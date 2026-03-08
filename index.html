@@ -111,6 +111,11 @@
             box-shadow: 0 5px 20px rgba(108, 60, 225, 0.4);
         }
 
+        /* Hide menu icons on desktop */
+        .menu-icon {
+            display: none;
+        }
+
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -118,6 +123,33 @@
             color: var(--text);
             font-size: 1.5rem;
             cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            transition: background 0.3s;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Mobile overlay backdrop */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 99;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
         }
 
         /* ========== HERO ========== */
@@ -893,52 +925,135 @@
                 font-size: 0.9rem;
             }
 
-            /* -- Nav -- */
+            /* -- Nav: Full-screen mobile menu -- */
             .nav-links {
                 display: none;
                 position: fixed;
                 top: 0;
                 right: 0;
-                left: auto;
+                left: 0;
                 bottom: 0;
-                width: 280px;
-                background: var(--dark-card);
+                width: 100%;
+                background: linear-gradient(160deg, #1a1a2e 0%, #16162a 40%, #1e1040 100%);
                 flex-direction: column;
-                padding: 5rem 2rem 2rem;
-                gap: 1.5rem;
-                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
-                direction: rtl;
-                text-align: right;
+                padding: 0;
+                gap: 0;
                 z-index: 100;
+                direction: rtl;
+                text-align: center;
+                align-items: stretch;
+                justify-content: center;
+                overflow-y: auto;
             }
 
             .nav-links.open {
                 display: flex;
+                animation: menuSlideIn 0.35s ease;
             }
 
-            .nav-links {
-                align-items: flex-start;
+            @keyframes menuSlideIn {
+                from { opacity: 0; transform: translateY(-20px); }
+                to { opacity: 1; transform: translateY(0); }
             }
 
             .nav-links li {
                 width: 100%;
+                list-style: none;
             }
 
+            .nav-links li a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.8rem;
+                padding: 1.2rem 2rem;
+                font-size: 1.25rem !important;
+                font-weight: 600 !important;
+                color: var(--text) !important;
+                text-decoration: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                transition: background 0.2s;
+            }
+
+            .nav-links li a:hover,
+            .nav-links li a:active {
+                background: rgba(108, 60, 225, 0.12);
+            }
+
+            /* Reorder: regular links first, CTAs at bottom */
             .nav-links li:first-child {
                 order: 10;
-                margin-top: 1rem;
+                margin-top: 0.5rem;
             }
 
+            .nav-links li:nth-child(6) {
+                order: 11;
+            }
+
+            .nav-links li:nth-child(7) {
+                order: 12;
+            }
+
+            /* CTA buttons in mobile menu */
             .nav-links .nav-cta {
-                display: inline-block;
-                text-align: center;
-                padding: 0.6rem 1.5rem;
-                font-size: 0.95rem;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                margin: 0.5rem 2rem;
+                padding: 1rem 2rem !important;
+                border-radius: 16px !important;
+                font-size: 1.15rem !important;
+                font-weight: 700 !important;
+                border-bottom: none !important;
             }
 
             .mobile-menu-btn {
                 display: block;
                 z-index: 101;
+            }
+
+            .mobile-overlay {
+                display: block;
+            }
+
+            .menu-icon {
+                display: inline-block;
+                font-size: 1.3rem;
+            }
+
+            /* Mobile menu close btn */
+            .nav-links.open::before {
+                content: '\00D7';
+                position: absolute;
+                top: 1rem;
+                left: 1.5rem;
+                font-size: 2.2rem;
+                color: var(--text-muted);
+                cursor: pointer;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.05);
+                transition: background 0.2s;
+                z-index: 102;
+                pointer-events: none;
+            }
+
+            /* Mobile menu header/logo */
+            .nav-links.open::after {
+                content: 'AI Youth';
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+                font-size: 1.3rem;
+                font-weight: 800;
+                background: linear-gradient(135deg, var(--accent), var(--primary-light));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                pointer-events: none;
             }
 
             /* -- Hero compact -- */
@@ -1277,15 +1392,17 @@
     <nav id="navbar">
         <a href="#" class="nav-logo">AI Youth</a>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#faq">שאלות</a></li>
-            <li><a href="#skills">כישורים</a></li>
-            <li><a href="#program">תוכנית</a></li>
-            <li><a href="#about">על הקורס</a></li>
-            <li><a href="portal.html" class="nav-cta">אזור אישי</a></li>
-            <li><a href="#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);">הרשמה</a></li>
+            <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
+            <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות</a></li>
+            <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
+            <li><a href="#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
+            <li><a href="#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>
+            <li><a href="portal.html" class="nav-cta"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
+            <li><a href="#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);"><span class="menu-icon">&#x1F680;</span> הרשמה</a></li>
         </ul>
         <button class="mobile-menu-btn" id="menuBtn" aria-label="תפריט">&#9776;</button>
     </nav>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
     <!-- HERO -->
     <section class="hero">
@@ -1308,6 +1425,7 @@
             </h1>
             <p>
                 בנה את הסטארטאפ הראשון שלך תוך 8 מפגשים.
+                <br>תלמד ChatGPT, Claude, Cursor ועוד &mdash; ותבנה אתר אמיתי עם AI.
                 <br>בלי ניסיון קודם. בלי קוד. רק אתה ו-AI.
             </p>
             <div class="hero-buttons">
@@ -1318,6 +1436,10 @@
                 <div class="hero-stat">
                     <div class="number">8</div>
                     <div class="label">מפגשים</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">6+</div>
+                    <div class="label">כלי AI</div>
                 </div>
                 <div class="hero-stat">
                     <div class="number">13-17</div>
@@ -1331,25 +1453,25 @@
                     <span class="terminal-dot red"></span>
                     <span class="terminal-dot yellow"></span>
                     <span class="terminal-dot green"></span>
-                    <span class="terminal-title">Claude Code</span>
+                    <span class="terminal-title">Cursor AI Editor</span>
                 </div>
                 <div class="terminal-body">
                     <div class="terminal-line">
-                        <span class="terminal-prompt">$ </span>
-                        <span class="terminal-command">claude "build me a pizza ordering website"</span>
+                        <span class="terminal-prompt">Cursor AI &gt; </span>
+                        <span class="terminal-command">"תבנה לי אתר לפיצריה עם תפריט ועיצוב"</span>
                     </div>
                     <div class="terminal-line">
-                        <span class="terminal-output">Creating project structure...</span>
+                        <span class="terminal-output">&#x1F9E0; Building your website...</span>
                     </div>
                     <div class="terminal-line">
-                        <span class="terminal-file">  index.html style.css app.js</span>
+                        <span class="terminal-file">  index.html  style.css  app.js</span>
                     </div>
                     <div class="terminal-line">
-                        <span class="terminal-success">&#x2714; Website ready! Opening in browser...</span>
+                        <span class="terminal-success">&#x2714; !האתר מוכן</span>
                     </div>
                     <div class="terminal-line">
-                        <span class="terminal-output">Your pizza site is live at </span>
-                        <span class="terminal-success">localhost:3000</span>
+                        <span class="terminal-output">&#x1F680; Live at </span>
+                        <span class="terminal-success">my-pizza.github.io</span>
                     </div>
                 </div>
             </div>
@@ -1407,23 +1529,65 @@
             <div class="build-grid">
                 <div class="build-item reveal">
                     <div class="build-icon">&#x1F310;</div>
-                    <h3>אתר אינטרנט</h3>
-                    <p>דף נחיתה מקצועי לרעיון שלך &mdash; עם עיצוב, תפריטים ותוכן</p>
+                    <h3>אתר אינטרנט אמיתי</h3>
+                    <p>דף נחיתה מקצועי לסטארטאפ שלך &mdash; עם עיצוב, תפריטים ואנימציות. באוויר!</p>
                 </div>
                 <div class="build-item reveal">
-                    <div class="build-icon">&#x1F4F1;</div>
-                    <h3>אפליקציית ווב</h3>
-                    <p>אפליקציה עובדת עם לוגיקה, טפסים ואינטראקציה</p>
+                    <div class="build-icon">&#x1F4CB;</div>
+                    <h3>תוכנית עסקית</h3>
+                    <p>אפיון מוצר, קהל יעד, מודל עסקי ואסטרטגיית שיווק &mdash; כמו יזם אמיתי</p>
                 </div>
                 <div class="build-item reveal">
-                    <div class="build-icon">&#x1F916;</div>
-                    <h3>צ'אטבוט חכם</h3>
-                    <p>בוט שעונה ללקוחות, עוזר במכירות או פשוט מבדר</p>
+                    <div class="build-icon">&#x1F4E3;</div>
+                    <h3>תוכן שיווקי עם AI</h3>
+                    <p>פוסטים, סלוגנים ותוכן לרשתות חברתיות &mdash; שנוצרו עם בינה מלאכותית</p>
                 </div>
                 <div class="build-item reveal">
                     <div class="build-icon">&#x1F3AC;</div>
                     <h3>Pitch מנצח</h3>
-                    <p>מצגת ליום ההשקה &mdash; כמו סטארטאפ אמיתי</p>
+                    <p>מצגת ליום ההשקה &mdash; 3 דקות מול קהל, כמו Shark Tank!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI TOOLS -->
+    <section class="skills-section" id="tools">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>&#x1F916; הכלים שנלמד</h2>
+                <p>נכיר ונתנסה בכלי ה-AI המובילים בעולם</p>
+            </div>
+            <div class="build-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem;">
+                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F4AC;</div>
+                    <h3>ChatGPT</h3>
+                    <p>שיחה, כתיבה וניתוח &mdash; הכלי הכי פופולרי בעולם</p>
+                </div>
+                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F9E0;</div>
+                    <h3>Claude</h3>
+                    <p>חכם ומדויק &mdash; מעולה לקוד, ניתוח וכתיבה ארוכה</p>
+                </div>
+                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F50D;</div>
+                    <h3>Gemini</h3>
+                    <p>של גוגל &mdash; חיפוש חכם, תמונות ושילוב עם גוגל</p>
+                </div>
+                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F4BB;</div>
+                    <h3>Cursor</h3>
+                    <p>עורך קוד עם AI &mdash; הכלי שלנו לבניית האתר!</p>
+                </div>
+                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F3AC;</div>
+                    <h3>Novo</h3>
+                    <p>יצירת וידאו מרשים עם בינה מלאכותית</p>
+                </div>
+                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F3A8;</div>
+                    <h3>NanoBanana</h3>
+                    <p>יצירת תמונות ואיורים מטקסט עם AI</p>
                 </div>
             </div>
         </div>
@@ -1658,6 +1822,32 @@
         </div>
     </section>
 
+    <!-- PRICING -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>&#x1F4B0; כמה זה עולה?</h2>
+                <p>השקעה קטנה, ערך עצום. ביטחון מלא.</p>
+            </div>
+            <div class="pricing-card reveal">
+                <div class="pricing-popular">&#x2B50; המחזור הראשון</div>
+                <h3>קורס יזמות ו-AI לנוער</h3>
+                <div class="price">&#x20AA;890</div>
+                <div class="price-note">8 מפגשים &bull; 45 דק' כל מפגש &bull; פעמיים בשבוע</div>
+                <ul class="pricing-features">
+                    <li><span class="check">&#x2714;</span> 8 מפגשים חיים בזום עם מנחה</li>
+                    <li><span class="check">&#x2714;</span> גישה לאזור אישי עם חומרי לימוד</li>
+                    <li><span class="check">&#x2714;</span> גישה לכל כלי ה-AI במהלך הקורס</li>
+                    <li><span class="check">&#x2714;</span> אתר אישי שיישאר באוויר גם אחרי הקורס</li>
+                    <li><span class="check">&#x2714;</span> תעודת סיום + יום הפיץ'</li>
+                    <li><span class="check">&#x2714;</span> קבוצה קטנה &mdash; עד 12 תלמידים</li>
+                </ul>
+                <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI%20%D7%9C%D7%A0%D7%95%D7%A2%D7%A8" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
+                <div class="pricing-guarantee">&#x1F512; ביטול חינם עד סוף המפגש השני</div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta-section" id="register">
         <div class="container">
@@ -1690,17 +1880,36 @@
         // Mobile menu
         const menuBtn = document.getElementById('menuBtn');
         const navLinks = document.getElementById('navLinks');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function openMobileMenu() {
+            navLinks.classList.add('open');
+            mobileOverlay.classList.add('active');
+            menuBtn.innerHTML = '&times;';
+            menuBtn.style.zIndex = '101';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            navLinks.classList.remove('open');
+            mobileOverlay.classList.remove('active');
+            menuBtn.innerHTML = '&#9776;';
+            document.body.style.overflow = '';
+        }
+
         menuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            menuBtn.innerHTML = navLinks.classList.contains('open') ? '&times;' : '&#9776;';
+            if (navLinks.classList.contains('open')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
         });
+
+        mobileOverlay.addEventListener('click', closeMobileMenu);
 
         // Close mobile menu on link click
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-                menuBtn.innerHTML = '&#9776;';
-            });
+            link.addEventListener('click', closeMobileMenu);
         });
 
         // FAQ toggle
