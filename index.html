@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>יזמות ובינה מלאכותית לנוער | הרצליה</title>
+    <meta name="description" content="קורס יזמות ובינה מלאכותית לנוער בהרצליה. בנה את הסטארטאפ הראשון שלך עם AI תוך 10 מפגשים.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6C3CE1;
+            --primary-light: #8B5CF6;
+            --primary-dark: #5228CC;
+            --accent: #00D4AA;
+            --accent-light: #34EABB;
+            --dark: #0F0A1E;
+            --dark-card: #1A1330;
+            --dark-lighter: #251E3A;
+            --text: #E8E0F5;
+            --text-muted: #A89BC7;
+            --gold: #F5C842;
+            --orange: #FF7849;
+            --pink: #FF4D8D;
+            --blue: #4DA3FF;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.7;
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* ========== NAV ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+            direction: ltr;
+        }
+
+        nav.scrolled {
+            background: rgba(15, 10, 30, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 30px rgba(108, 60, 225, 0.15);
+        }
+
+        .nav-logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 2rem;
+            list-style: none;
+            direction: ltr;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            transition: transform 0.3s, box-shadow 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+            direction: rtl;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(108, 60, 225, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(0, 212, 170, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(108, 60, 225, 0.15);
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            color: var(--primary-light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-badge .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--primary-light), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 4s ease infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 200% center; }
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(108, 60, 225, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-light);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 4rem;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .hero-stat .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Floating elements */
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .float-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.15;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .float-icon:nth-child(1) { top: 15%; right: 10%; animation-delay: 0s; }
+        .float-icon:nth-child(2) { top: 25%; left: 8%; animation-delay: 1s; }
+        .float-icon:nth-child(3) { bottom: 30%; right: 15%; animation-delay: 2s; }
+        .float-icon:nth-child(4) { bottom: 20%; left: 12%; animation-delay: 3s; }
+        .float-icon:nth-child(5) { top: 40%; right: 5%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* ========== SECTIONS ========== */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            direction: rtl;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== PROBLEM SECTION ========== */
+        .problem {
+            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-card) 100%);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .problem-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+            direction: rtl;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .problem-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .problem-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .problem-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ========== WHAT YOU'LL BUILD ========== */
+        .build-section {
+            background: var(--dark-card);
+        }
+
+        .build-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .build-item {
+            background: linear-gradient(135deg, rgba(108, 60, 225, 0.08), rgba(0, 212, 170, 0.05));
+            border: 1px solid rgba(108, 60, 225, 0.15);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: all 0.3s;
+            direction: rtl;
+        }
+
+        .build-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.1);
+        }
+
+        .build-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .build-item h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .build-item p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* ========== COURSE TIMELINE ========== */
+        .timeline-section {
+            background: linear-gradient(180deg, var(--dark-card) 0%, var(--dark) 100%);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            direction: rtl;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 24px;
+            left: auto;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            direction: rtl;
+        }
+
+        .timeline-marker {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-marker {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+        }
+
+        .timeline-item:nth-child(even) .timeline-marker {
+            background: linear-gradient(135deg, var(--accent), #00B894);
+            color: var(--dark);
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 1.5rem;
+            flex: 1;
+            transition: border-color 0.3s;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .timeline-content:hover {
+            border-color: var(--primary);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .timeline-content .tag {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.15);
+            color: var(--primary-light);
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        /* ========== SKILLS ========== */
+        .skills-section {
+            background: var(--dark);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .skill-chip {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            transition: all 0.3s;
+            direction: rtl;
+        }
+
+        .skill-chip:hover {
+            background: rgba(108, 60, 225, 0.1);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .skill-chip .skill-icon {
+            font-size: 1.5rem;
+        }
+
+        .skill-chip span {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* ========== INSTRUCTOR ========== */
+        .instructor-section {
+            background: var(--dark-card);
+        }
+
+        .instructor-card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 3rem;
+            direction: rtl;
+        }
+
+        .instructor-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            flex-shrink: 0;
+        }
+
+        .instructor-info {
+            text-align: right;
+            direction: rtl;
+        }
+
+        .instructor-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .instructor-info .title {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .instructor-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .instructor-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .instructor-tags span {
+            background: rgba(108, 60, 225, 0.12);
+            color: var(--primary-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* ========== PRICING ========== */
+        .pricing-section {
+            background: linear-gradient(180deg, var(--dark-card) 0%, var(--dark) 100%);
+        }
+
+        .pricing-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(108, 60, 225, 0.1), rgba(0, 212, 170, 0.05));
+            border: 2px solid var(--primary);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            direction: rtl;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--pink));
+        }
+
+        .pricing-popular {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            color: var(--dark);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin: 1rem 0;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pricing-card .price-note {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: right;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .pricing-features li .check {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .pricing-card .btn-primary {
+            width: 100%;
+            justify-content: center;
+            font-size: 1.2rem;
+            padding: 1.1rem;
+        }
+
+        .pricing-guarantee {
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* ========== FAQ ========== */
+        .faq-section {
+            background: var(--dark);
+        }
+
+        .faq-list {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1.5rem 0;
+        }
+
+        .faq-question {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: color 0.3s;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .faq-question:hover {
+            color: var(--accent);
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--primary-light);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding-top: 1rem;
+        }
+
+        /* ========== CTA ========== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--dark) 100%);
+            text-align: center;
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+            direction: rtl;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 212, 170, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .cta-section p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .cta-section .btn-primary {
+            position: relative;
+            font-size: 1.3rem;
+            padding: 1.2rem 3rem;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            direction: rtl;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                left: auto;
+                bottom: 0;
+                width: 280px;
+                background: var(--dark-card);
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                gap: 1.5rem;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+                direction: rtl;
+                text-align: right;
+                z-index: 100;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                z-index: 101;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .instructor-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .instructor-tags {
+                justify-content: center;
+            }
+
+            .pricing-card {
+                padding: 2rem;
+            }
+
+            .timeline::before {
+                right: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ========== TERMINAL DEMO ========== */
+        .terminal {
+            background: #1a1a2e;
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 650px;
+            margin: 3rem auto 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+
+        .terminal-header {
+            background: #16162a;
+            padding: 0.8rem 1rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+            direction: ltr;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #ff5f57; }
+        .terminal-dot.yellow { background: #febc2e; }
+        .terminal-dot.green { background: #28c840; }
+
+        .terminal-title {
+            margin-left: auto;
+            margin-right: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            direction: ltr;
+            text-align: left;
+            line-height: 2;
+        }
+
+        .terminal-line {
+            opacity: 0;
+            animation: typeLine 0.5s ease forwards;
+        }
+
+        .terminal-line:nth-child(1) { animation-delay: 1.5s; }
+        .terminal-line:nth-child(2) { animation-delay: 2.5s; }
+        .terminal-line:nth-child(3) { animation-delay: 3.5s; }
+        .terminal-line:nth-child(4) { animation-delay: 4.5s; }
+        .terminal-line:nth-child(5) { animation-delay: 5.5s; }
+
+        @keyframes typeLine {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .terminal-prompt { color: var(--accent); }
+        .terminal-command { color: #fff; }
+        .terminal-output { color: var(--text-muted); }
+        .terminal-success { color: var(--accent); }
+        .terminal-file { color: var(--gold); }
+
+        /* ========== WHATSAPP FLOAT ========== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 25px rgba(37, 211, 102, 0.4);
+            z-index: 99;
+            transition: transform 0.3s;
+            text-decoration: none;
+            font-size: 1.8rem;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <a href="#" class="nav-logo">AI Youth</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">על הקורס</a></li>
+            <li><a href="#program">תוכנית</a></li>
+            <li><a href="#skills">כישורים</a></li>
+            <li><a href="#pricing">מחיר</a></li>
+            <li><a href="#faq">שאלות</a></li>
+            <li><a href="#register" class="nav-cta">הרשמה</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="menuBtn" aria-label="תפריט">&#9776;</button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="floating-icons">
+            <span class="float-icon">&#x1F680;</span>
+            <span class="float-icon">&#x1F4A1;</span>
+            <span class="float-icon">&#x1F916;</span>
+            <span class="float-icon">&#x1F4BB;</span>
+            <span class="float-icon">&#x26A1;</span>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse-dot"></span>
+                הרשמה פתוחה &mdash; הרצליה 2026
+            </div>
+            <h1>
+                יזמות<br>
+                <span class="gradient-text">ובינה מלאכותית</span><br>
+                לנוער
+            </h1>
+            <p>
+                בנה את הסטארטאפ הראשון שלך תוך 10 מפגשים.
+                <br>בלי ניסיון קודם. בלי קוד. רק אתה ו-AI.
+            </p>
+            <div class="hero-buttons">
+                <a href="#register" class="btn-primary">&#x1F680; שריינו לי מקום</a>
+                <a href="#program" class="btn-secondary">&#x1F4D6; מה לומדים?</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="number">10</div>
+                    <div class="label">מפגשים</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">13-17</div>
+                    <div class="label">גילאים</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">12</div>
+                    <div class="label">תלמידים בכיתה</div>
+                </div>
+            </div>
+
+            <!-- Terminal Demo -->
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">Claude Code</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$ </span>
+                        <span class="terminal-command">claude "build me a pizza ordering website"</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">Creating project structure...</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-file">  index.html style.css app.js</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-success">&#x2714; Website ready! Opening in browser...</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">Your pizza site is live at </span>
+                        <span class="terminal-success">localhost:3000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT / PROBLEM -->
+    <section class="problem" id="about">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>למה הקורס הזה?</h2>
+                <p>העולם השתנה. מי שיודע לעבוד עם AI &mdash; יוביל. מי שלא &mdash; יישאר מאחור.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card reveal">
+                    <div class="problem-icon">&#x1F3EB;</div>
+                    <h3>בית הספר לא מלמד את זה</h3>
+                    <p>תוכניות הלימוד תקועות ב-2015. בינה מלאכותית ויזמות לא נמצאים בתוכנית.</p>
+                </div>
+                <div class="problem-card reveal">
+                    <div class="problem-icon">&#x1F4A1;</div>
+                    <h3>רעיונות בלי כלים</h3>
+                    <p>לנוער יש רעיונות מדהימים אבל אין להם את הכלים לבנות אותם. עד עכשיו.</p>
+                </div>
+                <div class="problem-card reveal">
+                    <div class="problem-icon">&#x1F680;</div>
+                    <h3>יתרון לחיים</h3>
+                    <p>מי שלומד לבנות מוצרים עם AI בגיל 15, יהיה שנות אור לפני כולם בגיל 25.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT YOU'LL BUILD -->
+    <section class="build-section" id="build">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>מה תבנו בקורס?</h2>
+                <p>לא תיאוריה. לא מצגות. בונים דברים אמיתיים.</p>
+            </div>
+            <div class="build-grid">
+                <div class="build-item reveal">
+                    <div class="build-icon">&#x1F310;</div>
+                    <h3>אתר אינטרנט</h3>
+                    <p>דף נחיתה מקצועי לרעיון שלך &mdash; עם עיצוב, תפריטים ותוכן</p>
+                </div>
+                <div class="build-item reveal">
+                    <div class="build-icon">&#x1F4F1;</div>
+                    <h3>אפליקציית ווב</h3>
+                    <p>אפליקציה עובדת עם לוגיקה, טפסים ואינטראקציה</p>
+                </div>
+                <div class="build-item reveal">
+                    <div class="build-icon">&#x1F916;</div>
+                    <h3>צ'אטבוט חכם</h3>
+                    <p>בוט שעונה ללקוחות, עוזר במכירות או פשוט מבדר</p>
+                </div>
+                <div class="build-item reveal">
+                    <div class="build-icon">&#x1F3AC;</div>
+                    <h3>Pitch מנצח</h3>
+                    <p>מצגת ליום ההשקה &mdash; כמו סטארטאפ אמיתי</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRAM TIMELINE -->
+    <section class="timeline-section" id="program">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>תוכנית הקורס &mdash; 10 מפגשים</h2>
+                <p>כל מפגש שעתיים. פעם בשבוע. מרעיון למוצר חי.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>ברוכים הבאים לעולם ה-AI</h3>
+                        <p>מה זה בינה מלאכותית? היכרות עם Claude Code. הפקודה הראשונה שלך.</p>
+                        <span class="tag">היכרות</span>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3>חשיבה יזמית</h3>
+                        <p>איך מוצאים בעיה שווה? איך הופכים רעיון לתוכנית? כל אחד בוחר את הפרויקט שלו.</p>
+                        <span class="tag">אסטרטגיה</span>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3>בונים את האתר</h3>
+                        <p>עם פקודה אחת &mdash; Claude בונה את דף הנחיתה שלך. לומדים איך לכוון את ה-AI.</p>
+                        <span class="tag">בנייה</span>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3>עיצוב ו-UX</h3>
+                        <p>צבעים, פונטים, לוגו. מה עושה אתר מקצועי? עובדים עם AI על העיצוב.</p>
+                        <span class="tag">עיצוב</span>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">5</div>
+                    <div class="timeline-content">
+                        <h3>פיצ'רים ולוגיקה</h3>
+                        <p>מוסיפים טפסים, כפתורים, דפים נוספים. האתר הופך לאפליקציה.</p>
+                        <span class="tag">פיתוח</span>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">6</div>
+                    <div class="timeline-content">
+                        <h3>צ'אטבוט ואוטומציה</h3>
+                        <p>בונים בוט חכם שמדבר עם הלקוחות. לומדים על Prompt Engineering.</p>
+                        <span class="tag">AI</span>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">7</div>
+                    <div class="timeline-content">
+                        <h3>השקה!</h3>
+                        <p>קונים דומיין, מעלים לאוויר. הפרויקט שלך חי באינטרנט!</p>
+                        <span class="tag">השקה</span>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">8</div>
+                    <div class="timeline-content">
+                        <h3>משתמשים ופידבק</h3>
+                        <p>מביאים 5 משתמשים אמיתיים. אוספים פידבק. לומדים מה לשפר.</p>
+                        <span class="tag">שיווק</span>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">9</div>
+                    <div class="timeline-content">
+                        <h3>שיפור ומודל עסקי</h3>
+                        <p>משפרים לפי הפידבק. חושבים על כסף &mdash; איך הסטארטאפ שלך ירוויח?</p>
+                        <span class="tag">עסקים</span>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker">10</div>
+                    <div class="timeline-content">
+                        <h3>Pitch Day &#x1F3C6;</h3>
+                        <p>הצגה בפני הורים, חברים ושופטים. כמו Shark Tank &mdash; רק שאתם היזמים!</p>
+                        <span class="tag">הצגה</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills-section" id="skills">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>כישורים שתרכשו</h2>
+                <p>לא רק טכנולוגיה. כישורי חיים שישרתו אתכם לתמיד.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F916;</span>
+                    <span>עבודה עם AI</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F4A1;</span>
+                    <span>חשיבה יזמית</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F310;</span>
+                    <span>בניית אתרים</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F3A8;</span>
+                    <span>עיצוב דיגיטלי</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F4CA;</span>
+                    <span>מודל עסקי</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F3A4;</span>
+                    <span>הצגה בפני קהל</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F4DD;</span>
+                    <span>Prompt Engineering</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F91D;</span>
+                    <span>עבודת צוות</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F4E3;</span>
+                    <span>שיווק דיגיטלי</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F4AC;</span>
+                    <span>חשיבה ביקורתית</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F527;</span>
+                    <span>פתרון בעיות</span>
+                </div>
+                <div class="skill-chip reveal">
+                    <span class="skill-icon">&#x1F30D;</span>
+                    <span>חדשנות</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTRUCTOR -->
+    <section class="instructor-section" id="instructor">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>המנחה</h2>
+            </div>
+            <div class="instructor-card reveal">
+                <div class="instructor-avatar">&#x1F468;&#x200D;&#x1F4BB;</div>
+                <div class="instructor-info">
+                    <h3>מאיר לביא</h3>
+                    <div class="title">יזם טכנולוגי ומומחה AI</div>
+                    <p>
+                        מייסד GotChat &mdash; פלטפורמת צ'אטבוטים חכמים לעסקים שנבנתה כולה עם בינה מלאכותית.
+                        יזם עם ניסיון מעשי בבניית מוצרים דיגיטליים מאפס ועד השקה.
+                        מאמין שהדור הצעיר יכול לבנות דברים מדהימים &mdash; עם הכלים הנכונים.
+                    </p>
+                    <div class="instructor-tags">
+                        <span>AI</span>
+                        <span>יזמות</span>
+                        <span>פיתוח</span>
+                        <span>סטארטאפים</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>מחיר</h2>
+                <p>השקעה שתשתלם לכל החיים</p>
+            </div>
+            <div class="pricing-card reveal">
+                <div class="pricing-popular">&#x2B50; מחזור ראשון &mdash; מחיר השקה</div>
+                <h3>קורס יזמות ו-AI &mdash; 10 מפגשים</h3>
+                <div class="price">1,800&#x20AA;</div>
+                <div class="price-note">180&#x20AA; למפגש בלבד | שעתיים כל מפגש</div>
+                <ul class="pricing-features">
+                    <li><span class="check">&#x2713;</span> 10 מפגשים &times; שעתיים</li>
+                    <li><span class="check">&#x2713;</span> גישה ל-Claude Code (כלול)</li>
+                    <li><span class="check">&#x2713;</span> פרויקט אישי חי באינטרנט</li>
+                    <li><span class="check">&#x2713;</span> תעודת סיום</li>
+                    <li><span class="check">&#x2713;</span> Pitch Day בפני הורים ושופטים</li>
+                    <li><span class="check">&#x2713;</span> קבוצה קטנה &mdash; עד 12 תלמידים</li>
+                    <li><span class="check">&#x2713;</span> ליווי אישי לאורך כל הקורס</li>
+                </ul>
+                <a href="#register" class="btn-primary">&#x1F680; הרשמה לקורס</a>
+                <div class="pricing-guarantee">&#x1F512; תשלום מאובטח | אפשרות ביטול עד המפגש השני</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>שאלות נפוצות</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>צריך ניסיון בתכנות?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        בכלל לא! הקורס מיועד למתחילים מוחלטים. ה-AI עושה את התכנות בשבילכם &mdash; אתם לומדים לכוון אותו ולחשוב כמו יזמים.
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>מה צריך להביא?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        מחשב נייד (Windows / Mac / Chromebook) ורצון ליצור. הכל השאר &mdash; כולל גישה ל-AI &mdash; מסופק על ידינו.
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>מה הגילאים?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        הקורס מיועד לנוער בגילאי 13-17 (חטיבת ביניים ותיכון). הקורס מותאם לגילאים אלו הן בתוכן והן בקצב.
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>איפה הקורס מתקיים?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        הקורס מתקיים בהרצליה, במיקום נגיש בתחבורה ציבורית. הכתובת המדויקת תישלח לנרשמים.
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>מה אם הילד לא אוהב את הקורס?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        אנחנו מציעים מדיניות ביטול נוחה: אם עד סוף המפגש השני הילד מחליט שזה לא בשבילו &mdash; החזר מלא, ללא שאלות.
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>מה הילד ייצא עם בסוף?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        פרויקט אמיתי שרץ באינטרנט, ניסיון מעשי בעבודה עם AI, כישורי יזמות והצגה, ותעודת סיום. וגם &mdash; ביטחון עצמי שהוא יכול לבנות כל דבר.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="register">
+        <div class="container">
+            <h2 class="reveal">&#x1F680; המחזור הראשון מתחיל בקרוב</h2>
+            <p class="reveal">המקומות מוגבלים ל-12 תלמידים. שריינו את המקום שלכם עכשיו.</p>
+            <a href="https://wa.me/13507772082?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI%20%D7%9C%D7%A0%D7%95%D7%A2%D7%A8" class="btn-primary reveal" target="_blank">&#x1F4AC; שלחו לנו הודעה בוואטסאפ</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 יזמות ובינה מלאכותית לנוער | הרצליה</p>
+        <p style="margin-top: 0.5rem;">
+            שאלות? <a href="https://wa.me/13507772082" target="_blank">WhatsApp</a>
+        </p>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/13507772082?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI%20%D7%9C%D7%A0%D7%95%D7%A2%D7%A8" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        &#x1F4AC;
+    </a>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Mobile menu
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            menuBtn.innerHTML = navLinks.classList.contains('open') ? '&times;' : '&#9776;';
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                menuBtn.innerHTML = '&#9776;';
+            });
+        });
+
+        // FAQ toggle
+        function toggleFaq(el) {
+            const item = el.closest('.faq-item');
+            item.classList.toggle('active');
+        }
+
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
