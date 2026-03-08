@@ -142,21 +142,115 @@
             display: none;
         }
 
+        /* Mobile menu button — hidden on desktop */
         .mobile-menu-btn {
             display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
+            position: fixed;
+            top: 0.8rem;
+            right: 1rem;
+            z-index: 300;
             width: 44px;
             height: 44px;
             border-radius: 12px;
-            transition: background 0.3s;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+            font-family: 'Heebo', sans-serif;
         }
 
-        .mobile-menu-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
+        .mobile-menu-btn.menu-open {
+            font-size: 2rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Mobile full-screen menu panel — hidden on desktop */
+        .mobile-menu-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(160deg, #1a1a2e 0%, #16162a 40%, #1e1040 100%);
+            z-index: 250;
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+            text-align: center;
+            direction: rtl;
+            overflow-y: auto;
+        }
+
+        .mobile-menu-panel.open {
+            display: flex;
+            animation: menuSlideIn 0.3s ease;
+        }
+
+        @keyframes menuSlideIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mobile-menu-header {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.5rem;
+        }
+
+        .mobile-menu-logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-menu-links li a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.2s;
+        }
+
+        .mobile-menu-links li a:hover {
+            background: rgba(108, 60, 225, 0.12);
+        }
+
+        .mobile-menu-links .mobile-cta a {
+            margin: 0.5rem 2rem;
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-bottom: none;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+        }
+
+        .mobile-menu-links .mobile-cta-green a {
+            background: linear-gradient(135deg, var(--accent), #00b894);
         }
 
         /* Mobile overlay backdrop */
@@ -169,7 +263,7 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
-            z-index: 99;
+            z-index: 200;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
@@ -953,141 +1047,25 @@
                 font-size: 0.9rem;
             }
 
-            /* -- Nav: Full-screen mobile menu -- */
-            .nav-links {
-                display: none;
-                position: fixed;
-                top: 0;
-                right: 0;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-                background: linear-gradient(160deg, #1a1a2e 0%, #16162a 40%, #1e1040 100%);
-                flex-direction: column;
-                padding: 0;
-                gap: 0;
-                z-index: 100;
-                direction: rtl;
-                text-align: center;
-                align-items: stretch;
-                justify-content: center;
-                overflow-y: auto;
+            /* -- Hide desktop nav links on mobile -- */
+            .nav-links-desktop {
+                display: none !important;
             }
 
-            .nav-links.open {
-                display: flex;
-                animation: menuSlideIn 0.35s ease;
-            }
-
-            @keyframes menuSlideIn {
-                from { opacity: 0; transform: translateY(-20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-
-            .nav-links li {
-                width: 100%;
-                list-style: none;
-            }
-
-            .nav-links li a {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 0.8rem;
-                padding: 1.2rem 2rem;
-                font-size: 1.25rem !important;
-                font-weight: 600 !important;
-                color: var(--text) !important;
-                text-decoration: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-                transition: background 0.2s;
-            }
-
-            .nav-links li a:hover,
-            .nav-links li a:active {
-                background: rgba(108, 60, 225, 0.12);
-            }
-
-            /* Reorder: regular links first, CTAs at bottom */
-            .nav-links li:first-child {
-                order: 10;
-                margin-top: 0.5rem;
-            }
-
-            .nav-links li:nth-child(6) {
-                order: 11;
-            }
-
-            .nav-links li:nth-child(7) {
-                order: 12;
-            }
-
-            /* CTA buttons in mobile menu */
-            .nav-links .nav-cta {
-                display: flex !important;
-                align-items: center;
-                justify-content: center;
-                margin: 0.5rem 2rem;
-                padding: 1rem 2rem !important;
-                border-radius: 16px !important;
-                font-size: 1.15rem !important;
-                font-weight: 700 !important;
-                border-bottom: none !important;
-            }
-
+            /* -- Show mobile menu button -- */
             .mobile-menu-btn {
                 display: flex;
-                align-items: center;
-                justify-content: center;
-                position: fixed;
-                top: 0.8rem;
-                right: 1rem;
-                left: auto;
-                z-index: 200;
-                width: 44px;
-                height: 44px;
-                border-radius: 12px;
-                background: rgba(255, 255, 255, 0.08);
-                font-size: 1.5rem;
-                color: var(--text);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                transition: all 0.25s;
             }
 
-            .mobile-menu-btn:hover {
-                background: rgba(255, 255, 255, 0.15) !important;
-            }
-
-            /* When menu is open, style the button as X */
-            .mobile-menu-btn.menu-open {
-                background: rgba(255, 255, 255, 0.05);
-                border-color: rgba(255, 255, 255, 0.06);
-                font-size: 2rem;
-                color: var(--text-muted);
-            }
-
+            /* -- Show mobile overlay -- */
             .mobile-overlay {
                 display: block;
             }
 
+            /* -- Show menu icons in mobile panel -- */
             .menu-icon {
                 display: inline-block;
                 font-size: 1.3rem;
-            }
-
-            /* Mobile menu header/logo */
-            .nav-links.open::after {
-                content: 'AI Youth';
-                position: absolute;
-                top: 1.2rem;
-                left: 1.5rem;
-                right: auto;
-                font-size: 1.3rem;
-                font-weight: 800;
-                background: linear-gradient(135deg, var(--accent), var(--primary-light));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                pointer-events: none;
             }
 
             /* -- Hero compact -- */
@@ -1425,17 +1403,32 @@
     <!-- NAV -->
     <nav id="navbar">
         <a href="#" class="nav-logo">AI Youth</a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
-            <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות</a></li>
-            <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
-            <li><a href="#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
-            <li><a href="#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>
-            <li><a href="portal.html" class="nav-cta"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
-            <li><a href="#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);"><span class="menu-icon">&#x1F680;</span> הרשמה</a></li>
+        <ul class="nav-links nav-links-desktop" id="navLinksDesktop">
+            <li><a href="#pricing"> מחיר</a></li>
+            <li><a href="#faq"> שאלות</a></li>
+            <li><a href="#tools"> כלי AI</a></li>
+            <li><a href="#program"> תוכנית</a></li>
+            <li><a href="#about"> על הקורס</a></li>
+            <li><a href="portal.html" class="nav-cta"> אזור אישי</a></li>
+            <li><a href="#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);"> הרשמה</a></li>
         </ul>
-        <button class="mobile-menu-btn" id="menuBtn" aria-label="תפריט">&#9776;</button>
     </nav>
+    <!-- Mobile menu OUTSIDE nav to avoid backdrop-filter containing block -->
+    <button class="mobile-menu-btn" id="menuBtn" aria-label="תפריט">&#9776;</button>
+    <div class="mobile-menu-panel" id="mobileMenuPanel">
+        <div class="mobile-menu-header">
+            <span class="mobile-menu-logo">AI Youth</span>
+        </div>
+        <ul class="mobile-menu-links">
+            <li><a href="#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>
+            <li><a href="#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
+            <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
+            <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות</a></li>
+            <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
+            <li class="mobile-cta"><a href="portal.html"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
+            <li class="mobile-cta mobile-cta-green"><a href="#register"><span class="menu-icon">&#x1F680;</span> הרשמה</a></li>
+        </ul>
+    </div>
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
     <!-- HERO -->
@@ -1912,11 +1905,11 @@
 
         // Mobile menu
         const menuBtn = document.getElementById('menuBtn');
-        const navLinks = document.getElementById('navLinks');
+        const mobilePanel = document.getElementById('mobileMenuPanel');
         const mobileOverlay = document.getElementById('mobileOverlay');
 
         function openMobileMenu() {
-            navLinks.classList.add('open');
+            mobilePanel.classList.add('open');
             mobileOverlay.classList.add('active');
             menuBtn.classList.add('menu-open');
             menuBtn.innerHTML = '&times;';
@@ -1924,7 +1917,7 @@
         }
 
         function closeMobileMenu() {
-            navLinks.classList.remove('open');
+            mobilePanel.classList.remove('open');
             mobileOverlay.classList.remove('active');
             menuBtn.classList.remove('menu-open');
             menuBtn.innerHTML = '&#9776;';
@@ -1932,7 +1925,7 @@
         }
 
         menuBtn.addEventListener('click', () => {
-            if (navLinks.classList.contains('open')) {
+            if (mobilePanel.classList.contains('open')) {
                 closeMobileMenu();
             } else {
                 openMobileMenu();
@@ -1942,7 +1935,7 @@
         mobileOverlay.addEventListener('click', closeMobileMenu);
 
         // Close mobile menu on link click
-        navLinks.querySelectorAll('a').forEach(link => {
+        mobilePanel.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
         });
 
