@@ -1455,52 +1455,75 @@
             }
 
             .main-content {
-                padding: 1.2rem 1rem 5rem;
+                padding: 1.2rem 1rem 6rem;
             }
 
+            /* ===== iOS 26 FLOATING TAB BAR ===== */
             .mobile-nav {
                 display: flex;
                 position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: rgba(26, 26, 46, 0.95);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border-top: 1px solid rgba(255,255,255,0.08);
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                background: rgba(30, 30, 50, 0.75);
+                backdrop-filter: blur(40px) saturate(180%);
+                -webkit-backdrop-filter: blur(40px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 22px;
                 z-index: 50;
                 justify-content: space-around;
-                padding: 0.35rem 0;
+                padding: 0.5rem 0.3rem;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
             }
 
             .mobile-nav button {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 0.15rem;
+                gap: 0.2rem;
                 background: none;
                 border: none;
-                color: var(--text-muted);
+                color: rgba(255, 255, 255, 0.5);
                 font-family: 'Heebo', sans-serif;
-                font-size: 0.55rem;
-                padding: 0.25rem 0.3rem;
+                font-size: 0.6rem;
+                font-weight: 500;
+                padding: 0.3rem 0.5rem;
                 cursor: pointer;
+                border-radius: 14px;
+                transition: all 0.25s ease;
+                position: relative;
             }
 
-            /* More menu popup */
+            .mobile-nav button.active {
+                color: #fff;
+                background: rgba(108, 60, 225, 0.3);
+            }
+
+            .mobile-nav button.active .nav-icon {
+                transform: scale(1.1);
+            }
+
+            .mobile-nav button .nav-icon {
+                font-size: 1.2rem;
+                transition: transform 0.2s ease;
+            }
+
+            /* ===== MORE MENU POPUP (iOS style) ===== */
             .more-menu {
                 display: none;
                 position: fixed;
-                bottom: 60px;
+                bottom: 5.5rem;
                 left: 0.8rem;
-                background: var(--dark-card);
-                border: 1px solid rgba(255,255,255,0.12);
-                border-radius: 14px;
-                padding: 0.5rem;
+                background: rgba(30, 30, 50, 0.85);
+                backdrop-filter: blur(40px) saturate(180%);
+                -webkit-backdrop-filter: blur(40px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 16px;
+                padding: 0.4rem;
                 z-index: 60;
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
                 flex-direction: column;
-                min-width: 140px;
+                min-width: 150px;
             }
 
             .more-menu.open {
@@ -1509,7 +1532,7 @@
             }
 
             @keyframes moreSlideUp {
-                from { opacity: 0; transform: translateY(10px); }
+                from { opacity: 0; transform: translateY(8px); }
                 to { opacity: 1; transform: translateY(0); }
             }
 
@@ -1517,30 +1540,22 @@
                 display: flex;
                 align-items: center;
                 gap: 0.6rem;
-                padding: 0.7rem 1rem;
+                padding: 0.65rem 1rem;
                 background: none;
                 border: none;
-                color: var(--text);
+                color: rgba(255, 255, 255, 0.85);
                 font-family: 'Heebo', sans-serif;
-                font-size: 0.9rem;
+                font-size: 0.88rem;
                 font-weight: 500;
                 cursor: pointer;
-                border-radius: 10px;
+                border-radius: 12px;
                 transition: background 0.2s;
                 direction: rtl;
             }
 
             .more-menu button:hover,
             .more-menu button:active {
-                background: rgba(108, 60, 225, 0.15);
-            }
-
-            .mobile-nav button.active {
-                color: var(--accent);
-            }
-
-            .mobile-nav button .nav-icon {
-                font-size: 1.1rem;
+                background: rgba(255, 255, 255, 0.1);
             }
 
             .page-header {
@@ -1616,14 +1631,14 @@
                 <span>עזרה</span>
             </button>
         </div>
+        <a href="#" class="zoom-live-btn" id="zoomBtn" onclick="joinZoom()" title="הצטרפו למפגש בזום">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4 3C2.9 3 2 3.9 2 5V15C2 16.1 2.9 17 4 17H14C15.1 17 16 16.1 16 15V12L20 16V4L16 8V5C16 3.9 15.1 3 14 3H4ZM4 5H14V15H4V5Z"/>
+            </svg>
+            Zoom
+        </a>
         <div class="topnav-logo">
             <a href="index.html" title="לאתר הראשי">AI Youth</a>
-            <a href="#" class="zoom-live-btn" id="zoomBtn" onclick="joinZoom()" title="הצטרפו למפגש בזום">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M4 3C2.9 3 2 3.9 2 5V15C2 16.1 2.9 17 4 17H14C15.1 17 16 16.1 16 15V12L20 16V4L16 8V5C16 3.9 15.1 3 14 3H4ZM4 5H14V15H4V5Z"/>
-                </svg>
-                Zoom
-            </a>
         </div>
     </header>
 
