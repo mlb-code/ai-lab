@@ -266,6 +266,44 @@
             color: var(--text-muted);
         }
 
+        .session-concepts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .concept-tag {
+            background: linear-gradient(135deg, rgba(108, 60, 225, 0.2), rgba(0, 212, 170, 0.1));
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .session-discussion {
+            background: rgba(245, 200, 66, 0.08);
+            border-right: 3px solid var(--gold);
+            border-radius: 0 10px 10px 0;
+            padding: 0.8rem 1rem;
+            margin-top: 0.8rem;
+        }
+
+        .session-discussion .disc-label {
+            font-size: 0.78rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .session-discussion p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
         .session-presentation {
             display: inline-flex;
             align-items: center;
@@ -1145,16 +1183,27 @@
                         <span class="session-tag">היכרות</span>
                     </div>
                     <div class="session-card-body">
-                        <div class="objective">מטרה: הכרות עם בינה מלאכותית וחוויה ראשונה</div>
+                        <div class="objective">מטרה: הכרות עם בינה מלאכותית, הבנה מה זה ולמה זה חשוב, חוויה ראשונה</div>
                         <ul class="content-list">
-                            <li>מה זה בינה מלאכותית? דוגמאות מהחיים היומיום</li>
-                            <li>סוגי AI: טקסט, תמונות, וידאו, קוד</li>
-                            <li>הכרות עם ChatGPT ו-Claude</li>
-                            <li>איך AI משנה את העולם כבר היום</li>
+                            <li><strong>מה זה AI?</strong> בינה מלאכותית היא כשמחשבים לומדים לבצע משימות שדורשות חשיבה אנושית &mdash; הבנת שפה, זיהוי תמונות, קבלת החלטות. בניגוד לתוכנות רגילות שעובדות לפי כללים קשיחים, AI לומד מנתונים</li>
+                            <li><strong>סוגי AI:</strong> טקסט (ChatGPT, Claude), תמונות (DALL-E, NanoBanana), וידאו (Sora, Novo), קוד (Cursor), מוזיקה (Suno). כל סוג מעבד סוג אחר של מידע</li>
+                            <li><strong>AI בחיים היומיום:</strong> Siri ו-Google Assistant (קול), נטפליקס (המלצות), Google Translate (שפה), Waze (ניווט), Face ID (זיהוי), פילטרי ספאם (אימייל)</li>
+                            <li><strong>הכרות עם ChatGPT ו-Claude:</strong> שני הכלים החזקים ביותר. נכנסים, שואלים את אותה שאלה בשניהם, ורואים את ההבדלים &mdash; כל כלי חזק בדברים שונים</li>
+                            <li><strong>היסטוריה קצרה:</strong> הרעיון של AI קיים מ-1950 (אלן טיורינג), אבל הפריצה הגדולה הגיעה ב-2022 עם ChatGPT. ישראל מובילה עולמית בתחום!</li>
                         </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">בינה מלאכותית</span>
+                            <span class="concept-tag">מודל שפה</span>
+                            <span class="concept-tag">פרומפט</span>
+                            <span class="concept-tag">למידת מכונה</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>באילו כלי AI אתם כבר משתמשים בלי לדעת? &bull; מה ההבדל בין תוכנה חכמה לבינה מלאכותית?</p>
+                        </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול</div>
-                            <p>שאלו את ה-AI 5 שאלות שונות ותראו את ההבדלים בין הכלים</p>
+                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <p>שאלו את ChatGPT ואת Claude את אותן 5 שאלות &mdash; שימו לב להבדלים! שאלה על היסטוריה, מדע, כתיבה יצירתית, תרגיל מתמטי, ושאלה אישית</p>
                         </div>
                         <button class="session-presentation" onclick="openPresentation(1)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
@@ -1168,16 +1217,29 @@
                         <span class="session-tag">AI</span>
                     </div>
                     <div class="session-card-body">
-                        <div class="objective">מטרה: ללמוד לדבר עם AI בצורה אפקטיבית</div>
+                        <div class="objective">מטרה: ללמוד לדבר עם AI בצורה אפקטיבית &mdash; ככל שהפרומפט טוב יותר, התוצאה טובה יותר</div>
                         <ul class="content-list">
-                            <li>מה זה פרומפט ולמה הוא כל כך חשוב?</li>
-                            <li>5 טכניקות לכתיבת פרומפטים מעולים</li>
-                            <li>הבדלים בין הכלים: מתי להשתמש בכל אחד</li>
-                            <li>טעויות נפוצות ואיך להימנע מהן</li>
+                            <li><strong>מה זה פרומפט?</strong> ההוראה או השאלה שנותנים ל-AI. חשבו על זה כמו לדבר עם עוזר חכם מאוד &mdash; ככל שתהיו ברורים יותר, כך התוצאה תהיה טובה יותר</li>
+                            <li><strong>טכניקה 1 &mdash; היו ספציפיים:</strong> במקום "כתוב על כלבים" כתבו "כתוב פוסט של 200 מילים על 5 גזעי כלבים מומלצים למשפחות עם ילדים קטנים"</li>
+                            <li><strong>טכניקה 2 &mdash; תנו הקשר:</strong> "אני תלמיד בן 15 שבונה סטארטאפ. עזור לי לכתוב..." &mdash; ה-AI צריך לדעת מי אתם ולמה אתם צריכים את זה</li>
+                            <li><strong>טכניקה 3 &mdash; הגדירו פורמט:</strong> "תן לי רשימה ממוספרת / טבלה / 3 פסקאות / נקודות" &mdash; תגידו ל-AI בדיוק איך אתם רוצים את התשובה</li>
+                            <li><strong>טכניקה 4 &mdash; תנו דוגמה:</strong> "כתוב בסגנון דומה ל-X, אבל עם Y" &mdash; דוגמאות עוזרות ל-AI להבין מה אתם מחפשים</li>
+                            <li><strong>טכניקה 5 &mdash; חדדו בהדרגה:</strong> התחילו פשוט, ואז שפרו: "תקצר", "תוסיף הומור", "עכשיו תרגם לעברית". זה נקרא איטרציה</li>
+                            <li><strong>טעויות נפוצות:</strong> פרומפט עמום מדי, ארוך מדי, הוראות סותרות, או חוסר הקשר. תמיד בדקו: "האם AI יודע מה בדיוק אני רוצה?"</li>
                         </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">פרומפט</span>
+                            <span class="concept-tag">הקשר</span>
+                            <span class="concept-tag">איטרציה</span>
+                            <span class="concept-tag">שרשור פרומפטים</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>למה אותו פרומפט נותן תוצאות שונות בכלים שונים? &bull; מה ההבדל בין פרומפט טוב לפרומפט רע?</p>
+                        </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול</div>
-                            <p>אתגר פרומפטים: מי יצליח לגרום ל-AI ליצור את התוצאה הכי מדויקה?</p>
+                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <p>אתגר פרומפטים! כולם מקבלים את אותה משימה: "גרמו ל-AI ליצור לוגו לחנות גלידה". מי מקבל את התוצאה הכי טובה? נשווה ונלמד מהפרומפטים של כולם</p>
                         </div>
                         <button class="session-presentation" onclick="openPresentation(2)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
@@ -1191,16 +1253,28 @@
                         <span class="session-tag">יזמות</span>
                     </div>
                     <div class="session-card-body">
-                        <div class="objective">מטרה: לחשוב כמו יזמים ולזהות בעיות אמיתיות</div>
+                        <div class="objective">מטרה: ללמוד לחשוב כמו יזמים, לזהות בעיות אמיתיות ולהבין את הנוסחה של סטארטאפ מצליח</div>
                         <ul class="content-list">
-                            <li>מה זה סטארטאפ? סיפורי יזמים ישראלים</li>
-                            <li>הנוסחה: בעיה &#x2192; פתרון &#x2192; מוצר</li>
-                            <li>איך מזהים בעיות שאנשים מוכנים לשלם עליהן?</li>
-                            <li>Design Thinking לנוער</li>
+                            <li><strong>מה זה סטארטאפ?</strong> חברה צעירה שפותרת בעיה אמיתית בדרך חדשה או טובה יותר. ההבדל מעסק רגיל: סטארטאפ שואף לצמוח מהר ולהגיע להרבה אנשים</li>
+                            <li><strong>סיפורי יזמים ישראליים:</strong> Waze (פתרו את בעיית הפקקים), Wix (הקלו על בניית אתרים), Monday (סידרו כאוס בניהול פרויקטים), Iron Dome (ביטחון). ישראל = "אומת הסטארטאפ" &mdash; יותר סטארטאפים לנפש מכל מדינה!</li>
+                            <li><strong>הנוסחה:</strong> בעיה &#x2192; פתרון &#x2192; מוצר &#x2192; עסק. הכל מתחיל מבעיה אמיתית שאנשים רוצים לפתור!</li>
+                            <li><strong>Design Thinking:</strong> שיטה בת 5 שלבים &mdash; הזדהו (הבינו את המשתמש), הגדירו (מה הבעיה בדיוק), חשבו (סיעור מוחות), בנו (אב-טיפוס מהיר), בדקו (קבלו פידבק)</li>
+                            <li><strong>איך מוצאים בעיות טובות?</strong> מה מעצבן אתכם ביומיום? על מה חברים מתלוננים? מה הייתם רוצים שיהיה קל יותר? הבעיות הכי טובות הן אלה שאתם חווים בעצמכם!</li>
+                            <li><strong>בעיה טובה vs בעיה רעה:</strong> טובה = הרבה אנשים חווים אותה, מוכנים לשלם על פתרון, ספציפית. רעה = עמומה מדי, רק אתם חווים אותה, כבר נפתרה לגמרי</li>
                         </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">סטארטאפ</span>
+                            <span class="concept-tag">Design Thinking</span>
+                            <span class="concept-tag">אימות בעיה</span>
+                            <span class="concept-tag">בעיה &#x2192; פתרון</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>מה הדבר שהכי מעצבן אתכם בבית הספר? &bull; איזו אפליקציה הייתם רוצים שתהיה קיימת?</p>
+                        </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול</div>
-                            <p>כל תלמיד מזהה 3 בעיות מהחיים שלו ומציג לכיתה</p>
+                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <p>כל תלמיד מזהה 3 בעיות מהחיים שלו (בית ספר, תחביבים, חברים, משפחה) ומציג לכיתה. הכיתה מצביעה: איזו בעיה הכי מעניינת?</p>
                         </div>
                         <button class="session-presentation" onclick="openPresentation(3)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
@@ -1214,16 +1288,28 @@
                         <span class="session-tag">אסטרטגיה</span>
                     </div>
                     <div class="session-card-body">
-                        <div class="objective">מטרה: לבחור רעיון ולתכנן את המוצר</div>
+                        <div class="objective">מטרה: לבחור את הרעיון הטוב ביותר, להגדיר קהל יעד, לבנות הצעת ערך ולתכנן MVP</div>
                         <ul class="content-list">
-                            <li>בחירת הרעיון הטוב ביותר מתוך השלושה</li>
-                            <li>הגדרת קהל יעד: למי אנחנו פותרים?</li>
-                            <li>הצעת ערך: מה מיוחד בפתרון שלנו?</li>
-                            <li>ניתוח מתחרים: מה כבר קיים בשוק?</li>
+                            <li><strong>בחירת הרעיון:</strong> מתוך 3 הבעיות מהמפגש הקודם, בוחרים את הטובה ביותר. הקריטריונים: האם הבעיה אמיתית? האם אני מבין אותה? האם אפשר לבנות פתרון? האם אנשים ירצו להשתמש?</li>
+                            <li><strong>קהל יעד:</strong> מי בדיוק סובל מהבעיה? לא "כולם" אלא "תלמידי תיכון בישראל שמתקשים במתמטיקה". בונים פרסונה &mdash; דמות בדיונית שמייצגת את המשתמש האידיאלי</li>
+                            <li><strong>הצעת ערך:</strong> מה מיוחד בפתרון שלכם? הנוסחה: "אנחנו עוזרים ל-[קהל] לפתור את [הבעיה] על ידי [הפתרון], בניגוד ל-[מתחרים] אנחנו [יתרון ייחודי]"</li>
+                            <li><strong>ניתוח מתחרים:</strong> מה כבר קיים? חפשו בגוגל, הורידו אפליקציות דומות. מה טוב בהן? מה חסר? ההזדמנות שלכם נמצאת בפערים!</li>
+                            <li><strong>MVP:</strong> Minimum Viable Product &mdash; הגרסה הכי פשוטה שעדיין שימושית. לא המוצר המלא, רק מספיק כדי לבדוק אם אנשים רוצים את זה</li>
                         </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">קהל יעד</span>
+                            <span class="concept-tag">הצעת ערך</span>
+                            <span class="concept-tag">מתחרים</span>
+                            <span class="concept-tag">MVP</span>
+                            <span class="concept-tag">פרסונה</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>מי המשתמש שלכם? תארו אותו בפירוט. &bull; מה הדבר האחד שהמוצר שלכם עושה טוב יותר מכל דבר אחר?</p>
+                        </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול</div>
-                            <p>מילוי "בונה הפרויקט" באזור האישי &mdash; 10 שאלות שבונות אפיון מלא</p>
+                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <p>מילוי "בונה הפרויקט" באזור האישי &mdash; 10 שאלות מנחות שבונות אפיון מלא לסטארטאפ שלכם</p>
                         </div>
                         <button class="session-presentation" onclick="openPresentation(4)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
@@ -1237,16 +1323,28 @@
                         <span class="session-tag">בנייה</span>
                     </div>
                     <div class="session-card-body">
-                        <div class="objective">מטרה: התקנת Cursor ובנייה ראשונה עם AI</div>
+                        <div class="objective">מטרה: התקנת Cursor, הבנת מבנה בסיסי של אתר, ובנייה ראשונה של דף נחיתה עם AI</div>
                         <ul class="content-list">
-                            <li>התקנת Cursor &mdash; עורך הקוד החכם</li>
-                            <li>מבנה בסיסי של אתר: HTML ו-CSS</li>
-                            <li>בנייה עם AI: אומרים ל-Cursor מה לבנות</li>
-                            <li>הקובץ הראשון שלך חי בדפדפן!</li>
+                            <li><strong>מה זה Cursor?</strong> עורך קוד חכם עם AI מובנה. אתם מתארים מה רוצים בשפה חופשית ו-Cursor כותב את הקוד! לא צריך ידע קודם בתכנות</li>
+                            <li><strong>התקנה:</strong> הורידו מ-cursor.com, התקינו, הירשמו עם Google. פתחו תיקייה חדשה לפרויקט (שם באנגלית, בלי רווחים!)</li>
+                            <li><strong>מבנה אתר:</strong> HTML = השלד (מה יש בדף), CSS = העיצוב (איך זה נראה: צבעים, פונטים, פריסה), JavaScript = המוח (מה קורה כשלוחצים). הדפדפן קורא את הקבצים האלה ומציג את הדף</li>
+                            <li><strong>בנייה עם AI:</strong> לוחצים Cmd+I (מק) או Ctrl+I (ווינדוס), כותבים בפירוט מה רוצים: "Build me a landing page for [שם המוצר] with a hero section, about section, features with 3 cards, and contact form. Hebrew RTL, [צבעים]"</li>
+                            <li><strong>תצוגה מקדימה:</strong> פותחים את קובץ ה-HTML בדפדפן Chrome כדי לראות את האתר. כל שינוי = ריענון הדף</li>
                         </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">HTML</span>
+                            <span class="concept-tag">CSS</span>
+                            <span class="concept-tag">JavaScript</span>
+                            <span class="concept-tag">Cursor</span>
+                            <span class="concept-tag">דף נחיתה</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>אילו חלקים צריכים להיות בדף הנחיתה שלכם? &bull; אילו צבעים מייצגים את המותג שלכם?</p>
+                        </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול</div>
-                            <p>כל תלמיד בונה דף נחיתה למוצר שלו עם Cursor</p>
+                            <div class="exercise-label">&#x1F3AF; תרגול (20 דקות)</div>
+                            <p>כל תלמיד בונה דף נחיתה למוצר שלו עם Cursor! כותבים פרומפט מפורט ומקבלים אתר שלם</p>
                         </div>
                         <button class="session-presentation" onclick="openPresentation(5)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
@@ -1260,16 +1358,28 @@
                         <span class="session-tag">פיתוח</span>
                     </div>
                     <div class="session-card-body">
-                        <div class="objective">מטרה: להוסיף פיצ'רים ועיצוב מקצועי</div>
+                        <div class="objective">מטרה: לשדרג את האתר עם אנימציות, רספונסיביות למובייל, טפסים ופיצ'רים מתקדמים</div>
                         <ul class="content-list">
-                            <li>הוספת אנימציות ואפקטים</li>
-                            <li>JavaScript בסיסי: כפתורים שעובדים</li>
-                            <li>רספונסיביות: איך נראה במובייל?</li>
-                            <li>טפסים, תפריט ניווט ודפים נוספים</li>
+                            <li><strong>אנימציות:</strong> CSS transitions לאפקטי hover, scroll animations (אלמנטים נכנסים בגלילה), loading animations. בקשו מ-Cursor: "Add smooth fade-in animations to all sections"</li>
+                            <li><strong>JavaScript בסיסי:</strong> איך לגרום לכפתורים לעבוד (click events), להציג ולהסתיר אלמנטים (toggle), גלילה חלקה בין סקשנים, ולידציה של טפסים</li>
+                            <li><strong>רספונסיביות למובייל:</strong> האתר חייב לעבוד טוב בטלפון! Media queries משנות את הפריסה למסכים קטנים. בקשו: "Make this responsive &mdash; stack columns on mobile"</li>
+                            <li><strong>ניווט:</strong> Header עם לוגו ולינקים, תפריט המבורגר למובייל, גלילה חלקה, header דביק בגלילה</li>
+                            <li><strong>טפסים:</strong> טופס יצירת קשר עם שם/אימייל/הודעה, ולידציה (שדות חובה, פורמט אימייל), כפתור שליחה מעוצב</li>
                         </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">אנימציה</span>
+                            <span class="concept-tag">רספונסיביות</span>
+                            <span class="concept-tag">JavaScript</span>
+                            <span class="concept-tag">טופס</span>
+                            <span class="concept-tag">ניווט</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>בדקו את האתר שלכם בטלפון &mdash; מה צריך להשתנות? &bull; איזו אנימציה תגרום לאתר להרגיש מקצועי?</p>
+                        </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול</div>
-                            <p>שדרוג האתר: הוספת טופס יצירת קשר, אנימציה ותפריט</p>
+                            <div class="exercise-label">&#x1F3AF; תרגול (20 דקות)</div>
+                            <p>שדרגו את האתר! הוסיפו לפחות 3 דברים: טופס יצירת קשר, אנימציה אחת, ותפריט ניווט</p>
                         </div>
                         <button class="session-presentation" onclick="openPresentation(6)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
@@ -1283,16 +1393,29 @@
                         <span class="session-tag">עסקים</span>
                     </div>
                     <div class="session-card-body">
-                        <div class="objective">מטרה: איך מרוויחים כסף ומגיעים ללקוחות</div>
+                        <div class="objective">מטרה: להבין איך סטארטאפ מרוויח כסף, איך מגיעים ללקוחות, ואיך AI עוזר ליצור תוכן שיווקי</div>
                         <ul class="content-list">
-                            <li>מודלים עסקיים: מנוי, פרימיום, חנות</li>
-                            <li>שיווק דיגיטלי: רשתות חברתיות ותוכן</li>
-                            <li>יצירת תוכן שיווקי עם AI</li>
-                            <li>בניית תוכנית עסקית בעמוד אחד</li>
+                            <li><strong>מנוי חודשי:</strong> הלקוח משלם כל חודש/שנה. דוגמאות: Spotify, Netflix. מתאים לשירותים שנותנים ערך מתמשך</li>
+                            <li><strong>פרימיום (Freemium):</strong> גרסה בסיסית חינם + תשלום על פיצ'רים מתקדמים. דוגמאות: Spotify free vs premium. מצוין לגיוס משתמשים</li>
+                            <li><strong>חנות (E-commerce):</strong> מכירת מוצרים ישירות. דוגמאות: Amazon, Etsy. &bull; <strong>פרסום:</strong> שירות חינמי, הכנסות מפרסום. דוגמאות: YouTube, Instagram</li>
+                            <li><strong>שיווק דיגיטלי לנוער:</strong> Instagram Reels, TikTok, YouTube Shorts &mdash; תוכן ויזואלי הוא המלך! עקביות חשובה יותר משלמות. פרסמו 3 פעמים בשבוע</li>
+                            <li><strong>יצירת תוכן עם AI:</strong> ChatGPT כותב פוסטים, יוצר hashtags, מתכנן לוח תוכן. NanoBanana יוצר גרפיקה. Novo יוצר סרטונים. תוך דקות יש לכם תוכן מקצועי!</li>
+                            <li><strong>תוכנית עסקית בעמוד אחד:</strong> בעיה, פתרון, קהל יעד, מודל הכנסות, אסטרטגיית שיווק, תוכנית ל-3 חודשים ראשונים</li>
                         </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">מודל עסקי</span>
+                            <span class="concept-tag">מנוי</span>
+                            <span class="concept-tag">פרימיום</span>
+                            <span class="concept-tag">שיווק דיגיטלי</span>
+                            <span class="concept-tag">תוכן</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>איך האפליקציה האהובה עליכם מרוויחה כסף? &bull; כמה הייתם גובים עבור המוצר שלכם?</p>
+                        </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול</div>
-                            <p>בניית תוכנית עסקית + יצירת 3 פוסטים שיווקיים עם AI</p>
+                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <p>בנו תוכנית עסקית בעמוד אחד + צרו 3 פוסטים שיווקיים לאינסטגרם עם AI</p>
                         </div>
                         <button class="session-presentation" onclick="openPresentation(7)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
@@ -1306,16 +1429,27 @@
                         <span class="session-tag">הצגה</span>
                     </div>
                     <div class="session-card-body">
-                        <div class="objective">מטרה: להציג את הפרויקט בפני קהל</div>
+                        <div class="objective">מטרה: להציג את הפרויקט בפני קהל &mdash; 3 דקות, בעיה, פתרון, דמו חי!</div>
                         <ul class="content-list">
-                            <li>איך בונים מצגת שמוכרת</li>
-                            <li>טיפים לדיבור בפני קהל</li>
-                            <li>מבנה הפיץ': בעיה &#x2192; פתרון &#x2192; דמו</li>
-                            <li>פידבק מהמנחה</li>
+                            <li><strong>מבנה הפיץ' (3 דקות):</strong> Hook/פתיח (10 שניות) &mdash; עובדה מפתיעה או שאלה. הבעיה (30 שניות). הפתרון (30 שניות). דמו חי (90 שניות) &mdash; הראו את המוצר! מודל עסקי (20 שניות). קריאה לפעולה (10 שניות)</li>
+                            <li><strong>טיפים להצגה מעולה:</strong> דברו לאט וברור. הסתכלו על הקהל/מצלמה. התלהבו &mdash; אם אתם לא מתלהבים, הקהל לא יתלהב! תתאמנו לפחות פעמיים. זה בסדר לטעות &mdash; פשוט תמשיכו</li>
+                            <li><strong>עיצוב שקפים:</strong> טקסט גדול, מעט מילים בכל שקף, השתמשו בתמונות, צבעים עקביים, הלוגו שלכם</li>
+                            <li><strong>דמו:</strong> הכינו תוכנית B למקרה שמשהו נשבר. הראו את הפיצ'ר הכי מרשים קודם. תשמרו את זה פשוט</li>
+                            <li><strong>חגיגה!</strong> כל פרויקט הוא הישג! למדתם AI, יזמות, ובניתם מוצר אמיתי. זה יותר ממה שרוב המבוגרים יודעים לעשות!</li>
                         </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">פיץ'</span>
+                            <span class="concept-tag">הוק</span>
+                            <span class="concept-tag">דמו</span>
+                            <span class="concept-tag">קריאה לפעולה</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>מה הדבר הכי מרשים בפרויקט שלכם? &bull; תתאמנו על ה-Hook &mdash; 10 השניות הראשונות!</p>
+                        </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול</div>
-                            <p>כל תלמיד מציג 3 דקות: הבעיה, הפתרון, דמו חי של המוצר!</p>
+                            <div class="exercise-label">&#x1F3AF; יום הפיץ'! (30 דקות)</div>
+                            <p>כל תלמיד מציג 3 דקות: הבעיה, הפתרון, דמו חי של המוצר! פידבק מהמנחה ומהכיתה</p>
                         </div>
                         <button class="session-presentation" onclick="openPresentation(8)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
