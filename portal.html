@@ -1595,9 +1595,195 @@
                 padding: 1.5rem;
             }
         }
+
+        /* ===== LOGIN GATE ===== */
+        .login-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999;
+            background: linear-gradient(160deg, #1a1a2e 0%, #16162a 40%, #1e1040 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: rtl;
+        }
+
+        .login-gate.hidden {
+            display: none;
+        }
+
+        .login-card {
+            background: rgba(37, 37, 62, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            animation: loginFadeIn 0.5s ease;
+        }
+
+        @keyframes loginFadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .login-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-title {
+            font-size: 1.2rem;
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .login-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            color: var(--text);
+            font-family: 'Heebo', sans-serif;
+            font-size: 1.1rem;
+            text-align: center;
+            direction: ltr;
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s;
+            letter-spacing: 1px;
+        }
+
+        .login-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.9rem;
+            letter-spacing: 0;
+        }
+
+        .login-input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 20px rgba(108, 60, 225, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.85rem;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.35);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-error {
+            color: #FF4D8D;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            min-height: 1.2rem;
+        }
+
+        .login-back {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            transition: color 0.2s;
+        }
+
+        .login-back:hover {
+            color: var(--accent);
+        }
+
+        /* Greeting in topnav */
+        .topnav-greeting {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        .topnav-greeting strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            color: #FF4D8D;
+            border-color: #FF4D8D;
+        }
+
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 2.5rem 1.8rem;
+            }
+
+            .topnav-greeting {
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- LOGIN GATE -->
+    <div class="login-gate" id="loginGate">
+        <div class="login-card">
+            <div class="login-logo">AI Youth</div>
+            <div class="login-title">כניסה לאזור האישי</div>
+            <div class="login-subtitle">הכניסו את מספר הטלפון שנרשמתם איתו</div>
+            <input type="tel" class="login-input" id="phoneInput" placeholder="050-000-0000" maxlength="13" autocomplete="tel">
+            <button class="login-btn" id="loginBtn" onclick="handleLogin()">כניסה</button>
+            <div class="login-error" id="loginError"></div>
+            <a href="index.html" class="login-back">← חזרה לאתר הראשי</a>
+        </div>
+    </div>
 
     <!-- TOP NAV BAR -->
     <header class="topnav">
@@ -1638,6 +1824,8 @@
             Zoom
         </a>
         <div class="topnav-logo">
+            <span class="topnav-greeting" id="greetingArea"></span>
+            <button class="logout-btn" id="logoutBtn" onclick="handleLogout()" style="display:none;">יציאה</button>
             <a href="index.html" title="לאתר הראשי">AI Youth</a>
         </div>
     </header>
@@ -3041,6 +3229,131 @@
     </div>
 
     <script>
+        // ===== AUTH — GOOGLE SHEETS =====
+        const SHEET_ID = '1ibz8t0sKCanzfG1zU0ISlUlf5pz5KX-dL1Ch5jHjeRA';
+        const API_KEY = 'AIzaSyDKcJmFB60aKI3eBgglpX4TvBS6QNlD-IM';
+        const SHEET_RANGE = 'Sheet1!A:D';
+        const RECHECK_HOURS = 24; // re-verify every 24 hours
+
+        function normalizePhone(phone) {
+            phone = phone.replace(/[-\s\(\)]/g, '');
+            if (phone.startsWith('+972')) phone = '0' + phone.slice(4);
+            if (phone.startsWith('972')) phone = '0' + phone.slice(3);
+            return phone;
+        }
+
+        async function checkPhone(phone) {
+            phone = normalizePhone(phone);
+            if (phone.length < 9 || phone.length > 11) {
+                return { valid: false, reason: 'invalid' };
+            }
+            try {
+                var url = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID + '/values/' + SHEET_RANGE + '?key=' + API_KEY;
+                var res = await fetch(url);
+                if (!res.ok) throw new Error('API error');
+                var data = await res.json();
+                var rows = data.values || [];
+                // Skip header row
+                for (var i = 1; i < rows.length; i++) {
+                    var row = rows[i];
+                    if (normalizePhone(row[0] || '') === phone) {
+                        var expires = row[2] || '';
+                        if (expires && new Date(expires) < new Date()) {
+                            return { valid: false, reason: 'expired' };
+                        }
+                        return { valid: true, name: row[1] || '', group: row[3] || '' };
+                    }
+                }
+                return { valid: false, reason: 'not_found' };
+            } catch (e) {
+                console.error('Auth error:', e);
+                return { valid: false, reason: 'error' };
+            }
+        }
+
+        async function handleLogin() {
+            var phone = document.getElementById('phoneInput').value.trim();
+            var btn = document.getElementById('loginBtn');
+            var err = document.getElementById('loginError');
+            if (!phone) { err.textContent = 'הכניסו מספר טלפון'; return; }
+            btn.disabled = true;
+            btn.textContent = 'בודק...';
+            err.textContent = '';
+            var result = await checkPhone(phone);
+            if (result.valid) {
+                localStorage.setItem('youth_auth', JSON.stringify({
+                    phone: normalizePhone(phone),
+                    name: result.name,
+                    group: result.group,
+                    loginTime: Date.now()
+                }));
+                showPortal(result.name);
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'כניסה';
+                if (result.reason === 'not_found') err.textContent = 'מספר הטלפון לא נמצא במערכת';
+                else if (result.reason === 'expired') err.textContent = 'ההרשאה שלך פגה. פנו למורה';
+                else if (result.reason === 'invalid') err.textContent = 'מספר טלפון לא תקין';
+                else err.textContent = 'שגיאה בבדיקה. נסו שוב';
+            }
+        }
+
+        function showPortal(name) {
+            document.getElementById('loginGate').classList.add('hidden');
+            var greeting = document.getElementById('greetingArea');
+            if (name) greeting.innerHTML = 'שלום, <strong>' + name + '</strong>';
+            document.getElementById('logoutBtn').style.display = '';
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('youth_auth');
+            document.getElementById('loginGate').classList.remove('hidden');
+            document.getElementById('greetingArea').innerHTML = '';
+            document.getElementById('logoutBtn').style.display = 'none';
+            document.getElementById('phoneInput').value = '';
+            document.getElementById('loginError').textContent = '';
+            document.getElementById('loginBtn').textContent = 'כניסה';
+            document.getElementById('loginBtn').disabled = false;
+        }
+
+        // Check auth on page load
+        (function() {
+            var auth = localStorage.getItem('youth_auth');
+            if (auth) {
+                try {
+                    var data = JSON.parse(auth);
+                    var hoursSinceLogin = (Date.now() - data.loginTime) / (1000 * 60 * 60);
+                    if (hoursSinceLogin < RECHECK_HOURS) {
+                        // Still within valid window, show portal
+                        showPortal(data.name);
+                        return;
+                    }
+                    // Re-verify in background
+                    checkPhone(data.phone).then(function(result) {
+                        if (result.valid) {
+                            localStorage.setItem('youth_auth', JSON.stringify({
+                                phone: data.phone,
+                                name: result.name,
+                                group: result.group,
+                                loginTime: Date.now()
+                            }));
+                            showPortal(result.name);
+                        } else {
+                            handleLogout();
+                        }
+                    });
+                    // Show portal while checking
+                    showPortal(data.name);
+                } catch(e) {
+                    localStorage.removeItem('youth_auth');
+                }
+            }
+            // Allow Enter key on phone input
+            document.getElementById('phoneInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handleLogin();
+            });
+        })();
+
         // ===== ZOOM =====
         function joinZoom() {
             // Placeholder - Meir will set the real Zoom link later
