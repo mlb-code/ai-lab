@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>אזור אישי | יזמות ובינה מלאכותית לנוער</title>
+    <title>אזור אישי | יזמות ובינה מלאכותית</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -86,6 +86,34 @@
         .topnav-logo .back-link:hover {
             color: var(--accent);
             border-color: var(--accent);
+        }
+
+        .zoom-live-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 1.2rem;
+            background: linear-gradient(135deg, #2D8CFF, #0B5CFF);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.25s;
+            white-space: nowrap;
+            font-family: 'Heebo', sans-serif;
+            -webkit-text-fill-color: #fff;
+            -webkit-background-clip: unset;
+        }
+
+        .zoom-live-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(45, 140, 255, 0.35);
+            background: linear-gradient(135deg, #3D9CFF, #1B6CFF);
+        }
+
+        .zoom-live-btn svg {
+            flex-shrink: 0;
         }
 
         .topnav-tabs {
@@ -460,9 +488,9 @@
             color: var(--text-muted);
             display: block !important;
             line-height: 2.2;
-            border-bottom: 2px solid #5b3dbd !important;
             position: relative;
             padding-right: 1.5rem;
+            margin-bottom: 0;
         }
 
         .session-card-body .content-list li::before {
@@ -473,8 +501,17 @@
             top: 1.8rem;
         }
 
-        .session-card-body .content-list li:last-child {
-            border-bottom: none !important;
+        .session-card-body .content-list li::after {
+            content: '';
+            display: block;
+            height: 2px;
+            margin-top: 1.5rem;
+            background: linear-gradient(90deg, transparent 0%, rgba(108, 60, 225, 0.4) 20%, rgba(0, 212, 170, 0.3) 80%, transparent 100%);
+            border-radius: 1px;
+        }
+
+        .session-card-body .content-list li:last-child::after {
+            display: none;
         }
 
         .session-card-body .content-list li strong {
@@ -482,8 +519,6 @@
             display: block !important;
             font-size: 1.15rem;
             margin-bottom: 0.6rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #00d4aa !important;
             width: fit-content;
         }
 
@@ -1386,6 +1421,16 @@
                 display: none;
             }
 
+            .zoom-live-btn {
+                font-size: 0;
+                padding: 0.4rem;
+                border-radius: 8px;
+            }
+            .zoom-live-btn svg {
+                width: 22px;
+                height: 22px;
+            }
+
             .main-content {
                 padding: 1.2rem 1rem 5rem;
             }
@@ -1425,6 +1470,15 @@
 
             .mobile-nav button .nav-icon {
                 font-size: 1.15rem;
+            }
+
+            .mobile-nav .mobile-zoom-btn {
+                color: #2D8CFF;
+            }
+
+            .mobile-nav .mobile-zoom-btn .nav-icon {
+                font-size: unset;
+                line-height: 1;
             }
 
             .page-header h1 {
@@ -1492,6 +1546,12 @@
             </button>
         </div>
         <div class="topnav-logo">
+            <a href="#" class="zoom-live-btn" id="zoomBtn" onclick="joinZoom()" title="הצטרפו למפגש בזום">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M4 3C2.9 3 2 3.9 2 5V15C2 16.1 2.9 17 4 17H14C15.1 17 16 16.1 16 15V12L20 16V4L16 8V5C16 3.9 15.1 3 14 3H4ZM4 5H14V15H4V5Z"/>
+                </svg>
+                כניסה לשיעור
+            </a>
             <a href="index.html" class="back-link">&#8594; לאתר הראשי</a>
             <a href="portal.html">AI Youth</a>
         </div>
@@ -1518,6 +1578,14 @@
         <button data-section="recommendations">
             <span class="nav-icon">&#x2B50;</span>
             <span>המלצות</span>
+        </button>
+        <button class="mobile-zoom-btn" onclick="joinZoom()" title="כניסה לשיעור">
+            <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M4 3C2.9 3 2 3.9 2 5V15C2 16.1 2.9 17 4 17H14C15.1 17 16 16.1 16 15V12L20 16V4L16 8V5C16 3.9 15.1 3 14 3H4ZM4 5H14V15H4V5Z"/>
+                </svg>
+            </span>
+            <span>זום</span>
         </button>
     </nav>
 
@@ -1857,6 +1925,7 @@
                             <li><strong>שיווק דיגיטלי לנוער:</strong> Instagram Reels, TikTok, YouTube Shorts &mdash; תוכן ויזואלי הוא המלך! עקביות חשובה יותר משלמות. פרסמו 3 פעמים בשבוע</li>
                             <li><strong>יצירת תוכן עם AI:</strong> ChatGPT כותב פוסטים, יוצר hashtags, מתכנן לוח תוכן. NanoBanana יוצר גרפיקה. Novo יוצר סרטונים. תוך דקות יש לכם תוכן מקצועי!</li>
                             <li><strong>תוכנית עסקית בעמוד אחד:</strong> בעיה, פתרון, קהל יעד, מודל הכנסות, אסטרטגיית שיווק, תוכנית ל-3 חודשים ראשונים</li>
+                            <li><strong>&#x1F916; סוכני בינה מלאכותית (AI Agents):</strong> מה זה סוכן AI? איך סוכנים עובדים בצורה אוטונומית &mdash; מקבלים משימה ומבצעים אותה לבד. דוגמאות: סוכן שירות לקוחות, סוכן מכירות, סוכן שמנהל רשתות חברתיות. נלמד איך להגדיר סוכן פשוט ולתת לו הוראות ברורות</li>
                         </ul>
                         <div class="session-concepts">
                             <span class="concept-tag">מודל עסקי</span>
@@ -1864,6 +1933,7 @@
                             <span class="concept-tag">פרימיום</span>
                             <span class="concept-tag">שיווק דיגיטלי</span>
                             <span class="concept-tag">תוכן</span>
+                            <span class="concept-tag">סוכני AI</span>
                         </div>
                         <div class="session-discussion">
                             <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
@@ -1959,8 +2029,8 @@
                     <div class="ai-tool-icon" style="background: linear-gradient(135deg, #10a37f, #1a7f5a);">&#x1F4AC;</div>
                     <div class="ai-tool-info">
                         <h3>ChatGPT</h3>
-                        <p class="ai-tool-desc">הכלי הכי פופולרי בעולם. מעולה לשיחות, כתיבה, סיעור מוחות וניתוח מידע. הממשק פשוט ואינטואיטיבי.</p>
-                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: שיחה, כתיבה, סיכומים, רעיונות</div>
+                        <p class="ai-tool-desc">הכלי הכי פופולרי בעולם. מעולה לשיחות, כתיבה, סיעור מוחות וניתוח מידע. הממשק פשוט ואינטואיטיבי. אפשר גם ליצור GPTs &mdash; סוכני AI מותאמים אישית שמבצעים משימות לבד!</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: שיחה, כתיבה, סיכומים, רעיונות, סוכני AI</div>
                         <a href="https://chat.openai.com" target="_blank" class="ai-tool-link">כניסה ל-ChatGPT</a>
                     </div>
                 </div>
@@ -2856,11 +2926,11 @@
             <div class="summary-header">
                 <div class="doc-badge">&#x1F4C4; מסמך אפיון</div>
                 <h2 id="summaryProjectName">הפרויקט שלי</h2>
-                <div class="doc-subtitle">יזמות ובינה מלאכותית לנוער</div>
+                <div class="doc-subtitle">יזמות ובינה מלאכותית</div>
             </div>
             <div class="summary-body" id="summaryContent"></div>
             <div class="summary-footer">
-                <div class="footer-text">&#x2728; נוצר באזור האישי | יזמות ובינה מלאכותית לנוער</div>
+                <div class="footer-text">&#x2728; נוצר באזור האישי | יזמות ובינה מלאכותית</div>
                 <div class="footer-actions">
                     <button class="btn-download" onclick="downloadSummary()">&#x1F4E5; הורד כ-PDF</button>
                 </div>
@@ -2882,6 +2952,12 @@
     </div>
 
     <script>
+        // ===== ZOOM =====
+        function joinZoom() {
+            // Placeholder - Meir will set the real Zoom link later
+            alert('הלינק לזום יעודכן בקרוב! 🎥');
+        }
+
         // ===== NAVIGATION =====
         const allNavBtns = document.querySelectorAll('[data-section]');
         const allSections = document.querySelectorAll('.portal-section');

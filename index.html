@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>יזמות ובינה מלאכותית לנוער</title>
-    <meta name="description" content="קורס יזמות ובינה מלאכותית לנוער. בנו את הסטארטאפ הראשון שלכם עם AI תוך 8 מפגשים.">
+    <title>יזמות ובינה מלאכותית</title>
+    <meta name="description" content="קורס יזמות ובינה מלאכותית. בנו את הסטארטאפ הראשון שלכם עם AI תוך 8 מפגשים.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -53,24 +53,29 @@
             right: 0;
             left: 0;
             z-index: 100;
-            padding: 1rem 2rem;
+            height: 56px;
+            padding: 0 2.5rem;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.3s;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(12px);
+            transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
             direction: ltr;
         }
 
         nav.scrolled {
-            background: rgba(15, 10, 30, 0.95);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 2px 30px rgba(108, 60, 225, 0.15);
+            background: rgba(26, 26, 46, 0.92);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 1px 20px rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .nav-logo {
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             font-weight: 800;
+            letter-spacing: 0.5px;
             background: linear-gradient(135deg, var(--accent), var(--primary-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -80,7 +85,7 @@
         .nav-links {
             display: flex;
             flex-direction: row;
-            gap: 2rem;
+            gap: 1.2rem;
             list-style: none;
             direction: ltr;
         }
@@ -89,19 +94,40 @@
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             transition: color 0.3s;
+        }
+
+        .nav-links a:not(.nav-cta) {
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .nav-links a:not(.nav-cta)::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--accent);
         }
 
+        .nav-links a:not(.nav-cta):hover::after {
+            width: 100%;
+        }
+
         .nav-cta {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: #fff !important;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            font-size: 0.82rem !important;
             font-weight: 600 !important;
             transition: transform 0.3s, box-shadow 0.3s !important;
         }
@@ -1021,30 +1047,32 @@
                 font-size: 1.3rem;
             }
 
-            /* Mobile menu close btn */
-            .nav-links.open::before {
-                content: '\00D7';
-                position: absolute;
+            /* Mobile menu: position the real close button over the menu */
+            .nav-links.open ~ #menuBtn {
+                position: fixed;
                 top: 1rem;
                 left: 1.5rem;
-                font-size: 2.2rem;
-                color: var(--text-muted);
-                cursor: pointer;
+                right: auto;
+                z-index: 102;
                 width: 48px;
                 height: 48px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.05);
+                font-size: 2.2rem;
+                color: var(--text-muted);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.05);
                 transition: background 0.2s;
-                z-index: 102;
-                pointer-events: none;
+            }
+
+            .nav-links.open ~ #menuBtn:hover {
+                background: rgba(255, 255, 255, 0.12);
             }
 
             /* Mobile menu header/logo */
             .nav-links.open::after {
-                content: 'AI Youth';
+                content: 'AI';
                 position: absolute;
                 top: 1.5rem;
                 right: 1.5rem;
@@ -1420,8 +1448,7 @@
             </div>
             <h1>
                 יזמות<br>
-                <span class="gradient-text">ובינה מלאכותית</span><br>
-                לנוער
+                <span class="gradient-text">ובינה מלאכותית</span>
             </h1>
             <p>
                 בנו את הסטארטאפ הראשון שלכם תוך 8 מפגשים.
@@ -1653,8 +1680,9 @@
                     <div class="timeline-marker">7</div>
                     <div class="timeline-content">
                         <h3>מודל עסקי ושיווק</h3>
-                        <p>איך מרוויחים כסף? איך מגיעים ללקוחות? בונים תוכנית עסקית + תוכן שיווקי עם AI.</p>
+                        <p>איך מרוויחים כסף? איך מגיעים ללקוחות? בונים תוכנית עסקית + תוכן שיווקי עם AI. נכיר סוכני AI שעובדים בשבילכם!</p>
                         <span class="tag">עסקים</span>
+                        <span class="tag">סוכני AI</span>
                     </div>
                 </div>
                 <div class="timeline-item reveal">
@@ -1831,7 +1859,7 @@
             </div>
             <div class="pricing-card reveal">
                 <div class="pricing-popular">&#x2B50; המחזור הראשון</div>
-                <h3>קורס יזמות ו-AI לנוער</h3>
+                <h3>קורס יזמות ו-AI</h3>
                 <div class="price">&#x20AA;890</div>
                 <div class="price-note">8 מפגשים &bull; 45 דק' כל מפגש &bull; פעמיים בשבוע</div>
                 <ul class="pricing-features">
@@ -1858,7 +1886,7 @@
 
     <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 יזמות ובינה מלאכותית לנוער</p>
+        <p>&copy; 2026 יזמות ובינה מלאכותית</p>
         <p style="margin-top: 0.5rem;">
             שאלות? <a href="https://wa.me/972546500795" target="_blank">WhatsApp</a>
         </p>
@@ -1885,7 +1913,7 @@
             navLinks.classList.add('open');
             mobileOverlay.classList.add('active');
             menuBtn.innerHTML = '&times;';
-            menuBtn.style.zIndex = '101';
+            menuBtn.style.zIndex = '102';
             document.body.style.overflow = 'hidden';
         }
 
