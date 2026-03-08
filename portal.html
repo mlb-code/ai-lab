@@ -327,6 +327,53 @@
             box-shadow: 0 5px 20px rgba(108, 60, 225, 0.3);
         }
 
+        /* ===== HOMEWORK ===== */
+        .session-homework {
+            background: linear-gradient(135deg, rgba(77, 163, 255, 0.1), rgba(108, 60, 225, 0.08));
+            border: 1px solid rgba(77, 163, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .session-homework .homework-label {
+            font-size: 0.82rem;
+            color: var(--blue);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .session-homework p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0.4rem;
+        }
+
+        .session-homework .hw-connection {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            background: rgba(0, 212, 170, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .session-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
         /* Session detail view */
         .session-detail {
             display: none;
@@ -1171,7 +1218,6 @@
         <div class="portal-section active" id="section-sessions">
             <div class="page-header">
                 <h1>&#x1F4DA; מפגשי הקורס</h1>
-                <p>8 מפגשים, פעמיים בשבוע, 45 דקות כל מפגש</p>
             </div>
             <div class="sessions-grid">
 
@@ -1184,6 +1230,10 @@
                     </div>
                     <div class="session-card-body">
                         <div class="objective">מטרה: הכרות עם בינה מלאכותית, הבנה מה זה ולמה זה חשוב, חוויה ראשונה</div>
+                        <div class="session-discussion" style="margin-top:0; margin-bottom:1rem; border-right-color: var(--primary-light); background: rgba(108,60,225,0.08);">
+                            <div class="disc-label" style="color:var(--primary-light);">&#x1F3A4; שאלת פתיחה (5 דקות)</div>
+                            <p>למה באתם לקורס? מה אתם רוצים ללמוד? האם באתם להכיר את הכלים ולהנות, או שיש לכם מטרה ספציפית? &bull; מה כבר שמעתם על בינה מלאכותית?</p>
+                        </div>
                         <ul class="content-list">
                             <li><strong>מה זה AI?</strong> בינה מלאכותית היא כשמחשבים לומדים לבצע משימות שדורשות חשיבה אנושית &mdash; הבנת שפה, זיהוי תמונות, קבלת החלטות. בניגוד לתוכנות רגילות שעובדות לפי כללים קשיחים, AI לומד מנתונים</li>
                             <li><strong>סוגי AI:</strong> טקסט (ChatGPT, Claude), תמונות (DALL-E, NanoBanana), וידאו (Sora, Novo), קוד (Cursor), מוזיקה (Suno). כל סוג מעבד סוג אחר של מידע</li>
@@ -1191,6 +1241,19 @@
                             <li><strong>הכרות עם ChatGPT ו-Claude:</strong> שני הכלים החזקים ביותר. נכנסים, שואלים את אותה שאלה בשניהם, ורואים את ההבדלים &mdash; כל כלי חזק בדברים שונים</li>
                             <li><strong>היסטוריה קצרה:</strong> הרעיון של AI קיים מ-1950 (אלן טיורינג), אבל הפריצה הגדולה הגיעה ב-2022 עם ChatGPT. ישראל מובילה עולמית בתחום!</li>
                         </ul>
+                        <div class="session-exercise" style="background: rgba(108, 60, 225, 0.1); border: 1px solid rgba(108, 60, 225, 0.2);">
+                            <div class="exercise-label" style="color: var(--primary-light);">&#x1F4D6; מילון מושגים בסיסי</div>
+                            <p style="line-height:2;">
+                                <strong>AI (בינה מלאכותית)</strong> &mdash; מחשב שלומד לעשות דברים חכמים<br>
+                                <strong>פרומפט</strong> &mdash; ההוראה/שאלה שכותבים ל-AI<br>
+                                <strong>מודל שפה</strong> &mdash; AI שמבין ויוצר טקסט (כמו ChatGPT)<br>
+                                <strong>HTML</strong> &mdash; השפה שבונה את השלד של אתר אינטרנט<br>
+                                <strong>CSS</strong> &mdash; השפה שמעצבת את האתר (צבעים, פונטים)<br>
+                                <strong>JavaScript</strong> &mdash; השפה שגורמת לאתר לעבוד (כפתורים, אנימציות)<br>
+                                <strong>סטארטאפ</strong> &mdash; חברה צעירה שפותרת בעיה בדרך חדשה<br>
+                                <strong>MVP</strong> &mdash; הגרסה הכי פשוטה של המוצר שעדיין עובדת
+                            </p>
+                        </div>
                         <div class="session-concepts">
                             <span class="concept-tag">בינה מלאכותית</span>
                             <span class="concept-tag">מודל שפה</span>
@@ -1205,7 +1268,17 @@
                             <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
                             <p>שאלו את ChatGPT ואת Claude את אותן 5 שאלות &mdash; שימו לב להבדלים! שאלה על היסטוריה, מדע, כתיבה יצירתית, תרגיל מתמטי, ושאלה אישית</p>
                         </div>
-                        <button class="session-presentation" onclick="openPresentation(1)">&#x1F4CA; צפו במצגת השיעור</button>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; משימת בית</div>
+                            <p>1. נסו לפחות 3 כלי AI שונים (ChatGPT, Claude, Gemini) ותרשמו: מה כל אחד עושה טוב ומה פחות.</p>
+                            <p>2. צרו את החשבונות שלכם בכל הכלים (הגרסאות החינמיות מספיקות!).</p>
+                            <p>3. התקינו את <strong>Cursor</strong> על המחשב (ראו הדרכה בלשונית "הדרכות"). בקשו עזרה מההורים אם צריך!</p>
+                            <p>4. חשבו על 3 דברים שהייתם רוצים ש-AI יעזור לכם בהם.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד לכתוב פרומפטים מושלמים ונתקין Claude Code &mdash; הכלי לבנייה!</div>
+                        </div>
+                        <div class="session-actions">
+                            <button class="session-presentation" onclick="openPresentation(1)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1217,20 +1290,20 @@
                         <span class="session-tag">AI</span>
                     </div>
                     <div class="session-card-body">
-                        <div class="objective">מטרה: ללמוד לדבר עם AI בצורה אפקטיבית &mdash; ככל שהפרומפט טוב יותר, התוצאה טובה יותר</div>
+                        <div class="objective">מטרה: ללמוד לדבר עם AI בצורה אפקטיבית + התקנת Cursor ו-Claude Code</div>
                         <ul class="content-list">
                             <li><strong>מה זה פרומפט?</strong> ההוראה או השאלה שנותנים ל-AI. חשבו על זה כמו לדבר עם עוזר חכם מאוד &mdash; ככל שתהיו ברורים יותר, כך התוצאה תהיה טובה יותר</li>
                             <li><strong>טכניקה 1 &mdash; היו ספציפיים:</strong> במקום "כתוב על כלבים" כתבו "כתוב פוסט של 200 מילים על 5 גזעי כלבים מומלצים למשפחות עם ילדים קטנים"</li>
                             <li><strong>טכניקה 2 &mdash; תנו הקשר:</strong> "אני תלמיד בן 15 שבונה סטארטאפ. עזור לי לכתוב..." &mdash; ה-AI צריך לדעת מי אתם ולמה אתם צריכים את זה</li>
                             <li><strong>טכניקה 3 &mdash; הגדירו פורמט:</strong> "תן לי רשימה ממוספרת / טבלה / 3 פסקאות / נקודות" &mdash; תגידו ל-AI בדיוק איך אתם רוצים את התשובה</li>
                             <li><strong>טכניקה 4 &mdash; תנו דוגמה:</strong> "כתוב בסגנון דומה ל-X, אבל עם Y" &mdash; דוגמאות עוזרות ל-AI להבין מה אתם מחפשים</li>
-                            <li><strong>טכניקה 5 &mdash; חדדו בהדרגה:</strong> התחילו פשוט, ואז שפרו: "תקצר", "תוסיף הומור", "עכשיו תרגם לעברית". זה נקרא איטרציה</li>
-                            <li><strong>טעויות נפוצות:</strong> פרומפט עמום מדי, ארוך מדי, הוראות סותרות, או חוסר הקשר. תמיד בדקו: "האם AI יודע מה בדיוק אני רוצה?"</li>
+                            <li><strong>טכניקה 5 &mdash; שפרו צעד אחר צעד:</strong> התחילו פשוט, ואז בקשו שינויים: "תקצר", "תוסיף הומור", "עכשיו תרגם לעברית". כל פעם מקבלים תוצאה טובה יותר!</li>
+                            <li><strong>&#x1F4BB; התקנת Cursor + Claude Code:</strong> בחצי השני של המפגש &mdash; מתקינים את Cursor (עורך הקוד עם AI) ו-Claude Code (הכלי החכם ביותר לבנייה). ההדרכה המלאה באזור "הדרכות"</li>
                         </ul>
                         <div class="session-concepts">
                             <span class="concept-tag">פרומפט</span>
                             <span class="concept-tag">הקשר</span>
-                            <span class="concept-tag">איטרציה</span>
+                            <span class="concept-tag">שיפור בשלבים</span>
                             <span class="concept-tag">שרשור פרומפטים</span>
                         </div>
                         <div class="session-discussion">
@@ -1241,7 +1314,17 @@
                             <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
                             <p>אתגר פרומפטים! כולם מקבלים את אותה משימה: "גרמו ל-AI ליצור לוגו לחנות גלידה". מי מקבל את התוצאה הכי טובה? נשווה ונלמד מהפרומפטים של כולם</p>
                         </div>
-                        <button class="session-presentation" onclick="openPresentation(2)">&#x1F4CA; צפו במצגת השיעור</button>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; משימת בית</div>
+                            <p>1. כתבו 5 פרומפטים שונים לאותה משימה &mdash; שימו לב איך שינויים קטנים משפיעים על התוצאה.</p>
+                            <p>2. צרו לוגו לפרויקט עתידי שלכם באמצעות NanoBanana או DALL-E. שמרו את התוצאה!</p>
+                            <p>3. &#x1F4B3; <strong>שלם חשוב עם ההורים:</strong> הירשמו ל-Claude Code ($20/חודש) &mdash; זה הכלי שבונה אתרים בשבילכם! ההדרכה המלאה בלשונית "הדרכות". שבו ביחד עם ההורים ועשו את ההרשמה.</p>
+                            <p>4. חשבו על 3 בעיות מהחיים שלכם (בית ספר / תחביבים / חברים) &mdash; תביאו אותן מוכנות למפגש הבא!</p>
+                            <div class="hw-connection">&#x1F517; הלוגו שתיצרו ישמש אתכם כשנבנה את האתר! והבעיות &mdash; הן הבסיס לסטארטאפ שלכם.</div>
+                        </div>
+                        <div class="session-actions">
+                            <button class="session-presentation" onclick="openPresentation(2)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1276,7 +1359,16 @@
                             <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
                             <p>כל תלמיד מזהה 3 בעיות מהחיים שלו (בית ספר, תחביבים, חברים, משפחה) ומציג לכיתה. הכיתה מצביעה: איזו בעיה הכי מעניינת?</p>
                         </div>
-                        <button class="session-presentation" onclick="openPresentation(3)">&#x1F4CA; צפו במצגת השיעור</button>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; משימת בית</div>
+                            <p>1. בחרו את הבעיה הכי טובה מתוך ה-3 &mdash; זו שאתם הכי מתלהבים ממנה.</p>
+                            <p>2. שאלו 5 אנשים (חברים, משפחה) אם גם הם חווים את הבעיה. רשמו את התשובות!</p>
+                            <p>3. חפשו בגוגל: האם כבר קיים פתרון לבעיה? מה הוא עושה טוב ומה חסר בו?</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נהפוך את הבעיה למוצר אמיתי! תביאו את המחקר שלכם.</div>
+                        </div>
+                        <div class="session-actions">
+                            <button class="session-presentation" onclick="openPresentation(3)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1311,7 +1403,16 @@
                             <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
                             <p>מילוי "בונה הפרויקט" באזור האישי &mdash; 10 שאלות מנחות שבונות אפיון מלא לסטארטאפ שלכם</p>
                         </div>
-                        <button class="session-presentation" onclick="openPresentation(4)">&#x1F4CA; צפו במצגת השיעור</button>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; משימת בית</div>
+                            <p>1. השלימו את כל 10 השאלות ב"בונה הפרויקט" &mdash; זה האפיון שלכם!</p>
+                            <p>2. התקינו את Cursor על המחשב (ראו בלשונית "הדרכות").</p>
+                            <p>3. חשבו על עיצוב האתר: אילו צבעים מתאימים למוצר שלכם? אילו חלקים צריכים להיות בדף הנחיתה?</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נתחיל לבנות! ודאו ש-Cursor מותקן ושהלוגו מהמפגש השני שמור.</div>
+                        </div>
+                        <div class="session-actions">
+                            <button class="session-presentation" onclick="openPresentation(4)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1326,9 +1427,9 @@
                         <div class="objective">מטרה: התקנת Cursor, הבנת מבנה בסיסי של אתר, ובנייה ראשונה של דף נחיתה עם AI</div>
                         <ul class="content-list">
                             <li><strong>מה זה Cursor?</strong> עורך קוד חכם עם AI מובנה. אתם מתארים מה רוצים בשפה חופשית ו-Cursor כותב את הקוד! לא צריך ידע קודם בתכנות</li>
-                            <li><strong>התקנה:</strong> הורידו מ-cursor.com, התקינו, הירשמו עם Google. פתחו תיקייה חדשה לפרויקט (שם באנגלית, בלי רווחים!)</li>
+                            <li><strong>התקנה:</strong> הורידו מ-cursor.com, הריצו את ה-EXE, הירשמו עם Google. פתחו תיקייה חדשה לפרויקט (שם באנגלית, בלי רווחים!)</li>
                             <li><strong>מבנה אתר:</strong> HTML = השלד (מה יש בדף), CSS = העיצוב (איך זה נראה: צבעים, פונטים, פריסה), JavaScript = המוח (מה קורה כשלוחצים). הדפדפן קורא את הקבצים האלה ומציג את הדף</li>
-                            <li><strong>בנייה עם AI:</strong> לוחצים Cmd+I (מק) או Ctrl+I (ווינדוס), כותבים בפירוט מה רוצים: "Build me a landing page for [שם המוצר] with a hero section, about section, features with 3 cards, and contact form. Hebrew RTL, [צבעים]"</li>
+                            <li><strong>בנייה עם AI:</strong> לוחצים Ctrl+I, כותבים בפירוט מה רוצים: "Build me a landing page for [שם המוצר] with a hero section, about section, features with 3 cards, and contact form. Hebrew RTL, [צבעים]"</li>
                             <li><strong>תצוגה מקדימה:</strong> פותחים את קובץ ה-HTML בדפדפן Chrome כדי לראות את האתר. כל שינוי = ריענון הדף</li>
                         </ul>
                         <div class="session-concepts">
@@ -1346,7 +1447,16 @@
                             <div class="exercise-label">&#x1F3AF; תרגול (20 דקות)</div>
                             <p>כל תלמיד בונה דף נחיתה למוצר שלו עם Cursor! כותבים פרומפט מפורט ומקבלים אתר שלם</p>
                         </div>
-                        <button class="session-presentation" onclick="openPresentation(5)">&#x1F4CA; צפו במצגת השיעור</button>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; משימת בית</div>
+                            <p>1. שפרו את דף הנחיתה &mdash; הוסיפו את הלוגו שיצרתם במפגש 2!</p>
+                            <p>2. בדקו את האתר בטלפון &mdash; האם הוא נראה טוב? אם לא, בקשו מ-Cursor לתקן.</p>
+                            <p>3. הוסיפו עוד סקשן אחד (About / צוות / לקוחות / FAQ).</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נשדרג את האתר עם אנימציות, טפסים ותפריט ניווט!</div>
+                        </div>
+                        <div class="session-actions">
+                            <button class="session-presentation" onclick="openPresentation(5)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1381,7 +1491,16 @@
                             <div class="exercise-label">&#x1F3AF; תרגול (20 דקות)</div>
                             <p>שדרגו את האתר! הוסיפו לפחות 3 דברים: טופס יצירת קשר, אנימציה אחת, ותפריט ניווט</p>
                         </div>
-                        <button class="session-presentation" onclick="openPresentation(6)">&#x1F4CA; צפו במצגת השיעור</button>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; משימת בית</div>
+                            <p>1. העלו את האתר לאינטרנט עם GitHub Pages (ראו הדרכה בלשונית "הדרכות")!</p>
+                            <p>2. שלחו את הלינק ל-3 חברים ובקשו פידבק: מה אהבו? מה הייתם משנים?</p>
+                            <p>3. חשבו: איך הסטארטאפ שלכם ירוויח כסף? מנוי? חינם+פרימיום? פרסום?</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד על מודלים עסקיים ושיווק. האתר שבניתם יהיה הבסיס!</div>
+                        </div>
+                        <div class="session-actions">
+                            <button class="session-presentation" onclick="openPresentation(6)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1417,7 +1536,16 @@
                             <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
                             <p>בנו תוכנית עסקית בעמוד אחד + צרו 3 פוסטים שיווקיים לאינסטגרם עם AI</p>
                         </div>
-                        <button class="session-presentation" onclick="openPresentation(7)">&#x1F4CA; צפו במצגת השיעור</button>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; משימת בית</div>
+                            <p>1. הכינו מצגת של 5 שקפים לפיץ': הבעיה, הפתרון, דמו, מודל עסקי, סיכום.</p>
+                            <p>2. תתאמנו על ההצגה &mdash; 3 דקות, לפני מראה או מול חבר. תקליטו את עצמכם!</p>
+                            <p>3. ודאו שהאתר + הלוגו + הפוסטים מוכנים ליום הפיץ'.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא &mdash; יום הפיץ'! תציגו את כל מה שבניתם. בהצלחה!</div>
+                        </div>
+                        <div class="session-actions">
+                            <button class="session-presentation" onclick="openPresentation(7)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1451,7 +1579,14 @@
                             <div class="exercise-label">&#x1F3AF; יום הפיץ'! (30 דקות)</div>
                             <p>כל תלמיד מציג 3 דקות: הבעיה, הפתרון, דמו חי של המוצר! פידבק מהמנחה ומהכיתה</p>
                         </div>
-                        <button class="session-presentation" onclick="openPresentation(8)">&#x1F4CA; צפו במצגת השיעור</button>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3C6; &#x1F389; מזל טוב!</div>
+                            <p>סיימתם את הקורס! יש לכם אתר אמיתי באינטרנט, אפיון סטארטאפ, וכלי AI שתמיד ילוו אתכם.</p>
+                            <p>&#x1F4A1; המשיכו לבנות, לשפר, ולנסות כלים חדשים. העולם שייך ליזמים הצעירים!</p>
+                        </div>
+                        <div class="session-actions">
+                            <button class="session-presentation" onclick="openPresentation(8)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1723,9 +1858,9 @@
                     <div class="guide-step">
                         <div class="step-num">2</div>
                         <div class="step-content">
-                            <h4>התקנה</h4>
-                            <p><strong>במק:</strong> פתחו את קובץ ה-DMG שירד וגררו את האייקון של Cursor לתיקיית Applications. זה הכל!</p>
-                            <p><strong>בווינדוס:</strong> הריצו את קובץ ה-EXE ולחצו Next → Next → Install. ההתקנה אוטומטית.</p>
+                            <h4>התקנה (ווינדוס)</h4>
+                            <p>הריצו את קובץ ה-<strong>EXE</strong> שירד ולחצו <strong>Next &rarr; Next &rarr; Install</strong>. ההתקנה אוטומטית ולוקחת כדקה.</p>
+                            <div class="guide-tip">&#x1F4A1; <strong>מק?</strong> פתחו את קובץ ה-DMG וגררו את האייקון לתיקיית Applications.</div>
                         </div>
                     </div>
                     <div class="guide-step">
@@ -1747,8 +1882,9 @@
                         <div class="step-num">5</div>
                         <div class="step-content">
                             <h4>שימוש ב-AI</h4>
-                            <p>לחצו <kbd>Cmd+I</kbd> (מק) או <kbd>Ctrl+I</kbd> (ווינדוס) לפתיחת חלון ה-AI. כתבו מה אתם רוצים לבנות בשפה חופשית &mdash; אפשר גם בעברית!</p>
+                            <p>לחצו <kbd>Ctrl+I</kbd> לפתיחת חלון ה-AI. כתבו מה אתם רוצים לבנות בשפה חופשית &mdash; אפשר גם בעברית!</p>
                             <div class="guide-tip">&#x1F4A1; <strong>דוגמה:</strong> "Build me a modern landing page for a pet-sitting startup called PetBuddy. Use blue and white colors, Hebrew RTL."</div>
+                            <div class="guide-tip" style="margin-top:0.3rem;">&#x1F4BB; <strong>מק:</strong> השתמשו ב-<kbd>Cmd+I</kbd> במקום <kbd>Ctrl+I</kbd></div>
                         </div>
                     </div>
                 </div>
@@ -1787,6 +1923,70 @@
                         <div class="step-content">
                             <h4>שימוש</h4>
                             <p>עכשיו כל פעם שתכתבו פרומפט ב-Cursor, הוא ישתמש ב-Claude כדי לכתוב קוד, לתקן באגים ולענות על שאלות. פשוט כתבו מה אתם צריכים!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guide: Claude Code -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <div class="guide-header-right">
+                        <span class="guide-icon" style="background: linear-gradient(135deg, #D97757, #FF8C42);">&#x1F680;</span>
+                        <div>
+                            <h3>התקנת Claude Code &mdash; הכלי לבניית אתרים</h3>
+                            <span class="guide-time">&#x23F1; 10 דקות (ביחד עם ההורים)</span>
+                        </div>
+                    </div>
+                    <span class="guide-toggle">&#x25BC;</span>
+                </div>
+                <div class="guide-body">
+                    <div class="guide-step">
+                        <div class="step-num">1</div>
+                        <div class="step-content">
+                            <h4>מה זה Claude Code?</h4>
+                            <p>Claude Code הוא הכלי החזק ביותר לבניית אתרים ואפליקציות. אתם אומרים לו <strong>בעברית</strong> מה לבנות &mdash; והוא כותב את כל הקוד בשבילכם! זה הכלי המרכזי שלנו בקורס.</p>
+                            <div class="guide-tip">&#x1F4A1; <strong>חשוב:</strong> Claude Code עולה $20 לחודש. שבו ביחד עם ההורים לעשות את ההרשמה!</div>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-num">2</div>
+                        <div class="step-content">
+                            <h4>הרשמה לחשבון Claude</h4>
+                            <p>היכנסו ל-<a href="https://claude.ai" target="_blank" style="color:var(--accent);">claude.ai</a> והירשמו עם Google. לאחר מכן, שדרגו לתוכנית <strong>Pro</strong> ($20/חודש) &mdash; זה מה שנותן גישה ל-Claude Code.</p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-num">3</div>
+                        <div class="step-content">
+                            <h4>התקנה בתוך Cursor</h4>
+                            <p>פתחו את Cursor ולחצו על Terminal (<kbd>Ctrl+`</kbd>). הקלידו את הפקודה:</p>
+                            <div class="guide-code">
+                                <code>npm install -g @anthropic-ai/claude-code</code>
+                            </div>
+                            <p>המתינו שההתקנה תסתיים. זה לוקח כדקה.</p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-num">4</div>
+                        <div class="step-content">
+                            <h4>הפעלה ראשונה</h4>
+                            <p>ב-Terminal של Cursor, הקלידו:</p>
+                            <div class="guide-code">
+                                <code>claude</code>
+                            </div>
+                            <p>בפעם הראשונה תתבקשו להתחבר לחשבון Claude. עקבו אחרי ההוראות במסך.</p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-num">5</div>
+                        <div class="step-content">
+                            <h4>שימוש! &#x1F389;</h4>
+                            <p>עכשיו אתם יכולים לומר ל-Claude Code מה לבנות! למשל:</p>
+                            <div class="guide-code">
+                                <code>claude "תבנה לי דף נחיתה יפה לסטארטאפ שלי בשם StudyBuddy, בעברית, עם צבעים כחול וירוק"</code>
+                            </div>
+                            <div class="guide-tip">&#x1F4A1; <strong>טיפ:</strong> אפשר לדבר עם Claude Code בעברית! הוא מבין ובונה בדיוק מה שאתם רוצים.</div>
                         </div>
                     </div>
                 </div>
@@ -2144,13 +2344,13 @@
 
     <!-- PRESENTATION MODAL -->
     <div class="summary-overlay" id="presentationOverlay">
-        <div class="summary-card" style="max-width: 900px;">
+        <div class="summary-card" style="max-width: 950px; background: var(--dark); border: 1px solid rgba(255,255,255,0.1);">
             <button class="summary-close" onclick="closePresentation()">&times;</button>
-            <div id="presentationContent"></div>
-            <div style="display: flex; justify-content: space-between; margin-top: 2rem; align-items: center;">
-                <button class="btn-save" id="prevSlide" onclick="prevSlide()" style="opacity: 0.5;">&#x2190; הקודם</button>
-                <span id="slideCounter" style="color: var(--text-muted); font-size: 0.9rem;"></span>
-                <button class="btn-save" id="nextSlide" onclick="nextSlide()">הבא &#x2192;</button>
+            <div id="presentationContent" style="padding: 2.5rem 3rem; min-height: 400px; display:flex; flex-direction:column; justify-content:center;"></div>
+            <div style="display: flex; justify-content: space-between; padding: 1.2rem 2.5rem; align-items: center; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.2);">
+                <button class="btn-save" id="prevSlide" onclick="prevSlide()" style="opacity: 0.5; min-width: 100px;">הקודם &#x2192;</button>
+                <div style="display:flex; gap:0.4rem;" id="slideDotsContainer"></div>
+                <button class="btn-save" id="nextSlide" onclick="nextSlide()" style="min-width: 100px;">&#x2190; הבא</button>
             </div>
         </div>
     </div>
@@ -2387,8 +2587,15 @@
         function renderSlide() {
             const container = document.getElementById('presentationContent');
             container.innerHTML = currentSlides[currentSlide].content;
-            document.getElementById('slideCounter').textContent =
-                (currentSlide + 1) + ' / ' + currentSlides.length;
+            // Slide dots
+            const dotsContainer = document.getElementById('slideDotsContainer');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < currentSlides.length; i++) {
+                const dot = document.createElement('div');
+                dot.style.cssText = 'width:' + (i === currentSlide ? '24px' : '8px') + '; height:8px; border-radius:4px; transition:all 0.3s; cursor:pointer; background:' + (i === currentSlide ? 'linear-gradient(135deg, var(--primary), var(--accent))' : 'var(--dark-lighter)');
+                dot.onclick = function() { currentSlide = i; renderSlide(); };
+                dotsContainer.appendChild(dot);
+            }
             document.getElementById('prevSlide').style.opacity = currentSlide === 0 ? '0.3' : '1';
             document.getElementById('nextSlide').style.opacity = currentSlide === currentSlides.length - 1 ? '0.3' : '1';
         }
