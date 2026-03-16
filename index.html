@@ -1384,6 +1384,165 @@
         .terminal-success { color: var(--accent); }
         .terminal-file { color: var(--gold); }
 
+        /* ========== AUDIENCE SECTION ========== */
+        .audience-section {
+            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-card) 100%);
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .audience-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            direction: rtl;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .audience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .audience-card.youth::before {
+            background: linear-gradient(90deg, var(--primary), var(--pink));
+        }
+
+        .audience-card.adults::before {
+            background: linear-gradient(90deg, var(--accent), var(--blue));
+        }
+
+        .audience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .audience-card.youth:hover {
+            border-color: var(--primary);
+        }
+
+        .audience-card.adults:hover {
+            border-color: var(--accent);
+        }
+
+        .audience-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .audience-card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        .audience-card.youth h3 {
+            color: var(--primary-light);
+        }
+
+        .audience-card.adults h3 {
+            color: var(--accent);
+        }
+
+        .audience-age {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+        }
+
+        .audience-points {
+            list-style: none;
+            text-align: right;
+            margin-bottom: 1.5rem;
+        }
+
+        .audience-points li {
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            direction: rtl;
+        }
+
+        .audience-points li .point-icon {
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .audience-card .btn-audience {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .audience-card.youth .btn-audience {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+        }
+
+        .audience-card.adults .btn-audience {
+            background: linear-gradient(135deg, var(--accent), #00b894);
+            color: var(--dark);
+        }
+
+        .btn-audience:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .audience-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .audience-card {
+                padding: 1.5rem;
+            }
+
+            .audience-icon {
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .audience-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .audience-points li {
+                font-size: 0.85rem;
+            }
+
+            .btn-audience {
+                font-size: 0.9rem;
+                padding: 0.7rem 1.5rem;
+            }
+        }
+
         /* ========== WHATSAPP FLOAT ========== */
         .whatsapp-float {
             position: fixed;
@@ -1418,6 +1577,7 @@
             <li><a href="#faq"> שאלות</a></li>
             <li><a href="#tools"> כלי AI</a></li>
             <li><a href="#program"> תוכנית</a></li>
+            <li><a href="#audience"> למי מיועד?</a></li>
             <li><a href="#about"> על הקורס</a></li>
             <li><a href="portal.html" class="nav-cta"> אזור אישי</a></li>
             <li><a href="#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);"> הרשמה</a></li>
@@ -1430,6 +1590,7 @@
             <span class="mobile-menu-logo">AI Youth</span>
         </div>
         <ul class="mobile-menu-links">
+            <li><a href="#audience"><span class="menu-icon">&#x1F3AF;</span> למי מיועד?</a></li>
             <li><a href="#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>
             <li><a href="#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
             <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
@@ -1453,16 +1614,16 @@
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="pulse-dot"></span>
-                מתחילים 16.3 &mdash; מפגשים חיים בזום
+                מחזור חדש נפתח &mdash; מפגשים חיים בזום
             </div>
             <h1>
                 יזמות<br>
                 <span class="gradient-text">ובינה מלאכותית</span>
             </h1>
             <p>
-                בנו את הסטארטאפ הראשון שלכם תוך 8 מפגשים.
+                בנו את הפרויקט הראשון שלכם תוך 8 מפגשים.
                 <br>תלמדו ChatGPT, Claude, Cursor ועוד &mdash; ותבנו אתר אמיתי עם AI.
-                <br>בלי ניסיון קודם. בלי קוד. רק אתם ו-AI.
+                <br>לנוער (10-17) ולמבוגרים (40+). בלי ניסיון קודם. רק אתם ו-AI.
             </p>
             <div class="hero-buttons">
                 <a href="#register" class="btn-primary">&#x1F680; שריינו לי מקום</a>
@@ -1478,8 +1639,8 @@
                     <div class="label">כלי AI</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="number">16.3</div>
-                    <div class="label">מתחילים</div>
+                    <div class="number">2</div>
+                    <div class="label">מסלולים</div>
                 </div>
             </div>
 
@@ -1528,6 +1689,42 @@
         </div>
     </section>
 
+    <!-- AUDIENCE -->
+    <section class="audience-section" id="audience">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>&#x1F3AF; למי הקורס מיועד?</h2>
+                <p>אותה תוכנית, אותו מחיר. תוכן מעשי שמתאים לכל גיל.</p>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card youth reveal">
+                    <div class="audience-icon">&#x1F393;</div>
+                    <h3>לנוער</h3>
+                    <div class="audience-age">גילאי 10&ndash;17</div>
+                    <ul class="audience-points">
+                        <li><span class="point-icon">&#x2728;</span> תגלו מה AI יכול לעשות &mdash; ותבנו פרויקט אמיתי</li>
+                        <li><span class="point-icon">&#x1F310;</span> תלמדו ליצור אתרים, תמונות, וידאו ותוכן עם AI</li>
+                        <li><span class="point-icon">&#x1F476;</span> בלי ניסיון קודם &mdash; מתאים למתחילים מוחלטים</li>
+                        <li><span class="point-icon">&#x1F680;</span> יתרון משמעותי לעתיד &mdash; בלימודים ובקריירה</li>
+                    </ul>
+                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9C%D7%A0%D7%95%D7%A2%D7%A8" class="btn-audience" target="_blank">&#x1F680; רוצים להירשם? דברו איתנו</a>
+                </div>
+                <div class="audience-card adults reveal">
+                    <div class="audience-icon">&#x1F4BC;</div>
+                    <h3>למבוגרים</h3>
+                    <div class="audience-age">גילאי 40+</div>
+                    <ul class="audience-points">
+                        <li><span class="point-icon">&#x1F4A1;</span> למדו להשתמש בכלי AI שמשנים את שוק העבודה</li>
+                        <li><span class="point-icon">&#x1F310;</span> בנו אתר, צרו תוכן, וגלו יכולות שלא ידעתם שקיימות</li>
+                        <li><span class="point-icon">&#x2705;</span> בלי רקע טכנולוגי &mdash; הכל מותאם למתחילים</li>
+                        <li><span class="point-icon">&#x1F4C8;</span> שדרגו את עצמכם מקצועית &mdash; AI כבר כאן</li>
+                    </ul>
+                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9C%D7%9E%D7%91%D7%95%D7%92%D7%A8%D7%99%D7%9D" class="btn-audience" target="_blank">&#x1F4AC; רוצים לשמוע עוד? דברו איתנו</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ABOUT / PROBLEM -->
     <section class="problem" id="about">
         <div class="container">
@@ -1538,18 +1735,18 @@
             <div class="problem-grid">
                 <div class="problem-card reveal">
                     <div class="problem-icon">&#x1F3EB;</div>
-                    <h3>בית הספר לא מלמד את זה</h3>
-                    <p>תוכניות הלימוד תקועות ב-2015. בינה מלאכותית ויזמות לא נמצאים בתוכנית.</p>
+                    <h3>אף אחד לא מלמד את זה</h3>
+                    <p>בין אם אתם בכיתה ז' או בגיל 50 &mdash; AI לא נלמד בשום מקום באופן מעשי. עד עכשיו.</p>
                 </div>
                 <div class="problem-card reveal">
                     <div class="problem-icon">&#x1F4A1;</div>
                     <h3>רעיונות בלי כלים</h3>
-                    <p>לנוער יש רעיונות מדהימים אבל אין להם את הכלים לבנות אותם. עד עכשיו.</p>
+                    <p>לכולנו יש רעיונות. AI נותן את הכלים לבנות אותם &mdash; בלי קוד, בלי ניסיון קודם.</p>
                 </div>
                 <div class="problem-card reveal">
                     <div class="problem-icon">&#x1F680;</div>
                     <h3>יתרון לחיים</h3>
-                    <p>מי שלומד לבנות מוצרים עם AI בגיל 15, יהיה שנות אור לפני כולם בגיל 25.</p>
+                    <p>מי שלומד לעבוד עם AI היום &mdash; יוביל מחר. בכל גיל.</p>
                 </div>
             </div>
         </div>
@@ -1825,7 +2022,25 @@
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        הקורס מיועד לנוער (חטיבת ביניים ותיכון). הקורס מותאם לגילאים אלו הן בתוכן והן בקצב.
+                        הקורס פתוח לנוער (גילאי 10&ndash;17) ולמבוגרים (40+). התוכנית זהה &mdash; 8 מפגשים מעשיים בזום. התוכן מותאם כך שכל אחד יכול להתקדם בקצב שלו, ללא תלות ברקע טכנולוגי.
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>זה באמת מתאים למבוגרים?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        בהחלט! הקורס מותאם למתחילים מוחלטים. אין צורך ברקע טכנולוגי או ניסיון בתכנות. מבוגרים רבים מגלים שעבודה עם AI היא הרבה יותר פשוטה ממה שחשבו &mdash; ויוצאים עם כלים פרקטיים לעבודה ולחיים.
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>ילדים ומבוגרים לומדים ביחד?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        הקבוצות מופרדות לפי גיל &mdash; קבוצה לנוער וקבוצה למבוגרים. כל קבוצה לומדת באותה תוכנית אבל עם דוגמאות ושיח מותאם לגיל. קבוצה קטנה של עד 15 משתתפים מבטיחה יחס אישי.
                     </div>
                 </div>
                 <div class="faq-item reveal">
@@ -1869,7 +2084,7 @@
             <div class="pricing-card reveal">
                 <h3>קורס יזמות ו-AI</h3>
                 <div class="price">&#x20AA;890</div>
-                <div class="price-note">8 מפגשים &bull; כשעה כל מפגש &bull; מתחילים 16.3</div>
+                <div class="price-note">8 מפגשים &bull; מפגש כל יום &bull; כשעה כל מפגש</div>
                 <ul class="pricing-features">
                     <li><span class="check">&#x2714;</span> 8 מפגשים חיים בזום עם מנחה</li>
                     <li><span class="check">&#x2714;</span> גישה לאזור אישי עם חומרי לימוד</li>
@@ -1879,7 +2094,7 @@
                     <li><span class="check">&#x2714;</span> קבוצה קטנה &mdash; עד 15 תלמידים</li>
                 </ul>
                 <div class="pricing-extra-note">* נדרש מנוי ל-Claude Code ($20/חודש) &mdash; כלי הבנייה המרכזי בקורס. עלות נוספת על מחיר הקורס.</div>
-                <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI%20%D7%9C%D7%A0%D7%95%D7%A2%D7%A8" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
+                <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
             </div>
         </div>
     </section>
@@ -1887,9 +2102,9 @@
     <!-- CTA -->
     <section class="cta-section" id="register">
         <div class="container">
-            <h2 class="reveal">&#x1F680; הקורס מתחיל ב-16.3!</h2>
-            <p class="reveal">המקומות מוגבלים ל-15 תלמידים. שריינו את המקום שלכם עכשיו.</p>
-            <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI%20%D7%9C%D7%A0%D7%95%D7%A2%D7%A8" class="btn-primary reveal" target="_blank">&#x1F4AC; שלחו לנו הודעה בוואטסאפ</a>
+            <h2 class="reveal">&#x1F680; מחזור חדש נפתח!</h2>
+            <p class="reveal">לנוער (10&ndash;17) ולמבוגרים (40+). המקומות מוגבלים ל-15 משתתפים בקבוצה. שריינו את המקום שלכם עכשיו.</p>
+            <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI" class="btn-primary reveal" target="_blank">&#x1F4AC; שלחו לנו הודעה בוואטסאפ</a>
         </div>
     </section>
 
@@ -1902,7 +2117,7 @@
     </footer>
 
     <!-- WhatsApp Float -->
-    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI%20%D7%9C%D7%A0%D7%95%D7%A2%D7%A8" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
 
