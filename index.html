@@ -62,7 +62,7 @@
             background: rgba(26, 26, 46, 0.6);
             backdrop-filter: blur(12px);
             transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
-            direction: rtl;
+            direction: ltr;
         }
 
         nav.scrolled {
@@ -87,7 +87,7 @@
             flex-direction: row;
             gap: 1.2rem;
             list-style: none;
-            direction: rtl;
+            direction: ltr;
         }
 
         .nav-links a {
@@ -96,6 +96,8 @@
             font-weight: 500;
             font-size: 0.88rem;
             transition: color 0.3s;
+            direction: rtl;
+            unicode-bidi: plaintext;
         }
 
         .nav-links a:not(.nav-cta) {
@@ -1581,12 +1583,12 @@
     <nav id="navbar">
         <a href="#" class="nav-logo">AI Lab</a>
         <ul class="nav-links nav-links-desktop" id="navLinksDesktop">
-            <li><a href="#about">על הקורס</a></li>
-            <li><a href="#audience">למי מיועד?</a></li>
-            <li><a href="#program">תוכנית</a></li>
-            <li><a href="#tools">כלי AI</a></li>
-            <li><a href="#faq">שאלות</a></li>
             <li><a href="#pricing">מחיר</a></li>
+            <li><a href="#faq">שאלות</a></li>
+            <li><a href="#tools">כלי AI</a></li>
+            <li><a href="#program">תוכנית</a></li>
+            <li><a href="#audience">למי מיועד?</a></li>
+            <li><a href="#about">על הקורס</a></li>
             <li><a href="portal.html" class="nav-cta">אזור אישי</a></li>
             <li><a href="#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);">הרשמה</a></li>
         </ul>
