@@ -2298,19 +2298,22 @@
                 }
             });
         });
-        // Auto-scroll engine
+        // Auto-scroll engine — scroll one card every 3s (works with scroll-snap)
         const autoScrollTimers = new Map();
 
         function startAutoScroll(track) {
             if (autoScrollTimers.has(track)) return;
+            const card = track.children[0];
+            if (!card) return;
+            const scrollAmt = card.offsetWidth + 20;
             const timer = setInterval(() => {
                 const maxScroll = track.scrollWidth - track.clientWidth;
-                if (track.scrollLeft >= maxScroll - 2) {
+                if (track.scrollLeft >= maxScroll - 5) {
                     track.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
-                    track.scrollBy({ left: 1, behavior: 'auto' });
+                    track.scrollBy({ left: scrollAmt, behavior: 'smooth' });
                 }
-            }, 30);
+            }, 3000);
             autoScrollTimers.set(track, timer);
         }
 
