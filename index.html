@@ -602,37 +602,33 @@
         .scroll-carousel {
             overflow: hidden;
             margin-top: 2rem;
-            -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+            direction: ltr;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
         }
 
         .scroll-track {
             display: flex;
             gap: 20px;
             width: max-content;
-            animation: scrollTrackLeft 25s linear infinite;
-            direction: ltr;
-        }
-
-        .scroll-track.skills-track {
-            animation: scrollTrackLeft 18s linear infinite;
+            animation: scrollLeft 35s linear infinite;
         }
 
         .scroll-track.reverse {
-            animation: scrollTrackRight 25s linear infinite;
+            animation: scrollRight 35s linear infinite;
         }
 
         .scroll-track:hover {
             animation-play-state: paused;
         }
 
-        @keyframes scrollTrackLeft {
+        @keyframes scrollLeft {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-33.333%); }
+            100% { transform: translateX(-50%); }
         }
 
-        @keyframes scrollTrackRight {
-            0% { transform: translateX(-33.333%); }
+        @keyframes scrollRight {
+            0% { transform: translateX(-50%); }
             100% { transform: translateX(0); }
         }
 
@@ -1329,7 +1325,9 @@
 
             /* -- Scroll carousel mobile -- */
             .program-card { width: 260px; padding: 1.2rem; }
+            .student-card { width: 280px; padding: 1.5rem; }
             .scroll-track { gap: 12px; }
+            .scroll-track.reverse { display: none; }
 
             /* -- Instructor compact -- */
             .instructor-card {
@@ -1914,12 +1912,14 @@
                 <p>פרויקטים אמיתיים שנבנו בקורס &mdash; בלי ניסיון קודם.</p>
             </div>
         </div>
-        <div class="scroll-carousel">
-            <div class="scroll-track" id="projectsTrack">
+        <div class="scroll-carousel" style="display:flex;flex-direction:column;gap:20px;">
+            <div class="scroll-track" id="projectsRow1">
                 <div class="student-card"><div class="student-quote">"בניתי אתר דרופשיפינג שלם עם קטלוג מוצרים, עגלת קניות ודף תשלום. אני כבר מוכר כיסויים לאייפון!"</div><div class="student-project">🛒 אתר דרופשיפינג</div><div class="student-info"><div class="student-avatar">אכ</div><div><strong>איתי כהן</strong><br><span>גיל 14, ראשון לציון</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"אמא שלי מנהלת מכון יופי ולא היה לה אתר. בניתי לה אתר מקצועי עם גלריה, מחירון והזמנת תורים."</div><div class="student-project">💄 אתר לעסק של ההורים</div><div class="student-info"><div class="student-avatar">נל</div><div><strong>נועה לוי</strong><br><span>גיל 13, פתח תקווה</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"בניתי מערכת שעוזרת למצוא שחקני פורטנייט לפי רמה ושרת. יש כבר 40 שחקנים רשומים מהכיתה שלי!"</div><div class="student-project">🎮 מערכת שחקני פורטנייט</div><div class="student-info"><div class="student-avatar">עא</div><div><strong>עומר אביטל</strong><br><span>גיל 12, חולון</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"בניתי אתר שעוזר לבנות למצוא מוצרי טיפוח לפי סוג עור. ה-AI עוזר להתאים את המוצר המושלם!"</div><div class="student-project">✨ מערכת מוצרי קוסמטיקה</div><div class="student-info"><div class="student-avatar">שמ</div><div><strong>שירה מזרחי</strong><br><span>גיל 15, נתניה</span></div></div></div>
+            </div>
+            <div class="scroll-track reverse" id="projectsRow2">
                 <div class="student-card"><div class="student-quote">"אני אוהב לגו ובניתי אתר לתערוכה שעשיתי בשכונה. עם גלריה, כרטיסים ומפת הגעה. באו 50 אנשים!"</div><div class="student-project">🧱 אתר לתערוכת לגו</div><div class="student-info"><div class="student-avatar">יב</div><div><strong>יונתן ברק</strong><br><span>גיל 11, רעננה</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"בניתי אתר שעוזר לילדים בשכונה להתארגן למשחקי כדורגל. אפשר לבחור מגרש, שעה ולהזמין שחקנים!"</div><div class="student-project">⚽ ארגון משחקי כדורגל</div><div class="student-info"><div class="student-avatar">דח</div><div><strong>דניאל חדד</strong><br><span>גיל 13, באר שבע</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"בניתי אתר מתכונים שמייצר מתכונים חדשים עם AI לפי מה שיש לך במקרר. אפילו סבתא שלי משתמשת!"</div><div class="student-project">🍳 מחולל מתכונים חכם</div><div class="student-info"><div class="student-avatar">מפ</div><div><strong>מאיה פרידמן</strong><br><span>גיל 14, תל אביב</span></div></div></div>
@@ -2001,7 +2001,7 @@
             </div>
         </div>
         <div class="scroll-carousel">
-            <div class="scroll-track skills-track" id="skillsTrack">
+            <div class="scroll-track" id="skillsTrack">
                 <div class="skill-scroll-chip"><span class="skill-icon">🤖</span><span>עבודה עם AI</span></div>
                 <div class="skill-scroll-chip"><span class="skill-icon">💡</span><span>חשיבה יזמית</span></div>
                 <div class="skill-scroll-chip"><span class="skill-icon">🌐</span><span>בניית אתרים</span></div>
@@ -2268,10 +2268,9 @@
                 }
             });
         });
-        // Auto-scroll: duplicate track content enough times for seamless loop
+        // Auto-scroll: duplicate track content for seamless loop (same as GotChat)
         document.querySelectorAll('.scroll-track').forEach(track => {
-            const original = track.innerHTML;
-            track.innerHTML = original + original + original;
+            track.innerHTML += track.innerHTML;
         });
 
         // WhatsApp with form data
