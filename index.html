@@ -610,12 +610,16 @@
             display: flex;
             gap: 20px;
             width: max-content;
-            animation: scrollTrackLeft 40s linear infinite;
+            animation: scrollTrackLeft 25s linear infinite;
             direction: ltr;
         }
 
+        .scroll-track.skills-track {
+            animation: scrollTrackLeft 18s linear infinite;
+        }
+
         .scroll-track.reverse {
-            animation: scrollTrackRight 40s linear infinite;
+            animation: scrollTrackRight 25s linear infinite;
         }
 
         .scroll-track:hover {
@@ -624,11 +628,11 @@
 
         @keyframes scrollTrackLeft {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            100% { transform: translateX(-33.333%); }
         }
 
         @keyframes scrollTrackRight {
-            0% { transform: translateX(-50%); }
+            0% { transform: translateX(-33.333%); }
             100% { transform: translateX(0); }
         }
 
@@ -1997,7 +2001,7 @@
             </div>
         </div>
         <div class="scroll-carousel">
-            <div class="scroll-track" id="skillsTrack">
+            <div class="scroll-track skills-track" id="skillsTrack">
                 <div class="skill-scroll-chip"><span class="skill-icon">🤖</span><span>עבודה עם AI</span></div>
                 <div class="skill-scroll-chip"><span class="skill-icon">💡</span><span>חשיבה יזמית</span></div>
                 <div class="skill-scroll-chip"><span class="skill-icon">🌐</span><span>בניית אתרים</span></div>
@@ -2264,9 +2268,10 @@
                 }
             });
         });
-        // Auto-scroll: duplicate track content for seamless loop
+        // Auto-scroll: duplicate track content enough times for seamless loop
         document.querySelectorAll('.scroll-track').forEach(track => {
-            track.innerHTML += track.innerHTML;
+            const original = track.innerHTML;
+            track.innerHTML = original + original + original;
         });
 
         // WhatsApp with form data
