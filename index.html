@@ -594,141 +594,106 @@
             font-size: 0.85rem;
         }
 
-        /* ========== COURSE CAROUSEL ========== */
+        /* ========== AUTO-SCROLL CAROUSEL ========== */
         .timeline-section {
             background: linear-gradient(180deg, var(--dark-card) 0%, var(--dark) 100%);
         }
 
-        .carousel-wrapper {
-            position: relative;
-            max-width: 700px;
-            margin: 0 auto;
-            direction: rtl;
-        }
-
-        .carousel-track {
+        .scroll-carousel {
             overflow: hidden;
+            margin-top: 2rem;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
         }
 
-        .carousel-slide {
-            display: none;
-            animation: carouselFade 0.4s ease;
+        .scroll-track {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+            animation: scrollTrackLeft 40s linear infinite;
+            direction: ltr;
         }
 
-        .carousel-slide.active {
-            display: block;
+        .scroll-track.reverse {
+            animation: scrollTrackRight 40s linear infinite;
         }
 
-        @keyframes carouselFade {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+        .scroll-track:hover {
+            animation-play-state: paused;
         }
 
-        .carousel-marker {
+        @keyframes scrollTrackLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes scrollTrackRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .program-card {
             flex-shrink: 0;
-            width: 60px;
-            height: 60px;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            direction: rtl;
+            text-align: right;
+            transition: border-color 0.3s;
+        }
+
+        .program-card:hover {
+            border-color: var(--primary);
+        }
+
+        .program-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .program-card .card-num {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.3rem;
-        }
-
-        .carousel-slide:nth-child(odd) .carousel-marker {
+            font-size: 0.95rem;
+            flex-shrink: 0;
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: #fff;
         }
 
-        .carousel-slide:nth-child(even) .carousel-marker {
+        .program-card:nth-child(even) .card-num {
             background: linear-gradient(135deg, var(--accent), #00B894);
             color: var(--dark);
         }
 
-        .carousel-content {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 2rem;
-            flex: 1;
-            text-align: right;
-            direction: rtl;
-            min-height: 140px;
-        }
-
-        .carousel-content h3 {
-            font-size: 1.3rem;
+        .program-card h3 {
+            font-size: 1.05rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
         }
 
-        .carousel-content p {
+        .program-card p {
             color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 0.6rem;
         }
 
-        .carousel-content .tag {
+        .program-card .tag {
             display: inline-block;
             background: rgba(108, 60, 225, 0.15);
             color: var(--primary-light);
-            padding: 0.3rem 0.8rem;
+            padding: 0.2rem 0.7rem;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-top: 0.8rem;
-        }
-
-        .carousel-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
-            direction: ltr;
-        }
-
-        .carousel-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text);
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Heebo', sans-serif;
-        }
-
-        .carousel-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .carousel-dots {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .carousel-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            padding: 0;
-        }
-
-        .carousel-dot.active {
-            background: var(--primary-light);
-            transform: scale(1.3);
         }
 
         /* ========== SKILLS ========== */
@@ -736,50 +701,43 @@
             background: var(--dark);
         }
 
-        .skills-slide-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            width: 100%;
-        }
-
-        .skill-chip {
+        .skill-scroll-chip {
+            flex-shrink: 0;
             display: flex;
-            flex-direction: row;
             align-items: center;
             gap: 0.8rem;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
-            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1rem 1.5rem;
             direction: rtl;
+            transition: border-color 0.3s;
+            white-space: nowrap;
         }
 
-        .skill-chip:hover {
-            background: rgba(108, 60, 225, 0.1);
+        .skill-scroll-chip:hover {
             border-color: var(--primary);
         }
 
-        .skill-chip .skill-icon {
+        .skill-scroll-chip .skill-icon {
             font-size: 1.5rem;
         }
 
-        .skill-chip span {
+        .skill-scroll-chip span:last-child {
             font-weight: 600;
             font-size: 0.95rem;
         }
 
         /* ========== STUDENT PROJECTS ========== */
         .student-card {
+            flex-shrink: 0;
+            width: 340px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 2rem;
             text-align: right;
             direction: rtl;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
         .student-quote {
@@ -809,15 +767,17 @@
         }
 
         .student-avatar {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 0.85rem;
+            font-weight: 700;
             flex-shrink: 0;
+            color: #fff;
         }
 
         .student-info strong {
@@ -1363,48 +1323,9 @@
                 display: none;
             }
 
-            /* -- Carousel compact -- */
-            .carousel-marker {
-                width: 44px;
-                height: 44px;
-                font-size: 1rem;
-            }
-
-            .carousel-content {
-                padding: 1.2rem;
-                min-height: auto;
-            }
-
-            .carousel-content h3 {
-                font-size: 1.05rem;
-            }
-
-            .carousel-content p {
-                font-size: 0.88rem;
-            }
-
-            .carousel-slide.active {
-                gap: 1rem;
-            }
-
-            /* -- Skills carousel compact -- */
-            .skills-slide-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.6rem;
-            }
-
-            .skill-chip {
-                padding: 0.7rem 0.8rem;
-                gap: 0.5rem;
-            }
-
-            .skill-chip .skill-icon {
-                font-size: 1.2rem;
-            }
-
-            .skill-chip span {
-                font-size: 0.8rem;
-            }
+            /* -- Scroll carousel mobile -- */
+            .program-card { width: 260px; padding: 1.2rem; }
+            .scroll-track { gap: 12px; }
 
             /* -- Instructor compact -- */
             .instructor-card {
@@ -1981,101 +1902,24 @@
         </div>
     </section>
 
-    <!-- STUDENT PROJECTS CAROUSEL -->
-    <section class="skills-section" id="projects">
+    <!-- STUDENT PROJECTS -->
+    <section style="background: var(--dark-card); padding: 5rem 2rem;" id="projects">
         <div class="container">
             <div class="section-title reveal">
-                <h2>&#x1F4BB; מה התלמידים שלנו בנו?</h2>
+                <h2>💻 מה התלמידים שלנו בנו?</h2>
                 <p>פרויקטים אמיתיים שנבנו בקורס &mdash; בלי ניסיון קודם.</p>
             </div>
-            <div class="carousel-wrapper reveal" id="projectsCarousel">
-                <div class="carousel-track">
-                    <div class="carousel-slide active">
-                        <div class="student-card">
-                            <div class="student-quote">"בניתי אתר דרופשיפינג שלם עם קטלוג מוצרים, עגלת קניות ודף תשלום. אני כבר מוכר כיסויים לאייפון!"</div>
-                            <div class="student-project">&#x1F6D2; אתר דרופשיפינג למוצרי טכנולוגיה</div>
-                            <div class="student-info">
-                                <div class="student-avatar">&#x1F466;</div>
-                                <div><strong>איתי כהן</strong><br><span>גיל 14, ראשון לציון</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="student-card">
-                            <div class="student-quote">"אמא שלי מנהלת מכון יופי ולא היה לה אתר. בניתי לה אתר מקצועי עם גלריה, מחירון והזמנת תורים. היא לא האמינה!"</div>
-                            <div class="student-project">&#x1F484; אתר לעסק של ההורים</div>
-                            <div class="student-info">
-                                <div class="student-avatar">&#x1F467;</div>
-                                <div><strong>נועה לוי</strong><br><span>גיל 13, פתח תקווה</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="student-card">
-                            <div class="student-quote">"בניתי מערכת שעוזרת למצוא שחקני פורטנייט לפי רמה ושרת. יש כבר 40 שחקנים רשומים מהכיתה שלי!"</div>
-                            <div class="student-project">&#x1F3AE; מערכת למציאת שחקנים בפורטנייט</div>
-                            <div class="student-info">
-                                <div class="student-avatar">&#x1F466;</div>
-                                <div><strong>עומר אביטל</strong><br><span>גיל 12, חולון</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="student-card">
-                            <div class="student-quote">"בניתי אתר שעוזר לבנות למצוא מוצרי טיפוח לפי סוג עור. ה-AI עוזר להתאים את המוצר המושלם לכל אחת!"</div>
-                            <div class="student-project">&#x2728; מערכת לאיתור מוצרי קוסמטיקה</div>
-                            <div class="student-info">
-                                <div class="student-avatar">&#x1F467;</div>
-                                <div><strong>שירה מזרחי</strong><br><span>גיל 15, נתניה</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="student-card">
-                            <div class="student-quote">"אני אוהב לגו ובניתי אתר לתערוכה שעשיתי בשכונה. עם גלריה, כרטיסים ומפת הגעה. באו 50 אנשים!"</div>
-                            <div class="student-project">&#x1F9F1; אתר לתערוכת לגו</div>
-                            <div class="student-info">
-                                <div class="student-avatar">&#x1F466;</div>
-                                <div><strong>יונתן ברק</strong><br><span>גיל 11, רעננה</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="student-card">
-                            <div class="student-quote">"בניתי אתר שעוזר לילדים בשכונה להתארגן למשחקי כדורגל. אפשר לבחור מגרש, שעה ולהזמין שחקנים!"</div>
-                            <div class="student-project">&#x26BD; מערכת לארגון משחקי כדורגל</div>
-                            <div class="student-info">
-                                <div class="student-avatar">&#x1F466;</div>
-                                <div><strong>דניאל חדד</strong><br><span>גיל 13, באר שבע</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="student-card">
-                            <div class="student-quote">"בניתי אתר מתכונים שמייצר מתכונים חדשים עם AI לפי מה שיש לך במקרר. אפילו סבתא שלי משתמשת!"</div>
-                            <div class="student-project">&#x1F373; מחולל מתכונים חכם</div>
-                            <div class="student-info">
-                                <div class="student-avatar">&#x1F467;</div>
-                                <div><strong>מאיה פרידמן</strong><br><span>גיל 14, תל אביב</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="student-card">
-                            <div class="student-quote">"בניתי אתר שמשווה מחירים של משחקי PS5 בין כל החנויות בארץ. החברים שלי בודקים בו כל יום!"</div>
-                            <div class="student-project">&#x1F3AE; משווה מחירי משחקים</div>
-                            <div class="student-info">
-                                <div class="student-avatar">&#x1F466;</div>
-                                <div><strong>רועי אזולאי</strong><br><span>גיל 16, אשדוד</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-controls">
-                    <button class="carousel-btn" onclick="changeSlide('projectsCarousel', -1)">&#x276E;</button>
-                    <div class="carousel-dots" id="projectsCarousel-dots"></div>
-                    <button class="carousel-btn" onclick="changeSlide('projectsCarousel', 1)">&#x276F;</button>
-                </div>
+        </div>
+        <div class="scroll-carousel">
+            <div class="scroll-track" id="projectsTrack">
+                <div class="student-card"><div class="student-quote">"בניתי אתר דרופשיפינג שלם עם קטלוג מוצרים, עגלת קניות ודף תשלום. אני כבר מוכר כיסויים לאייפון!"</div><div class="student-project">🛒 אתר דרופשיפינג</div><div class="student-info"><div class="student-avatar">אכ</div><div><strong>איתי כהן</strong><br><span>גיל 14, ראשון לציון</span></div></div></div>
+                <div class="student-card"><div class="student-quote">"אמא שלי מנהלת מכון יופי ולא היה לה אתר. בניתי לה אתר מקצועי עם גלריה, מחירון והזמנת תורים."</div><div class="student-project">💄 אתר לעסק של ההורים</div><div class="student-info"><div class="student-avatar">נל</div><div><strong>נועה לוי</strong><br><span>גיל 13, פתח תקווה</span></div></div></div>
+                <div class="student-card"><div class="student-quote">"בניתי מערכת שעוזרת למצוא שחקני פורטנייט לפי רמה ושרת. יש כבר 40 שחקנים רשומים מהכיתה שלי!"</div><div class="student-project">🎮 מערכת שחקני פורטנייט</div><div class="student-info"><div class="student-avatar">עא</div><div><strong>עומר אביטל</strong><br><span>גיל 12, חולון</span></div></div></div>
+                <div class="student-card"><div class="student-quote">"בניתי אתר שעוזר לבנות למצוא מוצרי טיפוח לפי סוג עור. ה-AI עוזר להתאים את המוצר המושלם!"</div><div class="student-project">✨ מערכת מוצרי קוסמטיקה</div><div class="student-info"><div class="student-avatar">שמ</div><div><strong>שירה מזרחי</strong><br><span>גיל 15, נתניה</span></div></div></div>
+                <div class="student-card"><div class="student-quote">"אני אוהב לגו ובניתי אתר לתערוכה שעשיתי בשכונה. עם גלריה, כרטיסים ומפת הגעה. באו 50 אנשים!"</div><div class="student-project">🧱 אתר לתערוכת לגו</div><div class="student-info"><div class="student-avatar">יב</div><div><strong>יונתן ברק</strong><br><span>גיל 11, רעננה</span></div></div></div>
+                <div class="student-card"><div class="student-quote">"בניתי אתר שעוזר לילדים בשכונה להתארגן למשחקי כדורגל. אפשר לבחור מגרש, שעה ולהזמין שחקנים!"</div><div class="student-project">⚽ ארגון משחקי כדורגל</div><div class="student-info"><div class="student-avatar">דח</div><div><strong>דניאל חדד</strong><br><span>גיל 13, באר שבע</span></div></div></div>
+                <div class="student-card"><div class="student-quote">"בניתי אתר מתכונים שמייצר מתכונים חדשים עם AI לפי מה שיש לך במקרר. אפילו סבתא שלי משתמשת!"</div><div class="student-project">🍳 מחולל מתכונים חכם</div><div class="student-info"><div class="student-avatar">מפ</div><div><strong>מאיה פרידמן</strong><br><span>גיל 14, תל אביב</span></div></div></div>
+                <div class="student-card"><div class="student-quote">"בניתי אתר שמשווה מחירים של משחקי PS5 בין כל החנויות בארץ. החברים שלי בודקים בו כל יום!"</div><div class="student-project">🎮 משווה מחירי משחקים</div><div class="student-info"><div class="student-avatar">רא</div><div><strong>רועי אזולאי</strong><br><span>גיל 16, אשדוד</span></div></div></div>
             </div>
         </div>
     </section>
@@ -2122,129 +1966,50 @@
         </div>
     </section>
 
-    <!-- PROGRAM CAROUSEL -->
+    <!-- PROGRAM -->
     <section class="timeline-section" id="program">
         <div class="container">
             <div class="section-title reveal">
                 <h2>תוכנית הקורס &mdash; 8 מפגשים</h2>
                 <p>מפגש כל יום, כשעה כל מפגש. מרעיון למוצר חי.</p>
             </div>
-            <div class="carousel-wrapper reveal" id="programCarousel">
-                <div class="carousel-track">
-                    <div class="carousel-slide active">
-                        <div class="carousel-marker">1</div>
-                        <div class="carousel-content">
-                            <h3>ברוכים הבאים לעולם ה-AI</h3>
-                            <p>מה זה בינה מלאכותית? ניסוי ראשון עם ChatGPT ו-Claude. חוויה שמשנה הכל.</p>
-                            <span class="tag">היכרות</span>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-marker">2</div>
-                        <div class="carousel-content">
-                            <h3>אמנות הפרומפט</h3>
-                            <p>איך מדברים עם AI בצורה חכמה? טכניקות כתיבה שגורמות ל-AI לתת תשובות מדויקות.</p>
-                            <span class="tag">AI</span>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-marker">3</div>
-                        <div class="carousel-content">
-                            <h3>חשיבה יזמית &mdash; מוצאים בעיות</h3>
-                            <p>מה זה סטארטאפ? איך מזהים בעיות אמיתיות? כל תלמיד מוצא 3 בעיות מהחיים שלו.</p>
-                            <span class="tag">יזמות</span>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-marker">4</div>
-                        <div class="carousel-content">
-                            <h3>מרעיון למוצר</h3>
-                            <p>בוחרים רעיון, מגדירים קהל יעד, בונים אפיון למוצר. הסטארטאפ שלכם מתחיל להתגבש!</p>
-                            <span class="tag">אסטרטגיה</span>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-marker">5</div>
-                        <div class="carousel-content">
-                            <h3>בונים אתר &mdash; חלק 1</h3>
-                            <p>מתקינים Cursor ובונים את דף הנחיתה הראשון עם AI. בלי ידע קודם בתכנות!</p>
-                            <span class="tag">בנייה</span>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-marker">6</div>
-                        <div class="carousel-content">
-                            <h3>בונים אתר &mdash; חלק 2</h3>
-                            <p>מוסיפים עיצוב, אנימציות ופיצ'רים. האתר הופך למוצר אמיתי!</p>
-                            <span class="tag">פיתוח</span>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-marker">7</div>
-                        <div class="carousel-content">
-                            <h3>מודל עסקי ושיווק</h3>
-                            <p>איך מרוויחים כסף? איך מגיעים ללקוחות? בונים תוכנית עסקית + תוכן שיווקי עם AI. נכיר סוכני AI שעובדים בשבילכם!</p>
-                            <span class="tag">עסקים</span>
-                            <span class="tag">סוכני AI</span>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-marker">8</div>
-                        <div class="carousel-content">
-                            <h3>יום הפיץ' &#x1F3C6;</h3>
-                            <p>כל משתתף/ת מציג/ה את הפרויקט. 3 דקות &mdash; בעיה, פתרון, דמו. כמו Shark Tank!</p>
-                            <span class="tag">הצגה</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-controls">
-                    <button class="carousel-btn" onclick="changeSlide('programCarousel', -1)">&#x276E;</button>
-                    <div class="carousel-dots" id="programCarousel-dots"></div>
-                    <button class="carousel-btn" onclick="changeSlide('programCarousel', 1)">&#x276F;</button>
-                </div>
+        </div>
+        <div class="scroll-carousel">
+            <div class="scroll-track" id="programTrack">
+                <div class="program-card"><div class="card-header"><div class="card-num">1</div><h3>ברוכים הבאים לעולם ה-AI</h3></div><p>מה זה בינה מלאכותית? ניסוי ראשון עם ChatGPT ו-Claude. חוויה שמשנה הכל.</p><span class="tag">היכרות</span></div>
+                <div class="program-card"><div class="card-header"><div class="card-num">2</div><h3>אמנות הפרומפט</h3></div><p>איך מדברים עם AI בצורה חכמה? טכניקות כתיבה שגורמות ל-AI לתת תשובות מדויקות.</p><span class="tag">AI</span></div>
+                <div class="program-card"><div class="card-header"><div class="card-num">3</div><h3>חשיבה יזמית &mdash; מוצאים בעיות</h3></div><p>מה זה סטארטאפ? איך מזהים בעיות אמיתיות? כל תלמיד מוצא 3 בעיות מהחיים שלו.</p><span class="tag">יזמות</span></div>
+                <div class="program-card"><div class="card-header"><div class="card-num">4</div><h3>מרעיון למוצר</h3></div><p>בוחרים רעיון, מגדירים קהל יעד, בונים אפיון למוצר. הסטארטאפ שלכם מתחיל להתגבש!</p><span class="tag">אסטרטגיה</span></div>
+                <div class="program-card"><div class="card-header"><div class="card-num">5</div><h3>בונים אתר &mdash; חלק 1</h3></div><p>מתקינים Cursor ובונים את דף הנחיתה הראשון עם AI. בלי ידע קודם בתכנות!</p><span class="tag">בנייה</span></div>
+                <div class="program-card"><div class="card-header"><div class="card-num">6</div><h3>בונים אתר &mdash; חלק 2</h3></div><p>מוסיפים עיצוב, אנימציות ופיצ'רים. האתר הופך למוצר אמיתי!</p><span class="tag">פיתוח</span></div>
+                <div class="program-card"><div class="card-header"><div class="card-num">7</div><h3>מודל עסקי ושיווק</h3></div><p>איך מרוויחים כסף? איך מגיעים ללקוחות? בונים תוכנית עסקית + תוכן שיווקי עם AI.</p><span class="tag">עסקים</span></div>
+                <div class="program-card"><div class="card-header"><div class="card-num">8</div><h3>יום הפיץ' 🏆</h3></div><p>כל משתתף/ת מציג/ה את הפרויקט. 3 דקות &mdash; בעיה, פתרון, דמו. כמו Shark Tank!</p><span class="tag">הצגה</span></div>
             </div>
         </div>
     </section>
 
-    <!-- SKILLS CAROUSEL -->
+    <!-- SKILLS -->
     <section class="skills-section" id="skills">
         <div class="container">
             <div class="section-title reveal">
                 <h2>כישורים שתרכשו</h2>
                 <p>לא רק טכנולוגיה. כישורי חיים שישרתו אתכם לתמיד.</p>
             </div>
-            <div class="carousel-wrapper reveal" id="skillsCarousel">
-                <div class="carousel-track">
-                    <div class="carousel-slide active">
-                        <div class="skills-slide-grid">
-                            <div class="skill-chip"><span class="skill-icon">&#x1F916;</span><span>עבודה עם AI</span></div>
-                            <div class="skill-chip"><span class="skill-icon">&#x1F4A1;</span><span>חשיבה יזמית</span></div>
-                            <div class="skill-chip"><span class="skill-icon">&#x1F310;</span><span>בניית אתרים</span></div>
-                            <div class="skill-chip"><span class="skill-icon">&#x1F3A8;</span><span>עיצוב דיגיטלי</span></div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="skills-slide-grid">
-                            <div class="skill-chip"><span class="skill-icon">&#x1F4CA;</span><span>מודל עסקי</span></div>
-                            <div class="skill-chip"><span class="skill-icon">&#x1F3A4;</span><span>הצגה בפני קהל</span></div>
-                            <div class="skill-chip"><span class="skill-icon">&#x1F4DD;</span><span>הנדסת פרומפטים</span></div>
-                            <div class="skill-chip"><span class="skill-icon">&#x1F91D;</span><span>עבודת צוות</span></div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="skills-slide-grid">
-                            <div class="skill-chip"><span class="skill-icon">&#x1F4E3;</span><span>שיווק דיגיטלי</span></div>
-                            <div class="skill-chip"><span class="skill-icon">&#x1F4AC;</span><span>חשיבה ביקורתית</span></div>
-                            <div class="skill-chip"><span class="skill-icon">&#x1F527;</span><span>פתרון בעיות</span></div>
-                            <div class="skill-chip"><span class="skill-icon">&#x1F30D;</span><span>חדשנות</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-controls">
-                    <button class="carousel-btn" onclick="changeSlide('skillsCarousel', -1)">&#x276E;</button>
-                    <div class="carousel-dots" id="skillsCarousel-dots"></div>
-                    <button class="carousel-btn" onclick="changeSlide('skillsCarousel', 1)">&#x276F;</button>
-                </div>
+        </div>
+        <div class="scroll-carousel">
+            <div class="scroll-track" id="skillsTrack">
+                <div class="skill-scroll-chip"><span class="skill-icon">🤖</span><span>עבודה עם AI</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">💡</span><span>חשיבה יזמית</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">🌐</span><span>בניית אתרים</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">🎨</span><span>עיצוב דיגיטלי</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">📊</span><span>מודל עסקי</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">🎤</span><span>הצגה בפני קהל</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">📝</span><span>הנדסת פרומפטים</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">🤝</span><span>עבודת צוות</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">📣</span><span>שיווק דיגיטלי</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">💬</span><span>חשיבה ביקורתית</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">🔧</span><span>פתרון בעיות</span></div>
+                <div class="skill-scroll-chip"><span class="skill-icon">🌍</span><span>חדשנות</span></div>
             </div>
         </div>
     </section>
@@ -2499,51 +2264,10 @@
                 }
             });
         });
-        // Carousel logic
-        function initCarousel(id) {
-            const wrapper = document.getElementById(id);
-            const slides = wrapper.querySelectorAll('.carousel-slide');
-            const dotsContainer = document.getElementById(id + '-dots');
-            slides.forEach((_, i) => {
-                const dot = document.createElement('button');
-                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-                dot.onclick = () => goToSlide(id, i);
-                dotsContainer.appendChild(dot);
-            });
-        }
-
-        function goToSlide(id, index) {
-            const wrapper = document.getElementById(id);
-            const slides = wrapper.querySelectorAll('.carousel-slide');
-            const dots = wrapper.querySelectorAll('.carousel-dot');
-            slides.forEach(s => s.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-        }
-
-        function changeSlide(id, dir) {
-            const wrapper = document.getElementById(id);
-            const slides = wrapper.querySelectorAll('.carousel-slide');
-            let current = 0;
-            slides.forEach((s, i) => { if (s.classList.contains('active')) current = i; });
-            let next = current + dir;
-            if (next < 0) next = slides.length - 1;
-            if (next >= slides.length) next = 0;
-            goToSlide(id, next);
-        }
-
-        // Auto-advance carousels
-        function autoAdvance(id, interval) {
-            setInterval(() => changeSlide(id, 1), interval);
-        }
-
-        initCarousel('programCarousel');
-        initCarousel('skillsCarousel');
-        initCarousel('projectsCarousel');
-        autoAdvance('programCarousel', 5000);
-        autoAdvance('skillsCarousel', 4000);
-        autoAdvance('projectsCarousel', 4500);
+        // Auto-scroll: duplicate track content for seamless loop
+        document.querySelectorAll('.scroll-track').forEach(track => {
+            track.innerHTML += track.innerHTML;
+        });
 
         // WhatsApp with form data
         function sendWhatsApp() {
