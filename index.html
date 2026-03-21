@@ -600,36 +600,57 @@
         }
 
         .scroll-carousel {
-            overflow: hidden;
+            position: relative;
             margin-top: 2rem;
-            direction: ltr;
-            -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
         }
 
         .scroll-track {
             display: flex;
             gap: 20px;
-            width: max-content;
-            animation: scrollLeft 35s linear infinite;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 0.5rem 2rem 1rem;
+            direction: ltr;
         }
 
-        .scroll-track.reverse {
-            animation: scrollRight 35s linear infinite;
+        .scroll-track::-webkit-scrollbar { display: none; }
+
+        .scroll-track > * {
+            scroll-snap-align: start;
         }
 
-        .scroll-track:hover {
-            animation-play-state: paused;
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 1rem;
+            direction: ltr;
         }
 
-        @keyframes scrollLeft {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .carousel-nav button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: var(--dark-card);
+            color: var(--text);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @keyframes scrollRight {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
+        .carousel-nav button:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .carousel-nav button:active {
+            transform: scale(0.92);
         }
 
         .program-card {
@@ -1327,7 +1348,6 @@
             .program-card { width: 260px; padding: 1.2rem; }
             .student-card { width: 280px; padding: 1.5rem; }
             .scroll-track { gap: 12px; }
-            .scroll-track.reverse { display: none; }
 
             /* -- Instructor compact -- */
             .instructor-card {
@@ -1912,18 +1932,20 @@
                 <p>פרויקטים אמיתיים שנבנו בקורס &mdash; בלי ניסיון קודם.</p>
             </div>
         </div>
-        <div class="scroll-carousel" style="display:flex;flex-direction:column;gap:20px;">
-            <div class="scroll-track" id="projectsRow1">
+        <div class="scroll-carousel">
+            <div class="scroll-track" id="projectsTrack">
                 <div class="student-card"><div class="student-quote">"בניתי אתר דרופשיפינג שלם עם קטלוג מוצרים, עגלת קניות ודף תשלום. אני כבר מוכר כיסויים לאייפון!"</div><div class="student-project">🛒 אתר דרופשיפינג</div><div class="student-info"><div class="student-avatar">אכ</div><div><strong>איתי כהן</strong><br><span>גיל 14, ראשון לציון</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"אמא שלי מנהלת מכון יופי ולא היה לה אתר. בניתי לה אתר מקצועי עם גלריה, מחירון והזמנת תורים."</div><div class="student-project">💄 אתר לעסק של ההורים</div><div class="student-info"><div class="student-avatar">נל</div><div><strong>נועה לוי</strong><br><span>גיל 13, פתח תקווה</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"בניתי מערכת שעוזרת למצוא שחקני פורטנייט לפי רמה ושרת. יש כבר 40 שחקנים רשומים מהכיתה שלי!"</div><div class="student-project">🎮 מערכת שחקני פורטנייט</div><div class="student-info"><div class="student-avatar">עא</div><div><strong>עומר אביטל</strong><br><span>גיל 12, חולון</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"בניתי אתר שעוזר לבנות למצוא מוצרי טיפוח לפי סוג עור. ה-AI עוזר להתאים את המוצר המושלם!"</div><div class="student-project">✨ מערכת מוצרי קוסמטיקה</div><div class="student-info"><div class="student-avatar">שמ</div><div><strong>שירה מזרחי</strong><br><span>גיל 15, נתניה</span></div></div></div>
-            </div>
-            <div class="scroll-track reverse" id="projectsRow2">
                 <div class="student-card"><div class="student-quote">"אני אוהב לגו ובניתי אתר לתערוכה שעשיתי בשכונה. עם גלריה, כרטיסים ומפת הגעה. באו 50 אנשים!"</div><div class="student-project">🧱 אתר לתערוכת לגו</div><div class="student-info"><div class="student-avatar">יב</div><div><strong>יונתן ברק</strong><br><span>גיל 11, רעננה</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"בניתי אתר שעוזר לילדים בשכונה להתארגן למשחקי כדורגל. אפשר לבחור מגרש, שעה ולהזמין שחקנים!"</div><div class="student-project">⚽ ארגון משחקי כדורגל</div><div class="student-info"><div class="student-avatar">דח</div><div><strong>דניאל חדד</strong><br><span>גיל 13, באר שבע</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"בניתי אתר מתכונים שמייצר מתכונים חדשים עם AI לפי מה שיש לך במקרר. אפילו סבתא שלי משתמשת!"</div><div class="student-project">🍳 מחולל מתכונים חכם</div><div class="student-info"><div class="student-avatar">מפ</div><div><strong>מאיה פרידמן</strong><br><span>גיל 14, תל אביב</span></div></div></div>
                 <div class="student-card"><div class="student-quote">"בניתי אתר שמשווה מחירים של משחקי PS5 בין כל החנויות בארץ. החברים שלי בודקים בו כל יום!"</div><div class="student-project">🎮 משווה מחירי משחקים</div><div class="student-info"><div class="student-avatar">רא</div><div><strong>רועי אזולאי</strong><br><span>גיל 16, אשדוד</span></div></div></div>
+            </div>
+            <div class="carousel-nav">
+                <button onclick="scrollCarousel('projectsTrack',-1)" aria-label="הקודם">&#8249;</button>
+                <button onclick="scrollCarousel('projectsTrack',1)" aria-label="הבא">&#8250;</button>
             </div>
         </div>
     </section>
@@ -1989,6 +2011,10 @@
                 <div class="program-card"><div class="card-header"><div class="card-num">7</div><h3>מודל עסקי ושיווק</h3></div><p>איך מרוויחים כסף? איך מגיעים ללקוחות? בונים תוכנית עסקית + תוכן שיווקי עם AI.</p><span class="tag">עסקים</span></div>
                 <div class="program-card"><div class="card-header"><div class="card-num">8</div><h3>יום הפיץ' 🏆</h3></div><p>כל משתתף/ת מציג/ה את הפרויקט. 3 דקות &mdash; בעיה, פתרון, דמו. כמו Shark Tank!</p><span class="tag">הצגה</span></div>
             </div>
+            <div class="carousel-nav">
+                <button onclick="scrollCarousel('programTrack',-1)" aria-label="הקודם">&#8249;</button>
+                <button onclick="scrollCarousel('programTrack',1)" aria-label="הבא">&#8250;</button>
+            </div>
         </div>
     </section>
 
@@ -2014,6 +2040,10 @@
                 <div class="skill-scroll-chip"><span class="skill-icon">💬</span><span>חשיבה ביקורתית</span></div>
                 <div class="skill-scroll-chip"><span class="skill-icon">🔧</span><span>פתרון בעיות</span></div>
                 <div class="skill-scroll-chip"><span class="skill-icon">🌍</span><span>חדשנות</span></div>
+            </div>
+            <div class="carousel-nav">
+                <button onclick="scrollCarousel('skillsTrack',-1)" aria-label="הקודם">&#8249;</button>
+                <button onclick="scrollCarousel('skillsTrack',1)" aria-label="הבא">&#8250;</button>
             </div>
         </div>
     </section>
@@ -2268,9 +2298,57 @@
                 }
             });
         });
-        // Auto-scroll: duplicate track content for seamless loop (same as GotChat)
+        // Auto-scroll engine
+        const autoScrollTimers = new Map();
+
+        function startAutoScroll(track) {
+            if (autoScrollTimers.has(track)) return;
+            const timer = setInterval(() => {
+                const maxScroll = track.scrollWidth - track.clientWidth;
+                if (track.scrollLeft >= maxScroll - 2) {
+                    track.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    track.scrollBy({ left: 1, behavior: 'auto' });
+                }
+            }, 30);
+            autoScrollTimers.set(track, timer);
+        }
+
+        function stopAutoScroll(track) {
+            const timer = autoScrollTimers.get(track);
+            if (timer) { clearInterval(timer); autoScrollTimers.delete(track); }
+        }
+
+        // Carousel: scroll by one card width (buttons)
+        function scrollCarousel(trackId, dir) {
+            const track = document.getElementById(trackId);
+            if (!track) return;
+            const card = track.children[0];
+            if (!card) return;
+            const scrollAmt = card.offsetWidth + 20;
+            stopAutoScroll(track);
+            clearTimeout(track._resumeTimer);
+            track.scrollBy({ left: dir * scrollAmt, behavior: 'smooth' });
+            track._resumeTimer = setTimeout(() => startAutoScroll(track), 5000);
+        }
+
+        // Init all carousels: auto-scroll + pause on touch/click
         document.querySelectorAll('.scroll-track').forEach(track => {
-            track.innerHTML += track.innerHTML;
+            startAutoScroll(track);
+            track.addEventListener('touchstart', () => {
+                stopAutoScroll(track);
+                clearTimeout(track._resumeTimer);
+            }, { passive: true });
+            track.addEventListener('mousedown', () => {
+                stopAutoScroll(track);
+                clearTimeout(track._resumeTimer);
+            });
+            track.addEventListener('touchend', () => {
+                track._resumeTimer = setTimeout(() => startAutoScroll(track), 4000);
+            }, { passive: true });
+            track.addEventListener('mouseup', () => {
+                track._resumeTimer = setTimeout(() => startAutoScroll(track), 4000);
+            });
         });
 
         // WhatsApp with form data
