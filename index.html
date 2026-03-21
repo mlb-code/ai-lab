@@ -1003,6 +1003,98 @@
             padding: 1.2rem 3rem;
         }
 
+        /* ========== CONTACT FORM ========== */
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: 'Heebo', sans-serif;
+            transition: border-color 0.3s;
+            direction: rtl;
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.15);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .form-buttons .btn-primary,
+        .form-buttons .btn-whatsapp {
+            flex: 1;
+            justify-content: center;
+            font-size: 1rem;
+            padding: 0.9rem 1.5rem;
+            border: none;
+            cursor: pointer;
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: #fff;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .contact-form {
+                padding: 1.5rem;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+        }
+
         /* ========== FOOTER ========== */
         footer {
             background: rgba(0, 0, 0, 0.3);
@@ -2126,12 +2218,33 @@
         </div>
     </section>
 
-    <!-- CTA -->
+    <!-- REGISTER FORM -->
     <section class="cta-section" id="register">
         <div class="container">
             <h2 class="reveal">&#x1F680; הקורס הבא נפתח ב-29.03!</h2>
-            <p class="reveal">לנוער (10&ndash;17) ולמבוגרים (60+). המקומות מוגבלים ל-10 משתתפים בקבוצה. שריינו את המקום שלכם עכשיו.</p>
-            <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI" class="btn-primary reveal" target="_blank">&#x1F4AC; שלחו לנו הודעה בוואטסאפ</a>
+            <p class="reveal">לנוער (10&ndash;17) ולמבוגרים (60+). המקומות מוגבלים ל-10 משתתפים בקבוצה. השאירו פרטים ונחזור אליכם!</p>
+            <form class="contact-form reveal" id="contactForm" action="https://formsubmit.co/laviemb@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="פנייה חדשה מאתר הקורס AI Lab">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://mlb-code.github.io/ai-lab/index.html#register">
+                <input type="hidden" name="_template" value="table">
+                <div class="form-group">
+                    <label for="name">שם מלא</label>
+                    <input type="text" id="name" name="name" placeholder="הכניסו את השם שלכם" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">מספר טלפון</label>
+                    <input type="tel" id="phone" name="phone" placeholder="050-1234567" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">אימייל</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-primary">&#x1F4E9; שלח פנייה</button>
+                    <button type="button" class="btn-whatsapp" onclick="sendWhatsApp()">&#x1F4AC; שלח בוואטסאפ</button>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -2219,6 +2332,18 @@
                 }
             });
         });
+        // WhatsApp with form data
+        function sendWhatsApp() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            if (!name || !phone || !email) {
+                alert('נא למלא את כל השדות');
+                return;
+            }
+            const msg = `היי, אני מתעניין/ת בקורס יזמות ו-AI\n\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email}`;
+            window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
+        }
     </script>
 </body>
 </html>
