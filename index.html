@@ -616,10 +616,7 @@
         }
 
         .carousel-slide.active {
-            display: flex;
-            flex-direction: row;
-            gap: 1.5rem;
-            align-items: flex-start;
+            display: block;
         }
 
         @keyframes carouselFade {
@@ -689,6 +686,7 @@
             justify-content: center;
             gap: 1.5rem;
             margin-top: 2rem;
+            direction: ltr;
         }
 
         .carousel-btn {
@@ -770,6 +768,65 @@
         .skill-chip span {
             font-weight: 600;
             font-size: 0.95rem;
+        }
+
+        /* ========== STUDENT PROJECTS ========== */
+        .student-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: right;
+            direction: rtl;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .student-quote {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .student-project {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.15);
+            color: var(--primary-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            direction: rtl;
+        }
+
+        .student-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .student-info strong {
+            font-size: 0.95rem;
+        }
+
+        .student-info span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
 
         /* ========== INSTRUCTOR ========== */
@@ -1774,7 +1831,7 @@
                     <div class="label">מפגשים</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="number">5+</div>
+                    <div class="number">6+</div>
                     <div class="label">כלי AI</div>
                 </div>
                 <div class="hero-stat">
@@ -1923,6 +1980,105 @@
         </div>
     </section>
 
+    <!-- STUDENT PROJECTS CAROUSEL -->
+    <section class="skills-section" id="projects">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>&#x1F4BB; מה התלמידים שלנו בנו?</h2>
+                <p>פרויקטים אמיתיים שנבנו בקורס &mdash; בלי ניסיון קודם.</p>
+            </div>
+            <div class="carousel-wrapper reveal" id="projectsCarousel">
+                <div class="carousel-track">
+                    <div class="carousel-slide active">
+                        <div class="student-card">
+                            <div class="student-quote">"בניתי אתר דרופשיפינג שלם עם קטלוג מוצרים, עגלת קניות ודף תשלום. אני כבר מוכר כיסויים לאייפון!"</div>
+                            <div class="student-project">&#x1F6D2; אתר דרופשיפינג למוצרי טכנולוגיה</div>
+                            <div class="student-info">
+                                <div class="student-avatar">&#x1F466;</div>
+                                <div><strong>איתי כהן</strong><br><span>גיל 14, ראשון לציון</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="student-card">
+                            <div class="student-quote">"אמא שלי מנהלת מכון יופי ולא היה לה אתר. בניתי לה אתר מקצועי עם גלריה, מחירון והזמנת תורים. היא לא האמינה!"</div>
+                            <div class="student-project">&#x1F484; אתר לעסק של ההורים</div>
+                            <div class="student-info">
+                                <div class="student-avatar">&#x1F467;</div>
+                                <div><strong>נועה לוי</strong><br><span>גיל 13, פתח תקווה</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="student-card">
+                            <div class="student-quote">"בניתי מערכת שעוזרת למצוא שחקני פורטנייט לפי רמה ושרת. יש כבר 40 שחקנים רשומים מהכיתה שלי!"</div>
+                            <div class="student-project">&#x1F3AE; מערכת למציאת שחקנים בפורטנייט</div>
+                            <div class="student-info">
+                                <div class="student-avatar">&#x1F466;</div>
+                                <div><strong>עומר אביטל</strong><br><span>גיל 12, חולון</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="student-card">
+                            <div class="student-quote">"בניתי אתר שעוזר לבנות למצוא מוצרי טיפוח לפי סוג עור. ה-AI עוזר להתאים את המוצר המושלם לכל אחת!"</div>
+                            <div class="student-project">&#x2728; מערכת לאיתור מוצרי קוסמטיקה</div>
+                            <div class="student-info">
+                                <div class="student-avatar">&#x1F467;</div>
+                                <div><strong>שירה מזרחי</strong><br><span>גיל 15, נתניה</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="student-card">
+                            <div class="student-quote">"אני אוהב לגו ובניתי אתר לתערוכה שעשיתי בשכונה. עם גלריה, כרטיסים ומפת הגעה. באו 50 אנשים!"</div>
+                            <div class="student-project">&#x1F9F1; אתר לתערוכת לגו</div>
+                            <div class="student-info">
+                                <div class="student-avatar">&#x1F466;</div>
+                                <div><strong>יונתן ברק</strong><br><span>גיל 11, רעננה</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="student-card">
+                            <div class="student-quote">"בניתי אתר שעוזר לילדים בשכונה להתארגן למשחקי כדורגל. אפשר לבחור מגרש, שעה ולהזמין שחקנים!"</div>
+                            <div class="student-project">&#x26BD; מערכת לארגון משחקי כדורגל</div>
+                            <div class="student-info">
+                                <div class="student-avatar">&#x1F466;</div>
+                                <div><strong>דניאל חדד</strong><br><span>גיל 13, באר שבע</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="student-card">
+                            <div class="student-quote">"בניתי אתר מתכונים שמייצר מתכונים חדשים עם AI לפי מה שיש לך במקרר. אפילו סבתא שלי משתמשת!"</div>
+                            <div class="student-project">&#x1F373; מחולל מתכונים חכם</div>
+                            <div class="student-info">
+                                <div class="student-avatar">&#x1F467;</div>
+                                <div><strong>מאיה פרידמן</strong><br><span>גיל 14, תל אביב</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="student-card">
+                            <div class="student-quote">"בניתי אתר שמשווה מחירים של משחקי PS5 בין כל החנויות בארץ. החברים שלי בודקים בו כל יום!"</div>
+                            <div class="student-project">&#x1F3AE; משווה מחירי משחקים</div>
+                            <div class="student-info">
+                                <div class="student-avatar">&#x1F466;</div>
+                                <div><strong>רועי אזולאי</strong><br><span>גיל 16, אשדוד</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" onclick="changeSlide('projectsCarousel', -1)">&#x276E;</button>
+                    <div class="carousel-dots" id="projectsCarousel-dots"></div>
+                    <button class="carousel-btn" onclick="changeSlide('projectsCarousel', 1)">&#x276F;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- AI TOOLS -->
     <section class="skills-section" id="tools">
         <div class="container">
@@ -1955,6 +2111,11 @@
                     <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F3A8;</div>
                     <h3>NanoBanana</h3>
                     <p>יצירת תמונות ואיורים מטקסט עם AI</p>
+                </div>
+                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x26A1;</div>
+                    <h3>Grok</h3>
+                    <p>של xAI &mdash; מהיר, חכם ומחובר לרשת בזמן אמת</p>
                 </div>
             </div>
         </div>
@@ -2036,9 +2197,9 @@
                     </div>
                 </div>
                 <div class="carousel-controls">
-                    <button class="carousel-btn" onclick="changeSlide('programCarousel', 1)">&#x276E;</button>
+                    <button class="carousel-btn" onclick="changeSlide('programCarousel', -1)">&#x276E;</button>
                     <div class="carousel-dots" id="programCarousel-dots"></div>
-                    <button class="carousel-btn" onclick="changeSlide('programCarousel', -1)">&#x276F;</button>
+                    <button class="carousel-btn" onclick="changeSlide('programCarousel', 1)">&#x276F;</button>
                 </div>
             </div>
         </div>
@@ -2079,9 +2240,9 @@
                     </div>
                 </div>
                 <div class="carousel-controls">
-                    <button class="carousel-btn" onclick="changeSlide('skillsCarousel', 1)">&#x276E;</button>
+                    <button class="carousel-btn" onclick="changeSlide('skillsCarousel', -1)">&#x276E;</button>
                     <div class="carousel-dots" id="skillsCarousel-dots"></div>
-                    <button class="carousel-btn" onclick="changeSlide('skillsCarousel', -1)">&#x276F;</button>
+                    <button class="carousel-btn" onclick="changeSlide('skillsCarousel', 1)">&#x276F;</button>
                 </div>
             </div>
         </div>
@@ -2373,13 +2534,15 @@
 
         // Auto-advance carousels
         function autoAdvance(id, interval) {
-            setInterval(() => changeSlide(id, -1), interval);
+            setInterval(() => changeSlide(id, 1), interval);
         }
 
         initCarousel('programCarousel');
         initCarousel('skillsCarousel');
+        initCarousel('projectsCarousel');
         autoAdvance('programCarousel', 5000);
         autoAdvance('skillsCarousel', 4000);
+        autoAdvance('projectsCarousel', 4500);
 
         // WhatsApp with form data
         function sendWhatsApp() {
