@@ -717,6 +717,229 @@
             font-weight: 600;
         }
 
+        /* ========== COURSE TRACKS GRID ========== */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 960px;
+            margin: 2rem auto 0;
+            padding: 0 1.5rem;
+        }
+
+        .course-track-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            direction: rtl;
+        }
+
+        .course-track-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(108, 60, 225, 0.15);
+        }
+
+        .course-track-card.featured {
+            border-color: var(--gold);
+            background: rgba(245, 200, 66, 0.04);
+        }
+
+        .course-track-card.featured:hover {
+            border-color: var(--gold);
+            box-shadow: 0 12px 40px rgba(245, 200, 66, 0.15);
+        }
+
+        .course-track-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .course-track-badge.badge-gold {
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            color: var(--dark);
+        }
+
+        .course-track-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .course-track-card h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 0.6rem;
+        }
+
+        .course-track-card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .course-track-meta {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-track-meta span {
+            background: rgba(255,255,255,0.06);
+            padding: 0.25rem 0.7rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .course-track-cta {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: letter-spacing 0.2s;
+        }
+
+        .course-track-card:hover .course-track-cta {
+            letter-spacing: 1px;
+        }
+
+        /* SYLLABUS POPUP */
+        .syllabus-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .syllabus-overlay.open {
+            display: flex;
+        }
+
+        .syllabus-modal {
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+            position: relative;
+            direction: rtl;
+        }
+
+        .syllabus-close {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .syllabus-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .syllabus-modal h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        .syllabus-modal .syllabus-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .syllabus-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .syllabus-item:last-child {
+            border-bottom: none;
+        }
+
+        .syllabus-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .syllabus-item:nth-child(even) .syllabus-num {
+            background: linear-gradient(135deg, var(--accent), #00B894);
+            color: var(--dark);
+        }
+
+        .syllabus-item h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .syllabus-item p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            .syllabus-modal {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .courses-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         /* ========== SKILLS ========== */
         .skills-section {
             background: var(--dark);
@@ -747,6 +970,55 @@
         .skill-scroll-chip span:last-child {
             font-weight: 600;
             font-size: 0.95rem;
+        }
+
+        /* ========== SKILLS GRID ========== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 2rem auto 0;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(108, 60, 225, 0.12);
+        }
+
+        .skill-card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .skill-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .skill-card p {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .skill-card { padding: 1rem 0.8rem; }
         }
 
         /* ========== STUDENT PROJECTS ========== */
@@ -885,17 +1157,66 @@
             background: linear-gradient(180deg, var(--dark-card) 0%, var(--dark) 100%);
         }
 
-        .pricing-card {
-            max-width: 500px;
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1000px;
             margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 420px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 700px;
+            }
+        }
+
+        .pricing-card {
             background: linear-gradient(135deg, rgba(108, 60, 225, 0.1), rgba(0, 212, 170, 0.05));
-            border: 2px solid var(--primary);
+            border: 2px solid rgba(108, 60, 225, 0.3);
             border-radius: 24px;
-            padding: 3rem;
+            padding: 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
             direction: rtl;
+        }
+
+        .pricing-card-featured {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(245, 200, 66, 0.08), rgba(108, 60, 225, 0.1));
+            transform: scale(1.03);
+        }
+
+        .pricing-card-soon {
+            opacity: 0.7;
+            border-style: dashed;
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .pricing-coming-soon {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .btn-disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: default;
         }
 
         .pricing-card::before {
@@ -1771,16 +2092,16 @@
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <div class="number">8</div>
-                    <div class="label">מפגשים</div>
-                </div>
-                <div class="hero-stat">
                     <div class="number">6+</div>
                     <div class="label">כלי AI</div>
                 </div>
                 <div class="hero-stat">
                     <div class="number">2</div>
-                    <div class="label">מסלולים</div>
+                    <div class="label">רמות לימוד</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">5</div>
+                    <div class="label">תלמידים בכיתה</div>
                 </div>
             </div>
 
@@ -1996,24 +2317,51 @@
     <section class="timeline-section" id="program">
         <div class="container">
             <div class="section-title reveal">
-                <h2>תוכנית הקורס &mdash; 8 מפגשים</h2>
-                <p>מפגש כל יום, כשעה כל מפגש. מרעיון למוצר חי.</p>
+                <h2>תוכנית הקורסים</h2>
+                <p>בחרו את המסלול שמתאים לכם. לחצו על קורס לפרטים מלאים.</p>
+            </div>
+            <div class="courses-grid">
+                <div class="course-track-card reveal" onclick="openSyllabus('youth-basic')">
+                    <div class="course-track-badge">8 מפגשים</div>
+                    <div class="course-track-icon">&#x1F680;</div>
+                    <h3>ילדים ונוער &mdash; בסיסי</h3>
+                    <p>בונים פרויקט ראשון מאפס עם כלי AI. מרעיון למוצר חי תוך 8 מפגשים!</p>
+                    <div class="course-track-meta">
+                        <span>גילאי 10&ndash;17</span>
+                        <span>ללא ניסיון קודם</span>
+                    </div>
+                    <span class="course-track-cta">לתוכנית המלאה &larr;</span>
+                </div>
+                <div class="course-track-card featured reveal" onclick="openSyllabus('youth-advanced')">
+                    <div class="course-track-badge badge-gold">16 מפגשים</div>
+                    <div class="course-track-icon">&#x1F31F;</div>
+                    <h3>ילדים ונוער &mdash; מתקדם</h3>
+                    <p>לבוגרי הקורס הבסיסי. משדרגים את ה-MVP לאפליקציה אמיתית עם backend, בסיס נתונים ו-API.</p>
+                    <div class="course-track-meta">
+                        <span>גילאי 10&ndash;17</span>
+                        <span>דרישה: קורס בסיסי</span>
+                    </div>
+                    <span class="course-track-cta">לתוכנית המלאה &larr;</span>
+                </div>
+                <div class="course-track-card reveal" onclick="openSyllabus('adults-basic')">
+                    <div class="course-track-badge">8 מפגשים</div>
+                    <div class="course-track-icon">&#x1F4BB;</div>
+                    <h3>מבוגרים &mdash; בסיסי</h3>
+                    <p>גם בלי רקע טכנולוגי &mdash; תלמדו לבנות אתר ולעבוד עם AI. בקצב שלכם.</p>
+                    <div class="course-track-meta">
+                        <span>גילאי 60+</span>
+                        <span>ללא ניסיון קודם</span>
+                    </div>
+                    <span class="course-track-cta">לתוכנית המלאה &larr;</span>
+                </div>
             </div>
         </div>
-        <div class="scroll-carousel">
-            <div class="scroll-track" id="programTrack">
-                <div class="program-card"><div class="card-header"><div class="card-num">1</div><h3>ברוכים הבאים לעולם ה-AI</h3></div><p>מה זה בינה מלאכותית? ניסוי ראשון עם ChatGPT ו-Claude. חוויה שמשנה הכל.</p><span class="tag">היכרות</span></div>
-                <div class="program-card"><div class="card-header"><div class="card-num">2</div><h3>אמנות הפרומפט</h3></div><p>איך מדברים עם AI בצורה חכמה? טכניקות כתיבה שגורמות ל-AI לתת תשובות מדויקות.</p><span class="tag">AI</span></div>
-                <div class="program-card"><div class="card-header"><div class="card-num">3</div><h3>חשיבה יזמית &mdash; מוצאים בעיות</h3></div><p>מה זה סטארטאפ? איך מזהים בעיות אמיתיות? כל תלמיד מוצא 3 בעיות מהחיים שלו.</p><span class="tag">יזמות</span></div>
-                <div class="program-card"><div class="card-header"><div class="card-num">4</div><h3>מרעיון למוצר</h3></div><p>בוחרים רעיון, מגדירים קהל יעד, בונים אפיון למוצר. הסטארטאפ שלכם מתחיל להתגבש!</p><span class="tag">אסטרטגיה</span></div>
-                <div class="program-card"><div class="card-header"><div class="card-num">5</div><h3>בונים אתר &mdash; חלק 1</h3></div><p>מתקינים Cursor ובונים את דף הנחיתה הראשון עם AI. בלי ידע קודם בתכנות!</p><span class="tag">בנייה</span></div>
-                <div class="program-card"><div class="card-header"><div class="card-num">6</div><h3>בונים אתר &mdash; חלק 2</h3></div><p>מוסיפים עיצוב, אנימציות ופיצ'רים. האתר הופך למוצר אמיתי!</p><span class="tag">פיתוח</span></div>
-                <div class="program-card"><div class="card-header"><div class="card-num">7</div><h3>מודל עסקי ושיווק</h3></div><p>איך מרוויחים כסף? איך מגיעים ללקוחות? בונים תוכנית עסקית + תוכן שיווקי עם AI.</p><span class="tag">עסקים</span></div>
-                <div class="program-card"><div class="card-header"><div class="card-num">8</div><h3>יום הפיץ' 🏆</h3></div><p>כל משתתף/ת מציג/ה את הפרויקט. 3 דקות &mdash; בעיה, פתרון, דמו. כמו Shark Tank!</p><span class="tag">הצגה</span></div>
-            </div>
-            <div class="carousel-nav">
-                <button onclick="scrollCarousel('programTrack',-1)" aria-label="הקודם">&#8249;</button>
-                <button onclick="scrollCarousel('programTrack',1)" aria-label="הבא">&#8250;</button>
+
+        <!-- SYLLABUS POPUP -->
+        <div class="syllabus-overlay" id="syllabusOverlay" onclick="if(event.target===this)closeSyllabus()">
+            <div class="syllabus-modal">
+                <button class="syllabus-close" onclick="closeSyllabus()">&times;</button>
+                <div id="syllabusContent"></div>
             </div>
         </div>
     </section>
@@ -2025,25 +2373,47 @@
                 <h2>כישורים שתרכשו</h2>
                 <p>לא רק טכנולוגיה. כישורי חיים שישרתו אתכם לתמיד.</p>
             </div>
-        </div>
-        <div class="scroll-carousel">
-            <div class="scroll-track" id="skillsTrack">
-                <div class="skill-scroll-chip"><span class="skill-icon">🤖</span><span>עבודה עם AI</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">💡</span><span>חשיבה יזמית</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">🌐</span><span>בניית אתרים</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">🎨</span><span>עיצוב דיגיטלי</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">📊</span><span>מודל עסקי</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">🎤</span><span>הצגה בפני קהל</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">📝</span><span>הנדסת פרומפטים</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">🤝</span><span>עבודת צוות</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">📣</span><span>שיווק דיגיטלי</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">💬</span><span>חשיבה ביקורתית</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">🔧</span><span>פתרון בעיות</span></div>
-                <div class="skill-scroll-chip"><span class="skill-icon">🌍</span><span>חדשנות</span></div>
-            </div>
-            <div class="carousel-nav">
-                <button onclick="scrollCarousel('skillsTrack',-1)" aria-label="הקודם">&#8249;</button>
-                <button onclick="scrollCarousel('skillsTrack',1)" aria-label="הבא">&#8250;</button>
+            <div class="skills-grid">
+                <div class="skill-card reveal">
+                    <div class="skill-card-icon">&#x1F916;</div>
+                    <h4>עבודה עם AI</h4>
+                    <p>ChatGPT, Claude, Gemini ועוד</p>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-icon">&#x1F4BB;</div>
+                    <h4>Claude Code</h4>
+                    <p>בניית אתרים ואפליקציות עם AI</p>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-icon">&#x1F4A1;</div>
+                    <h4>חשיבה יזמית</h4>
+                    <p>מרעיון לסטארטאפ אמיתי</p>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-icon">&#x1F3A8;</div>
+                    <h4>עיצוב דיגיטלי</h4>
+                    <p>UI, אנימציות ויצירת תמונות עם AI</p>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-icon">&#x1F4DD;</div>
+                    <h4>הנדסת פרומפטים</h4>
+                    <p>איך לדבר עם AI ולקבל תוצאות מדויקות</p>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-icon">&#x1F4CA;</div>
+                    <h4>מודל עסקי</h4>
+                    <p>תוכנית עסקית, שיווק ומכירות</p>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-icon">&#x1F3A4;</div>
+                    <h4>הצגה בפני קהל</h4>
+                    <p>פיץ' של 3 דקות כמו Shark Tank</p>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-icon">&#x1F527;</div>
+                    <h4>פתרון בעיות</h4>
+                    <p>דיבאגינג, חשיבה ביקורתית ויצירתיות</p>
+                </div>
             </div>
         </div>
     </section>
@@ -2125,7 +2495,7 @@
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        הקבוצות מופרדות לפי גיל &mdash; קבוצה לנוער וקבוצה למבוגרים. כל קבוצה לומדת באותה תוכנית אבל עם דוגמאות ושיח מותאם לגיל. קבוצה קטנה של עד 10 משתתפים מבטיחה יחס אישי.
+                        הקבוצות מופרדות לפי גיל &mdash; קבוצה לנוער וקבוצה למבוגרים. כל קבוצה לומדת באותה תוכנית אבל עם דוגמאות ושיח מותאם לגיל. קבוצה קטנה של עד 5 תלמידים בכיתה מבטיחה יחס אישי.
                     </div>
                 </div>
                 <div class="faq-item reveal">
@@ -2166,20 +2536,54 @@
                 <h2>&#x1F4B0; כמה זה עולה?</h2>
                 <p>השקעה קטנה, ערך עצום. ביטחון מלא.</p>
             </div>
-            <div class="pricing-card reveal">
-                <h3>קורס יזמות ו-AI</h3>
-                <div class="price">&#x20AA;890</div>
-                <div class="price-note">8 מפגשים &bull; מפגש כל יום &bull; כשעה כל מפגש</div>
-                <ul class="pricing-features">
-                    <li><span class="check">&#x2714;</span> 8 מפגשים חיים בזום עם מנחה</li>
-                    <li><span class="check">&#x2714;</span> גישה לאזור אישי עם חומרי לימוד</li>
-                    <li><span class="check">&#x2714;</span> גישה לכל כלי ה-AI במהלך הקורס</li>
-                    <li><span class="check">&#x2714;</span> אתר אישי שיישאר באוויר גם אחרי הקורס</li>
-                    <li><span class="check">&#x2714;</span> תעודת סיום + יום הפיץ'</li>
-                    <li><span class="check">&#x2714;</span> קבוצה קטנה &mdash; עד 10 משתתפים</li>
-                </ul>
-                <div class="pricing-extra-note">* נדרש מנוי ל-Claude Code ($20/חודש) &mdash; כלי הבנייה המרכזי בקורס. עלות נוספת על מחיר הקורס.</div>
-                <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
+            <div class="pricing-grid">
+                <div class="pricing-card reveal">
+                    <h3>ילדים ונוער &mdash; בסיסי</h3>
+                    <div class="price">&#x20AA;890</div>
+                    <div class="price-note">8 מפגשים &bull; כשעה כל מפגש &bull; בזום</div>
+                    <ul class="pricing-features">
+                        <li><span class="check">&#x2714;</span> 8 מפגשים חיים בזום עם מנחה</li>
+                        <li><span class="check">&#x2714;</span> גישה לאזור אישי עם חומרי לימוד</li>
+                        <li><span class="check">&#x2714;</span> גישה לכל כלי ה-AI במהלך הקורס</li>
+                        <li><span class="check">&#x2714;</span> אתר אישי שיישאר באוויר גם אחרי הקורס</li>
+                        <li><span class="check">&#x2714;</span> תעודת סיום + יום הפיץ'</li>
+                        <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
+                    </ul>
+                    <div class="pricing-extra-note">* נדרש מנוי ל-Claude Code ($20/חודש) &mdash; כלי הבנייה המרכזי בקורס. עלות נוספת על מחיר הקורס.</div>
+                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI%20%D7%91%D7%A1%D7%99%D7%A1%D7%99" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
+                </div>
+                <div class="pricing-card pricing-card-featured reveal">
+                    <div class="pricing-popular">&#x1F31F; מתקדם</div>
+                    <h3>ילדים ונוער &mdash; מתקדם</h3>
+                    <div class="price">&#x20AA;1,490</div>
+                    <div class="price-note">16 מפגשים &bull; לבוגרי הקורס הבסיסי</div>
+                    <ul class="pricing-features">
+                        <li><span class="check">&#x2714;</span> 16 מפגשים חיים בזום עם מנחה</li>
+                        <li><span class="check">&#x2714;</span> שדרוג ה-MVP לאפליקציה מלאה</li>
+                        <li><span class="check">&#x2714;</span> Backend, בסיס נתונים ו-API</li>
+                        <li><span class="check">&#x2714;</span> אזור אישי מתקדם עם תכנים בלעדיים</li>
+                        <li><span class="check">&#x2714;</span> תעודת סיום מתקדם</li>
+                        <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
+                    </ul>
+                    <div class="pricing-extra-note">* נדרש מנוי ל-Claude Code ($20/חודש). דרישת קדם: קורס בסיסי.</div>
+                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9E%D7%AA%D7%A7%D7%93%D7%9D" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
+                </div>
+                <div class="pricing-card pricing-card-soon reveal">
+                    <div class="pricing-coming-soon">בקרוב</div>
+                    <h3>מבוגרים &mdash; בסיסי</h3>
+                    <div class="price">&#x20AA;890</div>
+                    <div class="price-note">8 מפגשים &bull; כשעה כל מפגש &bull; בזום</div>
+                    <ul class="pricing-features">
+                        <li><span class="check">&#x2714;</span> 8 מפגשים חיים בזום עם מנחה</li>
+                        <li><span class="check">&#x2714;</span> גישה לאזור אישי עם חומרי לימוד</li>
+                        <li><span class="check">&#x2714;</span> גישה לכל כלי ה-AI במהלך הקורס</li>
+                        <li><span class="check">&#x2714;</span> אתר אישי שיישאר באוויר גם אחרי הקורס</li>
+                        <li><span class="check">&#x2714;</span> תעודת סיום + יום הפיץ'</li>
+                        <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
+                    </ul>
+                    <div class="pricing-extra-note">* נדרש מנוי ל-Claude Code ($20/חודש) &mdash; כלי הבנייה המרכזי בקורס. עלות נוספת על מחיר הקורס.</div>
+                    <span class="btn-primary btn-disabled">&#x1F514; עדכנו אותי כשנפתח</span>
+                </div>
             </div>
         </div>
     </section>
@@ -2188,7 +2592,7 @@
     <section class="cta-section" id="register">
         <div class="container">
             <h2 class="reveal">&#x1F680; הקורס הבא נפתח ב-29.03!</h2>
-            <p class="reveal">לנוער (10&ndash;17) ולמבוגרים (60+). המקומות מוגבלים ל-10 משתתפים בקבוצה. השאירו פרטים ונחזור אליכם!</p>
+            <p class="reveal">לנוער (10&ndash;17) ולמבוגרים (60+). המקומות מוגבלים ל-5 תלמידים בכיתה. השאירו פרטים ונחזור אליכם!</p>
             <form class="contact-form reveal" id="contactForm" action="https://formsubmit.co/laviemb@gmail.com" method="POST">
                 <input type="hidden" name="_subject" value="פנייה חדשה מאתר הקורס AI Lab">
                 <input type="hidden" name="_captcha" value="false">
@@ -2352,6 +2756,82 @@
             track.addEventListener('mouseup', () => {
                 track._resumeTimer = setTimeout(() => startAutoScroll(track), 4000);
             });
+        });
+
+        // ===== SYLLABUS POPUPS =====
+        const syllabusData = {
+            'youth-basic': {
+                title: 'ילדים ונוער — בסיסי',
+                subtitle: '8 מפגשים | כשעה כל מפגש | בזום',
+                sessions: [
+                    { num: 1, title: 'ברוכים הבאים לעולם ה-AI', desc: 'מה זה בינה מלאכותית? ניסוי ראשון עם ChatGPT ו-Claude. חוויה שמשנה הכל.' },
+                    { num: 2, title: 'אמנות הפרומפט', desc: 'איך מדברים עם AI בצורה חכמה? טכניקות כתיבה שגורמות ל-AI לתת תשובות מדויקות.' },
+                    { num: 3, title: 'חשיבה יזמית — מוצאים בעיות', desc: 'מה זה סטארטאפ? איך מזהים בעיות אמיתיות? כל תלמיד מוצא 3 בעיות מהחיים שלו.' },
+                    { num: 4, title: 'מרעיון למוצר', desc: 'בוחרים רעיון, מגדירים קהל יעד, בונים אפיון למוצר. הסטארטאפ שלכם מתחיל להתגבש!' },
+                    { num: 5, title: 'בונים אתר — חלק 1', desc: 'מתקינים Cursor ובונים את דף הנחיתה הראשון עם AI. בלי ידע קודם בתכנות!' },
+                    { num: 6, title: 'בונים אתר — חלק 2', desc: 'מוסיפים עיצוב, אנימציות ופיצ\'רים. האתר הופך למוצר אמיתי!' },
+                    { num: 7, title: 'מודל עסקי ושיווק', desc: 'איך מרוויחים כסף? איך מגיעים ללקוחות? בונים תוכנית עסקית + תוכן שיווקי עם AI.' },
+                    { num: 8, title: 'יום הפיץ\' 🏆', desc: 'כל משתתף/ת מציג/ה את הפרויקט. 3 דקות — בעיה, פתרון, דמו. כמו Shark Tank!' }
+                ]
+            },
+            'youth-advanced': {
+                title: 'ילדים ונוער — מתקדם',
+                subtitle: '16 מפגשים | לבוגרי הקורס הבסיסי',
+                sessions: [
+                    { num: 1, title: 'חזרה ושדרוג ה-MVP', desc: 'סקירת הפרויקט מהקורס הבסיסי. מה עובד, מה חסר, ומה המטרה לקורס המתקדם.' },
+                    { num: 2, title: 'מבוא ל-Backend', desc: 'מה זה שרת? איך האתר שלכם מדבר עם העולם? מבוא ל-Node.js ו-APIs.' },
+                    { num: 3, title: 'בסיס נתונים — חלק 1', desc: 'מה זה Database? הכרות עם Supabase. שומרים ושולפים מידע אמיתי.' },
+                    { num: 4, title: 'בסיס נתונים — חלק 2', desc: 'חיבור בסיס הנתונים לאתר. טפסים ששומרים מידע, טבלאות דינמיות.' },
+                    { num: 5, title: 'Authentication — הרשמה והתחברות', desc: 'איך מוסיפים מערכת משתמשים לאתר? הרשמה, התחברות, ואזור אישי.' },
+                    { num: 6, title: 'API — חיבור לשירותים חיצוניים', desc: 'שליפת מידע מ-APIs חיצוניים. מזג אוויר, חדשות, או כל מידע שתרצו.' },
+                    { num: 7, title: 'עיצוב מתקדם ו-Responsive', desc: 'עיצוב מקצועי, אנימציות CSS, תמיכה מושלמת במובייל.' },
+                    { num: 8, title: 'AI מתקדם — Agents ואוטומציות', desc: 'בניית AI Agent שעושה דברים בשבילכם. אוטומציות חכמות.' },
+                    { num: 9, title: 'תשלומים ומסחר', desc: 'איך מוסיפים סליקה ותשלומים לאתר? מהאתר שלכם לעסק אמיתי.' },
+                    { num: 10, title: 'Deploy — העלאה לאוויר', desc: 'איך מעלים את האתר לאינטרנט? דומיין, hosting, ו-SSL.' },
+                    { num: 11, title: 'אבטחה ו-Best Practices', desc: 'הגנה מפני פריצות, ניהול סיסמאות, וכללי אצבע לקוד בטוח.' },
+                    { num: 12, title: 'אנליטיקס ו-SEO', desc: 'איך יודעים מי נכנס לאתר? איך מופיעים בגוגל? כלים למעקב וקידום.' },
+                    { num: 13, title: 'שיווק דיגיטלי מתקדם', desc: 'קמפיינים, רשתות חברתיות, ותוכן שיווקי שנוצר עם AI.' },
+                    { num: 14, title: 'פרויקט סיום — חלק 1', desc: 'בניית פרויקט סיום מקיף שמשלב את כל מה שלמדתם.' },
+                    { num: 15, title: 'פרויקט סיום — חלק 2', desc: 'השלמת הפרויקט, בדיקות, ליטוש ותיקוני באגים.' },
+                    { num: 16, title: 'יום הפיץ\' הגדול 🏆', desc: 'הצגת הפרויקט המתקדם. דמו חי, שאלות מהקהל, ותעודות סיום!' }
+                ]
+            },
+            'adults-basic': {
+                title: 'מבוגרים — בסיסי',
+                subtitle: '8 מפגשים | כשעה כל מפגש | בזום',
+                sessions: [
+                    { num: 1, title: 'ברוכים הבאים לעולם ה-AI', desc: 'מה זה בינה מלאכותית? ניסוי ראשון עם ChatGPT ו-Claude. חוויה שמשנה הכל.' },
+                    { num: 2, title: 'אמנות הפרומפט', desc: 'איך מדברים עם AI בצורה חכמה? טכניקות כתיבה שגורמות ל-AI לתת תשובות מדויקות.' },
+                    { num: 3, title: 'חשיבה יזמית — מוצאים בעיות', desc: 'מה זה סטארטאפ? איך מזהים בעיות אמיתיות? כל תלמיד מוצא 3 בעיות מהחיים שלו.' },
+                    { num: 4, title: 'מרעיון למוצר', desc: 'בוחרים רעיון, מגדירים קהל יעד, בונים אפיון למוצר. הסטארטאפ שלכם מתחיל להתגבש!' },
+                    { num: 5, title: 'בונים אתר — חלק 1', desc: 'מתקינים Cursor ובונים את דף הנחיתה הראשון עם AI. בלי ידע קודם בתכנות!' },
+                    { num: 6, title: 'בונים אתר — חלק 2', desc: 'מוסיפים עיצוב, אנימציות ופיצ\'רים. האתר הופך למוצר אמיתי!' },
+                    { num: 7, title: 'מודל עסקי ושיווק', desc: 'איך מרוויחים כסף? איך מגיעים ללקוחות? בונים תוכנית עסקית + תוכן שיווקי עם AI.' },
+                    { num: 8, title: 'יום הפיץ\' 🏆', desc: 'כל משתתף/ת מציג/ה את הפרויקט. 3 דקות — בעיה, פתרון, דמו. כמו Shark Tank!' }
+                ]
+            }
+        };
+
+        function openSyllabus(courseId) {
+            var data = syllabusData[courseId];
+            if (!data) return;
+            var html = '<h2>' + data.title + '</h2>';
+            html += '<div class="syllabus-subtitle">' + data.subtitle + '</div>';
+            data.sessions.forEach(function(s) {
+                html += '<div class="syllabus-item"><div class="syllabus-num">' + s.num + '</div><div><h4>' + s.title + '</h4><p>' + s.desc + '</p></div></div>';
+            });
+            document.getElementById('syllabusContent').innerHTML = html;
+            document.getElementById('syllabusOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSyllabus() {
+            document.getElementById('syllabusOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeSyllabus();
         });
 
         // WhatsApp with form data
