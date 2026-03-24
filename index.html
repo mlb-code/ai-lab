@@ -805,14 +805,19 @@
         }
 
         .course-track-cta {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: letter-spacing 0.2s;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.3s;
         }
 
         .course-track-card:hover .course-track-cta {
-            letter-spacing: 1px;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(108, 60, 225, 0.3);
         }
 
         /* SYLLABUS POPUP */
@@ -1190,16 +1195,34 @@
             direction: rtl;
         }
 
-        .pricing-card-featured {
-            border-color: var(--gold);
-            background: linear-gradient(135deg, rgba(245, 200, 66, 0.08), rgba(108, 60, 225, 0.1));
-            transform: scale(1.03);
+        .pricing-sale-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF4D8D, #FF7849);
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
         }
 
-        .pricing-card-soon {
-            opacity: 0.7;
+        .price-original {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-bottom: -0.5rem;
+        }
+
+        .pricing-card-blur {
+            opacity: 0.55;
+            filter: blur(0.5px);
             border-style: dashed;
-            border-color: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.12);
+        }
+
+        .pricing-card-blur:hover {
+            opacity: 0.75;
+            filter: none;
         }
 
         .pricing-coming-soon {
@@ -1211,12 +1234,6 @@
             font-size: 0.85rem;
             font-weight: 700;
             margin-bottom: 1rem;
-        }
-
-        .btn-disabled {
-            opacity: 0.5;
-            pointer-events: none;
-            cursor: default;
         }
 
         .pricing-card::before {
@@ -2035,7 +2052,6 @@
         <a href="#" class="nav-logo">AI Lab</a>
         <ul class="nav-links nav-links-desktop" id="navLinksDesktop">
             <li><a href="#pricing">מחיר</a></li>
-            <li><a href="#faq">שאלות</a></li>
             <li><a href="#tools">כלי AI</a></li>
             <li><a href="#program">תוכנית</a></li>
             <li><a href="#audience">למי מיועד?</a></li>
@@ -2055,7 +2071,6 @@
             <li><a href="#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>
             <li><a href="#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
             <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
-            <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות</a></li>
             <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
             <li class="mobile-cta"><a href="portal.html"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
             <li class="mobile-cta mobile-cta-green"><a href="#register"><span class="menu-icon">&#x1F680;</span> הרשמה</a></li>
@@ -2082,9 +2097,9 @@
                 <span class="gradient-text">ובינה מלאכותית</span>
             </h1>
             <p>
-                בנו את הפרויקט הראשון שלכם תוך 8 מפגשים.
-                <br>תלמדו ChatGPT, Claude, Cursor ועוד &mdash; ותבנו אתר אמיתי עם AI.
-                <br>לנוער (10-17) ולמבוגרים (60+). בלי ניסיון קודם. רק אתם ו-AI.
+                הילדים שלכם ילמדו לבנות אתרים, אפליקציות ומוצרים דיגיטליים &mdash; עם הכלים שמובילים את עולם הטכנולוגיה.
+                <br>ChatGPT, Claude Code, Cursor ועוד &mdash; ידע שייתן להם יתרון אמיתי לעתיד.
+                <br>בלי ניסיון קודם. רק מוטיבציה ודמיון.
             </p>
             <div class="hero-buttons">
                 <a href="#register" class="btn-primary">&#x1F680; שריינו לי מקום</a>
@@ -2330,7 +2345,7 @@
                         <span>גילאי 10&ndash;17</span>
                         <span>ללא ניסיון קודם</span>
                     </div>
-                    <span class="course-track-cta">לתוכנית המלאה &larr;</span>
+                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
                 </div>
                 <div class="course-track-card featured reveal" onclick="openSyllabus('youth-advanced')">
                     <div class="course-track-badge badge-gold">16 מפגשים</div>
@@ -2341,7 +2356,7 @@
                         <span>גילאי 10&ndash;17</span>
                         <span>דרישה: קורס בסיסי</span>
                     </div>
-                    <span class="course-track-cta">לתוכנית המלאה &larr;</span>
+                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
                 </div>
                 <div class="course-track-card reveal" onclick="openSyllabus('adults-basic')">
                     <div class="course-track-badge">8 מפגשים</div>
@@ -2352,7 +2367,7 @@
                         <span>גילאי 60+</span>
                         <span>ללא ניסיון קודם</span>
                     </div>
-                    <span class="course-track-cta">לתוכנית המלאה &larr;</span>
+                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
                 </div>
             </div>
         </div>
@@ -2447,7 +2462,7 @@
 
 
     <!-- FAQ -->
-    <section class="faq-section" id="faq">
+    <section class="faq-section" id="faq" style="display:none;">
         <div class="container">
             <div class="section-title reveal">
                 <h2>שאלות נפוצות</h2>
@@ -2538,51 +2553,44 @@
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card reveal">
+                    <div class="pricing-sale-badge">&#x1F389; מבצע חג!</div>
                     <h3>ילדים ונוער &mdash; בסיסי</h3>
+                    <div class="price-original">&#x20AA;990</div>
                     <div class="price">&#x20AA;890</div>
-                    <div class="price-note">8 מפגשים &bull; כשעה כל מפגש &bull; בזום</div>
+                    <div class="price-note">8 מפגשים חיים בזום</div>
                     <ul class="pricing-features">
-                        <li><span class="check">&#x2714;</span> 8 מפגשים חיים בזום עם מנחה</li>
-                        <li><span class="check">&#x2714;</span> גישה לאזור אישי עם חומרי לימוד</li>
-                        <li><span class="check">&#x2714;</span> גישה לכל כלי ה-AI במהלך הקורס</li>
-                        <li><span class="check">&#x2714;</span> אתר אישי שיישאר באוויר גם אחרי הקורס</li>
-                        <li><span class="check">&#x2714;</span> תעודת סיום + יום הפיץ'</li>
+                        <li><span class="check">&#x2714;</span> אזור אישי + חומרי לימוד</li>
+                        <li><span class="check">&#x2714;</span> כל כלי ה-AI + Claude Code</li>
+                        <li><span class="check">&#x2714;</span> אתר אישי שנשאר באוויר</li>
                         <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
                     </ul>
-                    <div class="pricing-extra-note">* נדרש מנוי ל-Claude Code ($20/חודש) &mdash; כלי הבנייה המרכזי בקורס. עלות נוספת על מחיר הקורס.</div>
                     <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI%20%D7%91%D7%A1%D7%99%D7%A1%D7%99" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
                 </div>
-                <div class="pricing-card pricing-card-featured reveal">
-                    <div class="pricing-popular">&#x1F31F; מתקדם</div>
+                <div class="pricing-card reveal">
+                    <div class="pricing-sale-badge">&#x1F389; מבצע חג!</div>
                     <h3>ילדים ונוער &mdash; מתקדם</h3>
+                    <div class="price-original">&#x20AA;1,650</div>
                     <div class="price">&#x20AA;1,490</div>
                     <div class="price-note">16 מפגשים &bull; לבוגרי הקורס הבסיסי</div>
                     <ul class="pricing-features">
-                        <li><span class="check">&#x2714;</span> 16 מפגשים חיים בזום עם מנחה</li>
-                        <li><span class="check">&#x2714;</span> שדרוג ה-MVP לאפליקציה מלאה</li>
-                        <li><span class="check">&#x2714;</span> Backend, בסיס נתונים ו-API</li>
-                        <li><span class="check">&#x2714;</span> אזור אישי מתקדם עם תכנים בלעדיים</li>
+                        <li><span class="check">&#x2714;</span> למידה מעמיקה והתקדמות בפרויקט</li>
+                        <li><span class="check">&#x2714;</span> תכנים בלעדיים באזור האישי</li>
                         <li><span class="check">&#x2714;</span> תעודת סיום מתקדם</li>
                         <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
                     </ul>
-                    <div class="pricing-extra-note">* נדרש מנוי ל-Claude Code ($20/חודש). דרישת קדם: קורס בסיסי.</div>
                     <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9E%D7%AA%D7%A7%D7%93%D7%9D" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
                 </div>
-                <div class="pricing-card pricing-card-soon reveal">
+                <div class="pricing-card pricing-card-blur reveal">
                     <div class="pricing-coming-soon">בקרוב</div>
                     <h3>מבוגרים &mdash; בסיסי</h3>
-                    <div class="price">&#x20AA;890</div>
-                    <div class="price-note">8 מפגשים &bull; כשעה כל מפגש &bull; בזום</div>
+                    <div class="price" style="-webkit-text-fill-color: var(--text-muted); font-size: 2rem;">מחיר יפורסם בקרוב</div>
+                    <div class="price-note">8 מפגשים חיים בזום</div>
                     <ul class="pricing-features">
-                        <li><span class="check">&#x2714;</span> 8 מפגשים חיים בזום עם מנחה</li>
-                        <li><span class="check">&#x2714;</span> גישה לאזור אישי עם חומרי לימוד</li>
-                        <li><span class="check">&#x2714;</span> גישה לכל כלי ה-AI במהלך הקורס</li>
-                        <li><span class="check">&#x2714;</span> אתר אישי שיישאר באוויר גם אחרי הקורס</li>
-                        <li><span class="check">&#x2714;</span> תעודת סיום + יום הפיץ'</li>
-                        <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
+                        <li><span class="check" style="opacity:0.4;">&#x2714;</span> תוכנית מותאמת לגיל 60+</li>
+                        <li><span class="check" style="opacity:0.4;">&#x2714;</span> ללא ניסיון קודם בטכנולוגיה</li>
+                        <li><span class="check" style="opacity:0.4;">&#x2714;</span> עד 5 תלמידים בכיתה</li>
                     </ul>
-                    <div class="pricing-extra-note">* נדרש מנוי ל-Claude Code ($20/חודש) &mdash; כלי הבנייה המרכזי בקורס. עלות נוספת על מחיר הקורס.</div>
-                    <span class="btn-primary btn-disabled">&#x1F514; עדכנו אותי כשנפתח</span>
+                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9C%D7%9E%D7%91%D7%95%D7%92%D7%A8%D7%99%D7%9D" class="btn-primary" target="_blank" style="opacity:0.7;">&#x1F514; עדכנו אותי כשנפתח</a>
                 </div>
             </div>
         </div>
