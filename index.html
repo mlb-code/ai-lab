@@ -1168,6 +1168,7 @@
             gap: 24px;
             max-width: 1000px;
             margin: 0 auto;
+            align-items: stretch;
         }
 
         @media (max-width: 768px) {
@@ -1193,6 +1194,12 @@
             position: relative;
             overflow: hidden;
             direction: rtl;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card .btn-primary {
+            margin-top: auto;
         }
 
         .pricing-sale-badge {
@@ -2229,7 +2236,7 @@
     </section>
 
     <!-- WHAT YOU'LL BUILD -->
-    <section class="build-section" id="build">
+    <section class="build-section" id="build" style="display:none;">
         <div class="container">
             <div class="section-title reveal">
                 <h2>מה תבנו בקורס?</h2>
@@ -2348,7 +2355,7 @@
                     <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
                 </div>
                 <div class="course-track-card featured reveal" onclick="openSyllabus('youth-advanced')">
-                    <div class="course-track-badge badge-gold">16 מפגשים</div>
+                    <div class="course-track-badge badge-gold">8 מפגשים</div>
                     <div class="course-track-icon">&#x1F31F;</div>
                     <h3>ילדים ונוער &mdash; מתקדם</h3>
                     <p>לבוגרי הקורס הבסיסי. משדרגים את ה-MVP לאפליקציה אמיתית עם backend, בסיס נתונים ו-API.</p>
@@ -2571,7 +2578,7 @@
                     <h3>ילדים ונוער &mdash; מתקדם</h3>
                     <div class="price-original">&#x20AA;1,650</div>
                     <div class="price">&#x20AA;1,490</div>
-                    <div class="price-note">16 מפגשים &bull; לבוגרי הקורס הבסיסי</div>
+                    <div class="price-note">8 מפגשים &bull; לבוגרי הקורס הבסיסי</div>
                     <ul class="pricing-features">
                         <li><span class="check">&#x2714;</span> למידה מעמיקה והתקדמות בפרויקט</li>
                         <li><span class="check">&#x2714;</span> תכנים בלעדיים באזור האישי</li>
@@ -2784,24 +2791,16 @@
             },
             'youth-advanced': {
                 title: 'ילדים ונוער — מתקדם',
-                subtitle: '16 מפגשים | לבוגרי הקורס הבסיסי',
+                subtitle: '8 מפגשים | לבוגרי הקורס הבסיסי',
                 sessions: [
                     { num: 1, title: 'חזרה ושדרוג ה-MVP', desc: 'סקירת הפרויקט מהקורס הבסיסי. מה עובד, מה חסר, ומה המטרה לקורס המתקדם.' },
-                    { num: 2, title: 'מבוא ל-Backend', desc: 'מה זה שרת? איך האתר שלכם מדבר עם העולם? מבוא ל-Node.js ו-APIs.' },
-                    { num: 3, title: 'בסיס נתונים — חלק 1', desc: 'מה זה Database? הכרות עם Supabase. שומרים ושולפים מידע אמיתי.' },
-                    { num: 4, title: 'בסיס נתונים — חלק 2', desc: 'חיבור בסיס הנתונים לאתר. טפסים ששומרים מידע, טבלאות דינמיות.' },
-                    { num: 5, title: 'Authentication — הרשמה והתחברות', desc: 'איך מוסיפים מערכת משתמשים לאתר? הרשמה, התחברות, ואזור אישי.' },
-                    { num: 6, title: 'API — חיבור לשירותים חיצוניים', desc: 'שליפת מידע מ-APIs חיצוניים. מזג אוויר, חדשות, או כל מידע שתרצו.' },
-                    { num: 7, title: 'עיצוב מתקדם ו-Responsive', desc: 'עיצוב מקצועי, אנימציות CSS, תמיכה מושלמת במובייל.' },
-                    { num: 8, title: 'AI מתקדם — Agents ואוטומציות', desc: 'בניית AI Agent שעושה דברים בשבילכם. אוטומציות חכמות.' },
-                    { num: 9, title: 'תשלומים ומסחר', desc: 'איך מוסיפים סליקה ותשלומים לאתר? מהאתר שלכם לעסק אמיתי.' },
-                    { num: 10, title: 'Deploy — העלאה לאוויר', desc: 'איך מעלים את האתר לאינטרנט? דומיין, hosting, ו-SSL.' },
-                    { num: 11, title: 'אבטחה ו-Best Practices', desc: 'הגנה מפני פריצות, ניהול סיסמאות, וכללי אצבע לקוד בטוח.' },
-                    { num: 12, title: 'אנליטיקס ו-SEO', desc: 'איך יודעים מי נכנס לאתר? איך מופיעים בגוגל? כלים למעקב וקידום.' },
-                    { num: 13, title: 'שיווק דיגיטלי מתקדם', desc: 'קמפיינים, רשתות חברתיות, ותוכן שיווקי שנוצר עם AI.' },
-                    { num: 14, title: 'פרויקט סיום — חלק 1', desc: 'בניית פרויקט סיום מקיף שמשלב את כל מה שלמדתם.' },
-                    { num: 15, title: 'פרויקט סיום — חלק 2', desc: 'השלמת הפרויקט, בדיקות, ליטוש ותיקוני באגים.' },
-                    { num: 16, title: 'יום הפיץ\' הגדול 🏆', desc: 'הצגת הפרויקט המתקדם. דמו חי, שאלות מהקהל, ותעודות סיום!' }
+                    { num: 2, title: 'Backend ובסיס נתונים', desc: 'מה זה שרת ו-Database? הכרות עם Supabase, שמירה ושליפה של מידע אמיתי.' },
+                    { num: 3, title: 'Authentication ומשתמשים', desc: 'מערכת הרשמה, התחברות ואזור אישי. האתר שלכם הופך לאפליקציה.' },
+                    { num: 4, title: 'API — חיבור לעולם', desc: 'שליפת מידע מ-APIs חיצוניים וחיבור שירותים חיצוניים לאתר.' },
+                    { num: 5, title: 'AI מתקדם — Agents ואוטומציות', desc: 'בניית AI Agent שעושה דברים בשבילכם. אוטומציות חכמות עם Claude.' },
+                    { num: 6, title: 'עיצוב מתקדם ו-Deploy', desc: 'עיצוב מקצועי, אנימציות, תמיכה במובייל. העלאה לאינטרנט עם דומיין.' },
+                    { num: 7, title: 'שיווק דיגיטלי ו-SEO', desc: 'איך מגיעים ללקוחות? קמפיינים, תוכן שיווקי עם AI, ואנליטיקס.' },
+                    { num: 8, title: 'יום הפיץ\' הגדול 🏆', desc: 'הצגת הפרויקט המתקדם. דמו חי, שאלות מהקהל, ותעודות סיום!' }
                 ]
             },
             'adults-basic': {
