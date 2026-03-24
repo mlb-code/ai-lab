@@ -1194,10 +1194,13 @@
             box-shadow: 0 8px 30px rgba(108, 60, 225, 0.1);
         }
 
-        .pricing-card .btn-primary {
+        .pricing-card .pricing-btn {
             margin-top: auto;
-            font-size: 1rem;
-            padding: 0.9rem;
+            font-size: 0.95rem;
+            padding: 0.8rem 1.5rem;
+            width: auto;
+            display: inline-block;
+            text-align: center;
         }
 
         .pricing-card::before {
@@ -1224,15 +1227,26 @@
         }
 
         .pricing-card-blur {
-            opacity: 0.55;
-            filter: blur(0.5px);
+            opacity: 0.45;
             border-style: dashed;
-            border-color: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.08);
         }
 
         .pricing-card-blur:hover {
-            opacity: 0.75;
-            filter: none;
+            opacity: 0.65;
+        }
+
+        .pricing-card-blur::after {
+            content: 'בקרוב';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            z-index: 2;
         }
 
         .pricing-coming-soon {
@@ -2563,7 +2577,7 @@
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card reveal">
-                    <div class="pricing-sale-badge">&#x1F389; מבצע חג!</div>
+                    <div class="pricing-sale-badge">מבצע חג</div>
                     <h3>ילדים ונוער &mdash; בסיסי</h3>
                     <div class="price-original">&#x20AA;990</div>
                     <div class="price">&#x20AA;890</div>
@@ -2574,33 +2588,35 @@
                         <li><span class="check">&#x2714;</span> אתר אישי שנשאר באוויר</li>
                         <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
                     </ul>
-                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI%20%D7%91%D7%A1%D7%99%D7%A1%D7%99" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
+                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%91%D7%A1%D7%99%D7%A1%D7%99" class="btn-primary pricing-btn" target="_blank">שריינו מקום</a>
                 </div>
                 <div class="pricing-card reveal">
-                    <div class="pricing-sale-badge">&#x1F389; מבצע חג!</div>
+                    <div class="pricing-sale-badge">מבצע חג</div>
                     <h3>ילדים ונוער &mdash; מתקדם</h3>
                     <div class="price-original">&#x20AA;1,650</div>
                     <div class="price">&#x20AA;1,490</div>
-                    <div class="price-note">8 מפגשים &bull; לבוגרי הקורס הבסיסי</div>
+                    <div class="price-note">8 מפגשים &bull; לבוגרי הבסיסי</div>
                     <ul class="pricing-features">
-                        <li><span class="check">&#x2714;</span> למידה מעמיקה והתקדמות בפרויקט</li>
+                        <li><span class="check">&#x2714;</span> העמקה והתקדמות בפרויקט</li>
                         <li><span class="check">&#x2714;</span> תכנים בלעדיים באזור האישי</li>
                         <li><span class="check">&#x2714;</span> תעודת סיום מתקדם</li>
                         <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
                     </ul>
-                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9E%D7%AA%D7%A7%D7%93%D7%9D" class="btn-primary" target="_blank">&#x1F4AC; שריינו מקום</a>
+                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9E%D7%AA%D7%A7%D7%93%D7%9D" class="btn-primary pricing-btn" target="_blank">שריינו מקום</a>
                 </div>
                 <div class="pricing-card pricing-card-blur reveal">
-                    <div class="pricing-coming-soon">בקרוב</div>
+                    <div class="pricing-sale-badge" style="visibility:hidden;">מבצע חג</div>
                     <h3>מבוגרים &mdash; בסיסי</h3>
-                    <div class="price" style="-webkit-text-fill-color: var(--text-muted); font-size: 2rem;">מחיר יפורסם בקרוב</div>
+                    <div class="price-original" style="visibility:hidden;">&#x20AA;990</div>
+                    <div class="price" style="visibility:hidden;">&#x20AA;890</div>
                     <div class="price-note">8 מפגשים חיים בזום</div>
                     <ul class="pricing-features">
-                        <li><span class="check" style="opacity:0.4;">&#x2714;</span> תוכנית מותאמת לגיל 60+</li>
-                        <li><span class="check" style="opacity:0.4;">&#x2714;</span> ללא ניסיון קודם בטכנולוגיה</li>
-                        <li><span class="check" style="opacity:0.4;">&#x2714;</span> עד 5 תלמידים בכיתה</li>
+                        <li><span class="check">&#x2714;</span> תוכנית מותאמת לגיל 60+</li>
+                        <li><span class="check">&#x2714;</span> ללא ניסיון קודם בטכנולוגיה</li>
+                        <li><span class="check">&#x2714;</span> אתר אישי שנשאר באוויר</li>
+                        <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
                     </ul>
-                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9C%D7%9E%D7%91%D7%95%D7%92%D7%A8%D7%99%D7%9D" class="btn-primary" target="_blank" style="opacity:0.7;">&#x1F514; עדכנו אותי כשנפתח</a>
+                    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%A2%D7%93%D7%9B%D7%A0%D7%95%20%D7%90%D7%95%D7%AA%D7%99%20%D7%9B%D7%A9%D7%A0%D7%A4%D7%AA%D7%97%20%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9C%D7%9E%D7%91%D7%95%D7%92%D7%A8%D7%99%D7%9D" class="btn-primary pricing-btn" target="_blank">עדכנו אותי כשנפתח</a>
                 </div>
             </div>
         </div>
