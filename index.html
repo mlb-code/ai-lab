@@ -1099,13 +1099,16 @@
         .instructor-avatar {
             width: 150px;
             height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
+            border-radius: 20px;
+            overflow: hidden;
             flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .instructor-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .instructor-info {
@@ -2452,7 +2455,7 @@
                 <h2>המנחה</h2>
             </div>
             <div class="instructor-card reveal">
-                <div class="instructor-avatar">&#x1F468;&#x200D;&#x1F4BB;</div>
+                <div class="instructor-avatar"><img src="meir.jpg" alt="מאיר לביא"></div>
                 <div class="instructor-info">
                     <h3>מאיר לביא</h3>
                     <div class="title">יזם טכנולוגי ומומחה AI</div>
