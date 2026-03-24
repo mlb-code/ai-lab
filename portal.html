@@ -1924,6 +1924,10 @@
                 <span class="nav-icon">&#x2753;</span>
                 <span>עזרה</span>
             </button>
+            <button data-section="advanced" class="advanced-only" style="display:none;">
+                <span class="nav-icon">&#x1F31F;</span>
+                <span>קורס מתקדם</span>
+            </button>
         </div>
         <a href="#" class="zoom-live-btn" id="zoomBtn" onclick="joinZoom()" title="הצטרפו למפגש בזום">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -1971,6 +1975,9 @@
         </button>
         <button data-section="help" onclick="selectMoreSection('help')">
             <span>&#x2753;</span> עזרה
+        </button>
+        <button data-section="advanced" onclick="selectMoreSection('advanced')" class="advanced-only" style="display:none;">
+            <span>&#x1F31F;</span> קורס מתקדם
         </button>
     </div>
 
@@ -3314,6 +3321,69 @@
             </div>
         </div>
 
+        <!-- ==================== ADVANCED COURSE ==================== -->
+        <div class="portal-section advanced-only" id="section-advanced" style="display:none;">
+            <div class="page-header">
+                <h1>&#x1F31F; קורס מתקדם</h1>
+                <p>ברוכים הבאים לשלב הבא! כאן תמצאו תכנים מתקדמים להמשך הלמידה</p>
+            </div>
+            <div class="sessions-grid">
+
+                <div class="session-card" onclick="this.classList.toggle('expanded')">
+                    <div class="session-banner" style="background: linear-gradient(135deg, #6C3CE1, #FF4D8D);">
+                        <div class="session-number">1</div>
+                    </div>
+                    <div class="session-body">
+                        <h3>Backend ושרתים</h3>
+                        <p class="session-preview">מבוא ל-backend, שרתים, APIs ואיך האתר שלכם מדבר עם העולם</p>
+                        <div class="session-detail">
+                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="session-card" onclick="this.classList.toggle('expanded')">
+                    <div class="session-banner" style="background: linear-gradient(135deg, #00D4AA, #4DA3FF);">
+                        <div class="session-number">2</div>
+                    </div>
+                    <div class="session-body">
+                        <h3>בסיס נתונים</h3>
+                        <p class="session-preview">איך שומרים מידע? מבוא לבסיסי נתונים ו-Supabase</p>
+                        <div class="session-detail">
+                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="session-card" onclick="this.classList.toggle('expanded')">
+                    <div class="session-banner" style="background: linear-gradient(135deg, #FF7849, #F5C842);">
+                        <div class="session-number">3</div>
+                    </div>
+                    <div class="session-body">
+                        <h3>Authentication ומשתמשים</h3>
+                        <p class="session-preview">איך מוסיפים הרשמה והתחברות לאתר שלכם</p>
+                        <div class="session-detail">
+                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="session-card" onclick="this.classList.toggle('expanded')">
+                    <div class="session-banner" style="background: linear-gradient(135deg, #FF4D8D, #6C3CE1);">
+                        <div class="session-number">4</div>
+                    </div>
+                    <div class="session-body">
+                        <h3>API וחיבור לשירותים</h3>
+                        <p class="session-preview">חיבור ל-APIs חיצוניים ושימוש בנתונים אמיתיים</p>
+                        <div class="session-detail">
+                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </main>
 
     <!-- PROJECT SUMMARY MODAL -->
@@ -3352,7 +3422,7 @@
         // ===== AUTH — GOOGLE SHEETS =====
         const SHEET_ID = '1ibz8t0sKCanzfG1zU0ISlUlf5pz5KX-dL1Ch5jHjeRA';
         const API_KEY = 'AIzaSyDKcJmFB60aKI3eBgglpX4TvBS6QNlD-IM';
-        const SHEET_RANGE = 'Sheet1!A:D';
+        const SHEET_RANGE = 'Sheet1!A:E';
         const RECHECK_HOURS = 24; // re-verify every 24 hours
 
         function normalizePhone(phone) {
@@ -3382,7 +3452,7 @@
                         if (expires && new Date(expires) < new Date()) {
                             return { valid: false, reason: 'expired' };
                         }
-                        return { valid: true, name: row[1] || '', group: row[3] || '' };
+                        return { valid: true, name: row[1] || '', group: row[3] || '', level: row[4] || 'basic' };
                     }
                 }
                 return { valid: false, reason: 'not_found' };
@@ -3406,9 +3476,10 @@
                     phone: normalizePhone(phone),
                     name: result.name,
                     group: result.group,
+                    level: result.level,
                     loginTime: Date.now()
                 }));
-                showPortal(result.name);
+                showPortal(result.name, result.level);
             } else {
                 btn.disabled = false;
                 btn.textContent = 'כניסה';
@@ -3419,11 +3490,17 @@
             }
         }
 
-        function showPortal(name) {
+        function showPortal(name, level) {
             document.getElementById('loginGate').classList.add('hidden');
             var greeting = document.getElementById('greetingArea');
             if (name) greeting.innerHTML = 'שלום, <strong>' + name + '</strong>';
             document.getElementById('logoutBtn').style.display = '';
+            // Show/hide advanced content
+            var advancedEls = document.querySelectorAll('.advanced-only');
+            var isAdvanced = level === 'advanced' || level === 'admin';
+            for (var i = 0; i < advancedEls.length; i++) {
+                advancedEls[i].style.display = isAdvanced ? '' : 'none';
+            }
         }
 
         function handleLogout() {
@@ -3446,7 +3523,7 @@
                     var hoursSinceLogin = (Date.now() - data.loginTime) / (1000 * 60 * 60);
                     if (hoursSinceLogin < RECHECK_HOURS) {
                         // Still within valid window, show portal
-                        showPortal(data.name);
+                        showPortal(data.name, data.level);
                         return;
                     }
                     // Re-verify in background
@@ -3456,15 +3533,16 @@
                                 phone: data.phone,
                                 name: result.name,
                                 group: result.group,
+                                level: result.level,
                                 loginTime: Date.now()
                             }));
-                            showPortal(result.name);
+                            showPortal(result.name, result.level);
                         } else {
                             handleLogout();
                         }
                     });
                     // Show portal while checking
-                    showPortal(data.name);
+                    showPortal(data.name, data.level);
                 } catch(e) {
                     localStorage.removeItem('youth_auth');
                 }
