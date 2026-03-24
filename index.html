@@ -1236,18 +1236,6 @@
             opacity: 0.65;
         }
 
-        .pricing-card-blur::after {
-            content: 'בקרוב';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            z-index: 2;
-        }
 
         .pricing-coming-soon {
             display: inline-block;
@@ -2627,11 +2615,10 @@
         <div class="container">
             <h2 class="reveal">&#x1F680; הקורס הבא נפתח ב-29.03!</h2>
             <p class="reveal">לנוער (10&ndash;17) ולמבוגרים (60+). המקומות מוגבלים ל-5 תלמידים בכיתה. השאירו פרטים ונחזור אליכם!</p>
-            <form class="contact-form reveal" id="contactForm" action="https://formsubmit.co/laviemb@gmail.com" method="POST">
-                <input type="hidden" name="_subject" value="פנייה חדשה מאתר הקורס AI Lab">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://mlb-code.github.io/ai-lab/index.html#register">
-                <input type="hidden" name="_template" value="table">
+            <form class="contact-form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
+                <input type="hidden" name="subject" value="פנייה חדשה מאתר הקורס AI Lab">
+                <input type="hidden" name="redirect" value="https://ai-lab.co.il/#register">
                 <div class="form-group">
                     <label for="name">שם מלא</label>
                     <input type="text" id="name" name="name" placeholder="הכניסו את השם שלכם" required>
