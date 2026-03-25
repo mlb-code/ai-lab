@@ -616,6 +616,7 @@
             scrollbar-width: none;
             padding: 0.5rem 2rem 1rem;
             direction: ltr;
+            justify-content: center;
         }
 
         .scroll-track::-webkit-scrollbar { display: none; }
@@ -1056,17 +1057,18 @@
             pointer-events: none;
         }
         .student-card .student-quote {
-            height: 110px;
+            min-height: 130px;
             display: flex;
             align-items: center;
-            overflow: hidden;
+            font-size: 0.92rem;
         }
         .student-card .student-project {
             flex-shrink: 0;
-            height: 52px;
+            min-height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.82rem;
         }
         .site-preview-btn {
             margin-top: auto;
