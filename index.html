@@ -2621,10 +2621,9 @@
         <div class="container">
             <h2 class="reveal">&#x1F680; הקורס הבא נפתח ב-29.03!</h2>
             <p class="reveal">לנוער (10&ndash;17) ולמבוגרים (60+). המקומות מוגבלים ל-5 תלמידים בכיתה. השאירו פרטים ונחזור אליכם!</p>
-            <form class="contact-form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+            <form class="contact-form reveal" id="contactForm" onsubmit="return submitForm(event)">
                 <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
                 <input type="hidden" name="subject" value="פנייה חדשה מאתר הקורס AI Lab">
-                <input type="hidden" name="redirect" value="https://ai-lab.co.il/#register">
                 <div class="form-group">
                     <label for="name">שם מלא</label>
                     <input type="text" id="name" name="name" placeholder="הכניסו את השם שלכם" required>
@@ -2852,6 +2851,31 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeSyllabus();
         });
+
+        // Form submit via AJAX
+        async function submitForm(e) {
+            e.preventDefault();
+            var form = document.getElementById('contactForm');
+            var btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'שולח...';
+            try {
+                var data = new FormData(form);
+                var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+                if (res.ok) {
+                    form.innerHTML = '<div style="text-align:center;padding:2rem;font-size:1.2rem;color:var(--accent);font-weight:700;">הפנייה נשלחה בהצלחה! נחזור אליכם בהקדם.</div>';
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = '📩 שלח פנייה';
+                    alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
+                }
+            } catch(err) {
+                btn.disabled = false;
+                btn.textContent = '📩 שלח פנייה';
+                alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
+            }
+            return false;
+        }
 
         // WhatsApp with form data
         function sendWhatsApp() {
