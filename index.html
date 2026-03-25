@@ -216,6 +216,22 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .mobile-close-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+        }
 
         .mobile-menu-links {
             list-style: none;
@@ -2206,6 +2222,7 @@
     <div class="mobile-menu-panel" id="mobileMenuPanel">
         <div class="mobile-menu-header">
             <span class="mobile-menu-logo">AI Lab</span>
+            <button class="mobile-close-btn" id="menuCloseBtn" aria-label="סגור תפריט">&times;</button>
         </div>
         <ul class="mobile-menu-links">
             <li><a href="#audience"><span class="menu-icon">&#x1F3AF;</span> למי מיועד?</a></li>
@@ -2837,6 +2854,7 @@
         });
 
         mobileOverlay.addEventListener('click', closeMobileMenu);
+        document.getElementById('menuCloseBtn').addEventListener('click', closeMobileMenu);
 
         // Close mobile menu on link click
         mobilePanel.querySelectorAll('a').forEach(link => {
