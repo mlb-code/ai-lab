@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>EnglishKids — אזור אישי</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#7C3AED;--purple-light:#A78BFA;
+  --pink:#EC4899;--pink-light:#F9A8D4;
+  --blue:#3B82F6;--green:#10B981;
+  --yellow:#FBBF24;--orange:#F97316;
+  --dark:#0F0A1E;--dark2:#160D2E;--dark3:#1E1040;
+  --card:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.1);
+  --sw:260px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x:hidden;min-height:100vh}
+
+/* ── LOGIN ── */
+#login-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 30% 30%,rgba(124,58,237,.35),transparent 55%),
+             radial-gradient(ellipse at 75% 70%,rgba(236,72,153,.25),transparent 55%),var(--dark);
+}
+.lcard{background:rgba(255,255,255,.05);border:1px solid var(--border);backdrop-filter:blur(24px);border-radius:32px;padding:48px 40px;width:100%;max-width:420px;text-align:center;position:relative}
+.lback{position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.6);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;text-decoration:none}
+.lback:hover{background:rgba(255,255,255,.15);color:#fff}
+.llogo{font-size:3.5rem;margin-bottom:8px;display:block}
+.ltitle{font-size:2rem;font-weight:900;background:linear-gradient(90deg,var(--purple-light),var(--pink-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.lsub{color:rgba(255,255,255,.5);font-size:.9rem;margin-bottom:36px;margin-top:6px}
+.fg{margin-bottom:16px;text-align:right}
+.fg label{display:block;font-size:.85rem;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:8px}
+.fg input{width:100%;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-family:'Heebo',sans-serif;font-size:1rem;outline:none;transition:border-color .2s}
+.fg input:focus{border-color:var(--purple-light);box-shadow:0 0 0 3px rgba(124,58,237,.2)}
+.lbtn{width:100%;padding:14px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-size:1.1rem;font-weight:800;cursor:pointer;font-family:'Heebo',sans-serif;margin-top:8px;box-shadow:0 8px 24px rgba(124,58,237,.4);transition:transform .2s,box-shadow .2s}
+.lbtn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(124,58,237,.6)}
+.lerr{color:#FCA5A5;font-size:.9rem;margin-top:12px;display:none}
+.lhint{margin-top:20px;color:rgba(255,255,255,.4);font-size:.8rem;line-height:1.8;background:rgba(255,255,255,.04);border-radius:12px;padding:12px}
+.lhint b{color:rgba(255,255,255,.7)}
+.ltabs{display:flex;background:rgba(255,255,255,.06);border-radius:50px;padding:4px;margin-bottom:28px;gap:0}
+.ltab{flex:1;padding:10px;border-radius:50px;border:none;background:none;color:rgba(255,255,255,.5);font-family:'Heebo',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s}
+.ltab.active{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;box-shadow:0 4px 12px rgba(124,58,237,.35)}
+.lsuccess{color:#6EE7B7;font-size:.9rem;margin-top:12px;display:none}
+
+/* ── APP ── */
+#app{display:none;min-height:100vh}
+.app-wrap{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:var(--sw);background:var(--dark2);border-left:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;right:0;height:100vh;z-index:50}
+.sb-head{padding:24px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.sb-av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.5rem;position:relative;flex-shrink:0;border:2px solid rgba(167,139,250,.4)}
+.sb-lvl{position:absolute;bottom:-4px;right:-4px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000;font-size:.6rem;font-weight:900;padding:2px 6px;border-radius:50px}
+.sb-name{font-weight:800;font-size:1rem}
+.sb-coins{display:flex;align-items:center;gap:4px;font-size:.8rem;color:var(--yellow);font-weight:700;margin-top:3px}
+.sb-nav{padding:16px 12px;flex:1;overflow-y:auto}
+.ni{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;cursor:pointer;font-size:.95rem;font-weight:600;color:rgba(255,255,255,.6);transition:all .2s;margin-bottom:4px;border:none;background:none;width:100%;text-align:right;font-family:'Heebo',sans-serif}
+.ni:hover{background:rgba(255,255,255,.07);color:#fff}
+.ni.active{background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(236,72,153,.2));color:#fff;border:1px solid rgba(124,58,237,.3)}
+.ni .ic{font-size:1.2rem;width:24px;text-align:center}
+.sb-foot{padding:16px 12px;border-top:1px solid var(--border)}
+.logout-btn{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;cursor:pointer;font-size:.9rem;font-weight:600;color:rgba(255,255,255,.5);background:none;border:none;width:100%;font-family:'Heebo',sans-serif;transition:all .2s;text-decoration:none}
+.logout-btn:hover{background:rgba(239,68,68,.1);color:#FCA5A5}
+
+/* MAIN */
+.app-main{margin-right:var(--sw);flex:1;padding:32px}
+.page{display:none}
+.page.active{display:block}
+.ph{margin-bottom:32px}
+.ph h1{font-size:1.9rem;font-weight:900}
+.ph p{color:rgba(255,255,255,.55);margin-top:5px}
+
+/* ── AVATAR PAGE ── */
+.av-layout{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start}
+.av-display{background:transparent!important;border:none!important;box-shadow:none!important;padding:0 8px 16px;text-align:center;position:sticky;top:32px}
+.av-name{font-size:1.15rem;font-weight:900;margin-top:12px;background:linear-gradient(90deg,var(--purple-light),var(--pink-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.av-level{color:rgba(255,255,255,.6);font-size:.85rem;margin-top:4px}
+.av-coins-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.35);border-radius:50px;padding:6px 16px;margin-top:8px;font-weight:700;font-size:.9rem}
+/* XP level bar */
+.av-xp-wrap{margin-top:14px;padding:0 4px}
+.av-xp-label{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.45);margin-bottom:5px;font-weight:700}
+.av-xp-bg{height:10px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.3)}
+.av-xp-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--purple),var(--pink),var(--yellow));transition:width 1s;position:relative;box-shadow:0 0 8px rgba(124,58,237,.6)}
+.av-xp-fill::after{content:'';position:absolute;top:1px;left:4px;right:4px;height:3px;background:rgba(255,255,255,.25);border-radius:3px}
+.av-lvl-badge{display:inline-flex;align-items:center;gap:5px;margin-top:10px;background:linear-gradient(135deg,rgba(124,58,237,.25),rgba(236,72,153,.2));border:1px solid rgba(124,58,237,.4);border-radius:50px;padding:5px 14px;font-size:.8rem;font-weight:900}
+.gender-toggle{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.gender-btn{flex:1;padding:10px;border-radius:14px;border:2px solid var(--border);background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Heebo',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .25s}
+.gender-btn.active.boy{border-color:#3B82F6;background:rgba(59,130,246,.15);color:#93C5FD}
+.gender-btn.active.girl{border-color:#EC4899;background:rgba(236,72,153,.15);color:#F9A8D4}
+/* Girl-mode overrides */
+.char-girl .c-hair-side{height:125px!important;border-radius:0 0 42% 42%!important}
+.char-girl .c-hair-back{width:120px!important;height:130px!important;border-radius:52% 52% 40% 40%!important}
+.char-girl .c-hair-front{clip-path:polygon(0 0,100% 0,100% 70%,85% 100%,70% 75%,50% 95%,30% 75%,15% 100%,0 70%)!important;width:106px!important;height:52px!important}
+.char-girl .c-lip-top{background:linear-gradient(160deg,#E0507A,#C0355A)!important}
+.char-girl .c-lip-bot{background:linear-gradient(160deg,#E86080,#C84060)!important;height:12px!important}
+.char-girl .c-eyelid::before{height:7px!important;background:linear-gradient(180deg,#3a1050,rgba(58,16,80,0))!important}
+.char-girl .c-torso{clip-path:polygon(12% 0,88% 0,95% 100%,5% 100%)!important}
+.char-girl .c-head::before{background:rgba(255,100,150,.28)!important}
+.char-girl .c-head::after{background:rgba(255,100,150,.28)!important}
+.char-girl .c-iris{background:radial-gradient(circle at 35% 30%,#A78BF5,#6D28D9 50%,#3b0e8c 80%)!important}
+
+/* char stage */
+.char-stage{position:relative;height:450px;display:flex;justify-content:center;align-items:flex-end}
+.char-glow-base{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:160px;height:22px;background:radial-gradient(ellipse,rgba(124,58,237,.55),transparent 70%);border-radius:50%}
+
+/* Overlays live INSIDE .character */
+.hat-ov{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:2.6rem;z-index:20;pointer-events:none;line-height:1;transition:all .3s}
+.acc-ov{position:absolute;top:42px;left:56%;font-size:1.6rem;z-index:20;pointer-events:none;transition:all .3s}
+.extra-ov{position:absolute;top:145px;left:-32px;font-size:2.4rem;z-index:1;pointer-events:none;transition:all .3s}
+
+/* ── REALISTIC HUMAN CHARACTER ── */
+.character{position:relative;width:210px;height:428px;margin-bottom:0}
+
+/* Hair back layer */
+.c-hair-back{
+  position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:110px;height:122px;
+  border-radius:54% 54% 38% 38%;
+  background:linear-gradient(155deg,#7C3AED,#4C1D95,#3b0e8c);
+  z-index:1;transition:background .4s;
+  box-shadow:0 4px 18px rgba(76,29,149,.5);
+}
+
+/* Head / face */
+.c-head{
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  width:92px;height:112px;
+  border-radius:47% 47% 43% 43%/52% 52% 48% 48%;
+  background:linear-gradient(170deg,#FFE8C8 10%,#FAC882 52%,#EEA055 88%,#D4854A 100%);
+  box-shadow:
+    inset -12px -20px 28px rgba(165,85,15,.22),
+    inset 8px 10px 20px rgba(255,240,200,.26),
+    6px 14px 32px rgba(0,0,0,.42),
+    0 2px 8px rgba(0,0,0,.18);
+  z-index:3;animation:hbob 3.5s ease-in-out infinite;overflow:visible;
+}
+/* Cheeks blush */
+.c-head::before{
+  content:'';position:absolute;
+  bottom:26px;left:3px;
+  width:24px;height:14px;
+  border-radius:50%;
+  background:rgba(240,110,70,.2);
+  filter:blur(6px);
+  z-index:10;
+}
+.c-head::after{
+  content:'';position:absolute;
+  bottom:26px;right:3px;
+  width:24px;height:14px;
+  border-radius:50%;
+  background:rgba(240,110,70,.2);
+  filter:blur(6px);
+  z-index:10;
+}
+@keyframes hbob{0%,100%{transform:translateX(-50%) rotate(-1.5deg)}50%{transform:translateX(-50%) rotate(1.5deg)}}
+
+/* Ears */
+.c-ear{
+  position:absolute;top:36px;
+  width:16px;height:24px;
+  border-radius:50%;
+  background:linear-gradient(155deg,#F8CB90,#E09050);
+  box-shadow:inset -4px 0 7px rgba(140,65,10,.2);
+  z-index:2;
+}
+.c-ear.L{left:-11px}.c-ear.R{right:-11px}
+.c-ear::after{
+  content:'';position:absolute;
+  top:5px;left:4px;
+  width:8px;height:14px;
+  border-radius:50%;
+  background:rgba(160,75,15,.1);
+}
+
+/* Eyebrows */
+.c-brow{
+  position:absolute;top:22px;
+  height:6px;width:24px;
+  border-radius:5px 5px 3px 3px;
+  z-index:4;
+  background:linear-gradient(90deg,#3B1A6A,#5B28A0);
+  transition:background .4s;
+  box-shadow:0 2px 5px rgba(0,0,0,.3);
+}
+.c-brow.L{left:8px;transform:rotate(-9deg)}
+.c-brow.R{right:8px;transform:rotate(9deg)}
+
+/* Eyes */
+.c-eye-wrap{position:absolute;top:34px;z-index:4}
+.c-eye-wrap.L{left:6px}.c-eye-wrap.R{right:6px}
+.c-eyelid{
+  width:26px;height:18px;
+  border-radius:50%;
+  background:#fefefe;
+  overflow:visible;
+  box-shadow:0 3px 8px rgba(0,0,0,.38),inset 0 2px 5px rgba(0,0,0,.1);
+  position:relative;
+  clip-path:ellipse(50% 50% at 50% 50%);
+}
+/* Eyelid top shadow / lash line */
+.c-eyelid::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:6px;
+  background:linear-gradient(180deg,#2a1060,rgba(42,16,96,0));
+  border-radius:50% 50% 0 0;
+  z-index:8;
+}
+/* Bottom lid */
+.c-eyelid::after{
+  content:'';position:absolute;
+  bottom:0;left:5px;right:5px;height:3px;
+  background:rgba(110,55,10,.18);
+  border-radius:0 0 50% 50%;
+  z-index:8;
+}
+.c-iris{
+  width:15px;height:15px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 28%,#63B3F8 0%,#1D60B0 45%,#0a2d6e 78%,#060f28 100%);
+  position:absolute;
+  top:1.5px;left:5.5px;
+  z-index:3;
+  overflow:hidden;
+  box-shadow:0 1px 4px rgba(0,0,0,.5);
+}
+.c-iris::after{
+  content:'';position:absolute;
+  bottom:2px;right:2px;
+  width:3px;height:3px;
+  border-radius:50%;
+  background:rgba(255,255,255,.35);
+}
+.c-pupil{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#1a1a30,#050510);
+  position:absolute;
+  top:3.5px;left:3.5px;
+}
+.c-shine{
+  width:5px;height:5px;
+  border-radius:50%;
+  background:rgba(255,255,255,.95);
+  position:absolute;
+  top:1px;left:1px;
+}
+
+/* Nose */
+.c-nose{
+  position:absolute;top:59px;left:50%;transform:translateX(-50%);
+  width:20px;height:18px;
+  z-index:4;
+}
+.c-nose::before{
+  content:'';position:absolute;
+  bottom:0;left:50%;transform:translateX(-50%);
+  width:16px;height:12px;
+  border-radius:50%;
+  background:rgba(148,75,18,.14);
+  box-shadow:-7px -3px 0 -2px rgba(148,75,18,.1),7px -3px 0 -2px rgba(148,75,18,.1);
+}
+.c-nose::after{
+  content:'';position:absolute;
+  top:0;left:50%;transform:translateX(-50%);
+  width:3px;height:11px;
+  border-radius:2px;
+  background:rgba(155,80,18,.08);
+}
+
+/* Lips */
+.c-mouth-wrap{
+  position:absolute;top:78px;left:50%;transform:translateX(-50%);
+  width:32px;z-index:4;
+}
+.c-lip-top{
+  width:32px;height:10px;
+  background:linear-gradient(155deg,#C87270,#A84E4E);
+  border-radius:48% 48% 0 0;
+  clip-path:polygon(0 100%,9% 8%,27% 62%,50% 4%,73% 62%,91% 8%,100% 100%);
+  box-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+.c-lip-bot{
+  width:29px;height:11px;
+  background:linear-gradient(155deg,#D08080,#B46262);
+  border-radius:0 0 56% 56%;
+  margin:0 auto;
+  box-shadow:0 3px 6px rgba(0,0,0,.18);
+}
+/* Lip shine */
+.c-lip-bot::after{
+  content:'';position:absolute;
+  top:2px;left:8px;
+  width:10px;height:4px;
+  border-radius:50%;
+  background:rgba(255,255,255,.15);
+}
+
+/* Hair front + sides */
+.c-hair-front{
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:104px;height:50px;
+  border-radius:54% 54% 0 0;
+  background:linear-gradient(155deg,#7C3AED,#4C1D95,#3b0e8c);
+  z-index:5;
+  clip-path:polygon(0 0,100% 0,100% 55%,82% 95%,68% 60%,50% 80%,32% 60%,18% 95%,0 55%);
+  transition:background .4s;
+  box-shadow:0 6px 16px rgba(76,29,149,.4);
+}
+.c-hair-side{
+  position:absolute;top:25px;
+  width:15px;height:58px;
+  border-radius:0 0 50% 50%;
+  background:linear-gradient(155deg,#6D28D9,#4C1D95);
+  z-index:6;transition:background .4s;
+}
+.c-hair-side.L{left:-2px;border-radius:0 22% 56% 36%}
+.c-hair-side.R{right:-2px;border-radius:22% 0 36% 56%}
+
+/* Neck */
+.c-neck{
+  position:absolute;top:114px;left:50%;transform:translateX(-50%);
+  width:28px;height:30px;
+  background:linear-gradient(155deg,#F5C090,#E09050);
+  box-shadow:inset -5px 0 9px rgba(140,65,10,.16);
+  z-index:2;
+}
+
+/* Shoulders */
+.c-shoulders{
+  position:absolute;top:136px;left:50%;transform:translateX(-50%);
+  width:122px;height:26px;
+  background:linear-gradient(155deg,#7C3AED,#5B21B6);
+  border-radius:50%;z-index:3;
+  box-shadow:0 5px 14px rgba(0,0,0,.35);
+  transition:background .4s;
+}
+
+/* Torso */
+.c-torso{
+  position:absolute;top:148px;left:50%;transform:translateX(-50%);
+  width:88px;height:112px;
+  border-radius:14px 14px 20px 20px;
+  background:linear-gradient(155deg,#7C3AED,#5B21B6);
+  box-shadow:
+    5px 10px 24px rgba(0,0,0,.52),
+    inset -8px -10px 20px rgba(0,0,0,.22),
+    inset 5px 5px 12px rgba(255,255,255,.08);
+  z-index:3;transition:background .4s;
+  clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);
+}
+
+/* Collar */
+.c-collar{
+  position:absolute;top:142px;left:50%;transform:translateX(-50%);
+  width:32px;height:20px;
+  z-index:4;
+  background:linear-gradient(155deg,#7C3AED,#5B21B6);
+  clip-path:polygon(0 0,50% 100%,100% 0);
+  filter:brightness(.80);transition:background .4s;
+}
+
+/* Upper arms */
+.c-uarm{
+  position:absolute;top:142px;
+  width:25px;height:76px;
+  border-radius:13px;
+  background:linear-gradient(155deg,#7C3AED,#5B21B6);
+  box-shadow:2px 5px 14px rgba(0,0,0,.42);
+  z-index:2;transition:background .4s;
+}
+.c-uarm.L{left:14px;transform-origin:top center;animation:armL 3s ease-in-out infinite}
+.c-uarm.R{right:14px;transform-origin:top center;animation:armR 3s ease-in-out infinite}
+@keyframes armL{0%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(16deg) translateY(3px)}100%{transform:rotate(-4deg) translateY(0)}}
+@keyframes armR{0%{transform:rotate(4deg) translateY(0)}50%{transform:rotate(-16deg) translateY(3px)}100%{transform:rotate(4deg) translateY(0)}}
+
+/* Forearm */
+.c-farm{
+  position:absolute;bottom:-58px;left:50%;transform:translateX(-50%);
+  width:21px;height:56px;
+  border-radius:11px;
+  background:linear-gradient(155deg,#FFE8C8,#EEA055);
+  box-shadow:1px 3px 9px rgba(0,0,0,.22);
+}
+
+/* Hand */
+.c-hand{
+  position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
+  width:22px;height:22px;
+  border-radius:42% 42% 52% 52%;
+  background:linear-gradient(155deg,#FFE8C8,#EEA055);
+  box-shadow:0 3px 7px rgba(0,0,0,.22);
+}
+.c-hand::before{
+  content:'';position:absolute;top:1px;left:2px;right:2px;height:7px;
+  border-radius:5px 5px 0 0;
+  background:repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(155,75,15,.18) 3px,rgba(155,75,15,.18) 4px);
+}
+
+/* Belt */
+.c-belt{
+  position:absolute;top:254px;left:50%;transform:translateX(-50%);
+  width:78px;height:11px;
+  background:linear-gradient(155deg,#1F2937,#0f1620);
+  border-radius:4px;z-index:4;
+  box-shadow:0 3px 7px rgba(0,0,0,.45);
+}
+.c-belt::after{
+  content:'';position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  width:14px;height:8px;
+  background:linear-gradient(135deg,#FBBF24,#D97706);
+  border-radius:3px;
+  box-shadow:0 1px 3px rgba(0,0,0,.3);
+}
+
+/* Legs */
+.c-leg{
+  position:absolute;top:260px;
+  width:36px;height:116px;
+  border-radius:9px 9px 7px 7px;
+  background:linear-gradient(155deg,#1e40af,#1a337a);
+  box-shadow:2px 5px 14px rgba(0,0,0,.42);
+  z-index:2;transition:background .4s;
+}
+.c-leg.L{left:30px}.c-leg.R{right:30px}
+.c-leg::before{
+  content:'';position:absolute;top:55px;left:4px;right:4px;height:4px;
+  background:rgba(0,0,0,.12);border-radius:3px;
+}
+
+/* Shoes */
+.c-shoe{
+  position:absolute;bottom:-17px;left:50%;transform:translateX(-50%);
+  width:46px;height:20px;
+  background:linear-gradient(135deg,#0f1620,#2d3748);
+  border-radius:14px 14px 6px 6px;
+  box-shadow:2px 5px 12px rgba(0,0,0,.5);
+  transition:background .4s;
+}
+.c-shoe::before{
+  content:'';position:absolute;top:4px;left:7px;
+  width:14px;height:6px;
+  border-radius:50%;
+  background:rgba(255,255,255,.13);
+}
+.c-shoe::after{
+  content:'';position:absolute;bottom:-5px;left:-2px;right:-2px;height:6px;
+  background:rgba(0,0,0,.55);border-radius:6px;
+}
+.c-leg.L .c-shoe{left:50%;transform:translateX(-50%)}.c-leg.R .c-shoe{right:auto;left:50%;transform:translateX(-50%)}
+
+/* ── SVG CHARACTER ── */
+#char-svg{animation:hbob 3.5s ease-in-out infinite;overflow:visible;display:block}
+#arm-l{transform-box:fill-box;transform-origin:50% 5%;animation:armL 3s ease-in-out infinite}
+#arm-r{transform-box:fill-box;transform-origin:50% 5%;animation:armR 3s ease-in-out infinite}
+.char-girl #s-lip-top{fill:#D0406A!important}
+.char-girl #s-lip-bot{fill:#E05878!important}
+/* ── SPECIAL ITEM ANIMATIONS ── */
+#s-divine-crown{animation:crownGlow 2s ease-in-out infinite}
+@keyframes crownGlow{0%,100%{filter:drop-shadow(0 0 10px rgba(255,200,0,.7))}50%{filter:drop-shadow(0 0 22px rgba(255,215,0,1))}}
+#s-lightning-crown{animation:lcrownFlash 1.6s ease-in-out infinite}
+@keyframes lcrownFlash{0%,100%{filter:drop-shadow(0 0 8px rgba(255,220,40,.6))}50%{filter:drop-shadow(0 0 20px rgba(255,240,80,1))}}
+#s-space-helmet{animation:helmetGlow 3s ease-in-out infinite}
+@keyframes helmetGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(56,189,248,.4))}50%{filter:drop-shadow(0 0 16px rgba(34,211,238,.8))}}
+#s-galaxy-crown{animation:galaxyPulse 2.2s ease-in-out infinite}
+@keyframes galaxyPulse{0%,100%{filter:drop-shadow(0 0 8px rgba(139,92,246,.5))}50%{filter:drop-shadow(0 0 18px rgba(167,139,250,.9))}}
+#s-halo-ov{animation:haloFloat 2.5s ease-in-out infinite}
+@keyframes haloFloat{0%,100%{transform:translateY(0) scaleX(1)}50%{transform:translateY(-6px) scaleX(1.05)}}
+#s-halo-ring{animation:haloShimmer 1.8s linear infinite}
+@keyframes haloShimmer{0%{stroke-opacity:0.9}50%{stroke-opacity:1;stroke:#FFFFFF}100%{stroke-opacity:0.9}}
+#s-lightning-bolt{animation:boltFlash 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 50%}
+@keyframes boltFlash{0%,100%{filter:drop-shadow(0 0 8px rgba(255,220,0,.6))url(#f-glow-bolt);opacity:1}50%{filter:drop-shadow(0 0 20px rgba(255,255,100,1))url(#f-glow-bolt);opacity:0.85}}
+
+/* SKIN PICKER */
+.skin-picker{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:16px;border:1px solid var(--border)}
+.sp-label{font-size:.8rem;font-weight:700;color:rgba(255,255,255,.55);white-space:nowrap;flex-shrink:0}
+.sp-swatches{display:flex;gap:7px;flex-wrap:wrap}
+.sp-sw{width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.15);cursor:pointer;transition:all .2s;flex-shrink:0}
+.sp-sw:hover{transform:scale(1.18);border-color:rgba(255,255,255,.5)}
+.sp-sw.active{border-color:var(--yellow);box-shadow:0 0 0 2px var(--yellow),0 0 12px rgba(234,179,8,.4)}
+
+/* WARDROBE */
+.wardrobe-card{background:var(--card);border:1px solid var(--border);border-radius:28px;padding:28px}
+.wtabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.wtab{padding:8px 16px;border-radius:50px;border:1px solid var(--border);background:none;color:rgba(255,255,255,.6);font-family:'Heebo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s}
+.wtab.active{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(124,58,237,.3)}
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:12px}
+.itm{border-radius:16px;padding:14px 8px;border:2px solid var(--border);background:rgba(255,255,255,.03);cursor:pointer;text-align:center;transition:all .25s;position:relative;overflow:hidden}
+.itm:hover:not(.locked){border-color:rgba(167,139,250,.4);background:rgba(124,58,237,.1);transform:translateY(-3px)}
+.itm.equipped{border-color:var(--yellow);background:rgba(234,179,8,.1);box-shadow:0 0 16px rgba(234,179,8,.2)}
+.itm.locked{opacity:.4;cursor:not-allowed}
+.itm-sw{width:44px;height:44px;border-radius:12px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+.itm-name{font-size:.7rem;font-weight:700;color:rgba(255,255,255,.85);line-height:1.3}
+.itm-lock{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:2px}
+.equipped-badge{position:absolute;top:4px;left:4px;background:var(--yellow);color:#000;font-size:.55rem;font-weight:900;padding:2px 6px;border-radius:50px}
+
+/* ── COURSES ── */
+.units-list{display:flex;flex-direction:column;gap:20px}
+.unit-card{background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden}
+.unit-hdr{display:flex;align-items:center;gap:16px;padding:22px 26px;cursor:pointer;border:none;width:100%;text-align:right;background:none;color:#fff;font-family:'Heebo',sans-serif;transition:background .2s}
+.unit-hdr:hover{background:rgba(255,255,255,.03)}
+.unit-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.unit-info{flex:1;text-align:right}
+.unit-title{font-size:1.05rem;font-weight:800}
+.unit-prog-txt{font-size:.82rem;color:rgba(255,255,255,.5);margin-top:2px}
+.prog-wrap{flex:1;max-width:150px}
+.prog-bg{height:7px;background:rgba(255,255,255,.1);border-radius:4px}
+.prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--purple),var(--pink));transition:width .5s}
+.unit-chev{font-size:1rem;color:rgba(255,255,255,.4);transition:transform .3s;flex-shrink:0}
+.unit-card.open .unit-chev{transform:rotate(180deg)}
+.lessons-list{border-top:1px solid var(--border);display:none}
+.unit-card.open .lessons-list{display:block}
+.lesson-row{display:flex;align-items:center;gap:14px;padding:14px 26px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .2s}
+.lesson-row:last-child{border-bottom:none}
+.lesson-row:hover:not(.locked){background:rgba(255,255,255,.04)}
+.lesson-row.locked{cursor:default;opacity:.5}
+.lnum{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;flex-shrink:0}
+.lnum.done{background:linear-gradient(135deg,var(--green),#059669)}
+.lnum.available{background:linear-gradient(135deg,var(--yellow),var(--orange));animation:pn 2s infinite}
+@keyframes pn{0%,100%{box-shadow:0 0 0 0 rgba(251,191,36,.4)}50%{box-shadow:0 0 0 8px rgba(251,191,36,0)}}
+.lnum.locked{background:rgba(255,255,255,.1)}
+.linfo{flex:1}
+.ltitle2{font-size:.95rem;font-weight:700}
+.ltype{font-size:.75rem;color:rgba(255,255,255,.5);margin-top:2px}
+.lcoins{display:flex;align-items:center;gap:4px;font-size:.8rem;font-weight:700;color:var(--yellow)}
+
+/* ── LESSON MODAL ── */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-ov.open{display:flex}
+.modal-box{background:var(--dark2);border:1px solid var(--border);border-radius:32px;padding:40px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal-x{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.08);border:none;color:#fff;width:36px;height:36px;border-radius:10px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-x:hover{background:rgba(255,255,255,.15)}
+.mhead{text-align:center;margin-bottom:28px}
+.micon{font-size:3rem;margin-bottom:10px}
+.mtitle{font-size:1.5rem;font-weight:900}
+.msub{color:rgba(255,255,255,.6);margin-top:6px;font-size:.9rem}
+
+/* Vocab */
+.vocab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.flip-card{height:115px;perspective:600px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-f,.flip-b{position:absolute;inset:0;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden}
+.flip-f{background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(59,130,246,.1));border:1px solid rgba(124,58,237,.3)}
+.flip-b{background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(6,182,212,.1));border:1px solid rgba(16,185,129,.3);transform:rotateY(180deg)}
+.fe{font-size:1.8rem;margin-bottom:5px}
+.fw{font-size:1.05rem;font-weight:800}
+.fh{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:3px}
+.tts-btn{margin-top:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:50%;width:30px;height:30px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0}
+.tts-btn:hover{background:rgba(255,255,255,.25)}
+
+/* Quiz */
+.qprog{text-align:center;color:rgba(255,255,255,.5);font-size:.85rem;margin-bottom:16px}
+.qq{font-size:1.2rem;font-weight:800;text-align:center;margin-bottom:22px;line-height:1.4}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qopt{padding:14px;border-radius:14px;border:2px solid var(--border);background:rgba(255,255,255,.04);cursor:pointer;font-size:.95rem;font-weight:700;font-family:'Heebo',sans-serif;color:#fff;transition:all .2s;text-align:center}
+.qopt:hover:not(:disabled){border-color:rgba(124,58,237,.5);background:rgba(124,58,237,.1)}
+.qopt.correct{border-color:var(--green);background:rgba(16,185,129,.2)}
+.qopt.wrong{border-color:#EF4444;background:rgba(239,68,68,.2)}
+.qfb{text-align:center;margin-top:14px;font-size:1rem;font-weight:700;min-height:26px}
+
+/* Complete */
+.complete-btn{display:none;width:100%;margin-top:26px;padding:15px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--green),#059669);color:#fff;font-size:1.1rem;font-weight:800;cursor:pointer;font-family:'Heebo',sans-serif;transition:transform .2s;box-shadow:0 6px 20px rgba(16,185,129,.4)}
+.complete-btn:hover{transform:scale(1.02)}
+.complete-btn.show{display:block}
+
+/* Toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;padding:14px 28px;border-radius:50px;font-weight:800;font-size:.95rem;z-index:999;transition:transform .4s;box-shadow:0 8px 24px rgba(124,58,237,.5);white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Friends */
+.friends-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.friend-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;text-align:center;transition:transform .2s}
+.friend-card:hover{transform:translateY(-4px);border-color:rgba(167,139,250,.3)}
+.fav{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 10px}
+.fname{font-weight:800;font-size:.95rem}
+.flvl{color:rgba(255,255,255,.5);font-size:.8rem;margin-top:2px}
+.fstatus{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:50px}
+.fstatus.online{background:rgba(16,185,129,.15);color:#6EE7B7}
+.fstatus.offline{background:rgba(255,255,255,.06);color:rgba(255,255,255,.4)}
+
+/* Profile */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pbig{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px;text-align:center;grid-column:span 2}
+.pbig-av{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 14px;border:4px solid rgba(167,139,250,.4)}
+.pstat{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;text-align:center}
+.pstat .num{font-size:2rem;font-weight:900;background:linear-gradient(90deg,var(--purple-light),var(--pink-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pstat .lbl{color:rgba(255,255,255,.5);font-size:.82rem;margin-top:4px}
+.xp-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;grid-column:span 2}
+.xp-top{display:flex;justify-content:space-between;margin-bottom:12px;font-weight:700;font-size:.9rem}
+.xp-bg{height:12px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden}
+.xp-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--purple),var(--pink));transition:width 1s}
+
+/* ── MEMORY GAME ── */
+.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.mem-card{height:70px;perspective:600px;cursor:pointer;border-radius:14px}
+.mem-inner{position:relative;width:100%;height:100%;transition:transform .4s;transform-style:preserve-3d}
+.mem-card.flipped .mem-inner,.mem-card.matched .mem-inner{transform:rotateY(180deg)}
+.mem-front,.mem-back{position:absolute;inset:0;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;gap:3px}
+.mem-front{background:linear-gradient(135deg,rgba(124,58,237,.25),rgba(59,130,246,.15));border:2px solid rgba(124,58,237,.35)}
+.mem-front::after{content:'?';font-size:1.6rem;color:rgba(255,255,255,.4)}
+.mem-back{background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(6,182,212,.15));border:2px solid rgba(16,185,129,.35);transform:rotateY(180deg)}
+.mem-card.matched .mem-back{border-color:var(--yellow);background:rgba(234,179,8,.15)}
+.mem-back .me{font-size:1.3rem}
+.mem-back .mw{font-size:.72rem;font-weight:800;color:#fff;text-align:center;line-height:1.2}
+.mem-result{text-align:center;padding:16px;font-size:1.1rem;font-weight:900}
+
+/* ── ADMIN PAGE ── */
+.admin-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;font-size:.7rem;font-weight:900;padding:3px 10px;border-radius:50px;margin-right:8px;box-shadow:0 2px 8px rgba(245,158,11,.4)}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+.admin-card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:24px}
+.admin-card h3{font-size:1rem;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.admin-stat-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.9rem}
+.admin-stat-row:last-child{border-bottom:none}
+.admin-stat-val{font-weight:800;color:var(--yellow)}
+.admin-btn{padding:9px 18px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Heebo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:transform .2s;margin-top:4px}
+.admin-btn:hover{transform:scale(1.05)}
+.admin-btn.danger{background:linear-gradient(135deg,#dc2626,#b91c1c)}
+.admin-btn.green{background:linear-gradient(135deg,var(--green),#047857)}
+
+
+/* Announcement Banner */
+.site-announcement{display:none;background:linear-gradient(135deg,var(--purple),var(--pink));padding:10px 24px;text-align:center;font-weight:700;font-size:.9rem;position:fixed;top:0;left:0;right:0;z-index:1000;box-shadow:0 2px 12px rgba(124,58,237,.5)}
+.site-announcement.show{display:block}
+.ann-close{float:left;background:none;border:none;color:#fff;cursor:pointer;font-size:1.1rem;margin-left:12px}
+
+/* Responsive */
+@media(max-width:900px){.av-layout{grid-template-columns:1fr}.vocab-grid{grid-template-columns:1fr 1fr}.admin-grid{grid-template-columns:1fr}}
+@media(max-width:700px){
+  .sidebar{transform:translateX(100%)}
+  .sidebar.open{transform:translateX(0)}
+  .app-main{margin-right:0;padding:16px}
+  .qopts{grid-template-columns:1fr}
+  .profile-grid{grid-template-columns:1fr}
+  .pbig{grid-column:span 1}
+  .xp-card{grid-column:span 1}
+}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<!-- Site Announcement Banner -->
+<div class="site-announcement" id="ann-banner">
+  <button class="ann-close" onclick="document.getElementById('ann-banner').classList.remove('show')">✕</button>
+  <span id="ann-text"></span>
+</div>
+
+<div id="login-screen">
+  <div class="lcard">
+    <a href="index.html" class="lback" title="חזרה לדף הבית">✕</a>
+    <span class="llogo">🎓</span>
+    <div class="ltitle">EnglishKids</div>
+    <div class="lsub" id="lsub">התחבר לאזור האישי שלך</div>
+
+    <!-- Tabs -->
+    <div class="ltabs">
+      <button class="ltab active" id="tab-login" onclick="switchTab('login')">כניסה</button>
+      <button class="ltab" id="tab-reg" onclick="switchTab('register')">הרשמה חינם 🎉</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="form-login" onsubmit="return doLogin()">
+      <div class="fg"><label>שם משתמש</label><input type="text" id="iu" placeholder="הכנס שם משתמש" autocomplete="username"/></div>
+      <div class="fg"><label>סיסמה</label><input type="password" id="ip" placeholder="הכנס סיסמה" autocomplete="current-password"/></div>
+      <div class="lerr" id="lerr">❌ שם משתמש או סיסמה שגויים</div>
+      <button type="submit" class="lbtn">🚀 כניסה</button>
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form id="form-reg" onsubmit="return doRegister()" style="display:none">
+      <div class="fg"><label>שם מלא</label><input type="text" id="ru-name" placeholder="איך קוראים לך?"/></div>
+      <div class="fg"><label>שם משתמש</label><input type="text" id="ru" placeholder="בחר שם משתמש"/></div>
+      <div class="fg"><label>סיסמה</label><input type="password" id="rp" placeholder="בחר סיסמה (מינימום 4 תווים)"/></div>
+      <div class="fg"><label>אימות סיסמה</label><input type="password" id="rp2" placeholder="הכנס שוב את הסיסמה"/></div>
+      <div class="lerr" id="rerr">❌</div>
+      <div class="lsuccess" id="rsuccess">✅ נרשמת בהצלחה! מעביר אותך...</div>
+      <button type="submit" class="lbtn">🎉 הירשם חינם</button>
+    </form>
+
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="app">
+  <div class="app-wrap">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-head">
+        <div class="sb-av" id="sbav">🦸<span class="sb-lvl" id="sblvl">7</span></div>
+        <div>
+          <div class="sb-name" id="sbname">טוען...</div>
+          <div class="sb-coins">🪙 <span id="sbcoins">0</span></div>
+        </div>
+      </div>
+      <nav class="sb-nav">
+        <button class="ni active" onclick="nav('avatar',this)"><span class="ic">🦸</span> האווטר שלי</button>
+        <button class="ni" onclick="nav('courses',this)"><span class="ic">📚</span> הקורסים שלי</button>
+        <button class="ni" onclick="nav('profile',this)"><span class="ic">👤</span> פרופיל</button>
+        <button class="ni admin-only" id="admin-nav-btn" style="display:none" onclick="nav('admin',this)"><span class="ic">⚙️</span> <span style="background:linear-gradient(90deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900">פאנל אדמין</span></button>
+      </nav>
+      <div class="sb-foot">
+        <a href="index.html" class="logout-btn">🏠 חזרה לדף הבית</a>
+        <button class="logout-btn" onclick="doLogout()">🚪 התנתקות</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="app-main">
+
+      <!-- PAGE: AVATAR -->
+      <section class="page active" id="page-avatar">
+        <div class="ph"><h1>🦸 האווטר שלי</h1><p>התאם אישית את הדמות שלך</p></div>
+        <div class="av-layout">
+          <div class="av-display">
+            <div class="char-stage">
+              <svg id="char-svg" viewBox="0 0 200 420" width="200" height="420" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+                <defs>
+                  <radialGradient id="g-skin" cx="42%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#FFE8C8"/><stop offset="50%" stop-color="#FAC882"/><stop offset="88%" stop-color="#ECA060"/><stop offset="100%" stop-color="#C87030"/>
+                  </radialGradient>
+                  <linearGradient id="g-skin-arm" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#C87030"/><stop offset="40%" stop-color="#FAC882"/><stop offset="100%" stop-color="#D88040"/>
+                  </linearGradient>
+                  <linearGradient id="g-shirt" x1="10%" y1="0%" x2="90%" y2="100%">
+                    <stop id="shirt-s1" offset="0%" stop-color="#7C3AED"/><stop id="shirt-s2" offset="100%" stop-color="#5B21B6"/>
+                  </linearGradient>
+                  <linearGradient id="g-pants" x1="0%" y1="0%" x2="30%" y2="100%">
+                    <stop id="pants-s1" offset="0%" stop-color="#1e40af"/><stop id="pants-s2" offset="100%" stop-color="#1e3a8a"/>
+                  </linearGradient>
+                  <linearGradient id="g-hair" x1="20%" y1="0%" x2="80%" y2="100%">
+                    <stop id="hair-s1" offset="0%" stop-color="#7C3AED"/><stop id="hair-s2" offset="100%" stop-color="#4C1D95"/>
+                  </linearGradient>
+                  <linearGradient id="g-shoe" x1="20%" y1="0%" x2="80%" y2="100%">
+                    <stop id="shoe-s1" offset="0%" stop-color="#374151"/><stop id="shoe-s2" offset="100%" stop-color="#111827"/>
+                  </linearGradient>
+                  <radialGradient id="g-iris" cx="35%" cy="30%" r="60%">
+                    <stop offset="0%" stop-color="#63B3F8"/><stop offset="42%" stop-color="#1D60B0"/><stop offset="80%" stop-color="#0a2d6e"/><stop offset="100%" stop-color="#040b20"/>
+                  </radialGradient>
+                  <radialGradient id="g-iris-girl" cx="35%" cy="30%" r="60%">
+                    <stop offset="0%" stop-color="#C4B5FD"/><stop offset="42%" stop-color="#7C3AED"/><stop offset="80%" stop-color="#4C1D95"/><stop offset="100%" stop-color="#2e0d6e"/>
+                  </radialGradient>
+                  <filter id="f-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="2" dy="5" stdDeviation="4" flood-opacity="0.4"/>
+                  </filter>
+                  <filter id="f-blur4"><feGaussianBlur stdDeviation="4"/></filter>
+                  <filter id="f-blur2"><feGaussianBlur stdDeviation="2"/></filter>
+                  <filter id="f-glow-gold" x="-40%" y="-40%" width="180%" height="180%">
+                    <feGaussianBlur stdDeviation="5" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                  <filter id="f-glow-bolt" x="-50%" y="-20%" width="200%" height="140%">
+                    <feGaussianBlur stdDeviation="4" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                  <linearGradient id="g-crown-gold" x1="0%" y1="0%" x2="80%" y2="100%">
+                    <stop offset="0%" stop-color="#FDE68A"/><stop offset="40%" stop-color="#D97706"/><stop offset="100%" stop-color="#F59E0B"/>
+                  </linearGradient>
+                  <linearGradient id="g-halo" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#FDE68A"/><stop offset="30%" stop-color="#FFFFFF"/><stop offset="65%" stop-color="#C7F0FF"/><stop offset="100%" stop-color="#FDE68A"/>
+                  </linearGradient>
+                  <linearGradient id="g-bolt" x1="0%" y1="0%" x2="50%" y2="100%">
+                    <stop offset="0%" stop-color="#FDE68A"/><stop offset="50%" stop-color="#FBBF24"/><stop offset="100%" stop-color="#EF4444"/>
+                  </linearGradient>
+                  <linearGradient id="g-bolt-crown" x1="20%" y1="0%" x2="80%" y2="100%">
+                    <stop offset="0%" stop-color="#FDE68A"/><stop offset="45%" stop-color="#FBBF24"/><stop offset="100%" stop-color="#D97706"/>
+                  </linearGradient>
+                  <radialGradient id="g-galaxy-fill" cx="50%" cy="40%" r="65%">
+                    <stop offset="0%" stop-color="#4C1D95"/><stop offset="55%" stop-color="#1E1B4B"/><stop offset="100%" stop-color="#0F0A1E"/>
+                  </radialGradient>
+                  <radialGradient id="g-visor" cx="38%" cy="32%" r="62%">
+                    <stop offset="0%" stop-color="#67E8F9" stop-opacity="0.45"/><stop offset="100%" stop-color="#0C4A6E" stop-opacity="0.08"/>
+                  </radialGradient>
+                </defs>
+
+                <!-- HAIR BACK -->
+                <path id="s-hair-back" fill="url(#g-hair)"
+                  d="M100,14 C154,14 160,50 160,78 C160,104 153,122 148,130 C146,118 144,100 144,80 C144,52 136,22 100,20 C64,22 56,52 56,80 C56,100 54,118 52,130 C47,122 40,104 40,78 C40,50 46,14 100,14Z"/>
+
+                <!-- EARS -->
+                <path id="s-ear-l" fill="#F5C090" d="M54,76 C43,76 39,84 40,93 C41,101 46,106 53,104 C51,97 50,88 53,82Z"/>
+                <path fill="rgba(160,80,20,0.15)" d="M50,83 C48,87 48,95 49,99 C51,96 52,90 52,85Z"/>
+                <path id="s-ear-r" fill="#F5C090" d="M146,76 C157,76 161,84 160,93 C159,101 154,106 147,104 C149,97 150,88 147,82Z"/>
+                <path fill="rgba(160,80,20,0.15)" d="M150,83 C152,87 152,95 151,99 C149,96 148,90 148,85Z"/>
+
+                <!-- FACE -->
+                <path id="s-face" fill="url(#g-skin)" filter="url(#f-shadow)"
+                  d="M100,20 C152,20 154,54 154,82 C154,114 143,130 128,135 C118,139 110,141 100,141 C90,141 82,139 72,135 C57,130 46,114 46,82 C46,54 48,20 100,20Z"/>
+
+                <!-- CHEEKS BLUSH -->
+                <ellipse cx="71" cy="108" rx="15" ry="9" fill="rgba(240,110,70,0.2)" filter="url(#f-blur4)"/>
+                <ellipse cx="129" cy="108" rx="15" ry="9" fill="rgba(240,110,70,0.2)" filter="url(#f-blur4)"/>
+
+                <!-- EYEBROWS -->
+                <path id="s-brow-l" d="M67,63 Q78,55 91,60" stroke="url(#g-hair)" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+                <path id="s-brow-r" d="M109,60 Q122,55 133,63" stroke="url(#g-hair)" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+
+                <!-- LEFT EYE -->
+                <ellipse cx="79" cy="82" rx="14.5" ry="11" fill="white"/>
+                <circle id="s-iris-l" cx="79" cy="82" r="8.5" fill="url(#g-iris)"/>
+                <circle cx="79" cy="82" r="5.5" fill="#040b20"/>
+                <circle cx="75.5" cy="78.5" r="3.2" fill="rgba(255,255,255,0.95)"/>
+                <circle cx="83" cy="86" r="1.8" fill="rgba(255,255,255,0.4)"/>
+                <path d="M65,74 Q79,67 93,74" stroke="#20104a" stroke-width="3.8" fill="none" stroke-linecap="round"/>
+                <path d="M67,91 Q79,97 91,91" stroke="rgba(110,55,10,0.18)" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+                <!-- RIGHT EYE -->
+                <ellipse cx="121" cy="82" rx="14.5" ry="11" fill="white"/>
+                <circle id="s-iris-r" cx="121" cy="82" r="8.5" fill="url(#g-iris)"/>
+                <circle cx="121" cy="82" r="5.5" fill="#040b20"/>
+                <circle cx="117.5" cy="78.5" r="3.2" fill="rgba(255,255,255,0.95)"/>
+                <circle cx="125" cy="86" r="1.8" fill="rgba(255,255,255,0.4)"/>
+                <path d="M107,74 Q121,67 135,74" stroke="#20104a" stroke-width="3.8" fill="none" stroke-linecap="round"/>
+                <path d="M109,91 Q121,97 133,91" stroke="rgba(110,55,10,0.18)" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+                <!-- NOSE -->
+                <path d="M100,93 C97,100 93,106 95,111 C97,115 103,115 105,111 C107,106 103,100 100,93Z" fill="rgba(155,80,20,0.1)"/>
+                <ellipse cx="94" cy="112" rx="4.5" ry="3.5" fill="rgba(150,75,15,0.2)"/>
+                <ellipse cx="106" cy="112" rx="4.5" ry="3.5" fill="rgba(150,75,15,0.2)"/>
+
+                <!-- LIPS -->
+                <path id="s-lip-top" d="M84,119 Q88,114 92,118 Q96,121 100,118 Q104,114 108,118 Q112,121 116,119 Q112,127 100,127 Q88,127 84,119Z" fill="#B06060"/>
+                <path d="M84,119 Q92,115 100,118 Q108,115 116,119" stroke="#C47474" stroke-width="1.5" fill="none"/>
+                <path id="s-lip-bot" d="M85,127 Q100,136 115,127 Q112,133 100,135 Q88,133 85,127Z" fill="#C47878"/>
+                <ellipse cx="100" cy="130" rx="9" ry="3.5" fill="rgba(255,255,255,0.1)"/>
+
+                <!-- HAIR FRONT -->
+                <path id="s-hair-front" fill="url(#g-hair)"
+                  d="M100,14 C154,14 160,50 160,70 C156,59 149,51 140,47 C145,38 145,22 132,16 C124,21 118,34 115,46 C112,35 108,21 100,16 C92,21 88,35 85,46 C82,34 76,21 68,16 C55,22 55,38 60,47 C51,51 44,59 40,70 C40,50 46,14 100,14Z"/>
+                <path id="s-hair-side-l" fill="url(#g-hair)"
+                  d="M52,66 C45,75 43,88 45,102 C46,108 49,112 52,114 C49,107 47,94 48,82 C49,75 50,70 52,66Z"/>
+                <path id="s-hair-side-r" fill="url(#g-hair)"
+                  d="M148,66 C155,75 157,88 155,102 C154,108 151,112 148,114 C151,107 153,94 152,82 C151,75 150,70 148,66Z"/>
+
+                <!-- NECK -->
+                <path fill="url(#g-skin-arm)"
+                  d="M88,139 L112,139 C114,139 116,141 116,143 L113,166 L87,166 C87,166 84,143 84,143 C84,141 86,139 88,139Z"/>
+                <path d="M88,139 L92,139 L90,166 L87,166Z" fill="rgba(0,0,0,0.08)"/>
+
+                <!-- SHOULDERS -->
+                <path id="s-shoulder-l" fill="url(#g-shirt)"
+                  d="M87,164 C70,164 46,169 32,182 C26,191 26,202 29,208 C37,195 56,189 72,187 L76,164Z"/>
+                <path id="s-shoulder-r" fill="url(#g-shirt)"
+                  d="M113,164 C130,164 154,169 168,182 C174,191 174,202 171,208 C163,195 144,189 128,187 L124,164Z"/>
+
+                <!-- TORSO -->
+                <path id="s-torso" fill="url(#g-shirt)"
+                  d="M76,164 L124,164 C131,164 136,169 137,176 L141,265 C141,271 137,275 131,275 L69,275 C63,275 59,271 59,265 L63,176 C64,169 69,164 76,164Z"/>
+                <path d="M78,166 L122,166 C128,166 132,170 133,176 L136,204 C118,200 82,200 64,204 L67,176 C68,170 72,166 78,166Z" fill="rgba(255,255,255,0.07)"/>
+                <path d="M59,242 L63,275 L70,275 L66,242Z" fill="rgba(0,0,0,0.12)"/>
+                <path d="M141,242 L137,275 L130,275 L134,242Z" fill="rgba(0,0,0,0.12)"/>
+
+                <!-- COLLAR -->
+                <path id="s-collar" fill="url(#g-shirt)" style="filter:brightness(0.8)"
+                  d="M90,164 L100,183 L110,164Z"/>
+
+                <!-- BELT -->
+                <rect x="59" y="268" width="82" height="12" rx="4" fill="#1F2937"/>
+                <rect x="59" y="268" width="82" height="5" rx="3" fill="rgba(255,255,255,0.05)"/>
+                <rect x="90" y="270" width="20" height="8" rx="3" fill="#D97706"/>
+                <rect x="93" y="273" width="14" height="2" rx="1" fill="#92400E"/>
+
+                <!-- LEFT ARM -->
+                <g id="arm-l" style="transform-box:fill-box;transform-origin:50% 5%;animation:armL 3s ease-in-out infinite">
+                  <path fill="url(#g-shirt)" d="M31,182 C21,189 14,202 12,219 L10,246 C10,255 14,261 21,261 L35,261 C29,246 27,228 29,212Z"/>
+                  <path fill="url(#g-skin-arm)" d="M12,246 C10,259 10,274 14,287 L20,304 C22,311 29,313 35,310 L41,306 C35,292 28,277 26,262 L21,261Z"/>
+                  <path fill="url(#g-skin-arm)" d="M20,304 C18,315 19,325 25,329 C32,332 40,329 44,322 C40,313 36,304 31,296Z"/>
+                  <line x1="22" y1="320" x2="29" y2="325" stroke="rgba(160,80,20,0.2)" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="28" y1="325" x2="35" y2="327" stroke="rgba(160,80,20,0.2)" stroke-width="1.5" stroke-linecap="round"/>
+                  <!-- Lightning bolt: rendered LAST so it appears in front of the arm -->
+                  <g id="s-lightning-bolt" style="display:none" filter="url(#f-glow-bolt)">
+                    <path d="M14,308 L-4,348 L10,345 L-6,382 L34,350 L18,352 Z" fill="rgba(255,240,100,0.3)"/>
+                    <path d="M16,306 L-2,346 L12,343 L-4,380 L36,348 L20,350 Z" fill="url(#g-bolt)" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linejoin="round"/>
+                    <circle cx="-4" cy="380" r="5" fill="#FDE68A" opacity="0.9"/>
+                    <circle cx="-2" cy="346" r="3" fill="#FFFFFF" opacity="0.8"/>
+                    <line x1="-8" y1="388" x2="8" y2="376" stroke="#FDE68A" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                    <line x1="-12" y1="382" x2="-2" y2="392" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                  </g>
+                </g>
+
+                <!-- RIGHT ARM -->
+                <g id="arm-r" style="transform-box:fill-box;transform-origin:50% 5%;animation:armR 3s ease-in-out infinite">
+                  <path fill="url(#g-shirt)" d="M169,182 C179,189 186,202 188,219 L190,246 C190,255 186,261 179,261 L165,261 C171,246 173,228 171,212Z"/>
+                  <path fill="url(#g-skin-arm)" d="M188,246 C190,259 190,274 186,287 L180,304 C178,311 171,313 165,310 L159,306 C165,292 172,277 174,262 L179,261Z"/>
+                  <path fill="url(#g-skin-arm)" d="M180,304 C182,315 181,325 175,329 C168,332 160,329 156,322 C160,313 164,304 169,296Z"/>
+                  <line x1="178" y1="320" x2="171" y2="325" stroke="rgba(160,80,20,0.2)" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="172" y1="325" x2="165" y2="327" stroke="rgba(160,80,20,0.2)" stroke-width="1.5" stroke-linecap="round"/>
+                </g>
+
+                <!-- LEFT LEG -->
+                <path id="s-leg-l" fill="url(#g-pants)"
+                  d="M65,277 L95,277 L99,372 L71,372Z"/>
+                <path d="M65,277 L73,277 L74,372 L71,372Z" fill="rgba(0,0,0,0.1)"/>
+                <path d="M89,277 L95,277 L99,372 L96,372Z" fill="rgba(255,255,255,0.04)"/>
+                <path d="M66,325 Q82,327 96,325" stroke="rgba(0,0,0,0.1)" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+                <!-- RIGHT LEG -->
+                <path id="s-leg-r" fill="url(#g-pants)"
+                  d="M105,277 L135,277 L129,372 L101,372Z"/>
+                <path d="M129,277 L135,277 L129,372 L124,372Z" fill="rgba(0,0,0,0.1)"/>
+                <path d="M105,277 L111,277 L107,372 L103,372Z" fill="rgba(255,255,255,0.04)"/>
+                <path d="M104,325 Q120,327 132,325" stroke="rgba(0,0,0,0.1)" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+                <!-- LEFT SHOE -->
+                <path id="s-shoe-l" fill="url(#g-shoe)"
+                  d="M63,370 L101,370 C108,370 115,373 118,380 C121,387 118,394 110,397 C97,400 74,400 61,396 C51,392 49,385 53,378 C56,373 59,370 63,370Z"/>
+                <path d="M65,372 L95,372 C102,372 108,375 110,380 C98,377 72,377 61,379 C59,375 61,372 65,372Z" fill="rgba(255,255,255,0.1)"/>
+                <path d="M49,394 C52,401 62,403 79,403 C96,403 109,401 114,398 C117,403 115,407 105,409 C90,411 63,410 54,406 C46,402 47,397 49,394Z" fill="rgba(0,0,0,0.45)"/>
+
+                <!-- RIGHT SHOE -->
+                <path id="s-shoe-r" fill="url(#g-shoe)"
+                  d="M99,370 L137,370 C141,370 144,373 147,378 C151,385 149,392 139,396 C126,400 103,400 90,397 C82,394 80,387 83,380 C86,373 93,370 99,370Z"/>
+                <path d="M105,372 L135,372 C139,372 142,375 140,379 C129,377 103,377 91,379 C91,375 95,372 105,372Z" fill="rgba(255,255,255,0.1)"/>
+                <path d="M151,394 C148,401 138,403 121,403 C104,403 91,401 86,398 C83,403 85,407 95,409 C110,411 137,410 146,406 C154,402 153,397 151,394Z" fill="rgba(0,0,0,0.45)"/>
+
+                <!-- OVERLAYS -->
+                <text id="s-hat-ov" x="100" y="-4" text-anchor="middle" font-size="42" dominant-baseline="middle" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.5))"></text>
+                <text id="s-acc-ov" x="133" y="82" text-anchor="middle" font-size="24" dominant-baseline="middle"></text>
+                <text id="s-extra-ov" x="12" y="308" text-anchor="middle" font-size="44" dominant-baseline="middle" style="filter:drop-shadow(0 2px 8px rgba(0,0,0,0.6))"></text>
+
+                <!-- LIGHTNING CROWN (כתר ברק) — had1 -->
+                <g id="s-lightning-crown" style="display:none" filter="url(#f-glow-bolt)">
+                  <path d="M58,50 Q100,42 142,50 L145,62 Q100,56 55,62 Z" fill="url(#g-bolt-crown)"/>
+                  <path d="M63,60 L74,14 L83,34 L96,8 L100,26 L104,8 L117,34 L126,14 L137,60 Z" fill="url(#g-bolt-crown)" stroke="rgba(255,230,60,0.85)" stroke-width="1.2" stroke-linejoin="round"/>
+                  <rect x="55" y="58" width="90" height="11" rx="4" fill="url(#g-bolt-crown)"/>
+                  <circle cx="100" cy="12" r="7" fill="#FDE68A" style="filter:drop-shadow(0 0 10px #FBBF24)"/>
+                  <circle cx="83" cy="28" r="5" fill="#FCD34D" style="filter:drop-shadow(0 0 7px #FCD34D)"/>
+                  <circle cx="117" cy="28" r="5" fill="#FCD34D" style="filter:drop-shadow(0 0 7px #FCD34D)"/>
+                  <path d="M73,38 L69,50 L74,49 L70,60 L78,47 L72,48 Z" fill="rgba(255,255,255,0.92)"/>
+                  <path d="M127,38 L131,50 L126,49 L130,60 L122,47 L128,48 Z" fill="rgba(255,255,255,0.92)"/>
+                  <circle cx="58" cy="62" r="2.5" fill="#FDE68A"/><circle cx="100" cy="62" r="2.5" fill="#FBBF24"/><circle cx="142" cy="62" r="2.5" fill="#FDE68A"/>
+                  <ellipse cx="100" cy="34" rx="50" ry="22" fill="none" stroke="rgba(255,220,50,0.18)" stroke-width="3"/>
+                </g>
+
+                <!-- SPACE HELMET (קסדת חלל) — had2 -->
+                <g id="s-space-helmet" style="display:none">
+                  <!-- Outer shell -->
+                  <ellipse cx="100" cy="78" rx="70" ry="74" fill="#080F1E" opacity="0.93" stroke="#1E3A8A" stroke-width="2"/>
+                  <!-- Visor window — face shows through -->
+                  <ellipse cx="100" cy="76" rx="48" ry="52" fill="url(#g-visor)" stroke="#22D3EE" stroke-width="2.5"/>
+                  <ellipse cx="100" cy="76" rx="44" ry="48" fill="none" stroke="rgba(103,232,249,0.35)" stroke-width="1.2"/>
+                  <!-- Reflection on visor -->
+                  <ellipse cx="83" cy="55" rx="12" ry="20" fill="rgba(255,255,255,0.055)" transform="rotate(-18,83,55)"/>
+                  <!-- Helmet top dome -->
+                  <path d="M68,6 Q100,-2 132,6 Q128,-18 100,-22 Q72,-18 68,6Z" fill="#0F172A" stroke="#1E3A8A" stroke-width="1.5"/>
+                  <!-- Side panels -->
+                  <path d="M31,68 Q28,90 33,112 L39,112 Q36,90 38,68Z" fill="#0F172A" stroke="#38BDF8" stroke-width="1.5"/>
+                  <path d="M169,68 Q172,90 167,112 L161,112 Q164,90 162,68Z" fill="#0F172A" stroke="#38BDF8" stroke-width="1.5"/>
+                  <!-- Side bolts -->
+                  <circle cx="32" cy="80" r="6" fill="#0F172A" stroke="#38BDF8" stroke-width="2"/>
+                  <circle cx="32" cy="80" r="2.5" fill="#38BDF8" style="filter:drop-shadow(0 0 4px #38BDF8)"/>
+                  <circle cx="168" cy="80" r="6" fill="#0F172A" stroke="#38BDF8" stroke-width="2"/>
+                  <circle cx="168" cy="80" r="2.5" fill="#38BDF8" style="filter:drop-shadow(0 0 4px #38BDF8)"/>
+                  <!-- Antenna -->
+                  <line x1="100" y1="-2" x2="100" y2="-26" stroke="#60A5FA" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="100" cy="-29" r="7" fill="#22D3EE" style="filter:drop-shadow(0 0 10px #22D3EE)"/>
+                  <circle cx="100" cy="-29" r="3.5" fill="#E0F9FF"/>
+                  <!-- Neck collar ring -->
+                  <path d="M34,150 Q100,158 166,150 L168,160 Q100,168 32,160 Z" fill="#0F172A" stroke="#38BDF8" stroke-width="1.5"/>
+                  <!-- Stars on helmet -->
+                  <circle cx="66" cy="44" r="1.8" fill="#FDE68A" opacity="0.85"/>
+                  <circle cx="132" cy="40" r="1.2" fill="#FDE68A" opacity="0.75"/>
+                  <circle cx="56" cy="102" r="1.5" fill="#C7F0FF" opacity="0.6"/>
+                  <circle cx="142" cy="108" r="1.2" fill="#C7F0FF" opacity="0.5"/>
+                </g>
+
+                <!-- GALAXY CROWN (כתר גלקסיה) — had3 -->
+                <g id="s-galaxy-crown" style="display:none">
+                  <path d="M55,42 Q100,34 145,42 L148,56 Q100,48 52,56 Z" fill="url(#g-galaxy-fill)" stroke="rgba(139,92,246,0.7)" stroke-width="1"/>
+                  <path d="M60,54 L65,10 L79,34 L100,4 L121,34 L135,10 L140,54 Z" fill="url(#g-galaxy-fill)" stroke="rgba(167,139,250,0.75)" stroke-width="1.3" stroke-linejoin="round"/>
+                  <rect x="52" y="52" width="96" height="11" rx="4" fill="url(#g-galaxy-fill)" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+                  <circle cx="100" cy="10" r="8" fill="#C4B5FD" style="filter:drop-shadow(0 0 10px #C4B5FD)"/>
+                  <circle cx="79" cy="28" r="5.5" fill="#818CF8" style="filter:drop-shadow(0 0 7px #818CF8)"/>
+                  <circle cx="121" cy="28" r="5.5" fill="#A78BFA" style="filter:drop-shadow(0 0 7px #A78BFA)"/>
+                  <circle cx="65" cy="18" r="4" fill="#67E8F9" style="filter:drop-shadow(0 0 5px #67E8F9)"/>
+                  <circle cx="135" cy="18" r="4" fill="#F472B6" style="filter:drop-shadow(0 0 5px #F472B6)"/>
+                  <!-- Star particles -->
+                  <circle cx="72" cy="38" r="1.8" fill="#FDE68A" opacity="0.9"/><circle cx="92" cy="44" r="1.2" fill="#FFF" opacity="0.7"/>
+                  <circle cx="108" cy="44" r="1.2" fill="#FFF" opacity="0.7"/><circle cx="128" cy="38" r="1.8" fill="#FDE68A" opacity="0.9"/>
+                  <circle cx="55" cy="55" r="2.5" fill="#C4B5FD"/><circle cx="100" cy="55" r="2.5" fill="#A78BFA"/><circle cx="145" cy="55" r="2.5" fill="#C4B5FD"/>
+                  <!-- Galaxy swirl -->
+                  <ellipse cx="100" cy="30" rx="52" ry="22" fill="none" stroke="rgba(139,92,246,0.22)" stroke-width="3"/>
+                  <path d="M100,10 Q118,20 110,32 Q102,38 84,28 Q78,20 90,14 Q98,10 100,10Z" fill="rgba(167,139,250,0.1)"/>
+                </g>
+
+                <!-- DIVINE CROWN (כתר האלים) — had4 -->
+                <g id="s-divine-crown" style="display:none" filter="url(#f-glow-gold)">
+                  <path d="M58,38 Q100,32 142,38 L147,52 Q100,46 53,52 Z" fill="url(#g-crown-gold)"/>
+                  <path d="M63,50 L70,6 L84,32 L100,-8 L116,32 L130,6 L137,50 Z" fill="url(#g-crown-gold)" stroke="rgba(255,220,80,0.7)" stroke-width="1.2" stroke-linejoin="round"/>
+                  <rect x="53" y="48" width="94" height="10" rx="4" fill="url(#g-crown-gold)"/>
+                  <circle cx="100" cy="-2" r="8" fill="#E879F9" style="filter:drop-shadow(0 0 8px #E879F9)"/>
+                  <circle cx="84" cy="26" r="5.5" fill="#60A5FA" style="filter:drop-shadow(0 0 6px #60A5FA)"/>
+                  <circle cx="116" cy="26" r="5.5" fill="#34D399" style="filter:drop-shadow(0 0 6px #34D399)"/>
+                  <circle cx="70" cy="14" r="4" fill="#FB923C" style="filter:drop-shadow(0 0 5px #FB923C)"/>
+                  <circle cx="130" cy="14" r="4" fill="#F472B6" style="filter:drop-shadow(0 0 5px #F472B6)"/>
+                  <circle cx="63" cy="53" r="3" fill="#FDE68A"/>
+                  <circle cx="81" cy="53" r="3" fill="#FDE68A"/>
+                  <circle cx="100" cy="53" r="3" fill="#FDE68A"/>
+                  <circle cx="119" cy="53" r="3" fill="#FDE68A"/>
+                  <circle cx="137" cy="53" r="3" fill="#FDE68A"/>
+                  <ellipse cx="100" cy="25" rx="58" ry="28" fill="none" stroke="rgba(255,215,0,0.18)" stroke-width="4"/>
+                </g>
+
+                <!-- HOLY HALO (הילה קדושה) — aad2 -->
+                <g id="s-halo-ov" style="display:none">
+                  <ellipse cx="100" cy="2" rx="39" ry="10" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="11"/>
+                  <ellipse cx="100" cy="2" rx="36" ry="9" fill="none" stroke="url(#g-halo)" stroke-width="6" id="s-halo-ring"/>
+                  <ellipse cx="100" cy="2" rx="32" ry="7" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                  <circle cx="136" cy="2" r="2.5" fill="#FDE68A" opacity="0.9"/>
+                  <circle cx="64" cy="2" r="2.5" fill="#FDE68A" opacity="0.9"/>
+                  <circle cx="100" cy="-7" r="2" fill="#FFFFFF" opacity="0.7"/>
+                </g>
+
+                <!-- LIGHTNING BOLT (כוח הברק) — aad4 — moved inside arm-l above -->
+              </svg>
+              <div class="char-glow-base"></div>
+            </div>
+            <div class="av-name" id="avname">טוען...</div>
+            <div class="av-lvl-badge">⚡ רמה <span id="avlvl">1</span> &nbsp;·&nbsp; 🪙 <span id="avcoins">0</span></div>
+            <div class="av-xp-wrap">
+              <div class="av-xp-label">
+                <span>XP לרמה הבאה</span>
+                <span id="av-xp-txt">0 / 200</span>
+              </div>
+              <div class="av-xp-bg">
+                <div class="av-xp-fill" id="av-xp-bar" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="wardrobe-card">
+            <div class="gender-toggle">
+              <button class="gender-btn boy active" id="gbtn-boy" onclick="setGender('boy')">👦 בן</button>
+              <button class="gender-btn girl" id="gbtn-girl" onclick="setGender('girl')">👧 בת</button>
+            </div>
+            <div class="skin-picker" id="skin-picker"></div>
+            <div class="wtabs" id="wtabs"></div>
+            <div class="items-grid" id="igrid"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: COURSES -->
+      <section class="page" id="page-courses">
+        <div class="ph"><h1>📚 הקורסים שלי</h1><p>השלם שיעורים יומיים וצבר מטבעות</p></div>
+        <div class="units-list" id="ulist"></div>
+      </section>
+
+      <!-- PAGE: FRIENDS (hidden, no fake data) -->
+      <section class="page" id="page-friends" style="display:none"></section>
+
+      <!-- PAGE: PROFILE -->
+      <section class="page" id="page-profile">
+        <div class="ph"><h1>👤 הפרופיל שלי</h1><p>ההישגים וההתקדמות שלך</p></div>
+        <div class="profile-grid" id="pgrid"></div>
+      </section>
+
+      <!-- PAGE: ADMIN -->
+      <section class="page" id="page-admin">
+        <div class="ph">
+          <h1>⚙️ פאנל אדמין <span class="admin-badge">👑 ADMIN</span></h1>
+          <p>ניהול האתר — גישה מוגבלת לאיתי קרמונה קינג בלבד</p>
+        </div>
+        <div class="admin-grid">
+
+          <!-- Stats card -->
+          <div class="admin-card">
+            <h3>📊 סטטיסטיקות אתר</h3>
+            <div class="admin-stat-row"><span>👥 משתמשים רשומים</span><span class="admin-stat-val" id="adm-users">0</span></div>
+            <div class="admin-stat-row"><span>📚 שיעורים פעילים</span><span class="admin-stat-val">20</span></div>
+            <div class="admin-stat-row"><span>✅ שיעורים הושלמו</span><span class="admin-stat-val" id="adm-done">0</span></div>
+            <div class="admin-stat-row"><span>🪙 מטבעות בסיסטם</span><span class="admin-stat-val" id="adm-coins">0</span></div>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="admin-card">
+            <h3>⚡ פעולות מהירות</h3>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <button class="admin-btn green" onclick="adminUnlockAll()">🔓 שחרר כל השיעורים</button>
+              <button class="admin-btn" onclick="adminAddCoins(500)">🪙 הוסף 500 מטבעות</button>
+              <button class="admin-btn" onclick="adminLevelUp()">⚡ עלה רמה</button>
+              <button class="admin-btn danger" onclick="adminResetLessons()">🔄 אפס שיעורים</button>
+            </div>
+          </div>
+
+          <!-- Users list -->
+          <div class="admin-card">
+            <h3>👥 רשימת משתמשים</h3>
+            <div id="adm-user-list"></div>
+          </div>
+
+          <!-- Site settings -->
+          <div class="admin-card">
+            <h3>🎨 הגדרות אתר</h3>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div>
+                <label style="font-size:.8rem;color:rgba(255,255,255,.6);display:block;margin-bottom:6px">שם האתר</label>
+                <input id="adm-sitename" style="width:100%;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-family:'Heebo',sans-serif;font-size:.9rem;outline:none" value="EnglishKids" />
+              </div>
+              <div>
+                <label style="font-size:.8rem;color:rgba(255,255,255,.6);display:block;margin-bottom:6px">הודעת באנר לאתר</label>
+                <input id="adm-ann-input" style="width:100%;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-family:'Heebo',sans-serif;font-size:.9rem;outline:none" placeholder="הודעה לכל המשתמשים..." />
+              </div>
+              <button class="admin-btn" onclick="adminSetAnnouncement()">📢 פרסם הודעה</button>
+              <button class="admin-btn danger" onclick="adminHideAnnouncement()">🚫 הסר הודעה</button>
+            </div>
+          </div>
+
+          <!-- Go to users list button -->
+          <div class="admin-card" style="text-align:center">
+            <h3>👥 ניהול משתמשים</h3>
+            <p style="font-size:.85rem;color:rgba(255,255,255,.5);margin:8px 0 16px">כל מי שנרשם לאתר נשמר אוטומטית</p>
+            <button class="admin-btn green" style="width:100%;font-size:1rem;padding:14px"
+              onclick="document.getElementById('adm-user-list').closest('.admin-card').scrollIntoView({behavior:'smooth'})">
+              📋 עבור לרשימת המשתמשים
+            </button>
+            <input id="gs-url-inp" style="display:none"/>
+          </div>              <span style="font-size:.8rem;color:rgba(255,255,255,.4);font-weight:400">מנוע AI לניהול האתר</span>
+            </div>
+            <div class="ai-messages" id="ai-msgs"></div>
+            <div class="ai-input-row">
+              <input class="ai-input" id="ai-in" placeholder="תכתוב פקודה לאי-איי... (למשל: שחרר שיעורים, הוסף מטבעות, שנה בצבע...)" onkeydown="if(event.key==='Enter')sendAI()"/>
+              <button class="ai-send" onclick="sendAI()">➤</button>
+            </div>
+            <div class="ai-hint">
+              💡 דוגמאות: <b>שחרר כל השיעורים</b> · <b>הוסף 1000 מטבעות</b> · <b>הודעה: ברוכים הבאים!</b> · <b>שנה שם האתר ל-X</b> · <b>עלה רמה</b>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- LESSON MODAL -->
+<div class="modal-ov" id="modal">
+  <div class="modal-box">
+    <button class="modal-x" onclick="closeLesson()">✕</button>
+    <div class="mhead">
+      <div class="micon" id="micon">📖</div>
+      <div class="mtitle" id="mtitle">שיעור</div>
+      <div class="msub" id="msub"></div>
+    </div>
+    <div id="mbody"></div>
+    <button class="complete-btn" id="cbtn" onclick="completeLesson()">✅ סיימתי!</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── DATA ── */
+/* ── GOOGLE SHEETS DB CONFIG ──
+   הכנס כאן את כתובת ה-Web App שלך אחרי הפריסה ב-Apps Script.
+   השאר ריק כדי לעבוד במצב מקומי (ללא שמירה מקוונת).                    */
+let GS_URL = '';  // e.g. 'https://script.google.com/macros/s/XXXX/exec'
+let _saveTimer = null;
+
+/* ── LOCAL STORAGE USERS ── */
+const LS_KEY = 'ek_users_v1';
+const LS_SESSION = 'ek_session_v1';
+
+function saveUsersLocal(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(USERS)); }catch(e){}
+}
+function loadUsersLocal(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){ const saved=JSON.parse(raw); Object.assign(USERS,saved); }
+  }catch(e){}
+}
+function saveSession(u){ try{ localStorage.setItem(LS_SESSION,JSON.stringify({username:u.username,pass:u.pass})); }catch(e){} }
+function clearSession(){ try{ localStorage.removeItem(LS_SESSION); }catch(e){} }
+function loadSession(){
+  try{
+    const raw=localStorage.getItem(LS_SESSION);
+    if(!raw) return;
+    const s=JSON.parse(raw);
+    if(s&&USERS[s.username]&&USERS[s.username].pass===s.pass){
+      user={...USERS[s.username],username:s.username};
+      document.getElementById('login-screen').style.display='none';
+      document.getElementById('app').style.display='block';
+      initApp();
+    }
+  }catch(e){}
+}
+
+function scheduleSave(){
+  /* sync current user data back to USERS object */
+  if(user&&USERS[user.username]){
+    USERS[user.username].coins=user.coins;
+    USERS[user.username].level=user.level;
+    USERS[user.username].xp=user.xp;
+    /* אדמין לא משתנה דרך שמירה רגילה */
+    if(user.username===ADMIN_USERNAME) USERS[user.username].admin=true;
+  }
+  saveUsersLocal(); /* always save locally */
+  if(!GS_URL||!user) return;
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(async ()=>{
+    try{
+      await fetch(GS_URL,{method:'POST',body:JSON.stringify({
+        action:'save',username:user.username,password:user.pass||'',
+        coins:user.coins,level:user.level,xp:user.xp
+      })});
+    }catch(e){}
+  },3000);
+}
+
+const ADMIN_USERNAME = 'איתיקרמונהקינג'; /* רק הוא אדמין לנצח */
+const USERS={
+  'איתיקרמונהקינג':{pass:'איתי12',name:'איתי קרמונה קינג 👑',level:7,coins:2450,xp:650,maxXp:1000,av:'🦸',admin:true},
+};
+loadUsersLocal(); /* load saved users immediately */
+/* וודא שהאדמין תמיד אדמין גם אחרי טעינה */
+if(USERS[ADMIN_USERNAME]) USERS[ADMIN_USERNAME].admin=true;
+
+const WD={
+  hat:{label:'🎩 כובעים',items:[
+    {id:'hn',  name:'ללא',              emoji:'',    unlock:0,  prem:false},
+    {id:'hc',  name:'קאפ כחול',         emoji:'🧢',  unlock:1,  prem:false},
+    {id:'hc2', name:'קאפ אדום',         emoji:'🧢',  unlock:2,  prem:false},
+    {id:'hs',  name:'כוכב ⭐',          emoji:'⭐',  unlock:3,  prem:false},
+    {id:'ht',  name:'סילינדר',           emoji:'🎩',  unlock:5,  prem:false},
+    {id:'hg',  name:'כובע בוגר',         emoji:'🎓',  unlock:6,  prem:false},
+    {id:'hh',  name:'קסדה',             emoji:'⛑️', unlock:8,  prem:false},
+    {id:'hb',  name:'כומתה',            emoji:'🪖',  unlock:9,  prem:false},
+    {id:'hw',  name:'כובע מכשפה',        emoji:'🧙',  unlock:11, prem:false},
+    {id:'hp',  name:'כובע פיראט',        emoji:'🏴‍☠️',unlock:12, prem:false},
+    {id:'hk',  name:'כתר זהב 👑',       emoji:'👑',  unlock:0,  prem:true},
+    {id:'hd',  name:'דיאדמה 💎',        emoji:'💎',  unlock:0,  prem:true},
+    {id:'hf',  name:'כובע קש',          emoji:'👒',  unlock:2,  prem:false},
+    {id:'hbn', name:'בנדנה',            emoji:'🎀',  unlock:3,  prem:false},
+    {id:'hv',  name:'כפה',              emoji:'🔵',  unlock:1,  prem:false},
+    {id:'hsp', name:'קסדת קרב ⚔️',      emoji:'⚔️',  unlock:10, prem:false},
+    {id:'hcl', name:'כובע ליצן 🃏',     emoji:'🃏',  unlock:7,  prem:false},
+    {id:'hsm', name:'כובע סמוראי',       emoji:'⛩️',  unlock:13, prem:false},
+    {id:'hfl', name:'פרחים 🌸',          emoji:'🌸',  unlock:5,  prem:false},
+    {id:'hun', name:'קרני חד-קרן 🦄',   emoji:'🦄',  unlock:0,  prem:true},
+    {id:'hfx', name:'אוזני שועל 🦊',    emoji:'🦊',  unlock:0,  prem:true},
+    {id:'had1',name:'⚡ כתר ברק',        emoji:'⚡',  unlock:0,  prem:false, adminOnly:true},
+    {id:'had2',name:'👾 קסדת חלל',      emoji:'👾',  unlock:0,  prem:false, adminOnly:true},
+    {id:'had3',name:'🌌 כתר גלקסיה',    emoji:'🌌',  unlock:0,  prem:false, adminOnly:true},
+    {id:'had4',name:'⚜️ כתר האלים',       emoji:'',    unlock:0,  prem:false, adminOnly:true},
+  ]},
+  shirt:{label:'👕 חולצות',items:[
+    {id:'sp',  name:'סגולה',            color:'linear-gradient(160deg,#7C3AED,#5B21B6)', unlock:0,  prem:false},
+    {id:'sb',  name:'כחולה',            color:'linear-gradient(160deg,#2563EB,#1d4ed8)', unlock:2,  prem:false},
+    {id:'sr',  name:'אדומה',            color:'linear-gradient(160deg,#DC2626,#b91c1c)', unlock:3,  prem:false},
+    {id:'sg',  name:'ירוקה',            color:'linear-gradient(160deg,#059669,#047857)', unlock:4,  prem:false},
+    {id:'sd',  name:'שחורה',            color:'linear-gradient(160deg,#1F2937,#111827)', unlock:2,  prem:false},
+    {id:'so',  name:'כתום',             color:'linear-gradient(160deg,#EA580C,#C2410C)', unlock:5,  prem:false},
+    {id:'spi', name:'ורודה',            color:'linear-gradient(160deg,#EC4899,#BE185D)', unlock:5,  prem:false},
+    {id:'sc',  name:'ציאן',             color:'linear-gradient(160deg,#0891B2,#0E7490)', unlock:6,  prem:false},
+    {id:'sl',  name:'ליים',             color:'linear-gradient(160deg,#65A30D,#4D7C0F)', unlock:7,  prem:false},
+    {id:'sn',  name:'חיל הים',          color:'linear-gradient(160deg,#1e3a8a,#172554)', unlock:8,  prem:false},
+    {id:'sw2', name:'זהב ✨',           color:'linear-gradient(160deg,#D97706,#B45309)', unlock:10, prem:false},
+    {id:'sg2', name:'כסף 🌟',           color:'linear-gradient(160deg,#9CA3AF,#6B7280)', unlock:11, prem:false},
+    {id:'srb', name:'קשת 🌈',           color:'linear-gradient(160deg,#EC4899,#8B5CF6,#3B82F6)', unlock:0, prem:true},
+    {id:'sf',  name:'אש 🔥',            color:'linear-gradient(160deg,#F97316,#DC2626,#7C2D12)', unlock:0, prem:true},
+    {id:'shy', name:'צהובה ☀️',         color:'linear-gradient(160deg,#D97706,#FBBF24)', unlock:3,  prem:false},
+    {id:'str', name:'טורקיז',           color:'linear-gradient(160deg,#0D9488,#14B8A6)', unlock:6,  prem:false},
+    {id:'sim', name:'אינדיגו',          color:'linear-gradient(160deg,#3730A3,#4338CA)', unlock:8,  prem:false},
+    {id:'sca', name:'קמו ירוק',         color:'linear-gradient(160deg,#365314,#4D7C0F)', unlock:9,  prem:false},
+    {id:'sra', name:'ורוד בהיר',        color:'linear-gradient(160deg,#F472B6,#FBCFE8)', unlock:4,  prem:false},
+    {id:'sma', name:'בוהק 🌈',          color:'linear-gradient(160deg,#8B5CF6,#EC4899,#F59E0B)', unlock:0, prem:true},
+    {id:'sst', name:'כסוף מנצנץ ✨',    color:'linear-gradient(160deg,#C0C0C0,#E5E7EB,#9CA3AF)', unlock:0, prem:true},
+    {id:'sad1',name:'⚡ גיבור-על',      color:'linear-gradient(160deg,#1D4ED8,#EF4444,#F59E0B)', unlock:0, prem:false, adminOnly:true},
+    {id:'sad2',name:'🌌 גלקסיה',        color:'linear-gradient(160deg,#0F172A,#4C1D95,#1E3A8A)', unlock:0, prem:false, adminOnly:true},
+    {id:'sad3',name:'🔥 אש + קרח',      color:'linear-gradient(160deg,#EF4444,#F97316,#3B82F6)', unlock:0, prem:false, adminOnly:true},
+    {id:'sad4',name:'👑 אדמין',         color:'linear-gradient(160deg,#D97706,#7C3AED,#EC4899)', unlock:0, prem:false, adminOnly:true},
+  ]},
+  pants:{label:'👖 מכנסיים',items:[
+    {id:'pn',  name:'כחול כהה',         color:'linear-gradient(160deg,#1e40af,#1e3a8a)', unlock:0,  prem:false},
+    {id:'pb',  name:'שחור',             color:'linear-gradient(160deg,#111827,#1F2937)', unlock:1,  prem:false},
+    {id:'pp',  name:'סגול',             color:'linear-gradient(160deg,#6D28D9,#4C1D95)', unlock:4,  prem:false},
+    {id:'pr',  name:'אדום',             color:'linear-gradient(160deg,#991B1B,#7F1D1D)', unlock:5,  prem:false},
+    {id:'pg',  name:'ירוק',             color:'linear-gradient(160deg,#065F46,#064E3B)', unlock:4,  prem:false},
+    {id:'po',  name:'כתום',             color:'linear-gradient(160deg,#92400E,#78350F)', unlock:6,  prem:false},
+    {id:'pw',  name:'לבן',              color:'linear-gradient(160deg,#E5E7EB,#D1D5DB)', unlock:3,  prem:false},
+    {id:'ppi', name:'ורוד',             color:'linear-gradient(160deg,#DB2777,#9D174D)', unlock:6,  prem:false},
+    {id:'pcy', name:'ציאן',             color:'linear-gradient(160deg,#0891B2,#164E63)', unlock:7,  prem:false},
+    {id:'pca', name:'קמו',              color:'linear-gradient(160deg,#4B5320,#3A4A1A)', unlock:9,  prem:false},
+    {id:'pgd', name:'זהב 👑',           color:'linear-gradient(160deg,#D97706,#F59E0B)', unlock:0,  prem:true},
+    {id:'prd', name:'קשת 🌈',           color:'linear-gradient(160deg,#EC4899,#8B5CF6,#3B82F6)', unlock:0, prem:true},
+    {id:'pte', name:'טורקיז',           color:'linear-gradient(160deg,#0D9488,#14B8A6)', unlock:3,  prem:false},
+    {id:'pli', name:'ליים',             color:'linear-gradient(160deg,#65A30D,#84CC16)', unlock:5,  prem:false},
+    {id:'pgr', name:'אפור',             color:'linear-gradient(160deg,#4B5563,#6B7280)', unlock:2,  prem:false},
+    {id:'pbl', name:'כחול שמיים',       color:'linear-gradient(160deg,#0284C7,#38BDF8)', unlock:7,  prem:false},
+    {id:'ptr', name:'חום',              color:'linear-gradient(160deg,#78350F,#A16207)', unlock:4,  prem:false},
+    {id:'prb', name:'כחול-אדום',        color:'linear-gradient(160deg,#991B1B,#1E3A8A)', unlock:10, prem:false},
+    {id:'pst', name:'כסוף ✨',          color:'linear-gradient(160deg,#9CA3AF,#E5E7EB)', unlock:0,  prem:true},
+    {id:'pnj', name:'ניאון 🌟',         color:'linear-gradient(160deg,#84CC16,#FACC15)', unlock:0,  prem:true},
+    {id:'phe', name:'חאקי',             color:'linear-gradient(160deg,#7C2D12,#9A3412)', unlock:11, prem:false},
+    {id:'pad1',name:'⚡ ברק',           color:'linear-gradient(160deg,#1E3A8A,#FBBF24,#1E3A8A)', unlock:0, prem:false, adminOnly:true},
+    {id:'pad2',name:'🌌 גלקסיה',        color:'linear-gradient(160deg,#0F172A,#4C1D95,#0F172A)', unlock:0, prem:false, adminOnly:true},
+    {id:'pad3',name:'🔥 אש',            color:'linear-gradient(160deg,#7C2D12,#EF4444,#F97316)', unlock:0, prem:false, adminOnly:true},
+    {id:'pad4',name:'👑 אדמין',         color:'linear-gradient(160deg,#D97706,#7C3AED)', unlock:0, prem:false, adminOnly:true},
+  ]},
+  shoes:{label:'👟 נעליים',items:[
+    {id:'shd', name:'כהות',             color:'linear-gradient(135deg,#111827,#374151)', unlock:0,  prem:false},
+    {id:'shw', name:'לבנות',            color:'linear-gradient(135deg,#D1D5DB,#F9FAFB)', unlock:2,  prem:false},
+    {id:'shr', name:'אדומות',           color:'linear-gradient(135deg,#DC2626,#EF4444)', unlock:3,  prem:false},
+    {id:'shb', name:'כחולות',           color:'linear-gradient(135deg,#1d4ed8,#3B82F6)', unlock:3,  prem:false},
+    {id:'shp', name:'סגולות',           color:'linear-gradient(135deg,#6D28D9,#8B5CF6)', unlock:5,  prem:false},
+    {id:'sho', name:'כתומות',           color:'linear-gradient(135deg,#EA580C,#FB923C)', unlock:5,  prem:false},
+    {id:'shpi',name:'ורודות',           color:'linear-gradient(135deg,#EC4899,#F472B6)', unlock:4,  prem:false},
+    {id:'shgr',name:'ירוקות',           color:'linear-gradient(135deg,#059669,#34D399)', unlock:6,  prem:false},
+    {id:'shc', name:'כסף',              color:'linear-gradient(135deg,#9CA3AF,#E5E7EB)', unlock:8,  prem:false},
+    {id:'shn', name:'חיל הים',          color:'linear-gradient(135deg,#1e3a8a,#172554)', unlock:7,  prem:false},
+    {id:'shg', name:'זהובות ✨',        color:'linear-gradient(135deg,#D97706,#F59E0B)', unlock:0,  prem:true},
+    {id:'shdm',name:'יהלום 💎',        color:'linear-gradient(135deg,#67E8F9,#A5F3FC,#ECFEFF)', unlock:0, prem:true},
+    {id:'shcy',name:'ציאן',             color:'linear-gradient(135deg,#0891B2,#67E8F9)', unlock:4,  prem:false},
+    {id:'shli',name:'ליים',             color:'linear-gradient(135deg,#65A30D,#A3E635)', unlock:6,  prem:false},
+    {id:'shye',name:'צהובות ☀️',       color:'linear-gradient(135deg,#D97706,#FCD34D)', unlock:5,  prem:false},
+    {id:'shmr',name:'מארון',            color:'linear-gradient(135deg,#7F1D1D,#B91C1C)', unlock:8,  prem:false},
+    {id:'shbr',name:'חום',              color:'linear-gradient(135deg,#78350F,#A16207)', unlock:3,  prem:false},
+    {id:'shtl',name:'טיל',              color:'linear-gradient(135deg,#0F766E,#14B8A6)', unlock:9,  prem:false},
+    {id:'shpl',name:'כסף מנצנץ ✨',    color:'linear-gradient(135deg,#C0C0C0,#E5E7EB)', unlock:0,  prem:true},
+    {id:'shnj',name:'ניאון 🌟',        color:'linear-gradient(135deg,#65A30D,#FACC15)', unlock:0,  prem:true},
+    {id:'shwh',name:'זהב-כסף',         color:'linear-gradient(135deg,#D97706,#9CA3AF)', unlock:11, prem:false},
+    {id:'shad1',name:'🚀 מגפי רקטה',   color:'linear-gradient(135deg,#1E3A8A,#60A5FA,#BFDBFE)', unlock:0, prem:false, adminOnly:true},
+    {id:'shad2',name:'⚡ מגפי ברק',    color:'linear-gradient(135deg,#1E3A8A,#FBBF24)', unlock:0,  prem:false, adminOnly:true},
+    {id:'shad3',name:'🌌 גלקסיה',      color:'linear-gradient(135deg,#0F172A,#4C1D95,#7C3AED)', unlock:0, prem:false, adminOnly:true},
+    {id:'shad4',name:'🔥 אש',          color:'linear-gradient(135deg,#7C2D12,#EF4444,#F97316)', unlock:0, prem:false, adminOnly:true},
+  ]},
+  hair:{label:'💇 שיער',items:[
+    {id:'hrp', name:'סגול',             color:'linear-gradient(160deg,#6D28D9,#4C1D95)', unlock:0,  prem:false},
+    {id:'hrk', name:'שחור',             color:'linear-gradient(160deg,#111827,#1F2937)', unlock:1,  prem:false},
+    {id:'hrb2',name:'חום כהה',          color:'linear-gradient(160deg,#78350F,#92400E)', unlock:2,  prem:false},
+    {id:'hrl', name:'בלונד',            color:'linear-gradient(160deg,#D97706,#F59E0B)', unlock:3,  prem:false},
+    {id:'hrw', name:'לבן',              color:'linear-gradient(160deg,#D1D5DB,#F9FAFB)', unlock:4,  prem:false},
+    {id:'hrr', name:'אדום',             color:'linear-gradient(160deg,#B91C1C,#EF4444)', unlock:5,  prem:false},
+    {id:'hrb', name:'כחול',             color:'linear-gradient(160deg,#1d4ed8,#60A5FA)', unlock:6,  prem:false},
+    {id:'hrpi',name:'ורוד',             color:'linear-gradient(160deg,#DB2777,#F472B6)', unlock:7,  prem:false},
+    {id:'hrg', name:'ירוק',             color:'linear-gradient(160deg,#059669,#34D399)', unlock:8,  prem:false},
+    {id:'hro', name:'כתום',             color:'linear-gradient(160deg,#EA580C,#FB923C)', unlock:9,  prem:false},
+    {id:'hrc', name:'ציאן',             color:'linear-gradient(160deg,#0891B2,#67E8F9)', unlock:10, prem:false},
+    {id:'hrx', name:'קשת 🌈',           color:'linear-gradient(160deg,#EC4899,#8B5CF6,#3B82F6,#10B981)', unlock:0, prem:true},
+    {id:'hrgd',name:'זהב ✨',           color:'linear-gradient(160deg,#F59E0B,#FDE68A,#D97706)', unlock:0, prem:true},
+    {id:'hrm', name:'מגנטה',            color:'linear-gradient(160deg,#9D174D,#DB2777)', unlock:5,  prem:false},
+    {id:'hrtl',name:'טיל',              color:'linear-gradient(160deg,#0F766E,#14B8A6)', unlock:6,  prem:false},
+    {id:'hryl',name:'לימון',            color:'linear-gradient(160deg,#CA8A04,#FDE68A)', unlock:4,  prem:false},
+    {id:'hrgr',name:'אפור כסף',         color:'linear-gradient(160deg,#6B7280,#D1D5DB)', unlock:8,  prem:false},
+    {id:'hrst',name:'כסף מנצנץ ✨',    color:'linear-gradient(160deg,#9CA3AF,#F9FAFB,#C0C0C0)', unlock:0, prem:true},
+    {id:'hrdb',name:'כחול כהה',         color:'linear-gradient(160deg,#1E3A8A,#3730A3)', unlock:7,  prem:false},
+    {id:'hrmx',name:'שחור+כסף',        color:'linear-gradient(160deg,#111827,#9CA3AF)', unlock:9,  prem:false},
+    {id:'hrlt',name:'לבנדר',            color:'linear-gradient(160deg,#7C3AED,#C4B5FD)', unlock:11, prem:false},
+    {id:'hrad1',name:'⚡ ברק',          color:'linear-gradient(160deg,#1E3A8A,#FBBF24,#60A5FA)', unlock:0, prem:false, adminOnly:true},
+    {id:'hrad2',name:'🔥 אש',           color:'linear-gradient(160deg,#7C2D12,#EF4444,#F97316)', unlock:0, prem:false, adminOnly:true},
+    {id:'hrad3',name:'🌌 גלקסיה',       color:'linear-gradient(160deg,#0F172A,#4C1D95,#6D28D9,#A78BFA)', unlock:0, prem:false, adminOnly:true},
+    {id:'hrad4',name:'👑 כסף מלכותי',   color:'linear-gradient(160deg,#D97706,#F9FAFB,#D97706)', unlock:0, prem:false, adminOnly:true},
+  ]},
+  acc:{label:'😎 אביזרים',items:[
+    {id:'an',  name:'ללא',              emoji:'',    pos:'acc',   unlock:0,  prem:false},
+    {id:'ag',  name:'משקפי שמש',        emoji:'🕶️', pos:'acc',   unlock:2,  prem:false},
+    {id:'am',  name:'משקפי ראיה',       emoji:'👓',  pos:'acc',   unlock:3,  prem:false},
+    {id:'as',  name:'צעיף',             emoji:'🧣',  pos:'acc',   unlock:4,  prem:false},
+    {id:'ax',  name:'כוכב ✨',          emoji:'✨',  pos:'acc',   unlock:5,  prem:false},
+    {id:'ah',  name:'אוזניות 🎧',       emoji:'🎧',  pos:'acc',   unlock:6,  prem:false},
+    {id:'af',  name:'פרח 🌸',           emoji:'🌸',  pos:'acc',   unlock:4,  prem:false},
+    {id:'aw',  name:'כנפיים 🦋',        emoji:'🦋',  pos:'extra', unlock:0,  prem:true},
+    {id:'ae',  name:'חרב ⚔️',           emoji:'⚔️', pos:'extra', unlock:7,  prem:false},
+    {id:'ad',  name:'מגן 🛡️',           emoji:'🛡️', pos:'extra', unlock:9,  prem:false},
+    {id:'ar',  name:'קשת 🏹',           emoji:'🏹',  pos:'extra', unlock:6,  prem:false},
+    {id:'at',  name:'טלסקופ 🔭',        emoji:'🔭',  pos:'extra', unlock:8,  prem:false},
+    {id:'ag2', name:'גיטרה 🎸',         emoji:'🎸',  pos:'extra', unlock:10, prem:false},
+    {id:'adr', name:'דרקון 🐉',         emoji:'🐉',  pos:'extra', unlock:0,  prem:true},
+    {id:'al',  name:'עניבה 👔',         emoji:'👔',  pos:'acc',   unlock:7,  prem:false},
+    {id:'ab',  name:'עניבת פפיון 🎀',   emoji:'🎀',  pos:'acc',   unlock:5,  prem:false},
+    {id:'ac',  name:'שרשרת 📿',         emoji:'📿',  pos:'acc',   unlock:8,  prem:false},
+    {id:'ak',  name:'תיק 🎒',           emoji:'🎒',  pos:'extra', unlock:4,  prem:false},
+    {id:'ap',  name:'מגן קסם 🔮',       emoji:'🔮',  pos:'extra', unlock:9,  prem:false},
+    {id:'afl', name:'שרביט ✨',         emoji:'🪄',  pos:'extra', unlock:11, prem:false},
+    {id:'amk', name:'מיקרופון 🎤',      emoji:'🎤',  pos:'extra', unlock:12, prem:false},
+    {id:'aad1',name:'👾 רובוט חבר',     emoji:'🤖',  pos:'extra', unlock:0,  prem:false, adminOnly:true},
+    {id:'aad2',name:'😇 הילה קדושה',    emoji:'',    pos:'halo',      unlock:0, prem:false, adminOnly:true},
+    {id:'aad3',name:'🔱 קילשון גלקסיה', emoji:'🔱',  pos:'trident',   unlock:0, prem:false, adminOnly:true},
+    {id:'aad4',name:'⚡ חזיז הברק',     emoji:'',    pos:'lightning', unlock:0, prem:false, adminOnly:true},
+  ]},
+};
+
+/* ── TOPIC BANK for infinite lessons ── */
+const TOPICS=[
+  {name:'ברכות',icon:'👋',color:'rgba(124,58,237,.25)',words:[
+    {en:'Hello',he:'שלום',e:'👋'},{en:'Goodbye',he:'להתראות',e:'✋'},{en:'Good morning',he:'בוקר טוב',e:'🌅'},{en:'Good night',he:'לילה טוב',e:'🌙'},{en:'Please',he:'בבקשה',e:'🙏'},{en:'Thank you',he:'תודה',e:'🤝'},{en:'Sorry',he:'סליחה',e:'😅'},{en:'Welcome',he:'ברוך הבא',e:'🎉'}
+  ]},
+  {name:'בעלי חיים',icon:'🐾',color:'rgba(236,72,153,.2)',words:[
+    {en:'Cat',he:'חתול',e:'🐱'},{en:'Dog',he:'כלב',e:'🐶'},{en:'Bird',he:'ציפור',e:'🐦'},{en:'Fish',he:'דג',e:'🐟'},{en:'Horse',he:'סוס',e:'🐴'},{en:'Rabbit',he:'ארנב',e:'🐰'},{en:'Lion',he:'אריה',e:'🦁'},{en:'Elephant',he:'פיל',e:'🐘'}
+  ]},
+  {name:'אוכל',icon:'🍕',color:'rgba(245,158,11,.2)',words:[
+    {en:'Pizza',he:'פיצה',e:'🍕'},{en:'Apple',he:'תפוח',e:'🍎'},{en:'Bread',he:'לחם',e:'🍞'},{en:'Milk',he:'חלב',e:'🥛'},{en:'Cake',he:'עוגה',e:'🎂'},{en:'Chicken',he:'עוף',e:'🍗'},{en:'Banana',he:'בננה',e:'🍌'},{en:'Egg',he:'ביצה',e:'🥚'}
+  ]},
+  {name:'משפחה',icon:'👨‍👩‍👧',color:'rgba(59,130,246,.2)',words:[
+    {en:'Mother',he:'אמא',e:'👩'},{en:'Father',he:'אבא',e:'👨'},{en:'Sister',he:'אחות',e:'👧'},{en:'Brother',he:'אח',e:'👦'},{en:'Baby',he:'תינוק',e:'👶'},{en:'Grandma',he:'סבתא',e:'👵'},{en:'Grandpa',he:'סבא',e:'👴'},{en:'Family',he:'משפחה',e:'👨‍👩‍👧‍👦'}
+  ]},
+  {name:'צבעים',icon:'🎨',color:'rgba(16,185,129,.2)',words:[
+    {en:'Red',he:'אדום',e:'🔴'},{en:'Blue',he:'כחול',e:'🔵'},{en:'Green',he:'ירוק',e:'💚'},{en:'Yellow',he:'צהוב',e:'💛'},{en:'Purple',he:'סגול',e:'💜'},{en:'Orange',he:'כתום',e:'🟠'},{en:'White',he:'לבן',e:'⚪'},{en:'Black',he:'שחור',e:'⚫'}
+  ]},
+  {name:'מספרים',icon:'🔢',color:'rgba(239,68,68,.2)',words:[
+    {en:'One',he:'אחד',e:'1️⃣'},{en:'Two',he:'שתיים',e:'2️⃣'},{en:'Three',he:'שלוש',e:'3️⃣'},{en:'Four',he:'ארבע',e:'4️⃣'},{en:'Five',he:'חמש',e:'5️⃣'},{en:'Six',he:'שש',e:'6️⃣'},{en:'Seven',he:'שבע',e:'7️⃣'},{en:'Eight',he:'שמונה',e:'8️⃣'}
+  ]},
+  {name:'בית וחדרים',icon:'🏠',color:'rgba(99,102,241,.2)',words:[
+    {en:'House',he:'בית',e:'🏠'},{en:'Door',he:'דלת',e:'🚪'},{en:'Window',he:'חלון',e:'🪟'},{en:'Kitchen',he:'מטבח',e:'🍳'},{en:'Bed',he:'מיטה',e:'🛏'},{en:'Chair',he:'כיסא',e:'🪑'},{en:'Table',he:'שולחן',e:'🪞'},{en:'Bathroom',he:'אמבטיה',e:'🛁'}
+  ]},
+  {name:'לבוש',icon:'👕',color:'rgba(236,72,153,.15)',words:[
+    {en:'Shirt',he:'חולצה',e:'👕'},{en:'Pants',he:'מכנסיים',e:'👖'},{en:'Shoes',he:'נעליים',e:'👟'},{en:'Hat',he:'כובע',e:'🎩'},{en:'Dress',he:'שמלה',e:'👗'},{en:'Socks',he:'גרביים',e:'🧦'},{en:'Coat',he:'מעיל',e:'🧥'},{en:'Glasses',he:'משקפיים',e:'👓'}
+  ]},
+  {name:'טבע',icon:'🌿',color:'rgba(16,185,129,.25)',words:[
+    {en:'Tree',he:'עץ',e:'🌳'},{en:'Flower',he:'פרח',e:'🌸'},{en:'Sun',he:'שמש',e:'☀️'},{en:'Rain',he:'גשם',e:'🌧'},{en:'Cloud',he:'ענן',e:'☁️'},{en:'Mountain',he:'הר',e:'⛰'},{en:'Sea',he:'ים',e:'🌊'},{en:'Moon',he:'ירח',e:'🌙'}
+  ]},
+  {name:'ספורט',icon:'⚽',color:'rgba(245,158,11,.25)',words:[
+    {en:'Football',he:'כדורגל',e:'⚽'},{en:'Basketball',he:'כדורסל',e:'🏀'},{en:'Swimming',he:'שחייה',e:'🏊'},{en:'Running',he:'ריצה',e:'🏃'},{en:'Bicycle',he:'אופניים',e:'🚲'},{en:'Tennis',he:'טניס',e:'🎾'},{en:'Jump',he:'קפיצה',e:'🤸'},{en:'Ball',he:'כדור',e:'🏐'}
+  ]},
+  {name:'בית ספר',icon:'📚',color:'rgba(124,58,237,.2)',words:[
+    {en:'Book',he:'ספר',e:'📚'},{en:'Pencil',he:'עיפרון',e:'✏️'},{en:'Teacher',he:'מורה',e:'👩‍🏫'},{en:'Classroom',he:'כיתה',e:'🏫'},{en:'Desk',he:'שולחן כתיבה',e:'🖥'},{en:'Homework',he:'שיעורי בית',e:'📝'},{en:'Test',he:'מבחן',e:'📋'},{en:'Grade',he:'ציון',e:'⭐'}
+  ]},
+  {name:'גוף האדם',icon:'🧠',color:'rgba(239,68,68,.18)',words:[
+    {en:'Head',he:'ראש',e:'🗣'},{en:'Eye',he:'עין',e:'👁'},{en:'Nose',he:'אף',e:'👃'},{en:'Mouth',he:'פה',e:'👄'},{en:'Hand',he:'יד',e:'🤚'},{en:'Leg',he:'רגל',e:'🦵'},{en:'Heart',he:'לב',e:'❤️'},{en:'Ear',he:'אוזן',e:'👂'}
+  ]}
+];
+
+/* Generate lesson from topic + index */
+function getLessonData(lessonId){
+  const topicIdx=Math.floor((lessonId-1)/3)%TOPICS.length;
+  const lessonInTopic=(lessonId-1)%3; // 0=vocab, 1=quiz, 2=memory
+  const topic=TOPICS[topicIdx];
+  const words=topic.words;
+  const types=['vocab','quiz','memory'];
+  const type=types[lessonInTopic];
+  const subMap={vocab:'לחץ על כרטיס לראות תרגום',quiz:'ענה נכון על כל השאלות',memory:'מצא את הזוגות המתאימים!'};
+  if(type==='quiz'){
+    // Generate 4 questions from the words
+    const qs=[];
+    for(let i=0;i<Math.min(4,words.length);i++){
+      const w=words[i];
+      const wrong=words.filter((_,j)=>j!==i).slice(0,3).map(x=>x.he);
+      const opts=[w.he,...wrong].sort(()=>Math.random()-.5);
+      qs.push({q:`איך אומרים "${w.en}" בעברית?`,opts,ans:opts.indexOf(w.he)});
+    }
+    return{icon:topic.icon,sub:subMap[type],type,questions:qs,topic:topic.name};
+  }
+  return{icon:topic.icon,sub:subMap[type],type,words:words.slice(0,6),topic:topic.name};
+}
+
+/* Generate COURSES dynamically — infinite units */
+function buildInfiniteCourses(){
+  const totalUnits=60;
+  const units=[];
+  for(let u=0;u<totalUnits;u++){
+    const topic=TOPICS[u%TOPICS.length];
+    const startLesson=u*3+1;
+    const lessons=[];
+    for(let l=0;l<3;l++){
+      const lid=startLesson+l;
+      const typeNames=['📖 מילות אוצר','❓ חידון','🧠 משחק זיכרון'];
+      lessons.push({id:lid,title:topic.name+' — '+typeNames[l],type:['vocab','quiz','memory'][l],status:lid===1?'done':lid===2?'done':lid===3?'available':'locked',coins:50+Math.floor(lid/3)*25});
+    }
+    units.push({id:u+1,title:`יחידה ${u+1}: ${topic.name}`,icon:topic.icon,color:topic.color,lessons});
+  }
+  return units;
+}
+const COURSES=buildInfiniteCourses();
+
+const FRIENDS=[
+  {name:'שירה', av:'👧',level:5, online:true},
+  {name:'דניאל',av:'👦',level:9, online:false},
+  {name:'נועה',  av:'🧒',level:3, online:true},
+  {name:'אורי',  av:'🧑',level:12,online:true},
+  {name:'מיה',   av:'👩',level:6, online:false},
+  {name:'יובל',  av:'🧔',level:4, online:false},
+];
+
+/* ── STATE ── */
+let user=null;
+let outfit={hat:'hn',shirt:'sp',pants:'pn',shoes:'shd',hair:'hrp',acc:'an'};
+let gender='boy';
+let activeTab='hat';
+let curLesson=null;
+let qState={idx:0};
+let lState={};
+
+/* ── TAB SWITCH ── */
+function switchTab(t){
+  const isLogin=t==='login';
+  document.getElementById('tab-login').classList.toggle('active',isLogin);
+  document.getElementById('tab-reg').classList.toggle('active',!isLogin);
+  document.getElementById('form-login').style.display=isLogin?'block':'none';
+  document.getElementById('form-reg').style.display=isLogin?'none':'block';
+  document.getElementById('lsub').textContent=isLogin?'התחבר לאזור האישי שלך':'הצטרף בחינם ותתחיל ללמוד! 🎁';
+  document.getElementById('lerr').style.display='none';
+  document.getElementById('rerr').style.display='none';
+}
+
+/* ── REGISTER ── */
+async function doRegister(){
+  const name=document.getElementById('ru-name').value.trim();
+  const u=document.getElementById('ru').value.trim();
+  const p=document.getElementById('rp').value;
+  const p2=document.getElementById('rp2').value;
+  const err=document.getElementById('rerr');
+  const btn=document.querySelector('#form-reg .lbtn');
+  if(!name){err.textContent='❌ הכנס שם מלא';err.style.display='block';return false;}
+  if(u.length<3){err.textContent='❌ שם משתמש חייב להיות לפחות 3 תווים';err.style.display='block';return false;}
+  if(p.length<4){err.textContent='❌ סיסמה חייבת להיות לפחות 4 תווים';err.style.display='block';return false;}
+  if(p!==p2){err.textContent='❌ הסיסמאות לא תואמות';err.style.display='block';return false;}
+  err.style.display='none';
+  if(GS_URL){
+    btn.textContent='⏳ רושם...'; btn.disabled=true;
+    try{
+      const res=await fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'register',username:u,password:p,name})});
+      const data=await res.json();
+      btn.textContent='🎉 הירשם חינם'; btn.disabled=false;
+      if(!data.success){err.textContent='❌ '+(data.error||'שגיאה');err.style.display='block';return false;}
+      user={...data.user,pass:p,username:u,xp:0,maxXp:200};
+      /* Mirror to local */
+      USERS[u]={pass:p,name:user.name,level:user.level||1,coins:user.coins||0,xp:0,maxXp:200,av:'🧒',admin:!!user.admin};
+    }catch(e){
+      btn.textContent='🎉 הירשם חינם'; btn.disabled=false;
+      if(USERS[u]){err.textContent='❌ שם המשתמש תפוס, בחר אחר';err.style.display='block';return false;}
+      USERS[u]={pass:p,name:name+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒'};
+      user={...USERS[u],username:u};
+    }
+  } else {
+    if(USERS[u]){err.textContent='❌ שם המשתמש תפוס, בחר אחר';err.style.display='block';return false;}
+    const joined=new Date().toLocaleDateString('he-IL');
+    USERS[u]={pass:p,name:name+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒',admin:false,joined};
+    user={...USERS[u],username:u};
+    saveUsersLocal();
+    saveSession(user);
+  }
+  document.getElementById('rsuccess').style.display='block';
+  setTimeout(()=>{
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    initApp();
+  },1200);
+  return false;
+}
+
+/* ── LOGIN ── */
+async function doLogin(){
+  const u=document.getElementById('iu').value.trim();
+  const p=document.getElementById('ip').value.trim();
+  const err=document.getElementById('lerr');
+  const btn=document.querySelector('#form-login .lbtn');
+  if(GS_URL){
+    btn.textContent='⏳ מתחבר...'; btn.disabled=true;
+    try{
+      const res=await fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'login',username:u,password:p})});
+      const data=await res.json();
+      btn.textContent='🚀 כניסה'; btn.disabled=false;
+      if(data.success){
+        user={...data.user,pass:p,username:u};
+        if(!user.maxXp) user.maxXp=Math.max(200,user.level*150);
+        USERS[u]={pass:p,name:user.name,level:user.level,coins:user.coins,xp:user.xp||0,maxXp:user.maxXp,av:'🧒',admin:!!user.admin};
+        err.style.display='none';
+        document.getElementById('login-screen').style.display='none';
+        document.getElementById('app').style.display='block';
+        initApp();
+      } else {
+        err.textContent='❌ '+(data.error||'שם משתמש או סיסמה שגויים');
+        err.style.display='block';
+      }
+    }catch(e){
+      btn.textContent='🚀 כניסה'; btn.disabled=false;
+      /* Fallback to local */
+      if(USERS[u]&&USERS[u].pass===p){
+        user={...USERS[u],username:u};
+        err.style.display='none';
+        document.getElementById('login-screen').style.display='none';
+        document.getElementById('app').style.display='block';
+        initApp();
+      } else { err.style.display='block'; }
+    }
+  } else {
+    if(USERS[u]&&USERS[u].pass===p){
+      user={...USERS[u],username:u};
+      saveSession(user);
+      err.style.display='none';
+      document.getElementById('login-screen').style.display='none';
+      document.getElementById('app').style.display='block';
+      initApp();
+    } else { err.style.display='block'; }
+  }
+  return false;
+}
+function doLogout(){
+  clearSession();
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('iu').value='';
+  document.getElementById('ip').value='';
+  user=null;
+}
+
+/* ── GOOGLE SHEETS CONNECT ── */
+async function gsConnect(){
+  const inp=document.getElementById('gs-url-inp');
+  const url=(inp.value||'').trim();
+  if(!url){toast('⚠️ הכנס כתובת Apps Script');return;}
+  const statusEl=document.getElementById('gs-status');
+  statusEl.textContent='⏳ מתחבר...';
+  try{
+    const res=await fetch(url+'?action=ping');
+    const data=await res.json();
+    GS_URL=url;
+    statusEl.style.background='rgba(16,185,129,.15)';
+    statusEl.style.color='#6EE7B7';
+    statusEl.textContent='✅ מחובר ל-Google Sheets! כל הרשמה ועדכון נשמרים אוטומטית';
+    toast('✅ Google Sheets מחובר!');
+    gsLoadUsers();
+  }catch(e){
+    statusEl.style.background='rgba(239,68,68,.12)';
+    statusEl.style.color='#FCA5A5';
+    statusEl.textContent='❌ שגיאת חיבור — בדוק שהכתובת נכונה ושה-Web App פורס כ"Anyone"';
+    toast('❌ שגיאת חיבור');
+  }
+}
+function gsDisconnect(){
+  GS_URL='';
+  const statusEl=document.getElementById('gs-status');
+  statusEl.style.background='rgba(255,255,255,.06)';
+  statusEl.style.color='rgba(255,255,255,.6)';
+  statusEl.textContent='📴 לא מחובר — משתמשים נשמרים בזיכרון בלבד';
+  document.getElementById('gs-users-list').innerHTML='';
+  toast('🔌 נותק מ-Google Sheets');
+}
+async function gsLoadUsers(){
+  if(!GS_URL) return;
+  const listEl=document.getElementById('gs-users-list');
+  listEl.innerHTML='<span style="opacity:.5">טוען...</span>';
+  try{
+    const res=await fetch(GS_URL+'?action=users');
+    const data=await res.json();
+    if(data.success&&data.users){
+      if(!data.users.length){listEl.innerHTML='<span style="opacity:.5">אין משתמשים עדיין</span>';return;}
+      listEl.innerHTML=data.users.map(u=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:10px;border:1px solid rgba(255,255,255,.06)">
+          <div>
+            <span style="font-size:.9rem">${u.admin?'👑':'🧑'} <b>${u.name}</b></span>
+            <span style="opacity:.45;font-size:.72rem;margin-right:6px">(${u.username})</span>
+            ${!u.active?'<span style="color:#f87171;font-size:.7rem">מושהה</span>':''}
+            <br>
+            <span style="opacity:.5;font-size:.72rem">🪙${(u.coins||0).toLocaleString()} · רמה ${u.level||1} · ${u.date||''}</span>
+          </div>
+          <div style="display:flex;gap:5px;flex-shrink:0">
+            <button onclick="gsToggleAdmin('${u.username}',${!u.admin})" title="${u.admin?'הסר אדמין':'הפוך לאדמין'}" style="background:${u.admin?'rgba(245,158,11,.2)':'rgba(99,102,241,.2)'};border:none;border-radius:6px;padding:4px 7px;color:#fff;cursor:pointer;font-size:.75rem">${u.admin?'👑 הסר':'👑 אדמין'}</button>
+            <button onclick="gsSuspendUser('${u.username}')" title="השהה משתמש" style="background:rgba(239,68,68,.15);border:none;border-radius:6px;padding:4px 7px;color:#fca5a5;cursor:pointer;font-size:.75rem">🚫</button>
+          </div>
+        </div>`).join('');
+      document.getElementById('adm-users').textContent=data.users.length;
+    }
+  }catch(e){
+    listEl.innerHTML='<span style="color:#f87171;font-size:.8rem">❌ שגיאה בטעינת משתמשים</span>';
+  }
+}
+async function gsToggleAdmin(username,makeAdmin){
+  if(!GS_URL)return;
+  try{
+    await fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'setAdmin',username,admin:makeAdmin})});
+    toast(makeAdmin?`👑 ${username} הפך לאדמין`:`🧑 ${username} הוסר מאדמין`);
+    gsLoadUsers();
+  }catch(e){toast('❌ שגיאה');}
+}
+async function gsSuspendUser(username){
+  if(!GS_URL)return;
+  if(!confirm(`להשהות את המשתמש "${username}"?`))return;
+  try{
+    await fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'deleteUser',username})});
+    toast(`🚫 ${username} הושהה`);
+    gsLoadUsers();
+  }catch(e){toast('❌ שגיאה');}
+}
+
+/* ── INIT ── */
+function initApp(){
+  document.getElementById('sbname').textContent=user.name;
+  document.getElementById('sblvl').textContent=user.level;
+  document.getElementById('sbcoins').textContent=user.coins.toLocaleString();
+  document.getElementById('avname').textContent=user.name;
+  document.getElementById('avlvl').textContent=user.level;
+  document.getElementById('avcoins').textContent=user.coins.toLocaleString();
+  // XP bar
+  const xpPct=Math.round((user.xp/user.maxXp)*100);
+  const xpBar=document.getElementById('av-xp-bar');
+  const xpTxt=document.getElementById('av-xp-txt');
+  if(xpBar)xpBar.style.width=xpPct+'%';
+  if(xpTxt)xpTxt.textContent=user.xp+' / '+user.maxXp+' XP';
+  // Show admin button if admin
+  if(user.admin){
+    document.getElementById('admin-nav-btn').style.display='flex';
+  }
+  COURSES.forEach(c=>c.lessons.forEach(l=>{lState[l.id]=l.status;}));
+  buildWDTabs();
+  buildSkinPicker();
+  setGender('boy',true);
+  buildGrid('hat');
+  updateChar();
+  buildCourses();
+  buildProfile();
+  buildAdminPanel();
+}
+
+/* ── NAV ── */
+function nav(page,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  el.classList.add('active');
+}
+
+/* ── AVATAR ── */
+function parseGradColors(g){
+  if(!g)return['#7C3AED','#5B21B6'];
+  const m=g.match(/#[0-9A-Fa-f]{6}/g)||g.match(/#[0-9A-Fa-f]{3}/g);
+  return m||['#7C3AED','#5B21B6'];
+}
+function setGrad(id,gradStr){
+  const colors=parseGradColors(gradStr);
+  const el=document.getElementById(id);
+  if(!el)return;
+  const stops=el.querySelectorAll('stop');
+  if(stops[0])stops[0].setAttribute('stop-color',colors[0]);
+  if(stops[1])stops[1].setAttribute('stop-color',colors[colors.length-1]);
+}
+function updateChar(){
+  const s=getItem('shirt',outfit.shirt);
+  const p=getItem('pants',outfit.pants);
+  const sh=getItem('shoes',outfit.shoes);
+  const h=getItem('hair',outfit.hair);
+  setGrad('g-shirt',s.color);
+  setGrad('g-pants',p.color);
+  setGrad('g-shoe',sh.color);
+  setGrad('g-hair',h.color);
+  const hc=parseGradColors(h.color);
+  document.querySelectorAll('#s-brow-l,#s-brow-r').forEach(b=>b.setAttribute('stroke',hc[0]));
+  // ── HAT ──
+  const hat=getItem('hat',outfit.hat);
+  const elHat=document.getElementById('s-hat-ov');
+  const elCrown=document.getElementById('s-divine-crown');
+  const elLCrown=document.getElementById('s-lightning-crown');
+  const elHelmet=document.getElementById('s-space-helmet');
+  const elGCrown=document.getElementById('s-galaxy-crown');
+  // Hide all special hats first
+  [elCrown,elLCrown,elHelmet,elGCrown].forEach(el=>{if(el)el.style.display='none';});
+  if(hat.id==='had4'){
+    if(elHat) elHat.textContent=''; if(elCrown) elCrown.style.display='';
+  } else if(hat.id==='had1'){
+    if(elHat) elHat.textContent=''; if(elLCrown) elLCrown.style.display='';
+  } else if(hat.id==='had2'){
+    if(elHat) elHat.textContent=''; if(elHelmet) elHelmet.style.display='';
+  } else if(hat.id==='had3'){
+    if(elHat) elHat.textContent=''; if(elGCrown) elGCrown.style.display='';
+  } else {
+    if(elHat) elHat.textContent=hat.emoji||'';
+  }
+  // ── ACC ──
+  const acc=getItem('acc',outfit.acc);
+  const elAcc=document.getElementById('s-acc-ov');
+  const elEx=document.getElementById('s-extra-ov');
+  const elHalo=document.getElementById('s-halo-ov');
+  const elBolt=document.getElementById('s-lightning-bolt');
+  if(elHalo) elHalo.style.display='none';
+  if(elBolt) elBolt.style.display='none';
+  if(elAcc) elAcc.textContent='';
+  if(elEx) elEx.textContent='';
+  if(acc.pos==='halo'){
+    if(elHalo) elHalo.style.display='';
+  } else if(acc.pos==='lightning'){
+    if(elBolt) elBolt.style.display='';
+  } else if(acc.pos==='extra'||acc.pos==='trident'){
+    if(elEx) elEx.textContent=acc.emoji||'';
+  } else {
+    if(elAcc) elAcc.textContent=acc.emoji||'';
+  }
+}
+function getItem(cat,id){return WD[cat].items.find(i=>i.id===id)||WD[cat].items[0];}
+
+/* ── GENDER ── */
+/* ── SKIN TONES ── */
+const SKIN_TONES=[
+  {name:'☀️ בהיר',   s:['#FFE8C8','#FAC882','#ECA060','#C87030'], a:['#C87030','#FAC882','#D88040'], ear:'#F5C090'},
+  {name:'🌤️ חיטה',  s:['#F5D0A0','#E8B875','#D09050','#B07030'], a:['#B07030','#E8B875','#C07040'], ear:'#E8B875'},
+  {name:'🌥️ שזוף',  s:['#E0B888','#C89060','#A87040','#905028'], a:['#905028','#C89060','#A07040'], ear:'#C89060'},
+  {name:'☁️ כהה',   s:['#C09070','#A07048','#806030','#604820'], a:['#604820','#A07048','#806038'], ear:'#A07048'},
+  {name:'🌑 שחום',  s:['#9B7050','#7B5030','#5B3818','#3E2410'], a:['#3E2410','#7B5030','#5B3818'], ear:'#7B5030'},
+];
+let skinToneIdx=0;
+function setSkin(idx){
+  skinToneIdx=idx;
+  const t=SKIN_TONES[idx];
+  const gSkin=document.getElementById('g-skin');
+  if(gSkin){const ss=gSkin.querySelectorAll('stop');ss.forEach((s,i)=>{if(t.s[i])s.setAttribute('stop-color',t.s[i]);});}
+  const gArm=document.getElementById('g-skin-arm');
+  if(gArm){const ss=gArm.querySelectorAll('stop');ss.forEach((s,i)=>{if(t.a[i])s.setAttribute('stop-color',t.a[i]);});}
+  ['s-ear-l','s-ear-r'].forEach(id=>{const el=document.getElementById(id);if(el)el.setAttribute('fill',t.ear);});
+  buildSkinPicker();
+  toast('🎨 גוון עור שונה!');
+}
+function buildSkinPicker(){
+  const el=document.getElementById('skin-picker');
+  if(!el)return;
+  el.innerHTML=`<span class="sp-label">🎨 גוון עור</span><div class="sp-swatches">${SKIN_TONES.map((t,i)=>`<button class="sp-sw${i===skinToneIdx?' active':''}" onclick="setSkin(${i})" title="${t.name}" style="background:linear-gradient(135deg,${t.s[0]},${t.s[2]})"></button>`).join('')}</div>`;
+}
+
+const HAIR_SVG={
+  boy:{
+    back:"M100,14 C154,14 160,50 160,78 C160,104 153,122 148,130 C146,118 144,100 144,80 C144,52 136,22 100,20 C64,22 56,52 56,80 C56,100 54,118 52,130 C47,122 40,104 40,78 C40,50 46,14 100,14Z",
+    front:"M100,14 C154,14 160,50 160,70 C156,59 149,51 140,47 C145,38 145,22 132,16 C124,21 118,34 115,46 C112,35 108,21 100,16 C92,21 88,35 85,46 C82,34 76,21 68,16 C55,22 55,38 60,47 C51,51 44,59 40,70 C40,50 46,14 100,14Z",
+    sideL:"M52,66 C45,75 43,88 45,102 C46,108 49,112 52,114 C49,107 47,94 48,82 C49,75 50,70 52,66Z",
+    sideR:"M148,66 C155,75 157,88 155,102 C154,108 151,112 148,114 C151,107 153,94 152,82 C151,75 150,70 148,66Z"
+  },
+  girl:{
+    back:"M100,14 C160,14 168,52 168,84 C168,124 157,152 148,168 C145,148 144,120 144,92 C144,52 136,22 100,20 C64,22 56,52 56,92 C56,120 55,148 52,168 C43,152 32,124 32,84 C32,52 40,14 100,14Z",
+    front:"M100,14 C160,14 168,52 168,74 C162,63 154,55 144,51 C150,40 150,24 135,17 C127,22 120,36 117,50 C114,37 110,22 100,16 C90,22 86,37 83,50 C80,36 73,22 65,17 C50,24 50,40 56,51 C46,55 38,63 32,74 C32,52 40,14 100,14Z",
+    sideL:"M52,68 C43,86 39,120 42,158 C45,174 53,184 60,188 C50,174 46,148 48,118 C48,98 49,82 52,68Z",
+    sideR:"M148,68 C157,86 161,120 158,158 C155,174 147,184 140,188 C150,174 154,148 152,118 C152,98 151,82 148,68Z"
+  }
+};
+const LIP_SVG={
+  boy:{
+    top:"M87,121 Q93,117 100,121 Q107,117 113,121 Q111,126 100,126 Q89,126 87,121Z",
+    bot:"M87,126 Q100,130 113,126 Q111,129 100,130 Q89,129 87,126Z"
+  },
+  girl:{
+    top:"M84,119 Q88,114 92,118 Q96,121 100,118 Q104,114 108,118 Q112,121 116,119 Q112,127 100,127 Q88,127 84,119Z",
+    bot:"M85,127 Q100,136 115,127 Q112,133 100,135 Q88,133 85,127Z"
+  }
+};
+function setGender(g,silent=false){
+  gender=g;
+  const svg=document.getElementById('char-svg');
+  if(svg){svg.classList.toggle('char-girl',g==='girl');}
+  document.getElementById('gbtn-boy').classList.toggle('active',g==='boy');
+  document.getElementById('gbtn-girl').classList.toggle('active',g==='girl');
+  const paths=HAIR_SVG[g];
+  const lips=LIP_SVG[g];
+  const upd=(id,d)=>{const e=document.getElementById(id);if(e)e.setAttribute('d',d);};
+  upd('s-hair-back',paths.back);
+  upd('s-hair-front',paths.front);
+  upd('s-hair-side-l',paths.sideL);
+  upd('s-hair-side-r',paths.sideR);
+  upd('s-lip-top',lips.top);
+  upd('s-lip-bot',lips.bot);
+  // Set cheek blush visibility
+  document.querySelectorAll('#char-svg ellipse[fill*="240,110"]').forEach(el=>{
+    el.setAttribute('fill',g==='girl'?'rgba(240,110,70,0.28)':'rgba(230,100,50,0.12)');
+  });
+  // Girl eye color
+  ['s-iris-l','s-iris-r'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.setAttribute('fill',g==='girl'?'url(#g-iris-girl)':'url(#g-iris)');
+  });
+  if(g==='girl') outfit.hair='hrl';
+  else           outfit.hair='hrk';
+  buildGrid(activeTab);
+  updateChar();
+  if(!silent)toast(g==='girl'?'👧 מצב בת הופעל!':'👦 מצב בן הופעל!');
+}
+
+/* ── WARDROBE ── */
+function buildWDTabs(){
+  document.getElementById('wtabs').innerHTML=Object.entries(WD).map(([k,v])=>
+    `<button class="wtab ${k===activeTab?'active':''}" onclick="selTab('${k}',this)">${v.label}</button>`
+  ).join('');
+}
+function selTab(k,el){
+  activeTab=k;
+  document.querySelectorAll('.wtab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  buildGrid(k);
+}
+function buildGrid(cat){
+  const isAdmin=user&&user.admin;
+  document.getElementById('igrid').innerHTML=WD[cat].items.filter(item=>{
+    if(item.adminOnly&&!isAdmin)return false;
+    return true;
+  }).map(item=>{
+    const eq=outfit[cat]===item.id;
+    // Admin gets all items unlocked
+    const locked=isAdmin?false:(item.prem?false:(item.unlock>user.level));
+    const premLocked=isAdmin?false:item.prem;
+    const isLocked=locked||premLocked;
+    const swatch=item.color
+      ?`<div class="itm-sw" style="background:${item.color}"></div>`
+      :`<div class="itm-sw">${item.emoji||'✨'}</div>`;
+    const adminBadge=item.adminOnly?'<span class="equipped-badge" style="background:linear-gradient(90deg,#f59e0b,#ef4444)">👑</span>':'';
+    return`<button class="itm ${eq?'equipped':''} ${isLocked?'locked':''}"
+      onclick="${isLocked?'':'equip(\''+cat+'\',\''+item.id+'\')'}">
+      ${eq?'<span class="equipped-badge">✓</span>':''}
+      ${!eq?adminBadge:''}
+      ${swatch}
+      <div class="itm-name">${item.name}</div>
+      <div class="itm-lock">${isAdmin&&item.adminOnly?'🔐 אדמין':premLocked?'👑 פרימיום':locked?'🔒 רמה '+item.unlock:''}</div>
+    </button>`;
+  }).join('');
+}
+function equip(cat,id){
+  outfit[cat]=id;
+  buildGrid(cat);
+  updateChar();
+  toast('✅ הלבשת: '+getItem(cat,id).name);
+}
+
+/* ── COURSES ── */
+const TLAB={vocab:'כרטיסיות',quiz:'חידון',match:'התאמה'};
+function buildCourses(){
+  document.getElementById('ulist').innerHTML=COURSES.map(unit=>{
+    const done=unit.lessons.filter(l=>lState[l.id]==='done').length;
+    const pct=Math.round(done/unit.lessons.length*100);
+    return`<div class="unit-card" id="uc${unit.id}">
+      <button class="unit-hdr" onclick="toggleUnit(${unit.id})">
+        <div class="unit-icon" style="background:${unit.color}">${unit.icon}</div>
+        <div class="unit-info">
+          <div class="unit-title">${unit.title}</div>
+          <div class="unit-prog-txt">${done} / ${unit.lessons.length} שיעורים</div>
+        </div>
+        <div class="prog-wrap"><div class="prog-bg"><div class="prog-fill" style="width:${pct}%"></div></div></div>
+        <div class="unit-chev">▼</div>
+      </button>
+      <div class="lessons-list">
+        ${unit.lessons.map(l=>{
+          const st=lState[l.id];
+          const ic=st==='done'?'✅':st==='available'?'🔥':'🔒';
+          return`<div class="lesson-row ${st==='locked'?'locked':''}"
+            onclick="${st!=='locked'?'openLesson('+l.id+')':''}">
+            <div class="lnum ${st}">${ic}</div>
+            <div class="linfo">
+              <div class="ltitle2">${l.title}</div>
+              <div class="ltype">${TLAB[l.type]||l.type}</div>
+            </div>
+            <div class="lcoins">🪙 ${l.coins}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+  toggleUnit(1);
+}
+function toggleUnit(id){document.getElementById('uc'+id).classList.toggle('open');}
+
+/* ── LESSON ── */
+function openLesson(id){
+  const data=getLessonData(id);
+  if(!data){toast('שיעור זה יגיע בקרוב! 🚧');return;}
+  curLesson=id;
+  const lObj=COURSES.flatMap(c=>c.lessons).find(l=>l.id===id);
+  document.getElementById('micon').textContent=data.icon;
+  document.getElementById('mtitle').textContent=lObj.title;
+  document.getElementById('msub').textContent=data.sub;
+  const cbtn=document.getElementById('cbtn');
+  cbtn.classList.remove('show');
+  cbtn.textContent=`✅ סיימתי! +🪙${lObj.coins}`;
+  if(data.type==='vocab') renderVocab(data);
+  else if(data.type==='quiz') renderQuiz(data);
+  else if(data.type==='memory') renderMemory(data);
+  document.getElementById('modal').classList.add('open');
+}
+function closeLesson(){
+  document.getElementById('modal').classList.remove('open');
+  curLesson=null;
+}
+/* ── TTS helpers ── */
+function speakText(text,lang,rate,onEnd){
+  if(!window.speechSynthesis)return onEnd&&onEnd();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang;u.rate=rate||0.85;
+  if(onEnd)u.onend=onEnd;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+function speakWord(enText,heText){
+  speakText(enText,'en-US',0.8,()=>{
+    setTimeout(()=>speakText(heText,'he-IL',0.85),400);
+  });
+}
+function renderVocab(data){
+  document.getElementById('mbody').innerHTML=
+    `<div class="vocab-grid">${data.words.map((w,i)=>`
+      <div class="flip-card" id="vc${i}" onclick="flipVocabCard(this,'${w.en.replace(/'/g,"\\'")}','${w.he.replace(/'/g,"\\'")}')">
+        <div class="flip-inner">
+          <div class="flip-f">
+            <div class="fe">${w.e}</div>
+            <div class="fw">${w.en}</div>
+            <div class="fh">לחץ לתרגום</div>
+            <button class="tts-btn" onclick="event.stopPropagation();speakWord('${w.en.replace(/'/g,"\\'")}','${w.he.replace(/'/g,"\\'")}')">🔊</button>
+          </div>
+          <div class="flip-b">
+            <div class="fe">${w.e}</div>
+            <div class="fw">${w.he}</div>
+            <div class="fh">${w.en}</div>
+            <button class="tts-btn" onclick="event.stopPropagation();speakWord('${w.en.replace(/'/g,"\\'")}','${w.he.replace(/'/g,"\\'")}')">🔊</button>
+          </div>
+        </div>
+      </div>`).join('')}</div>`;
+  document.getElementById('cbtn').classList.add('show');
+  /* auto-speak first word */
+  if(data.words.length)setTimeout(()=>speakWord(data.words[0].en,data.words[0].he),600);
+}
+function flipVocabCard(el,enText,heText){
+  el.classList.toggle('flipped');
+  speakWord(enText,heText);
+}
+function renderQuiz(data){
+  qState={idx:0,data};
+  showQ();
+}
+function showQ(){
+  const {idx,data}=qState;
+  const q=data.questions[idx];
+  document.getElementById('mbody').innerHTML=`
+    <div class="qprog">שאלה ${idx+1} מתוך ${data.questions.length}</div>
+    <div class="qq">${q.q}</div>
+    <div class="qopts">${q.opts.map((o,i)=>
+      `<button class="qopt" onclick="ansQ(${i},${q.ans},this)">${o}</button>`
+    ).join('')}</div>
+    <div class="qfb" id="qfb"></div>`;
+}
+function ansQ(chosen,correct,el){
+  document.querySelectorAll('.qopt').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('qfb');
+  if(chosen===correct){el.classList.add('correct');fb.textContent='✅ נכון מאוד! 🎉';fb.style.color='#6EE7B7';}
+  else{el.classList.add('wrong');document.querySelectorAll('.qopt')[correct].classList.add('correct');fb.textContent='❌ לא נכון, נסה בפעם הבאה';fb.style.color='#FCA5A5';}
+  qState.idx++;
+  setTimeout(()=>{
+    if(qState.idx<qState.data.questions.length){showQ();}
+    else{
+      document.getElementById('mbody').innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:3rem">🎊</div><div style="font-size:1.4rem;font-weight:900;margin-top:12px">כל הכבוד! סיימת!</div></div>`;
+      document.getElementById('cbtn').classList.add('show');
+    }
+  },1300);
+}
+/* ── MEMORY GAME ── */
+let memState={pairs:[],flipped:[],matched:0,total:0,lock:false};
+function renderMemory(data){
+  const words=data.words.slice(0,4); // 4 pairs = 8 cards
+  memState={pairs:words,flipped:[],matched:0,total:words.length,lock:false};
+  // Build card array: english + hebrew for each word, shuffled
+  const cards=[];
+  words.forEach((w,i)=>{
+    cards.push({id:i,side:'en',text:w.en,emoji:w.e});
+    cards.push({id:i,side:'he',text:w.he,emoji:w.e});
+  });
+  // Shuffle
+  for(let i=cards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cards[i],cards[j]]=[cards[j],cards[i]];}
+  document.getElementById('mbody').innerHTML=`
+    <div class="memory-grid" id="mgrid">${cards.map((c,idx)=>`
+      <div class="mem-card" data-idx="${idx}" data-id="${c.id}" data-side="${c.side}" onclick="flipMem(this)">
+        <div class="mem-inner">
+          <div class="mem-front"></div>
+          <div class="mem-back"><div class="me">${c.emoji}</div><div class="mw">${c.text}</div></div>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div class="mem-result" id="mres"></div>`;
+}
+function flipMem(card){
+  if(memState.lock)return;
+  if(card.classList.contains('flipped')||card.classList.contains('matched'))return;
+  card.classList.add('flipped');
+  memState.flipped.push(card);
+  if(memState.flipped.length===2){
+    memState.lock=true;
+    const [a,b]=memState.flipped;
+    if(a.dataset.id===b.dataset.id && a.dataset.side!==b.dataset.side){
+      // Match!
+      setTimeout(()=>{
+        a.classList.add('matched');b.classList.add('matched');
+        memState.flipped=[];memState.lock=false;
+        memState.matched++;
+        if(memState.matched===memState.total){
+          document.getElementById('mres').innerHTML='<div style="font-size:2rem">🎊</div><div>כל הכבוד! מצאת את כל הזוגות!</div>';
+          document.getElementById('cbtn').classList.add('show');
+        }
+      },500);
+    } else {
+      // No match
+      setTimeout(()=>{
+        a.classList.remove('flipped');b.classList.remove('flipped');
+        memState.flipped=[];memState.lock=false;
+      },900);
+    }
+  }
+}
+function completeLesson(){
+  if(!curLesson)return;
+  const lObj=COURSES.flatMap(c=>c.lessons).find(l=>l.id===curLesson);
+  const coins=lObj?lObj.coins:50;
+  lState[curLesson]='done';
+  const all=COURSES.flatMap(c=>c.lessons);
+  const idx=all.findIndex(l=>l.id===curLesson);
+  if(idx+1<all.length&&lState[all[idx+1].id]==='locked') lState[all[idx+1].id]='available';
+  user.coins+=coins; user.xp=Math.min(user.xp+100,user.maxXp);
+  document.getElementById('sbcoins').textContent=user.coins.toLocaleString();
+  document.getElementById('avcoins').textContent=user.coins.toLocaleString();
+  closeLesson(); buildCourses(); buildProfile();
+  toast(`🎉 כל הכבוד! +🪙${coins} מטבעות!`);
+}
+
+/* ── FRIENDS (disabled — no fake data) ── */
+function buildFriends(){}
+
+/* ── PROFILE ── */
+function buildProfile(){
+  const done=Object.values(lState).filter(s=>s==='done').length;
+  document.getElementById('pgrid').innerHTML=`
+    <div class="pbig">
+      <div class="pbig-av">${user.av}</div>
+      <div style="font-size:1.3rem;font-weight:900">${user.name}</div>
+      <div style="color:rgba(255,255,255,.5);font-size:.9rem;margin-top:4px">⚡ רמה ${user.level}</div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.3);border-radius:50px;padding:8px 20px;margin-top:12px;font-weight:700">🪙 ${user.coins.toLocaleString()}</div>
+    </div>
+    <div class="pstat"><div class="num">${done}</div><div class="lbl">שיעורים הושלמו</div></div>
+    <div class="pstat"><div class="num">7🔥</div><div class="lbl">רצף יומי</div></div>
+    <div class="pstat"><div class="num">0</div><div class="lbl">חברים</div></div>
+    <div class="pstat"><div class="num">85%</div><div class="lbl">אחוז הצלחה</div></div>
+    <div class="xp-card">
+      <div class="xp-top"><span>⚡ התקדמות לרמה ${user.level+1}</span><span>${user.xp} / ${user.maxXp} XP</span></div>
+      <div class="xp-bg"><div class="xp-fill" style="width:${Math.round(user.xp/user.maxXp*100)}%"></div></div>
+    </div>`;
+}
+
+/* ── ADMIN ── */
+function adminKickUser(k){
+  if(k===ADMIN_USERNAME){toast('❌ אי אפשר למחוק את האדמין הראשי!');return;}
+  if(k===user.username){toast('❌ אי אפשר למחוק את עצמך!');return;}
+  if(!confirm(`למחוק את "${USERS[k]?.name||k}"?`)) return;
+  delete USERS[k]; saveUsersLocal(); buildAdminPanel();
+  toast('🗑️ משתמש נמחק');
+}
+function adminToggleAdmin(k){
+  if(k===ADMIN_USERNAME){toast('👑 האדמין הראשי לא ניתן לשינוי');return;}
+  if(!USERS[k]) return;
+  USERS[k].admin=!USERS[k].admin;
+  saveUsersLocal(); buildAdminPanel();
+  toast(USERS[k].admin?`👑 ${k} הפך לאדמין`:`🧑 ${k} הוסר מאדמין`);
+}
+function buildAdminPanel(){
+  if(!user||!user.admin)return;
+  const gsInp=document.getElementById('gs-url-inp');
+  if(gsInp&&GS_URL&&!gsInp.value) gsInp.value=GS_URL;
+  const entries=Object.entries(USERS);
+  document.getElementById('adm-users').textContent=entries.length;
+  document.getElementById('adm-done').textContent=Object.values(lState).filter(s=>s==='done').length;
+  const totalCoins=entries.reduce((a,[,v])=>a+v.coins,0);
+  document.getElementById('adm-coins').textContent=totalCoins.toLocaleString();
+
+  /* ── טבלת משתמשים ── */
+  const rows=entries.map(([k,v])=>{
+    const isMe=k===user.username;
+    const isMainAdmin=k===ADMIN_USERNAME;
+    const adminBadge=v.admin
+      ?`<span style="background:rgba(234,179,8,.2);border:1px solid rgba(234,179,8,.5);color:#FDE68A;padding:2px 8px;border-radius:6px;font-size:.7rem;font-weight:700">👑 אדמין</span>`
+      :`<span style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.4);padding:2px 8px;border-radius:6px;font-size:.7rem">🧑 משתמש</span>`;
+    const joinedTxt=v.joined?`<span style="font-size:.68rem;color:rgba(255,255,255,.35)">${v.joined}</span>`:'';
+    const btns=isMainAdmin
+      ?`<span style="font-size:.7rem;color:rgba(255,255,255,.3)">(אתה)</span>`
+      :`<div style="display:flex;gap:5px">
+          <button onclick="adminToggleAdmin('${k}')" title="${v.admin?'הסר אדמין':'הפוך לאדמין'}"
+            style="background:rgba(234,179,8,.15);border:1px solid rgba(234,179,8,.4);color:#FDE68A;padding:4px 9px;border-radius:8px;cursor:pointer;font-size:.72rem;font-weight:700;white-space:nowrap"
+            >${v.admin?'➖ הסר אדמין':'👑 הפוך אדמין'}</button>
+          <button onclick="adminKickUser('${k}')"
+            style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#FCA5A5;padding:4px 9px;border-radius:8px;cursor:pointer;font-size:.72rem;font-weight:700"
+            >🗑️</button>
+        </div>`;
+    return `<tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+      <td style="padding:10px 8px;font-weight:700">${isMe?'⭐ ':''}${v.name}</td>
+      <td style="padding:10px 8px;color:rgba(255,255,255,.55);font-size:.8rem">${k}</td>
+      <td style="padding:10px 8px">${adminBadge}</td>
+      <td style="padding:10px 8px;font-size:.8rem">🪙${v.coins.toLocaleString()}</td>
+      <td style="padding:10px 8px;font-size:.8rem">⚡${v.level}</td>
+      <td style="padding:10px 8px">${joinedTxt}</td>
+      <td style="padding:10px 8px">${btns}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('adm-user-list').innerHTML=`
+    <div style="overflow-x:auto;margin-top:8px">
+    <table style="width:100%;border-collapse:collapse;font-family:Heebo,sans-serif;font-size:.82rem">
+      <thead>
+        <tr style="background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);font-size:.75rem">
+          <th style="padding:8px;text-align:right;font-weight:600">שם מלא</th>
+          <th style="padding:8px;text-align:right;font-weight:600">שם משתמש</th>
+          <th style="padding:8px;text-align:right;font-weight:600">הרשאה</th>
+          <th style="padding:8px;text-align:right;font-weight:600">מטבעות</th>
+          <th style="padding:8px;text-align:right;font-weight:600">רמה</th>
+          <th style="padding:8px;text-align:right;font-weight:600">הצטרף</th>
+          <th style="padding:8px;text-align:right;font-weight:600">פעולות</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>`;
+}
+function adminUnlockAll(){
+  COURSES.forEach(c=>c.lessons.forEach(l=>{ lState[l.id]='available'; }));
+  buildCourses(); buildAdminPanel();
+  toast('🔓 כל השיעורים שוחררו!');
+}
+function adminResetLessons(){
+  COURSES.forEach((c,ci)=>c.lessons.forEach((l,li)=>{
+    if(ci===0&&li===0) lState[l.id]='done';
+    else if(ci===0&&li===1) lState[l.id]='done';
+    else if(ci===0&&li===2) lState[l.id]='available';
+    else lState[l.id]='locked';
+  }));
+  buildCourses(); buildAdminPanel();
+  toast('🔄 שיעורים אופסו');
+}
+function adminAddCoins(n){
+  user.coins+=n;
+  USERS[user.username].coins+=n;
+  document.getElementById('sbcoins').textContent=user.coins.toLocaleString();
+  document.getElementById('avcoins').textContent=user.coins.toLocaleString();
+  buildAdminPanel(); buildProfile();
+  toast(`🪙 +${n.toLocaleString()} מטבעות!`);
+  scheduleSave();
+}
+function adminLevelUp(){
+  user.level++;
+  USERS[user.username].level=user.level;
+  document.getElementById('sblvl').textContent=user.level;
+  document.getElementById('avlvl').textContent=user.level;
+  buildAdminPanel(); buildProfile();
+  toast(`⚡ עלית לרמה ${user.level}!`);
+  scheduleSave();
+}
+function adminSetAnnouncement(){
+  const txt=document.getElementById('adm-ann-input').value.trim();
+  if(!txt){toast('כתוב הודעה קודם'); return;}
+  document.getElementById('ann-text').textContent=txt;
+  document.getElementById('ann-banner').classList.add('show');
+  toast('📢 הודעה פורסמה!');
+}
+function adminHideAnnouncement(){
+  document.getElementById('ann-banner').classList.remove('show');
+  toast('הודעה הוסרה');
+}
+
+
+
+/* ── TOAST ── */
+let tt;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ── AUTO LOGIN ON PAGE LOAD ── */
+window.addEventListener('DOMContentLoaded', ()=>{ loadSession(); });
+</script>
+</body>
+</html>
