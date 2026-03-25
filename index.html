@@ -2209,7 +2209,7 @@
 
     <!-- NAV -->
     <nav id="navbar">
-        <a href="#" class="nav-logo">AI Lab</a>
+        <a href="/" class="nav-logo" onclick="if(location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">AI Lab</a>
         <ul class="nav-links nav-links-desktop" id="navLinksDesktop">
             <li><a href="#pricing">מחיר</a></li>
             <li><a href="#tools">כלי AI</a></li>
