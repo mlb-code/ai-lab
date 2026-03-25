@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>HORSE FASHION | ציוד מקצועי לסוסים</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top">
+      <span class="header-tagline">משלוחים לכל הארץ | שירות אישי | איכות מקצועית</span>
+    </div>
+    <nav class="navbar">
+      <div class="nav-logo">
+        <img src="תמונות לאתר/5ab88c58-75f2-495d-ba3f-534f29a7122f.jpg" alt="Horse Fashion Logo" class="nav-logo-img" />
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home">בית</a></li>
+        <li><a href="#products">מוצרים</a></li>
+        <li><a href="#about">אודות</a></li>
+        <li><a href="#contact">צור קשר</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="cart-btn" onclick="openCart()">
+          🛒
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+      </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home" onclick="toggleMenu()">בית</a>
+      <a href="#products" onclick="toggleMenu()">מוצרים</a>
+      <a href="#about" onclick="toggleMenu()">אודות</a>
+      <a href="#contact" onclick="toggleMenu()">צור קשר</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img src="תמונות לאתר/5ab88c58-75f2-495d-ba3f-534f29a7122f.jpg" alt="Horse Fashion Logo" class="hero-logo-img" />
+      <p class="hero-sub">ציוד מקצועי ואיכותי לסוסים</p>
+      <p class="hero-desc">כל מה שהסוס שלך צריך — באיכות הגבוהה ביותר, במחירים הטובים ביותר</p>
+      <div class="hero-buttons">
+        <a href="#products" class="btn btn-primary">לקטלוג המוצרים</a>
+        <a href="#contact" class="btn btn-secondary">להזמנה מהירה</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>גלול למטה</span>
+      <div class="scroll-arrow">↓</div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="feature-card">
+      <div class="feature-icon">🚚</div>
+      <h3>משלוח מהיר</h3>
+      <p>משלוחים לכל הארץ</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⭐</div>
+      <h3>איכות מובטחת</h3>
+      <p>מוצרים מהספקים הטובים ביותר בעולם</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📞</div>
+      <h3>שירות אישי</h3>
+      <p>נחזור אליך בווטסאפ לאישור הזמנה</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💳</div>
+      <h3>מחירים תחרותיים</h3>
+      <p>מחירים משתלמים על ציוד איכותי לסוסים</p>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories-section">
+    <div class="section-header">
+      <h2>קטגוריות</h2>
+      <p>בחר קטגוריה לגלות את כל המוצרים</p>
+    </div>
+    <div class="categories-grid">
+      <div class="category-card" onclick="filterProducts('jacket')">
+        <div class="cat-icon">🧥</div>
+        <h3>ג'קט תחרויות</h3>
+      </div>
+      <div class="category-card" onclick="filterProducts('bags')">
+        <div class="cat-icon">🎒</div>
+        <h3>תיקים לאימון</h3>
+      </div>
+      <div class="category-card" onclick="filterProducts('care')">
+        <div class="cat-icon">✨</div>
+        <h3>טיפוח וניקוי</h3>
+      </div>
+      <div class="category-card" onclick="filterProducts('boots')">
+        <div class="cat-icon">🦾</div>
+        <h3>אפוד מגן</h3>
+      </div>
+      <div class="category-card" onclick="filterProducts('rider')">
+        <div class="cat-icon">👕</div>
+        <h3>ציוד רוכב</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products-section" id="products">
+    <div class="section-header">
+      <h2>המוצרים שלנו</h2>
+      <p>ציוד מקצועי לסוסים ולרוכבים</p>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('all')">הכל</button>
+      <button class="filter-btn" onclick="filterProducts('jacket')">ג'קט תחרויות</button>
+      <button class="filter-btn" onclick="filterProducts('bags')">תיקים לאימון</button>
+      <button class="filter-btn" onclick="filterProducts('care')">טיפוח</button>
+      <button class="filter-btn" onclick="filterProducts('boots')">אפוד מגן</button>
+      <button class="filter-btn" onclick="filterProducts('rider')">ציוד רוכב</button>
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal product-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="productModalContent"></div>
+    </div>
+  </div>
+
+  <!-- CART PANEL -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h3>🛒 עגלת הקניות</h3>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-empty" id="cartEmpty">
+      <div class="cart-empty-icon">🛒</div>
+      <p>העגלה ריקה</p>
+      <button class="btn btn-primary" onclick="closeCart()">לקטלוג המוצרים</button>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-total">
+        <span>סה"כ:</span>
+        <span class="cart-total-price" id="cartTotal">₪0</span>
+      </div>
+      <form id="cartOrderForm" onsubmit="submitCartOrder(event)">
+        <div class="form-group">
+          <label>שם מלא *</label>
+          <input type="text" id="cartName" placeholder="ישראל ישראלי" required />
+        </div>
+        <div class="form-group">
+          <label>מספר טלפון *</label>
+          <input type="tel" id="cartPhone" placeholder="050-0000000" required />
+        </div>
+        <div class="form-group">
+          <label>הערות</label>
+          <textarea id="cartNotes" placeholder="מידות, צבעים, שאלות..." rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">שלח הזמנה 📞</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SUCCESS TOAST -->
+  <div class="toast" id="toast">
+    ✅ ההזמנה התקבלה! נחזור אליך בהקדם.
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-image">
+      <div class="about-image-placeholder">
+        <img src="תמונות לאתר/5ab88c58-75f2-495d-ba3f-534f29a7122f.jpg" alt="Horse Fashion Logo" class="about-logo-img" />
+      </div>
+    </div>
+    <div class="about-content">
+      <h2>אודות HORSE FASHION</h2>
+      <p>אנחנו מתמחים בייבוא וסיפוק ציוד מקצועי לסוסים ולרוכבים. עם שנים של ניסיון בתחום, אנו מביאים לכם את המוצרים האיכותיים ביותר מהספקים המובילים בעולם.</p>
+      <div class="about-stats">
+        <div class="stat">
+          <span class="stat-num">500+</span>
+          <span class="stat-label">לקוחות מרוצים</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">5★</span>
+          <span class="stat-label">דירוג לקוחות</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="section-header light">
+      <h2>צור קשר</h2>
+      <p>נשמח לענות על כל שאלה</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <div>
+            <strong>טלפון</strong>
+            <p><a href="tel:0559139557" style="color:inherit;text-decoration:none">055-9139557</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📱</span>
+          <div>
+            <strong>וואטסאפ</strong>
+            <p><a href="https://wa.me/972559139557" target="_blank" style="color:inherit;text-decoration:none">שלח הודעה בוואטסאפ</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📧</span>
+          <div>
+            <strong>אימייל</strong>
+            <p><a href="mailto:shirbarneah@gmail.com" style="color:inherit;text-decoration:none">shirbarneah@gmail.com</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">⏰</span>
+          <div>
+            <strong>שעות פעילות</strong>
+            <p>א׳–ה׳: 13:00–20:00<br />ו׳: 10:00–15:00<br />שבת: לא זמינים</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:6px;">* שעות אלו הן לוואטסאפ וליצירת קשר בלבד<br />האתר זמין לצפייה 24/7 🕐</p>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="submitContact(event)">
+        <div class="form-group">
+          <label>שם</label>
+          <input type="text" placeholder="שמך המלא" required />
+        </div>
+        <div class="form-group">
+          <label>טלפון</label>
+          <input type="tel" placeholder="050-0000000" required />
+        </div>
+        <div class="form-group">
+          <label>הודעה</label>
+          <textarea placeholder="כתוב את שאלתך כאן..." rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">שלח הודעה</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="תמונות לאתר/5ab88c58-75f2-495d-ba3f-534f29a7122f.jpg" alt="Horse Fashion Logo" class="footer-logo-img" />
+      </div>
+      <p class="footer-desc">ציוד מקצועי לסוסים ולרוכבים — איכות ללא פשרות</p>
+      <div class="footer-links">
+        <a href="#home">בית</a>
+        <a href="#products">מוצרים</a>
+        <a href="#about">אודות</a>
+        <a href="#contact">צור קשר</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 HORSE FASHION. כל הזכויות שמורות.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
