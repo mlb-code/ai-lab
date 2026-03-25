@@ -1765,8 +1765,63 @@
 
             /* -- Scroll carousel mobile -- */
             .program-card { width: 260px; padding: 1.2rem; }
-            .student-card { width: 280px; padding: 1.5rem; }
             .scroll-track { gap: 12px; }
+
+            /* -- Student projects mobile: full-width one-at-a-time -- */
+            #projects {
+                padding: 2rem 0 !important;
+            }
+            #projects .container {
+                padding: 0 1rem;
+            }
+            .scroll-carousel {
+                margin-top: 1rem;
+            }
+            #projectsTrack {
+                gap: 16px;
+                padding: 0.5rem 1rem 1rem;
+                scroll-snap-type: x mandatory;
+                scroll-padding: 0 1rem;
+            }
+            .student-card {
+                width: calc(100vw - 2rem);
+                min-width: calc(100vw - 2rem);
+                max-width: calc(100vw - 2rem);
+                padding: 1.2rem;
+                scroll-snap-align: center;
+            }
+            .student-card:hover {
+                transform: none;
+            }
+            .site-preview-wrap {
+                height: 200px;
+            }
+            .site-preview-iframe {
+                width: 1280px;
+                height: 900px;
+                transform: scale(calc((100vw - 4.4rem) / 1280));
+                transform-origin: top right;
+            }
+            .student-card .student-quote {
+                min-height: unset;
+                font-size: 0.9rem;
+                line-height: 1.7;
+                margin-bottom: 0.8rem;
+                -webkit-line-clamp: unset;
+                overflow: visible;
+            }
+            .student-card .student-project {
+                min-height: unset;
+                font-size: 0.82rem;
+                margin-bottom: 0.8rem;
+            }
+            .student-info {
+                margin-bottom: 0.8rem;
+            }
+            .site-preview-btn {
+                font-size: 0.9rem;
+                padding: 0.7rem 1.2rem;
+            }
 
             /* -- Instructor compact -- */
             .instructor-card {
@@ -2818,7 +2873,8 @@
             if (autoScrollTimers.has(track)) return;
             const card = track.children[0];
             if (!card) return;
-            const scrollAmt = card.offsetWidth + 20;
+            const gap = parseInt(getComputedStyle(track).gap) || 20;
+            const scrollAmt = card.offsetWidth + gap;
             const timer = setInterval(() => {
                 const maxScroll = track.scrollWidth - track.clientWidth;
                 if (track.scrollLeft >= maxScroll - 5) {
@@ -2841,7 +2897,8 @@
             if (!track) return;
             const card = track.children[0];
             if (!card) return;
-            const scrollAmt = card.offsetWidth + 20;
+            const gap = parseInt(getComputedStyle(track).gap) || 20;
+            const scrollAmt = card.offsetWidth + gap;
             stopAutoScroll(track);
             clearTimeout(track._resumeTimer);
             track.scrollBy({ left: dir * scrollAmt, behavior: 'smooth' });
