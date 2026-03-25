@@ -1029,6 +1029,46 @@
             padding: 2rem;
             text-align: right;
             direction: rtl;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .student-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .site-preview-wrap {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            position: relative;
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .site-preview-iframe {
+            width: 1280px;
+            height: 900px;
+            border: none;
+            transform: scale(0.234);
+            transform-origin: top right;
+            pointer-events: none;
+        }
+        .site-preview-btn {
+            margin-top: 1rem;
+            text-align: center;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent), #9333ea);
+            color: #fff;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+        .student-card:hover .site-preview-btn {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
         }
 
         .student-quote {
@@ -2288,29 +2328,33 @@
         </div>
         <div class="scroll-carousel">
             <div class="scroll-track" id="projectsTrack">
-                <a href="/hairmatch.html" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;">
+                <a href="/hairmatch.html" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
+                    <div class="site-preview-wrap"><iframe src="/hairmatch.html" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
                     <div class="student-quote">"בניתי אתר שעוזר לבנות למצוא מוצרי טיפוח לפי סוג עור ושיער. ה-AI עוזר להתאים את המוצר המושלם!"</div>
                     <div class="student-project">✨ NOAM &mdash; מוצרי טיפוח</div>
-                    <div class="student-info"><div class="student-avatar">נ</div><div><strong>נועם</strong><br><span>תלמידת הקורס</span></div></div>
-                    <div style="margin-top:0.8rem;text-align:center;color:var(--accent);font-size:0.85rem;font-weight:600;">🔗 לצפייה באתר</div>
+                    <div style="flex:1;"></div>
+                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
                 </a>
-                <a href="/horse-fashion/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;">
+                <a href="/horse-fashion/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
+                    <div class="site-preview-wrap"><iframe src="/horse-fashion/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
                     <div class="student-quote">"בניתי חנות אונליין לציוד רכיבה על סוסים &mdash; עם קטלוג מוצרים, עגלת קניות ועיצוב מקצועי!"</div>
                     <div class="student-project">🐴 Horse Fashion &mdash; ציוד לרוכבים</div>
-                    <div class="student-info"><div class="student-avatar">🏇</div><div><strong>Horse Fashion</strong><br><span>תלמידת הקורס</span></div></div>
-                    <div style="margin-top:0.8rem;text-align:center;color:var(--accent);font-size:0.85rem;font-weight:600;">🔗 לצפייה באתר</div>
+                    <div style="flex:1;"></div>
+                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
                 </a>
-                <a href="/englishkids.html" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;">
+                <a href="/englishkids.html" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
+                    <div class="site-preview-wrap"><iframe src="/englishkids.html" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
                     <div class="student-quote">"בניתי פלטפורמה ללימוד אנגלית לילדים עם אזור אישי, תרגולים ומשחקים &mdash; הכל בעיצוב צבעוני וכיפי!"</div>
                     <div class="student-project">📚 EnglishKids &mdash; לימוד אנגלית</div>
-                    <div class="student-info"><div class="student-avatar">🇬🇧</div><div><strong>EnglishKids</strong><br><span>תלמיד הקורס</span></div></div>
-                    <div style="margin-top:0.8rem;text-align:center;color:var(--accent);font-size:0.85rem;font-weight:600;">🔗 לצפייה באתר</div>
+                    <div style="flex:1;"></div>
+                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
                 </a>
-                <a href="/gamebuddy/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;">
+                <a href="/gamebuddy/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
+                    <div class="site-preview-wrap"><iframe src="/gamebuddy/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
                     <div class="student-quote">"בניתי פלטפורמה שמחברת שחקני פורטנייט ישראלים לפי רמה &mdash; כבר יש שחקנים רשומים מכל הארץ!"</div>
                     <div class="student-project">🎮 GameBuddy &mdash; מציאת שותפי משחק</div>
-                    <div class="student-info"><div class="student-avatar">🎮</div><div><strong>GameBuddy</strong><br><span>תלמיד הקורס</span></div></div>
-                    <div style="margin-top:0.8rem;text-align:center;color:var(--accent);font-size:0.85rem;font-weight:600;">🔗 לצפייה באתר</div>
+                    <div style="flex:1;"></div>
+                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
                 </a>
             </div>
             <div class="carousel-nav">
