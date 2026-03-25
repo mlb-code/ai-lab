@@ -619,7 +619,9 @@
             scrollbar-width: none;
             padding: 0.5rem 2rem 1rem;
             direction: ltr;
-            justify-content: center;
+        }
+        @media (min-width: 1500px) {
+            .scroll-track { justify-content: center; }
         }
 
         .scroll-track::-webkit-scrollbar { display: none; }
