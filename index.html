@@ -1045,6 +1045,7 @@
             position: relative;
             background: #1a1a2e;
             border: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
         }
         .site-preview-iframe {
             width: 1280px;
@@ -1054,8 +1055,16 @@
             transform-origin: top right;
             pointer-events: none;
         }
+        .student-card .student-quote {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+        }
+        .student-card .student-project {
+            flex-shrink: 0;
+        }
         .site-preview-btn {
-            margin-top: 1rem;
+            margin-top: auto;
             text-align: center;
             padding: 0.75rem 1.5rem;
             background: linear-gradient(135deg, var(--accent), #9333ea);
@@ -1065,6 +1074,7 @@
             font-weight: 700;
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            flex-shrink: 0;
         }
         .student-card:hover .site-preview-btn {
             transform: scale(1.05);
@@ -2332,28 +2342,24 @@
                     <div class="site-preview-wrap"><iframe src="/hairmatch.html" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
                     <div class="student-quote">"בניתי אתר שעוזר לבנות למצוא מוצרי טיפוח לפי סוג עור ושיער. ה-AI עוזר להתאים את המוצר המושלם!"</div>
                     <div class="student-project">✨ HairMatch &mdash; התאמת מוצרי טיפוח</div>
-                    <div style="flex:1;"></div>
                     <div class="site-preview-btn">🚀 לצפייה באתר</div>
                 </a>
                 <a href="/horse-fashion/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
                     <div class="site-preview-wrap"><iframe src="/horse-fashion/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
                     <div class="student-quote">"בניתי חנות אונליין לציוד רכיבה על סוסים &mdash; עם קטלוג מוצרים, עגלת קניות ועיצוב מקצועי!"</div>
                     <div class="student-project">🐴 Horse Fashion &mdash; ציוד לרוכבים</div>
-                    <div style="flex:1;"></div>
                     <div class="site-preview-btn">🚀 לצפייה באתר</div>
                 </a>
                 <a href="/englishkids.html" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
                     <div class="site-preview-wrap"><iframe src="/englishkids.html" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
                     <div class="student-quote">"בניתי פלטפורמה ללימוד אנגלית לילדים עם אזור אישי, תרגולים ומשחקים &mdash; הכל בעיצוב צבעוני וכיפי!"</div>
                     <div class="student-project">📚 EnglishKids &mdash; לימוד אנגלית</div>
-                    <div style="flex:1;"></div>
                     <div class="site-preview-btn">🚀 לצפייה באתר</div>
                 </a>
                 <a href="/gamebuddy/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
                     <div class="site-preview-wrap"><iframe src="/gamebuddy/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
                     <div class="student-quote">"בניתי פלטפורמה שמחברת שחקני פורטנייט ישראלים לפי רמה &mdash; כבר יש שחקנים רשומים מכל הארץ!"</div>
                     <div class="student-project">🎮 GameBuddy &mdash; מציאת שותפי משחק</div>
-                    <div style="flex:1;"></div>
                     <div class="site-preview-btn">🚀 לצפייה באתר</div>
                 </a>
             </div>
