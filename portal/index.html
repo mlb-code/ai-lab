@@ -31,7 +31,34 @@
             --sidebar-width: 240px;
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(108, 60, 225, 0.3) transparent;
+        }
+
+        /* Global custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(108, 60, 225, 0.3);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(108, 60, 225, 0.5);
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
 
         body {
             font-family: 'Heebo', sans-serif;
@@ -66,21 +93,6 @@
             overflow-y: auto;
             overflow-x: hidden;
             direction: rtl;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(108, 60, 225, 0.2) transparent;
-        }
-
-        .sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .sidebar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background: rgba(108, 60, 225, 0.25);
-            border-radius: 4px;
         }
 
         .sidebar-header {
@@ -3777,6 +3789,7 @@
                 const body = card.querySelector('.session-card-body');
                 if (body) body.style.display = 'none';
                 const header = card.querySelector('.session-card-header');
+                if (!header) return;
                 const d = sessionData[i] || { desc: '', topics: [], bg: '' };
 
                 // Add gradient image banner before header
