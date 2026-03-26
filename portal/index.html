@@ -935,15 +935,10 @@
         .wizard-card {
             background: var(--dark-card);
             border-radius: 20px;
-            padding: 2.5rem 2rem;
+            padding: 2rem 2rem 1.5rem;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.06);
             animation: wizardFade 0.3s ease;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
         @keyframes wizardFade {
@@ -954,6 +949,7 @@
         .wizard-emoji {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            -webkit-text-fill-color: initial;
         }
 
         .wizard-question {
@@ -961,11 +957,14 @@
             font-weight: 700;
             margin-bottom: 0.5rem;
             width: 100%;
+            color: var(--text);
+            -webkit-text-fill-color: var(--text);
         }
 
         .wizard-hint {
             font-size: 0.9rem;
             color: var(--text-muted);
+            -webkit-text-fill-color: var(--text-muted);
             margin-bottom: 1.5rem;
         }
 
