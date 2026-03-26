@@ -273,6 +273,8 @@
             padding: 2rem 3rem;
             min-height: 100vh;
             max-width: 1100px;
+            -webkit-text-fill-color: var(--text);
+            -webkit-background-clip: border-box;
         }
 
         .page-header {
@@ -907,6 +909,10 @@
             max-width: 700px;
             margin: 0 auto;
             padding: 2rem 1rem 1rem;
+            color: var(--text);
+            -webkit-text-fill-color: var(--text);
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
         }
 
         .wizard-progress {
@@ -929,6 +935,7 @@
             text-align: center;
             font-size: 0.85rem;
             color: var(--text-muted);
+            -webkit-text-fill-color: var(--text-muted);
             margin-bottom: 1.5rem;
         }
 
@@ -939,6 +946,10 @@
             text-align: center;
             border: 1px solid rgba(255,255,255,0.06);
             animation: wizardFade 0.3s ease;
+            color: var(--text);
+            -webkit-text-fill-color: var(--text);
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
         }
 
         @keyframes wizardFade {
@@ -949,7 +960,10 @@
         .wizard-emoji {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            color: var(--text);
             -webkit-text-fill-color: initial;
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
         }
 
         .wizard-question {
@@ -957,15 +971,23 @@
             font-weight: 700;
             margin-bottom: 0.5rem;
             width: 100%;
-            color: var(--text);
-            -webkit-text-fill-color: var(--text);
+            color: var(--text) !important;
+            -webkit-text-fill-color: var(--text) !important;
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
+            opacity: 1;
+            visibility: visible;
         }
 
         .wizard-hint {
             font-size: 0.9rem;
-            color: var(--text-muted);
-            -webkit-text-fill-color: var(--text-muted);
+            color: var(--text-muted) !important;
+            -webkit-text-fill-color: var(--text-muted) !important;
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
             margin-bottom: 1.5rem;
+            opacity: 1;
+            visibility: visible;
         }
 
         .wizard-textarea {
