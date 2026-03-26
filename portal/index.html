@@ -904,9 +904,9 @@
 
         /* ===== PROJECT WIZARD ===== */
         .project-wizard {
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto;
-            padding-top: 1rem;
+            padding: 2rem 1rem 1rem;
         }
 
         .wizard-progress {
@@ -939,6 +939,11 @@
             text-align: center;
             border: 1px solid rgba(255,255,255,0.06);
             animation: wizardFade 0.3s ease;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         @keyframes wizardFade {
@@ -952,9 +957,10 @@
         }
 
         .wizard-question {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+            width: 100%;
         }
 
         .wizard-hint {
@@ -965,7 +971,7 @@
 
         .wizard-textarea {
             width: 100%;
-            min-height: 120px;
+            min-height: 100px;
             background: var(--dark-lighter);
             border: 2px solid rgba(108, 60, 225, 0.2);
             border-radius: 14px;
