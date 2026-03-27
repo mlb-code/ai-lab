@@ -11,13 +11,24 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Lab | יזמות ובינה מלאכותית</title>
-    <meta name="description" content="קורס יזמות ובינה מלאכותית. בנו את הסטארטאפ הראשון שלכם עם AI תוך 8 מפגשים.">
-    <meta property="og:title" content="AI Lab | יזמות ובינה מלאכותית">
-    <meta property="og:description" content="קורס יזמות ובינה מלאכותית. בנו את הסטארטאפ הראשון שלכם עם AI תוך 8 מפגשים.">
+    <title>קורס AI לילדים ונוער | יזמות ובינה מלאכותית | AI Lab</title>
+    <meta name="description" content="קורס יזמות ובינה מלאכותית לילדים, נוער ומבוגרים. בנו אתר ופרויקט אמיתי עם ChatGPT, Claude ו-Cursor תוך 8 מפגשים בזום. הקורס הבא: 12.04!">
+    <meta name="keywords" content="קורס AI לילדים, בינה מלאכותית לנוער, קורס יזמות לילדים, קורס AI ישראל, לימוד בינה מלאכותית, ChatGPT לילדים, קורס תכנות לילדים, AI לנוער, קורס יזמות ובינה מלאכותית, בניית אתרים עם AI, Cursor AI, קורס AI למבוגרים, סטארטאפ לילדים">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Hebrew">
+    <meta name="geo.region" content="IL">
+    <link rel="canonical" href="https://ai-lab.co.il/">
+    <meta property="og:title" content="קורס AI לילדים ונוער | יזמות ובינה מלאכותית | AI Lab">
+    <meta property="og:description" content="קורס יזמות ובינה מלאכותית לילדים, נוער ומבוגרים. בנו אתר ופרויקט אמיתי עם ChatGPT, Claude ו-Cursor תוך 8 מפגשים בזום.">
     <meta property="og:image" content="https://ai-lab.co.il/og-image.png">
     <meta property="og:url" content="https://ai-lab.co.il/">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="he_IL">
+    <meta property="og:site_name" content="AI Lab">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="קורס AI לילדים ונוער | יזמות ובינה מלאכותית | AI Lab">
+    <meta name="twitter:description" content="קורס יזמות ובינה מלאכותית לילדים, נוער ומבוגרים. בנו אתר ופרויקט אמיתי עם ChatGPT, Claude ו-Cursor תוך 8 מפגשים בזום.">
+    <meta name="twitter:image" content="https://ai-lab.co.il/og-image.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -1950,6 +1961,224 @@
                 bottom: 1.2rem;
                 left: 1.2rem;
             }
+
+            /* -- Ensure minimum font size on mobile -- */
+            body {
+                font-size: 16px;
+            }
+
+            /* -- Ensure touch targets 44px min -- */
+            .nav-links a,
+            .carousel-nav button,
+            .faq-question,
+            .course-track-card,
+            .btn-audience,
+            .pricing-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .carousel-nav button {
+                width: 44px;
+                height: 44px;
+            }
+
+            /* -- Form inputs full-width -- */
+            .form-group input {
+                width: 100%;
+                font-size: 16px; /* prevents iOS zoom on focus */
+            }
+
+            /* -- Prevent content touching edges -- */
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            /* -- Pricing readable on mobile -- */
+            .pricing-card {
+                min-width: 0;
+            }
+
+            .pricing-card .btn-primary {
+                font-size: 1rem;
+                padding: 0.9rem;
+            }
+
+            /* -- Syllabus modal on mobile -- */
+            .syllabus-overlay {
+                padding: 0.5rem;
+            }
+
+            .syllabus-modal {
+                max-height: 90vh;
+                border-radius: 16px;
+            }
+
+            /* -- Footer spacing -- */
+            footer {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        /* ========== EXTRA SMALL SCREENS (iPhone SE, 320px) ========== */
+        @media (max-width: 374px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .hero-badge {
+                font-size: 0.72rem;
+                padding: 0.35rem 0.8rem;
+            }
+
+            .hero-stats {
+                gap: 1rem;
+            }
+
+            .hero-stat .number {
+                font-size: 1.3rem;
+            }
+
+            .hero-stat .label {
+                font-size: 0.7rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.3rem;
+            }
+
+            .section-title p {
+                font-size: 0.82rem;
+            }
+
+            .build-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .skill-card {
+                padding: 0.8rem 0.5rem;
+            }
+
+            .skill-card h4 {
+                font-size: 0.82rem;
+            }
+
+            .audience-card {
+                padding: 1.2rem;
+            }
+
+            .audience-card h3 {
+                font-size: 1.05rem;
+            }
+
+            .audience-points li {
+                font-size: 0.8rem;
+            }
+
+            .pricing-card {
+                padding: 1.2rem;
+            }
+
+            .pricing-card .price {
+                font-size: 2rem;
+            }
+
+            .pricing-features li {
+                font-size: 0.8rem;
+            }
+
+            .faq-question {
+                font-size: 0.88rem;
+            }
+
+            .faq-answer {
+                font-size: 0.82rem;
+            }
+
+            .instructor-info h3 {
+                font-size: 1.05rem;
+            }
+
+            .instructor-info p {
+                font-size: 0.8rem;
+            }
+
+            .btn-primary, .btn-secondary {
+                font-size: 0.9rem;
+                padding: 0.8rem 1.2rem;
+            }
+
+            .contact-form {
+                padding: 1.2rem;
+            }
+
+            .student-card {
+                width: calc(100vw - 2rem);
+                min-width: calc(100vw - 2rem);
+                max-width: calc(100vw - 2rem);
+                padding: 1rem;
+            }
+
+            .mobile-menu-links li a {
+                font-size: 1.1rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .cta-section .btn-primary {
+                font-size: 0.95rem;
+                padding: 0.9rem 1.5rem;
+            }
+        }
+
+        /* ========== SMALL SCREENS (iPhone, 375px) ========== */
+        @media (min-width: 375px) and (max-width: 767px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .build-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+        }
+
+        /* ========== TABLET (768px+) ========== */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.15rem;
+            }
+
+            .audience-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+
+            .problem-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .instructor-card {
+                flex-direction: row;
+                gap: 2rem;
+            }
         }
 
         /* ========== TERMINAL DEMO ========== */
@@ -2212,6 +2441,180 @@
             transform: scale(1.1);
         }
     </style>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "AI Lab",
+        "url": "https://ai-lab.co.il",
+        "logo": "https://ai-lab.co.il/og-image.png",
+        "description": "קורסי יזמות ובינה מלאכותית לילדים, נוער ומבוגרים",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+972-54-650-0795",
+            "contactType": "customer service",
+            "availableLanguage": "Hebrew"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": "קורס יזמות ובינה מלאכותית לילדים ונוער - בסיסי",
+            "description": "קורס מעשי של 8 מפגשים בזום. לומדים לבנות אתר ופרויקט אמיתי עם ChatGPT, Claude, Cursor וכלי AI מובילים. ללא ניסיון קודם.",
+            "provider": {
+                "@type": "Organization",
+                "name": "AI Lab",
+                "url": "https://ai-lab.co.il"
+            },
+            "offers": {
+                "@type": "Offer",
+                "price": "890",
+                "priceCurrency": "ILS",
+                "availability": "https://schema.org/InStock"
+            },
+            "courseMode": "online",
+            "inLanguage": "he",
+            "audience": {
+                "@type": "EducationalAudience",
+                "educationalRole": "student",
+                "suggestedAge": "10-17"
+            },
+            "numberOfCredits": 8,
+            "hasCourseInstance": {
+                "@type": "CourseInstance",
+                "courseMode": "online",
+                "startDate": "2026-04-12",
+                "location": {
+                    "@type": "VirtualLocation",
+                    "name": "Zoom"
+                }
+            }
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": "קורס יזמות ובינה מלאכותית לילדים ונוער - מתקדם",
+            "description": "המשך הקורס הבסיסי. 8 מפגשים של העמקה בפיתוח, כלים מתקדמים והתקדמות בפרויקט.",
+            "provider": {
+                "@type": "Organization",
+                "name": "AI Lab",
+                "url": "https://ai-lab.co.il"
+            },
+            "courseMode": "online",
+            "inLanguage": "he",
+            "coursePrerequisites": "קורס בסיסי"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": "קורס יזמות ובינה מלאכותית למבוגרים - בסיסי",
+            "description": "קורס מעשי של 8 מפגשים בזום למבוגרים. לומדים לבנות אתר ולעבוד עם AI. ללא רקע טכנולוגי.",
+            "provider": {
+                "@type": "Organization",
+                "name": "AI Lab",
+                "url": "https://ai-lab.co.il"
+            },
+            "courseMode": "online",
+            "inLanguage": "he",
+            "audience": {
+                "@type": "EducationalAudience",
+                "educationalRole": "student",
+                "suggestedAge": "60+"
+            }
+        }
+    ]
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "צריך ניסיון בתכנות?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "בכלל לא! הקורס מיועד למתחילים מוחלטים. ה-AI עושה את התכנות בשבילכם — אתם לומדים לכוון אותו ולחשוב כמו יזמים."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "מה צריך להביא?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "מחשב נייד (Windows / Mac / Chromebook) ורצון ליצור. הכל השאר — כולל גישה ל-AI — מסופק על ידינו."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "מה הגילאים?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "הקורס פתוח לנוער (גילאי 10–17) ולמבוגרים (60+). התוכנית זהה — 8 מפגשים מעשיים בזום."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "זה באמת מתאים למבוגרים?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "בהחלט! הקורס מותאם למתחילים מוחלטים. אין צורך ברקע טכנולוגי או ניסיון בתכנות."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "ילדים ומבוגרים לומדים ביחד?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "הקבוצות מופרדות לפי גיל — קבוצה לנוער וקבוצה למבוגרים. כל קבוצה לומדת באותה תוכנית אבל עם דוגמאות ושיח מותאם לגיל."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "איפה הקורס מתקיים?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "כל המפגשים מתקיימים בזום — אפשר להשתתף מכל מקום בארץ!"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "מה אם לא אוהבים את הקורס?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "אנחנו מציעים מדיניות ביטול נוחה: אם עד סוף המפגש השני מחליטים שזה לא מתאים — החזר מלא, ללא שאלות."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "עם מה יוצאים מהקורס?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "פרויקט אמיתי שרץ באינטרנט, ניסיון מעשי בעבודה עם AI, כישורי יזמות והצגה, ותעודת סיום."
+                }
+            }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "דף הבית",
+                "item": "https://ai-lab.co.il/"
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 
@@ -2225,6 +2628,7 @@
         <a href="/" class="nav-logo" onclick="if(location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">AI Lab</a>
         <ul class="nav-links nav-links-desktop" id="navLinksDesktop">
             <li><a href="#pricing">מחיר</a></li>
+            <li><a href="#faq">שאלות</a></li>
             <li><a href="#tools">כלי AI</a></li>
             <li><a href="#program">תוכנית</a></li>
             <li><a href="#audience">למי מיועד?</a></li>
@@ -2245,6 +2649,7 @@
             <li><a href="#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
             <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
             <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
+            <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות נפוצות</a></li>
             <li class="mobile-cta"><a href="/portal/"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
             <li class="mobile-cta mobile-cta-green"><a href="#register"><span class="menu-icon">&#x1F680;</span> הרשמה</a></li>
         </ul>
@@ -2655,7 +3060,7 @@
 
 
     <!-- FAQ -->
-    <section class="faq-section" id="faq" style="display:none;">
+    <section class="faq-section" id="faq">
         <div class="container">
             <div class="section-title reveal">
                 <h2>שאלות נפוצות</h2>
