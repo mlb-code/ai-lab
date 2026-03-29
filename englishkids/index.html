@@ -75,7 +75,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
 
 /* ── AVATAR PAGE ── */
 .av-layout{display:flex;flex-direction:row-reverse;gap:28px;align-items:flex-start}
-.av-display{background:transparent!important;border:none!important;box-shadow:none!important;padding:0 8px 16px;text-align:center;position:sticky;top:90px;width:280px;flex-shrink:0}
+.av-display{background:transparent!important;border:none!important;box-shadow:none!important;padding:0 8px 16px;text-align:center;position:sticky;top:90px;width:300px;flex-shrink:0;overflow:visible}
 .wardrobe-card{flex:1;min-width:0}
 .av-name{font-size:1.15rem;font-weight:900;margin-top:12px;background:linear-gradient(90deg,var(--purple-light),var(--pink-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .av-level{color:rgba(255,255,255,.6);font-size:.85rem;margin-top:4px}
@@ -104,7 +104,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
 .char-girl .c-iris{background:radial-gradient(circle at 35% 30%,#A78BF5,#6D28D9 50%,#3b0e8c 80%)!important}
 
 /* char stage */
-.char-stage{position:relative;height:450px;display:flex;justify-content:center;align-items:flex-end}
+.char-stage{position:relative;height:420px;display:flex;justify-content:center;align-items:flex-end;overflow:visible;max-width:280px;margin:0 auto}
 .char-glow-base{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:160px;height:22px;background:radial-gradient(ellipse,rgba(124,58,237,.55),transparent 70%);border-radius:50%}
 
 /* Overlays live INSIDE .character */
@@ -454,7 +454,8 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
 .c-leg.L .c-shoe{left:50%;transform:translateX(-50%)}.c-leg.R .c-shoe{right:auto;left:50%;transform:translateX(-50%)}
 
 /* ── SVG CHARACTER ── */
-#char-svg{animation:hbob 3.5s ease-in-out infinite;overflow:visible;display:block}
+#char-svg{animation:svgbob 3.5s ease-in-out infinite;overflow:visible;display:block;margin:0 auto}
+@keyframes svgbob{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
 #arm-l{transform-box:fill-box;transform-origin:50% 5%;animation:armL 3s ease-in-out infinite}
 #arm-r{transform-box:fill-box;transform-origin:50% 5%;animation:armR 3s ease-in-out infinite}
 .char-girl #s-lip-top{fill:#D0406A!important}
