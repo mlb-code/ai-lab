@@ -1510,30 +1510,15 @@ async function doRegister(){
   if(p.length<4){err.textContent='❌ סיסמה חייבת להיות לפחות 4 תווים';err.style.display='block';return false;}
   if(p!==p2){err.textContent='❌ הסיסמאות לא תואמות';err.style.display='block';return false;}
   err.style.display='none';
-  if(GS_URL){
-    btn.textContent='⏳ רושם...'; btn.disabled=true;
-    try{
-      const res=await fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'register',username:u,password:p,name})});
-      const data=await res.json();
-      btn.textContent='🎉 הירשם חינם'; btn.disabled=false;
-      if(!data.success){err.textContent='❌ '+(data.error||'שגיאה');err.style.display='block';return false;}
-      user={...data.user,pass:p,username:u,xp:0,maxXp:200};
-      /* Mirror to local */
-      USERS[u]={pass:p,name:user.name,level:user.level||1,coins:user.coins||0,xp:0,maxXp:200,av:'🧒',admin:!!user.admin};
-    }catch(e){
-      btn.textContent='🎉 הירשם חינם'; btn.disabled=false;
-      if(USERS[u]){err.textContent='❌ שם המשתמש תפוס, בחר אחר';err.style.display='block';return false;}
-      USERS[u]={pass:p,name:name+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒'};
-      user={...USERS[u],username:u};
-    }
-  } else {
-    if(USERS[u]){err.textContent='❌ שם המשתמש תפוס, בחר אחר';err.style.display='block';return false;}
-    const joined=new Date().toLocaleDateString('he-IL');
-    USERS[u]={pass:p,name:name+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒',admin:false,joined};
-    user={...USERS[u],username:u};
-    saveUsersLocal();
-    saveSession(user);
-  }
+  /* Always register locally — no DB needed */
+  btn.textContent='⏳ רושם...'; btn.disabled=true;
+  await new Promise(r=>setTimeout(r,800));
+  btn.textContent='🎉 הירשם חינם'; btn.disabled=false;
+  const joined=new Date().toLocaleDateString('he-IL');
+  USERS[u]={pass:p,name:name+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒',admin:false,joined};
+  user={...USERS[u],username:u};
+  saveUsersLocal();
+  saveSession(user);
   document.getElementById('rsuccess').style.display='block';
   setTimeout(()=>{
     document.getElementById('login-screen').style.display='none';
@@ -1549,45 +1534,24 @@ async function doLogin(){
   const p=document.getElementById('ip').value.trim();
   const err=document.getElementById('lerr');
   const btn=document.querySelector('#form-login .lbtn');
-  if(GS_URL){
-    btn.textContent='⏳ מתחבר...'; btn.disabled=true;
-    try{
-      const res=await fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'login',username:u,password:p})});
-      const data=await res.json();
-      btn.textContent='🚀 כניסה'; btn.disabled=false;
-      if(data.success){
-        user={...data.user,pass:p,username:u};
-        if(!user.maxXp) user.maxXp=Math.max(200,user.level*150);
-        USERS[u]={pass:p,name:user.name,level:user.level,coins:user.coins,xp:user.xp||0,maxXp:user.maxXp,av:'🧒',admin:!!user.admin};
-        err.style.display='none';
-        document.getElementById('login-screen').style.display='none';
-        document.getElementById('app').style.display='block';
-        initApp();
-      } else {
-        err.textContent='❌ '+(data.error||'שם משתמש או סיסמה שגויים');
-        err.style.display='block';
-      }
-    }catch(e){
-      btn.textContent='🚀 כניסה'; btn.disabled=false;
-      /* Fallback to local */
-      if(USERS[u]&&USERS[u].pass===p){
-        user={...USERS[u],username:u};
-        err.style.display='none';
-        document.getElementById('login-screen').style.display='none';
-        document.getElementById('app').style.display='block';
-        initApp();
-      } else { err.style.display='block'; }
-    }
-  } else {
-    if(USERS[u]&&USERS[u].pass===p){
-      user={...USERS[u],username:u};
-      saveSession(user);
-      err.style.display='none';
-      document.getElementById('login-screen').style.display='none';
-      document.getElementById('app').style.display='block';
-      initApp();
-    } else { err.style.display='block'; }
+  if(!u||!p){err.textContent='❌ נא למלא שם משתמש וסיסמה';err.style.display='block';return false;}
+  btn.textContent='⏳ מתחבר...'; btn.disabled=true;
+  await new Promise(r=>setTimeout(r,800));
+  btn.textContent='🚀 כניסה'; btn.disabled=false;
+  /* If user exists locally, check password */
+  if(USERS[u]&&USERS[u].pass!==p){err.textContent='❌ סיסמה שגויה';err.style.display='block';return false;}
+  /* If user doesn't exist, create on the fly */
+  if(!USERS[u]){
+    const joined=new Date().toLocaleDateString('he-IL');
+    USERS[u]={pass:p,name:u+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒',admin:false,joined};
   }
+  user={...USERS[u],username:u};
+  saveUsersLocal();
+  saveSession(user);
+  err.style.display='none';
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  initApp();
   return false;
 }
 function doLogout(){
