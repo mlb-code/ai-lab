@@ -74,8 +74,9 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
 .ph p{color:rgba(255,255,255,.55);margin-top:5px}
 
 /* ── AVATAR PAGE ── */
-.av-layout{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start}
-.av-display{background:transparent!important;border:none!important;box-shadow:none!important;padding:0 8px 16px;text-align:center;position:sticky;top:32px}
+.av-layout{display:flex;flex-direction:row-reverse;gap:28px;align-items:flex-start}
+.av-display{background:transparent!important;border:none!important;box-shadow:none!important;padding:0 8px 16px;text-align:center;position:sticky;top:90px;width:280px;flex-shrink:0}
+.wardrobe-card{flex:1;min-width:0}
 .av-name{font-size:1.15rem;font-weight:900;margin-top:12px;background:linear-gradient(90deg,var(--purple-light),var(--pink-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .av-level{color:rgba(255,255,255,.6);font-size:.85rem;margin-top:4px}
 .av-coins-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.35);border-radius:50px;padding:6px 16px;margin-top:8px;font-weight:700;font-size:.9rem}
