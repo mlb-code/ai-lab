@@ -663,7 +663,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
     </div>
 
     <!-- LOGIN FORM -->
-    <form id="form-login" onsubmit="return doLogin()">
+    <form id="form-login" onsubmit="event.preventDefault();doLogin()">
       <div class="fg"><label>שם משתמש</label><input type="text" id="iu" placeholder="הכנס שם משתמש" autocomplete="username"/></div>
       <div class="fg"><label>סיסמה</label><input type="password" id="ip" placeholder="הכנס סיסמה" autocomplete="current-password"/></div>
       <div class="lerr" id="lerr">❌ שם משתמש או סיסמה שגויים</div>
@@ -671,7 +671,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
     </form>
 
     <!-- REGISTER FORM -->
-    <form id="form-reg" onsubmit="return doRegister()" style="display:none">
+    <form id="form-reg" onsubmit="event.preventDefault();doRegister()" style="display:none">
       <div class="fg"><label>שם מלא</label><input type="text" id="ru-name" placeholder="איך קוראים לך?"/></div>
       <div class="fg"><label>שם משתמש</label><input type="text" id="ru" placeholder="בחר שם משתמש"/></div>
       <div class="fg"><label>סיסמה</label><input type="password" id="rp" placeholder="בחר סיסמה (מינימום 4 תווים)"/></div>
