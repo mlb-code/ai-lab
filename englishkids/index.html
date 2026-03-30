@@ -74,9 +74,8 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
 .ph p{color:rgba(255,255,255,.55);margin-top:5px}
 
 /* ── AVATAR PAGE ── */
-.av-layout{display:flex;flex-direction:row;gap:28px;align-items:flex-start}
-.av-display{background:transparent!important;border:none!important;box-shadow:none!important;padding:0 8px 16px;text-align:center;position:sticky;top:90px;width:300px;flex-shrink:0;overflow:visible}
-.wardrobe-card{flex:1;min-width:0}
+.av-layout{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start}
+.av-display{background:transparent!important;border:none!important;box-shadow:none!important;padding:0 8px 16px;text-align:center;position:sticky;top:32px}
 .av-name{font-size:1.15rem;font-weight:900;margin-top:12px;background:linear-gradient(90deg,var(--purple-light),var(--pink-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .av-level{color:rgba(255,255,255,.6);font-size:.85rem;margin-top:4px}
 .av-coins-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.35);border-radius:50px;padding:6px 16px;margin-top:8px;font-weight:700;font-size:.9rem}
@@ -104,7 +103,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
 .char-girl .c-iris{background:radial-gradient(circle at 35% 30%,#A78BF5,#6D28D9 50%,#3b0e8c 80%)!important}
 
 /* char stage */
-.char-stage{position:relative;height:420px;display:flex;justify-content:center;align-items:flex-end;overflow:visible;max-width:280px;margin:0 auto}
+.char-stage{position:relative;height:450px;display:flex;justify-content:center;align-items:flex-end}
 .char-glow-base{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:160px;height:22px;background:radial-gradient(ellipse,rgba(124,58,237,.55),transparent 70%);border-radius:50%}
 
 /* Overlays live INSIDE .character */
@@ -454,8 +453,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
 .c-leg.L .c-shoe{left:50%;transform:translateX(-50%)}.c-leg.R .c-shoe{right:auto;left:50%;transform:translateX(-50%)}
 
 /* ── SVG CHARACTER ── */
-#char-svg{animation:svgbob 3.5s ease-in-out infinite;overflow:visible;display:block;margin:0 auto}
-@keyframes svgbob{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+#char-svg{animation:hbob 3.5s ease-in-out infinite;overflow:visible;display:block}
 #arm-l{transform-box:fill-box;transform-origin:50% 5%;animation:armL 3s ease-in-out infinite}
 #arm-r{transform-box:fill-box;transform-origin:50% 5%;animation:armR 3s ease-in-out infinite}
 .char-girl #s-lip-top{fill:#D0406A!important}
@@ -489,15 +487,15 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
 .wtabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
 .wtab{padding:8px 16px;border-radius:50px;border:1px solid var(--border);background:none;color:rgba(255,255,255,.6);font-family:'Heebo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s}
 .wtab.active{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(124,58,237,.3)}
-.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px}
-.itm{border-radius:18px;padding:18px 10px;border:2px solid var(--border);background:rgba(255,255,255,.03);cursor:pointer;text-align:center;transition:all .25s;position:relative;overflow:hidden}
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:12px}
+.itm{border-radius:16px;padding:14px 8px;border:2px solid var(--border);background:rgba(255,255,255,.03);cursor:pointer;text-align:center;transition:all .25s;position:relative;overflow:hidden}
 .itm:hover:not(.locked){border-color:rgba(167,139,250,.4);background:rgba(124,58,237,.1);transform:translateY(-3px)}
 .itm.equipped{border-color:var(--yellow);background:rgba(234,179,8,.1);box-shadow:0 0 16px rgba(234,179,8,.2)}
 .itm.locked{opacity:.4;cursor:not-allowed}
-.itm-sw{width:64px;height:64px;border-radius:14px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:2.4rem}
-.itm-name{font-size:.82rem;font-weight:700;color:rgba(255,255,255,.85);line-height:1.3}
-.itm-lock{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:4px}
-.equipped-badge{position:absolute;top:6px;left:6px;background:var(--yellow);color:#000;font-size:.6rem;font-weight:900;padding:3px 8px;border-radius:50px}
+.itm-sw{width:44px;height:44px;border-radius:12px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;line-height:1;height:40px}
+.itm-name{font-size:.7rem;font-weight:700;color:rgba(255,255,255,.85);line-height:1.3}
+.itm-lock{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:2px}
+.equipped-badge{position:absolute;top:4px;left:4px;background:var(--yellow);color:#000;font-size:.55rem;font-weight:900;padding:2px 6px;border-radius:50px}
 
 /* ── COURSES ── */
 .units-list{display:flex;flex-direction:column;gap:20px}
@@ -629,6 +627,62 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
 .site-announcement.show{display:block}
 .ann-close{float:left;background:none;border:none;color:#fff;cursor:pointer;font-size:1.1rem;margin-left:12px}
 
+.spell-word{font-size:2.5rem;font-weight:900;text-align:center;padding:20px;color:#fff;letter-spacing:2px}
+.spell-hint{font-size:1.1rem;color:rgba(255,255,255,.5);text-align:center;margin-bottom:20px}
+.spell-input{width:100%;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);color:#fff;font-size:1.3rem;font-family:Heebo,sans-serif;outline:none;text-align:center;box-sizing:border-box;transition:border-color .2s}
+.spell-input:focus{border-color:var(--purple-light)}
+.spell-input.correct{border-color:#10B981;background:rgba(16,185,129,.15)}
+.spell-input.wrong{border-color:#EF4444;background:rgba(239,68,68,.15)}
+.spell-check{margin-top:12px;width:100%;padding:13px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-size:1rem;font-weight:700;cursor:pointer;font-family:Heebo,sans-serif}
+.spell-prog{font-size:.85rem;color:rgba(255,255,255,.5);text-align:center;margin-bottom:16px}
+.spell-fb{text-align:center;font-size:1rem;font-weight:700;min-height:28px;margin-top:10px}
+.lang-opt{padding:10px 18px;border-radius:50px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font-family:Heebo,sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;font-weight:600}
+.lang-opt.active{border-color:var(--purple-light);background:rgba(124,58,237,.25);color:#C4B5FD}
+
+/* Match game */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-tile{padding:12px 10px;border-radius:14px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;user-select:none}
+.match-tile:hover:not(.matched):not(.disabled){border-color:var(--purple-light);background:rgba(124,58,237,.2);transform:translateY(-2px)}
+.match-tile.selected{border-color:#EC4899;background:rgba(236,72,153,.25);box-shadow:0 0 12px rgba(236,72,153,.4)}
+.match-tile.matched{border-color:#10B981;background:rgba(16,185,129,.2);opacity:.7;pointer-events:none}
+.match-tile.wrong-flash{border-color:#EF4444;background:rgba(239,68,68,.2)}
+.match-score{text-align:center;font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:12px}
+
+/* Scramble game */
+.scr-word{font-size:2rem;font-weight:900;text-align:center;padding:16px 0;letter-spacing:3px;color:rgba(255,255,255,.35);min-height:52px;border-bottom:2px dashed rgba(255,255,255,.15);margin-bottom:18px}
+.scr-word span.scr-slot{display:inline-block;min-width:28px;border-bottom:2px solid var(--purple-light);margin:0 3px;text-align:center;cursor:pointer;color:#fff;transition:opacity .15s}
+.scr-tiles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 20px}
+.scr-tile{padding:10px 16px;background:rgba(124,58,237,.2);border:2px solid rgba(124,58,237,.5);border-radius:12px;color:#fff;font-size:1.1rem;font-weight:700;cursor:pointer;letter-spacing:1px;transition:all .15s;user-select:none}
+.scr-tile:hover:not(.used){background:rgba(124,58,237,.4);transform:translateY(-2px)}
+.scr-tile.used{opacity:.25;pointer-events:none}
+.scr-tile.correct-tile{background:rgba(16,185,129,.25);border-color:#10B981}
+.scr-prog{font-size:.85rem;color:rgba(255,255,255,.5);text-align:center;margin-bottom:12px}
+.scr-hint{font-size:1rem;color:rgba(255,255,255,.55);text-align:center;margin-bottom:6px}
+.scr-fb{text-align:center;font-size:1rem;font-weight:700;min-height:28px;margin-top:8px}
+.scr-actions{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.scr-btn{padding:10px 22px;border-radius:12px;border:none;font-family:Heebo,sans-serif;font-weight:700;font-size:.95rem;cursor:pointer}
+.scr-btn.check{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff}
+.scr-btn.clear{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff}
+
+.lang-switch-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.12);border-radius:16px;color:#fff;font-family:Heebo,sans-serif;cursor:pointer;text-align:right;transition:all .2s;width:100%}
+.lang-switch-item:hover{border-color:var(--purple-light);background:rgba(124,58,237,.15)}
+.lang-switch-item.active-lang{border-color:var(--purple-light);background:rgba(124,58,237,.2)}
+.lang-check{margin-right:auto;font-size:1.2rem;color:#A78BFA;font-weight:900;min-width:20px}
+
+.onboard-slide{width:25%;padding:36px 32px 16px;box-sizing:border-box;flex-shrink:0}
+.onboard-hero{font-size:4rem;text-align:center;margin-bottom:16px;animation:lp-hbob 3s ease-in-out infinite}
+.onboard-title{font-size:1.4rem;font-weight:900;text-align:center;margin:0 0 10px}
+.onboard-desc{text-align:center;color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:20px;line-height:1.6}
+.onboard-feat{display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(255,255,255,.06);border-radius:12px;margin-bottom:8px;font-size:.9rem;font-weight:600}
+.onboard-feat span{font-size:1.3rem;flex-shrink:0}
+.onboard-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px 24px}
+.onboard-dots{display:flex;gap:8px}
+.ob-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s}
+.ob-dot.active{width:24px;border-radius:4px;background:var(--purple-light)}
+.onboard-arrow{width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.onboard-arrow:hover{background:rgba(124,58,237,.3);border-color:var(--purple-light)}
+
 /* Responsive */
 @media(max-width:900px){.av-layout{grid-template-columns:1fr}.vocab-grid{grid-template-columns:1fr 1fr}.admin-grid{grid-template-columns:1fr}}
 @media(max-width:700px){
@@ -665,7 +719,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
     </div>
 
     <!-- LOGIN FORM -->
-    <form id="form-login" onsubmit="event.preventDefault();doLogin()">
+    <form id="form-login" onsubmit="return doLogin()">
       <div class="fg"><label>שם משתמש</label><input type="text" id="iu" placeholder="הכנס שם משתמש" autocomplete="username"/></div>
       <div class="fg"><label>סיסמה</label><input type="password" id="ip" placeholder="הכנס סיסמה" autocomplete="current-password"/></div>
       <div class="lerr" id="lerr">❌ שם משתמש או סיסמה שגויים</div>
@@ -673,7 +727,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
     </form>
 
     <!-- REGISTER FORM -->
-    <form id="form-reg" onsubmit="event.preventDefault();doRegister()" style="display:none">
+    <form id="form-reg" onsubmit="return doRegister()" style="display:none">
       <div class="fg"><label>שם מלא</label><input type="text" id="ru-name" placeholder="איך קוראים לך?"/></div>
       <div class="fg"><label>שם משתמש</label><input type="text" id="ru" placeholder="בחר שם משתמש"/></div>
       <div class="fg"><label>סיסמה</label><input type="password" id="rp" placeholder="בחר סיסמה (מינימום 4 תווים)"/></div>
@@ -700,10 +754,14 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
         </div>
       </div>
       <nav class="sb-nav">
-        <button class="ni active" onclick="nav('avatar',this)"><span class="ic">🦸</span> האווטר שלי</button>
+        <button class="ni" onclick="nav('avatar',this)"><span class="ic">🦸</span> האווטר שלי</button>
         <button class="ni" onclick="nav('courses',this)"><span class="ic">📚</span> הקורסים שלי</button>
         <button class="ni" onclick="nav('profile',this)"><span class="ic">👤</span> פרופיל</button>
         <button class="ni admin-only" id="admin-nav-btn" style="display:none" onclick="nav('admin',this)"><span class="ic">⚙️</span> <span style="background:linear-gradient(90deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900">פאנל אדמין</span></button>
+        <button class="ni lang-switch-btn" onclick="openLangSwitch()" style="margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding-top:16px">
+          <span class="ic" id="lang-flag">🇬🇧</span>
+          <span id="lang-name-sb">אנגלית</span>
+        </button>
       </nav>
       <div class="sb-foot">
         <a href="index.html" class="logout-btn">🏠 חזרה לדף הבית</a>
@@ -715,7 +773,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
     <main class="app-main">
 
       <!-- PAGE: AVATAR -->
-      <section class="page active" id="page-avatar">
+      <section class="page" id="page-avatar">
         <div class="ph"><h1>🦸 האווטר שלי</h1><p>התאם אישית את הדמות שלך</p></div>
         <div class="av-layout">
           <div class="av-display">
@@ -920,7 +978,7 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
                 <path d="M151,394 C148,401 138,403 121,403 C104,403 91,401 86,398 C83,403 85,407 95,409 C110,411 137,410 146,406 C154,402 153,397 151,394Z" fill="rgba(0,0,0,0.45)"/>
 
                 <!-- OVERLAYS -->
-                <text id="s-hat-ov" x="100" y="-4" text-anchor="middle" font-size="42" dominant-baseline="middle" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.5))"></text>
+                <text id="s-hat-ov" x="100" y="12" text-anchor="middle" font-size="62" dominant-baseline="auto" style="filter:drop-shadow(0 3px 8px rgba(0,0,0,0.6))"></text>
                 <text id="s-acc-ov" x="133" y="82" text-anchor="middle" font-size="24" dominant-baseline="middle"></text>
                 <text id="s-extra-ov" x="12" y="308" text-anchor="middle" font-size="44" dominant-baseline="middle" style="filter:drop-shadow(0 2px 8px rgba(0,0,0,0.6))"></text>
 
@@ -1120,22 +1178,143 @@ body{font-family:'Heebo',sans-serif;background:var(--dark);color:#fff;overflow-x
               📋 עבור לרשימת המשתמשים
             </button>
             <input id="gs-url-inp" style="display:none"/>
-          </div>              <span style="font-size:.8rem;color:rgba(255,255,255,.4);font-weight:400">מנוע AI לניהול האתר</span>
-            </div>
-            <div class="ai-messages" id="ai-msgs"></div>
-            <div class="ai-input-row">
-              <input class="ai-input" id="ai-in" placeholder="תכתוב פקודה לאי-איי... (למשל: שחרר שיעורים, הוסף מטבעות, שנה בצבע...)" onkeydown="if(event.key==='Enter')sendAI()"/>
-              <button class="ai-send" onclick="sendAI()">➤</button>
-            </div>
-            <div class="ai-hint">
-              💡 דוגמאות: <b>שחרר כל השיעורים</b> · <b>הוסף 1000 מטבעות</b> · <b>הודעה: ברוכים הבאים!</b> · <b>שנה שם האתר ל-X</b> · <b>עלה רמה</b>
-            </div>
           </div>
+
+          <div class="admin-card">
+  <h3>💸 שלח מטבעות / רמות למשתמש</h3>
+  <p style="font-size:.85rem;color:rgba(255,255,255,.5);margin:8px 0 16px">בחר משתמש ושלח לו מטבעות או רמות</p>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <select id="adm-give-target" style="padding:10px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-family:Heebo,sans-serif;font-size:.9rem;outline:none">
+      <option value="">בחר משתמש...</option>
+    </select>
+    <div style="display:flex;gap:8px">
+      <input id="adm-give-coins" type="number" min="0" placeholder="🪙 מטבעות (0 = לא לשנות)" style="flex:1;padding:10px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-family:Heebo,sans-serif;font-size:.9rem;outline:none"/>
+      <input id="adm-give-lvl" type="number" min="0" placeholder="⚡ רמות להוסיף" style="flex:1;padding:10px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-family:Heebo,sans-serif;font-size:.9rem;outline:none"/>
+    </div>
+    <button onclick="adminGiveToUser()" class="admin-btn green" style="width:100%;font-size:1rem;padding:12px">💸 שלח!</button>
+  </div>
+</div>
 
         </div>
       </section>
 
     </main>
+  </div>
+</div>
+
+<!-- LANGUAGE MODAL -->
+<div class="modal-ov" id="lang-modal" style="display:none">
+  <div class="modal-box" style="max-width:420px">
+    <div class="mhead">
+      <div class="micon">🌍</div>
+      <div class="mtitle">ברוך הבא!</div>
+      <div class="msub">בחר את השפות שלך</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;padding:0 8px">
+      <div>
+        <label style="font-size:.9rem;color:rgba(255,255,255,.6);display:block;margin-bottom:8px">🎯 אני רוצה ללמוד:</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap" id="lang-learn-opts">
+          <button class="lang-opt active" data-val="en" onclick="selectLangOpt('learn',this)">🇬🇧 אנגלית</button>
+          <button class="lang-opt" data-val="es" onclick="selectLangOpt('learn',this)">🇪🇸 ספרדית ✅</button>
+          <button class="lang-opt" data-val="fr" onclick="selectLangOpt('learn',this)">🇫🇷 צרפתית ✅</button>
+          <button class="lang-opt" data-val="de" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇩🇪 גרמנית 🔜</button>
+          <button class="lang-opt" data-val="it" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇮🇹 איטלקית 🔜</button>
+          <button class="lang-opt" data-val="pt" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇧🇷 פורטוגזית 🔜</button>
+          <button class="lang-opt" data-val="ru" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇷🇺 רוסית 🔜</button>
+          <button class="lang-opt" data-val="ar" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇸🇦 ערבית 🔜</button>
+          <button class="lang-opt" data-val="zh" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇨🇳 סינית 🔜</button>
+          <button class="lang-opt" data-val="ja" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇯🇵 יפנית 🔜</button>
+          <button class="lang-opt" data-val="ko" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇰🇷 קורנית 🔜</button>
+          <button class="lang-opt" data-val="tr" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇹🇷 טורקית 🔜</button>
+          <button class="lang-opt" data-val="hi" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇮🇳 הינדית 🔜</button>
+          <button class="lang-opt" data-val="nl" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇳🇱 הולנדית 🔜</button>
+          <button class="lang-opt" data-val="sv" onclick="selectLangOpt('learn',this)" style="opacity:.6">🇸🇪 שוודית 🔜</button>
+        </div>
+      </div>
+      <div>
+        <label style="font-size:.9rem;color:rgba(255,255,255,.6);display:block;margin-bottom:8px">🏠 השפה שלי:</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap" id="lang-native-opts">
+          <button class="lang-opt active" data-val="he" onclick="selectLangOpt('native',this)">🇮🇱 עברית</button>
+          <button class="lang-opt" data-val="ar" onclick="selectLangOpt('native',this)">🇸🇦 ערבית</button>
+          <button class="lang-opt" data-val="ru" onclick="selectLangOpt('native',this)">🇷🇺 רוסית</button>
+        </div>
+      </div>
+      <button onclick="confirmLang()" style="width:100%;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#7C3AED,#EC4899);color:#fff;font-size:1.1rem;font-weight:800;cursor:pointer;font-family:Heebo,sans-serif;margin-top:8px">🚀 בואו נתחיל ללמוד!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ONBOARDING MODAL -->
+<div class="modal-ov" id="onboard-modal" style="display:none">
+  <div class="modal-box" style="max-width:460px;padding:0;overflow:hidden">
+    <!-- Slides -->
+    <div id="onboard-slides" style="transition:transform .35s ease;display:flex;width:400%">
+      <!-- Slide 1 -->
+      <div class="onboard-slide">
+        <div class="onboard-hero">🦸</div>
+        <h2 class="onboard-title">ברוך הבא לEnglishKids!</h2>
+        <p class="onboard-desc">האפליקציה שתלמד אותך שפות חדשות בצורה מהנה ומשחקית — עם אווטר, מטבעות ופרסים!</p>
+        <div class="onboard-feat"><span>🎮</span> 6 סוגי משחקים שונים</div>
+        <div class="onboard-feat"><span>🪙</span> מטבעות ופרסים על כל שיעור</div>
+        <div class="onboard-feat"><span>🦸</span> אווטר שמשדרג עם הזמן</div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="onboard-slide">
+        <div class="onboard-hero">📚</div>
+        <h2 class="onboard-title">איך לומדים?</h2>
+        <p class="onboard-desc">כל יחידת לימוד מכילה 6 שיעורים שיעזרו לך לשלוט במילים:</p>
+        <div class="onboard-feat"><span>📖</span> מילות אוצר — לימוד המילים</div>
+        <div class="onboard-feat"><span>❓</span> חידון — בחירה מרובה</div>
+        <div class="onboard-feat"><span>🧠</span> משחק זיכרון — מצא זוגות</div>
+        <div class="onboard-feat"><span>✍️</span> כתיב — כתוב את המילה</div>
+        <div class="onboard-feat"><span>🔀</span> אות באות — סדר אותיות</div>
+        <div class="onboard-feat"><span>🎯</span> התאמה — חבר זוגות</div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="onboard-slide">
+        <div class="onboard-hero">🪙</div>
+        <h2 class="onboard-title">מטבעות ופרסים</h2>
+        <p class="onboard-desc">ככל שאתה מצליח יותר — כך תרוויח יותר מטבעות!</p>
+        <div class="onboard-feat"><span>✅</span> תשובה נכונה = יותר מטבעות</div>
+        <div class="onboard-feat"><span>🎽</span> קנה פריטי לבוש לאווטר שלך</div>
+        <div class="onboard-feat"><span>⚡</span> עלה רמות ופתח פריטים בלעדיים</div>
+        <div class="onboard-feat"><span>🔥</span> שמור על רצף יומי לבונוסים</div>
+      </div>
+      <!-- Slide 4 -->
+      <div class="onboard-slide">
+        <div class="onboard-hero">🌍</div>
+        <h2 class="onboard-title">מוכן להתחיל?</h2>
+        <p class="onboard-desc">בחר שפה, התחל לשחק, ותראה כמה מהר אתה מתקדם!</p>
+        <div class="onboard-feat"><span>🇬🇧</span> אנגלית — זמינה עכשיו!</div>
+        <div class="onboard-feat"><span>🇪🇸</span> ספרדית — זמינה עכשיו!</div>
+        <div class="onboard-feat"><span>🇫🇷</span> צרפתית — זמינה עכשיו!</div>
+        <div class="onboard-feat"><span>🌐</span> עוד שפות נוספות בקרוב!</div>
+        <button onclick="closeOnboard()" style="width:100%;margin-top:24px;padding:16px;border-radius:16px;border:none;background:linear-gradient(135deg,#7C3AED,#EC4899);color:#fff;font-size:1.1rem;font-weight:900;cursor:pointer;font-family:Heebo,sans-serif;box-shadow:0 4px 20px rgba(124,58,237,.5)">🚀 בואו נתחיל!</button>
+      </div>
+    </div>
+    <!-- Dots + nav -->
+    <div class="onboard-nav">
+      <button class="onboard-arrow" id="ob-prev" onclick="obSlide(-1)" style="visibility:hidden">‹</button>
+      <div class="onboard-dots" id="ob-dots">
+        <div class="ob-dot active"></div><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot"></div>
+      </div>
+      <button class="onboard-arrow" id="ob-next" onclick="obSlide(1)">›</button>
+    </div>
+  </div>
+</div>
+
+<!-- IN-APP LANG SWITCH MODAL -->
+<div class="modal-ov" id="lang-switch-modal" style="display:none">
+  <div class="modal-box" style="max-width:400px;max-height:85vh;overflow:hidden;display:flex;flex-direction:column">
+    <button class="modal-x" onclick="document.getElementById('lang-switch-modal').style.display='none'">✕</button>
+    <div style="padding:24px 24px 12px;text-align:center">
+      <div style="font-size:2.5rem">🌍</div>
+      <div style="font-size:1.3rem;font-weight:900;margin-top:8px">בחר שפה ללמוד</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.5);margin-top:4px">12 שפות זמינות בקרוב</div>
+    </div>
+    <div style="overflow-y:auto;padding:0 16px 20px;display:flex;flex-direction:column;gap:8px" id="lang-list-container">
+      <!-- populated by JS -->
+    </div>
   </div>
 </div>
 
@@ -1390,78 +1569,118 @@ const WD={
 /* ── TOPIC BANK for infinite lessons ── */
 const TOPICS=[
   {name:'ברכות',icon:'👋',color:'rgba(124,58,237,.25)',words:[
-    {en:'Hello',he:'שלום',e:'👋'},{en:'Goodbye',he:'להתראות',e:'✋'},{en:'Good morning',he:'בוקר טוב',e:'🌅'},{en:'Good night',he:'לילה טוב',e:'🌙'},{en:'Please',he:'בבקשה',e:'🙏'},{en:'Thank you',he:'תודה',e:'🤝'},{en:'Sorry',he:'סליחה',e:'😅'},{en:'Welcome',he:'ברוך הבא',e:'🎉'}
+    {en:'Hello',he:'שלום',e:'👋',es:'Hola',fr:'Bonjour',de:'Hallo',it:'Ciao',pt:'Olá',ru:'Привет',ar:'مرحبا',zh:'你好',ja:'こんにちは',ko:'안녕하세요',tr:'Merhaba',hi:'नमस्ते',nl:'Hallo',sv:'Hej'},{en:'Goodbye',he:'להתראות',e:'✋',es:'Adiós',fr:'Au revoir',de:'Auf Wiedersehen',it:'Arrivederci',pt:'Adeus',ru:'До свидания',ar:'وداعا',zh:'再见',ja:'さようなら',ko:'안녕히 가세요',tr:'Güle güle',hi:'अलविदा',nl:'Tot ziens',sv:'Hejdå'},{en:'Good morning',he:'בוקר טוב',e:'🌅',es:'Buenos días',fr:'Bonjour',de:'Guten Morgen',it:'Buongiorno',pt:'Bom dia',ru:'Доброе утро',ar:'صباح الخير',zh:'早上好',ja:'おはようございます',ko:'좋은 아침',tr:'Günaydın',hi:'सुप्रभात',nl:'Goedemorgen',sv:'God morgon'},{en:'Good night',he:'לילה טוב',e:'🌙',es:'Buenas noches',fr:'Bonne nuit',de:'Gute Nacht',it:'Buonanotte',pt:'Boa noite',ru:'Спокойной ночи',ar:'تصبح على خير',zh:'晚安',ja:'おやすみなさい',ko:'잘 자요',tr:'İyi geceler',hi:'शुभ रात्रि',nl:'Goede nacht',sv:'God natt'},{en:'Please',he:'בבקשה',e:'🙏',es:'Por favor',fr:"S'il vous plaît",de:'Bitte',it:'Per favore',pt:'Por favor',ru:'Пожалуйста',ar:'من فضلك',zh:'请',ja:'お願いします',ko:'제발',tr:'Lütfen',hi:'कृपया',nl:'Alsjeblieft',sv:'Snälla'},{en:'Thank you',he:'תודה',e:'🤝',es:'Gracias',fr:'Merci',de:'Danke',it:'Grazie',pt:'Obrigado',ru:'Спасибо',ar:'شكرا',zh:'谢谢',ja:'ありがとう',ko:'감사합니다',tr:'Teşekkürler',hi:'धन्यवाद',nl:'Dank je',sv:'Tack'},{en:'Sorry',he:'סליחה',e:'😅',es:'Lo siento',fr:'Pardon',de:'Entschuldigung',it:'Scusa',pt:'Desculpe',ru:'Извините',ar:'آسف',zh:'对不起',ja:'ごめんなさい',ko:'미안합니다',tr:'Özür dilerim',hi:'माफ़ करना',nl:'Sorry',sv:'Förlåt'},{en:'Welcome',he:'ברוך הבא',e:'🎉',es:'Bienvenido',fr:'Bienvenue',de:'Willkommen',it:'Benvenuto',pt:'Bem-vindo',ru:'Добро пожаловать',ar:'أهلاً وسهلاً',zh:'欢迎',ja:'ようこそ',ko:'환영합니다',tr:'Hoş geldiniz',hi:'स्वागत है',nl:'Welkom',sv:'Välkommen'}
   ]},
   {name:'בעלי חיים',icon:'🐾',color:'rgba(236,72,153,.2)',words:[
-    {en:'Cat',he:'חתול',e:'🐱'},{en:'Dog',he:'כלב',e:'🐶'},{en:'Bird',he:'ציפור',e:'🐦'},{en:'Fish',he:'דג',e:'🐟'},{en:'Horse',he:'סוס',e:'🐴'},{en:'Rabbit',he:'ארנב',e:'🐰'},{en:'Lion',he:'אריה',e:'🦁'},{en:'Elephant',he:'פיל',e:'🐘'}
+    {en:'Cat',he:'חתול',e:'🐱',es:'Gato',fr:'Chat',de:'Katze',it:'Gatto',pt:'Gato',ru:'Кошка',ar:'قطة',zh:'猫',ja:'猫',ko:'고양이',tr:'Kedi',hi:'बिल्ली',nl:'Kat',sv:'Katt'},{en:'Dog',he:'כלב',e:'🐶',es:'Perro',fr:'Chien',de:'Hund',it:'Cane',pt:'Cachorro',ru:'Собака',ar:'كلب',zh:'狗',ja:'犬',ko:'개',tr:'Köpek',hi:'कुत्ता',nl:'Hond',sv:'Hund'},{en:'Bird',he:'ציפור',e:'🐦',es:'Pájaro',fr:'Oiseau',de:'Vogel',it:'Uccello',pt:'Pássaro',ru:'Птица',ar:'طائر',zh:'鸟',ja:'鳥',ko:'새',tr:'Kuş',hi:'पक्षी',nl:'Vogel',sv:'Fågel'},{en:'Fish',he:'דג',e:'🐟',es:'Pez',fr:'Poisson',de:'Fisch',it:'Pesce',pt:'Peixe',ru:'Рыба',ar:'سمكة',zh:'鱼',ja:'魚',ko:'물고기',tr:'Balık',hi:'मछली',nl:'Vis',sv:'Fisk'},{en:'Horse',he:'סוס',e:'🐴',es:'Caballo',fr:'Cheval',de:'Pferd',it:'Cavallo',pt:'Cavalo',ru:'Лошадь',ar:'حصان',zh:'马',ja:'馬',ko:'말',tr:'At',hi:'घोड़ा',nl:'Paard',sv:'Häst'},{en:'Rabbit',he:'ארנב',e:'🐰',es:'Conejo',fr:'Lapin',de:'Hase',it:'Coniglio',pt:'Coelho',ru:'Кролик',ar:'أرنب',zh:'兔子',ja:'ウサギ',ko:'토끼',tr:'Tavşan',hi:'खरगोश',nl:'Konijn',sv:'Kanin'},{en:'Lion',he:'אריה',e:'🦁',es:'León',fr:'Lion',de:'Löwe',it:'Leone',pt:'Leão',ru:'Лев',ar:'أسد',zh:'狮子',ja:'ライオン',ko:'사자',tr:'Aslan',hi:'शेर',nl:'Leeuw',sv:'Lejon'},{en:'Elephant',he:'פיל',e:'🐘',es:'Elefante',fr:'Éléphant',de:'Elefant',it:'Elefante',pt:'Elefante',ru:'Слон',ar:'فيل',zh:'大象',ja:'ゾウ',ko:'코끼리',tr:'Fil',hi:'हाथी',nl:'Olifant',sv:'Elefant'}
   ]},
   {name:'אוכל',icon:'🍕',color:'rgba(245,158,11,.2)',words:[
-    {en:'Pizza',he:'פיצה',e:'🍕'},{en:'Apple',he:'תפוח',e:'🍎'},{en:'Bread',he:'לחם',e:'🍞'},{en:'Milk',he:'חלב',e:'🥛'},{en:'Cake',he:'עוגה',e:'🎂'},{en:'Chicken',he:'עוף',e:'🍗'},{en:'Banana',he:'בננה',e:'🍌'},{en:'Egg',he:'ביצה',e:'🥚'}
+    {en:'Pizza',he:'פיצה',e:'🍕',es:'Pizza',fr:'Pizza',de:'Pizza',it:'Pizza',pt:'Pizza',ru:'Пицца',ar:'بيتزا',zh:'披萨',ja:'ピザ',ko:'피자',tr:'Pizza',hi:'पिज्जा',nl:'Pizza',sv:'Pizza'},{en:'Apple',he:'תפוח',e:'🍎',es:'Manzana',fr:'Pomme',de:'Apfel',it:'Mela',pt:'Maçã',ru:'Яблоко',ar:'تفاحة',zh:'苹果',ja:'りんご',ko:'사과',tr:'Elma',hi:'सेब',nl:'Appel',sv:'Äpple'},{en:'Bread',he:'לחם',e:'🍞',es:'Pan',fr:'Pain',de:'Brot',it:'Pane',pt:'Pão',ru:'Хлеб',ar:'خبز',zh:'面包',ja:'パン',ko:'빵',tr:'Ekmek',hi:'रोटी',nl:'Brood',sv:'Bröd'},{en:'Milk',he:'חלב',e:'🥛',es:'Leche',fr:'Lait',de:'Milch',it:'Latte',pt:'Leite',ru:'Молоко',ar:'حليب',zh:'牛奶',ja:'牛乳',ko:'우유',tr:'Süt',hi:'दूध',nl:'Melk',sv:'Mjölk'},{en:'Cake',he:'עוגה',e:'🎂',es:'Pastel',fr:'Gâteau',de:'Kuchen',it:'Torta',pt:'Bolo',ru:'Торт',ar:'كعكة',zh:'蛋糕',ja:'ケーキ',ko:'케이크',tr:'Pasta',hi:'केक',nl:'Taart',sv:'Tårta'},{en:'Chicken',he:'עוף',e:'🍗',es:'Pollo',fr:'Poulet',de:'Huhn',it:'Pollo',pt:'Frango',ru:'Курица',ar:'دجاج',zh:'鸡肉',ja:'チキン',ko:'닭고기',tr:'Tavuk',hi:'मुर्गा',nl:'Kip',sv:'Kyckling'},{en:'Banana',he:'בננה',e:'🍌',es:'Plátano',fr:'Banane',de:'Banane',it:'Banana',pt:'Banana',ru:'Банан',ar:'موزة',zh:'香蕉',ja:'バナナ',ko:'바나나',tr:'Muz',hi:'केला',nl:'Banaan',sv:'Banan'},{en:'Egg',he:'ביצה',e:'🥚',es:'Huevo',fr:'Œuf',de:'Ei',it:'Uovo',pt:'Ovo',ru:'Яйцо',ar:'بيضة',zh:'鸡蛋',ja:'卵',ko:'계란',tr:'Yumurta',hi:'अंडा',nl:'Ei',sv:'Ägg'}
   ]},
   {name:'משפחה',icon:'👨‍👩‍👧',color:'rgba(59,130,246,.2)',words:[
-    {en:'Mother',he:'אמא',e:'👩'},{en:'Father',he:'אבא',e:'👨'},{en:'Sister',he:'אחות',e:'👧'},{en:'Brother',he:'אח',e:'👦'},{en:'Baby',he:'תינוק',e:'👶'},{en:'Grandma',he:'סבתא',e:'👵'},{en:'Grandpa',he:'סבא',e:'👴'},{en:'Family',he:'משפחה',e:'👨‍👩‍👧‍👦'}
+    {en:'Mother',he:'אמא',e:'👩',es:'Madre',fr:'Mère',de:'Mutter',it:'Madre',pt:'Mãe',ru:'Мать',ar:'أم',zh:'妈妈',ja:'お母さん',ko:'어머니',tr:'Anne',hi:'माँ',nl:'Moeder',sv:'Mamma'},{en:'Father',he:'אבא',e:'👨',es:'Padre',fr:'Père',de:'Vater',it:'Padre',pt:'Pai',ru:'Отец',ar:'أب',zh:'爸爸',ja:'お父さん',ko:'아버지',tr:'Baba',hi:'पिता',nl:'Vader',sv:'Pappa'},{en:'Sister',he:'אחות',e:'👧',es:'Hermana',fr:'Sœur',de:'Schwester',it:'Sorella',pt:'Irmã',ru:'Сестра',ar:'أخت',zh:'姐妹',ja:'姉妹',ko:'자매',tr:'Kız kardeş',hi:'बहन',nl:'Zus',sv:'Syster'},{en:'Brother',he:'אח',e:'👦',es:'Hermano',fr:'Frère',de:'Bruder',it:'Fratello',pt:'Irmão',ru:'Брат',ar:'أخ',zh:'兄弟',ja:'兄弟',ko:'형제',tr:'Erkek kardeş',hi:'भाई',nl:'Broer',sv:'Bror'},{en:'Baby',he:'תינוק',e:'👶',es:'Bebé',fr:'Bébé',de:'Baby',it:'Bambino',pt:'Bebê',ru:'Малыш',ar:'طفل',zh:'宝宝',ja:'赤ちゃん',ko:'아기',tr:'Bebek',hi:'बच्चा',nl:'Baby',sv:'Baby'},{en:'Grandma',he:'סבתא',e:'👵',es:'Abuela',fr:'Grand-mère',de:'Großmutter',it:'Nonna',pt:'Avó',ru:'Бабушка',ar:'جدة',zh:'奶奶',ja:'おばあさん',ko:'할머니',tr:'Büyükanne',hi:'दादी',nl:'Grootmoeder',sv:'Farmor'},{en:'Grandpa',he:'סבא',e:'👴',es:'Abuelo',fr:'Grand-père',de:'Großvater',it:'Nonno',pt:'Avô',ru:'Дедушка',ar:'جد',zh:'爷爷',ja:'おじいさん',ko:'할아버지',tr:'Büyükbaba',hi:'दादा',nl:'Grootvader',sv:'Farfar'},{en:'Family',he:'משפחה',e:'👨‍👩‍👧‍👦',es:'Familia',fr:'Famille',de:'Familie',it:'Famiglia',pt:'Família',ru:'Семья',ar:'عائلة',zh:'家人',ja:'家族',ko:'가족',tr:'Aile',hi:'परिवार',nl:'Familie',sv:'Familj'}
   ]},
   {name:'צבעים',icon:'🎨',color:'rgba(16,185,129,.2)',words:[
-    {en:'Red',he:'אדום',e:'🔴'},{en:'Blue',he:'כחול',e:'🔵'},{en:'Green',he:'ירוק',e:'💚'},{en:'Yellow',he:'צהוב',e:'💛'},{en:'Purple',he:'סגול',e:'💜'},{en:'Orange',he:'כתום',e:'🟠'},{en:'White',he:'לבן',e:'⚪'},{en:'Black',he:'שחור',e:'⚫'}
+    {en:'Red',he:'אדום',e:'🔴',es:'Rojo',fr:'Rouge',de:'Rot',it:'Rosso',pt:'Vermelho',ru:'Красный',ar:'أحمر',zh:'红色',ja:'赤',ko:'빨간색',tr:'Kırmızı',hi:'लाल',nl:'Rood',sv:'Röd'},{en:'Blue',he:'כחול',e:'🔵',es:'Azul',fr:'Bleu',de:'Blau',it:'Blu',pt:'Azul',ru:'Синий',ar:'أزرق',zh:'蓝色',ja:'青',ko:'파란색',tr:'Mavi',hi:'नीला',nl:'Blauw',sv:'Blå'},{en:'Green',he:'ירוק',e:'💚',es:'Verde',fr:'Vert',de:'Grün',it:'Verde',pt:'Verde',ru:'Зелёный',ar:'أخضر',zh:'绿色',ja:'緑',ko:'초록색',tr:'Yeşil',hi:'हरा',nl:'Groen',sv:'Grön'},{en:'Yellow',he:'צהוב',e:'💛',es:'Amarillo',fr:'Jaune',de:'Gelb',it:'Giallo',pt:'Amarelo',ru:'Жёлтый',ar:'أصفر',zh:'黄色',ja:'黄色',ko:'노란색',tr:'Sarı',hi:'पीला',nl:'Geel',sv:'Gul'},{en:'Purple',he:'סגול',e:'💜',es:'Morado',fr:'Violet',de:'Lila',it:'Viola',pt:'Roxo',ru:'Фиолетовый',ar:'بنفسجي',zh:'紫色',ja:'紫',ko:'보라색',tr:'Mor',hi:'बैंगनी',nl:'Paars',sv:'Lila'},{en:'Orange',he:'כתום',e:'🟠',es:'Naranja',fr:'Orange',de:'Orange',it:'Arancione',pt:'Laranja',ru:'Оранжевый',ar:'برتقالي',zh:'橙色',ja:'オレンジ',ko:'주황색',tr:'Turuncu',hi:'नारंगी',nl:'Oranje',sv:'Orange'},{en:'White',he:'לבן',e:'⚪',es:'Blanco',fr:'Blanc',de:'Weiß',it:'Bianco',pt:'Branco',ru:'Белый',ar:'أبيض',zh:'白色',ja:'白',ko:'흰색',tr:'Beyaz',hi:'सफेद',nl:'Wit',sv:'Vit'},{en:'Black',he:'שחור',e:'⚫',es:'Negro',fr:'Noir',de:'Schwarz',it:'Nero',pt:'Preto',ru:'Чёрный',ar:'أسود',zh:'黑色',ja:'黒',ko:'검은색',tr:'Siyah',hi:'काला',nl:'Zwart',sv:'Svart'}
   ]},
   {name:'מספרים',icon:'🔢',color:'rgba(239,68,68,.2)',words:[
-    {en:'One',he:'אחד',e:'1️⃣'},{en:'Two',he:'שתיים',e:'2️⃣'},{en:'Three',he:'שלוש',e:'3️⃣'},{en:'Four',he:'ארבע',e:'4️⃣'},{en:'Five',he:'חמש',e:'5️⃣'},{en:'Six',he:'שש',e:'6️⃣'},{en:'Seven',he:'שבע',e:'7️⃣'},{en:'Eight',he:'שמונה',e:'8️⃣'}
+    {en:'One',he:'אחד',e:'1️⃣',es:'Uno',fr:'Un',de:'Eins',it:'Uno',pt:'Um',ru:'Один',ar:'واحد',zh:'一',ja:'一',ko:'일',tr:'Bir',hi:'एक',nl:'Één',sv:'Ett'},{en:'Two',he:'שתיים',e:'2️⃣',es:'Dos',fr:'Deux',de:'Zwei',it:'Due',pt:'Dois',ru:'Два',ar:'اثنان',zh:'二',ja:'二',ko:'이',tr:'İki',hi:'दो',nl:'Twee',sv:'Två'},{en:'Three',he:'שלוש',e:'3️⃣',es:'Tres',fr:'Trois',de:'Drei',it:'Tre',pt:'Três',ru:'Три',ar:'ثلاثة',zh:'三',ja:'三',ko:'삼',tr:'Üç',hi:'तीन',nl:'Drie',sv:'Tre'},{en:'Four',he:'ארבע',e:'4️⃣',es:'Cuatro',fr:'Quatre',de:'Vier',it:'Quattro',pt:'Quatro',ru:'Четыре',ar:'أربعة',zh:'四',ja:'四',ko:'사',tr:'Dört',hi:'चार',nl:'Vier',sv:'Fyra'},{en:'Five',he:'חמש',e:'5️⃣',es:'Cinco',fr:'Cinq',de:'Fünf',it:'Cinque',pt:'Cinco',ru:'Пять',ar:'خمسة',zh:'五',ja:'五',ko:'오',tr:'Beş',hi:'पाँच',nl:'Vijf',sv:'Fem'},{en:'Six',he:'שש',e:'6️⃣',es:'Seis',fr:'Six',de:'Sechs',it:'Sei',pt:'Seis',ru:'Шесть',ar:'ستة',zh:'六',ja:'六',ko:'육',tr:'Altı',hi:'छह',nl:'Zes',sv:'Sex'},{en:'Seven',he:'שבע',e:'7️⃣',es:'Siete',fr:'Sept',de:'Sieben',it:'Sette',pt:'Sete',ru:'Семь',ar:'سبعة',zh:'七',ja:'七',ko:'칠',tr:'Yedi',hi:'सात',nl:'Zeven',sv:'Sju'},{en:'Eight',he:'שמונה',e:'8️⃣',es:'Ocho',fr:'Huit',de:'Acht',it:'Otto',pt:'Oito',ru:'Восемь',ar:'ثمانية',zh:'八',ja:'八',ko:'팔',tr:'Sekiz',hi:'आठ',nl:'Acht',sv:'Åtta'}
   ]},
   {name:'בית וחדרים',icon:'🏠',color:'rgba(99,102,241,.2)',words:[
-    {en:'House',he:'בית',e:'🏠'},{en:'Door',he:'דלת',e:'🚪'},{en:'Window',he:'חלון',e:'🪟'},{en:'Kitchen',he:'מטבח',e:'🍳'},{en:'Bed',he:'מיטה',e:'🛏'},{en:'Chair',he:'כיסא',e:'🪑'},{en:'Table',he:'שולחן',e:'🪞'},{en:'Bathroom',he:'אמבטיה',e:'🛁'}
+    {en:'House',he:'בית',e:'🏠',es:'Casa',fr:'Maison',de:'Haus',it:'Casa',pt:'Casa',ru:'Дом',ar:'بيت',zh:'房子',ja:'家',ko:'집',tr:'Ev',hi:'घर',nl:'Huis',sv:'Hus'},{en:'Door',he:'דלת',e:'🚪',es:'Puerta',fr:'Porte',de:'Tür',it:'Porta',pt:'Porta',ru:'Дверь',ar:'باب',zh:'门',ja:'ドア',ko:'문',tr:'Kapı',hi:'दरवाजा',nl:'Deur',sv:'Dörr'},{en:'Window',he:'חלון',e:'🪟',es:'Ventana',fr:'Fenêtre',de:'Fenster',it:'Finestra',pt:'Janela',ru:'Окно',ar:'نافذة',zh:'窗户',ja:'窓',ko:'창문',tr:'Pencere',hi:'खिड़की',nl:'Raam',sv:'Fönster'},{en:'Kitchen',he:'מטבח',e:'🍳',es:'Cocina',fr:'Cuisine',de:'Küche',it:'Cucina',pt:'Cozinha',ru:'Кухня',ar:'مطبخ',zh:'厨房',ja:'キッチン',ko:'부엌',tr:'Mutfak',hi:'रसोई',nl:'Keuken',sv:'Kök'},{en:'Bed',he:'מיטה',e:'🛏',es:'Cama',fr:'Lit',de:'Bett',it:'Letto',pt:'Cama',ru:'Кровать',ar:'سرير',zh:'床',ja:'ベッド',ko:'침대',tr:'Yatak',hi:'बिस्तर',nl:'Bed',sv:'Säng'},{en:'Chair',he:'כיסא',e:'🪑',es:'Silla',fr:'Chaise',de:'Stuhl',it:'Sedia',pt:'Cadeira',ru:'Стул',ar:'كرسي',zh:'椅子',ja:'椅子',ko:'의자',tr:'Sandalye',hi:'कुर्सी',nl:'Stoel',sv:'Stol'},{en:'Table',he:'שולחן',e:'🪞',es:'Mesa',fr:'Table',de:'Tisch',it:'Tavolo',pt:'Mesa',ru:'Стол',ar:'طاولة',zh:'桌子',ja:'テーブル',ko:'테이블',tr:'Masa',hi:'मेज',nl:'Tafel',sv:'Bord'},{en:'Bathroom',he:'אמבטיה',e:'🛁',es:'Baño',fr:'Salle de bain',de:'Badezimmer',it:'Bagno',pt:'Banheiro',ru:'Ванная',ar:'حمام',zh:'浴室',ja:'バスルーム',ko:'욕실',tr:'Banyo',hi:'बाथरूम',nl:'Badkamer',sv:'Badrum'}
   ]},
   {name:'לבוש',icon:'👕',color:'rgba(236,72,153,.15)',words:[
-    {en:'Shirt',he:'חולצה',e:'👕'},{en:'Pants',he:'מכנסיים',e:'👖'},{en:'Shoes',he:'נעליים',e:'👟'},{en:'Hat',he:'כובע',e:'🎩'},{en:'Dress',he:'שמלה',e:'👗'},{en:'Socks',he:'גרביים',e:'🧦'},{en:'Coat',he:'מעיל',e:'🧥'},{en:'Glasses',he:'משקפיים',e:'👓'}
+    {en:'Shirt',he:'חולצה',e:'👕',es:'Camisa',fr:'Chemise',de:'Hemd',it:'Camicia',pt:'Camisa',ru:'Рубашка',ar:'قميص',zh:'衬衫',ja:'シャツ',ko:'셔츠',tr:'Gömlek',hi:'कमीज़',nl:'Hemd',sv:'Skjorta'},{en:'Pants',he:'מכנסיים',e:'👖',es:'Pantalón',fr:'Pantalon',de:'Hose',it:'Pantaloni',pt:'Calça',ru:'Брюки',ar:'بنطلون',zh:'裤子',ja:'ズボン',ko:'바지',tr:'Pantolon',hi:'पैंट',nl:'Broek',sv:'Byxor'},{en:'Shoes',he:'נעליים',e:'👟',es:'Zapatos',fr:'Chaussures',de:'Schuhe',it:'Scarpe',pt:'Sapatos',ru:'Туфли',ar:'حذاء',zh:'鞋子',ja:'靴',ko:'신발',tr:'Ayakkabı',hi:'जूते',nl:'Schoenen',sv:'Skor'},{en:'Hat',he:'כובע',e:'🎩',es:'Sombrero',fr:'Chapeau',de:'Hut',it:'Cappello',pt:'Chapéu',ru:'Шляпа',ar:'قبعة',zh:'帽子',ja:'帽子',ko:'모자',tr:'Şapka',hi:'टोपी',nl:'Hoed',sv:'Hatt'},{en:'Dress',he:'שמלה',e:'👗',es:'Vestido',fr:'Robe',de:'Kleid',it:'Vestito',pt:'Vestido',ru:'Платье',ar:'فستان',zh:'裙子',ja:'ドレス',ko:'드레스',tr:'Elbise',hi:'पोशाक',nl:'Jurk',sv:'Klänning'},{en:'Socks',he:'גרביים',e:'🧦',es:'Calcetines',fr:'Chaussettes',de:'Socken',it:'Calzini',pt:'Meias',ru:'Носки',ar:'جوارب',zh:'袜子',ja:'靴下',ko:'양말',tr:'Çorap',hi:'मोजे',nl:'Sokken',sv:'Strumpor'},{en:'Coat',he:'מעיל',e:'🧥',es:'Abrigo',fr:'Manteau',de:'Mantel',it:'Cappotto',pt:'Casaco',ru:'Пальто',ar:'معطف',zh:'外套',ja:'コート',ko:'코트',tr:'Palto',hi:'कोट',nl:'Jas',sv:'Kappa'},{en:'Glasses',he:'משקפיים',e:'👓',es:'Gafas',fr:'Lunettes',de:'Brille',it:'Occhiali',pt:'Óculos',ru:'Очки',ar:'نظارات',zh:'眼镜',ja:'眼鏡',ko:'안경',tr:'Gözlük',hi:'चश्मा',nl:'Bril',sv:'Glasögon'}
   ]},
   {name:'טבע',icon:'🌿',color:'rgba(16,185,129,.25)',words:[
-    {en:'Tree',he:'עץ',e:'🌳'},{en:'Flower',he:'פרח',e:'🌸'},{en:'Sun',he:'שמש',e:'☀️'},{en:'Rain',he:'גשם',e:'🌧'},{en:'Cloud',he:'ענן',e:'☁️'},{en:'Mountain',he:'הר',e:'⛰'},{en:'Sea',he:'ים',e:'🌊'},{en:'Moon',he:'ירח',e:'🌙'}
+    {en:'Tree',he:'עץ',e:'🌳',es:'Árbol',fr:'Arbre',de:'Baum',it:'Albero',pt:'Árvore',ru:'Дерево',ar:'شجرة',zh:'树',ja:'木',ko:'나무',tr:'Ağaç',hi:'पेड़',nl:'Boom',sv:'Träd'},{en:'Flower',he:'פרח',e:'🌸',es:'Flor',fr:'Fleur',de:'Blume',it:'Fiore',pt:'Flor',ru:'Цветок',ar:'زهرة',zh:'花',ja:'花',ko:'꽃',tr:'Çiçek',hi:'फूल',nl:'Bloem',sv:'Blomma'},{en:'Sun',he:'שמש',e:'☀️',es:'Sol',fr:'Soleil',de:'Sonne',it:'Sole',pt:'Sol',ru:'Солнце',ar:'شمس',zh:'太阳',ja:'太陽',ko:'태양',tr:'Güneş',hi:'सूरज',nl:'Zon',sv:'Sol'},{en:'Rain',he:'גשם',e:'🌧',es:'Lluvia',fr:'Pluie',de:'Regen',it:'Pioggia',pt:'Chuva',ru:'Дождь',ar:'مطر',zh:'雨',ja:'雨',ko:'비',tr:'Yağmur',hi:'बारिश',nl:'Regen',sv:'Regn'},{en:'Cloud',he:'ענן',e:'☁️',es:'Nube',fr:'Nuage',de:'Wolke',it:'Nuvola',pt:'Nuvem',ru:'Облако',ar:'سحابة',zh:'云',ja:'雲',ko:'구름',tr:'Bulut',hi:'बादल',nl:'Wolk',sv:'Moln'},{en:'Mountain',he:'הר',e:'⛰',es:'Montaña',fr:'Montagne',de:'Berg',it:'Montagna',pt:'Montanha',ru:'Гора',ar:'جبل',zh:'山',ja:'山',ko:'산',tr:'Dağ',hi:'पहाड़',nl:'Berg',sv:'Berg'},{en:'Sea',he:'ים',e:'🌊',es:'Mar',fr:'Mer',de:'Meer',it:'Mare',pt:'Mar',ru:'Море',ar:'بحر',zh:'海',ja:'海',ko:'바다',tr:'Deniz',hi:'समुद्र',nl:'Zee',sv:'Hav'},{en:'Moon',he:'ירח',e:'🌙',es:'Luna',fr:'Lune',de:'Mond',it:'Luna',pt:'Lua',ru:'Луна',ar:'قمر',zh:'月亮',ja:'月',ko:'달',tr:'Ay',hi:'चाँद',nl:'Maan',sv:'Måne'}
   ]},
   {name:'ספורט',icon:'⚽',color:'rgba(245,158,11,.25)',words:[
-    {en:'Football',he:'כדורגל',e:'⚽'},{en:'Basketball',he:'כדורסל',e:'🏀'},{en:'Swimming',he:'שחייה',e:'🏊'},{en:'Running',he:'ריצה',e:'🏃'},{en:'Bicycle',he:'אופניים',e:'🚲'},{en:'Tennis',he:'טניס',e:'🎾'},{en:'Jump',he:'קפיצה',e:'🤸'},{en:'Ball',he:'כדור',e:'🏐'}
+    {en:'Football',he:'כדורגל',e:'⚽',es:'Fútbol',fr:'Football',de:'Fußball',it:'Calcio',pt:'Futebol',ru:'Футбол',ar:'كرة قدم',zh:'足球',ja:'サッカー',ko:'축구',tr:'Futbol',hi:'फुटबॉल',nl:'Voetbal',sv:'Fotboll'},{en:'Basketball',he:'כדורסל',e:'🏀',es:'Baloncesto',fr:'Basketball',de:'Basketball',it:'Basket',pt:'Basquete',ru:'Баскетбол',ar:'كرة سلة',zh:'篮球',ja:'バスケ',ko:'농구',tr:'Basketbol',hi:'बास्केटबॉल',nl:'Basketbal',sv:'Basket'},{en:'Swimming',he:'שחייה',e:'🏊',es:'Natación',fr:'Natation',de:'Schwimmen',it:'Nuoto',pt:'Natação',ru:'Плавание',ar:'سباحة',zh:'游泳',ja:'水泳',ko:'수영',tr:'Yüzme',hi:'तैराकी',nl:'Zwemmen',sv:'Simning'},{en:'Running',he:'ריצה',e:'🏃',es:'Correr',fr:'Courir',de:'Laufen',it:'Corsa',pt:'Corrida',ru:'Бег',ar:'جري',zh:'跑步',ja:'ランニング',ko:'달리기',tr:'Koşu',hi:'दौड़',nl:'Hardlopen',sv:'Löpning'},{en:'Bicycle',he:'אופניים',e:'🚲',es:'Bicicleta',fr:'Vélo',de:'Fahrrad',it:'Bicicletta',pt:'Bicicleta',ru:'Велосипед',ar:'دراجة',zh:'自行车',ja:'自転車',ko:'자전거',tr:'Bisiklet',hi:'साइकिल',nl:'Fiets',sv:'Cykel'},{en:'Tennis',he:'טניס',e:'🎾',es:'Tenis',fr:'Tennis',de:'Tennis',it:'Tennis',pt:'Tênis',ru:'Теннис',ar:'تنس',zh:'网球',ja:'テニス',ko:'테니스',tr:'Tenis',hi:'टेनिस',nl:'Tennis',sv:'Tennis'},{en:'Jump',he:'קפיצה',e:'🤸',es:'Saltar',fr:'Sauter',de:'Springen',it:'Salto',pt:'Pulo',ru:'Прыжок',ar:'قفز',zh:'跳跃',ja:'ジャンプ',ko:'점프',tr:'Zıplama',hi:'कूदना',nl:'Springen',sv:'Hoppa'},{en:'Ball',he:'כדור',e:'🏐',es:'Pelota',fr:'Balle',de:'Ball',it:'Palla',pt:'Bola',ru:'Мяч',ar:'كرة',zh:'球',ja:'ボール',ko:'공',tr:'Top',hi:'गेंद',nl:'Bal',sv:'Boll'}
   ]},
   {name:'בית ספר',icon:'📚',color:'rgba(124,58,237,.2)',words:[
-    {en:'Book',he:'ספר',e:'📚'},{en:'Pencil',he:'עיפרון',e:'✏️'},{en:'Teacher',he:'מורה',e:'👩‍🏫'},{en:'Classroom',he:'כיתה',e:'🏫'},{en:'Desk',he:'שולחן כתיבה',e:'🖥'},{en:'Homework',he:'שיעורי בית',e:'📝'},{en:'Test',he:'מבחן',e:'📋'},{en:'Grade',he:'ציון',e:'⭐'}
+    {en:'Book',he:'ספר',e:'📚',es:'Libro',fr:'Livre',de:'Buch',it:'Libro',pt:'Livro',ru:'Книга',ar:'كتاب',zh:'书',ja:'本',ko:'책',tr:'Kitap',hi:'किताब',nl:'Boek',sv:'Bok'},{en:'Pencil',he:'עיפרון',e:'✏️',es:'Lápiz',fr:'Crayon',de:'Bleistift',it:'Matita',pt:'Lápis',ru:'Карандаш',ar:'قلم',zh:'铅笔',ja:'鉛筆',ko:'연필',tr:'Kalem',hi:'पेंसिल',nl:'Potlood',sv:'Penna'},{en:'Teacher',he:'מורה',e:'👩‍🏫',es:'Maestro',fr:'Professeur',de:'Lehrer',it:'Insegnante',pt:'Professor',ru:'Учитель',ar:'معلم',zh:'老师',ja:'先生',ko:'선생님',tr:'Öğretmen',hi:'शिक्षक',nl:'Leraar',sv:'Lärare'},{en:'Classroom',he:'כיתה',e:'🏫',es:'Aula',fr:'Classe',de:'Klassenzimmer',it:'Aula',pt:'Sala de aula',ru:'Класс',ar:'فصل',zh:'教室',ja:'教室',ko:'교실',tr:'Sınıf',hi:'कक्षा',nl:'Klaslokaal',sv:'Klassrum'},{en:'Desk',he:'שולחן כתיבה',e:'🖥',es:'Escritorio',fr:'Bureau',de:'Schreibtisch',it:'Banco',pt:'Mesa',ru:'Парта',ar:'مكتب',zh:'课桌',ja:'机',ko:'책상',tr:'Masa',hi:'डेस्क',nl:'Bureau',sv:'Skrivbord'},{en:'Homework',he:'שיעורי בית',e:'📝',es:'Tarea',fr:'Devoir',de:'Hausaufgaben',it:'Compiti',pt:'Dever',ru:'Домашнее задание',ar:'واجب',zh:'作业',ja:'宿題',ko:'숙제',tr:'Ödev',hi:'होमवर्क',nl:'Huiswerk',sv:'Läxa'},{en:'Test',he:'מבחן',e:'📋',es:'Examen',fr:'Examen',de:'Test',it:'Esame',pt:'Teste',ru:'Тест',ar:'اختبار',zh:'考试',ja:'テスト',ko:'시험',tr:'Sınav',hi:'परीक्षा',nl:'Test',sv:'Prov'},{en:'Grade',he:'ציון',e:'⭐',es:'Nota',fr:'Note',de:'Note',it:'Voto',pt:'Nota',ru:'Оценка',ar:'درجة',zh:'成绩',ja:'成績',ko:'성적',tr:'Not',hi:'ग्रेड',nl:'Cijfer',sv:'Betyg'}
   ]},
   {name:'גוף האדם',icon:'🧠',color:'rgba(239,68,68,.18)',words:[
-    {en:'Head',he:'ראש',e:'🗣'},{en:'Eye',he:'עין',e:'👁'},{en:'Nose',he:'אף',e:'👃'},{en:'Mouth',he:'פה',e:'👄'},{en:'Hand',he:'יד',e:'🤚'},{en:'Leg',he:'רגל',e:'🦵'},{en:'Heart',he:'לב',e:'❤️'},{en:'Ear',he:'אוזן',e:'👂'}
+    {en:'Head',he:'ראש',e:'🗣',es:'Cabeza',fr:'Tête',de:'Kopf',it:'Testa',pt:'Cabeça',ru:'Голова',ar:'رأس',zh:'头',ja:'頭',ko:'머리',tr:'Baş',hi:'सिर',nl:'Hoofd',sv:'Huvud'},{en:'Eye',he:'עין',e:'👁',es:'Ojo',fr:'Œil',de:'Auge',it:'Occhio',pt:'Olho',ru:'Глаз',ar:'عين',zh:'眼睛',ja:'目',ko:'눈',tr:'Göz',hi:'आँख',nl:'Oog',sv:'Öga'},{en:'Nose',he:'אף',e:'👃',es:'Nariz',fr:'Nez',de:'Nase',it:'Naso',pt:'Nariz',ru:'Нос',ar:'أنف',zh:'鼻子',ja:'鼻',ko:'코',tr:'Burun',hi:'नाक',nl:'Neus',sv:'Näsa'},{en:'Mouth',he:'פה',e:'👄',es:'Boca',fr:'Bouche',de:'Mund',it:'Bocca',pt:'Boca',ru:'Рот',ar:'فم',zh:'嘴巴',ja:'口',ko:'입',tr:'Ağız',hi:'मुँह',nl:'Mond',sv:'Mun'},{en:'Hand',he:'יד',e:'🤚',es:'Mano',fr:'Main',de:'Hand',it:'Mano',pt:'Mão',ru:'Рука',ar:'يد',zh:'手',ja:'手',ko:'손',tr:'El',hi:'हाथ',nl:'Hand',sv:'Hand'},{en:'Leg',he:'רגל',e:'🦵',es:'Pierna',fr:'Jambe',de:'Bein',it:'Gamba',pt:'Perna',ru:'Нога',ar:'ساق',zh:'腿',ja:'足',ko:'다리',tr:'Bacak',hi:'पैर',nl:'Been',sv:'Ben'},{en:'Heart',he:'לב',e:'❤️',es:'Corazón',fr:'Cœur',de:'Herz',it:'Cuore',pt:'Coração',ru:'Сердце',ar:'قلب',zh:'心脏',ja:'心臓',ko:'심장',tr:'Kalp',hi:'दिल',nl:'Hart',sv:'Hjärta'},{en:'Ear',he:'אוזן',e:'👂',es:'Oreja',fr:'Oreille',de:'Ohr',it:'Orecchio',pt:'Orelha',ru:'Ухо',ar:'أذن',zh:'耳朵',ja:'耳',ko:'귀',tr:'Kulak',hi:'कान',nl:'Oor',sv:'Öra'}
+  ]},
+  {name:'תחבורה',icon:'🚗',color:'rgba(59,130,246,.22)',words:[
+    {en:'Car',he:'מכונית',e:'🚗',es:'Coche',fr:'Voiture',de:'Auto',it:'Macchina',pt:'Carro',ru:'Машина',ar:'سيارة',zh:'汽车',ja:'車',ko:'자동차',tr:'Araba',hi:'कार',nl:'Auto',sv:'Bil'},{en:'Bus',he:'אוטובוס',e:'🚌',es:'Autobús',fr:'Bus',de:'Bus',it:'Autobus',pt:'Ônibus',ru:'Автобус',ar:'حافلة',zh:'公共汽车',ja:'バス',ko:'버스',tr:'Otobüs',hi:'बस',nl:'Bus',sv:'Buss'},{en:'Train',he:'רכבת',e:'🚂',es:'Tren',fr:'Train',de:'Zug',it:'Treno',pt:'Trem',ru:'Поезд',ar:'قطار',zh:'火车',ja:'電車',ko:'기차',tr:'Tren',hi:'ट्रेन',nl:'Trein',sv:'Tåg'},{en:'Plane',he:'מטוס',e:'✈️',es:'Avión',fr:'Avion',de:'Flugzeug',it:'Aereo',pt:'Avião',ru:'Самолёт',ar:'طائرة',zh:'飞机',ja:'飛行機',ko:'비행기',tr:'Uçak',hi:'हवाई जहाज',nl:'Vliegtuig',sv:'Flygplan'},{en:'Bicycle',he:'אופניים',e:'🚲',es:'Bicicleta',fr:'Vélo',de:'Fahrrad',it:'Bicicletta',pt:'Bicicleta',ru:'Велосипед',ar:'دراجة',zh:'自行车',ja:'自転車',ko:'자전거',tr:'Bisiklet',hi:'साइकिल',nl:'Fiets',sv:'Cykel'},{en:'Boat',he:'סירה',e:'⛵',es:'Barco',fr:'Bateau',de:'Boot',it:'Barca',pt:'Barco',ru:'Лодка',ar:'قارب',zh:'船',ja:'船',ko:'배',tr:'Tekne',hi:'नाव',nl:'Boot',sv:'Båt'},{en:'Truck',he:'משאית',e:'🚚',es:'Camión',fr:'Camion',de:'LKW',it:'Camion',pt:'Caminhão',ru:'Грузовик',ar:'شاحنة',zh:'卡车',ja:'トラック',ko:'트럭',tr:'Kamyon',hi:'ट्रक',nl:'Vrachtwagen',sv:'Lastbil'},{en:'Motorcycle',he:'אופנוע',e:'🏍',es:'Moto',fr:'Moto',de:'Motorrad',it:'Moto',pt:'Moto',ru:'Мотоцикл',ar:'دراجة نارية',zh:'摩托车',ja:'バイク',ko:'오토바이',tr:'Motosiklet',hi:'मोटरसाइकिल',nl:'Motor',sv:'Motorcykel'}
+  ]},
+  {name:'זמן',icon:'⏰',color:'rgba(16,185,129,.2)',words:[
+    {en:'Morning',he:'בוקר',e:'🌅',es:'Mañana',fr:'Matin',de:'Morgen',it:'Mattina',pt:'Manhã',ru:'Утро',ar:'صباح',zh:'早上',ja:'朝',ko:'아침',tr:'Sabah',hi:'सुबह',nl:'Ochtend',sv:'Morgon'},{en:'Night',he:'לילה',e:'🌙',es:'Noche',fr:'Nuit',de:'Nacht',it:'Notte',pt:'Noite',ru:'Ночь',ar:'ليل',zh:'晚上',ja:'夜',ko:'밤',tr:'Gece',hi:'रात',nl:'Nacht',sv:'Natt'},{en:'Today',he:'היום',e:'📅',es:'Hoy',fr:"Aujourd'hui",de:'Heute',it:'Oggi',pt:'Hoje',ru:'Сегодня',ar:'اليوم',zh:'今天',ja:'今日',ko:'오늘',tr:'Bugün',hi:'आज',nl:'Vandaag',sv:'Idag'},{en:'Tomorrow',he:'מחר',e:'⏭️',es:'Mañana',fr:'Demain',de:'Morgen',it:'Domani',pt:'Amanhã',ru:'Завтра',ar:'غداً',zh:'明天',ja:'明日',ko:'내일',tr:'Yarın',hi:'कल',nl:'Morgen',sv:'Imorgon'},{en:'Yesterday',he:'אתמול',e:'⏮️',es:'Ayer',fr:'Hier',de:'Gestern',it:'Ieri',pt:'Ontem',ru:'Вчера',ar:'أمس',zh:'昨天',ja:'昨日',ko:'어제',tr:'Dün',hi:'कल',nl:'Gisteren',sv:'Igår'},{en:'Week',he:'שבוע',e:'📆',es:'Semana',fr:'Semaine',de:'Woche',it:'Settimana',pt:'Semana',ru:'Неделя',ar:'أسبوع',zh:'周',ja:'週',ko:'주',tr:'Hafta',hi:'हफ्ता',nl:'Week',sv:'Vecka'},{en:'Month',he:'חודש',e:'🗓',es:'Mes',fr:'Mois',de:'Monat',it:'Mese',pt:'Mês',ru:'Месяц',ar:'شهر',zh:'月',ja:'月',ko:'월',tr:'Ay',hi:'महीना',nl:'Maand',sv:'Månad'},{en:'Year',he:'שנה',e:'🎆',es:'Año',fr:'Année',de:'Jahr',it:'Anno',pt:'Ano',ru:'Год',ar:'سنة',zh:'年',ja:'年',ko:'년',tr:'Yıl',hi:'साल',nl:'Jaar',sv:'År'}
+  ]},
+  {name:'מזג אוויר',icon:'☀️',color:'rgba(245,158,11,.22)',words:[
+    {en:'Hot',he:'חם',e:'🥵',es:'Caliente',fr:'Chaud',de:'Heiß',it:'Caldo',pt:'Quente',ru:'Жарко',ar:'حار',zh:'热',ja:'暑い',ko:'더운',tr:'Sıcak',hi:'गरम',nl:'Heet',sv:'Het'},{en:'Cold',he:'קר',e:'🥶',es:'Frío',fr:'Froid',de:'Kalt',it:'Freddo',pt:'Frio',ru:'Холодно',ar:'بارد',zh:'冷',ja:'寒い',ko:'추운',tr:'Soğuk',hi:'ठंडा',nl:'Koud',sv:'Kall'},{en:'Rain',he:'גשם',e:'🌧',es:'Lluvia',fr:'Pluie',de:'Regen',it:'Pioggia',pt:'Chuva',ru:'Дождь',ar:'مطر',zh:'雨',ja:'雨',ko:'비',tr:'Yağmur',hi:'बारिश',nl:'Regen',sv:'Regn'},{en:'Snow',he:'שלג',e:'❄️',es:'Nieve',fr:'Neige',de:'Schnee',it:'Neve',pt:'Neve',ru:'Снег',ar:'ثلج',zh:'雪',ja:'雪',ko:'눈',tr:'Kar',hi:'बर्फ',nl:'Sneeuw',sv:'Snö'},{en:'Wind',he:'רוח',e:'💨',es:'Viento',fr:'Vent',de:'Wind',it:'Vento',pt:'Vento',ru:'Ветер',ar:'رياح',zh:'风',ja:'風',ko:'바람',tr:'Rüzgar',hi:'हवा',nl:'Wind',sv:'Vind'},{en:'Storm',he:'סופה',e:'⛈',es:'Tormenta',fr:'Tempête',de:'Sturm',it:'Tempesta',pt:'Tempestade',ru:'Буря',ar:'عاصفة',zh:'暴风',ja:'嵐',ko:'폭풍',tr:'Fırtına',hi:'तूफान',nl:'Storm',sv:'Storm'},{en:'Sunny',he:'שמשי',e:'☀️',es:'Soleado',fr:'Ensoleillé',de:'Sonnig',it:'Soleggiato',pt:'Ensolarado',ru:'Солнечно',ar:'مشمس',zh:'晴天',ja:'晴れ',ko:'맑은',tr:'Güneşli',hi:'धूप',nl:'Zonnig',sv:'Solig'},{en:'Cloudy',he:'מעונן',e:'☁️',es:'Nublado',fr:'Nuageux',de:'Bewölkt',it:'Nuvoloso',pt:'Nublado',ru:'Облачно',ar:'غائم',zh:'阴天',ja:'曇り',ko:'흐린',tr:'Bulutlu',hi:'बादल',nl:'Bewolkt',sv:'Molnig'}
+  ]},
+  {name:'מקצועות',icon:'👷',color:'rgba(124,58,237,.2)',words:[
+    {en:'Doctor',he:'רופא',e:'👨‍⚕️',es:'Médico',fr:'Médecin',de:'Arzt',it:'Dottore',pt:'Médico',ru:'Врач',ar:'طبيب',zh:'医生',ja:'医者',ko:'의사',tr:'Doktor',hi:'डॉक्टर',nl:'Dokter',sv:'Läkare'},{en:'Teacher',he:'מורה',e:'👩‍🏫',es:'Maestro',fr:'Professeur',de:'Lehrer',it:'Insegnante',pt:'Professor',ru:'Учитель',ar:'معلم',zh:'老师',ja:'先生',ko:'선생님',tr:'Öğretmen',hi:'शिक्षक',nl:'Leraar',sv:'Lärare'},{en:'Police',he:'שוטר',e:'👮',es:'Policía',fr:'Police',de:'Polizist',it:'Poliziotto',pt:'Policial',ru:'Полицейский',ar:'شرطي',zh:'警察',ja:'警察官',ko:'경찰',tr:'Polis',hi:'पुलिस',nl:'Politieagent',sv:'Polis'},{en:'Chef',he:'שף',e:'👨‍🍳',es:'Chef',fr:'Chef',de:'Koch',it:'Chef',pt:'Chef',ru:'Повар',ar:'طاهٍ',zh:'厨师',ja:'シェフ',ko:'요리사',tr:'Aşçı',hi:'शेफ',nl:'Kok',sv:'Kock'},{en:'Engineer',he:'מהנדס',e:'👷',es:'Ingeniero',fr:'Ingénieur',de:'Ingenieur',it:'Ingegnere',pt:'Engenheiro',ru:'Инженер',ar:'مهندس',zh:'工程师',ja:'エンジニア',ko:'엔지니어',tr:'Mühendis',hi:'इंजीनियर',nl:'Ingenieur',sv:'Ingenjör'},{en:'Pilot',he:'טייס',e:'✈️',es:'Piloto',fr:'Pilote',de:'Pilot',it:'Pilota',pt:'Piloto',ru:'Пилот',ar:'طيار',zh:'飞行员',ja:'パイロット',ko:'파일럿',tr:'Pilot',hi:'पायलट',nl:'Piloot',sv:'Pilot'},{en:'Singer',he:'זמר',e:'🎤',es:'Cantante',fr:'Chanteur',de:'Sänger',it:'Cantante',pt:'Cantor',ru:'Певец',ar:'مغني',zh:'歌手',ja:'歌手',ko:'가수',tr:'Şarkıcı',hi:'गायक',nl:'Zanger',sv:'Sångare'},{en:'Farmer',he:'חקלאי',e:'👨‍🌾',es:'Granjero',fr:'Fermier',de:'Bauer',it:'Contadino',pt:'Fazendeiro',ru:'Фермер',ar:'مزارع',zh:'农民',ja:'農家',ko:'농부',tr:'Çiftçi',hi:'किसान',nl:'Boer',sv:'Bonde'}
+  ]},
+  {name:'פעולות',icon:'🏃',color:'rgba(236,72,153,.18)',words:[
+    {en:'Run',he:'לרוץ',e:'🏃',es:'Correr',fr:'Courir',de:'Laufen',it:'Correre',pt:'Correr',ru:'Бежать',ar:'يركض',zh:'跑',ja:'走る',ko:'달리다',tr:'Koşmak',hi:'दौड़ना',nl:'Rennen',sv:'Springa'},{en:'Jump',he:'לקפוץ',e:'🤸',es:'Saltar',fr:'Sauter',de:'Springen',it:'Saltare',pt:'Pular',ru:'Прыгать',ar:'يقفز',zh:'跳',ja:'跳ぶ',ko:'점프하다',tr:'Zıplamak',hi:'कूदना',nl:'Springen',sv:'Hoppa'},{en:'Eat',he:'לאכול',e:'🍽️',es:'Comer',fr:'Manger',de:'Essen',it:'Mangiare',pt:'Comer',ru:'Есть',ar:'يأكل',zh:'吃',ja:'食べる',ko:'먹다',tr:'Yemek',hi:'खाना',nl:'Eten',sv:'Äta'},{en:'Sleep',he:'לישון',e:'😴',es:'Dormir',fr:'Dormir',de:'Schlafen',it:'Dormire',pt:'Dormir',ru:'Спать',ar:'ينام',zh:'睡觉',ja:'寝る',ko:'자다',tr:'Uyumak',hi:'सोना',nl:'Slapen',sv:'Sova'},{en:'Read',he:'לקרוא',e:'📖',es:'Leer',fr:'Lire',de:'Lesen',it:'Leggere',pt:'Ler',ru:'Читать',ar:'يقرأ',zh:'读',ja:'読む',ko:'읽다',tr:'Okumak',hi:'पढ़ना',nl:'Lezen',sv:'Läsa'},{en:'Write',he:'לכתוב',e:'✍️',es:'Escribir',fr:'Écrire',de:'Schreiben',it:'Scrivere',pt:'Escrever',ru:'Писать',ar:'يكتب',zh:'写',ja:'書く',ko:'쓰다',tr:'Yazmak',hi:'लिखना',nl:'Schrijven',sv:'Skriva'},{en:'Play',he:'לשחק',e:'🎮',es:'Jugar',fr:'Jouer',de:'Spielen',it:'Giocare',pt:'Brincar',ru:'Играть',ar:'يلعب',zh:'玩',ja:'遊ぶ',ko:'놀다',tr:'Oynamak',hi:'खेलना',nl:'Spelen',sv:'Leka'},{en:'Swim',he:'לשחות',e:'🏊',es:'Nadar',fr:'Nager',de:'Schwimmen',it:'Nuotare',pt:'Nadar',ru:'Плавать',ar:'يسبح',zh:'游泳',ja:'泳ぐ',ko:'수영하다',tr:'Yüzmek',hi:'तैरना',nl:'Zwemmen',sv:'Simma'}
+  ]},
+  {name:'רגשות',icon:'😊',color:'rgba(251,191,36,.2)',words:[
+    {en:'Happy',he:'שמח',e:'😊',es:'Feliz',fr:'Heureux',de:'Glücklich',it:'Felice',pt:'Feliz',ru:'Счастливый',ar:'سعيد',zh:'开心',ja:'嬉しい',ko:'행복한',tr:'Mutlu',hi:'खुश',nl:'Blij',sv:'Glad'},{en:'Sad',he:'עצוב',e:'😢',es:'Triste',fr:'Triste',de:'Traurig',it:'Triste',pt:'Triste',ru:'Грустный',ar:'حزين',zh:'伤心',ja:'悲しい',ko:'슬픈',tr:'Üzgün',hi:'दुखी',nl:'Verdrietig',sv:'Ledsen'},{en:'Angry',he:'כועס',e:'😠',es:'Enojado',fr:'En colère',de:'Wütend',it:'Arrabbiato',pt:'Bravo',ru:'Злой',ar:'غاضب',zh:'生气',ja:'怒っている',ko:'화난',tr:'Kızgın',hi:'गुस्से में',nl:'Boos',sv:'Arg'},{en:'Scared',he:'מפחד',e:'😨',es:'Asustado',fr:'Effrayé',de:'Ängstlich',it:'Spaventato',pt:'Assustado',ru:'Испуганный',ar:'خائف',zh:'害怕',ja:'怖い',ko:'무서운',tr:'Korkmuş',hi:'डरा हुआ',nl:'Bang',sv:'Rädd'},{en:'Surprised',he:'מופתע',e:'😮',es:'Sorprendido',fr:'Surpris',de:'Überrascht',it:'Sorpreso',pt:'Surpreso',ru:'Удивлённый',ar:'مندهش',zh:'惊讶',ja:'驚いた',ko:'놀란',tr:'Şaşırmış',hi:'हैरान',nl:'Verrast',sv:'Förvånad'},{en:'Tired',he:'עייף',e:'😴',es:'Cansado',fr:'Fatigué',de:'Müde',it:'Stanco',pt:'Cansado',ru:'Усталый',ar:'متعب',zh:'累',ja:'疲れた',ko:'피곤한',tr:'Yorgun',hi:'थका हुआ',nl:'Moe',sv:'Trött'},{en:'Excited',he:'נרגש',e:'🤩',es:'Emocionado',fr:'Excité',de:'Aufgeregt',it:'Eccitato',pt:'Animado',ru:'Взволнованный',ar:'متحمس',zh:'兴奋',ja:'興奮',ko:'신난',tr:'Heyecanlı',hi:'उत्साहित',nl:'Opgewonden',sv:'Upprymd'},{en:'Bored',he:'משועמם',e:'😑',es:'Aburrido',fr:'Ennuyé',de:'Gelangweilt',it:'Annoiato',pt:'Entediado',ru:'Скучающий',ar:'ممل',zh:'无聊',ja:'退屈',ko:'지루한',tr:'Sıkılmış',hi:'बोर',nl:'Verveeld',sv:'Uttråkad'}
+  ]},
+  {name:'פירות וירקות',icon:'🍎',color:'rgba(16,185,129,.22)',words:[
+    {en:'Apple',he:'תפוח',e:'🍎',es:'Manzana',fr:'Pomme',de:'Apfel',it:'Mela',pt:'Maçã',ru:'Яблоко',ar:'تفاحة',zh:'苹果',ja:'りんご',ko:'사과',tr:'Elma',hi:'सेब',nl:'Appel',sv:'Äpple'},{en:'Banana',he:'בננה',e:'🍌',es:'Plátano',fr:'Banane',de:'Banane',it:'Banana',pt:'Banana',ru:'Банан',ar:'موزة',zh:'香蕉',ja:'バナナ',ko:'바나나',tr:'Muz',hi:'केला',nl:'Banaan',sv:'Banan'},{en:'Orange',he:'תפוז',e:'🍊',es:'Naranja',fr:'Orange',de:'Orange',it:'Arancia',pt:'Laranja',ru:'Апельсин',ar:'برتقالة',zh:'橙子',ja:'オレンジ',ko:'오렌지',tr:'Portakal',hi:'संतरा',nl:'Sinaasappel',sv:'Apelsin'},{en:'Tomato',he:'עגבניה',e:'🍅',es:'Tomate',fr:'Tomate',de:'Tomate',it:'Pomodoro',pt:'Tomate',ru:'Помидор',ar:'طماطم',zh:'番茄',ja:'トマト',ko:'토마토',tr:'Domates',hi:'टमाटर',nl:'Tomaat',sv:'Tomat'},{en:'Carrot',he:'גזר',e:'🥕',es:'Zanahoria',fr:'Carotte',de:'Karotte',it:'Carota',pt:'Cenoura',ru:'Морковь',ar:'جزرة',zh:'胡萝卜',ja:'にんじん',ko:'당근',tr:'Havuç',hi:'गाजर',nl:'Wortel',sv:'Morot'},{en:'Watermelon',he:'אבטיח',e:'🍉',es:'Sandía',fr:'Pastèque',de:'Wassermelone',it:'Anguria',pt:'Melancia',ru:'Арбуз',ar:'بطيخ',zh:'西瓜',ja:'スイカ',ko:'수박',tr:'Karpuz',hi:'तरबूज',nl:'Watermeloen',sv:'Vattenmelon'},{en:'Grape',he:'ענב',e:'🍇',es:'Uva',fr:'Raisin',de:'Traube',it:'Uva',pt:'Uva',ru:'Виноград',ar:'عنب',zh:'葡萄',ja:'ぶどう',ko:'포도',tr:'Üzüm',hi:'अंगूर',nl:'Druif',sv:'Druva'},{en:'Strawberry',he:'תות',e:'🍓',es:'Fresa',fr:'Fraise',de:'Erdbeere',it:'Fragola',pt:'Morango',ru:'Клубника',ar:'فراولة',zh:'草莓',ja:'いちご',ko:'딸기',tr:'Çilek',hi:'स्ट्रॉबेरी',nl:'Aardbei',sv:'Jordgubbe'}
+  ]},
+  {name:'מספרים',icon:'🔢',color:'rgba(99,102,241,.22)',words:[
+    {en:'One',he:'אחד',e:'1️⃣',es:'Uno',fr:'Un',de:'Eins',it:'Uno',pt:'Um',ru:'Один',ar:'واحد',zh:'一',ja:'一',ko:'일',tr:'Bir',hi:'एक',nl:'Één',sv:'Ett'},{en:'Two',he:'שניים',e:'2️⃣',es:'Dos',fr:'Deux',de:'Zwei',it:'Due',pt:'Dois',ru:'Два',ar:'اثنان',zh:'二',ja:'二',ko:'이',tr:'İki',hi:'दो',nl:'Twee',sv:'Två'},{en:'Three',he:'שלושה',e:'3️⃣',es:'Tres',fr:'Trois',de:'Drei',it:'Tre',pt:'Três',ru:'Три',ar:'ثلاثة',zh:'三',ja:'三',ko:'삼',tr:'Üç',hi:'तीन',nl:'Drie',sv:'Tre'},{en:'Four',he:'ארבעה',e:'4️⃣',es:'Cuatro',fr:'Quatre',de:'Vier',it:'Quattro',pt:'Quatro',ru:'Четыре',ar:'أربعة',zh:'四',ja:'四',ko:'사',tr:'Dört',hi:'चार',nl:'Vier',sv:'Fyra'},{en:'Five',he:'חמישה',e:'5️⃣',es:'Cinco',fr:'Cinq',de:'Fünf',it:'Cinque',pt:'Cinco',ru:'Пять',ar:'خمسة',zh:'五',ja:'五',ko:'오',tr:'Beş',hi:'पाँच',nl:'Vijf',sv:'Fem'},{en:'Ten',he:'עשרה',e:'🔟',es:'Diez',fr:'Dix',de:'Zehn',it:'Dieci',pt:'Dez',ru:'Десять',ar:'عشرة',zh:'十',ja:'十',ko:'십',tr:'On',hi:'दस',nl:'Tien',sv:'Tio'},{en:'Hundred',he:'מאה',e:'💯',es:'Cien',fr:'Cent',de:'Hundert',it:'Cento',pt:'Cem',ru:'Сто',ar:'مئة',zh:'百',ja:'百',ko:'백',tr:'Yüz',hi:'सौ',nl:'Honderd',sv:'Hundra'},{en:'Zero',he:'אפס',e:'0️⃣',es:'Cero',fr:'Zéro',de:'Null',it:'Zero',pt:'Zero',ru:'Ноль',ar:'صفر',zh:'零',ja:'ゼロ',ko:'영',tr:'Sıfır',hi:'शून्य',nl:'Nul',sv:'Noll'}
+  ]},
+  {name:'מוסיקה',icon:'🎵',color:'rgba(236,72,153,.22)',words:[
+    {en:'Song',he:'שיר',e:'🎵',es:'Canción',fr:'Chanson',de:'Lied',it:'Canzone',pt:'Canção',ru:'Песня',ar:'أغنية',zh:'歌曲',ja:'歌',ko:'노래',tr:'Şarkı',hi:'गाना',nl:'Lied',sv:'Låt'},{en:'Guitar',he:'גיטרה',e:'🎸',es:'Guitarra',fr:'Guitare',de:'Gitarre',it:'Chitarra',pt:'Violão',ru:'Гитара',ar:'جيتار',zh:'吉他',ja:'ギター',ko:'기타',tr:'Gitar',hi:'गिटार',nl:'Gitaar',sv:'Gitarr'},{en:'Piano',he:'פסנתר',e:'🎹',es:'Piano',fr:'Piano',de:'Klavier',it:'Pianoforte',pt:'Piano',ru:'Пианино',ar:'بيانو',zh:'钢琴',ja:'ピアノ',ko:'피아노',tr:'Piyano',hi:'पियानो',nl:'Piano',sv:'Piano'},{en:'Drums',he:'תופים',e:'🥁',es:'Batería',fr:'Batterie',de:'Schlagzeug',it:'Batteria',pt:'Bateria',ru:'Барабаны',ar:'طبول',zh:'鼓',ja:'ドラム',ko:'드럼',tr:'Davul',hi:'ड्रम',nl:'Drums',sv:'Trummor'},{en:'Voice',he:'קול',e:'🎤',es:'Voz',fr:'Voix',de:'Stimme',it:'Voce',pt:'Voz',ru:'Голос',ar:'صوت',zh:'声音',ja:'声',ko:'목소리',tr:'Ses',hi:'आवाज',nl:'Stem',sv:'Röst'},{en:'Dance',he:'ריקוד',e:'💃',es:'Baile',fr:'Danse',de:'Tanz',it:'Danza',pt:'Dança',ru:'Танец',ar:'رقص',zh:'舞蹈',ja:'ダンス',ko:'춤',tr:'Dans',hi:'नृत्य',nl:'Dans',sv:'Dans'},{en:'Concert',he:'קונצרט',e:'🎼',es:'Concierto',fr:'Concert',de:'Konzert',it:'Concerto',pt:'Concerto',ru:'Концерт',ar:'حفلة',zh:'音乐会',ja:'コンサート',ko:'콘서트',tr:'Konser',hi:'संगीत कार्यक्रम',nl:'Concert',sv:'Konsert'},{en:'Music',he:'מוסיקה',e:'🎶',es:'Música',fr:'Musique',de:'Musik',it:'Musica',pt:'Música',ru:'Музыка',ar:'موسيقى',zh:'音乐',ja:'音楽',ko:'음악',tr:'Müzik',hi:'संगीत',nl:'Muziek',sv:'Musik'}
+  ]},
+  {name:'טכנולוגיה',icon:'💻',color:'rgba(59,130,246,.2)',words:[
+    {en:'Computer',he:'מחשב',e:'💻',es:'Computadora',fr:'Ordinateur',de:'Computer',it:'Computer',pt:'Computador',ru:'Компьютер',ar:'كمبيوتر',zh:'电脑',ja:'コンピューター',ko:'컴퓨터',tr:'Bilgisayar',hi:'कंप्यूटर',nl:'Computer',sv:'Dator'},{en:'Phone',he:'טלפון',e:'📱',es:'Teléfono',fr:'Téléphone',de:'Telefon',it:'Telefono',pt:'Telefone',ru:'Телефон',ar:'هاتف',zh:'手机',ja:'電話',ko:'전화',tr:'Telefon',hi:'फ़ोन',nl:'Telefoon',sv:'Telefon'},{en:'Internet',he:'אינטרנט',e:'🌐',es:'Internet',fr:'Internet',de:'Internet',it:'Internet',pt:'Internet',ru:'Интернет',ar:'إنترنت',zh:'网络',ja:'インターネット',ko:'인터넷',tr:'Internet',hi:'इंटरनेट',nl:'Internet',sv:'Internet'},{en:'Game',he:'משחק',e:'🎮',es:'Juego',fr:'Jeu',de:'Spiel',it:'Gioco',pt:'Jogo',ru:'Игра',ar:'لعبة',zh:'游戏',ja:'ゲーム',ko:'게임',tr:'Oyun',hi:'गेम',nl:'Spel',sv:'Spel'},{en:'Camera',he:'מצלמה',e:'📷',es:'Cámara',fr:'Caméra',de:'Kamera',it:'Fotocamera',pt:'Câmera',ru:'Камера',ar:'كاميرا',zh:'相机',ja:'カメラ',ko:'카메라',tr:'Kamera',hi:'कैमरा',nl:'Camera',sv:'Kamera'},{en:'Robot',he:'רובוט',e:'🤖',es:'Robot',fr:'Robot',de:'Roboter',it:'Robot',pt:'Robô',ru:'Робот',ar:'روبوت',zh:'机器人',ja:'ロボット',ko:'로봇',tr:'Robot',hi:'रोबोट',nl:'Robot',sv:'Robot'},{en:'Screen',he:'מסך',e:'🖥️',es:'Pantalla',fr:'Écran',de:'Bildschirm',it:'Schermo',pt:'Tela',ru:'Экран',ar:'شاشة',zh:'屏幕',ja:'画面',ko:'화면',tr:'Ekran',hi:'स्क्रीन',nl:'Scherm',sv:'Skärm'},{en:'Password',he:'סיסמה',e:'🔑',es:'Contraseña',fr:'Mot de passe',de:'Passwort',it:'Password',pt:'Senha',ru:'Пароль',ar:'كلمة مرور',zh:'密码',ja:'パスワード',ko:'비밀번호',tr:'Şifre',hi:'पासवर्ड',nl:'Wachtwoord',sv:'Lösenord'}
+  ]},
+  {name:'בריאות',icon:'💊',color:'rgba(239,68,68,.2)',words:[
+    {en:'Hospital',he:'בית חולים',e:'🏥',es:'Hospital',fr:'Hôpital',de:'Krankenhaus',it:'Ospedale',pt:'Hospital',ru:'Больница',ar:'مستشفى',zh:'医院',ja:'病院',ko:'병원',tr:'Hastane',hi:'अस्पताल',nl:'Ziekenhuis',sv:'Sjukhus'},{en:'Medicine',he:'תרופה',e:'💊',es:'Medicina',fr:'Médicament',de:'Medikament',it:'Medicina',pt:'Remédio',ru:'Лекарство',ar:'دواء',zh:'药',ja:'薬',ko:'약',tr:'İlaç',hi:'दवाई',nl:'Medicijn',sv:'Medicin'},{en:'Healthy',he:'בריא',e:'💪',es:'Saludable',fr:'En bonne santé',de:'Gesund',it:'Sano',pt:'Saudável',ru:'Здоровый',ar:'صحي',zh:'健康',ja:'健康',ko:'건강한',tr:'Sağlıklı',hi:'स्वस्थ',nl:'Gezond',sv:'Frisk'},{en:'Sleep',he:'שינה',e:'😴',es:'Dormir',fr:'Dormir',de:'Schlafen',it:'Dormire',pt:'Dormir',ru:'Сон',ar:'نوم',zh:'睡觉',ja:'睡眠',ko:'수면',tr:'Uyku',hi:'नींद',nl:'Slaap',sv:'Sömn'},{en:'Exercise',he:'פעילות גופנית',e:'🏋️',es:'Ejercicio',fr:'Exercice',de:'Sport',it:'Esercizio',pt:'Exercício',ru:'Упражнение',ar:'تمرين',zh:'运动',ja:'運動',ko:'운동',tr:'Egzersiz',hi:'व्यायाम',nl:'Oefening',sv:'Träning'},{en:'Water',he:'מים',e:'💧',es:'Agua',fr:'Eau',de:'Wasser',it:'Acqua',pt:'Água',ru:'Вода',ar:'ماء',zh:'水',ja:'水',ko:'물',tr:'Su',hi:'पानी',nl:'Water',sv:'Vatten'},{en:'Vitamins',he:'ויטמינים',e:'🍊',es:'Vitaminas',fr:'Vitamines',de:'Vitamine',it:'Vitamine',pt:'Vitaminas',ru:'Витамины',ar:'فيتامينات',zh:'维生素',ja:'ビタミン',ko:'비타민',tr:'Vitaminler',hi:'विटामिन',nl:'Vitaminen',sv:'Vitaminer'},{en:'Sick',he:'חולה',e:'🤒',es:'Enfermo',fr:'Malade',de:'Krank',it:'Malato',pt:'Doente',ru:'Больной',ar:'مريض',zh:'病',ja:'病気',ko:'아픈',tr:'Hasta',hi:'बीमार',nl:'Ziek',sv:'Sjuk'}
+  ]},
+  {name:'חגים',icon:'🎉',color:'rgba(251,191,36,.25)',words:[
+    {en:'Birthday',he:'יום הולדת',e:'🎂',es:'Cumpleaños',fr:'Anniversaire',de:'Geburtstag',it:'Compleanno',pt:'Aniversário',ru:'День рождения',ar:'عيد ميلاد',zh:'生日',ja:'誕生日',ko:'생일',tr:'Doğum günü',hi:'जन्मदिन',nl:'Verjaardag',sv:'Födelsedag'},{en:'Holiday',he:'חג',e:'🕍',es:'Vacaciones',fr:'Fête',de:'Feiertag',it:'Vacanza',pt:'Feriado',ru:'Праздник',ar:'عطلة',zh:'节日',ja:'休日',ko:'휴일',tr:'Tatil',hi:'छुट्टी',nl:'Vakantie',sv:'Helgdag'},{en:'Party',he:'מסיבה',e:'🎉',es:'Fiesta',fr:'Fête',de:'Party',it:'Festa',pt:'Festa',ru:'Вечеринка',ar:'حفلة',zh:'派对',ja:'パーティー',ko:'파티',tr:'Parti',hi:'पार्टी',nl:'Feest',sv:'Fest'},{en:'Gift',he:'מתנה',e:'🎁',es:'Regalo',fr:'Cadeau',de:'Geschenk',it:'Regalo',pt:'Presente',ru:'Подарок',ar:'هدية',zh:'礼物',ja:'プレゼント',ko:'선물',tr:'Hediye',hi:'उपहार',nl:'Cadeau',sv:'Present'},{en:'Balloon',he:'בלון',e:'🎈',es:'Globo',fr:'Ballon',de:'Ballon',it:'Palloncino',pt:'Balão',ru:'Воздушный шар',ar:'بالون',zh:'气球',ja:'風船',ko:'풍선',tr:'Balon',hi:'गुब्बारा',nl:'Ballon',sv:'Ballong'},{en:'Candle',he:'נר',e:'🕯️',es:'Vela',fr:'Bougie',de:'Kerze',it:'Candela',pt:'Vela',ru:'Свеча',ar:'شمعة',zh:'蜡烛',ja:'キャンドル',ko:'양초',tr:'Mum',hi:'मोमबत्ती',nl:'Kaars',sv:'Ljus'},{en:'Fireworks',he:'זיקוקים',e:'🎆',es:'Fuegos artificiales',fr:"Feux d'artifice",de:'Feuerwerk',it:"Fuochi d'artificio",pt:'Fogos de artifício',ru:'Фейерверк',ar:'ألعاب نارية',zh:'烟花',ja:'花火',ko:'불꽃놀이',tr:'Havai fişek',hi:'पटाखे',nl:'Vuurwerk',sv:'Fyrverkeri'},{en:'Celebration',he:'חגיגה',e:'🥳',es:'Celebración',fr:'Célébration',de:'Feier',it:'Celebrazione',pt:'Celebração',ru:'Праздник',ar:'احتفال',zh:'庆典',ja:'お祝い',ko:'축하',tr:'Kutlama',hi:'जश्न',nl:'Viering',sv:'Firande'}
+  ]},
+  {name:'בעלי חיים ים',icon:'🐬',color:'rgba(59,130,246,.25)',words:[
+    {en:'Fish',he:'דג',e:'🐟',es:'Pez',fr:'Poisson',de:'Fisch',it:'Pesce',pt:'Peixe',ru:'Рыба',ar:'سمكة',zh:'鱼',ja:'魚',ko:'물고기',tr:'Balık',hi:'मछली',nl:'Vis',sv:'Fisk'},{en:'Dolphin',he:'דולפין',e:'🐬',es:'Delfín',fr:'Dauphin',de:'Delfin',it:'Delfino',pt:'Golfinho',ru:'Дельфин',ar:'دلفين',zh:'海豚',ja:'イルカ',ko:'돌고래',tr:'Yunus',hi:'डॉल्फिन',nl:'Dolfijn',sv:'Delfin'},{en:'Shark',he:'כריש',e:'🦈',es:'Tiburón',fr:'Requin',de:'Hai',it:'Squalo',pt:'Tubarão',ru:'Акула',ar:'قرش',zh:'鲨鱼',ja:'サメ',ko:'상어',tr:'Köpekbalığı',hi:'शार्क',nl:'Haai',sv:'Haj'},{en:'Whale',he:'לוויתן',e:'🐋',es:'Ballena',fr:'Baleine',de:'Wal',it:'Balena',pt:'Baleia',ru:'Кит',ar:'حوت',zh:'鲸鱼',ja:'クジラ',ko:'고래',tr:'Balina',hi:'व्हेल',nl:'Walvis',sv:'Val'},{en:'Octopus',he:'תמנון',e:'🐙',es:'Pulpo',fr:'Pieuvre',de:'Tintenfisch',it:'Polpo',pt:'Polvo',ru:'Осьминог',ar:'أخطبوط',zh:'章鱼',ja:'タコ',ko:'문어',tr:'Ahtapot',hi:'ऑक्टोपस',nl:'Octopus',sv:'Bläckfisk'},{en:'Crab',he:'סרטן',e:'🦀',es:'Cangrejo',fr:'Crabe',de:'Krabbe',it:'Granchio',pt:'Caranguejo',ru:'Краб',ar:'سرطان بحر',zh:'螃蟹',ja:'カニ',ko:'게',tr:'Yengeç',hi:'केकड़ा',nl:'Krab',sv:'Krabba'},{en:'Turtle',he:'צב',e:'🐢',es:'Tortuga',fr:'Tortue',de:'Schildkröte',it:'Tartaruga',pt:'Tartaruga',ru:'Черепаха',ar:'سلحفاة',zh:'乌龟',ja:'カメ',ko:'거북이',tr:'Kaplumbağa',hi:'कछुआ',nl:'Schildpad',sv:'Sköldpadda'},{en:'Penguin',he:'פינגווין',e:'🐧',es:'Pingüino',fr:'Pingouin',de:'Pinguin',it:'Pinguino',pt:'Pinguim',ru:'Пингвин',ar:'بطريق',zh:'企鹅',ja:'ペンギン',ko:'펭귄',tr:'Penguen',hi:'पेंगुइन',nl:'Pinguïn',sv:'Pingvin'}
   ]}
 ];
 
 /* Generate lesson from topic + index */
 function getLessonData(lessonId){
-  const topicIdx=Math.floor((lessonId-1)/3)%TOPICS.length;
-  const lessonInTopic=(lessonId-1)%3; // 0=vocab, 1=quiz, 2=memory
+  const topicIdx=Math.floor((lessonId-1)/6)%TOPICS.length;
+  const lessonInTopic=(lessonId-1)%6; // 0=vocab,1=quiz,2=memory,3=spelling,4=scramble,5=match
   const topic=TOPICS[topicIdx];
   const words=topic.words;
-  const types=['vocab','quiz','memory'];
+  const types=['vocab','quiz','memory','spelling','scramble','match'];
   const type=types[lessonInTopic];
-  const subMap={vocab:'לחץ על כרטיס לראות תרגום',quiz:'ענה נכון על כל השאלות',memory:'מצא את הזוגות המתאימים!'};
+  const subMap={vocab:'לחץ על כרטיס לראות תרגום',quiz:'ענה נכון על כל השאלות',memory:'מצא את הזוגות המתאימים!',spelling:'כתוב את המילה באנגלית',scramble:'סדר את האותיות לקבלת המילה!',match:'חבר כל מילה אנגלית לתרגום שלה!'};
   if(type==='quiz'){
-    // Generate 4 questions from the words
     const qs=[];
-    for(let i=0;i<Math.min(4,words.length);i++){
+    for(let i=0;i<Math.min(8,words.length);i++){
       const w=words[i];
-      const wrong=words.filter((_,j)=>j!==i).slice(0,3).map(x=>x.he);
+      const wrong=words.filter((_,j)=>j!==i).slice(0,5).map(x=>x.he);
       const opts=[w.he,...wrong].sort(()=>Math.random()-.5);
-      qs.push({q:`איך אומרים "${w.en}" בעברית?`,opts,ans:opts.indexOf(w.he)});
+      qs.push({q:`איך אומרים "${wLang(w)}" בעברית?`,opts,ans:opts.indexOf(w.he)});
     }
     return{icon:topic.icon,sub:subMap[type],type,questions:qs,topic:topic.name};
   }
-  return{icon:topic.icon,sub:subMap[type],type,words:words.slice(0,6),topic:topic.name};
+  return{icon:topic.icon,sub:subMap[type],type,words:words.slice(0,8),topic:topic.name};
 }
 
 /* Generate COURSES dynamically — infinite units */
 function buildInfiniteCourses(){
-  const totalUnits=60;
+  const totalUnits=9999;
   const units=[];
   for(let u=0;u<totalUnits;u++){
     const topic=TOPICS[u%TOPICS.length];
-    const startLesson=u*3+1;
+    const startLesson=u*6+1;
     const lessons=[];
-    for(let l=0;l<3;l++){
+    for(let l=0;l<6;l++){
       const lid=startLesson+l;
-      const typeNames=['📖 מילות אוצר','❓ חידון','🧠 משחק זיכרון'];
-      lessons.push({id:lid,title:topic.name+' — '+typeNames[l],type:['vocab','quiz','memory'][l],status:lid===1?'done':lid===2?'done':lid===3?'available':'locked',coins:50+Math.floor(lid/3)*25});
+      const typeNames=['📖 מילות אוצר','❓ חידון','🧠 משחק זיכרון','✍️ כתיב','🔀 אות באות','🎯 התאמה'];
+      const typeList=['vocab','quiz','memory','spelling','scramble','match'];
+      const isVocab=l===0;
+      lessons.push({id:lid,title:topic.name+' — '+typeNames[l],type:typeList[l],status:lid===1?'done':lid===2?'done':lid===3?'available':'locked',coins:isVocab?0:50+Math.floor(lid/6)*25});
     }
     units.push({id:u+1,title:`יחידה ${u+1}: ${topic.name}`,icon:topic.icon,color:topic.color,lessons});
   }
@@ -1484,8 +1703,14 @@ let outfit={hat:'hn',shirt:'sp',pants:'pn',shoes:'shd',hair:'hrp',acc:'an'};
 let gender='boy';
 let activeTab='hat';
 let curLesson=null;
-let qState={idx:0};
+let qState={idx:0,correct:0,wrong:0};
 let lState={};
+let curLang=localStorage.getItem('curLang')||'en';
+function wLang(w){return w[curLang]||w.en;}
+function langTTS(){
+  const map={en:'en-US',es:'es-ES',fr:'fr-FR',de:'de-DE',it:'it-IT',pt:'pt-BR',ru:'ru-RU',ar:'ar-SA',zh:'zh-CN',ja:'ja-JP',ko:'ko-KR',tr:'tr-TR',hi:'hi-IN',nl:'nl-NL',sv:'sv-SE'};
+  return map[curLang]||'en-US';
+}
 
 /* ── TAB SWITCH ── */
 function switchTab(t){
@@ -1512,21 +1737,32 @@ async function doRegister(){
   if(p.length<4){err.textContent='❌ סיסמה חייבת להיות לפחות 4 תווים';err.style.display='block';return false;}
   if(p!==p2){err.textContent='❌ הסיסמאות לא תואמות';err.style.display='block';return false;}
   err.style.display='none';
-  /* Always register locally — no DB needed */
-  btn.textContent='⏳ רושם...'; btn.disabled=true;
-  await new Promise(r=>setTimeout(r,800));
-  btn.textContent='🎉 הירשם חינם'; btn.disabled=false;
-  const joined=new Date().toLocaleDateString('he-IL');
-  USERS[u]={pass:p,name:name+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒',admin:false,joined};
-  user={...USERS[u],username:u};
-  saveUsersLocal();
-  saveSession(user);
+  if(GS_URL){
+    btn.textContent='⏳ רושם...'; btn.disabled=true;
+    try{
+      const res=await fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'register',username:u,password:p,name})});
+      const data=await res.json();
+      btn.textContent='🎉 הירשם חינם'; btn.disabled=false;
+      if(!data.success){err.textContent='❌ '+(data.error||'שגיאה');err.style.display='block';return false;}
+      user={...data.user,pass:p,username:u,xp:0,maxXp:200};
+      /* Mirror to local */
+      USERS[u]={pass:p,name:user.name,level:user.level||1,coins:user.coins||0,xp:0,maxXp:200,av:'🧒',admin:!!user.admin};
+    }catch(e){
+      btn.textContent='🎉 הירשם חינם'; btn.disabled=false;
+      if(USERS[u]){err.textContent='❌ שם המשתמש תפוס, בחר אחר';err.style.display='block';return false;}
+      USERS[u]={pass:p,name:name+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒'};
+      user={...USERS[u],username:u};
+    }
+  } else {
+    if(USERS[u]){err.textContent='❌ שם המשתמש תפוס, בחר אחר';err.style.display='block';return false;}
+    const joined=new Date().toLocaleDateString('he-IL');
+    USERS[u]={pass:p,name:name+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒',admin:false,joined};
+    user={...USERS[u],username:u};
+    saveUsersLocal();
+    saveSession(user);
+  }
   document.getElementById('rsuccess').style.display='block';
-  setTimeout(()=>{
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('app').style.display='block';
-    initApp();
-  },1200);
+  setTimeout(()=>{ showLangModal(); },1200);
   return false;
 }
 
@@ -1536,24 +1772,45 @@ async function doLogin(){
   const p=document.getElementById('ip').value.trim();
   const err=document.getElementById('lerr');
   const btn=document.querySelector('#form-login .lbtn');
-  if(!u||!p){err.textContent='❌ נא למלא שם משתמש וסיסמה';err.style.display='block';return false;}
-  btn.textContent='⏳ מתחבר...'; btn.disabled=true;
-  await new Promise(r=>setTimeout(r,800));
-  btn.textContent='🚀 כניסה'; btn.disabled=false;
-  /* If user exists locally, check password */
-  if(USERS[u]&&USERS[u].pass!==p){err.textContent='❌ סיסמה שגויה';err.style.display='block';return false;}
-  /* If user doesn't exist, create on the fly */
-  if(!USERS[u]){
-    const joined=new Date().toLocaleDateString('he-IL');
-    USERS[u]={pass:p,name:u+' 🌟',level:1,coins:0,xp:0,maxXp:200,av:'🧒',admin:false,joined};
+  if(GS_URL){
+    btn.textContent='⏳ מתחבר...'; btn.disabled=true;
+    try{
+      const res=await fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'login',username:u,password:p})});
+      const data=await res.json();
+      btn.textContent='🚀 כניסה'; btn.disabled=false;
+      if(data.success){
+        user={...data.user,pass:p,username:u};
+        if(!user.maxXp) user.maxXp=Math.max(200,user.level*150);
+        USERS[u]={pass:p,name:user.name,level:user.level,coins:user.coins,xp:user.xp||0,maxXp:user.maxXp,av:'🧒',admin:!!user.admin};
+        err.style.display='none';
+        document.getElementById('login-screen').style.display='none';
+        document.getElementById('app').style.display='block';
+        initApp();
+      } else {
+        err.textContent='❌ '+(data.error||'שם משתמש או סיסמה שגויים');
+        err.style.display='block';
+      }
+    }catch(e){
+      btn.textContent='🚀 כניסה'; btn.disabled=false;
+      /* Fallback to local */
+      if(USERS[u]&&USERS[u].pass===p){
+        user={...USERS[u],username:u};
+        err.style.display='none';
+        document.getElementById('login-screen').style.display='none';
+        document.getElementById('app').style.display='block';
+        initApp();
+      } else { err.style.display='block'; }
+    }
+  } else {
+    if(USERS[u]&&USERS[u].pass===p){
+      user={...USERS[u],username:u};
+      saveSession(user);
+      err.style.display='none';
+      document.getElementById('login-screen').style.display='none';
+      document.getElementById('app').style.display='block';
+      initApp();
+    } else { err.style.display='block'; }
   }
-  user={...USERS[u],username:u};
-  saveUsersLocal();
-  saveSession(user);
-  err.style.display='none';
-  document.getElementById('login-screen').style.display='none';
-  document.getElementById('app').style.display='block';
-  initApp();
   return false;
 }
 function doLogout(){
@@ -1671,6 +1928,18 @@ function initApp(){
   buildCourses();
   buildProfile();
   buildAdminPanel();
+  // Update lang flag in sidebar
+  const meta=LANG_META[curLang]||LANG_META.en;
+  const flagEl=document.getElementById('lang-flag');
+  const nameEl=document.getElementById('lang-name-sb');
+  if(flagEl) flagEl.textContent=meta.flag;
+  if(nameEl) nameEl.textContent=meta.name;
+  // Navigate to courses by default
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-courses').classList.add('active');
+  const coursesBtn=document.querySelector('.ni[onclick*="courses"]');
+  if(coursesBtn) coursesBtn.classList.add('active');
 }
 
 /* ── NAV ── */
@@ -1875,7 +2144,7 @@ function equip(cat,id){
 }
 
 /* ── COURSES ── */
-const TLAB={vocab:'כרטיסיות',quiz:'חידון',match:'התאמה'};
+const TLAB={vocab:'כרטיסיות',quiz:'חידון',match:'התאמה',memory:'זיכרון',spelling:'כתיב'};
 function buildCourses(){
   document.getElementById('ulist').innerHTML=COURSES.map(unit=>{
     const done=unit.lessons.filter(l=>lState[l.id]==='done').length;
@@ -1913,6 +2182,7 @@ function toggleUnit(id){document.getElementById('uc'+id).classList.toggle('open'
 
 /* ── LESSON ── */
 function openLesson(id){
+  qState={idx:0,correct:0,wrong:0};
   const data=getLessonData(id);
   if(!data){toast('שיעור זה יגיע בקרוב! 🚧');return;}
   curLesson=id;
@@ -1922,10 +2192,13 @@ function openLesson(id){
   document.getElementById('msub').textContent=data.sub;
   const cbtn=document.getElementById('cbtn');
   cbtn.classList.remove('show');
-  cbtn.textContent=`✅ סיימתי! +🪙${lObj.coins}`;
+  cbtn.textContent=data.type==='vocab'?`✅ סיימתי! (קריאה בלבד — אין מטבעות)`:`✅ סיימתי! +🪙${lObj.coins}`;
   if(data.type==='vocab') renderVocab(data);
   else if(data.type==='quiz') renderQuiz(data);
   else if(data.type==='memory') renderMemory(data);
+  else if(data.type==='spelling') renderSpelling(data);
+  else if(data.type==='scramble') renderScramble(data);
+  else if(data.type==='match') renderMatch(data);
   document.getElementById('modal').classList.add('open');
 }
 function closeLesson(){
@@ -1941,40 +2214,41 @@ function speakText(text,lang,rate,onEnd){
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(u);
 }
-function speakWord(enText,heText){
-  speakText(enText,'en-US',0.8,()=>{
+function speakLang(wordText){ speakText(wordText,langTTS(),0.8); }
+function speakWord(learnText,heText){
+  speakText(learnText,langTTS(),0.8,()=>{
     setTimeout(()=>speakText(heText,'he-IL',0.85),400);
   });
 }
 function renderVocab(data){
   document.getElementById('mbody').innerHTML=
     `<div class="vocab-grid">${data.words.map((w,i)=>`
-      <div class="flip-card" id="vc${i}" onclick="flipVocabCard(this,'${w.en.replace(/'/g,"\\'")}','${w.he.replace(/'/g,"\\'")}')">
+      <div class="flip-card" id="vc${i}" onclick="flipVocabCard(this,'${wLang(w).replace(/'/g,"\\'")}','${w.he.replace(/'/g,"\\'")}')">
         <div class="flip-inner">
           <div class="flip-f">
             <div class="fe">${w.e}</div>
-            <div class="fw">${w.en}</div>
+            <div class="fw">${wLang(w)}</div>
             <div class="fh">לחץ לתרגום</div>
-            <button class="tts-btn" onclick="event.stopPropagation();speakWord('${w.en.replace(/'/g,"\\'")}','${w.he.replace(/'/g,"\\'")}')">🔊</button>
+            <button class="tts-btn" onclick="event.stopPropagation();speakWord('${wLang(w).replace(/'/g,"\\'")}','${w.he.replace(/'/g,"\\'")}')">🔊</button>
           </div>
           <div class="flip-b">
             <div class="fe">${w.e}</div>
             <div class="fw">${w.he}</div>
-            <div class="fh">${w.en}</div>
-            <button class="tts-btn" onclick="event.stopPropagation();speakWord('${w.en.replace(/'/g,"\\'")}','${w.he.replace(/'/g,"\\'")}')">🔊</button>
+            <div class="fh">${wLang(w)}</div>
+            <button class="tts-btn" onclick="event.stopPropagation();speakWord('${wLang(w).replace(/'/g,"\\'")}','${w.he.replace(/'/g,"\\'")}')">🔊</button>
           </div>
         </div>
       </div>`).join('')}</div>`;
   document.getElementById('cbtn').classList.add('show');
   /* auto-speak first word */
-  if(data.words.length)setTimeout(()=>speakWord(data.words[0].en,data.words[0].he),600);
+  if(data.words.length)setTimeout(()=>speakWord(wLang(data.words[0]),data.words[0].he),600);
 }
-function flipVocabCard(el,enText,heText){
+function flipVocabCard(el,learnText,heText){
   el.classList.toggle('flipped');
-  speakWord(enText,heText);
+  speakWord(learnText,heText);
 }
 function renderQuiz(data){
-  qState={idx:0,data};
+  qState={idx:0,correct:0,wrong:0,data};
   showQ();
 }
 function showQ(){
@@ -1991,8 +2265,8 @@ function showQ(){
 function ansQ(chosen,correct,el){
   document.querySelectorAll('.qopt').forEach(b=>b.disabled=true);
   const fb=document.getElementById('qfb');
-  if(chosen===correct){el.classList.add('correct');fb.textContent='✅ נכון מאוד! 🎉';fb.style.color='#6EE7B7';}
-  else{el.classList.add('wrong');document.querySelectorAll('.qopt')[correct].classList.add('correct');fb.textContent='❌ לא נכון, נסה בפעם הבאה';fb.style.color='#FCA5A5';}
+  if(chosen===correct){el.classList.add('correct');fb.textContent='✅ נכון מאוד! 🎉';fb.style.color='#6EE7B7';qState.correct++;}
+  else{el.classList.add('wrong');document.querySelectorAll('.qopt')[correct].classList.add('correct');fb.textContent='❌ לא נכון, נסה בפעם הבאה';fb.style.color='#FCA5A5';qState.wrong++;}
   qState.idx++;
   setTimeout(()=>{
     if(qState.idx<qState.data.questions.length){showQ();}
@@ -2010,7 +2284,7 @@ function renderMemory(data){
   // Build card array: english + hebrew for each word, shuffled
   const cards=[];
   words.forEach((w,i)=>{
-    cards.push({id:i,side:'en',text:w.en,emoji:w.e});
+    cards.push({id:i,side:'en',text:wLang(w),emoji:w.e});
     cards.push({id:i,side:'he',text:w.he,emoji:w.e});
   });
   // Shuffle
@@ -2054,10 +2328,198 @@ function flipMem(card){
     }
   }
 }
+let spellState={idx:0,words:[],correct:0,wrong:0};
+function renderSpelling(data){
+  const words=data.words.slice(0,6);
+  spellState={idx:0,words,correct:0,wrong:0};
+  showSpell();
+}
+function showSpell(){
+  const {idx,words}=spellState;
+  if(idx>=words.length){
+    const acc=Math.round(spellState.correct/words.length*100);
+    document.getElementById('mbody').innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:3rem">✍️</div><div style="font-size:1.4rem;font-weight:900;margin-top:12px">סיימת! ${acc}% דיוק</div></div>`;
+    qState.correct=spellState.correct; qState.wrong=spellState.wrong;
+    document.getElementById('cbtn').classList.add('show');
+    return;
+  }
+  const w=words[idx];
+  document.getElementById('mbody').innerHTML=`
+    <div class="spell-prog">מילה ${idx+1} מתוך ${words.length}</div>
+    <div class="spell-hint">כתוב באנגלית:</div>
+    <div class="spell-word">${w.e} ${w.he}</div>
+    <input class="spell-input" id="spell-inp" placeholder="Type the English word..." onkeydown="if(event.key==='Enter')checkSpell()"/>
+    <button class="spell-check" onclick="checkSpell()">✅ בדוק</button>
+    <div class="spell-fb" id="spell-fb"></div>`;
+  document.getElementById('spell-inp').focus();
+}
+function checkSpell(){
+  const inp=document.getElementById('spell-inp');
+  const fb=document.getElementById('spell-fb');
+  if(!inp)return;
+  const answer=inp.value.trim().toLowerCase();
+  const correct=wLang(spellState.words[spellState.idx]).toLowerCase();
+  if(answer===correct){
+    inp.classList.add('correct');
+    fb.textContent='✅ נכון מאוד! 🎉';
+    fb.style.color='#6EE7B7';
+    spellState.correct++;
+    speakText(wLang(spellState.words[spellState.idx]),langTTS(),0.8);
+  } else {
+    inp.classList.add('wrong');
+    fb.innerHTML=`❌ לא נכון. התשובה הנכונה: <strong>${wLang(spellState.words[spellState.idx])}</strong>`;
+    fb.style.color='#FCA5A5';
+    spellState.wrong++;
+  }
+  inp.disabled=true;
+  spellState.idx++;
+  setTimeout(showSpell,1500);
+}
+/* ── MATCH GAME ── */
+let matchState={selected:null,matched:0,total:0,correct:0,wrong:0};
+function renderMatch(data){
+  const words=data.words.slice(0,6);
+  matchState={selected:null,matched:0,total:words.length,correct:0,wrong:0};
+  const engShuffled=[...words].sort(()=>Math.random()-.5);
+  const heShuffled=[...words].sort(()=>Math.random()-.5);
+  document.getElementById('mbody').innerHTML=`
+    <div class="match-score" id="match-score">התאם ${words.length} זוגות</div>
+    <div class="match-grid">
+      <div class="match-col">${engShuffled.map(w=>`
+        <div class="match-tile" id="me_${w.en}" data-id="${w.en}" data-side="en" onclick="clickMatch(this)">
+          ${w.e} ${wLang(w)}
+        </div>`).join('')}
+      </div>
+      <div class="match-col">${heShuffled.map(w=>`
+        <div class="match-tile" id="mh_${w.en}" data-id="${w.en}" data-side="he" onclick="clickMatch(this)">
+          ${w.he}
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+function clickMatch(tile){
+  if(tile.classList.contains('matched'))return;
+  const prev=matchState.selected;
+  if(!prev){
+    tile.classList.add('selected');
+    matchState.selected=tile;
+    return;
+  }
+  if(prev===tile){prev.classList.remove('selected');matchState.selected=null;return;}
+  if(prev.dataset.side===tile.dataset.side){
+    prev.classList.remove('selected');
+    tile.classList.add('selected');
+    matchState.selected=tile;
+    return;
+  }
+  // Check match
+  if(prev.dataset.id===tile.dataset.id){
+    prev.classList.remove('selected');prev.classList.add('matched');
+    tile.classList.add('matched');
+    matchState.matched++;matchState.correct++;
+    matchState.selected=null;
+    document.getElementById('match-score').textContent=`✅ ${matchState.matched} / ${matchState.total} זוגות`;
+    if(matchState.matched===matchState.total){
+      qState.correct=matchState.correct;qState.wrong=matchState.wrong;
+      setTimeout(()=>{
+        document.getElementById('mbody').insertAdjacentHTML('beforeend','<div style="text-align:center;padding:20px;font-size:1.3rem;font-weight:900">🎯 כל הכבוד! התאמת הכל! 🎉</div>');
+        document.getElementById('cbtn').classList.add('show');
+      },400);
+    }
+  } else {
+    prev.classList.remove('selected');prev.classList.add('wrong-flash');
+    tile.classList.add('wrong-flash');
+    matchState.wrong++;matchState.selected=null;
+    setTimeout(()=>{prev.classList.remove('wrong-flash');tile.classList.remove('wrong-flash');},700);
+  }
+}
+
+/* ── SCRAMBLE GAME ── */
+let scrState={idx:0,words:[],chosen:[],correct:0,wrong:0};
+function renderScramble(data){
+  scrState={idx:0,words:data.words.slice(0,6),chosen:[],correct:0,wrong:0};
+  showScramble();
+}
+function showScramble(){
+  const {idx,words}=scrState;
+  if(idx>=words.length){
+    const acc=Math.round(scrState.correct/words.length*100);
+    document.getElementById('mbody').innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:3rem">🔀</div><div style="font-size:1.4rem;font-weight:900;margin-top:12px">סיימת! ${acc}% דיוק 🎉</div></div>`;
+    qState.correct=scrState.correct; qState.wrong=scrState.wrong;
+    document.getElementById('cbtn').classList.add('show');
+    return;
+  }
+  const w=words[idx];
+  scrState.chosen=[];
+  const letters=wLang(w).split('').map((l,i)=>({l,i}));
+  // shuffle
+  for(let i=letters.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[letters[i],letters[j]]=[letters[j],letters[i]];}
+  scrState.letters=letters;
+  document.getElementById('mbody').innerHTML=`
+    <div class="scr-prog">מילה ${idx+1} מתוך ${words.length}</div>
+    <div class="scr-hint">${w.e} ${w.he} — כתוב:</div>
+    <div class="scr-word" id="scr-display">${'_'.repeat(wLang(w).length).split('').map((_,i)=>`<span class="scr-slot" id="slot${i}" onclick="removeScr(${i})"> </span>`).join('')}</div>
+    <div class="scr-tiles" id="scr-tiles">${letters.map((obj,ti)=>`<div class="scr-tile" id="stile${ti}" onclick="pickScr(${ti},'${obj.l}')">${obj.l}</div>`).join('')}</div>
+    <div class="scr-fb" id="scr-fb"></div>
+    <div class="scr-actions">
+      <button class="scr-btn clear" onclick="clearScr()">🗑️ נקה</button>
+      <button class="scr-btn check" onclick="checkScr()">✅ בדוק</button>
+    </div>`;
+}
+function pickScr(tileIdx,letter){
+  const w=scrState.words[scrState.idx];
+  const slot=scrState.chosen.length;
+  if(slot>=wLang(w).length)return;
+  scrState.chosen.push({tileIdx,letter});
+  document.getElementById(`slot${slot}`).textContent=letter;
+  document.getElementById(`stile${tileIdx}`).classList.add('used');
+}
+function removeScr(slotIdx){
+  if(slotIdx>=scrState.chosen.length)return;
+  const removed=scrState.chosen.splice(slotIdx,1)[0];
+  document.getElementById(`stile${removed.tileIdx}`).classList.remove('used');
+  // re-render slots
+  const w=scrState.words[scrState.idx];
+  for(let i=0;i<wLang(w).length;i++){
+    const sl=document.getElementById(`slot${i}`);
+    if(sl) sl.textContent=scrState.chosen[i]?scrState.chosen[i].letter:' ';
+  }
+}
+function clearScr(){
+  scrState.chosen=[];
+  const w=scrState.words[scrState.idx];
+  for(let i=0;i<wLang(w).length;i++){
+    const sl=document.getElementById(`slot${i}`);
+    if(sl)sl.textContent=' ';
+  }
+  document.querySelectorAll('.scr-tile').forEach(t=>t.classList.remove('used'));
+}
+function checkScr(){
+  const w=scrState.words[scrState.idx];
+  const answer=scrState.chosen.map(c=>c.letter).join('');
+  const fb=document.getElementById('scr-fb');
+  if(answer.toLowerCase()===wLang(w).toLowerCase()){
+    fb.textContent='✅ נכון מאוד! 🎉'; fb.style.color='#6EE7B7';
+    scrState.correct++;
+    speakText(wLang(w),langTTS(),0.8);
+    document.querySelectorAll('.scr-tile').forEach(t=>t.classList.add('correct-tile'));
+  } else {
+    fb.innerHTML=`❌ לא נכון. התשובה: <strong>${wLang(w)}</strong>`; fb.style.color='#FCA5A5';
+    scrState.wrong++;
+  }
+  scrState.idx++;
+  setTimeout(showScramble,1800);
+}
 function completeLesson(){
   if(!curLesson)return;
   const lObj=COURSES.flatMap(c=>c.lessons).find(l=>l.id===curLesson);
-  const coins=lObj?lObj.coins:50;
+  const baseCoins=lObj?lObj.coins:0;
+  let coins=baseCoins;
+  const isVocab=lObj&&lObj.type==='vocab';
+  if(!isVocab&&qState.correct+qState.wrong>0){
+    const acc=qState.correct/(qState.correct+qState.wrong);
+    coins=Math.max(10,Math.round(baseCoins*(0.4+0.6*acc)));
+  }
   lState[curLesson]='done';
   const all=COURSES.flatMap(c=>c.lessons);
   const idx=all.findIndex(l=>l.id===curLesson);
@@ -2066,7 +2528,8 @@ function completeLesson(){
   document.getElementById('sbcoins').textContent=user.coins.toLocaleString();
   document.getElementById('avcoins').textContent=user.coins.toLocaleString();
   closeLesson(); buildCourses(); buildProfile();
-  toast(`🎉 כל הכבוד! +🪙${coins} מטבעות!`);
+  const perfMsg=qState.correct+qState.wrong>0?` (${Math.round(qState.correct/(qState.correct+qState.wrong)*100)}% דיוק)`:'';
+  toast(isVocab?'📖 סיימת לקרוא! כעת שחק כדי להרוויח מטבעות':`🎉 כל הכבוד! +🪙${coins} מטבעות${perfMsg}`);
 }
 
 /* ── FRIENDS (disabled — no fake data) ── */
@@ -2106,6 +2569,26 @@ function adminToggleAdmin(k){
   USERS[k].admin=!USERS[k].admin;
   saveUsersLocal(); buildAdminPanel();
   toast(USERS[k].admin?`👑 ${k} הפך לאדמין`:`🧑 ${k} הוסר מאדמין`);
+}
+function adminGiveToUser(){
+  const sel=document.getElementById('adm-give-target');
+  const k=sel.value;
+  if(!k){toast('⚠️ בחר משתמש');return;}
+  const coins=parseInt(document.getElementById('adm-give-coins').value)||0;
+  const lvls=parseInt(document.getElementById('adm-give-lvl').value)||0;
+  if(!coins&&!lvls){toast('⚠️ הכנס מטבעות או רמות');return;}
+  if(!USERS[k]){toast('❌ משתמש לא נמצא');return;}
+  if(coins){USERS[k].coins=(USERS[k].coins||0)+coins;}
+  if(lvls){USERS[k].level=(USERS[k].level||1)+lvls;}
+  saveUsersLocal();
+  if(k===user.username){
+    user.coins=USERS[k].coins; user.level=USERS[k].level;
+    document.getElementById('sbcoins').textContent=user.coins.toLocaleString();
+    document.getElementById('avcoins').textContent=user.coins.toLocaleString();
+    buildProfile();
+  }
+  buildAdminPanel();
+  toast(`✅ נשלח ל-${USERS[k].name}: ${coins?'🪙'+coins.toLocaleString()+' מטבעות':''}${lvls?' ⚡'+lvls+' רמות':''}`);
 }
 function buildAdminPanel(){
   if(!user||!user.admin)return;
@@ -2163,6 +2646,15 @@ function buildAdminPanel(){
       <tbody>${rows}</tbody>
     </table>
     </div>`;
+  // Populate give-to-user select
+  const giveSel=document.getElementById('adm-give-target');
+  if(giveSel){
+    const prevVal=giveSel.value;
+    giveSel.innerHTML='<option value="">בחר משתמש...</option>'+
+      entries.filter(([k])=>k!==user.username).map(([k,v])=>
+        `<option value="${k}"${prevVal===k?' selected':''}>${v.name} (${k})</option>`
+      ).join('');
+  }
 }
 function adminUnlockAll(){
   COURSES.forEach(c=>c.lessons.forEach(l=>{ lState[l.id]='available'; }));
@@ -2209,7 +2701,92 @@ function adminHideAnnouncement(){
   toast('הודעה הוסרה');
 }
 
+/* ── LANGUAGE MODAL ── */
+let langChoices={learn:'en',native:'he'};
+function selectLangOpt(type,btn){
+  const container=btn.parentElement;
+  container.querySelectorAll('.lang-opt').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  langChoices[type]=btn.dataset.val;
+}
+function showLangModal(){
+  document.getElementById('lang-modal').style.display='flex';
+}
+function confirmLang(){
+  if(user){user.langLearn=langChoices.learn;user.langNative=langChoices.native;}
+  document.getElementById('lang-modal').style.display='none';
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  initApp();
+  showOnboard();
+}
 
+let obIdx=0;
+function showOnboard(){
+  obIdx=0;
+  updateObSlide();
+  document.getElementById('onboard-modal').style.display='flex';
+}
+function obSlide(dir){
+  obIdx=Math.max(0,Math.min(3,obIdx+dir));
+  updateObSlide();
+}
+function updateObSlide(){
+  document.getElementById('onboard-slides').style.transform=`translateX(${obIdx*-25}%)`;
+  document.querySelectorAll('.ob-dot').forEach((d,i)=>d.classList.toggle('active',i===obIdx));
+  document.getElementById('ob-prev').style.visibility=obIdx===0?'hidden':'visible';
+  document.getElementById('ob-next').style.visibility=obIdx===3?'hidden':'visible';
+}
+function closeOnboard(){
+  document.getElementById('onboard-modal').style.display='none';
+}
+
+const LANG_META={
+  en:{flag:'🇬🇧',name:'English — אנגלית',native:'English',ready:true},
+  es:{flag:'🇪🇸',name:'Español — ספרדית',native:'Español',ready:true},
+  fr:{flag:'🇫🇷',name:'Français — צרפתית',native:'Français',ready:true},
+  de:{flag:'🇩🇪',name:'Deutsch — גרמנית',native:'Deutsch',ready:true},
+  it:{flag:'🇮🇹',name:'Italiano — איטלקית',native:'Italiano',ready:true},
+  pt:{flag:'🇧🇷',name:'Português — פורטוגזית',native:'Português',ready:true},
+  ru:{flag:'🇷🇺',name:'Русский — רוסית',native:'Русский',ready:true},
+  ar:{flag:'🇸🇦',name:'العربية — ערבית',native:'العربية',ready:true},
+  zh:{flag:'🇨🇳',name:'中文 — סינית',native:'中文',ready:true},
+  ja:{flag:'🇯🇵',name:'日本語 — יפנית',native:'日本語',ready:true},
+  ko:{flag:'🇰🇷',name:'한국어 — קורנית',native:'한국어',ready:true},
+  tr:{flag:'🇹🇷',name:'Türkçe — טורקית',native:'Türkçe',ready:true},
+  hi:{flag:'🇮🇳',name:'हिन्दी — הינדית',native:'हिन्दी',ready:true},
+  nl:{flag:'🇳🇱',name:'Nederlands — הולנדית',native:'Nederlands',ready:true},
+  sv:{flag:'🇸🇪',name:'Svenska — שוודית',native:'Svenska',ready:true},
+};
+function openLangSwitch(){
+  const container=document.getElementById('lang-list-container');
+  if(container){
+    container.innerHTML=Object.entries(LANG_META).map(([code,m])=>`
+      <button class="lang-switch-item${code===curLang?' active-lang':''}"
+        onclick="${m.ready?`switchLang('${code}',this)`:`toast('🔜 ${m.name} תגיע בקרוב!')`}"
+        style="${!m.ready?'opacity:.6':''}" data-lang="${code}">
+        <span style="font-size:1.8rem">${m.flag}</span>
+        <div style="flex:1;text-align:right">
+          <div style="font-weight:800;font-size:.95rem">${m.name}</div>
+          ${!m.ready?'<div style="font-size:.75rem;color:#A78BFA;font-weight:700">🔜 בקרוב</div>':'<div style="font-size:.75rem;color:#6EE7B7">✅ זמין עכשיו</div>'}
+        </div>
+        <span style="font-size:1.1rem;color:#A78BFA;font-weight:900;min-width:20px">${code===curLang?'✓':''}</span>
+      </button>`).join('');
+  }
+  document.getElementById('lang-switch-modal').style.display='flex';
+}
+function switchLang(lang,btn){
+  curLang=lang;
+  localStorage.setItem('curLang',lang);
+  const meta=LANG_META[lang]||LANG_META.en;
+  const flagEl=document.getElementById('lang-flag');
+  const nameEl=document.getElementById('lang-name-sb');
+  if(flagEl) flagEl.textContent=meta.flag;
+  if(nameEl) nameEl.textContent=meta.name;
+  document.getElementById('lang-switch-modal').style.display='none';
+  toast(`🌍 עברת ל${meta.name}! השיעורים עודכנו`);
+  buildCourses();
+}
 
 /* ── TOAST ── */
 let tt;
