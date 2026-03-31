@@ -102,12 +102,15 @@
             transition: color 0.3s;
             direction: rtl;
             unicode-bidi: plaintext;
-            position: relative;
-            padding-bottom: 2px;
             white-space: nowrap;
         }
 
-        .nav-links a::after {
+        .nav-links a:not(.nav-cta) {
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .nav-links a:not(.nav-cta)::after {
             content: '';
             position: absolute;
             bottom: -2px;
@@ -122,7 +125,7 @@
             color: var(--accent);
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:not(.nav-cta):hover::after {
             width: 100%;
         }
 
@@ -144,8 +147,6 @@
             transition: transform 0.3s, box-shadow 0.3s !important;
             white-space: nowrap;
         }
-
-        .nav-cta::after { display: none !important; }
 
         .nav-cta:hover {
             transform: translateY(-2px);
