@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-37WXJMRB9C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-37WXJMRB9C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עולם ה-AI | מאמרים וטיפים | AI Lab</title>
+    <meta name="description" content="מאמרים, מדריכים וטיפים מעולם הבינה המלאכותית. כל מה שצריך לדעת על AI, כלים חדשים וטרנדים — בשפה פשוטה ונגישה.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ai-lab.co.il/blog/">
+    <meta property="og:title" content="עולם ה-AI | מאמרים וטיפים | AI Lab">
+    <meta property="og:description" content="מאמרים, מדריכים וטיפים מעולם הבינה המלאכותית בשפה פשוטה ונגישה.">
+    <meta property="og:image" content="https://ai-lab.co.il/og-image.png">
+    <meta property="og:url" content="https://ai-lab.co.il/blog/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="he_IL">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #6C3CE1;
+            --primary-light: #8B5CF6;
+            --primary-dark: #5228CC;
+            --accent: #00D4AA;
+            --accent-light: #34EABB;
+            --dark: #1a1a2e;
+            --dark-card: #25253e;
+            --dark-lighter: #32324e;
+            --text: #f0eef5;
+            --text-muted: #b8b0d0;
+            --gold: #F5C842;
+            --orange: #FF7849;
+            --pink: #FF4D8D;
+            --blue: #4DA3FF;
+        }
+
+        html { scroll-behavior: smooth; overflow-x: clip; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: clip;
+            line-height: 1.7;
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* ========== NAV ========== */
+        nav {
+            position: fixed;
+            top: 0; right: 0; left: 0;
+            z-index: 100;
+            height: 56px;
+            padding: 0 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 46, 0.92);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 1px 20px rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            direction: ltr;
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+            list-style: none;
+            direction: ltr;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.82rem;
+            transition: color 0.3s;
+            direction: rtl;
+            unicode-bidi: plaintext;
+            position: relative;
+            padding-bottom: 2px;
+            white-space: nowrap;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff !important;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.78rem !important;
+            font-weight: 600 !important;
+            transition: transform 0.3s, box-shadow 0.3s !important;
+            white-space: nowrap;
+        }
+
+        .nav-cta::after { display: none !important; }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.4);
+        }
+
+        .menu-icon { display: none; }
+
+        .mobile-menu-btn {
+            display: none;
+            z-index: 300;
+            width: 44px; height: 44px;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu-panel {
+            display: none;
+            position: fixed;
+            top: 0; right: 0;
+            width: 280px; height: 100vh;
+            background: var(--dark);
+            z-index: 250;
+            flex-direction: column;
+            padding: 1.5rem;
+            border-left: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .mobile-menu-panel.open {
+            display: flex;
+            animation: menuSlideIn 0.3s ease;
+        }
+
+        @keyframes menuSlideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-menu-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mobile-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .mobile-menu-links li a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .mobile-menu-links li a:hover {
+            background: var(--dark-card);
+        }
+
+        .mobile-menu-links .mobile-cta a {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            justify-content: center;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .mobile-menu-links .mobile-cta-green a {
+            background: linear-gradient(135deg, var(--accent), #00b894);
+            color: #fff;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+        }
+
+        /* ========== PAGE HEADER ========== */
+        .page-header {
+            padding: 7rem 2rem 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== BLOG GRID ========== */
+        .blog-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: var(--dark-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(108, 60, 225, 0.2);
+        }
+
+        .blog-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--primary-dark), var(--dark-lighter));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+        }
+
+        .blog-card-body {
+            padding: 1.5rem;
+        }
+
+        .blog-card-tag {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.2);
+            color: var(--primary-light);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+        }
+
+        .blog-card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .blog-card-excerpt {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .blog-card-read {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* ========== COMING SOON STATE ========== */
+        .coming-soon {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .coming-soon-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .coming-soon h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .coming-soon p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .coming-soon .btn-back {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .coming-soon .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 60, 225, 0.4);
+        }
+
+        /* ========== SAMPLE ARTICLES (preview) ========== */
+        .sample-tag {
+            display: inline-block;
+            background: rgba(0, 212, 170, 0.15);
+            color: var(--accent);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-right: 0.5rem;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3rem 2rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            direction: rtl;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            text-align: right;
+        }
+
+        .footer-section h4 {
+            color: var(--text);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            line-height: 2;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .footer-social {
+            max-width: 1100px;
+            margin: 1.5rem auto 0;
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+        }
+
+        .footer-social a {
+            color: var(--text-muted);
+            transition: color 0.3s, transform 0.3s;
+            display: flex;
+        }
+
+        .footer-social a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 1.5rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .nav-links-desktop { display: none !important; }
+            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+            .menu-icon { display: inline; }
+
+            .page-header { padding: 6rem 1.5rem 2rem; }
+            .page-header h1 { font-size: 2rem; }
+            .page-header p { font-size: 1rem; }
+
+            .blog-grid { grid-template-columns: 1fr; }
+            .blog-container { padding: 1rem; }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <nav>
+        <a href="/" class="nav-logo">AI Lab</a>
+        <ul class="nav-links nav-links-desktop">
+            <li><a href="/blog/" class="active">עולם ה-AI</a></li>
+            <li><a href="/#pricing">מחיר</a></li>
+            <li><a href="/#faq">שאלות</a></li>
+            <li><a href="/#tools">כלי AI</a></li>
+            <li><a href="/#program">תוכנית</a></li>
+            <li><a href="/#audience">למי מיועד?</a></li>
+            <li><a href="/#about">על הקורס</a></li>
+            <li><a href="/portal/" class="nav-cta">אזור אישי</a></li>
+            <li><a href="/#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);">הרשמה</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="menuBtn" aria-label="תפריט">&#9776;</button>
+    </nav>
+    <div class="mobile-menu-panel" id="mobileMenuPanel">
+        <div class="mobile-menu-header">
+            <span class="mobile-menu-logo">AI Lab</span>
+            <button class="mobile-close-btn" id="menuCloseBtn" aria-label="סגור תפריט">&times;</button>
+        </div>
+        <ul class="mobile-menu-links">
+            <li><a href="/#audience"><span class="menu-icon">&#x1F3AF;</span> למי מיועד?</a></li>
+            <li><a href="/#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>
+            <li><a href="/#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
+            <li><a href="/#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
+            <li><a href="/#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
+            <li><a href="/#faq"><span class="menu-icon">&#x2753;</span> שאלות נפוצות</a></li>
+            <li><a href="/blog/"><span class="menu-icon">&#x1F30D;</span> עולם ה-AI</a></li>
+            <li class="mobile-cta"><a href="/portal/"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
+            <li class="mobile-cta mobile-cta-green"><a href="/#register"><span class="menu-icon">&#x1F680;</span> הרשמה</a></li>
+        </ul>
+    </div>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1>עולם <span class="gradient-text">ה-AI</span></h1>
+        <p>מאמרים, מדריכים וטיפים מעולם הבינה המלאכותית — בשפה פשוטה שכולם יכולים להבין</p>
+    </section>
+
+    <!-- BLOG CONTENT -->
+    <div class="blog-container">
+        <div class="blog-grid">
+            <a class="blog-card" href="/blog/what-is-ai.html">
+                <img class="blog-card-image" src="/blog/images/article-1-what-is-ai.png" alt="מה זה בינה מלאכותית?">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">מתחילים</span>
+                    <h3 class="blog-card-title">מה זה בינה מלאכותית? הסבר פשוט להורים ולילדים</h3>
+                    <p class="blog-card-excerpt">הסבר קצר וברור על מה זה AI, איך זה עובד, ולמה כל כך חשוב ללמוד על זה היום — גם אם אתם בכלל לא טכנולוגיים.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+            <a class="blog-card" href="/blog/why-kids-need-ai.html">
+                <img class="blog-card-image" src="/blog/images/article-2-why-kids-need-ai.png" alt="למה חשוב שילדים ילמדו בינה מלאכותית?">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">חינוך</span>
+                    <h3 class="blog-card-title">למה חשוב שילדים ילמדו בינה מלאכותית?</h3>
+                    <p class="blog-card-excerpt">למה AI זה כמו אנגלית — שפה חדשה שחובה ללמוד. על שוק העבודה, מיומנויות המחר, וחשיבה ביקורתית.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+            <a class="blog-card" href="/blog/ai-tools-for-kids.html">
+                <img class="blog-card-image" src="/blog/images/article-3-ai-tools-for-kids.png" alt="5 כלי AI לילדים">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">כלים</span>
+                    <h3 class="blog-card-title">5 כלי AI שילדים יכולים להשתמש בהם כבר היום</h3>
+                    <p class="blog-card-excerpt">מ-ChatGPT ועד כלי יצירת תמונות — הנה הכלים הכי שימושיים, בטוחים ומהנים לילדים ובני נוער.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+            <a class="blog-card" href="/blog/entrepreneurship-for-kids.html">
+                <img class="blog-card-image" src="/blog/images/article-4-entrepreneurship-for-kids.png" alt="יזמות לילדים">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">יזמות</span>
+                    <h3 class="blog-card-title">יזמות לילדים — למה זה הדבר הכי חשוב שהם ילמדו?</h3>
+                    <p class="blog-card-excerpt">יזמות זה לא רק כסף — זה פתרון בעיות, יצירתיות ועצמאות. דוגמאות של ילדים יזמים שעשו דברים מדהימים.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+            <a class="blog-card" href="/blog/build-website-with-ai.html">
+                <img class="blog-card-image" src="/blog/images/article-5-build-website-with-ai.png" alt="איך ילד בנה אתר עם AI">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">פרויקטים</span>
+                    <h3 class="blog-card-title">איך ילד בן 12 בנה אתר אינטרנט עם AI תוך שעה</h3>
+                    <p class="blog-card-excerpt">סיפור אמיתי מתוך הקורס — איך תלמיד צעיר השתמש ב-Cursor ו-Claude כדי לבנות את הפרויקט הראשון שלו.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+            <a class="blog-card" href="/blog/chatgpt-guide-for-parents.html">
+                <img class="blog-card-image" src="/blog/images/article-6-chatgpt-guide-for-parents.png" alt="ChatGPT מדריך להורים">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">מדריכים</span>
+                    <h3 class="blog-card-title">ChatGPT לילדים — מדריך להורים</h3>
+                    <p class="blog-card-excerpt">מדריך מעשי להורים: מה זה ChatGPT, האם זה בטוח לילדים, איך לשים גבולות ואיך להשתמש בזה ללמידה.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+            <a class="blog-card" href="/blog/what-kids-can-create.html">
+                <img class="blog-card-image" src="/blog/images/article-7-what-kids-can-create.png" alt="10 דברים שילדים יוצרים עם AI">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">יצירתיות</span>
+                    <h3 class="blog-card-title">10 דברים מדהימים שילדים יכולים ליצור עם AI</h3>
+                    <p class="blog-card-excerpt">מאתרים ומשחקים ועד מוזיקה ואפליקציות — הנה 10 דברים יצירתיים שילדים יכולים לבנות עם בינה מלאכותית.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+            <a class="blog-card" href="/blog/first-project-ideas.html">
+                <img class="blog-card-image" src="/blog/images/article-8-first-project-ideas.png" alt="5 רעיונות לפרויקט ראשון">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">פרויקטים</span>
+                    <h3 class="blog-card-title">5 רעיונות לפרויקט ראשון עם AI — לילדים ונוער</h3>
+                    <p class="blog-card-excerpt">אתר אישי, חנות אונליין, משחק חידון ועוד — רעיונות מעשיים לפרויקט ראשון שכל ילד יכול לבנות.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+            <a class="blog-card" href="/blog/ai-in-education.html">
+                <img class="blog-card-image" src="/blog/images/article-9-ai-in-education.png" alt="AI בחינוך">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">חינוך</span>
+                    <h3 class="blog-card-title">איך בינה מלאכותית משנה את עולם החינוך?</h3>
+                    <p class="blog-card-excerpt">למידה מותאמת אישית, מורים דיגיטליים ופרויקטים יצירתיים — איך AI משנה את החינוך ומה זה אומר לילדים שלנו.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+            <a class="blog-card" href="/blog/tips-for-parents.html">
+                <img class="blog-card-image" src="/blog/images/article-10-tips-for-parents.png" alt="טיפים להורים">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">הורים</span>
+                    <h3 class="blog-card-title">7 טיפים להורים — איך ללוות ילדים בעולם הטכנולוגיה</h3>
+                    <p class="blog-card-excerpt">אל תפחדו מטכנולוגיה, תלמדו ביחד, תשימו גבולות ותעודדו יצירה — טיפים מעשיים להורים בעידן ה-AI.</p>
+                    <div class="blog-card-meta">
+                        <span>מרץ 2026</span>
+                        <span class="blog-card-read">קראו עוד ←</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>AI Lab</h4>
+                <p>קורסי יזמות ובינה מלאכותית לילדים, נוער ומבוגרים</p>
+                <p>מאיר לביא</p>
+            </div>
+            <div class="footer-section">
+                <h4>יצירת קשר</h4>
+                <a href="tel:054-6500795">054-6500795</a>
+                <a href="mailto:laviemb@gmail.com">laviemb@gmail.com</a>
+                <a href="https://wa.me/972546500795" target="_blank">WhatsApp</a>
+            </div>
+            <div class="footer-section">
+                <h4>מידע</h4>
+                <a href="/blog/">עולם ה-AI</a>
+                <a href="/privacy.html">מדיניות פרטיות</a>
+                <a href="/terms.html">תנאי שימוש</a>
+                <a href="/accessibility.html">הצהרת נגישות</a>
+            </div>
+        </div>
+        <div class="footer-social">
+            <a href="https://www.instagram.com/ai.lab.il" target="_blank" aria-label="Instagram">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@ai.labisrael" target="_blank" aria-label="TikTok">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.46V13.2a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-.81-.07 4.86 4.86 0 01-.38-4.56z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/share/18CXmH7Zum/" target="_blank" aria-label="Facebook">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 AI Lab — מאיר לביא. כל הזכויות שמורות.</span>
+            <span>ai-lab.co.il</span>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI" class="whatsapp-float" target="_blank" aria-label="WhatsApp" style="position:fixed;bottom:24px;left:24px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(37,211,102,0.4);z-index:99;transition:transform 0.3s;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script>
+        // Mobile menu
+        const menuBtn = document.getElementById('menuBtn');
+        const mobilePanel = document.getElementById('mobileMenuPanel');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function openMobileMenu() {
+            mobilePanel.classList.add('open');
+            mobileOverlay.classList.add('active');
+            menuBtn.innerHTML = '&times;';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobilePanel.classList.remove('open');
+            mobileOverlay.classList.remove('active');
+            menuBtn.innerHTML = '&#9776;';
+            document.body.style.overflow = '';
+        }
+
+        menuBtn.addEventListener('click', () => {
+            mobilePanel.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+        });
+
+        document.getElementById('menuCloseBtn').addEventListener('click', closeMobileMenu);
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+
+        document.querySelectorAll('.mobile-menu-links a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+    </script>
+</body>
+</html>
