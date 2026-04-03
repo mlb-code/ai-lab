@@ -185,6 +185,56 @@
             flex-shrink: 0;
         }
 
+        /* ===== COURSE SWITCHER ===== */
+        .course-switcher {
+            padding: 0.6rem 0.8rem;
+            text-align: center;
+        }
+
+        .course-switcher-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-switcher-btns {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 3px;
+            gap: 3px;
+        }
+
+        .course-btn {
+            flex: 1;
+            padding: 0.4rem 0.6rem;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .course-btn:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .course-btn.active {
+            background: linear-gradient(135deg, var(--primary), rgba(0, 212, 170, 0.4));
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(108, 60, 225, 0.3);
+        }
+
         /* ===== SIDEBAR NAV LABEL ===== */
         .sidebar-nav-label {
             font-size: 0.68rem;
@@ -2056,39 +2106,66 @@
 
         <div class="sidebar-divider"></div>
 
+        <!-- Course Level Switcher -->
+        <div class="course-switcher advanced-only" id="courseSwitcher" style="display:none;">
+            <div class="course-switcher-label">קורס</div>
+            <div class="course-switcher-btns">
+                <button class="course-btn active" id="courseBtnBasic" onclick="switchCourse('basic')">בסיסי</button>
+                <button class="course-btn" id="courseBtnAdvanced" onclick="switchCourse('advanced')">מתקדם</button>
+            </div>
+        </div>
+
+        <div class="sidebar-divider advanced-only" style="display:none;"></div>
+
         <div class="sidebar-nav-label">תפריט</div>
         <nav class="sidebar-nav">
+            <!-- Shared: מפגשים -->
             <button class="active" data-section="sessions">
-                <span class="nav-icon">&#x1F4DA;</span>
-                <span>מפגשים</span>
+                <span class="nav-icon">&#x1F4DA;</span><span>מפגשים</span>
             </button>
-            <button data-section="ai-tools">
-                <span class="nav-icon">&#x1F916;</span>
-                <span>כלי AI</span>
+            <!-- Basic: כלי AI -->
+            <button data-section="ai-tools" data-nav-course="basic">
+                <span class="nav-icon">&#x1F916;</span><span>כלי AI</span>
             </button>
-            <button data-section="project">
-                <span class="nav-icon">&#x1F680;</span>
-                <span>הפרויקט שלי</span>
+            <!-- Advanced: כלים לפיתוח -->
+            <button data-section="dev-tools" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F527;</span><span>כלים לפיתוח</span>
             </button>
-            <button data-section="guides">
-                <span class="nav-icon">&#x1F4D6;</span>
-                <span>הדרכות</span>
+            <!-- Basic: הפרויקט שלי -->
+            <button data-section="project" data-nav-course="basic">
+                <span class="nav-icon">&#x1F680;</span><span>הפרויקט שלי</span>
             </button>
+            <!-- Advanced: פרומפטים מוכנים -->
+            <button data-section="prompts" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F3AF;</span><span>פרומפטים מוכנים</span>
+            </button>
+            <!-- Basic: הדרכות -->
+            <button data-section="guides" data-nav-course="basic">
+                <span class="nav-icon">&#x1F4D6;</span><span>הדרכות</span>
+            </button>
+            <!-- Advanced: צ'קליסט פרויקט -->
+            <button data-section="checklist" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F4CB;</span><span>צ'קליסט פרויקט</span>
+            </button>
+            <!-- Basic: המלצות -->
+            <button data-section="recommendations" data-nav-course="basic">
+                <span class="nav-icon">&#x2B50;</span><span>המלצות</span>
+            </button>
+            <!-- Advanced: קהילה -->
+            <button data-section="community" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F465;</span><span>קהילה</span>
+            </button>
+            <!-- Advanced: הדרכות -->
+            <button data-section="guides-adv" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F4D6;</span><span>הדרכות</span>
+            </button>
+            <!-- Shared: הורדות -->
             <button data-section="downloads">
-                <span class="nav-icon">&#x1F4BE;</span>
-                <span>הורדות</span>
+                <span class="nav-icon">&#x1F4BE;</span><span>הורדות</span>
             </button>
-            <button data-section="recommendations">
-                <span class="nav-icon">&#x2B50;</span>
-                <span>המלצות</span>
-            </button>
-            <button data-section="help">
-                <span class="nav-icon">&#x2753;</span>
-                <span>עזרה</span>
-            </button>
-            <button data-section="advanced" class="advanced-only" style="display:none;">
-                <span class="nav-icon">&#x1F31F;</span>
-                <span>קורס מתקדם</span>
+            <!-- Basic: עזרה -->
+            <button data-section="help" data-nav-course="basic">
+                <span class="nav-icon">&#x2753;</span><span>עזרה</span>
             </button>
         </nav>
 
@@ -2103,15 +2180,33 @@
             <span class="nav-icon">&#x1F4DA;</span>
             <span>מפגשים</span>
         </button>
-        <button data-section="ai-tools">
+        <!-- Basic only -->
+        <button data-section="ai-tools" data-nav-course="basic">
             <span class="nav-icon">&#x1F916;</span>
             <span>כלי AI</span>
         </button>
-        <button data-section="project">
+        <!-- Advanced only -->
+        <button data-section="dev-tools" data-nav-course="advanced" style="display:none;">
+            <span class="nav-icon">&#x1F527;</span>
+            <span>כלים</span>
+        </button>
+        <!-- Basic only -->
+        <button data-section="project" data-nav-course="basic">
             <span class="nav-icon">&#x1F680;</span>
             <span>הפרויקט</span>
         </button>
-        <button data-section="guides">
+        <!-- Advanced only -->
+        <button data-section="checklist" data-nav-course="advanced" style="display:none;">
+            <span class="nav-icon">&#x1F4CB;</span>
+            <span>צ'קליסט</span>
+        </button>
+        <!-- Basic only -->
+        <button data-section="guides" data-nav-course="basic">
+            <span class="nav-icon">&#x1F4D6;</span>
+            <span>הדרכות</span>
+        </button>
+        <!-- Advanced only -->
+        <button data-section="guides-adv" data-nav-course="advanced" style="display:none;">
             <span class="nav-icon">&#x1F4D6;</span>
             <span>הדרכות</span>
         </button>
@@ -2125,14 +2220,16 @@
         <button data-section="downloads" onclick="selectMoreSection('downloads')">
             <span>&#x1F4BE;</span> הורדות
         </button>
+        <!-- Advanced only -->
+        <button data-section="prompts" data-nav-course="advanced" onclick="selectMoreSection('prompts')" style="display:none;">
+            <span>&#x1F3AF;</span> פרומפטים מוכנים
+        </button>
         <button data-section="recommendations" onclick="selectMoreSection('recommendations')">
             <span>&#x2B50;</span> המלצות
         </button>
-        <button data-section="help" onclick="selectMoreSection('help')">
-            <span>&#x2753;</span> עזרה
-        </button>
-        <button data-section="advanced" onclick="selectMoreSection('advanced')" class="advanced-only" style="display:none;">
-            <span>&#x1F31F;</span> קורס מתקדם
+        <!-- Advanced only -->
+        <button data-section="community" data-nav-course="advanced" style="display:none;" onclick="selectMoreSection('community')">
+            <span>&#x1F465;</span> קהילה
         </button>
     </div>
 
@@ -2147,7 +2244,7 @@
             <div class="sessions-grid">
 
                 <!-- Session 1 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">1</div>
                         <h3>ברוכים הבאים לעולם ה-AI</h3>
@@ -2215,7 +2312,7 @@
                 </div>
 
                 <!-- Session 2 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">2</div>
                         <h3>אמנות הפרומפט</h3>
@@ -2264,7 +2361,7 @@
                 </div>
 
                 <!-- Session 3 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">3</div>
                         <h3>חשיבה יזמית &mdash; מוצאים בעיות</h3>
@@ -2312,7 +2409,7 @@
                 </div>
 
                 <!-- Session 4 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">4</div>
                         <h3>מרעיון למוצר</h3>
@@ -2360,7 +2457,7 @@
                 </div>
 
                 <!-- Session 5 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">5</div>
                         <h3>בונים אתר &mdash; חלק 1</h3>
@@ -2409,7 +2506,7 @@
                 </div>
 
                 <!-- Session 6 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">6</div>
                         <h3>בונים אתר &mdash; חלק 2</h3>
@@ -2458,7 +2555,7 @@
                 </div>
 
                 <!-- Session 7 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">7</div>
                         <h3>מודל עסקי ושיווק</h3>
@@ -2510,7 +2607,7 @@
                 </div>
 
                 <!-- Session 8 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header" style="background: linear-gradient(135deg, var(--gold), var(--orange));">
                         <div class="session-number">8</div>
                         <h3>&#x1F3C6; יום הפיץ'</h3>
@@ -2550,6 +2647,393 @@
                         </div>
                         <div class="session-actions">
                             <button class="session-presentation" onclick="openPresentation(8)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== ADVANCED COURSE SESSIONS ===== -->
+
+                <!-- Advanced Session 1 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">1</div>
+                        <h3>חזרה ושדרוג</h3>
+                        <span class="session-tag">שדרוג</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נסתכל על מה שבנינו בקורס הקודם, נחשוב מה אפשר לשפר, ונתכנן את השדרוג</div>
+                        <div class="session-discussion" style="margin-top:0; margin-bottom:1rem; border-right-color: var(--primary-light); background: rgba(108,60,225,0.08);">
+                            <div class="disc-label" style="color:var(--primary-light);">&#x1F3A4; שאלת פתיחה (5 דקות)</div>
+                            <p>מה הדבר הכי מגניב שבניתם בקורס הקודם? מה הייתם רוצים להוסיף?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>מה בנינו עד עכשיו:</strong> בקורס הקודם כל אחד בנה אתר משלו. עכשיו נסתכל עליו ביחד — מה עובד טוב? מה אפשר לשפר? מה חסר?</li>
+                            <li><strong>מה זה מוצר מינימלי (MVP):</strong> בקורס הקודם בנינו גרסה ראשונה — את הדבר הכי בסיסי שעובד. עכשיו הגיע הזמן להפוך אותו למשהו יותר מקצועי ויותר שלם</li>
+                            <li><strong>תכנון השדרוג:</strong> נכין רשימה של כל מה שנרצה להוסיף ונחליט מה הכי חשוב. קודם הדברים ההכרחיים, אחר כך הבונוסים</li>
+                            <li><strong>מה נלמד בקורס הזה:</strong> שמירת מידע, הרשמה והתחברות, חיבור לשירותים חיצוניים, בניית עוזר חכם, עיצוב מקצועי, העלאה לאינטרנט ושיווק — הכל צעד אחרי צעד</li>
+                            <li><strong>שיפור העיצוב:</strong> נסתכל על האתר שלנו בעיניים חדשות. מה נראה טוב? מה צריך שיפור? נלמד איך לזהות עיצוב מקצועי</li>
+                            <li><strong>חשיבה גדולה:</strong> איך נראה האתר המושלם שלכם? מה הוא יוכל לעשות? מי ישתמש בו? בואו נחלום בגדול ונתכנן איך להגיע לשם</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">שדרוג</span>
+                            <span class="concept-tag">תכנון</span>
+                            <span class="concept-tag">מוצר מינימלי</span>
+                            <span class="concept-tag">חשיבה גדולה</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>מה הפיצ'ר הכי חשוב שחסר בפרויקט שלכם? &bull; למה לא כדאי לבנות הכל בבת אחת?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> פתחו את האתר שלכם ורשמו על דף — 3 דברים טובים ו-3 דברים שאפשר לשפר. ציירו איך האתר ייראה אחרי השדרוג.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> רשמו רשימת שדרוגים ודרגו אותם לפי חשיבות. הכינו תוכנית — מה נעשה בכל מפגש?</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> בנו מפת דרכים מפורטת — אילו תכונות נוסיף, באיזה סדר, ומה היעד ליום ההצגה. חפשו 3 אתרים שמעצבים אתכם ורשמו למה.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. רשמו רשימה של 5 שיפורים שתרצו לעשות באתר, ודרגו מ-1 (הכי חשוב) ל-5.</p>
+                            <p>2. חפשו 3 אתרים שאתם אוהבים ורשמו מה בדיוק טוב בהם.</p>
+                            <p>3. חשבו — מי יהיו המשתמשים של האתר שלכם? מה הם צריכים?</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד איך לשמור מידע — שהאתר שלנו יזכור דברים!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 2 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">2</div>
+                        <h3>שמירת מידע — מאגר נתונים</h3>
+                        <span class="session-tag">מאגר נתונים</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נלמד איך לשמור מידע כדי שהאתר שלנו יזכור דברים — שמות, הודעות ועוד</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם סקרנו את הפרויקטים ותכננו את השדרוג. &bull; <strong>בדיקת משימת בית:</strong> מי הכין רשימת שיפורים? מה המשתמשים שלכם צריכים?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>למה צריך לשמור מידע:</strong> כרגע האתר שלכם כמו מחברת שנמחקת כל פעם שסוגרים אותה. אם מישהו ממלא טופס או נרשם — המידע נעלם! אנחנו רוצים שהאתר יזכור הכל</li>
+                            <li><strong>מה זה מאגר נתונים (Database באנגלית):</strong> מקום מסודר לשמור מידע. דמיינו טבלה כמו אקסל או גוגל שיטס — שורות ועמודות. כל שורה זה פריט מידע (למשל: שם, אימייל, הודעה)</li>
+                            <li><strong>הצד שרואים והצד שמאחורי הקלעים:</strong> מה שהגולש רואה באתר זה הצד הקדמי (Frontend באנגלית). מה שעובד מאחורי הקלעים — שמירת מידע, שליחת מיילים, ניהול משתמשים — זה הצד האחורי (Backend באנגלית)</li>
+                            <li><strong>הכרות עם Supabase (סופאבייס):</strong> שירות חינמי באינטרנט שנותן לנו מאגר נתונים מוכן. במקום לבנות הכל לבד, פשוט נרשמים ומתחילים לשמור מידע. כמו גוגל שיטס — אבל חכם יותר</li>
+                            <li><strong>בניית טבלה ראשונה:</strong> ניצור טבלה ראשונה ב-Supabase — למשל טבלה ששומרת הודעות מטופס יצירת קשר. נגדיר שדות: שם, אימייל, הודעה, תאריך</li>
+                            <li><strong>חיבור האתר למאגר:</strong> נחבר את האתר שלנו ל-Supabase — ככה כשמישהו ממלא טופס, המידע נשמר אוטומטית. וגם נלמד איך לשלוף מידע ולהציג אותו באתר</li>
+                        </ul>
+                        <div class="session-exercise" style="background: rgba(0, 212, 170, 0.1); border: 1px solid rgba(0, 212, 170, 0.2);">
+                            <div class="exercise-label" style="color: var(--accent);">&#x1F4D6; מילון מושגים</div>
+                            <p style="line-height:2;">
+                                <strong>מאגר נתונים (Database באנגלית)</strong> — מקום מסודר לשמור מידע, כמו טבלת אקסל חכמה בענן<br>
+                                <strong>צד קדמי (Frontend באנגלית)</strong> — מה שהגולש רואה באתר — העיצוב, הכפתורים, הטקסט<br>
+                                <strong>צד אחורי (Backend באנגלית)</strong> — מה שעובד מאחורי הקלעים — שמירת מידע, שליחה, חישובים<br>
+                                <strong>טבלה (Table באנגלית)</strong> — מבנה מסודר של מידע בשורות ועמודות<br>
+                                <strong>Supabase (סופאבייס)</strong> — שירות חינמי שנותן מאגר נתונים מוכן לשימוש<br>
+                                <strong>שליפה ושמירה</strong> — שליפה = לקחת מידע מהמאגר. שמירה = להכניס מידע חדש למאגר
+                            </p>
+                        </div>
+                        <div class="session-concepts">
+                            <span class="concept-tag">מאגר נתונים</span>
+                            <span class="concept-tag">טבלה</span>
+                            <span class="concept-tag">Supabase</span>
+                            <span class="concept-tag">צד אחורי</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>למה האתר שלכם צריך לשמור מידע? &bull; איזה מידע הפרויקט שלכם צריך לזכור?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נירשם ל-Supabase וניצור פרויקט. נבנה טבלה ראשונה דרך הממשק — שם, אימייל, הודעה. נכניס 3 שורות לדוגמה ביד.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — נחבר טופס יצירת קשר מהאתר ל-Supabase. כשממלאים ושולחים — המידע נשמר!</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נבנה טבלה שנייה שמתאימה לפרויקט (מוצרים, הזמנות, פוסטים) ונציג את המידע באתר.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. הוסיפו טבלה ב-Supabase שמתאימה לפרויקט שלכם ומלאו אותה ב-5 שורות לדוגמה.</p>
+                            <p>2. נסו לחבר את הטבלה לאתר — שהמידע יופיע בדף.</p>
+                            <p>3. חשבו — איזה עוד מידע האתר שלכם צריך לשמור? רשמו רשימה.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד איך להוסיף הרשמה והתחברות — שלכל משתמש יהיה חשבון משלו!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 3 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">3</div>
+                        <h3>הרשמה והתחברות — חשבונות משתמשים</h3>
+                        <span class="session-tag">חשבונות</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נוסיף לאתר אפשרות הרשמה והתחברות — שלכל משתמש יהיה חשבון אישי</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם למדנו לשמור מידע ב-Supabase ולחבר טבלאות לאתר. &bull; <strong>בדיקת משימת בית:</strong> מי בנה טבלה נוספת? מי הצליח להציג מידע באתר?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>למה צריך הרשמה:</strong> כשנכנסים לאינסטגרם, טיקטוק או ספוטיפיי — מה הדבר הראשון? מתחברים! בלי התחברות, האתר לא יודע מי אתה ולא יכול לשמור את הדברים שלך</li>
+                            <li><strong>מה זה זיהוי משתמשים (Authentication באנגלית):</strong> זה התהליך של לוודא שמי שנכנס הוא באמת מי שהוא אומר שהוא. כמו תעודת תלמיד בבית הספר — מזהים אותך ונותנים לך גישה</li>
+                            <li><strong>דרכי התחברות:</strong> אימייל וסיסמה (הרגיל), התחברות עם גוגל (נכנסים עם חשבון גוגל — בלי לזכור סיסמה חדשה), קישור חד-פעמי למייל. Supabase תומכת בכולם!</li>
+                            <li><strong>בניית טופס הרשמה:</strong> נבנה דף הרשמה שבו המשתמש בוחר אימייל וסיסמה ויוצר חשבון. נוסיף גם בדיקות — האם האימייל תקין? האם הסיסמה חזקה מספיק?</li>
+                            <li><strong>אזור אישי:</strong> אחרי שהמשתמש מתחבר, הוא רואה דף מיוחד רק בשבילו — עם השם שלו, המידע שלו, וההיסטוריה שלו. כמו האזור האישי הזה בדיוק!</li>
+                            <li><strong>הגנה על דפים:</strong> דפים מסוימים באתר צריכים להיות רק למשתמשים מחוברים. אם מישהו מנסה להיכנס בלי להתחבר — הוא מועבר לדף ההתחברות</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">זיהוי משתמשים</span>
+                            <span class="concept-tag">הרשמה</span>
+                            <span class="concept-tag">התחברות</span>
+                            <span class="concept-tag">אזור אישי</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>למה אתרים צריכים התחברות? &bull; מה היתרונות של התחברות עם גוגל? &bull; איך שומרים על הסיסמה?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נפעיל זיהוי משתמשים ב-Supabase. ניצור חשבון ניסיון, נתחבר ונראה שזה עובד.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> נבנה טופס הרשמה + התחברות באתר שלנו. כשמתחברים — רואים הודעת "שלום [שם]!".</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נבנה אזור אישי ודף מוגן. נוסיף גם כפתור "התחבר עם גוגל".</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. ודאו שההרשמה וההתחברות עובדות באתר שלכם. נסו להירשם עם אימייל אמיתי.</p>
+                            <p>2. הוסיפו הודעת ברוכים הבאים שמציגה את שם המשתמש אחרי התחברות.</p>
+                            <p>3. חשבו — מה המשתמש שלכם צריך לראות באזור האישי? רשמו רשימה.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד איך לחבר את האתר לשירותים חיצוניים — מזג אוויר, חדשות ועוד!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 4 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">4</div>
+                        <h3>חיבור לשירותים חיצוניים</h3>
+                        <span class="session-tag">חיבורים</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נלמד איך האתר שלנו יכול לקבל מידע מאתרים ושירותים אחרים — ולהציג אותו</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם הוספנו הרשמה והתחברות לאתר. &bull; <strong>בדיקת משימת בית:</strong> מי בנה אזור אישי? מה המשתמשים שלכם רואים אחרי התחברות?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>מה זה ממשק חיבור (API באנגלית):</strong> דמיינו מלצר במסעדה. אתם (האתר) מזמינים מנה (בקשה), המלצר הולך למטבח (שירות חיצוני) ומביא לכם את האוכל (מידע). ממשק חיבור (API באנגלית) זה בדיוק המלצר הזה — הדרך שבה אתרים ותוכנות מעבירים מידע ביניהם</li>
+                            <li><strong>סוגי בקשות:</strong> יש 4 פעולות שאפשר לעשות: לבקש מידע (שלוף), לשלוח מידע חדש (שמור), לעדכן מידע קיים (עדכן), למחוק מידע (מחק). כמו 4 פעולות בסיסיות שעושים עם כל מידע</li>
+                            <li><strong>שפת המידע (JSON באנגלית):</strong> כשאתרים שולחים מידע ביניהם, הם משתמשים בשפה מסודרת. למשל: {"שם": "דני", "גיל": 15, "עיר": "תל אביב"} — מפתח ומה שהוא שווה. פשוט ומסודר!</li>
+                            <li><strong>מפתח גישה:</strong> כדי להשתמש בשירות חיצוני, צריך מפתח מיוחד (כמו סיסמה). השירות נותן לכם מפתח ייחודי ואתם שולחים אותו עם כל בקשה. חשוב מאוד לא לחשוף אותו!</li>
+                            <li><strong>חיבור שירותים אמיתיים:</strong> נחבר את האתר שלנו לשירות מזג אוויר — ונציג את הטמפרטורה בזמן אמת! אפשר גם: חדשות, מפות, תרגום, מטבעות ועוד</li>
+                            <li><strong>שירותים של חברות גדולות:</strong> גוגל, פייסבוק, אפל — כולם נותנים שירותים שאפשר לחבר לאתר שלכם. מפות של גוגל, שיתוף לפייסבוק, התחברות עם אפל — הכל דרך ממשקי חיבור</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">ממשק חיבור (API)</span>
+                            <span class="concept-tag">בקשה ותשובה</span>
+                            <span class="concept-tag">שפת מידע (JSON)</span>
+                            <span class="concept-tag">מפתח גישה</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>אילו שירותים חיצוניים יכולים לשדרג את הפרויקט שלכם? &bull; למה חשוב לא לחשוף את המפתח?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נתחבר לשירות מזג אוויר — נשלוף את הטמפרטורה הנוכחית בעיר שלנו ונציג אותה בדף!</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — נבחר שירות נוסף שמתאים לפרויקט שלנו ונחבר גם אותו.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נעצב את תצוגת המידע בצורה יפה ונוסיף עדכון אוטומטי.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. חברו לפחות שירות חיצוני אחד לאתר שלכם שנותן ערך למשתמשים.</p>
+                            <p>2. הציגו את המידע בעיצוב יפה — לא רק טקסט, אלא עם צבעים ואייקונים.</p>
+                            <p>3. חפשו באינטרנט 3 שירותים חיצוניים מעניינים ורשמו מה הם עושים ואיך הם יכולים לעזור לפרויקט שלכם.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נבנה עוזר חכם — בוט AI שעונה למשתמשים שלכם!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 5 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">5</div>
+                        <h3>בניית עוזר חכם</h3>
+                        <span class="session-tag">עוזר AI</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נבנה עוזר חכם שיודע לענות לשאלות ולעזור למשתמשים באתר שלנו</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם חיברנו שירותים חיצוניים לאתר — מזג אוויר ועוד. &bull; <strong>בדיקת משימת בית:</strong> מי חיבר שירות לפרויקט? מה הוספתם?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>מה ההבדל בין צ׳אט רגיל לעוזר חכם:</strong> צ׳אט רגיל (כמו ChatGPT) רק עונה לשאלות. עוזר חכם (Agent באנגלית) גם עושה דברים — שולח הודעות, שומר מידע, מחפש תשובות. כמו ההבדל בין חבר שנותן עצות לעוזר אישי שגם מבצע משימות</li>
+                            <li><strong>הוראות הפעלה (System Prompt באנגלית):</strong> כדי שהעוזר ידע מה התפקיד שלו, כותבים לו הוראות. כמו שמסבירים לעובד חדש: "אתה עוזר של חנות צעצועים. עזור ללקוחות לבחור מתנה. תמיד תשאל לאיזה גיל." — ככה העוזר יודע מה לעשות</li>
+                            <li><strong>יכולות (כלים):</strong> אפשר לתת לעוזר "כלים" — דברים שהוא יודע לעשות. למשל: לחפש מוצרים, לשלוח מייל, לשמור הזמנה. העוזר מחליט לבד מתי להשתמש בכל כלי — כמו ארגז כלים חכם</li>
+                            <li><strong>דברים שקורים אוטומטית:</strong> אפשר להגדיר שדברים יקרו לבד. כשמישהו נרשם — ישלח מייל ברוכים הבאים. כשיש הזמנה חדשה — תגיע התראה. הכל בלי שתצטרכו לעשות שום דבר!</li>
+                            <li><strong>חלון צ׳אט באתר:</strong> נבנה חלון צ׳אט קטן שנכנס לאתר שלכם. המשתמשים כותבים שאלות והעוזר החכם עונה בזמן אמת — כמו נציג שירות שעובד 24 שעות ביממה</li>
+                            <li><strong>גבולות ובטיחות:</strong> חשוב שהעוזר ידע מה לא לעשות. למשל: לא לתת מידע שגוי, לא לדבר על נושאים לא קשורים, ולהעביר לאדם אמיתי כשהוא לא יודע. עוזר חכם = עוזר אחראי</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">עוזר חכם</span>
+                            <span class="concept-tag">הוראות הפעלה</span>
+                            <span class="concept-tag">יכולות</span>
+                            <span class="concept-tag">חלון צ׳אט</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>איזה עוזר חכם הייתם רוצים שיעבוד בשביל הפרויקט שלכם? מה הוא צריך לדעת? מה הוא לא צריך לעשות?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נכתוב הוראות הפעלה מושלמות לעוזר שמתאים לפרויקט שלנו — מה התפקיד שלו, מה הוא יודע, ומה הכללים. נבדוק אותו ב-ChatGPT או Claude.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — נבנה חלון צ׳אט באתר שלנו שהעוזר החכם עונה בו למשתמשים.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נוסיף לעוזר "זיכרון" (שיזכור שיחות קודמות) ולפחות כלי אחד (חיפוש, שמירת מידע).</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. שפרו את הוראות ההפעלה של העוזר — הוסיפו לפחות 5 כללים ברורים.</p>
+                            <p>2. בדקו את העוזר עם 10 שאלות שונות — האם הוא עונה נכון? מה צריך לשפר?</p>
+                            <p>3. חשבו על 3 דברים שהעוזר יכול לעשות אוטומטית בפרויקט שלכם.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נשפר את העיצוב ונעלה את האתר לאינטרנט — שכולם יוכלו לראות!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 6 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">6</div>
+                        <h3>עיצוב, שיפור והעלאה לאינטרנט</h3>
+                        <span class="session-tag">העלאה</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נשפר את העיצוב של האתר, נוודא שהוא נראה טוב בטלפון, ונעלה אותו לאינטרנט</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם בנינו עוזר חכם עם הוראות הפעלה וחלון צ׳אט. &bull; <strong>בדיקת משימת בית:</strong> מי שיפר את העוזר? מה הכללים שהוספתם?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>עקרונות עיצוב פשוטים:</strong> שלושה כללים שהופכים כל אתר למקצועי: פחות זה יותר (אל תעמיסו), דברים חשובים בולטים יותר (גודל, צבע), ורווחים בין דברים (נשימה לעיניים)</li>
+                            <li><strong>תנועה ואנימציה:</strong> אפקטים קטנים שמחיים את האתר — כפתור שזז כשמעבירים עליו, תמונה שמופיעה בהדרגה, צבע שמשתנה. הכל בעדינות — אנימציה טובה לא מורגשת, מורגשת רק כשהיא חסרה</li>
+                            <li><strong>התאמה לטלפון:</strong> רוב האנשים גולשים מהטלפון. האתר חייב להיראות מעולה גם במסך קטן. נלמד איך לבנות אתר שמתאים את עצמו אוטומטית לכל מסך</li>
+                            <li><strong>העלאה לאינטרנט (Deploy באנגלית):</strong> עד עכשיו האתר חי רק במחשב שלכם. הגיע הזמן להעלות אותו לאינטרנט! נשתמש בשירות חינמי שנותן לכם כתובת אינטרנט אמיתית שכל אחד בעולם יכול לגלוש בה</li>
+                            <li><strong>כתובת אינטרנט משלכם:</strong> במקום כתובת ארוכה ומוזרה, אפשר לקנות כתובת אישית כמו myproject.co.il! נלמד איך זה עובד ואיך מחברים</li>
+                            <li><strong>מהירות האתר:</strong> אתר איטי = משתמשים עוזבים. נלמד איך לבדוק את מהירות האתר ואיך לשפר — תמונות קטנות יותר, קוד נקי, טעינה חכמה</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">עיצוב</span>
+                            <span class="concept-tag">התאמה לטלפון</span>
+                            <span class="concept-tag">העלאה</span>
+                            <span class="concept-tag">מהירות</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>למה אתרים צריכים להיראות טוב בטלפון? איזה אנימציות מוסיפות ערך ואילו מפריעות?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נשפר את העיצוב — צבעים, גדלים, רווחים. נעלה את האתר לאינטרנט עם עזרת המנחה ונקבל כתובת אמיתית!</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — נוסיף אנימציות ונוודא שהאתר נראה מושלם בטלפון.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נחבר כתובת אינטרנט אישית ונבדוק את מהירות האתר עם כלי בדיקה.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. ודאו שהאתר שלכם נראה מעולה בטלפון — פתחו אותו בנייד ותקנו מה שצריך.</p>
+                            <p>2. הוסיפו לפחות 3 אפקטים עדינים שמשפרים את החוויה.</p>
+                            <p>3. שלחו את הכתובת של האתר ל-3 חברים ובקשו מהם לגלוש — מה הם חושבים?</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד שיווק — איך להביא אנשים לאתר שלכם!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 7 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">7</div>
+                        <h3>שיווק ופרסום דיגיטלי</h3>
+                        <span class="session-tag">שיווק</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נלמד איך להביא אנשים לאתר — שיווק, תוכן ופרסום עם עזרת AI</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם שדרגנו את העיצוב, הוספנו אנימציות, והעלינו את האתר לאינטרנט! &bull; <strong>בדיקת משימת בית:</strong> מי שלח את הכתובת לחברים? מה הם אמרו?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>איך אנשים מוצאים אתרים:</strong> בעיקר דרך חיפוש בגוגל ודרך רשתות חברתיות. אם האתר שלכם לא מופיע בגוגל ואף אחד לא שיתף אותו — אף אחד לא יגיע. שיווק = לגרום לאנשים לדעת שאתם קיימים</li>
+                            <li><strong>גילוי בגוגל (SEO באנגלית):</strong> איך לגרום לגוגל להציג את האתר שלכם כשמישהו מחפש? כותרות ברורות, תיאורים טובים, תמונות עם שמות, וכתובות מסודרות. כל הדברים הקטנים שגורמים לגוגל "לאהוב" את האתר</li>
+                            <li><strong>מעקב אחרי מבקרים:</strong> כלי חינמי של גוגל שמראה כמה אנשים נכנסו לאתר, מאיפה הם הגיעו, כמה זמן נשארו, ומה הדפים הכי פופולריים. מידע = כוח!</li>
+                            <li><strong>שיווק ברשתות חברתיות:</strong> איך יוצרים תוכן שאנשים רוצים לשתף? שלושה סודות: עקביות (לפרסם באופן קבוע), ערך (לתת משהו שימושי), וסיפור (לספר את הסיפור מאחורי הפרויקט). AI עוזר ליצור את כל התוכן!</li>
+                            <li><strong>יצירת תוכן עם AI:</strong> בעשר דקות אפשר ליצור פוסטים לרשתות, טקסטים לאתר, ורעיונות לפרסום. AI הוא שותף השיווק הכי טוב שיש — מהיר, יצירתי, וחינמי</li>
+                            <li><strong>דף נחיתה שמוכר:</strong> דף שגורם לאנשים לעשות משהו — להירשם, לקנות, ליצור קשר. המבנה: משפט פתיחה חזק, הבעיה, הפתרון, המלצות, וכפתור פעולה ברור</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">שיווק</span>
+                            <span class="concept-tag">גילוי בגוגל</span>
+                            <span class="concept-tag">רשתות חברתיות</span>
+                            <span class="concept-tag">תוכן</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>איך אתם מגלים אתרים חדשים? מה גורם לכם ללחוץ על פוסט? למה תוכן טוב עדיף על פרסום יקר?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נוסיף כותרות ותיאורים לכל דף באתר (כדי שגוגל יבין מה יש שם). ניצור פוסט אחד לרשת חברתית עם עזרת AI.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — ניצור 3 פוסטים שונים ונחבר מעקב מבקרים לאתר.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נבנה דף נחיתה מושלם ונתכנן קמפיין שיווקי שלם לשבוע.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. ודאו שלכל דף באתר יש כותרת ותיאור מתאימים.</p>
+                            <p>2. צרו 5 פוסטים לרשת חברתית שבחרתם — עם עזרת AI!</p>
+                            <p>3. הכינו הצגה מעודכנת — 5 נקודות שמוכרות את הפרויקט שלכם.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא — יום ההצגה הגדול! הכינו הכל, התאמנו, ובואו להרשים! &#x1F3C6;</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 8 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header" style="background: linear-gradient(135deg, var(--gold), var(--orange));">
+                        <div class="session-number">8</div>
+                        <h3>&#x1F3C6; יום ההצגה הגדול</h3>
+                        <span class="session-tag">הצגה!</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: הצגת הפרויקט שלכם — הדגמה חיה, שאלות מהקהל, ותעודות סיום!</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם למדנו שיווק, יצרנו תוכן עם AI, וחיברנו מעקב מבקרים. &bull; <strong>בדיקת משימת בית:</strong> מי הכין הצגה? מי התאמן? הגיע הרגע!</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>מבנה ההצגה:</strong> כל תלמיד מציג את הפרויקט שלו! מתחילים עם משפט פתיחה חזק שתופס את תשומת הלב, מסבירים מה הבעיה שפותרים, מראים את הפתרון, ומדגימים את האתר חי — שכולם רואים שזה באמת עובד</li>
+                            <li><strong>הדגמה חיה:</strong> הרגע הכי מרשים — להראות את האתר האמיתי עובד! לא מצגת, לא תמונות מסך — הדבר האמיתי. הקהל רוצה לראות שזה חי, שזה עובד, שזה אמיתי</li>
+                            <li><strong>שאלות מהקהל:</strong> אחרי כל הצגה הקהל שואל שאלות. התכוננו לשאלות כמו: "למי זה מיועד?", "מה המיוחד בפרויקט שלכם?", "מה השלב הבא?", "למה שמישהו ישתמש בזה?"</li>
+                            <li><strong>שופטים ופרסים:</strong> שופטים מעולם הטכנולוגיה והיזמות ייתנו משוב מקצועי ויבחרו את ההצגה הכי טובה, העיצוב הכי יפה, והרעיון הכי חדשני!</li>
+                            <li><strong>קשרים (נטוורקינג):</strong> אחרי ההצגות — הזדמנות לדבר עם אורחים, לשאול שאלות, ולספר על הפרויקט. לפעמים מקשר אחד מגיעה הזדמנות ענקית!</li>
+                            <li><strong>&#x1F389; טקס סיום ותעודות:</strong> כל מי שסיים את הקורס מקבל תעודת "יזם טכנולוגי צעיר"! פרסים למצטיינים, ואחלה חגיגה!</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">הצגה</span>
+                            <span class="concept-tag">הדגמה חיה</span>
+                            <span class="concept-tag">קשרים</span>
+                            <span class="concept-tag">&#x1F3C6; חגיגה!</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>מה השתנה מהקורס הקודם? מה הדבר הכי מפתיע שלמדתם? מה התוכניות לעתיד?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; יום ההצגה הגדול! (60 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> הצגה של 3 דקות — ספרו על הפרויקט, הראו את האתר, וענו לשאלה אחת מהקהל. מצגת לא חובה — הדגמה חיה עדיפה!</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> הצגה של 4 דקות — הסבירו את הבעיה שאתם פותרים, הדגימו את האתר חי, וענו ל-2 שאלות מהקהל.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> הצגה של 5 דקות — פתיח, בעיה, פתרון, הדגמה חיה, ומודל עסקי. ענו ל-3 שאלות מהקהל והציגו תוכניות לעתיד.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3C6; &#x1F389; Congratulations — מזל טוב!</div>
+                            <p>סיימתם את הקורס! יש לכם אתר אמיתי באינטרנט עם מאגר נתונים, חשבונות משתמשים, עוזר חכם, ועיצוב מקצועי. יש לכם יותר ידע מרוב המבוגרים!</p>
+                            <p><strong>&#x1F4A1; מה עכשיו?</strong> המשיכו לבנות, לשפר, ולחלום גדול. השתתפו בתחרויות, בנו פרויקטים חדשים, ובעיקר — אל תפסיקו ליצור! העולם שייך ליוצרים הצעירים! &#x1F680;</p>
                         </div>
                     </div>
                 </div>
@@ -3476,66 +3960,534 @@
             </div>
         </div>
 
-        <!-- ==================== ADVANCED COURSE ==================== -->
-        <div class="portal-section advanced-only" id="section-advanced" style="display:none;">
+        <!-- ==================== COMMUNITY ==================== -->
+        <div class="portal-section" id="section-community">
+            <!-- HEADER -->
             <div class="page-header">
-                <h1>&#x1F31F; קורס מתקדם</h1>
-                <p>ברוכים הבאים לשלב הבא! כאן תמצאו תכנים מתקדמים להמשך הלמידה</p>
+                <h1>&#x1F465; קהילת AI Lab</h1>
+                <p>המקום של היזמים הצעירים</p>
             </div>
-            <div class="sessions-grid">
 
-                <div class="session-card" onclick="this.classList.toggle('expanded')">
-                    <div class="session-banner" style="background: linear-gradient(135deg, #6C3CE1, #FF4D8D);">
-                        <div class="session-number">1</div>
+            <div style="max-width:800px; margin:0 auto;">
+
+                <!-- ABOUT -->
+                <div style="background:var(--dark-card); border-radius:20px; padding:2rem; margin-bottom:2rem; border:1px solid rgba(255,255,255,0.06);">
+                    <h2 style="font-size:1.3rem; margin-bottom:1rem;">&#x1F31F; מה זה קהילת AI Lab?</h2>
+                    <p style="color:var(--text-muted); line-height:1.9; font-size:1rem;">
+                        מקום אחד שבו תלמידים מכל המחזורים נפגשים, עוזרים אחד לשני, משתפים פרויקטים ולומדים ביחד.
+                        <br>כל יום אתגר חדש, כל שבוע סדנה בלייב, ותוכן בלעדי על בינה מלאכותית ויזמות — הכל במקום אחד ב-Discord.
+                    </p>
+                </div>
+
+                <!-- CHANNELS GRID -->
+                <h3 style="font-size:1.15rem; margin-bottom:1rem; padding-right:0.5rem;">&#x1F4E2; מה יש בקהילה?</h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:1rem; margin-bottom:2rem;">
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--accent);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F3AF;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">אתגר יומי</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">משימה קטנה כל יום שמשפרת את הכישורים שלכם</div>
                     </div>
-                    <div class="session-body">
-                        <h3>Backend ושרתים</h3>
-                        <p class="session-preview">מבוא ל-backend, שרתים, APIs ואיך האתר שלכם מדבר עם העולם</p>
-                        <div class="session-detail">
-                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--gold);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F3C6;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">אתגר שבועי</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">פרויקט שלם קטן — בנו, שתפו, וקבלו פידבק</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--primary-light);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F3A5;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">סדנאות שבועיות</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">סדנה בלייב כל שבוע + הקלטות לצפייה חוזרת</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--blue);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F4E2;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">עדכוני AI</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">כלים חדשים, חדשות ועדכונים מעולם הבינה המלאכותית</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--orange);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F4A1;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">סיפורי יזמים</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">השראה מיזמים ישראלים ובינלאומיים</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--pink);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F6E0;&#xFE0F;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">עזרה טכנית</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">נתקעתם? בוט AI + חברי קהילה עוזרים בזמן אמת</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid #9B59B6;">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F3AE;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">פיתוח משחקים</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">משחקים, Roblox ואפליקציות — בנו את המשחק שלכם</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--accent);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F4BC;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">הזדמנויות</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">האקתונים, תחרויות, מלגות והזדמנויות פרילנס</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--gold);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F5BC;&#xFE0F;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">שיתוף פרויקטים</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">"תראו מה בניתי!" — הציגו את היצירות שלכם</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--text-muted);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F4AC;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">ועוד...</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">תכנות, אי-קומרס, תדמית, סוכני AI, דאטה בייס, טיפים</div>
+                    </div>
+                </div>
+
+                <!-- TEASERS (blurred for non-members) -->
+                <h3 style="font-size:1.15rem; margin-bottom:1rem; padding-right:0.5rem;">&#x1F525; קורה עכשיו בקהילה</h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:1rem; margin-bottom:2rem; position:relative;">
+                    <!-- Daily Challenge Teaser -->
+                    <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(0,212,170,0.2); filter:blur(3px); user-select:none; pointer-events:none;">
+                        <div style="font-size:0.75rem; color:var(--accent); font-weight:600; margin-bottom:0.5rem;">&#x1F3AF; אתגר יומי #42</div>
+                        <div style="font-weight:700; margin-bottom:0.5rem;">הוסיפו מצב חשוך (Dark Mode) לאתר שלכם</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">17 חברים כבר סיימו!</div>
+                    </div>
+                    <!-- AI Update Teaser -->
+                    <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(108,60,225,0.2); filter:blur(3px); user-select:none; pointer-events:none;">
+                        <div style="font-size:0.75rem; color:var(--primary-light); font-weight:600; margin-bottom:0.5rem;">&#x1F4E2; עדכון AI</div>
+                        <div style="font-weight:700; margin-bottom:0.5rem;">Claude 4 יצא! הנה מה שהשתנה ואיך להשתמש</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">לפני 3 שעות</div>
+                    </div>
+                    <!-- Project of the Month Teaser -->
+                    <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(245,200,66,0.2); filter:blur(3px); user-select:none; pointer-events:none;">
+                        <div style="font-size:0.75rem; color:var(--gold); font-weight:600; margin-bottom:0.5rem;">&#x1F5BC;&#xFE0F; פרויקט החודש</div>
+                        <div style="font-weight:700; margin-bottom:0.5rem;">נועם (15) בנה אפליקציה לניהול משימות</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">47 לייקים &#x2764;&#xFE0F;</div>
+                    </div>
+                    <!-- Overlay -->
+                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(26,26,46,0.3); border-radius:16px;">
+                        <span style="background:var(--dark-card); padding:0.6rem 1.5rem; border-radius:12px; font-weight:600; font-size:0.95rem; border:1px solid rgba(255,255,255,0.1);">&#x1F512; תוכן לחברי קהילה</span>
+                    </div>
+                </div>
+
+                <!-- STATS -->
+                <div style="display:flex; justify-content:center; gap:2.5rem; margin-bottom:2.5rem; flex-wrap:wrap;">
+                    <div style="text-align:center;">
+                        <div style="font-size:2rem; font-weight:800; color:var(--accent);">47</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">חברים בקהילה</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2rem; font-weight:800; color:var(--primary-light);">12</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">פרויקטים החודש</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2rem; font-weight:800; color:var(--gold);">#42</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">אתגר יומי</div>
+                    </div>
+                </div>
+
+                <!-- GALLERY BUTTON -->
+                <div style="text-align:center; margin-bottom:2rem;">
+                    <a href="/#students" style="display:inline-flex; align-items:center; gap:0.6rem; background:var(--dark-card); color:var(--text); text-decoration:none; padding:0.9rem 2rem; border-radius:14px; font-weight:600; border:1px solid rgba(255,255,255,0.08); transition:transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        &#x1F5BC;&#xFE0F; הכירו את הפרויקטים של התלמידים
+                    </a>
+                </div>
+
+                <!-- FREE JOIN -->
+                <div style="background: linear-gradient(135deg, rgba(0,212,170,0.1), rgba(108,60,225,0.1)); border-radius:20px; padding:2rem; margin-bottom:1.5rem; border:1px solid rgba(0,212,170,0.2); text-align:center;">
+                    <div style="font-size:1.8rem; margin-bottom:0.5rem;">&#x1F44B;</div>
+                    <h3 style="font-size:1.2rem; margin-bottom:0.5rem;">הצטרפו לערוץ המחזור — בחינם!</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.2rem; line-height:1.7;">קבלו גישה לערוץ המחזור שלכם ב-Discord — דברו עם חברי הכיתה, שאלו שאלות ועזרו אחד לשני.</p>
+                    <a href="#" onclick="joinFreeCommunity(); return false;" style="display:inline-block; background:linear-gradient(135deg, var(--accent), #00b894); color:#fff; padding:0.8rem 2.5rem; border-radius:12px; text-decoration:none; font-weight:700; font-size:1.05rem; transition:transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(0,212,170,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        &#x1F517; חברו את ה-Discord (חינם)
+                    </a>
+                </div>
+
+                <!-- PAID UPGRADE -->
+                <div style="background: linear-gradient(135deg, rgba(108,60,225,0.15), rgba(245,200,66,0.1)); border-radius:20px; padding:2rem; margin-bottom:1.5rem; border:1px solid rgba(108,60,225,0.25); text-align:center;">
+                    <div style="font-size:1.8rem; margin-bottom:0.5rem;">&#x1F680;</div>
+                    <h3 style="font-size:1.2rem; margin-bottom:0.5rem;">שדרגו לקהילה המלאה</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0.8rem; line-height:1.7;">אתגרים יומיים, סדנאות בלייב, עדכוני AI, סיפורי יזמים, עזרה טכנית עם AI ועוד — הכל נפתח.</p>
+                    <div style="font-size:1.6rem; font-weight:800; color:var(--gold); margin-bottom:1rem;">בקרוב &#x1F389;</div>
+                    <button disabled style="display:inline-block; background:var(--dark-lighter); color:var(--text-muted); padding:0.8rem 2.5rem; border-radius:12px; border:1px solid rgba(255,255,255,0.1); font-weight:600; font-size:1rem; cursor:not-allowed; font-family:inherit;">
+                        &#x1F514; עדכנו אותי כשנפתח
+                    </button>
+                </div>
+
+                <!-- MEMBER STATUS (hidden by default, shown when member) -->
+                <div id="communityMemberStatus" style="display:none; background:var(--dark-card); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; border:1px solid rgba(0,212,170,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                        <div>
+                            <span style="color:var(--accent); font-weight:700;">&#x2705; חבר קהילה</span>
+                            <span style="color:var(--text-muted); font-size:0.85rem; margin-right:0.5rem;">מנוי פעיל</span>
+                        </div>
+                        <div style="display:flex; gap:0.8rem; align-items:center;">
+                            <span id="discordStatus" style="color:var(--text-muted); font-size:0.85rem;">Discord: לא מחובר</span>
+                            <button onclick="cancelMembership()" style="background:none; border:1px solid rgba(255,77,141,0.3); color:var(--pink); padding:0.4rem 1rem; border-radius:8px; font-size:0.8rem; cursor:pointer; font-family:inherit;">ביטול מנוי</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="session-card" onclick="this.classList.toggle('expanded')">
-                    <div class="session-banner" style="background: linear-gradient(135deg, #00D4AA, #4DA3FF);">
-                        <div class="session-number">2</div>
+            </div>
+        </div>
+
+        <!-- ==================== DEV-TOOLS (Advanced) ==================== -->
+        <div class="portal-section" id="section-dev-tools">
+            <div class="page-header">
+                <h1>&#x1F527; כלים לפיתוח</h1>
+                <p>כל הכלים שתשתמשו בהם לבניית הפרויקט המתקדם</p>
+            </div>
+            <div class="ai-tools-grid">
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #3ECF8E, #2B9F6F);">&#x1F4BE;</div>
+                    <div class="ai-tool-info">
+                        <h3>Supabase (סופאבייס)</h3>
+                        <p class="ai-tool-desc">שירות חינמי שנותן לכם מאגר נתונים, הרשמה והתחברות, ואחסון קבצים. במקום לבנות שרת מאפס &mdash; הכל מוכן!</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: שמירת מידע, חשבונות משתמשים, אחסון תמונות</div>
+                        <a href="https://supabase.com" target="_blank" class="ai-tool-link">כניסה ל-Supabase</a>
                     </div>
-                    <div class="session-body">
-                        <h3>בסיס נתונים</h3>
-                        <p class="session-preview">איך שומרים מידע? מבוא לבסיסי נתונים ו-Supabase</p>
-                        <div class="session-detail">
-                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #000, #333);">&#x25B2;</div>
+                    <div class="ai-tool-info">
+                        <h3>Vercel (ורסל)</h3>
+                        <p class="ai-tool-desc">שירות חינמי להעלאת אתרים לאינטרנט. מחברים את הפרויקט ותוך דקה האתר באוויר עם כתובת אמיתית!</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: העלאה לאינטרנט, כתובת אינטרנט, עדכון אוטומטי</div>
+                        <a href="https://vercel.com" target="_blank" class="ai-tool-link">כניסה ל-Vercel</a>
+                    </div>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #24292e, #555);">&#x1F4BB;</div>
+                    <div class="ai-tool-info">
+                        <h3>GitHub (גיטהאב)</h3>
+                        <p class="ai-tool-desc">מקום לשמור את הקוד שלכם בענן. כמו גוגל דרייב &mdash; אבל לקוד. שומר גרסאות, מאפשר שיתוף, ומחובר ל-Vercel.</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: שמירת קוד, ניהול גרסאות, שיתוף פרויקטים</div>
+                        <a href="https://github.com" target="_blank" class="ai-tool-link">כניסה ל-GitHub</a>
+                    </div>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #FF6B35, #FF8C42);">&#x1F310;</div>
+                    <div class="ai-tool-info">
+                        <h3>שירותים חיצוניים (APIs)</h3>
+                        <p class="ai-tool-desc">שירותים שאפשר לחבר לאתר שלכם: מזג אוויר, חדשות, מפות, תרגום ועוד. כל שירות נותן מידע שאפשר להציג באתר.</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: מידע בזמן אמת, מפות, חדשות, תרגום</div>
+                        <a href="https://rapidapi.com" target="_blank" class="ai-tool-link">חיפוש שירותים ב-RapidAPI</a>
+                    </div>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #6C3CE1, #8B5CF6);">&#x1F916;</div>
+                    <div class="ai-tool-info">
+                        <h3>Claude API</h3>
+                        <p class="ai-tool-desc">ממשק חיבור ל-Claude שמאפשר לבנות עוזר חכם באתר שלכם. המשתמשים שואלים שאלות וה-AI עונה בזמן אמת.</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: עוזר חכם, צ'אטבוט, מענה אוטומטי</div>
+                        <a href="https://console.anthropic.com" target="_blank" class="ai-tool-link">כניסה ל-Claude API</a>
+                    </div>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #4285F4, #34A853);">&#x1F4CA;</div>
+                    <div class="ai-tool-info">
+                        <h3>Google Analytics</h3>
+                        <p class="ai-tool-desc">כלי חינמי של גוגל שמראה כמה אנשים נכנסו לאתר, מאיפה הגיעו, וכמה זמן נשארו. מידע חיוני לשיווק!</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: מעקב מבקרים, ניתוח נתונים, שיפור האתר</div>
+                        <a href="https://analytics.google.com" target="_blank" class="ai-tool-link">כניסה ל-Google Analytics</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CHECKLIST (Advanced) ==================== -->
+        <div class="portal-section" id="section-checklist">
+            <div class="page-header">
+                <h1>&#x1F4CB; צ'קליסט פרויקט</h1>
+                <p>רשימת כל מה שצריך לעשות כדי שהפרויקט יהיה מוכן ליום ההצגה</p>
+            </div>
+            <div style="max-width:700px; margin:0 auto;">
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; border-right:3px solid var(--accent);">
+                    <h3 style="color:var(--accent); margin-bottom:1rem; font-size:1.1rem;">&#x1F527; תשתית (מפגשים 1-3)</h3>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent);"> סקירת ה-MVP ותכנון שדרוג
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent);"> יצירת פרויקט ב-Supabase
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent);"> בניית טבלאות במאגר הנתונים
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent);"> חיבור טפסים ל-Supabase
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer;">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent);"> הוספת הרשמה והתחברות
+                    </label>
+                </div>
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; border-right:3px solid var(--primary-light);">
+                    <h3 style="color:var(--primary-light); margin-bottom:1rem; font-size:1.1rem;">&#x1F680; תכונות (מפגשים 4-5)</h3>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--primary-light);"> חיבור שירות חיצוני (API)
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--primary-light);"> הצגת מידע מהשירות באתר
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--primary-light);"> כתיבת הוראות הפעלה לעוזר חכם
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer;">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--primary-light);"> בניית חלון צ'אט עם AI
+                    </label>
+                </div>
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; border-right:3px solid var(--gold);">
+                    <h3 style="color:var(--gold); margin-bottom:1rem; font-size:1.1rem;">&#x2728; גימור (מפגשים 6-7)</h3>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold);"> עיצוב מקצועי ואנימציות
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold);"> התאמה לטלפון (רספונסיבי)
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold);"> העלאה לאינטרנט (Deploy)
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold);"> הוספת SEO &mdash; כותרות ותיאורים
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer;">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold);"> חיבור Google Analytics
+                    </label>
+                </div>
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border-right:3px solid var(--orange);">
+                    <h3 style="color:var(--orange); margin-bottom:1rem; font-size:1.1rem;">&#x1F3C6; הצגה (מפגש 8)</h3>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--orange);"> הכנת מצגת / נקודות להצגה
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--orange);"> תרגול הדגמה חיה
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; color:var(--text); cursor:pointer;">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--orange);"> הכנת תשובות לשאלות צפויות
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== GUIDES-ADV (Advanced) ==================== -->
+        <div class="portal-section" id="section-guides-adv">
+            <div class="page-header">
+                <h1>&#x1F4D6; הדרכות</h1>
+                <p>מדריכים צעד אחר צעד לכל נושא בקורס המתקדם</p>
+            </div>
+            <div class="help-list">
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך נרשמים ל-Supabase ויוצרים פרויקט?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>היכנסו לאתר <a href="https://supabase.com" target="_blank" style="color: var(--accent);">supabase.com</a></li>
+                                <li>לחצו על "Start your project" והירשמו עם חשבון GitHub</li>
+                                <li>לחצו "New Project" &mdash; בחרו שם, סיסמה, ואזור (בחרו את הקרוב אליכם)</li>
+                                <li>חכו דקה עד שהפרויקט מוכן &mdash; תקבלו URL ומפתח (API Key)</li>
+                                <li>שמרו את המפתחות! תצטרכו אותם כדי לחבר את האתר</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
-
-                <div class="session-card" onclick="this.classList.toggle('expanded')">
-                    <div class="session-banner" style="background: linear-gradient(135deg, #FF7849, #F5C842);">
-                        <div class="session-number">3</div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך יוצרים טבלה ב-Supabase?</span>
+                        <span class="toggle-icon">+</span>
                     </div>
-                    <div class="session-body">
-                        <h3>Authentication ומשתמשים</h3>
-                        <p class="session-preview">איך מוסיפים הרשמה והתחברות לאתר שלכם</p>
-                        <div class="session-detail">
-                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>בפרויקט ב-Supabase, לחצו על "Table Editor" בתפריט השמאלי</li>
+                                <li>לחצו "New Table" ותנו שם (למשל: contacts, products, messages)</li>
+                                <li>הוסיפו עמודות &mdash; למשל: name (טקסט), email (טקסט), message (טקסט), created_at (תאריך)</li>
+                                <li>לחצו "Save" &mdash; הטבלה מוכנה!</li>
+                                <li>אפשר להוסיף שורות ביד בלחיצה על "Insert Row"</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
-
-                <div class="session-card" onclick="this.classList.toggle('expanded')">
-                    <div class="session-banner" style="background: linear-gradient(135deg, #FF4D8D, #6C3CE1);">
-                        <div class="session-number">4</div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך מפעילים הרשמה והתחברות ב-Supabase?</span>
+                        <span class="toggle-icon">+</span>
                     </div>
-                    <div class="session-body">
-                        <h3>API וחיבור לשירותים</h3>
-                        <p class="session-preview">חיבור ל-APIs חיצוניים ושימוש בנתונים אמיתיים</p>
-                        <div class="session-detail">
-                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>ב-Supabase, לחצו על "Authentication" בתפריט השמאלי</li>
+                                <li>לחצו "Providers" &mdash; תראו רשימה של דרכי התחברות</li>
+                                <li>Email כבר מופעל כברירת מחדל</li>
+                                <li>בשביל "התחבר עם גוגל" &mdash; לחצו על Google והפעילו. תצטרכו מפתחות מ-Google Cloud Console</li>
+                                <li>בקשו מה-AI שלכם שיעזור לחבר את טופס ההרשמה לאתר!</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך מחברים שירות חיצוני (API) לאתר?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>בחרו שירות &mdash; למשל מזג אוויר (<a href="https://openweathermap.org/api" target="_blank" style="color:var(--accent);">OpenWeather</a>)</li>
+                                <li>הירשמו לשירות וקבלו מפתח גישה (API Key)</li>
+                                <li>בקשו מה-AI ב-Cursor: "חבר לי את ה-API של מזג אוויר &mdash; הנה המפתח: [...]"</li>
+                                <li>ה-AI יכתוב את הקוד שמביא את המידע ומציג אותו באתר</li>
+                                <li>בדקו שהמידע מופיע נכון ועצבו את התצוגה</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך מעלים את האתר לאינטרנט (Vercel)?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>ודאו שהפרויקט שלכם ב-GitHub (בקשו מה-AI לעזור לדחוף לשם)</li>
+                                <li>היכנסו ל-<a href="https://vercel.com" target="_blank" style="color:var(--accent);">vercel.com</a> והתחברו עם GitHub</li>
+                                <li>לחצו "New Project" ובחרו את הפרויקט שלכם מ-GitHub</li>
+                                <li>לחצו "Deploy" &mdash; תוך דקה האתר באוויר!</li>
+                                <li>תקבלו כתובת כמו myproject.vercel.app &mdash; שלחו לחברים!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך בונים עוזר חכם (AI Agent) לאתר?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>כתבו הוראות הפעלה (System Prompt) &mdash; מה התפקיד של העוזר, מה הכללים, מה הוא יודע</li>
+                                <li>בדקו את ההוראות ב-ChatGPT או Claude &mdash; שלחו הודעות ובדקו שהתשובות טובות</li>
+                                <li>בקשו מה-AI ב-Cursor: "בנה לי חלון צ'אט באתר שמשתמש ב-Claude API"</li>
+                                <li>הוסיפו את מפתח ה-API של Claude (מ-<a href="https://console.anthropic.com" target="_blank" style="color:var(--accent);">console.anthropic.com</a>)</li>
+                                <li>בדקו שהעוזר עונה נכון ושפרו את ההוראות לפי הצורך</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- ==================== PROMPTS (Advanced) ==================== -->
+        <div class="portal-section" id="section-prompts">
+            <div class="page-header">
+                <h1>&#x1F3AF; פרומפטים מוכנים</h1>
+                <p>העתיקו את הפרומפט, הדביקו ב-Cursor או Claude, ותנו ל-AI לעשות את העבודה</p>
+            </div>
+            <div style="max-width:800px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem;">
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F4BE; חיבור ל-Supabase</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        חבר את האתר שלי ל-Supabase. הנה הפרטים:<br>
+                        - כתובת Supabase: [הדביקו כאן את הכתובת]<br>
+                        - מפתח Supabase: [הדביקו כאן את המפתח]<br>
+                        <br>
+                        בנה טופס יצירת קשר ששומר מידע בטבלה בשם "contacts" עם השדות: name, email, message, created_at.<br>
+                        הוסף הודעות הצלחה ושגיאה בעברית.
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F510; הרשמה והתחברות</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        הוסף מערכת הרשמה והתחברות לאתר שלי עם Supabase Auth.<br>
+                        - בנה דף הרשמה עם אימייל + סיסמה<br>
+                        - בנה דף התחברות<br>
+                        - הוסף כפתור "התחבר עם גוגל"<br>
+                        - אחרי התחברות, העבר לאזור אישי שמציג "שלום, [שם המשתמש]!"<br>
+                        - הגן על האזור האישי — אם לא מחובר, העבר לדף ההתחברות<br>
+                        - כל הטקסטים בעברית, כיוון RTL
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F30D; חיבור שירות מזג אוויר</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        הוסף ווידג'ט מזג אוויר לאתר שלי עם OpenWeather API.<br>
+                        - מפתח API: [הדביקו כאן את המפתח]<br>
+                        - הצג טמפרטורה נוכחית, תיאור מזג האוויר ואייקון<br>
+                        - עיר ברירת מחדל: תל אביב<br>
+                        - הוסף תיבת חיפוש כדי לבדוק ערים אחרות<br>
+                        - עצב את זה יפה בתוך כרטיס. ממשק בעברית.
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F916; בניית עוזר חכם (צ'אטבוט)</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        בנה חלון צ'אט באתר שלי עם עוזר חכם AI.<br>
+                        - השתמש ב-Claude API (מפתח: [הדביקו כאן])<br>
+                        - תפקיד העוזר: [תארו מה העוזר עושה]<br>
+                        - הוראות הפעלה: "אתה עוזר של [שם הפרויקט]. אתה עוזר למשתמשים עם [מה]. תמיד ענה בעברית. היה ידידותי וקצר."<br>
+                        - הצ'אט מופיע ככפתור צף בפינה השמאלית למטה<br>
+                        - שמור היסטוריית שיחה<br>
+                        - ממשק בעברית, כיוון RTL
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F680; העלאה לאינטרנט</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        עזור לי להעלות את האתר שלי לאינטרנט:<br>
+                        1. צור ריפוזיטורי (מאגר קוד) ב-GitHub לפרויקט שלי<br>
+                        2. העלה את כל הקוד ל-GitHub<br>
+                        3. חבר ל-Vercel והעלה לאינטרנט<br>
+                        4. תן לי הוראות צעד אחרי צעד לכל חלק<br>
+                        <br>
+                        הפרויקט שלי נמצא בתיקייה: [הדביקו כאן את הנתיב לתיקייה]
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F4C8; הוספת SEO ו-Analytics</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        שפר את האתר שלי לקידום בגוגל והוסף מעקב מבקרים:<br>
+                        - הוסף כותרות ותיאורים מתאימים לכל דף (בעברית)<br>
+                        - הוסף טקסט חלופי לכל התמונות<br>
+                        - הוסף תגיות לשיתוף ברשתות חברתיות<br>
+                        - הוסף קוד מעקב של Google Analytics (מזהה: [הדביקו כאן את המזהה])<br>
+                        - צור קובץ sitemap.xml<br>
+                        - צור קובץ robots.txt
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F3A8; שיפור עיצוב + מובייל</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        שפר את העיצוב של האתר שלי:<br>
+                        - תתאים אותו לטלפון נייד (רספונסיבי)<br>
+                        - הוסף אפקטים עדינים על כפתורים וכרטיסים כשמעבירים עליהם עכבר<br>
+                        - הוסף אנימציות כניסה עדינות (הופעה הדרגתית, החלקה מלמטה)<br>
+                        - שפר רווחים וגדלי טקסט<br>
+                        - ודא שזה נראה מעולה באייפון, אייפד ומחשב<br>
+                        - שמור על הצבעים הקיימים והכיוון RTL
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -3607,7 +4559,10 @@
                         if (expires && new Date(expires) < new Date()) {
                             return { valid: false, reason: 'expired' };
                         }
-                        return { valid: true, name: row[1] || '', group: row[3] || '', level: row[4] || 'basic' };
+                        var userLevel = row[4] || 'basic';
+                        // Admin override for specific name
+                        if ((row[1] || '').indexOf('מאיר') !== -1) userLevel = 'admin';
+                        return { valid: true, name: row[1] || '', group: row[3] || '', level: userLevel };
                     }
                 }
                 return { valid: false, reason: 'not_found' };
@@ -3645,6 +4600,9 @@
             }
         }
 
+        var currentUserLevel = 'basic';
+        var currentCourseView = 'basic';
+
         function showPortal(name, level) {
             document.getElementById('loginGate').classList.add('hidden');
             var greeting = document.getElementById('greetingArea');
@@ -3654,11 +4612,75 @@
                 if (avatar) avatar.textContent = name.charAt(0);
             }
             document.getElementById('logoutBtn').style.display = '';
-            // Show/hide advanced content
+
+            // Store user level
+            currentUserLevel = level || 'basic';
+            var isAdvanced = currentUserLevel === 'advanced' || currentUserLevel === 'admin';
+
+            // Show/hide advanced-only elements (switcher, advanced nav items)
             var advancedEls = document.querySelectorAll('.advanced-only');
-            var isAdvanced = level === 'advanced' || level === 'admin';
             for (var i = 0; i < advancedEls.length; i++) {
                 advancedEls[i].style.display = isAdvanced ? '' : 'none';
+            }
+
+            // Default to basic view for all users
+            switchCourse('basic');
+        }
+
+        function switchCourse(courseType) {
+            currentCourseView = courseType;
+
+            // Update switcher buttons
+            var btnBasic = document.getElementById('courseBtnBasic');
+            var btnAdvanced = document.getElementById('courseBtnAdvanced');
+            if (btnBasic && btnAdvanced) {
+                btnBasic.classList.toggle('active', courseType === 'basic');
+                btnAdvanced.classList.toggle('active', courseType === 'advanced');
+            }
+
+            // Show/hide sections based on course type
+            // Elements with data-course="basic" show in basic view
+            // Elements with data-course="advanced" show in advanced view
+            // Elements without data-course show in both views
+            var courseElements = document.querySelectorAll('[data-course]');
+            courseElements.forEach(function(el) {
+                var elCourse = el.getAttribute('data-course');
+                if (courseType === 'advanced') {
+                    // Advanced view: show only advanced content
+                    el.style.display = (elCourse === 'advanced') ? '' : 'none';
+                } else {
+                    // Basic view: show only basic content
+                    el.style.display = (elCourse === 'basic') ? '' : 'none';
+                }
+            });
+
+            // Show/hide nav buttons based on course type
+            var navButtons = document.querySelectorAll('[data-nav-course]');
+            navButtons.forEach(function(btn) {
+                var btnCourse = btn.getAttribute('data-nav-course');
+                if (courseType === 'advanced') {
+                    btn.style.display = (btnCourse === 'advanced') ? '' : 'none';
+                } else {
+                    btn.style.display = (btnCourse === 'basic') ? '' : 'none';
+                }
+            });
+
+            // When switching course, go back to sessions (shared section)
+            var allNavBtnsSwitch = document.querySelectorAll('.sidebar-nav button, .mobile-nav button');
+            allNavBtnsSwitch.forEach(function(b) { b.classList.remove('active'); });
+            var sessionsBtn = document.querySelector('.sidebar-nav button[data-section="sessions"]');
+            if (sessionsBtn) sessionsBtn.classList.add('active');
+            var sessionsBtnMobile = document.querySelector('.mobile-nav button[data-section="sessions"]');
+            if (sessionsBtnMobile) sessionsBtnMobile.classList.add('active');
+            switchSection('sessions');
+
+            // Update page header if exists
+            var activeSection = document.querySelector('.portal-section[style*="block"], .portal-section.active');
+            if (activeSection) {
+                var headers = activeSection.querySelectorAll('.page-header h1 .course-label');
+                headers.forEach(function(h) {
+                    h.textContent = courseType === 'advanced' ? 'מתקדם' : 'בסיסי';
+                });
             }
         }
 
@@ -3682,7 +4704,7 @@
                     var hoursSinceLogin = (Date.now() - data.loginTime) / (1000 * 60 * 60);
                     if (hoursSinceLogin < RECHECK_HOURS) {
                         // Still within valid window, show portal
-                        showPortal(data.name, data.level);
+                        showPortal(data.name, data.level || 'basic');
                         return;
                     }
                     // Re-verify in background
@@ -3763,7 +4785,7 @@
         });
 
         // ===== SESSION CARDS: COMPACT GRID + DETAIL VIEW =====
-        const sessionData = [
+        const sessionDataBasic = [
             { desc: '\u05D4\u05DB\u05E8\u05D5\u05EA \u05E2\u05DD \u05D1\u05D9\u05E0\u05D4 \u05DE\u05DC\u05D0\u05DB\u05D5\u05EA\u05D9\u05EA, \u05E0\u05D9\u05E1\u05D9\u05D5\u05DF \u05E8\u05D0\u05E9\u05D5\u05DF \u05E2\u05DD ChatGPT \u05D5-Claude', topics: ['\u05DE\u05D4 \u05D6\u05D4 AI?', 'ChatGPT', 'Claude', '\u05DE\u05D9\u05DC\u05D5\u05DF \u05DE\u05D5\u05E9\u05D2\u05D9\u05DD'],
               bg: 'linear-gradient(135deg, #1a0533 0%, #4a00e0 50%, #3f5efb 100%)' },
             { desc: '\u05D8\u05DB\u05E0\u05D9\u05E7\u05D5\u05EA \u05DC\u05DB\u05EA\u05D9\u05D1\u05EA \u05E4\u05E8\u05D5\u05DE\u05E4\u05D8\u05D9\u05DD \u05DE\u05D5\u05E9\u05DC\u05DE\u05D9\u05DD + \u05D4\u05EA\u05E7\u05E0\u05EA Cursor \u05D5-Claude Code', topics: ['\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8', '5 \u05D8\u05DB\u05E0\u05D9\u05E7\u05D5\u05EA', 'Cursor', 'Claude Code'],
@@ -3782,44 +4804,73 @@
               bg: 'linear-gradient(135deg, #e65100 0%, #ff9800 50%, #ffd54f 100%)' }
         ];
 
+        const sessionDataAdvanced = [
+            { desc: 'סקירת הפרויקט מהקורס הבסיסי — מה עובד, מה חסר, ומה המטרה לקורס המתקדם', topics: ['MVP', 'Roadmap', 'Git', 'שדרוג'],
+              bg: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' },
+            { desc: 'מה זה שרת ו-Database? הכרות עם Supabase, שמירה ושליפה של מידע אמיתי', topics: ['Backend', 'Database', 'Supabase', 'SQL'],
+              bg: 'linear-gradient(135deg, #0d2137 0%, #0f4c75 50%, #3282b8 100%)' },
+            { desc: 'מערכת הרשמה, התחברות ואזור אישי — האתר שלכם הופך לאפליקציה', topics: ['Auth', 'OAuth', 'Session', 'Token'],
+              bg: 'linear-gradient(135deg, #1a0a2e 0%, #5b2c8e 50%, #8e44ad 100%)' },
+            { desc: 'שליפת מידע מ-APIs חיצוניים וחיבור שירותים חיצוניים לאתר', topics: ['API', 'REST', 'JSON', 'HTTP'],
+              bg: 'linear-gradient(135deg, #0c3547 0%, #11698e 50%, #19d3da 100%)' },
+            { desc: 'בניית AI Agent שעושה דברים בשבילכם — אוטומציות חכמות עם Claude', topics: ['AI Agent', 'Automation', 'System Prompt', 'Functions'],
+              bg: 'linear-gradient(135deg, #1a0533 0%, #6a0572 50%, #ab83a1 100%)' },
+            { desc: 'עיצוב מקצועי, אנימציות, תמיכה במובייל, והעלאה לאינטרנט עם דומיין', topics: ['Responsive', 'Animation', 'Deploy', 'Vercel'],
+              bg: 'linear-gradient(135deg, #0a3d62 0%, #0c5298 50%, #2e86de 100%)' },
+            { desc: 'איך מגיעים ללקוחות? קמפיינים, תוכן שיווקי עם AI, ואנליטיקס', topics: ['SEO', 'Analytics', 'Marketing', 'Content'],
+              bg: 'linear-gradient(135deg, #1e3a1e 0%, #2d6a2d 50%, #4caf50 100%)' },
+            { desc: 'הצגת הפרויקט המתקדם — דמו חי, שאלות מהקהל, ותעודות סיום!', topics: ['פיץ\'', 'Demo', 'Networking', 'חגיגה!'],
+              bg: 'linear-gradient(135deg, #b45309 0%, #d97706 50%, #fbbf24 100%)' }
+        ];
+
         // On load: inject image banners + previews + hide bodies + add click handlers
         (function initSessionCards() {
-            const cards = document.querySelectorAll('.session-card');
-            cards.forEach((card, i) => {
-                const body = card.querySelector('.session-card-body');
-                if (body) body.style.display = 'none';
-                const header = card.querySelector('.session-card-header');
-                if (!header) return;
-                const d = sessionData[i] || { desc: '', topics: [], bg: '' };
+            var basicCards = document.querySelectorAll('.session-card[data-course="basic"]');
+            var advancedCards = document.querySelectorAll('.session-card[data-course="advanced"]');
 
-                // Add gradient image banner before header
-                const imgBanner = document.createElement('div');
-                imgBanner.className = 'session-card-image';
-                imgBanner.style.background = d.bg;
-                imgBanner.innerHTML = '<span class="img-num">' + (i + 1) + '</span><div class="img-deco"></div>';
-                header.parentNode.insertBefore(imgBanner, header);
+            function setupCards(cards, dataArr, courseType) {
+                cards.forEach(function(card, i) {
+                    var body = card.querySelector('.session-card-body');
+                    if (body) body.style.display = 'none';
+                    var header = card.querySelector('.session-card-header');
+                    if (!header) return;
+                    var d = dataArr[i] || { desc: '', topics: [], bg: '' };
 
-                // Remove the old background from header (now it's a separate element)
-                header.style.background = 'none';
+                    // Add gradient image banner before header
+                    var imgBanner = document.createElement('div');
+                    imgBanner.className = 'session-card-image';
+                    imgBanner.style.background = d.bg;
+                    imgBanner.innerHTML = '<span class="img-num">' + (i + 1) + '</span><div class="img-deco"></div>';
+                    header.parentNode.insertBefore(imgBanner, header);
 
-                // Create preview text
-                const preview = document.createElement('div');
-                preview.className = 'session-card-preview';
-                preview.innerHTML = '<p>' + d.desc + '</p>' +
-                    '<div class="preview-topics">' + d.topics.map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
-                    '<div class="preview-enter">\u05D4\u05D9\u05DB\u05E0\u05E1\u05D5 \u05DC\u05DE\u05E4\u05D2\u05E9 \u2190</div>';
-                header.insertAdjacentElement('afterend', preview);
+                    // Remove the old background from header (now it's a separate element)
+                    header.style.background = 'none';
 
-                // Click handler
-                card.addEventListener('click', function(e) {
-                    if (e.target.closest('.session-presentation')) return;
-                    openSession(i);
+                    // Create preview text
+                    var preview = document.createElement('div');
+                    preview.className = 'session-card-preview';
+                    preview.innerHTML = '<p>' + d.desc + '</p>' +
+                        '<div class="preview-topics">' + d.topics.map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
+                        '<div class="preview-enter">\u05D4\u05D9\u05DB\u05E0\u05E1\u05D5 \u05DC\u05DE\u05E4\u05D2\u05E9 \u2190</div>';
+                    header.insertAdjacentElement('afterend', preview);
+
+                    // Click handler — store course type and index on the card
+                    card.dataset.sessionIndex = i;
+                    card.dataset.courseType = courseType;
+                    card.addEventListener('click', function(e) {
+                        if (e.target.closest('.session-presentation')) return;
+                        openSession(parseInt(card.dataset.sessionIndex), card.dataset.courseType);
+                    });
                 });
-            });
+            }
+
+            setupCards(basicCards, sessionDataBasic, 'basic');
+            setupCards(advancedCards, sessionDataAdvanced, 'advanced');
         })();
 
-        function openSession(idx) {
-            const cards = document.querySelectorAll('.session-card');
+        function openSession(idx, courseType) {
+            courseType = courseType || 'basic';
+            const cards = document.querySelectorAll('.session-card[data-course="' + courseType + '"]');
             const card = cards[idx];
             if (!card) return;
             const grid = document.querySelector('.sessions-grid');
@@ -3840,7 +4891,7 @@
             grid.style.display = 'none';
             detail.classList.add('active');
             // Push state so browser back button returns to grid
-            history.pushState({ view: 'session', idx: idx }, '', '#session-' + (idx + 1));
+            history.pushState({ view: 'session', idx: idx, course: courseType }, '', '#session-' + courseType + '-' + (idx + 1));
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -3881,6 +4932,19 @@
             if (!wasOpen) item.classList.add('open');
             document.querySelectorAll('.help-item .toggle-icon').forEach(icon => icon.textContent = '+');
             if (!wasOpen) item.querySelector('.toggle-icon').textContent = '\u00D7';
+        }
+
+        // ===== COPY PROMPT =====
+        function copyPrompt(btn) {
+            var promptText = btn.closest('div').nextElementSibling.textContent.trim();
+            navigator.clipboard.writeText(promptText).then(function() {
+                btn.textContent = 'הועתק!';
+                btn.style.background = 'var(--accent)';
+                setTimeout(function() {
+                    btn.textContent = 'העתק';
+                    btn.style.background = 'var(--primary)';
+                }, 2000);
+            });
         }
 
         // ===== PROJECT WIZARD =====
