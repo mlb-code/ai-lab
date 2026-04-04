@@ -265,8 +265,9 @@
     position: relative;
   }
   .price-card .course-name { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
-  .price-card .price { font-size: 2rem; font-weight: 900; color: var(--accent); margin: 12px 0 4px; }
-  .price-card .price span { font-size: 0.9rem; color: #888; font-weight: 400; }
+  .price-card .community-badge { font-size: 0.72rem; background: rgba(0,212,170,0.12); color: var(--accent); border: 1px solid rgba(0,212,170,0.3); border-radius: 20px; padding: 2px 10px; display: inline-block; margin-bottom: 6px; }
+  .price-card .original { font-size: 0.9rem; color: #555; text-decoration: line-through; margin-bottom: 2px; }
+  .price-card .price { font-size: 2rem; font-weight: 900; color: var(--accent); margin: 4px 0 4px; }
   .price-card .sessions { font-size: 0.82rem; color: #888; }
   .price-card.coming-soon { opacity: 0.5; }
   .price-card.coming-soon .price { font-size: 1.1rem; color: #555; }
@@ -314,6 +315,13 @@
     font-size: 0.9rem;
   }
   .contact-info a { color: var(--accent); text-decoration: none; }
+
+  /* PRINT */
+  @media print {
+    @page { margin: 0; size: 1280px 30000px; }
+    html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .site-preview-wrap, .site-preview-iframe { display: none; }
+  }
 
   /* MOBILE */
   @media (max-width: 640px) {
@@ -606,12 +614,16 @@
   <div class="pricing-grid">
     <div class="price-card">
       <div class="course-name">קורס בסיסי</div>
-      <div class="price">₪890</div>
+      <div class="community-badge">מחיר קהילת 8100 🎉</div>
+      <div class="original">₪890</div>
+      <div class="price">₪790</div>
       <div class="sessions">לקורס · 8 מפגשים · 60 דקות</div>
     </div>
     <div class="price-card">
       <div class="course-name">קורס מתקדם</div>
-      <div class="price">₪1,190</div>
+      <div class="community-badge">מחיר קהילת 8100 🎉</div>
+      <div class="original">₪1,190</div>
+      <div class="price">₪1,090</div>
       <div class="sessions">לקורס · 8 מפגשים · 60 דקות</div>
     </div>
     <div class="price-card coming-soon">
@@ -631,7 +643,7 @@
 <div class="cta-section">
   <h2>מעוניינים לשמוע עוד?</h2>
   <p>נשמח לספר על הקורס, לתאם שיחה קצרה או לשלוח חומרים נוספים</p>
-  <a href="https://wa.me/972546500795?text=היי, ראיתי את המצגת על קורס AI Lab ורוצה לשמוע עוד פרטים" class="btn-wa">
+  <a href="https://wa.me/972546500795?text=היי אני מקהילת 8100 אשמח להרשם לקורס הבסיסי" class="btn-wa">
     💬 יצירת קשר בוואטסאפ
   </a>
   <div style="margin-top:16px;">
