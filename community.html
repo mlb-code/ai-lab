@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Lab — קורס AI ויזמות לילדים</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8f0;
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 50%, #0d1a0d 100%);
+    padding: 70px 20px 60px;
+    text-align: center;
+    border-bottom: 1px solid #2a2a3a;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(100,200,100,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .logo {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .logo span { color: #64c864; }
+  .hero h1 {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    margin: 20px 0 16px;
+    line-height: 1.3;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: #64c864;
+  }
+  .hero p {
+    font-size: 1.15rem;
+    color: #aaa;
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(100,200,100,0.12);
+    border: 1px solid rgba(100,200,100,0.3);
+    color: #64c864;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin: 4px;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    border-bottom: 1px solid #1a1a2a;
+  }
+  .section h2 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  .section h2 .icon { margin-left: 10px; }
+  .section p { color: #bbb; margin-bottom: 14px; font-size: 1.05rem; }
+
+  /* AGE CARDS */
+  .age-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .age-card {
+    background: #13131f;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .age-card .age-label {
+    font-size: 0.85rem;
+    color: #64c864;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .age-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: #fff; }
+  .age-card ul { list-style: none; padding: 0; }
+  .age-card ul li { color: #999; font-size: 0.9rem; padding: 3px 0; }
+  .age-card ul li::before { content: '✓ '; color: #64c864; }
+
+  /* ZOOM SECTION */
+  .zoom-highlight {
+    background: linear-gradient(135deg, #0d1f0d, #131320);
+    border: 1px solid rgba(100,200,100,0.2);
+    border-radius: 14px;
+    padding: 28px;
+    margin-top: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .zoom-stat {
+    text-align: center;
+    min-width: 100px;
+  }
+  .zoom-stat .num {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #64c864;
+    display: block;
+  }
+  .zoom-stat .label { font-size: 0.85rem; color: #888; }
+  .zoom-text { flex: 1; min-width: 200px; }
+  .zoom-text p { color: #bbb; margin: 0; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .project-card {
+    background: #13131f;
+    border: 1px solid #2a2a3a;
+    border-radius: 10px;
+    padding: 16px;
+    transition: border-color 0.2s;
+  }
+  .project-card:hover { border-color: #64c864; }
+  .project-card .emoji { font-size: 2rem; margin-bottom: 8px; display: block; }
+  .project-card h4 { font-size: 0.95rem; color: #fff; margin-bottom: 4px; }
+  .project-card p { font-size: 0.85rem; color: #888; margin: 0; }
+  .project-card .age-tag {
+    display: inline-block;
+    background: rgba(100,200,100,0.1);
+    color: #64c864;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 8px;
+  }
+
+  /* COMMUNITY */
+  .community-box {
+    background: linear-gradient(135deg, #0d0d2a, #1a0d1a);
+    border: 1px solid rgba(114,137,218,0.3);
+    border-radius: 14px;
+    padding: 30px;
+    margin-top: 24px;
+  }
+  .community-box h3 {
+    font-size: 1.3rem;
+    color: #8fa8ff;
+    margin-bottom: 16px;
+  }
+  .feature-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .feature-list li {
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  .feature-list li strong { color: #8fa8ff; display: block; margin-bottom: 4px; }
+
+  /* WORKSHOPS */
+  .workshop-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .workshop-pill {
+    background: #13131f;
+    border: 1px solid #2a2a3a;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  .workshop-pill .icon { margin-left: 6px; }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #0d1f0d, #0a0a0f);
+  }
+  .cta-section h2 { font-size: 1.8rem; margin-bottom: 12px; }
+  .cta-section p { color: #aaa; margin-bottom: 28px; font-size: 1.05rem; }
+  .btn-wa {
+    display: inline-block;
+    background: #25d366;
+    color: #000;
+    font-weight: 800;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .btn-wa:hover { transform: scale(1.04); opacity: 0.9; }
+  .contact-info {
+    margin-top: 20px;
+    color: #777;
+    font-size: 0.9rem;
+  }
+  .contact-info a { color: #64c864; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="logo">AI <span>Lab</span></div>
+  <h1>קורס <em>AI ויזמות</em><br>לילדים ונוער</h1>
+  <p>הכנה אמיתית לעולם הטכנולוגי — פרויקטים מעשיים, כיתות קטנות בזום, וקהילה של יזמים צעירים מכל הארץ</p>
+  <div>
+    <span class="badge">גילאי 10–17</span>
+    <span class="badge">זום · כיתות קטנות</span>
+    <span class="badge">פרויקטים אמיתיים</span>
+    <span class="badge">קהילת Discord</span>
+  </div>
+</div>
+
+<!-- COURSE -->
+<div class="section">
+  <h2><span class="icon">🎯</span>הקורס — מותאם לכל גיל</h2>
+  <p>תוכן הקורס מתאים את עצמו דינמית לגיל הילד — אותו בסיס חזק, רמת עומק שונה.</p>
+  <div class="age-grid">
+    <div class="age-card">
+      <div class="age-label">גילאי 10–12</div>
+      <h3>ילדים — בסיס</h3>
+      <ul>
+        <li>מה זה AI? הסבר ויזואלי</li>
+        <li>ChatGPT ככלי יצירה</li>
+        <li>בניית בוט פשוט</li>
+        <li>פרויקט: "הרעיון שלי"</li>
+      </ul>
+    </div>
+    <div class="age-card">
+      <div class="age-label">גילאי 13–15</div>
+      <h3>נוער — מתקדם</h3>
+      <ul>
+        <li>כלי AI מתקדמים</li>
+        <li>יסודות יזמות</li>
+        <li>בניית מוצר דיגיטלי</li>
+        <li>פרויקט: MVP ראשון</li>
+      </ul>
+    </div>
+    <div class="age-card">
+      <div class="age-label">גילאי 16–17</div>
+      <h3>בוגרים — עומק</h3>
+      <ul>
+        <li>Automation ו-AI agents</li>
+        <li>פיתוח עסקי בסיסי</li>
+        <li>מצגת לפני קהל</li>
+        <li>פרויקט: סטארטאפ מיני</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ZOOM -->
+<div class="section">
+  <h2><span class="icon">💻</span>כיתות קטנות בזום</h2>
+  <p>הקורס מתקיים אונליין בזום — נגיש מכל מקום בארץ, ללא צורך בנסיעות.</p>
+  <div class="zoom-highlight">
+    <div class="zoom-stat">
+      <span class="num">5–8</span>
+      <span class="label">תלמידים בכיתה</span>
+    </div>
+    <div class="zoom-stat">
+      <span class="num">8</span>
+      <span class="label">מפגשים בקורס</span>
+    </div>
+    <div class="zoom-stat">
+      <span class="num">90</span>
+      <span class="label">דקות למפגש</span>
+    </div>
+    <div class="zoom-text">
+      <p>כיתות קטנות מאפשרות תשומת לב אישית לכל ילד. המדריך מכיר כל תלמיד ומתאים את הקצב אליו. ילדים שאין להם ניסיון קודם — מתחילים מאפס. ילדים עם רקע — מתקדמים מהר יותר.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="section">
+  <h2><span class="icon">🚀</span>מה הילדים בנו</h2>
+  <p>כל ילד יוצא מהקורס עם פרויקט אמיתי שבנה בעצמו — לא תרגילים, מוצרים אמיתיים.</p>
+  <div class="projects-grid">
+    <div class="project-card">
+      <span class="emoji">🤖</span>
+      <h4>בוט WhatsApp לבית הספר</h4>
+      <p>בוט שעונה על שאלות של תלמידים על מערכת השעות</p>
+      <span class="age-tag">גיל 13</span>
+    </div>
+    <div class="project-card">
+      <span class="emoji">🎮</span>
+      <h4>משחק AI</h4>
+      <p>משחק טריוויה שה-AI מייצר לו שאלות חדשות בכל פעם</p>
+      <span class="age-tag">גיל 11</span>
+    </div>
+    <div class="project-card">
+      <span class="emoji">📱</span>
+      <h4>אפליקציית המלצות</h4>
+      <p>כלי שממליץ על סרטים לפי מצב הרוח שלך</p>
+      <span class="age-tag">גיל 15</span>
+    </div>
+    <div class="project-card">
+      <span class="emoji">💡</span>
+      <h4>עוזר שיעורי בית</h4>
+      <p>AI שמסביר חומר לימוד בשפה של ילדים</p>
+      <span class="age-tag">גיל 12</span>
+    </div>
+    <div class="project-card">
+      <span class="emoji">🌱</span>
+      <h4>סטארטאפ מיני</h4>
+      <p>רעיון עסקי מלא עם מצגת, לוגו ו-MVP</p>
+      <span class="age-tag">גיל 16</span>
+    </div>
+    <div class="project-card">
+      <span class="emoji">🎨</span>
+      <h4>כלי AI לאמנות</h4>
+      <p>גנרטור תמונות בסגנון אישי עם פרומפטים חכמים</p>
+      <span class="age-tag">גיל 14</span>
+    </div>
+  </div>
+</div>
+
+<!-- COMMUNITY -->
+<div class="section">
+  <h2><span class="icon">🌐</span>קהילת Discord — החזון הרחב</h2>
+  <p>מעבר לקורס — בונים קהילה חיה של ילדים ונוער יזמים מכל הארץ. מקום להתפתח, לשתף פעולה וליצור קשרים שיישארו לכל החיים.</p>
+  <div class="community-box">
+    <h3>🎮 קהילת Discord — "Young Builders IL"</h3>
+    <p style="color:#aaa; margin-bottom:16px;">פלטפורמה ייעודית שבה הילדים ממשיכים לבנות גם בין המפגשים:</p>
+    <ul class="feature-list">
+      <li><strong>שיתופי פעולה</strong>ילדים מכל הארץ מתחברים לפרויקטים משותפים</li>
+      <li><strong>הצגת פרויקטים</strong>כל ילד מציג מה בנה ומקבל פידבק</li>
+      <li><strong>מנטורינג עמיתים</strong>מתקדמים עוזרים למתחילים</li>
+      <li><strong>אתגרי שבוע</strong>אתגר AI שבועי עם פרסים</li>
+      <li><strong>רשת קשרים</strong>היכרויות עם יזמים צעירים שיהיו שותפים עתידיים</li>
+      <li><strong>הורים בלופ</strong>ערוץ להורים עם עדכונים ותוצרים</li>
+    </ul>
+  </div>
+</div>
+
+<!-- WORKSHOPS -->
+<div class="section">
+  <h2><span class="icon">📅</span>סדנאות שבועיות בקהילה</h2>
+  <p>בנוסף לקורס, הקהילה מפעילה סדנאות שבועיות קצרות (45 דקות) פתוחות לכל חברי הקהילה — ללא עלות נוספת.</p>
+  <div class="workshop-row">
+    <div class="workshop-pill"><span class="icon">🤖</span>AI של השבוע — כלי חדש בכל שבוע</div>
+    <div class="workshop-pill"><span class="icon">💼</span>יזמות — איך בונים רעיון עסקי</div>
+    <div class="workshop-pill"><span class="icon">🎤</span>Pitch — איך מציגים רעיון</div>
+    <div class="workshop-pill"><span class="icon">🔧</span>Build Together — בונים ביחד בלייב</div>
+    <div class="workshop-pill"><span class="icon">🌍</span>השראה — יזמים צעירים מהעולם</div>
+    <div class="workshop-pill"><span class="icon">🧠</span>Critical Thinking — חשיבה יצירתית</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>מעוניינים לשמוע עוד?</h2>
+  <p>נשמח לספר על הקורס, לתאם שיחה קצרה או לשלוח חומרים נוספים</p>
+  <a href="https://wa.me/972546500795?text=היי, ראיתי את המצגת על קורס AI Lab ורוצה לשמוע עוד פרטים" class="btn-wa">
+    💬 דברו איתנו בוואטסאפ
+  </a>
+  <div class="contact-info">
+    או שלחו מייל: <a href="mailto:laviemb@gmail.com">laviemb@gmail.com</a>
+    &nbsp;|&nbsp;
+    <a href="https://ai-lab.co.il" target="_blank">ai-lab.co.il</a>
+  </div>
+</div>
+
+</body>
+</html>
