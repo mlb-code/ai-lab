@@ -297,6 +297,72 @@
   }
   .cta-section h2 { font-size: 1.8rem; margin-bottom: 12px; }
   .cta-section p { color: #aaa; margin-bottom: 28px; font-size: 1.05rem; }
+
+  /* CONTACT FORM */
+  .contact-form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: right;
+  }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+    color: #e8e8f0;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: #e8e8f0;
+    font-size: 1rem;
+    font-family: inherit;
+    direction: rtl;
+  }
+  .form-group input::placeholder { color: #888; }
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(108,60,225,0.15);
+  }
+  .form-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .form-buttons .btn-submit,
+  .form-buttons .btn-whatsapp-form {
+    flex: 1;
+    min-width: 140px;
+    padding: 0.9rem 1.2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 800;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    text-align: center;
+  }
+  .form-buttons .btn-submit {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+  }
+  .form-buttons .btn-whatsapp-form {
+    background: #25d366;
+    color: #000;
+  }
+  .form-buttons .btn-submit:hover,
+  .form-buttons .btn-whatsapp-form:hover { transform: scale(1.03); opacity: 0.9; }
   .btn-wa {
     display: inline-block;
     background: #25d366;
@@ -643,16 +709,28 @@
 <div class="cta-section">
   <h2>מעוניינים לשמוע עוד?</h2>
   <p>נשמח לספר על הקורס, לתאם שיחה קצרה או לשלוח חומרים נוספים</p>
-  <a href="https://wa.me/972546500795?text=היי אני מעמותת עמי״ט אשמח להרשם לקורס הבסיסי" class="btn-wa">
-    💬 יצירת קשר בוואטסאפ
-  </a>
-  <div style="margin-top:16px;">
+  <form class="contact-form" id="contactForm" onsubmit="return submitForm(event)">
+    <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
+    <input type="hidden" name="subject" value="פנייה חדשה — שותפות עמי״ט">
+    <div class="form-group">
+      <label for="name">שם מלא</label>
+      <input type="text" id="name" name="name" placeholder="הכניסו את השם שלכם" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">מספר טלפון</label>
+      <input type="tel" id="phone" name="phone" placeholder="050-1234567" required>
+    </div>
+    <div class="form-group">
+      <label for="email">אימייל</label>
+      <input type="email" id="email" name="email" placeholder="your@email.com" required>
+    </div>
+    <div class="form-buttons">
+      <button type="submit" class="btn-submit">📩 שלח פנייה</button>
+      <button type="button" class="btn-whatsapp-form" onclick="sendWhatsApp()">💬 שלח בוואטסאפ</button>
+    </div>
+  </form>
+  <div style="margin-top:24px;">
     <a href="https://ai-lab.co.il" target="_blank" class="btn-site">🚀 כניסה לאתר הקורס</a>
-  </div>
-  <div class="contact-info">
-    או שלחו מייל: <a href="mailto:laviemb@gmail.com">laviemb@gmail.com</a>
-    &nbsp;|&nbsp;
-    <a href="https://ai-lab.co.il" target="_blank">ai-lab.co.il</a>
   </div>
 </div>
 
@@ -713,6 +791,41 @@ function openSyllabus(type) {
 }
 function closeSyllabus() {
   document.getElementById('syllabus-modal').style.display = 'none';
+}
+
+async function submitForm(e) {
+  e.preventDefault();
+  var form = document.getElementById('contactForm');
+  var btn = form.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'שולח...';
+  try {
+    var data = new FormData(form);
+    var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+    if (res.ok) {
+      form.innerHTML = '<div style="text-align:center;padding:2rem;font-size:1.2rem;color:#00D4AA;font-weight:700;">הפנייה נשלחה בהצלחה! נחזור אליכם בהקדם.</div>';
+    } else {
+      btn.disabled = false;
+      btn.textContent = '📩 שלח פנייה';
+      alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
+    }
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = '📩 שלח פנייה';
+    alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
+  }
+  return false;
+}
+
+function sendWhatsApp() {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  if (!name || !phone || !email) { alert('נא למלא את כל השדות'); return; }
+  const msg = `היי, אני מעמותת עמי״ט ומתעניין/ת בקורס יזמות ו-AI\n\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email}`;
+  window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
+}
+
 }
 document.getElementById('syllabus-modal').addEventListener('click', function(e) {
   if (e.target === this) closeSyllabus();
