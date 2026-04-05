@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Lab — קורס AI ויזמות לילדים</title>
+<style>
+  :root {
+    --primary: #6C3CE1;
+    --primary-light: #8B5CF6;
+    --accent: #00D4AA;
+    --accent-light: #34EABB;
+    --dark: #1a1a2e;
+    --dark-card: #16162a;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--dark);
+    color: #e8e8f0;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(160deg, #1a1a2e 0%, #16162a 40%, #1e1040 100%);
+    padding: 70px 20px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(108,60,225,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .logo {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .logo span { color: var(--accent); }
+  .hero h1 {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    margin: 20px 0 16px;
+    line-height: 1.3;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: 1.15rem;
+    color: #aaa;
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.3);
+    color: var(--accent);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin: 4px;
+  }
+  .btn-site {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--primary-light));
+    color: #fff;
+    font-weight: 800;
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: transform 0.2s, opacity 0.2s;
+    margin-top: 20px;
+  }
+  .btn-site:hover { transform: scale(1.04); opacity: 0.9; }
+
+  /* SECTION WRAPPERS */
+  .sw { width: 100%; }
+  .sw-a { background: #1a1a2e; }
+  .sw-b { background: #100e1e; }
+
+  /* SECTIONS */
+  .section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 50px 20px;
+  }
+  .section h2 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  .section h2 .icon { margin-left: 10px; }
+  .section p { color: #bbb; margin-bottom: 14px; font-size: 1.05rem; }
+
+  /* AGE CARDS */
+  .age-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+    text-align: right;
+  }
+  .age-card {
+    background: var(--dark-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .age-card ul { flex: 1; }
+  .age-card .age-label {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .age-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: #fff; }
+  .age-card ul { list-style: none; padding: 0; }
+  .age-card ul li { color: #999; font-size: 0.9rem; padding: 3px 0; }
+  .age-card ul li::before { content: '✓ '; color: var(--accent); }
+
+  /* ZOOM SECTION */
+  .zoom-highlight {
+    background: linear-gradient(135deg, rgba(108,60,225,0.08), rgba(0,212,170,0.05));
+    border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 14px;
+    padding: 28px;
+    margin-top: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .zoom-stat {
+    text-align: center;
+    min-width: 100px;
+  }
+  .zoom-stat .num {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+  }
+  .zoom-stat .label { font-size: 0.85rem; color: #888; }
+  .zoom-text { flex: 1; min-width: 200px; text-align: right; }
+  .zoom-text p { color: #bbb; margin: 0; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .project-card {
+    background: var(--dark-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    text-align: right;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .site-preview-wrap {
+    width: 100%;
+    height: 160px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    position: relative;
+    background: #1a1a2e;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .site-preview-iframe {
+    width: 1280px;
+    height: 900px;
+    border: none;
+    transform: scale(0.208);
+    transform-origin: top right;
+    pointer-events: none;
+  }
+  .project-card .project-title { font-size: 0.95rem; color: #fff; font-weight: 700; margin-bottom: 6px; }
+  .project-card .project-quote { font-size: 0.82rem; color: #aaa; line-height: 1.6; flex: 1; font-style: italic; }
+  .project-card .project-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .project-card .student-name { font-size: 0.82rem; color: var(--accent); font-weight: 600; }
+  .project-card .view-btn {
+    font-size: 0.75rem;
+    background: rgba(0,212,170,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(0,212,170,0.3);
+    border-radius: 6px;
+    padding: 4px 10px;
+  }
+
+  /* COMMUNITY */
+  .community-box {
+    background: linear-gradient(135deg, #0d0d2a, #1a0d1a);
+    border: 1px solid rgba(108,60,225,0.3);
+    border-radius: 14px;
+    padding: 30px;
+    margin-top: 24px;
+    text-align: right;
+  }
+  .discord-channel {
+    font-size: 0.88rem;
+    color: #ccc;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .price-card {
+    background: var(--dark-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+    position: relative;
+  }
+  .price-card .course-name { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .price-card .community-badge { font-size: 0.72rem; background: rgba(0,212,170,0.12); color: var(--accent); border: 1px solid rgba(0,212,170,0.3); border-radius: 20px; padding: 2px 10px; display: inline-block; margin-bottom: 6px; }
+  .price-card .original { font-size: 0.9rem; color: #555; text-decoration: line-through; margin-bottom: 2px; }
+  .price-card .price { font-size: 2rem; font-weight: 900; color: var(--accent); margin: 4px 0 4px; }
+  .price-card .sessions { font-size: 0.82rem; color: #888; }
+  .price-card.coming-soon { opacity: 0.5; }
+  .price-card.coming-soon .price { font-size: 1.1rem; color: #555; }
+
+  /* WORKSHOPS */
+  .workshop-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  .workshop-pill {
+    background: var(--dark-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(160deg, #1e1040, var(--dark));
+  }
+  .cta-section h2 { font-size: 1.8rem; margin-bottom: 12px; }
+  .cta-section p { color: #aaa; margin-bottom: 28px; font-size: 1.05rem; }
+  .btn-wa {
+    display: inline-block;
+    background: #25d366;
+    color: #000;
+    font-weight: 800;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .btn-wa:hover { transform: scale(1.04); opacity: 0.9; }
+  .contact-info {
+    margin-top: 20px;
+    color: #777;
+    font-size: 0.9rem;
+  }
+  .contact-info a { color: var(--accent); text-decoration: none; }
+
+  /* PRINT */
+  @media print {
+    @page { margin: 0; size: 1280px 30000px; }
+    html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .site-preview-wrap, .site-preview-iframe { display: none; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 640px) {
+    .hero { padding: 50px 16px 40px; }
+    .hero h1 { font-size: 1.8rem; }
+    .pricing-grid { grid-template-columns: 1fr 1fr; }
+    .age-grid { grid-template-columns: 1fr; }
+    /* Projects: horizontal scroll carousel */
+    .projects-grid {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 12px;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .projects-grid .project-card {
+      min-width: 80vw;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+    .projects-grid .project-quote { display: none; }
+    .projects-grid .project-card {
+      min-width: 72vw;
+      max-width: 72vw;
+      overflow: hidden;
+    }
+    .projects-grid .site-preview-wrap {
+      height: 120px;
+      overflow: hidden;
+      direction: ltr;
+    }
+    .projects-grid .site-preview-iframe {
+      transform: scale(0.185);
+      transform-origin: top left;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .two-col { grid-template-columns: 1fr !important; }
+    .discord-grid { grid-template-columns: 1fr !important; }
+    .zoom-highlight { flex-direction: column; align-items: center; }
+    .zoom-text { text-align: center; }
+    .section { padding: 36px 16px; }
+    .community-box { padding: 20px 14px; }
+    .founder-flex { flex-direction: column; align-items: center !important; }
+    .founder-text { text-align: center !important; }
+    .founder-text p { text-align: center !important; }
+    .btn-site { font-size: 0.9rem; padding: 10px 22px; }
+    .price-card .price { font-size: 1.6rem; }
+    .workshop-row { gap: 8px; }
+    .workshop-pill { font-size: 0.82rem; padding: 8px 12px; }
+    .age-grid { gap: 12px; }
+  }
+  @media (max-width: 400px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="logo">AI <span>Lab</span></div>
+  <h1>קורס <em>AI ויזמות</em><br>לילדים ונוער</h1>
+  <p style="font-size:1.1rem; max-width:600px; margin:0 auto 20px;">הילדים של היום יחיו בעולם שמונע על ידי בינה מלאכותית. השאלה היא לא אם הם יפגשו אותו — אלא האם הם יהיו מי שבונים אותו, או מי שמשתמשים בו.</p>
+  <p style="color:#aaa; font-size:0.95rem; max-width:520px; margin:0 auto 28px;">ב-AI Lab אנחנו מלמדים ילדים לחשוב כיזמים, לבנות מוצרים אמיתיים עם כלי AI, ולצאת עם ניסיון שרלוונטי לעולם האמיתי — תוך 8 מפגשים בזום.</p>
+  <a href="https://ai-lab.co.il" target="_blank" class="btn-site">🚀 כניסה לאתר הקורס</a>
+
+  <div style="max-width:580px; margin:28px auto 0; border-top:1px solid rgba(0,212,170,0.2); padding-top:24px;">
+    <p style="color:var(--accent); font-size:1rem; font-weight:700; margin-bottom:12px;">למה עכשיו?</p>
+    <p style="color:#ccc; font-size:0.95rem; line-height:1.8; margin-bottom:20px;">כלי AI כמו Claude ו-ChatGPT עשו את מה שכל הטכנולוגיות לפניהם לא הצליחו — הכניסו AI לחיי היומיום של כולם. ילדים כבר משתמשים בהם. השאלה היא מה הם עושים איתם: מקבלים תשובות — או בונים עם זה משהו שלהם.</p>
+    <p style="color:#888; font-size:0.88rem; letter-spacing:0.5px;">↓ גלגלו למטה לראות מה קורה בפנים</p>
+  </div>
+</div>
+
+<!-- COURSE -->
+<div class="sw sw-a"><div class="section">
+  <h2><span class="icon">🎯</span>הקורס — גישה ייחודית לכל גיל</h2>
+  <p>הקורס מתאים לילדים ונוער בגילאי 10–17, ומחולק לקבוצות לפי רמת הבשלות והיכולת — לא לפי גיל בלבד.</p>
+  <p>בכיתות קטנות של עד <strong style="color:#fff;">5 תלמידים</strong>, המדריך מכיר כל ילד ומתאים את העומק, הדוגמאות והקצב כמעט באופן אישי.</p>
+  <div style="background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(108,60,225,0.08)); border:1px solid rgba(0,212,170,0.3); border-radius:12px; padding:16px 20px; margin-bottom:20px; text-align:center;">
+    <div style="font-size:1.6rem; margin-bottom:6px;">👤</div>
+    <strong style="color:#fff; font-size:1rem;">אזור אישי לכל תלמיד</strong>
+    <p style="color:#aaa; font-size:0.88rem; margin:6px 0 0;">כל תלמיד מקבל אזור אישי משלו — מעקב אחר התקדמות, חומרים מהקורס, פרויקטים וגישה לסדנאות. הכל במקום אחד.</p>
+  </div>
+  <div class="two-col" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;">
+    <div style="background:#13131f; border:1px solid #2a2a3a; border-radius:12px; padding:20px;">
+      <div style="color:#64c864; font-size:0.85rem; font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">רמה צעירה</div>
+      <p style="color:#bbb; font-size:0.95rem; margin:0;">הדגש על חשיבה יזמית, יצירתיות ושימוש בכלי AI בצורה ויזואלית ומשחקית. לא לומדים "טכנולוגיה" — לומדים לחשוב בצורה חדשה ולהפוך רעיונות למציאות.</p>
+    </div>
+    <div style="background:#13131f; border:1px solid #2a2a3a; border-radius:12px; padding:20px;">
+      <div style="color:#64c864; font-size:0.85rem; font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">רמה מתקדמת</div>
+      <p style="color:#bbb; font-size:0.95rem; margin:0;">הדגש פרקטי — כלים, מוצרים, חשיבה עסקית. כל תלמיד יוצא עם MVP שעובד, רעיון מגובש ויכולת ליישם AI בחיים האמיתיים.</p>
+    </div>
+  </div>
+  <p style="margin-top:16px; color:#888; font-size:0.95rem;">בשני המסלולים — כולם בונים. כולם יוצאים עם משהו אמיתי.</p>
+
+  <div class="age-grid" style="margin-top:24px;">
+    <div class="age-card" style="border-color: rgba(100,200,100,0.3);">
+      <div class="age-label">קורס בסיסי — פעיל עכשיו</div>
+      <h3>גילאי 10–17</h3>
+      <ul>
+        <li>Claude Code — הכלי המרכזי בקורס</li>
+        <li>כלי AI נוספים (ChatGPT, Cursor ועוד)</li>
+        <li>חשיבה יזמית ובניית רעיון</li>
+        <li>פיתוח MVP עם AI</li>
+        <li>הצגת הפרויקט בסוף הקורס</li>
+      </ul>
+      <button onclick="openSyllabus('basic')" style="margin-top:14px; width:100%; background:rgba(100,200,100,0.12); border:1px solid rgba(100,200,100,0.3); color:#64c864; padding:8px; border-radius:8px; cursor:pointer; font-size:0.85rem; font-family:inherit;">📋 צפה בסילבוס</button>
+    </div>
+    <div class="age-card" style="border-color: rgba(143,168,255,0.3); opacity: 0.85;">
+      <div class="age-label" style="color:#8fa8ff;">קורס מתקדם — בקרוב</div>
+      <h3>גילאי 10–17</h3>
+      <ul>
+        <li>AI Agents ואוטומציות</li>
+        <li>פיתוח עסקי ו-Pitch</li>
+        <li>שיתופי פעולה בין תלמידים</li>
+        <li>תוכן מותאם לפי רמת הילד</li>
+      </ul>
+      <button onclick="openSyllabus('advanced')" style="margin-top:14px; width:100%; background:rgba(143,168,255,0.1); border:1px solid rgba(143,168,255,0.3); color:#8fa8ff; padding:8px; border-radius:8px; cursor:pointer; font-size:0.85rem; font-family:inherit;">📋 צפה בסילבוס</button>
+    </div>
+  </div>
+</div>
+
+<!-- ZOOM -->
+<div class="section">
+  <h2><span class="icon">💻</span>כיתות קטנות בזום</h2>
+  <p>הקורס מתקיים אונליין בזום — נגיש מכל מקום בארץ, ללא צורך בנסיעות.</p>
+  <div class="zoom-highlight">
+    <div class="zoom-stat">
+      <span class="num">5</span>
+      <span class="label">תלמידים בכיתה</span>
+    </div>
+    <div class="zoom-stat">
+      <span class="num">8</span>
+      <span class="label">מפגשים בקורס</span>
+    </div>
+    <div class="zoom-stat">
+      <span class="num">60</span>
+      <span class="label">דקות למפגש</span>
+    </div>
+    <div class="zoom-text">
+      <p>כיתות קטנות מאפשרות תשומת לב אישית לכל ילד. המדריך מכיר כל תלמיד ומתאים את הקצב אליו. ילדים ללא ניסיון מתחילים מאפס — ילדים עם רקע מתקדמים מהר יותר.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="section">
+  <h2><span class="icon">🚀</span>מה הילדים בנו</h2>
+  <p>פרויקטים אמיתיים שנבנו בקורס — בלי ניסיון קודם.</p>
+  <div class="projects-grid">
+    <a href="https://ai-lab.co.il/nadavlego/" target="_blank" class="project-card">
+      <div class="site-preview-wrap">
+        <iframe class="site-preview-iframe" src="https://ai-lab.co.il/nadavlego/" loading="lazy" title="חגיגת לגו"></iframe>
+      </div>
+      <div class="project-title">🧱 חגיגת לגו — תערוכה, פעילות ויצירה</div>
+      <div class="project-quote">"בניתי אתר לתערוכת הלגו שלי — עם גלריה דיגיטלית של כל הדגמים, הרשמה לאירוע וחידון לגו!"</div>
+      <div class="project-footer">
+        <span class="student-name">נדב, בן 10</span>
+        <span class="view-btn">צפה באתר ↗</span>
+      </div>
+    </a>
+    <a href="https://ai-lab.co.il/hairmatch/" target="_blank" class="project-card">
+      <div class="site-preview-wrap">
+        <iframe class="site-preview-iframe" src="https://ai-lab.co.il/hairmatch/" loading="lazy" title="HairMatch"></iframe>
+      </div>
+      <div class="project-title">✨ HairMatch — התאמת מוצרי טיפוח</div>
+      <div class="project-quote">"בניתי אתר שעוזר לבנות למצוא מוצרי טיפוח לפי סוג עור ושיער. ה-AI עוזר להתאים את המוצר המושלם!"</div>
+      <div class="project-footer">
+        <span class="student-name">נועם, בת 13.5</span>
+        <span class="view-btn">צפה באתר ↗</span>
+      </div>
+    </a>
+    <a href="https://ai-lab.co.il/horse-fashion/" target="_blank" class="project-card">
+      <div class="site-preview-wrap">
+        <iframe class="site-preview-iframe" src="https://ai-lab.co.il/horse-fashion/" loading="lazy" title="Horse Fashion"></iframe>
+      </div>
+      <div class="project-title">🐴 Horse Fashion — ציוד לרוכבים</div>
+      <div class="project-quote">"בניתי חנות אונליין לציוד רכיבה על סוסים — עם קטלוג מוצרים, עגלת קניות ועיצוב מקצועי!"</div>
+      <div class="project-footer">
+        <span class="student-name">שיר, בת 13.5</span>
+        <span class="view-btn">צפה באתר ↗</span>
+      </div>
+    </a>
+    <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" class="project-card">
+      <div class="site-preview-wrap">
+        <iframe class="site-preview-iframe" src="https://ai-lab.co.il/gamebuddy/" loading="lazy" title="GameBuddy"></iframe>
+      </div>
+      <div class="project-title">🎮 GameBuddy — מציאת שותפי משחק</div>
+      <div class="project-quote">"בניתי פלטפורמה שמחברת שחקני פורטנייט ישראלים לפי רמה — כבר יש שחקנים רשומים מכל הארץ!"</div>
+      <div class="project-footer">
+        <span class="student-name">אבינועם וגבריאל, בני 13.5</span>
+        <span class="view-btn">צפה באתר ↗</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- COMMUNITY -->
+<div class="section">
+  <h2><span class="icon">🌐</span>קהילת Discord — Young Builders IL</h2>
+  <p>מעבר לקורס — קהילה חיה של ילדים ונוער יזמים מכל הארץ. ממשיכים לבנות גם בין המפגשים.</p>
+  <div class="community-box">
+    <div class="discord-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:24px; direction:rtl;">
+      <div>
+        <div style="font-size:0.7rem; color:#555; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; font-weight:700;">תוכן ולמידה</div>
+        <div class="discord-channel">📢 עדכונים בנושא בינה מלאכותית</div>
+        <div class="discord-channel">💡 סיפורי יזמים בארץ ובעולם</div>
+        <div class="discord-channel">💬 שיח תכנות</div>
+        <div class="discord-channel">🎓 טיפים ללימוד — פרומפטים, קיצורים, טריקים</div>
+        <div class="discord-channel">🎥 סדנאות — לייב + הקלטות</div>
+        <div style="font-size:0.7rem; color:#555; text-transform:uppercase; letter-spacing:1px; margin:16px 0 10px; font-weight:700;">פרויקטים לפי נושא</div>
+        <div class="discord-channel">🛒 אתרי אי-קומרס</div>
+        <div class="discord-channel">🎨 אתרי תדמית</div>
+        <div class="discord-channel">🤖 סוכני בינה מלאכותית</div>
+        <div class="discord-channel">🎮 פיתוח משחקים</div>
+        <div class="discord-channel">🟣 פיתוח משחקי Roblox</div>
+        <div class="discord-channel">📱 פיתוח אפליקציות</div>
+        <div class="discord-channel">🗄️ דאטה בייס</div>
+      </div>
+      <div>
+        <div style="font-size:0.7rem; color:#555; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; font-weight:700;">קהילה</div>
+        <div class="discord-channel">🖼️ שיתוף פרויקטים — תראו מה בניתי!</div>
+        <div class="discord-channel">🗣️ כללי / פטפוט</div>
+        <div class="discord-channel">💼 הזדמנויות — פרילנס, האקתונים, מלגות</div>
+        <div class="discord-channel">📋 הצעות ומשוב</div>
+        <div class="discord-channel">🆘 עזרה טכנית — בוט AI + מאיר</div>
+        <div style="font-size:0.7rem; color:#555; text-transform:uppercase; letter-spacing:1px; margin:16px 0 10px; font-weight:700;">אתגרים ותחרויות</div>
+        <div class="discord-channel">🎯 אתגר יומי</div>
+        <div class="discord-channel">🏆 אתגר שבועי — עם פרסים</div>
+        <div class="discord-channel">🥇 תחרויות — תחרויות בין-עירוניות עם פרסים</div>
+        <div style="font-size:0.7rem; color:#555; text-transform:uppercase; letter-spacing:1px; margin:16px 0 10px; font-weight:700;">פודקאסט</div>
+        <div class="discord-channel">🎙️ AI Lab Podcast — פרקים על יזמות ובינה מלאכותית</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WORKSHOPS -->
+<div class="section">
+  <h2><span class="icon">🎥</span>סדנאות שבועיות — חברי קהילה בלבד</h2>
+  <p>45 דקות בזום, בלייב, פתוחות לכל חברי הקהילה. כל הסדנאות מוקלטות ונשמרות.</p>
+  <p style="margin-top:10px; color:#64c864; font-size:0.9rem;">🎯 המטרה: לייצר רוטציה של אורחים — יזמים, מפתחים, מנהלי מוצר — שמביאים ניסיון אמיתי מהשטח, לא רק מאיר.</p>
+  <div class="workshop-row">
+    <div class="workshop-pill">🤖 AI של השבוע — כלי חדש בכל שבוע</div>
+    <div class="workshop-pill">💼 יזמות — איך בונים רעיון עסקי</div>
+    <div class="workshop-pill">🎤 Pitch — איך מציגים רעיון</div>
+    <div class="workshop-pill">🔧 Build Together — בונים ביחד בלייב</div>
+    <div class="workshop-pill">🌍 השראה — יזמים צעירים מהעולם</div>
+    <div class="workshop-pill">🧠 Critical Thinking — חשיבה יצירתית</div>
+  </div>
+</div>
+
+<!-- FOUNDER -->
+<div class="section">
+  <h2><span class="icon">👤</span>מי מאחורי AI Lab</h2>
+  <div class="founder-flex" style="display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; margin-top:20px;">
+    <div style="display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0;">
+      <img src="https://ai-lab.co.il/meir.jpg" alt="מאיר לביא" style="width:110px; height:110px; border-radius:50%; object-fit:cover; border:2px solid var(--accent);">
+      <div style="text-align:center;">
+        <div style="font-size:1.1rem; font-weight:800; color:#fff;">מאיר לביא</div>
+        <div style="color:#888; font-size:0.82rem;">הרצליה · בן 34</div>
+      </div>
+    </div>
+    <div class="founder-text" style="flex:1; min-width:240px;">
+      <div style="margin-bottom:6px;"></div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+        <span style="background:rgba(100,200,100,0.12); border:1px solid rgba(100,200,100,0.3); color:#64c864; padding:3px 12px; border-radius:20px; font-size:0.8rem;">יזם</span>
+        <span style="background:rgba(100,200,100,0.12); border:1px solid rgba(100,200,100,0.3); color:#64c864; padding:3px 12px; border-radius:20px; font-size:0.8rem;">משקיע</span>
+        <span style="background:rgba(100,200,100,0.12); border:1px solid rgba(100,200,100,0.3); color:#64c864; padding:3px 12px; border-radius:20px; font-size:0.8rem;">פיתוח עסקי</span>
+        <span style="background:rgba(255,255,255,0.04); border:1px solid #2a2a3a; color:#aaa; padding:3px 12px; border-radius:20px; font-size:0.78rem;">🎓 מנהל עסקים וממשל</span>
+        <span style="background:rgba(255,255,255,0.04); border:1px solid #2a2a3a; color:#aaa; padding:3px 12px; border-radius:20px; font-size:0.78rem;">🎓 ג׳ון ברייס — ניהול רשתות</span>
+        <span style="background:rgba(255,255,255,0.04); border:1px solid #2a2a3a; color:#aaa; padding:3px 12px; border-radius:20px; font-size:0.78rem;">🎓 האוניברסיטה העברית — פיתוח תוכנה ב-AI</span>
+      </div>
+      <p style="color:#bbb; margin-bottom:10px; text-align:right;">רקע של סמנכ"ל פיתוח עסקי בחברות הייטק ונדל"ן — Get Status, מידע טופ, הרציג נדל"ן. מביא לשולחן ניסיון אמיתי של בניית מוצרים, ניהול שותפויות ויצירת ערך עסקי.</p>
+      <p style="color:#bbb; margin-bottom:10px; text-align:right;"><strong style="color:#fff;">עכשיו נדל"ן</strong> — מייסד פלטפורמת ליווי משקיעי נדל"ן עם התמחות בהתחדשות עירונית (תמ"א, פינוי-בינוי), כולל מאגר פנימי ייחודי למעקב פרויקטים.</p>
+      <p style="color:#bbb; text-align:right;"><strong style="color:#fff;">GotChat</strong> — מייסד מיזם SaaS בשוק האמריקאי, עתיד לצאת לשיווק בחודשים הקרובים.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section">
+  <h2><span class="icon">💰</span>עלויות</h2>
+  <p>מחירים שקופים — ללא הפתעות.</p>
+  <p style="color:#888; font-size:0.88rem;">* בנוסף לעלות הקורס, נדרש מנוי Claude Code בעלות של $20/חודש — ניתן לבטל בכל עת.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="course-name">קורס בסיסי</div>
+      <div class="community-badge">מחיר עמותת עמי״ט 🎉</div>
+      <div class="original">₪890</div>
+      <div class="price">₪790</div>
+      <div class="sessions">לקורס · 8 מפגשים · 60 דקות</div>
+    </div>
+    <div class="price-card">
+      <div class="course-name">קורס מתקדם</div>
+      <div class="community-badge">מחיר עמותת עמי״ט 🎉</div>
+      <div class="original">₪1,190</div>
+      <div class="price">₪1,090</div>
+      <div class="sessions">לקורס · 8 מפגשים · 60 דקות</div>
+    </div>
+    <div class="price-card coming-soon">
+      <div class="course-name">קורס בוגרים</div>
+      <div class="price">בקרוב</div>
+      <div class="sessions">פרטים יפורסמו בהמשך</div>
+    </div>
+    <div class="price-card coming-soon">
+      <div class="course-name">קהילה + סדנאות</div>
+      <div class="price">בקרוב</div>
+      <div class="sessions">מנוי חודשי · פרטים בהמשך</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>מעוניינים לשמוע עוד?</h2>
+  <p>נשמח לספר על הקורס, לתאם שיחה קצרה או לשלוח חומרים נוספים</p>
+  <a href="https://wa.me/972546500795?text=היי אני מעמותת עמי״ט אשמח להרשם לקורס הבסיסי" class="btn-wa">
+    💬 יצירת קשר בוואטסאפ
+  </a>
+  <div style="margin-top:16px;">
+    <a href="https://ai-lab.co.il" target="_blank" class="btn-site">🚀 כניסה לאתר הקורס</a>
+  </div>
+  <div class="contact-info">
+    או שלחו מייל: <a href="mailto:laviemb@gmail.com">laviemb@gmail.com</a>
+    &nbsp;|&nbsp;
+    <a href="https://ai-lab.co.il" target="_blank">ai-lab.co.il</a>
+  </div>
+</div>
+
+<!-- SYLLABUS MODAL -->
+<div id="syllabus-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; padding:20px;">
+  <div style="background:#13131f; border:1px solid #2a2a3a; border-radius:16px; max-width:540px; width:100%; padding:32px; position:relative; max-height:90vh; overflow-y:auto;">
+    <button onclick="closeSyllabus()" style="position:absolute; top:16px; left:16px; background:none; border:none; color:#888; font-size:1.4rem; cursor:pointer;">✕</button>
+    <div id="syllabus-content"></div>
+  </div>
+</div>
+
+<script>
+const syllabi = {
+  basic: `
+    <div style="color:#64c864; font-size:0.8rem; font-weight:700; letter-spacing:1px; margin-bottom:8px;">קורס בסיסי — 8 מפגשים</div>
+    <h3 style="color:#fff; font-size:1.3rem; margin-bottom:6px;">ילדים ונוער — בסיסי</h3>
+    <div style="color:#888; font-size:0.85rem; margin-bottom:20px;">8 מפגשים | כשעה כל מפגש | בזום</div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      ${[
+        {n:1, t:'ברוכים הבאים לעולם ה-AI', d:'מה זה בינה מלאכותית? ניסוי ראשון עם ChatGPT ו-Claude. חוויה שמשנה הכל.'},
+        {n:2, t:'אמנות הפרומפט', d:'איך מדברים עם AI בצורה חכמה? טכניקות כתיבה שגורמות ל-AI לתת תשובות מדויקות.'},
+        {n:3, t:'חשיבה יזמית — מוצאים בעיות', d:'מה זה סטארטאפ? איך מזהים בעיות אמיתיות? כל תלמיד מוצא 3 בעיות מהחיים שלו.'},
+        {n:4, t:'מרעיון למוצר', d:'בוחרים רעיון, מגדירים קהל יעד, בונים אפיון למוצר. הסטארטאפ שלכם מתחיל להתגבש!'},
+        {n:5, t:'בונים אתר — חלק 1', d:'מתקינים Cursor ובונים את דף הנחיתה הראשון עם AI. בלי ידע קודם בתכנות!'},
+        {n:6, t:'בונים אתר — חלק 2', d:'מוסיפים עיצוב, אנימציות ופיצ\'רים. האתר הופך למוצר אמיתי!'},
+        {n:7, t:'מודל עסקי ושיווק', d:'איך מרוויחים כסף? איך מגיעים ללקוחות? בונים תוכנית עסקית + תוכן שיווקי עם AI.'},
+        {n:8, t:'יום הפיץ\' 🏆', d:'כל משתתף/ת מציג/ה את הפרויקט. 3 דקות — בעיה, פתרון, דמו. כמו Shark Tank!'}
+      ].map(s => `<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #1a1a2a;">
+        <div style="min-width:28px;height:28px;background:rgba(100,200,100,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#64c864;font-weight:700;font-size:0.8rem;">${s.n}</div>
+        <div><div style="color:#fff;font-weight:700;font-size:0.9rem;">${s.t}</div><div style="color:#888;font-size:0.82rem;">${s.d}</div></div>
+      </div>`).join('')}
+    </div>`,
+  advanced: `
+    <div style="color:#8fa8ff; font-size:0.8rem; font-weight:700; letter-spacing:1px; margin-bottom:8px;">קורס מתקדם — 8 מפגשים</div>
+    <h3 style="color:#fff; font-size:1.3rem; margin-bottom:6px;">ילדים ונוער — מתקדם</h3>
+    <div style="color:#888; font-size:0.85rem; margin-bottom:20px;">8 מפגשים | לבוגרי הקורס הבסיסי</div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      ${[
+        {n:1, t:'חזרה ושדרוג ה-MVP', d:'סקירת הפרויקט מהקורס הבסיסי. מה עובד, מה חסר, ומה המטרה לקורס המתקדם.'},
+        {n:2, t:'Backend ובסיס נתונים', d:'מה זה שרת ו-Database? הכרות עם Supabase, שמירה ושליפה של מידע אמיתי.'},
+        {n:3, t:'Authentication ומשתמשים', d:'מערכת הרשמה, התחברות ואזור אישי. האתר שלכם הופך לאפליקציה.'},
+        {n:4, t:'API — חיבור לעולם', d:'שליפת מידע מ-APIs חיצוניים וחיבור שירותים חיצוניים לאתר.'},
+        {n:5, t:'AI מתקדם — Agents ואוטומציות', d:'בניית AI Agent שעושה דברים בשבילכם. אוטומציות חכמות עם Claude.'},
+        {n:6, t:'עיצוב מתקדם ו-Deploy', d:'עיצוב מקצועי, אנימציות, תמיכה במובייל. העלאה לאינטרנט עם דומיין.'},
+        {n:7, t:'שיווק דיגיטלי ו-SEO', d:'איך מגיעים ללקוחות? קמפיינים, תוכן שיווקי עם AI, ואנליטיקס.'},
+        {n:8, t:'יום הפיץ\' הגדול 🏆', d:'הצגת הפרויקט המתקדם. דמו חי, שאלות מהקהל, ותעודות סיום!'}
+      ].map(s => `<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #1a1a2a;">
+        <div style="min-width:28px;height:28px;background:rgba(143,168,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#8fa8ff;font-weight:700;font-size:0.8rem;">${s.n}</div>
+        <div><div style="color:#fff;font-weight:700;font-size:0.9rem;">${s.t}</div><div style="color:#888;font-size:0.82rem;">${s.d}</div></div>
+      </div>`).join('')}
+    </div>`
+};
+
+function openSyllabus(type) {
+  document.getElementById('syllabus-content').innerHTML = syllabi[type];
+  const modal = document.getElementById('syllabus-modal');
+  modal.style.display = 'flex';
+}
+function closeSyllabus() {
+  document.getElementById('syllabus-modal').style.display = 'none';
+}
+document.getElementById('syllabus-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeSyllabus();
+});
+</script>
+
+</body>
+</html>
