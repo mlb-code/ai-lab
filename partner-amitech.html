@@ -713,6 +713,7 @@
     <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
     <input type="hidden" name="subject" value="פנייה חדשה — עמותת עמי״ט">
     <input type="hidden" name="community" value="עמותת עמי״ט">
+    <input type="hidden" name="cc" value="vip0532405056@gmail.com">
     <div class="form-group">
       <label>קהילה</label>
       <input type="text" value='עמותת עמי"ט' readonly style="opacity:0.6; cursor:default; background:rgba(255,255,255,0.03);">
@@ -828,6 +829,17 @@ function sendWhatsApp() {
   const email = document.getElementById('email').value.trim();
   if (!name || !phone || !email) { alert('נא למלא את כל השדות'); return; }
   const msg = `היי, אני מעמותת עמי״ט ומתעניין/ת בקורס יזמות ו-AI\n\nקהילה: עמותת עמי״ט\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email}`;
+  // שליחת מייל שקט ברקע
+  const fd = new FormData();
+  fd.append('access_key', '9ba5abaf-d501-44db-a33d-d5028c89e0ef');
+  fd.append('subject', 'פנייה בוואטסאפ — עמותת עמי״ט');
+  fd.append('cc', 'vip0532405056@gmail.com');
+  fd.append('community', 'עמותת עמי״ט');
+  fd.append('name', name);
+  fd.append('phone', phone);
+  fd.append('email', email);
+  fd.append('channel', 'וואטסאפ');
+  fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
   window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
 }
 document.getElementById('syllabus-modal').addEventListener('click', function(e) {
