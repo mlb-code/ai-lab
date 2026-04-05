@@ -711,7 +711,12 @@
   <p>נשמח לספר על הקורס, לתאם שיחה קצרה או לשלוח חומרים נוספים</p>
   <form class="contact-form" id="contactForm" onsubmit="return submitForm(event)">
     <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
-    <input type="hidden" name="subject" value="פנייה חדשה — שותפות עמי״ט">
+    <input type="hidden" name="subject" value="פנייה חדשה — עמותת עמי״ט">
+    <input type="hidden" name="community" value="עמותת עמי״ט">
+    <div class="form-group">
+      <label>קהילה</label>
+      <input type="text" value='עמותת עמי"ט' readonly style="opacity:0.6; cursor:default; background:rgba(255,255,255,0.03);">
+    </div>
     <div class="form-group">
       <label for="name">שם מלא</label>
       <input type="text" id="name" name="name" placeholder="הכניסו את השם שלכם" required>
@@ -822,10 +827,8 @@ function sendWhatsApp() {
   const phone = document.getElementById('phone').value.trim();
   const email = document.getElementById('email').value.trim();
   if (!name || !phone || !email) { alert('נא למלא את כל השדות'); return; }
-  const msg = `היי, אני מעמותת עמי״ט ומתעניין/ת בקורס יזמות ו-AI\n\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email}`;
+  const msg = `היי, אני מעמותת עמי״ט ומתעניין/ת בקורס יזמות ו-AI\n\nקהילה: עמותת עמי״ט\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email}`;
   window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
-}
-
 }
 document.getElementById('syllabus-modal').addEventListener('click', function(e) {
   if (e.target === this) closeSyllabus();
