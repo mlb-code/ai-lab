@@ -804,7 +804,7 @@ const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz18KOVyFYyHoZdkDWW8
 function sendToSheets(name, phone, email, channel) {
   fetch(SHEETS_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    mode: 'no-cors',
     body: JSON.stringify({ name, phone, email, community: 'עמותת עמי״ט', channel })
   }).catch(() => {});
 }
