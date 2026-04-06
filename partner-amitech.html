@@ -799,16 +799,30 @@ function closeSyllabus() {
   document.getElementById('syllabus-modal').style.display = 'none';
 }
 
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz18KOVyFYyHoZdkDWW835IlqSAOncRDXQCaMU_BAQOpQ3jXP2r39CWrl4HjFZiD_5A/exec';
+
+function sendToSheets(name, phone, email, channel) {
+  fetch(SHEETS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, phone, email, community: 'עמותת עמי״ט', channel })
+  }).catch(() => {});
+}
+
 async function submitForm(e) {
   e.preventDefault();
   var form = document.getElementById('contactForm');
   var btn = form.querySelector('.btn-submit');
+  var name = document.getElementById('name').value.trim();
+  var phone = document.getElementById('phone').value.trim();
+  var email = document.getElementById('email').value.trim();
   btn.disabled = true;
   btn.textContent = 'שולח...';
   try {
     var data = new FormData(form);
     var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
     if (res.ok) {
+      sendToSheets(name, phone, email, 'טופס מייל');
       form.innerHTML = '<div style="text-align:center;padding:2rem;font-size:1.2rem;color:#00D4AA;font-weight:700;">הפנייה נשלחה בהצלחה! נחזור אליכם בהקדם.</div>';
     } else {
       btn.disabled = false;
@@ -840,6 +854,7 @@ function sendWhatsApp() {
   fd.append('email', email);
   fd.append('channel', 'וואטסאפ');
   fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+  sendToSheets(name, phone, email, 'וואטסאפ');
   window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
 }
 document.getElementById('syllabus-modal').addEventListener('click', function(e) {
