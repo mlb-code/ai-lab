@@ -799,14 +799,11 @@ function closeSyllabus() {
   document.getElementById('syllabus-modal').style.display = 'none';
 }
 
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz18KOVyFYyHoZdkDWW835IlqSAOncRDXQCaMU_BAQOpQ3jXP2r39CWrl4HjFZiD_5A/exec';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw3CmaBxA_Y9NjxSf7MvvZDVEvvVyxp2FvLjASCPMPSBRdw5F8Rc6vgDdwaInsaKtZi/exec';
 
 function sendToSheets(name, phone, email, channel) {
-  fetch(SHEETS_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: JSON.stringify({ name, phone, email, community: 'עמותת עמי״ט', channel })
-  }).catch(() => {});
+  const params = new URLSearchParams({ name, phone, email, community: 'עמותת עמי״ט', channel });
+  fetch(SHEETS_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' }).catch(() => {});
 }
 
 async function submitForm(e) {
