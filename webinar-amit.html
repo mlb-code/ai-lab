@@ -512,21 +512,19 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
+    } catch(e) { console.warn('Web3Forms error:', e); }
 
-      // 2. EmailJS — מייל אישור לנרשם
-      await emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
-        to_name:   document.getElementById('fn').value,
-        to_email:  document.getElementById('fe').value,
-        zoom_link: C.ZOOM,
-        gcal_link: gcal,
-      });
+    // הצג success מיד
+    document.getElementById('regForm').style.display = 'none';
+    document.getElementById('successCard').style.display = 'block';
 
-      document.getElementById('regForm').style.display = 'none';
-      document.getElementById('successCard').style.display = 'block';
-    } catch {
-      btn.disabled = false;
-      btn.textContent = '❌ שגיאה — נסו שוב';
-    }
+    // 2. EmailJS — מייל אישור לנרשם (ברקע, לא חוסם)
+    emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
+      to_name:   document.getElementById('fn').value,
+      to_email:  document.getElementById('fe').value,
+      zoom_link: C.ZOOM,
+      gcal_link: gcal,
+    }).catch(err => console.error('EmailJS error:', err));
   });
 
   // ICS download
