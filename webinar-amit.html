@@ -7,6 +7,7 @@
   <meta name="description" content="וובינר חינמי מיוחד להורים: איך ילדים ובני נוער יכולים לבנות פרויקטים אמיתיים עם AI. יום שלישי 14.4.2026 — הרשמה חינם.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root {
       --primary: #6C3CE1;
@@ -447,15 +448,21 @@
   //  ⚙️  הגדרות — עדכנו כאן
   // ══════════════════════════════════════════
   const C = {
-    // Web3Forms — חינם ללא הגבלה
-    // הוראות: web3forms.com → Enter Email → Copy Access Key
-    W3F_KEY: 'ac1edd62-607b-464c-a677-0f62676a9b5d',
+    // Web3Forms — התראה למייר
+    W3F_KEY:     'ac1edd62-607b-464c-a677-0f62676a9b5d',
+
+    // EmailJS — מייל אישור לנרשם
+    EJS_KEY:     'OHbhRjZEi65SHI5jx',
+    EJS_SERVICE: 'service_0n55sp2',
+    EJS_TPL:     'ynxyg99',
 
     ZOOM:     'https://us06web.zoom.us/j/87248723485?pwd=sZlPgGc9tisWk0RekVktLNvA',
     UTC_H:    16,   // 19:00 ישראל = 16:00 UTC (UTC+3 בקיץ)
     UTC_M:    0,
     DUR_H:    1,    // משך שעה
   };
+
+  emailjs.init({ publicKey: C.EJS_KEY });
 
   // Google Calendar link
   function p(n){ return String(n).padStart(2,'0'); }
@@ -499,14 +506,21 @@
     };
 
     try {
-      if (C.W3F_KEY !== 'YOUR_ACCESS_KEY') {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        if (!res.ok) throw new Error('failed');
-      }
+      // 1. Web3Forms — התראה למייר
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      // 2. EmailJS — מייל אישור לנרשם
+      await emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
+        to_name:   document.getElementById('fn').value,
+        to_email:  document.getElementById('fe').value,
+        zoom_link: C.ZOOM,
+        gcal_link: gcal,
+      });
+
       document.getElementById('regForm').style.display = 'none';
       document.getElementById('successCard').style.display = 'block';
     } catch {
