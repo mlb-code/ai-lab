@@ -2986,9 +2986,9 @@
                     <div class="site-preview-btn">🚀 לצפייה באתר</div>
                 </a>
             </div>
-            <div class="carousel-nav">
-                <button onclick="scrollCarousel('projectsTrack',-1)" aria-label="הקודם">&#8249;</button>
-                <button onclick="scrollCarousel('projectsTrack',1)" aria-label="הבא">&#8250;</button>
+            <div class="carousel-nav" id="projectsNav">
+                <button id="projectsPrev" aria-label="הקודם">&#8249;</button>
+                <button id="projectsNext" aria-label="הבא">&#8250;</button>
             </div>
         </div>
     </section>
@@ -3475,8 +3475,7 @@
         }
 
         // Carousel: scroll by one card width (buttons)
-        function scrollCarousel(trackId, dir) {
-            const track = document.getElementById(trackId);
+        function scrollCarousel(track, dir) {
             if (!track) return;
             const cards = Array.from(track.children);
             if (!cards.length) return;
@@ -3486,9 +3485,20 @@
             clearTimeout(track._resumeTimer);
             const currentIndex = Math.round(track.scrollLeft / cardW);
             const targetIndex = Math.max(0, Math.min(cards.length - 1, currentIndex + dir));
-            track.scrollTo({ left: targetIndex * cardW, behavior: 'smooth' });
+            track.scrollTo({ left: targetIndex * cardW, behavior: 'instant' });
             track._resumeTimer = setTimeout(() => startAutoScroll(track), 5000);
         }
+
+        // Wire up project carousel buttons
+        const projectsTrack = document.getElementById('projectsTrack');
+        document.getElementById('projectsPrev').addEventListener('click', function(e) {
+            e.stopPropagation();
+            scrollCarousel(projectsTrack, -1);
+        });
+        document.getElementById('projectsNext').addEventListener('click', function(e) {
+            e.stopPropagation();
+            scrollCarousel(projectsTrack, 1);
+        });
 
         // Init all carousels: auto-scroll + pause on touch/click
         document.querySelectorAll('.scroll-track').forEach(track => {
