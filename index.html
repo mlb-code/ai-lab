@@ -669,29 +669,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow: hidden;
         }
 
         .scroll-track {
             display: flex;
             gap: 20px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
             padding: 0.5rem 1rem 1rem;
             direction: ltr;
+            transition: transform 0.4s ease;
+            will-change: transform;
         }
         .scroll-track > * {
             direction: rtl;
-        }
-        @media (min-width: 1500px) {
-            .scroll-track { justify-content: center; }
-        }
-
-        .scroll-track::-webkit-scrollbar { display: none; }
-
-        .scroll-track > * {
-            scroll-snap-align: start;
         }
 
         .carousel-nav {
@@ -1092,7 +1082,7 @@
         /* ========== STUDENT PROJECTS ========== */
         .student-card {
             flex-shrink: 0;
-            width: 300px;
+            width: calc((100vw - 3rem - 60px) / 4);
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
@@ -1921,8 +1911,11 @@
             #projectsTrack {
                 gap: 1rem;
                 padding: 0.5rem 1rem 1rem;
+                overflow-x: auto;
                 scroll-snap-type: x mandatory;
                 scroll-padding-left: 1rem;
+                transition: none !important;
+                transform: none !important;
             }
             .student-card {
                 width: calc(100vw - 3rem);
@@ -3489,35 +3482,65 @@
             track._resumeTimer = setTimeout(() => startAutoScroll(track), 5000);
         }
 
-        // Wire up project carousel buttons
-        const projectsTrack = document.getElementById('projectsTrack');
-        document.getElementById('projectsPrev').addEventListener('click', function(e) {
-            e.stopPropagation();
-            scrollCarousel(projectsTrack, -1);
-        });
-        document.getElementById('projectsNext').addEventListener('click', function(e) {
-            e.stopPropagation();
-            scrollCarousel(projectsTrack, 1);
-        });
+        // ── Projects carousel: transform-based, 4 cards visible on desktop ──
+        (function() {
+            const track = document.getElementById('projectsTrack');
+            const prevBtn = document.getElementById('projectsPrev');
+            const nextBtn = document.getElementById('projectsNext');
+            let idx = 0;
 
-        // Init all carousels: auto-scroll + pause on touch/click
-        document.querySelectorAll('.scroll-track').forEach(track => {
-            startAutoScroll(track);
-            track.addEventListener('touchstart', () => {
-                stopAutoScroll(track);
-                clearTimeout(track._resumeTimer);
-            }, { passive: true });
-            track.addEventListener('mousedown', () => {
-                stopAutoScroll(track);
-                clearTimeout(track._resumeTimer);
+            function isMobile() { return window.innerWidth <= 768; }
+
+            function getCardW() {
+                const card = track.children[0];
+                if (!card) return 0;
+                return card.offsetWidth + (parseInt(getComputedStyle(track).gap) || 20);
+            }
+
+            function maxIdx() {
+                return Math.max(0, track.children.length - 4);
+            }
+
+            function applyTransform(instant) {
+                if (isMobile()) { track.style.transform = ''; return; }
+                const offset = idx * getCardW();
+                if (instant) {
+                    track.style.transition = 'none';
+                    track.style.transform = 'translateX(-' + offset + 'px)';
+                    track.getBoundingClientRect(); // force reflow
+                    track.style.transition = '';
+                } else {
+                    track.style.transform = 'translateX(-' + offset + 'px)';
+                }
+            }
+
+            nextBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isMobile()) return;
+                const max = maxIdx();
+                if (idx >= max) {
+                    idx = 0;
+                    applyTransform(true); // instant wrap to start
+                } else {
+                    idx++;
+                    applyTransform(false);
+                }
             });
-            track.addEventListener('touchend', () => {
-                track._resumeTimer = setTimeout(() => startAutoScroll(track), 4000);
-            }, { passive: true });
-            track.addEventListener('mouseup', () => {
-                track._resumeTimer = setTimeout(() => startAutoScroll(track), 4000);
+
+            prevBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isMobile()) return;
+                if (idx <= 0) {
+                    idx = maxIdx();
+                    applyTransform(true); // instant wrap to end
+                } else {
+                    idx--;
+                    applyTransform(false);
+                }
             });
-        });
+
+            window.addEventListener('resize', function() { idx = 0; applyTransform(true); });
+        }());
 
         // ===== SYLLABUS POPUPS =====
         const syllabusData = {
