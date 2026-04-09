@@ -967,6 +967,7 @@
       <div class="genre-pill" data-genre="animation">🎨 אנימציה</div>
       <div class="genre-pill" data-genre="adventure">🗺️ הרפתקאות</div>
       <div class="genre-pill" data-genre="oscar">🏆 פרסי אוסקר</div>
+      <div class="genre-pill" data-genre="children">🧒 ילדים</div>
     </div>
 
     <!-- GENRE RESULTS -->
@@ -1278,6 +1279,13 @@
       { yt:'ovRf9cPPQF4', title:'PAW Patrol: The Movie', year:'2021', genre:'הרפתקאות', summary:'כלבי המשימה עוברים לעיר הגדולה כדי לעצור ראש עיר בלתי אחראי.' },
       { yt:'pM_IjGDWMkM', title:'Toy Story 4', year:'2019', genre:'הרפתקאות', summary:'וודי ופורקי יוצאים למסע דרך הארץ ופוגשים פרצופים ישנים וחדשים.' },
     ],
+    children: [
+      { yt:'KMBNOaQmMkk', title:'Inside Out 2', year:'2024', genre:'ילדים', summary:'ריילי מתמודדת עם גיל ההתבגרות כשרגשות חדשים – בראשם חרדה – מציפים את המפקדה שבראשה.' },
+      { yt:'5xL7ERLg-ec', title:'The Lion King', year:'2019', genre:'ילדים', summary:'סימבה, שיר האריות הצעיר, נאלץ לעמוד מול גורלו ולהיאבק על ממלכתו מפני דודו המרושע סקאר.' },
+      { yt:'_YUzQa_1RCE', title:'Frozen II', year:'2019', genre:'ילדים', summary:'אלזה ואנה יוצאות למסע מסתורי לגלות את מקור כוחותיה של אלזה ולהציל את ממלכת ארנדל.' },
+      { yt:'DWaB4PXCwFU', title:'Puss in Boots: The Last Wish', year:'2022', genre:'ילדים', summary:'החתול בסין מגלה שנשארה לו רק חיה אחת מתשע, ויוצא למסע אפי למצוא את כוכב הרצון.' },
+      { yt:'SfLuBLaFBCQ', title:'Minions: The Rise of Gru', year:'2022', genre:'ילדים', summary:'גרו הצעיר חולם להיות נבל-על, והמיניונים האהובים שלו הולכים בעקבותיו בהרפתקה מצחיקה.' },
+    ],
   };
 
   function buildGenreCard(t) {
@@ -1302,6 +1310,7 @@
     drama:'🎭 דרמה', thriller:'🕵️ מתח ומסתורין', fantasy:'🧙 פנטזיה',
     family:'👨‍👩‍👧 משפחה', musical:'🎶 מיוזיקל', oscar:'🏆 פרסי אוסקר',
     animation:'🎨 אנימציה', adventure:'🗺️ הרפתקאות',
+    children:'🧒 ילדים',
   };
 
   document.querySelectorAll('.genre-pill[data-genre]').forEach(pill => {
