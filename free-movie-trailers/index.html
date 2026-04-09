@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Movie Trailers – כל הטריילרים במקום אחד</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:    #05080f;
+      --bg-card:    #0a0f1e;
+      --bg-card2:   #0d1428;
+      --accent1:    #2563eb;
+      --accent2:    #ec4899;
+      --accent3:    #a78bfa;
+      --text-main:  #f0f4ff;
+      --text-muted: #94a3b8;
+      --border:     rgba(37,99,235,.28);
+      --grad-hero:  linear-gradient(135deg,#2563eb 0%,#ec4899 100%);
+      --grad-card:  linear-gradient(145deg,#0d1428 0%,#0a0f1e 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(8,11,20,.7);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: 1.25rem; font-weight: 800;
+      background: var(--grad-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-logo span.icon { font-size: 1.6rem; filter: drop-shadow(0 0 8px #2563eb); -webkit-text-fill-color: initial; }
+    .nav-cta {
+      background: var(--grad-hero);
+      color: #fff; border: none; border-radius: 50px;
+      padding: .55rem 1.4rem; font-size: .9rem; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-cta:hover { opacity: .85; transform: scale(1.04); }
+
+    /* nav links desktop */
+    .nav-links {
+      display: flex; align-items: center; gap: 1.8rem;
+    }
+    .nav-link {
+      color: var(--text-muted); text-decoration: none;
+      font-size: .92rem; font-weight: 500;
+      transition: color .2s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: var(--text-main); }
+
+    /* mobile menu links */
+    .nav-mobile-link {
+      display: block; width: 100%; padding: .85rem 1rem;
+      color: var(--text-main); text-decoration: none;
+      font-size: 1.05rem; font-weight: 600;
+      border-radius: 12px;
+      transition: background .2s;
+    }
+    .nav-mobile-link:hover { background: rgba(255,255,255,.06); }
+    .nav-mobile-divider {
+      width: 100%; height: 1px;
+      background: var(--border); margin: .3rem 0;
+    }
+    .nav-mobile-wa {
+      display: flex; align-items: center; gap: .6rem;
+      width: 100%; padding: .85rem 1rem;
+      background: rgba(37,211,102,.12);
+      border: 1px solid rgba(37,211,102,.3);
+      border-radius: 12px; color: #25D366;
+      text-decoration: none; font-size: 1rem; font-weight: 700;
+      transition: background .2s;
+    }
+    .nav-mobile-wa:hover { background: rgba(37,211,102,.2); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+    @media (min-width: 769px) {
+      .hamburger { display: none !important; }
+      .nav-mobile { display: none !important; }
+      .carousel-arrow { display: none !important; }
+    }
+
+    /* hamburger */
+    .hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; cursor: pointer; background: none; border: none;
+      padding: .3rem; z-index: 101;
+    }
+    .hamburger span {
+      display: block; width: 26px; height: 2.5px;
+      background: var(--text-main); border-radius: 4px;
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    /* mobile menu */
+    .nav-mobile {
+      display: none; position: fixed; top: 65px; right: 0; left: 0;
+      background: rgba(8,11,20,.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      flex-direction: column; align-items: center;
+      gap: 1.2rem; padding: 2rem 1.5rem;
+      z-index: 99;
+    }
+    .nav-mobile.open { display: flex; animation: fadeUp .25s ease; }
+    .nav-mobile .nav-cta { width: 100%; text-align: center; padding: .85rem; font-size: 1rem; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 7rem 1.5rem 4rem;
+      overflow: hidden;
+    }
+
+    /* glow blobs */
+    .blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(100px); opacity: .35; pointer-events: none;
+    }
+    .blob-1 { width: 600px; height: 600px; background: #2563eb; top: -200px; right: -150px; }
+    .blob-2 { width: 500px; height: 500px; background: #ec4899; bottom: -150px; left: -100px; }
+    .blob-3 { width: 350px; height: 350px; background: #a78bfa; top: 40%; left: 50%; transform: translate(-50%,-50%); opacity: .15; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(37,99,235,.15);
+      border: 1px solid rgba(37,99,235,.4);
+      border-radius: 50px; padding: .4rem 1rem;
+      font-size: .82rem; color: #93c5fd; margin-bottom: 1.6rem;
+      animation: fadeUp .7s ease both;
+    }
+    .hero-badge::before { content: '✦'; }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      font-weight: 900; line-height: 1.1;
+      margin-bottom: 1.4rem;
+      animation: fadeUp .8s .1s ease both;
+    }
+    h1 .grad { background: var(--grad-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      color: var(--text-muted); max-width: 580px;
+      line-height: 1.75; margin-bottom: 2.8rem;
+      animation: fadeUp .8s .2s ease both;
+    }
+
+    /* search results dropdown */
+    .search-results {
+      position: absolute; top: calc(100% + 8px); right: 0; left: 0;
+      background: #0d1428; border: 1px solid var(--border);
+      border-radius: 18px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+      z-index: 200; max-height: 420px; overflow-y: auto;
+      scrollbar-width: thin; scrollbar-color: var(--accent1) transparent;
+      text-align: right;
+    }
+    .search-result-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: .85rem 1.2rem; cursor: pointer;
+      transition: background .18s; border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover { background: rgba(37,99,235,.15); }
+    .search-result-thumb {
+      width: 72px; height: 44px; border-radius: 8px;
+      object-fit: cover; flex-shrink: 0;
+    }
+    .search-result-info { flex: 1; }
+    .search-result-title { font-size: .95rem; font-weight: 700; }
+    .search-result-meta { font-size: .78rem; color: var(--text-muted); margin-top: .15rem; }
+    .search-result-genre {
+      display: inline-block; background: rgba(37,99,235,.2);
+      border-radius: 50px; padding: .1rem .55rem;
+      font-size: .72rem; color: #93c5fd; margin-right: .4rem;
+    }
+    .search-no-results {
+      padding: 1.5rem; color: var(--text-muted);
+      font-size: .95rem; text-align: center;
+    }
+    .search-results-header {
+      padding: .6rem 1.2rem; font-size: .78rem;
+      color: var(--text-muted); border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+    }
+
+    /* search bar */
+    .search-wrap {
+      position: relative; width: min(100%, 560px);
+      margin: 0 auto 8rem;
+      animation: fadeUp .8s .3s ease both;
+    }
+    .search-wrap input {
+      width: 100%; padding: 1.1rem 1.4rem 1.1rem 5rem;
+      border-radius: 50px; border: 2px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text-main); font-size: 1rem; font-family: inherit;
+      outline: none; transition: border-color .25s, background .25s;
+      direction: rtl;
+    }
+    .search-wrap input::placeholder { color: var(--text-muted); }
+    .search-wrap input:focus { border-color: var(--accent1); background: rgba(255,255,255,.09); }
+    .search-btn {
+      position: absolute; left: .45rem; top: 50%; transform: translateY(-50%);
+      background: var(--grad-hero); border: none; border-radius: 50px;
+      color: #fff; padding: .65rem 1.2rem; font-size: .9rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: opacity .2s;
+      white-space: nowrap;
+    }
+    .search-btn:hover { opacity: .85; }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp .8s .4s ease both;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 1.7rem; font-weight: 900; background: var(--grad-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .stat-label { font-size: .8rem; color: var(--text-muted); }
+
+    /* ── SECTION BASE ── */
+    section { position: relative; z-index: 1; }
+    .section-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem; }
+    .section-tag {
+      display: inline-block; background: rgba(37,99,235,.15);
+      border: 1px solid rgba(37,99,235,.35); border-radius: 50px;
+      padding: .3rem .9rem; font-size: .78rem; color: #93c5fd;
+      margin-bottom: 1rem;
+    }
+    .section-title { font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 800; margin-bottom: .8rem; }
+    .section-sub { color: var(--text-muted); font-size: 1.05rem; max-width: 560px; line-height: 1.7; }
+
+    /* ── PROBLEM ── */
+    .problem-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    @media(max-width:640px){ .problem-grid { grid-template-columns: 1fr; } }
+
+    .problem-card {
+      background: var(--grad-card);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 1.8rem;
+      transition: transform .25s, border-color .25s;
+    }
+    .problem-card:hover { transform: translateY(-4px); border-color: rgba(124,58,237,.5); }
+    .problem-card .icon { font-size: 2.2rem; margin-bottom: .9rem; }
+    .problem-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem; }
+    .problem-card p { color: var(--text-muted); font-size: .92rem; line-height: 1.65; }
+    .problem-card.bad .icon-wrap { color: #f87171; }
+    .problem-card.good .icon-wrap { color: #34d399; }
+
+    /* ── FEATURES ── */
+    .features-bg { background: linear-gradient(180deg, var(--bg-dark) 0%, #0d0f1f 50%, var(--bg-dark) 100%); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .feat-card {
+      background: var(--grad-card);
+      border: 1px solid var(--border);
+      border-radius: 24px; padding: 2rem;
+      position: relative; overflow: hidden;
+      transition: transform .25s, border-color .25s;
+    }
+    .feat-card::before {
+      content: ''; position: absolute;
+      inset: 0; border-radius: 24px;
+      background: var(--grad-hero); opacity: 0;
+      transition: opacity .3s; z-index: 0;
+    }
+    .feat-card:hover { transform: translateY(-6px); border-color: transparent; }
+    .feat-card:hover::before { opacity: .08; }
+    .feat-card > * { position: relative; z-index: 1; }
+
+    .feat-icon-wrap {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.2rem;
+    }
+    .feat-icon-wrap.purple { background: rgba(37,99,235,.2); }
+    .feat-icon-wrap.pink   { background: rgba(236,72,153,.2); }
+    .feat-icon-wrap.amber  { background: rgba(167,139,250,.2); }
+
+    .feat-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .6rem; }
+    .feat-card p  { color: var(--text-muted); font-size: .9rem; line-height: 1.7; }
+
+    /* ── HOW IT WORKS ── */
+    .steps { display: flex; flex-direction: column; gap: 0; margin-top: 3rem; }
+    .step {
+      display: flex; align-items: flex-start; gap: 1.8rem;
+      padding: 1.8rem; border-radius: 20px;
+      transition: background .25s;
+    }
+    .step:hover { background: rgba(124,58,237,.07); }
+    .step-num {
+      flex-shrink: 0; width: 52px; height: 52px;
+      border-radius: 50%; background: var(--grad-hero);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: 900;
+    }
+    .step-content h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
+    .step-content p  { color: var(--text-muted); font-size: .92rem; line-height: 1.65; }
+    .step-line { width: 2px; height: 32px; background: var(--border); margin-right: 25px; }
+
+    /* ── GENRES ── */
+    .genres-grid {
+      display: flex; flex-wrap: wrap; gap: .8rem;
+      margin-top: 2.5rem;
+    }
+    .genre-pill {
+      padding: .55rem 1.2rem; border-radius: 50px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      font-size: .9rem; cursor: pointer;
+      transition: background .2s, border-color .2s, transform .2s;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .genre-pill:hover {
+      background: rgba(124,58,237,.18);
+      border-color: var(--accent1); transform: scale(1.05);
+    }
+
+    /* ── PRICING/MODEL ── */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .price-card {
+      background: var(--grad-card);
+      border: 1px solid var(--border);
+      border-radius: 24px; padding: 2rem;
+      text-align: center; position: relative;
+      transition: transform .25s;
+    }
+    .price-card:hover { transform: translateY(-4px); }
+    .price-card.featured {
+      border-color: var(--accent1);
+      background: linear-gradient(145deg,#1a1040 0%,#0f1424 100%);
+    }
+    .price-badge {
+      position: absolute; top: -14px; right: 50%; transform: translateX(50%);
+      background: var(--grad-hero); color: #fff;
+      border-radius: 50px; padding: .3rem .9rem;
+      font-size: .75rem; font-weight: 700;
+    }
+    .price-title { font-size: 1.2rem; font-weight: 800; margin-bottom: .5rem; }
+    .price-amount { font-size: 2.5rem; font-weight: 900; margin: .8rem 0 .3rem; }
+    .price-amount span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+    .price-desc { color: var(--text-muted); font-size: .88rem; line-height: 1.6; }
+    .price-list { list-style: none; text-align: right; margin: 1.2rem 0; }
+    .price-list li { padding: .35rem 0; font-size: .9rem; color: var(--text-muted); }
+    .price-list li::before { content: '✓ '; color: #34d399; font-weight: 700; }
+    .price-btn {
+      width: 100%; padding: .8rem; border-radius: 50px; border: none;
+      font-family: inherit; font-size: .95rem; font-weight: 700; cursor: pointer;
+      transition: opacity .2s, transform .2s;
+    }
+    .price-btn.outline {
+      background: transparent; border: 2px solid var(--border); color: var(--text-main);
+    }
+    .price-btn.outline:hover { border-color: var(--accent1); }
+    .price-btn.solid { background: var(--grad-hero); color: #fff; }
+    .price-btn.solid:hover { opacity: .85; transform: scale(1.02); }
+
+    /* ── CTA ── */
+    .cta-section {
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #050d2a 0%, #1a0520 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cta-inner {
+      max-width: 700px; margin: 0 auto;
+      padding: 6rem 1.5rem; text-align: center;
+    }
+    .cta-inner h2 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 1rem; }
+    .cta-inner p  { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 2.5rem; line-height: 1.7; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--grad-hero); color: #fff;
+      border: none; border-radius: 50px;
+      padding: .9rem 2.2rem; font-size: 1rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      box-shadow: 0 0 40px rgba(124,58,237,.4);
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-primary:hover { opacity: .88; transform: scale(1.04); }
+    .btn-secondary {
+      background: rgba(255,255,255,.08); color: var(--text-main);
+      border: 1px solid var(--border); border-radius: 50px;
+      padding: .9rem 2.2rem; font-size: 1rem; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: background .2s, border-color .2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,.13); border-color: var(--accent1); }
+    .cta-blob1 { position: absolute; width: 400px; height: 400px; background: #2563eb; border-radius: 50%; filter: blur(120px); opacity: .2; top: -100px; right: -100px; }
+    .cta-blob2 { position: absolute; width: 400px; height: 400px; background: #ec4899; border-radius: 50%; filter: blur(120px); opacity: .2; bottom: -100px; left: -100px; }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 28px; left: 28px; z-index: 999;
+      display: flex; align-items: center; justify-content: center;
+      background: #25D366;
+      border-radius: 50%; width: 60px; height: 60px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,.5);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(37,211,102,.7);
+    }
+    .wa-float span { display: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem 1.5rem;
+      color: var(--text-muted); font-size: .85rem;
+      border-top: 1px solid var(--border);
+    }
+    footer .footer-logo {
+      font-size: 1.1rem; font-weight: 800; margin-bottom: .6rem;
+      background: var(--grad-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-cta { display: none; }
+      nav { padding: .9rem 1.2rem; }
+
+      .hero { padding: 6rem 1.2rem 3rem; }
+      h1 { font-size: 2.2rem; }
+      .hero-sub { font-size: .97rem; }
+      .hero-stats { gap: 1.5rem; }
+      .stat-num { font-size: 1.4rem; }
+
+      .search-wrap input { font-size: .9rem; padding: 1rem 1.2rem 1rem 4.5rem; }
+      .search-btn { padding: .55rem .9rem; font-size: .82rem; }
+
+      .section-inner { padding: 3rem 1.2rem; }
+      .section-title { font-size: 1.5rem; }
+
+      .problem-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .pricing-grid  { grid-template-columns: 1fr; }
+
+      .trailers-preview {
+        display: flex !important;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 1rem;
+        padding-bottom: .8rem;
+        margin-right: -1.2rem;
+        margin-left: -1.2rem;
+        padding-right: 1.2rem;
+        padding-left: 1.2rem;
+        scrollbar-width: none;
+      }
+      .trailers-preview::-webkit-scrollbar { display: none; }
+      .trailers-preview .trailer-card {
+        flex: 0 0 72vw;
+        max-width: 280px;
+        scroll-snap-align: start;
+      }
+      .carousel-wrap { position: relative; }
+      .carousel-arrow {
+        position: absolute; top: 38%; transform: translateY(-50%);
+        width: 36px; height: 36px; border-radius: 50%;
+        background: var(--grad-hero); border: none;
+        color: #fff; font-size: 1.1rem;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; z-index: 10;
+        box-shadow: 0 2px 12px rgba(37,99,235,.4);
+      }
+      .carousel-arrow.prev { right: -14px; }
+      .carousel-arrow.next { left: -14px; }
+
+      .trailer-info h4 { font-size: .88rem; }
+
+      .steps .step { flex-direction: column; gap: 1rem; }
+      .step-num { width: 42px; height: 42px; font-size: 1rem; }
+      .step-line { margin-right: 20px; height: 24px; }
+
+      .genres-grid { gap: .55rem; }
+      .genre-pill { font-size: .82rem; padding: .45rem .95rem; }
+
+      .trailer-tabs { gap: .5rem; }
+      .tab-btn { font-size: .85rem; padding: .5rem 1.1rem; }
+
+      .cta-inner { padding: 4rem 1.2rem; }
+      .cta-inner h2 { font-size: 1.6rem; }
+      .cta-btns { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+
+      .wa-float { width: 52px; height: 52px; bottom: 20px; left: 16px; }
+      .wa-float svg { width: 28px; height: 28px; }
+
+      .blob-1 { width: 300px; height: 300px; }
+      .blob-2 { width: 250px; height: 250px; }
+    }
+
+    @media (max-width: 420px) {
+      h1 { font-size: 1.85rem; }
+      .trailers-preview .trailer-card { flex: 0 0 82vw; }
+      .hero-stats { gap: 1rem; }
+      .stat-num { font-size: 1.2rem; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOCK VIDEO CARDS ── */
+    .trailers-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.2rem; margin-top: 3rem;
+    }
+    .trailer-card {
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      cursor: pointer; transition: transform .25s, border-color .25s;
+    }
+    .trailer-card:hover { transform: translateY(-5px) scale(1.02); border-color: rgba(124,58,237,.5); }
+    .trailer-thumb {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1a1040, #2d0a2e);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; position: relative;
+    }
+    .trailer-thumb::after {
+      content: '▶';
+      position: absolute; font-size: 2.5rem;
+      color: rgba(255,255,255,.9);
+      background: rgba(0,0,0,.45);
+      width: 54px; height: 54px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+      transition: background .2s, transform .2s;
+    }
+    .trailer-card:hover .trailer-thumb::after { background: var(--grad-hero); transform: scale(1.1); }
+    .trailer-thumb::after { display: flex; align-items: center; justify-content: center; }
+    .trailer-info { padding: .9rem; }
+    .trailer-info h4 { font-size: .92rem; font-weight: 700; margin-bottom: .25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .trailer-info span { font-size: .78rem; color: var(--text-muted); }
+    .trailer-genre {
+      display: inline-block; background: rgba(124,58,237,.2);
+      border-radius: 50px; padding: .15rem .6rem;
+      font-size: .72rem; color: #a78bfa; margin-top: .35rem;
+    }
+
+    /* SUMMARY */
+    .summary-btn {
+      display: inline-flex; align-items: center; gap: .3rem;
+      margin-top: .6rem; background: rgba(37,99,235,.15);
+      border: 1px solid rgba(37,99,235,.35); border-radius: 50px;
+      color: #93c5fd; font-size: .78rem; font-weight: 600;
+      padding: .28rem .75rem; cursor: pointer; font-family: inherit;
+      transition: background .2s, border-color .2s;
+    }
+    .summary-btn:hover { background: rgba(37,99,235,.3); border-color: #2563eb; }
+    .summary-box {
+      display: none; margin-top: .6rem;
+      background: rgba(255,255,255,.05);
+      border-right: 3px solid #2563eb;
+      border-radius: 0 8px 8px 0;
+      padding: .7rem .9rem;
+      font-size: .83rem; color: var(--text-muted);
+      line-height: 1.65; animation: fadeUp .25s ease;
+    }
+    .summary-box.open { display: block; }
+
+    /* TABS */
+    .trailer-tabs {
+      display: flex; gap: .7rem; margin: 1.8rem 0 0;
+    }
+    .tab-btn {
+      padding: .6rem 1.5rem; border-radius: 50px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      color: var(--text-muted); font-size: .95rem; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--grad-hero); border-color: transparent; color: #fff;
+    }
+
+    /* YT THUMBNAIL */
+    .yt-thumb {
+      position: relative; width: 100%; aspect-ratio: 16/9;
+      overflow: hidden; background: #000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .yt-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .35s, filter .35s;
+      filter: brightness(.85);
+    }
+    .trailer-card:hover .yt-thumb img { transform: scale(1.06); filter: brightness(.65); }
+
+    /* play button pseudo fix */
+    .play-circle {
+      position: absolute;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: rgba(0,0,0,.55);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; backdrop-filter: blur(4px);
+      transition: background .2s, transform .2s;
+      border: 2px solid rgba(255,255,255,.3);
+      z-index: 2;
+    }
+    .trailer-card:hover .play-circle { background: var(--grad-hero); border-color: transparent; transform: scale(1.12); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="icon">🎬</span>
+    Free Movie Trailers
+  </div>
+  <div class="nav-links">
+    <a href="#trailers" class="nav-link">טריילרים</a>
+    <a href="#features" class="nav-link">יכולות</a>
+    <a href="#genres" class="nav-link">ז'אנרים</a>
+    <a href="#how" class="nav-link">איך זה עובד</a>
+  </div>
+  <button class="nav-cta">התחל עכשיו</button>
+  <button class="hamburger" id="hamburger" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#trailers" class="nav-mobile-link">🎬 טריילרים</a>
+  <a href="#features" class="nav-mobile-link">⚡ יכולות</a>
+  <a href="#genres" class="nav-mobile-link">🎭 ז'אנרים</a>
+  <a href="#how" class="nav-mobile-link">📋 איך זה עובד</a>
+  <div class="nav-mobile-divider"></div>
+  <button class="nav-cta" style="width:100%;text-align:center;padding:.85rem;font-size:1rem;">התחל עכשיו</button>
+  <a href="https://wa.me/972586555370?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A6%D7%A8%D7%99%D7%9A%20%D7%A2%D7%96%D7%A8%D7%94%20%D7%91%D7%90%D7%AA%D7%A8%20Free%20Movie%20Trailers%20%F0%9F%8E%AC" target="_blank" class="nav-mobile-wa">
+    <svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.845L0 24l6.335-1.51A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm6.07 16.56c-.26.73-1.52 1.4-2.08 1.48-.53.08-1.2.11-1.94-.12-.45-.14-1.02-.33-1.75-.65-3.08-1.33-5.09-4.43-5.24-4.63-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .46-.07.71.54.26.62.88 2.15.95 2.3.08.16.13.34.03.55-.1.2-.15.33-.3.5-.16.18-.33.4-.47.54-.16.15-.32.31-.14.62.18.3.8 1.3 1.72 2.1 1.18 1.05 2.17 1.37 2.48 1.53.31.16.5.13.68-.08.19-.2.8-.93 1.01-1.25.21-.31.42-.26.71-.16.3.1 1.87.88 2.19 1.04.32.16.53.24.61.37.08.13.08.74-.18 1.47z"/></svg>
+    צור קשר בוואטסאפ
+  </a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="hero-badge">MVP בדרך · גרסה ראשונה בקרוב</div>
+
+  <h1>
+    כל הטריילרים<br/>
+    <span class="grad">במקום אחד</span>
+  </h1>
+
+  <p class="hero-sub">
+    נמאס לחפש טריילרים ביוטיוב? כאן תמצא בקלות טריילרים לכל סרט וסדרה, ממוינים לפי ז'אנר, בחינם לחלוטין.
+  </p>
+
+  <div class="search-wrap">
+    <input id="hero-search" type="text" placeholder='חפש סרט, סדרה או ז׳אנר...' autocomplete="off" />
+    <button class="search-btn" id="hero-search-btn">🔍 חפש</button>
+    <div id="search-results" class="search-results" style="display:none"></div>
+  </div>
+
+  <div class="hero-stats" id="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-count">28</div>
+      <div class="stat-label">טריילרים</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">ז'אנרים</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">חינמי</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM vs SOLUTION -->
+<section>
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">הבעיה שפתרנו</span>
+      <h2 class="section-title">למה זה היה מסובך עד עכשיו?</h2>
+      <p class="section-sub">חיפוש טריילרים היה כאב ראש מיותר שאנחנו מחסלים אחת ולתמיד.</p>
+    </div>
+    <div class="problem-grid reveal">
+      <div class="problem-card bad">
+        <div class="icon">😤</div>
+        <h3>לפני Free Movie Trailers</h3>
+        <p>היית צריך לחפש כל טריילר ידנית ביוטיוב, לסנן תוצאות לא רלוונטיות, ולעבור בין כמה אפליקציות שונות של ספקים.</p>
+      </div>
+      <div class="problem-card good">
+        <div class="icon">🚀</div>
+        <h3>עם Free Movie Trailers</h3>
+        <p>כל הטריילרים מרוכזים במקום אחד. חיפוש מהיר, המלצות חכמות לפי ז'אנר – ובלי פרסומות מטרידות.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAILER PREVIEW -->
+<section id="trailers">
+  <div class="section-inner" style="padding-top:0">
+    <div class="reveal">
+      <span class="section-tag">תצוגה מקדימה</span>
+      <h2 class="section-title">טריילרים פופולריים עכשיו</h2>
+    </div>
+
+    <!-- TABS -->
+    <div class="trailer-tabs reveal">
+      <button class="tab-btn active" data-tab="movies">🎬 סרטים</button>
+      <button class="tab-btn" data-tab="series">📺 סדרות</button>
+    </div>
+
+    <!-- MOVIES -->
+    <div class="carousel-wrap">
+      <button class="carousel-arrow prev" data-target="tab-movies">›</button>
+      <button class="carousel-arrow next" data-target="tab-movies">‹</button>
+    <div class="trailers-preview reveal" id="tab-movies">
+
+      <div class="trailer-card" data-yt="Way9Dexny3w" data-title="Dune: Part Two" data-year="2024" data-genre="מדע בדיוני">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/Way9Dexny3w/hqdefault.jpg" alt="Dune: Part Two" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>Dune: Part Two</h4>
+          <span>2024</span><br/>
+          <span class="trailer-genre">מדע בדיוני</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">פול אטריידס מתאחד עם הצ'אני ועם הפרמן כדי להילחם נגד הכוחות שהרסו את משפחתו. בדרכו להנקמה הוא עומד בפני בחירה שתשנה את גורל הגלקסיה לנצח.</div>
+        </div>
+      </div>
+
+      <div class="trailer-card" data-yt="uYPbbksJxIg" data-title="Oppenheimer" data-year="2023" data-genre="דרמה">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/uYPbbksJxIg/hqdefault.jpg" alt="Oppenheimer" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>Oppenheimer</h4>
+          <span>2023</span><br/>
+          <span class="trailer-genre">דרמה</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">סיפורו של ג'יי רוברט אופנהיימר, הפיזיקאי שהוביל את פרויקט מנהטן ופיתח את פצצת האטום – ואת המחיר האישי הכבד שבא עמו.</div>
+        </div>
+      </div>
+
+      <div class="trailer-card" data-yt="JfVOs4VSpmA" data-title="Spider-Man: No Way Home" data-year="2021" data-genre="אקשן">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/JfVOs4VSpmA/hqdefault.jpg" alt="Spider-Man: No Way Home" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>Spider-Man: No Way Home</h4>
+          <span>2021</span><br/>
+          <span class="trailer-genre">אקשן</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">כשזהותו של פיטר פארקר נחשפת, הוא פונה לד"ר סטריינג' לעזרה – ומשגר לתוך המולטיוורס את אויביו המסוכנים ביותר מיקומות אחרים.</div>
+        </div>
+      </div>
+
+      <div class="trailer-card" data-yt="giXco2jaZ_4" data-title="Top Gun: Maverick" data-year="2022" data-genre="אקשן">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/giXco2jaZ_4/hqdefault.jpg" alt="Top Gun: Maverick" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>Top Gun: Maverick</h4>
+          <span>2022</span><br/>
+          <span class="trailer-genre">אקשן</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">מאוורק חוזר לאמן דור חדש של טייסי עילית למשימה כמעט בלתי אפשרית – ונאלץ להתמודד עם עברו ועם מה שמשמעות ההקרבה האמיתית.</div>
+        </div>
+      </div>
+
+      <div class="trailer-card" data-yt="a8Gx8wiNbs8" data-title="Avatar: The Way of Water" data-year="2022" data-genre="מדע בדיוני">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/a8Gx8wiNbs8/hqdefault.jpg" alt="Avatar: The Way of Water" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>Avatar: The Way of Water</h4>
+          <span>2022</span><br/>
+          <span class="trailer-genre">מדע בדיוני</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">ג'ייק סאלי ומשפחתו עוזבים את ביתם ומתחילים חיים חדשים בין שבטי המים של פנדורה. כשמגיע האיום הישן, הם נאלצים להילחם על הישרדותם.</div>
+        </div>
+      </div>
+    </div>
+    </div><!-- /carousel-wrap movies -->
+
+    <!-- SERIES -->
+    <div class="carousel-wrap">
+      <button class="carousel-arrow prev" data-target="tab-series">›</button>
+      <button class="carousel-arrow next" data-target="tab-series">‹</button>
+    <div class="trailers-preview reveal" id="tab-series" style="display:none">
+
+      <div class="trailer-card" data-yt="uLtkt8BonwM" data-title="The Last of Us" data-year="S1 · HBO" data-genre="דרמה">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/uLtkt8BonwM/hqdefault.jpg" alt="The Last of Us" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>The Last of Us</h4>
+          <span>S1 · HBO</span><br/>
+          <span class="trailer-genre">דרמה</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">עולם פוסט-אפוקליפטי שנכבש על ידי פטריית קורדיספס. ג'ואל, ניצול קשה, מקבל משימה להבריח את אלי – ילדה חסינה לנגיף – דרך אמריקה ההרוסה.</div>
+        </div>
+      </div>
+
+      <div class="trailer-card" data-yt="oBkTe7GIuFo" data-title="Stranger Things 4" data-year="S4 · Netflix" data-genre="מתח">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/oBkTe7GIuFo/hqdefault.jpg" alt="Stranger Things 4" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>Stranger Things 4</h4>
+          <span>S4 · Netflix</span><br/>
+          <span class="trailer-genre">מתח</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">שישה חודשים לאחר קרב הבלתי-מוד, הצוות מפוזר לראשונה. כשמתגלה איום חדש ומסוכן מהעולם ההפוך, אל הסודות הנסתרים ביותר יחשפו.</div>
+        </div>
+      </div>
+
+      <div class="trailer-card" data-yt="DotnJ7tTA34" data-title="House of the Dragon" data-year="S1 · HBO" data-genre="פנטזיה">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/DotnJ7tTA34/hqdefault.jpg" alt="House of the Dragon" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>House of the Dragon</h4>
+          <span>S1 · HBO</span><br/>
+          <span class="trailer-genre">פנטזיה</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">פרקוול ל-Game of Thrones. סיפור הירידה של בית טארגריין – 200 שנה לפני אירועי הסדרה המקורית – ומלחמת הירושה שפילגה את הממלכה.</div>
+        </div>
+      </div>
+
+      <div class="trailer-card" data-yt="oqxAJRvndBc" data-title="Squid Game" data-year="S1 · Netflix" data-genre="מתח">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/oqxAJRvndBc/hqdefault.jpg" alt="Squid Game" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>Squid Game</h4>
+          <span>S1 · Netflix</span><br/>
+          <span class="trailer-genre">מתח</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">456 אנשים שקועים בחובות מקבלים הזמנה מסתורית לשחק במשחקי ילדים קוריאניים תמימים – כשהפרס הוא מיליארדים, והמחיר על הפסד הוא חייהם.</div>
+        </div>
+      </div>
+
+      <div class="trailer-card" data-yt="ndl1W4ltcmg" data-title="The Witcher" data-year="S1 · Netflix" data-genre="פנטזיה">
+        <div class="trailer-thumb yt-thumb">
+          <img src="https://img.youtube.com/vi/ndl1W4ltcmg/hqdefault.jpg" alt="The Witcher" />
+          <div class="play-circle">▶</div>
+        </div>
+        <div class="trailer-info">
+          <h4>The Witcher</h4>
+          <span>S1 · Netflix</span><br/>
+          <span class="trailer-genre">פנטזיה</span>
+          <button class="summary-btn" onclick="toggleSummary(event, this)">📖 תקציר ▾</button>
+          <div class="summary-box">גרלט מריביה, ציד מפלצות גיבור-על, מתמודד בעולם שבו בני אדם ומפלצות כאחד יכולים להיות אויבים – וגורלו קשור לנסיכה צ'ירי.</div>
+        </div>
+      </div>
+    </div>
+    </div><!-- /carousel-wrap series -->
+  </div>
+</section>
+
+
+<!-- FEATURES -->
+<section id="features" class="features-bg">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">יכולות עיקריות</span>
+      <h2 class="section-title">מה תמצאו אצלנו?</h2>
+      <p class="section-sub">שלוש סיבות מרכזיות שיגרמו לך לא לחזור לחפש ביוטיוב.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon-wrap purple">🔍</div>
+        <h3>חיפוש טריילרים מהיר</h3>
+        <p>הקלד שם של סרט או סדרה ותקבל את הטריילר הרשמי בשנייה. ללא חיפוש ידני, ללא עומס תוצאות.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon-wrap pink">🎯</div>
+        <h3>המלצות אישיות</h3>
+        <p>מנוע המלצות חכם שמציע לך טריילרים על בסיס מה שצפית בו קודם, ומה שפופולרי בקרב אנשים עם טעם דומה לשלך.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon-wrap amber">🎭</div>
+        <h3>גלישה לפי ז'אנר</h3>
+        <p>אקשן, קומדיה, אימה, דרמה, מדע בדיוני ועוד – גלה תוכן חדש שמתאים בדיוק לאווירה שאתה מחפש.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GENRES -->
+<section id="genres">
+  <div class="section-inner" style="padding-top:0; padding-bottom:4rem">
+    <div class="reveal">
+      <span class="section-tag">גלה לפי ז'אנר</span>
+      <h2 class="section-title">מה בא לך לצפות?</h2>
+    </div>
+    <div class="genres-grid reveal">
+      <div class="genre-pill" data-genre="popular">🔥 פופולרי עכשיו</div>
+      <div class="genre-pill" data-genre="action">💥 אקשן</div>
+      <div class="genre-pill" data-genre="comedy">😂 קומדיה</div>
+      <div class="genre-pill" data-genre="horror">😱 אימה</div>
+      <div class="genre-pill" data-genre="scifi">🚀 מדע בדיוני</div>
+      <div class="genre-pill" data-genre="romance">❤️ רומנטיקה</div>
+      <div class="genre-pill" data-genre="drama">🎭 דרמה</div>
+      <div class="genre-pill" data-genre="thriller">🕵️ מתח ומסתורין</div>
+      <div class="genre-pill" data-genre="fantasy">🧙 פנטזיה</div>
+      <div class="genre-pill" data-genre="family">👨‍👩‍👧 משפחה</div>
+      <div class="genre-pill" data-genre="musical">🎶 מיוזיקל</div>
+      <div class="genre-pill" data-genre="animation">🎨 אנימציה</div>
+      <div class="genre-pill" data-genre="adventure">🗺️ הרפתקאות</div>
+      <div class="genre-pill" data-genre="oscar">🏆 פרסי אוסקר</div>
+    </div>
+
+    <!-- GENRE RESULTS -->
+    <div id="genre-results" style="display:none; margin-top:2.5rem">
+      <div id="genre-results-title" style="font-size:1.1rem; font-weight:700; margin-bottom:1.2rem; color:var(--text-muted)"></div>
+      <div class="trailers-preview" id="genre-trailers"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background: linear-gradient(180deg, var(--bg-dark), #0d0f1f, var(--bg-dark))">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">איך זה עובד</span>
+      <h2 class="section-title">שלושה צעדים פשוטים</h2>
+      <p class="section-sub">מהכניסה לאתר ועד צפייה בטריילר – לא יותר מ-10 שניות.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>פתח את האתר</h3>
+          <p>אין צורך בהרשמה, אין הורדות. פשוט נכנס מכל מכשיר.</p>
+        </div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>חפש או גלה</h3>
+          <p>הקלד שם ספציפי או עיין לפי ז'אנר, סדרה, שנה ועוד.</p>
+        </div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>צפה בטריילר</h3>
+          <p>הטריילר מופעל ישירות מיוטיוב – איכות גבוהה, ללא עיכובים.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/972586555370?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A6%D7%A8%D7%99%D7%9A%20%D7%A2%D7%96%D7%A8%D7%94%20%D7%91%D7%90%D7%AA%D7%A8%20Free%20Movie%20Trailers%20%F0%9F%8E%AC" target="_blank" class="wa-float" title="צור קשר בוואטסאפ">
+  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.845L0 24l6.335-1.51A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm6.07 16.56c-.26.73-1.52 1.4-2.08 1.48-.53.08-1.2.11-1.94-.12-.45-.14-1.02-.33-1.75-.65-3.08-1.33-5.09-4.43-5.24-4.63-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .46-.07.71.54.26.62.88 2.15.95 2.3.08.16.13.34.03.55-.1.2-.15.33-.3.5-.16.18-.33.4-.47.54-.16.15-.32.31-.14.62.18.3.8 1.3 1.72 2.1 1.18 1.05 2.17 1.37 2.48 1.53.31.16.5.13.68-.08.19-.2.8-.93 1.01-1.25.21-.31.42-.26.71-.16.3.1 1.87.88 2.19 1.04.32.16.53.24.61.37.08.13.08.74-.18 1.47z"/>
+  </svg>
+  <span>צור קשר</span>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🎬 Free Movie Trailers</div>
+  <p>כל הטריילרים. מקום אחד. בחינם.</p>
+  <p style="margin-top:.4rem;font-size:.78rem;opacity:.5">© 2025 Free Movie Trailers · MVP בפיתוח</p>
+</footer>
+
+<script>
+  // ── MASTER TRAILER DATABASE ──
+  const masterDB = [
+    { yt:'Way9Dexny3w', title:'Dune: Part Two',                   year:'2024',          genre:'מדע בדיוני', type:'סרט'   },
+    { yt:'uYPbbksJxIg', title:'Oppenheimer',                      year:'2023',          genre:'דרמה',       type:'סרט'   },
+    { yt:'JfVOs4VSpmA', title:'Spider-Man: No Way Home',          year:'2021',          genre:'אקשן',       type:'סרט'   },
+    { yt:'giXco2jaZ_4', title:'Top Gun: Maverick',                year:'2022',          genre:'אקשן',       type:'סרט'   },
+    { yt:'a8Gx8wiNbs8', title:'Avatar: The Way of Water',         year:'2022',          genre:'מדע בדיוני', type:'סרט'   },
+    { yt:'uLtkt8BonwM', title:'The Last of Us',                   year:'S1 · HBO',      genre:'דרמה',       type:'סדרה'  },
+    { yt:'oBkTe7GIuFo', title:'Stranger Things 4',                year:'S4 · Netflix',  genre:'מתח',        type:'סדרה'  },
+    { yt:'DotnJ7tTA34', title:'House of the Dragon',              year:'S1 · HBO',      genre:'פנטזיה',     type:'סדרה'  },
+    { yt:'oqxAJRvndBc', title:'Squid Game',                       year:'S1 · Netflix',  genre:'מתח',        type:'סדרה'  },
+    { yt:'ndl1W4ltcmg', title:'The Witcher',                      year:'S1 · Netflix',  genre:'פנטזיה',     type:'סדרה'  },
+    { yt:'5zSx2xJaIuQ', title:'The Conjuring',                    year:'2013',          genre:'אימה',       type:'סרט'   },
+    { yt:'ruNrdmjcNTc', title:'Hereditary',                       year:'2018',          genre:'אימה',       type:'סרט'   },
+    { yt:'k4_9HXbGLME', title:'Get Out',                          year:'2017',          genre:'אימה',       type:'סרט'   },
+    { yt:'InPoPRfqEWM', title:'A Quiet Place',                    year:'2018',          genre:'אימה',       type:'סרט'   },
+    { yt:'pBqk_-WSBRE', title:'The Grand Budapest Hotel',         year:'2014',          genre:'קומדיה',     type:'סרט'   },
+    { yt:'KRCNEe1URAI', title:'Barbie',                           year:'2023',          genre:'קומדיה',     type:'סרט'   },
+    { yt:'s7EdQ4FqbhY', title:'The Nice Guys',                    year:'2016',          genre:'קומדיה',     type:'סרט'   },
+    { yt:'FvPbxuFKIhg', title:'Free Guy',                         year:'2021',          genre:'קומדיה',     type:'סרט'   },
+    { yt:'VyHV0BRtdxo', title:'La La Land',                       year:'2016',          genre:'מיוזיקל',    type:'סרט'   },
+    { yt:'hOf5PN8-c6k', title:'Mamma Mia!',                       year:'2008',          genre:'מיוזיקל',    type:'סרט'   },
+    { yt:'b-boW4WWJCQ', title:'The Greatest Showman',             year:'2017',          genre:'מיוזיקל',    type:'סרט'   },
+    { yt:'BbFiRBqodVo', title:'About Time',                       year:'2013',          genre:'רומנטיקה',   type:'סרט'   },
+    { yt:'wScV3QLOQIU', title:'The Notebook',                     year:'2004',          genre:'רומנטיקה',   type:'סרט'   },
+    { yt:'hf8EYbFZqMk', title:'The Shawshank Redemption',         year:'1994',          genre:'דרמה',       type:'סרט'   },
+    { yt:'5USfMOFSxGE', title:'Gone Girl',                         year:'2014',          genre:'מתח',        type:'סרט'   },
+    { yt:'2m1drlOZSDw', title:'Mission: Impossible – Dead Reckoning', year:'2023',      genre:'אקשן',       type:'סרט'   },
+    { yt:'EXeTwQWrcwY', title:'John Wick: Chapter 4',             year:'2023',          genre:'אקשן',       type:'סרט'   },
+    { yt:'aA4VqMOHoGA', title:'Doctor Strange',                   year:'2016',          genre:'פנטזיה',     type:'סרט'   },
+
+    // ── ילדים ואנימציה ──
+    { yt:'KMBNOaQmMbk', title:'Inside Out 2',                     year:'2024',          genre:'אנימציה',    type:'סרט'   },
+    { yt:'5xL7ERLg-ec', title:'The Lion King',                    year:'2019',          genre:'אנימציה',    type:'סרט'   },
+    { yt:'ByXuk9QqQkk', title:'Moana 2',                          year:'2024',          genre:'אנימציה',    type:'סרט'   },
+    { yt:'e3Nl_TCQXuw', title:'Encanto',                          year:'2021',          genre:'אנימציה',    type:'סרט'   },
+    { yt:'_YUzQa_1RCE', title:'Frozen II',                        year:'2019',          genre:'אנימציה',    type:'סרט'   },
+    { yt:'pM_IjGDWMkM', title:'Toy Story 4',                      year:'2019',          genre:'אנימציה',    type:'סרט'   },
+    { yt:'SfLuBLaFBCQ', title:'Minions: The Rise of Gru',         year:'2022',          genre:'אנימציה',    type:'סרט'   },
+    { yt:'DWaB4PXCwFU', title:'Puss in Boots: The Last Wish',     year:'2022',          genre:'אנימציה',    type:'סרט'   },
+    { yt:'hYkFh4GUaWk', title:'Bluey – Best of Bluey',            year:'Australia·ABC', genre:'אנימציה',    type:'סדרה'  },
+    { yt:'ovRf9cPPQF4', title:'PAW Patrol: The Movie',            year:'2021',          genre:'אנימציה',    type:'סרט'   },
+
+    // ── סרטים מוכרים נוספים ──
+    { yt:'gqzBERKHCbI', title:'Interstellar',                     year:'2014',          genre:'מדע בדיוני', type:'סרט'   },
+    { yt:'EXeTwQWrcwY', title:'The Batman',                       year:'2022',          genre:'אקשן',       type:'סרט'   },
+    { yt:'TcMBFSGVi1c', title:'Black Panther: Wakanda Forever',   year:'2022',          genre:'אקשן',       type:'סרט'   },
+    { yt:'d9MyW72ELq0', title:'Avengers: Endgame',                year:'2019',          genre:'אקשן',       type:'סרט'   },
+    { yt:'1Q8fG0TtVAY', title:'Thor: Love and Thunder',           year:'2022',          genre:'אקשן',       type:'סרט'   },
+    { yt:'ue80QwXMRHg', title:'Jurassic World Dominion',          year:'2022',          genre:'הרפתקאות',   type:'סרט'   },
+    { yt:'sj9J2ecsSpo', title:'The Dark Knight',                  year:'2008',          genre:'אקשן',       type:'סרט'   },
+    { yt:'0PLmMCGh4p4', title:'Forrest Gump',                     year:'1994',          genre:'דרמה',       type:'סרט'   },
+    { yt:'mqqft2x_Aa4', title:'Titanic',                          year:'1997',          genre:'רומנטיקה',   type:'סרט'   },
+    { yt:'5PSNL1qE6VY', title:'Parasite',                         year:'2019',          genre:'מתח',        type:'סרט'   },
+    { yt:'8ugaeA-nMTc', title:'Everything Everywhere All at Once',year:'2022',          genre:'מדע בדיוני', type:'סרט'   },
+    { yt:'YoHD9XEInc0', title:'Poor Things',                      year:'2023',          genre:'דרמה',       type:'סרט'   },
+
+    // ── סדרות מוכרות נוספות ──
+    { yt:'rhW6RlMKqQE', title:'Breaking Bad',                     year:'S1 · AMC',      genre:'מתח',        type:'סדרה'  },
+    { yt:'giYeaKsHQf8', title:'Game of Thrones',                  year:'S1 · HBO',      genre:'פנטזיה',     type:'סדרה'  },
+    { yt:'4yLAH4cL9gA', title:'Wednesday',                        year:'S1 · Netflix',  genre:'אימה',       type:'סדרה'  },
+    { yt:'KPFYJ3a5X-o', title:'The Crown',                        year:'S1 · Netflix',  genre:'דרמה',       type:'סדרה'  },
+    { yt:'ia4it8OGhRQ', title:'Emily in Paris',                   year:'S1 · Netflix',  genre:'רומנטיקה',   type:'סדרה'  },
+    { yt:'GRVEInkGNjw', title:'Ozark',                            year:'S1 · Netflix',  genre:'מתח',        type:'סדרה'  },
+    { yt:'7f4k2-XEQ1A', title:'The Boys',                         year:'S1 · Amazon',   genre:'אקשן',       type:'סדרה'  },
+    { yt:'vl3bUzCTAmM', title:'Succession',                       year:'S1 · HBO',      genre:'דרמה',       type:'סדרה'  },
+    { yt:'9EcANaQke2M', title:'Black Mirror',                     year:'S1 · Netflix',  genre:'מדע בדיוני', type:'סדרה'  },
+  ];
+
+  // Update stat count
+  document.getElementById('stat-count').textContent = masterDB.length;
+
+  // ── SEARCH ──
+  const searchInput = document.getElementById('hero-search');
+  const searchResults = document.getElementById('search-results');
+
+  const heroStats = document.getElementById('hero-stats');
+
+  function runSearch(q) {
+    q = q.trim().toLowerCase();
+    if (!q) {
+      searchResults.style.display = 'none';
+      heroStats.style.display = 'flex';
+      return;
+    }
+    heroStats.style.display = 'none';
+    const hits = masterDB.filter(t =>
+      t.title.toLowerCase().includes(q) ||
+      t.genre.includes(q) ||
+      t.type.includes(q) ||
+      t.year.toLowerCase().includes(q)
+    );
+    if (!hits.length) {
+      searchResults.innerHTML = `<div class="search-no-results">😕 לא נמצאו תוצאות עבור "<strong>${q}</strong>"</div>`;
+    } else {
+      searchResults.innerHTML =
+        `<div class="search-results-header">נמצאו ${hits.length} תוצאות</div>` +
+        hits.map(t => `
+          <div class="search-result-item" onclick="window.open('https://www.youtube.com/watch?v=${t.yt}','_blank')">
+            <img class="search-result-thumb" src="https://img.youtube.com/vi/${t.yt}/mqdefault.jpg" alt="${t.title}" />
+            <div class="search-result-info">
+              <div class="search-result-title">${t.title}</div>
+              <div class="search-result-meta">
+                <span class="search-result-genre">${t.genre}</span>
+                ${t.type} · ${t.year}
+              </div>
+            </div>
+            <span style="color:var(--text-muted);font-size:1.2rem">▶</span>
+          </div>`).join('');
+    }
+    searchResults.style.display = 'block';
+  }
+
+  searchInput.addEventListener('input', () => runSearch(searchInput.value));
+  searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(searchInput.value); });
+  document.getElementById('hero-search-btn').addEventListener('click', () => runSearch(searchInput.value));
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-wrap')) {
+      searchResults.style.display = 'none';
+      if (!searchInput.value.trim()) heroStats.style.display = 'flex';
+    }
+  });
+  searchInput.addEventListener('focus', () => { if (searchInput.value) runSearch(searchInput.value); });
+
+  // Carousel arrows (mobile only)
+  document.querySelectorAll('.carousel-arrow').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const track = document.getElementById(btn.dataset.target);
+      if (!track) return;
+      const card = track.querySelector('.trailer-card');
+      const scrollAmt = card ? card.offsetWidth + 16 : 200;
+      track.scrollBy({ left: btn.classList.contains('prev') ? scrollAmt : -scrollAmt, behavior: 'smooth' });
+    });
+  });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navMobile = document.getElementById('nav-mobile');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navMobile.classList.toggle('open');
+  });
+  // Close menu on link click
+  navMobile.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navMobile.classList.remove('open');
+    });
+  });
+
+  // Scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+
+  // Genre data
+  const genreData = {
+    popular: [
+      { yt:'Way9Dexny3w', title:'Dune: Part Two', year:'2024', genre:'מדע בדיוני', summary:'פול אטריידס מתאחד עם הצ\'אני ועם הפרמן כדי להילחם נגד הכוחות שהרסו את משפחתו.' },
+      { yt:'uYPbbksJxIg', title:'Oppenheimer', year:'2023', genre:'דרמה', summary:'סיפורו של אופנהיימר, הפיזיקאי שפיתח את פצצת האטום ואת המחיר האישי הכבד שבא עמו.' },
+      { yt:'oqxAJRvndBc', title:'Squid Game', year:'S1 · Netflix', genre:'מתח', summary:'456 אנשים שקועים בחובות מוזמנים לשחק במשחקי ילדים – כשהפסד פירושו מוות.' },
+      { yt:'giXco2jaZ_4', title:'Top Gun: Maverick', year:'2022', genre:'אקשן', summary:'מאוורק חוזר לאמן דור חדש של טייסים למשימה כמעט בלתי אפשרית.' },
+    ],
+    action: [
+      { yt:'giXco2jaZ_4', title:'Top Gun: Maverick', year:'2022', genre:'אקשן', summary:'מאוורק חוזר לאמן דור חדש של טייסי עילית למשימה כמעט בלתי אפשרית.' },
+      { yt:'JfVOs4VSpmA', title:'Spider-Man: No Way Home', year:'2021', genre:'אקשן', summary:'פיטר פארקר פותח את שער המולטיוורס ומשחרר את אויביו המסוכנים ביותר.' },
+      { yt:'_Z3QKkl1WyM', title:'John Wick: Chapter 4', year:'2023', genre:'אקשן', summary:'ג\'ון וויק מחפש את דרכו לחופשי מהגילדה, ונאלץ לנהל את המלחמה הגדולה ביותר שלו.' },
+      { yt:'2m1drlOZSDw', title:'Mission: Impossible – Dead Reckoning', year:'2023', genre:'אקשן', summary:'אתן האנט ניצב מול אויב בלתי נראה שמאיים על העתיד כולו.' },
+    ],
+    comedy: [
+      { yt:'pBqk_-WSBRE', title:'The Grand Budapest Hotel', year:'2014', genre:'קומדיה', summary:'מנהל מלון אקסצנטרי ועוזרו הצעיר נסחפים לתעלומת רצח ומרדף אחר ציור גנוב.' },
+      { yt:'KRCNEe1URAI', title:'Barbie', year:'2023', genre:'קומדיה', summary:'ברבי יוצאת מברביילנד לעולם האמיתי ומגלה דברים שמשנים אותה לנצח.' },
+      { yt:'s7EdQ4FqbhY', title:'The Nice Guys', year:'2016', genre:'קומדיה', summary:'בלש פרטי עלוב ומכה שכיר מאוד לא נוח משתפים פעולה לפתור תעלומת נעדרת בלוס אנג\'לס.' },
+      { yt:'FvPbxuFKIhg', title:'Free Guy', year:'2021', genre:'קומדיה', summary:'NPCבמשחק וידאו מגלה שהוא דמות ומחליט לכתוב את הסיפור שלו בעצמו.' },
+    ],
+    horror: [
+      { yt:'InPoPRfqEWM', title:'A Quiet Place', year:'2018', genre:'אימה', summary:'משפחה נאלצת לחיות בשתיקה מוחלטת כדי לשרוד מפלצות הצדות לפי קול.' },
+      { yt:'k4_9HXbGLME', title:'Get Out', year:'2017', genre:'אימה', summary:'גבר צעיר מגלה סוד מטריד כשהוא מבקר את הוריה של חברתו.' },
+      { yt:'ruNrdmjcNTc', title:'Hereditary', year:'2018', genre:'אימה', summary:'אחרי מות אמה המסתורית, משפחה חושפת סודות אפלים שרדפו אותם זה דורות.' },
+      { yt:'5zSx2xJaIuQ', title:'The Conjuring', year:'2013', genre:'אימה', summary:'חוקרי פרנורמל מסייעים למשפחה שנרדפת על ידי נוכחות מרושעת בביתה החדש.' },
+    ],
+    scifi: [
+      { yt:'Way9Dexny3w', title:'Dune: Part Two', year:'2024', genre:'מדע בדיוני', summary:'פול אטריידס מתאחד עם הצ\'אני להילחם נגד הכוחות שהרסו את משפחתו.' },
+      { yt:'a8Gx8wiNbs8', title:'Avatar: The Way of Water', year:'2022', genre:'מדע בדיוני', summary:'ג\'ייק סאלי ומשפחתו מתחילים חיים חדשים בין שבטי המים של פנדורה.' },
+      { yt:'uLtkt8BonwM', title:'The Last of Us', year:'S1 · HBO', genre:'מדע בדיוני', summary:'עולם פוסט-אפוקליפטי שנכבש על ידי פטרייה. ג\'ואל מנסה להבריח ילדה חסינה לנגיף.' },
+      { yt:'oBkTe7GIuFo', title:'Stranger Things 4', year:'S4 · Netflix', genre:'מדע בדיוני', summary:'הצוות המפוזר מתמודד עם איום חדש ומסוכן מהעולם ההפוך.' },
+    ],
+    romance: [
+      { yt:'KRCNEe1URAI', title:'Barbie', year:'2023', genre:'רומנטיקה', summary:'ברבי יוצאת לעולם האמיתי ומגלה את האהבה ומשמעות החיים.' },
+      { yt:'VyHV0BRtdxo', title:'La La Land', year:'2016', genre:'רומנטיקה', summary:'חלומות, אהבה ופשרות – סיפור אהבה בין שחקנית שאפתנית לג\'אזמן בלוס אנג\'לס.' },
+      { yt:'BbFiRBqodVo', title:'About Time', year:'2013', genre:'רומנטיקה', summary:'גבר צעיר מגלה שהוא יכול לנסוע בזמן ומשתמש בכוח הזה כדי למצוא אהבה.' },
+      { yt:'wScV3QLOQIU', title:'The Notebook', year:'2004', genre:'רומנטיקה', summary:'סיפור אהבה אפי בין שני צעירים ממעמדות שונים שנפרדים ומוצאים זה את זה שוב.' },
+    ],
+    drama: [
+      { yt:'uYPbbksJxIg', title:'Oppenheimer', year:'2023', genre:'דרמה', summary:'סיפורו של אופנהיימר, הפיזיקאי שפיתח את פצצת האטום.' },
+      { yt:'uLtkt8BonwM', title:'The Last of Us', year:'S1 · HBO', genre:'דרמה', summary:'ג\'ואל מבריח ילדה חסינה לנגיף קטלני דרך אמריקה הרוסה.' },
+      { yt:'VyHV0BRtdxo', title:'La La Land', year:'2016', genre:'דרמה', summary:'חלומות, אהבה ופשרות – סיפור שני אמנים בלוס אנג\'לס.' },
+      { yt:'hf8EYbFZqMk', title:'The Shawshank Redemption', year:'1994', genre:'דרמה', summary:'בנקאי המורשע ברצח מוצא תקווה ופדות בתוך כלא קשוח לאורך שנים.' },
+    ],
+    thriller: [
+      { yt:'oqxAJRvndBc', title:'Squid Game', year:'S1 · Netflix', genre:'מתח', summary:'456 אנשים מוזמנים לשחק במשחקי ילדים – כשהפסד פירושו מוות.' },
+      { yt:'5USfMOFSxGE', title:'Gone Girl', year:'2014', genre:'מתח', summary:'כשאישה נעלמת ביום נישואין, בעלה הופך לחשוד הראשי בפרשה מפותלת.' },
+      { yt:'k4_9HXbGLME', title:'Get Out', year:'2017', genre:'מתח', summary:'סוד מטריד מתגלה כשגבר צעיר מבקר את הוריה של חברתו.' },
+      { yt:'2m1drlOZSDw', title:'Mission: Impossible – Dead Reckoning', year:'2023', genre:'מתח', summary:'אתן האנט ניצב מול אויב בלתי נראה שמאיים על העתיד כולו.' },
+    ],
+    fantasy: [
+      { yt:'DotnJ7tTA34', title:'House of the Dragon', year:'S1 · HBO', genre:'פנטזיה', summary:'פרקוול ל-Game of Thrones – מלחמת הירושה של בית טארגריין.' },
+      { yt:'ndl1W4ltcmg', title:'The Witcher', year:'S1 · Netflix', genre:'פנטזיה', summary:'גרלט, ציד מפלצות, מתמודד בעולם שבו בני אדם ומפלצות כאחד יכולים להיות אויבים.' },
+      { yt:'Way9Dexny3w', title:'Dune: Part Two', year:'2024', genre:'פנטזיה', summary:'פול אטריידס נלחם על גורל הגלקסיה בעולם מדבר מסתורי.' },
+      { yt:'_Z3QKkl1WyM', title:'Doctor Strange', year:'2016', genre:'פנטזיה', summary:'כירורג מבריק מגלה עולם של קסם ומימדים נסתרים לאחר תאונה שמשנה חייו.' },
+    ],
+    family: [
+      { yt:'KRCNEe1URAI', title:'Barbie', year:'2023', genre:'משפחה', summary:'ברבי וקן יוצאים לעולם האמיתי למסע של גילוי עצמי.' },
+      { yt:'FvPbxuFKIhg', title:'Free Guy', year:'2021', genre:'משפחה', summary:'NPC במשחק וידאו מגלה שהוא דמות ומחליט לכתוב את הסיפור שלו.' },
+      { yt:'a8Gx8wiNbs8', title:'Avatar: The Way of Water', year:'2022', genre:'משפחה', summary:'ג\'ייק סאלי ומשפחתו נלחמים על הישרדותם בפנדורה.' },
+      { yt:'pBqk_-WSBRE', title:'The Grand Budapest Hotel', year:'2014', genre:'משפחה', summary:'הרפתקאות קומיות ומסתוריות במלון יוקרתי בין שתי מלחמות עולם.' },
+    ],
+    musical: [
+      { yt:'VyHV0BRtdxo', title:'La La Land', year:'2016', genre:'מיוזיקל', summary:'סיפור אהבה מוזיקלי בין שחקנית לג\'אזמן בלוס אנג\'לס.' },
+      { yt:'KRCNEe1URAI', title:'Barbie', year:'2023', genre:'מיוזיקל', summary:'ברבי יוצאת לעולם האמיתי בסיפור צבעוני עם שירים בלתי נשכחים.' },
+      { yt:'hOf5PN8-c6k', title:'Mamma Mia!', year:'2008', genre:'מיוזיקל', summary:'ערב החתונה, כלה מזמינה שלושה גברים שכולם עשויים להיות אביה.' },
+      { yt:'b-boW4WWJCQ', title:'The Greatest Showman', year:'2017', genre:'מיוזיקל', summary:'סיפור P.T. Barnum וכיצד הקים את התצוגה הגדולה בעולם.' },
+    ],
+    oscar: [
+      { yt:'uYPbbksJxIg', title:'Oppenheimer', year:'2023 · 7 פרסים', genre:'אוסקר', summary:'זכה ב-7 פרסי אוסקר כולל סרט השנה. סיפורו של אבי פצצת האטום.' },
+      { yt:'VyHV0BRtdxo', title:'La La Land', year:'2016 · 6 פרסים', genre:'אוסקר', summary:'זכה ב-6 פרסי אוסקר. מיוזיקל רומנטי על חלומות ואהבה.' },
+      { yt:'5PSNL1qE6VY', title:'Parasite', year:'2019 · 4 פרסים', genre:'אוסקר', summary:'זכה ב-4 פרסי אוסקר כולל סרט השנה – הסרט הזר הראשון שזכה בפרס.' },
+      { yt:'8ugaeA-nMTc', title:'Everything Everywhere All at Once', year:'2022 · 7 פרסים', genre:'אוסקר', summary:'זכה ב-7 פרסי אוסקר. מסע מולטי-ממדי מטורף על אישה סינית-אמריקאית.' },
+      { yt:'hf8EYbFZqMk', title:'The Shawshank Redemption', year:'1994 · 7 מינויים', genre:'אוסקר', summary:'7 מינויים לאוסקר. סיפור על תקווה ופדות בכלא.' },
+    ],
+    animation: [
+      { yt:'KMBNOaQmMkk', title:'Inside Out 2', year:'2024', genre:'אנימציה', summary:'ריילי מתמודדת עם גיל ההתבגרות כשרגשות חדשים – בראשם חרדה – מציפים את המפקדה.' },
+      { yt:'5xL7ERLg-ec', title:'The Lion King', year:'2019', genre:'אנימציה', summary:'סימבה, שיר האריות הצעיר, נאלץ לעמוד בפני גורלו ולהיאבק על ממלכתו.' },
+      { yt:'_YUzQa_1RCE', title:'Frozen II', year:'2019', genre:'אנימציה', summary:'אלזה ואנה יוצאות למסע לגלות את מקור כוחותיה המסתוריים של אלזה.' },
+      { yt:'DWaB4PXCwFU', title:'Puss in Boots: The Last Wish', year:'2022', genre:'אנימציה', summary:'החתול בסין מגלה שנשארה לו רק חיה אחת מתשע, ויוצא לחפש את כוכב הרצון.' },
+      { yt:'SfLuBLaFBCQ', title:'Minions: The Rise of Gru', year:'2022', genre:'אנימציה', summary:'גרו הצעיר חולם להיות נבל-על, והמיניונים שלו הולכים בעקבותיו בהרפתקה מטורפת.' },
+    ],
+    adventure: [
+      { yt:'ue80QwXMRHg', title:'Jurassic World Dominion', year:'2022', genre:'הרפתקאות', summary:'הדינוזאורים פרצו לעולם האנושי. אוון ו-Claire נאלצים לפעול כדי להציל את הכדור הארץ.' },
+      { yt:'d9MyW72ELq0', title:'Avengers: Endgame', year:'2019', genre:'הרפתקאות', summary:'הנוקמים מתאחדים לאחר ההרס של תאנוס לנסות ולהחזיר את חצי יקום שנמחק.' },
+      { yt:'Way9Dexny3w', title:'Dune: Part Two', year:'2024', genre:'הרפתקאות', summary:'פול אטריידס נלחם על גורל הגלקסיה בעולם המדבר של אראקיס.' },
+      { yt:'ovRf9cPPQF4', title:'PAW Patrol: The Movie', year:'2021', genre:'הרפתקאות', summary:'כלבי המשימה עוברים לעיר הגדולה כדי לעצור ראש עיר בלתי אחראי.' },
+      { yt:'pM_IjGDWMkM', title:'Toy Story 4', year:'2019', genre:'הרפתקאות', summary:'וודי ופורקי יוצאים למסע דרך הארץ ופוגשים פרצופים ישנים וחדשים.' },
+    ],
+  };
+
+  function buildGenreCard(t) {
+    return `<div class="trailer-card" onclick="window.open('https://www.youtube.com/watch?v=${t.yt}','_blank')">
+      <div class="trailer-thumb yt-thumb">
+        <img src="https://img.youtube.com/vi/${t.yt}/hqdefault.jpg" alt="${t.title}" />
+        <div class="play-circle">▶</div>
+      </div>
+      <div class="trailer-info">
+        <h4>${t.title}</h4>
+        <span>${t.year}</span><br/>
+        <span class="trailer-genre">${t.genre}</span>
+        <button class="summary-btn" onclick="toggleSummary(event,this)">📖 תקציר ▾</button>
+        <div class="summary-box">${t.summary}</div>
+      </div>
+    </div>`;
+  }
+
+  const genreLabels = {
+    popular:'🔥 פופולרי עכשיו', action:'💥 אקשן', comedy:'😂 קומדיה',
+    horror:'😱 אימה', scifi:'🚀 מדע בדיוני', romance:'❤️ רומנטיקה',
+    drama:'🎭 דרמה', thriller:'🕵️ מתח ומסתורין', fantasy:'🧙 פנטזיה',
+    family:'👨‍👩‍👧 משפחה', musical:'🎶 מיוזיקל', oscar:'🏆 פרסי אוסקר',
+    animation:'🎨 אנימציה', adventure:'🗺️ הרפתקאות',
+  };
+
+  document.querySelectorAll('.genre-pill[data-genre]').forEach(pill => {
+    pill.addEventListener('click', function() {
+      const g = this.dataset.genre;
+      document.querySelectorAll('.genre-pill[data-genre]').forEach(p => {
+        p.style.background = ''; p.style.borderColor = ''; p.style.transform = '';
+      });
+      this.style.background = 'rgba(37,99,235,.35)';
+      this.style.borderColor = '#2563eb';
+      this.style.transform = 'scale(1.07)';
+
+      const results = document.getElementById('genre-results');
+      const container = document.getElementById('genre-trailers');
+      const titleEl = document.getElementById('genre-results-title');
+      container.innerHTML = (genreData[g] || []).map(buildGenreCard).join('');
+      titleEl.innerHTML = `טריילרים בקטגוריה: <span style="background:var(--grad-hero);-webkit-background-clip:text;-webkit-text-fill-color:transparent">${genreLabels[g]}</span>`;
+      results.style.display = 'block';
+      results.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    });
+  });
+
+  // Summary toggle
+  function toggleSummary(e, btn) {
+    e.stopPropagation();
+    const box = btn.nextElementSibling;
+    const isOpen = box.classList.toggle('open');
+    btn.textContent = isOpen ? '📖 תקציר ▴' : '📖 תקציר ▾';
+  }
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const tab = this.dataset.tab;
+      document.getElementById('tab-movies').style.display = tab === 'movies' ? 'grid' : 'none';
+      document.getElementById('tab-series').style.display = tab === 'series' ? 'grid' : 'none';
+    });
+  });
+
+  // YouTube – open in new tab
+  document.querySelectorAll('.trailer-card').forEach(card => {
+    card.addEventListener('click', function() {
+      const ytId = this.dataset.yt;
+      window.open(`https://www.youtube.com/watch?v=${ytId}`, '_blank');
+    });
+  });
+
+  // Genre pill active
+  document.querySelectorAll('.genre-pill').forEach(p => {
+    p.addEventListener('click', function() {
+      document.querySelectorAll('.genre-pill').forEach(x => x.style.cssText = '');
+      this.style.background = 'rgba(37,99,235,.35)';
+      this.style.borderColor = '#2563eb';
+      this.style.transform = 'scale(1.07)';
+    });
+  });
+
+  // Search enter key
+  document.querySelector('.search-wrap input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.querySelector('.search-btn').click();
+  });
+</script>
+</body>
+</html>
