@@ -1160,6 +1160,74 @@
             font-style: italic;
         }
 
+        /* ── PROJECTS GRID (new style) ── */
+        .proj-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+        .proj-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: transform .22s, border-color .22s, box-shadow .22s;
+            cursor: pointer;
+        }
+        .proj-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0,212,170,.35);
+            box-shadow: 0 14px 36px rgba(0,0,0,.45);
+        }
+        .proj-preview {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: #0a0a18;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+        }
+        .proj-preview iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 900px;
+            height: 600px;
+            transform-origin: top left;
+            pointer-events: none;
+            border: none;
+        }
+        .proj-info {
+            padding: 13px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+        .proj-name { font-size: 0.85rem; font-weight: 800; color: #fff; line-height: 1.3; }
+        .proj-student { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 2px; }
+        .proj-btn {
+            margin-top: auto;
+            padding-top: 10px;
+            display: block;
+            text-align: center;
+            background: rgba(0,212,170,.07);
+            border: 1px solid rgba(0,212,170,.18);
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 7px;
+            border-radius: 8px;
+        }
+        @media(max-width:900px) { .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
+        @media(max-width:480px) { .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 14px; } .proj-info { padding: 10px 11px 12px; } .proj-name { font-size: 0.78rem; } }
+
         .student-project {
             display: inline-block;
             background: rgba(108, 60, 225, 0.15);
@@ -2721,6 +2789,7 @@
             <li><a href="#audience">למי מיועד?</a></li>
             <li><a href="#about">על הקורס</a></li>
             <li><a href="/portal/" class="nav-cta">אזור אישי</a></li>
+            <li><a href="/webinar-general.html" class="nav-cta" style="background: linear-gradient(135deg, #00D4AA, #00b894); color:#0f0f1e;">🎓 וובינר חינמי</a></li>
             <li><a href="#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);">הרשמה</a></li>
         </ul>
         <button class="mobile-menu-btn" id="menuBtn" aria-label="תפריט">&#9776;</button>
@@ -2739,6 +2808,7 @@
             <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות נפוצות</a></li>
             <li><a href="/blog/"><span class="menu-icon">&#x1F30D;</span> עולם ה-AI</a></li>
             <li class="mobile-cta"><a href="/portal/"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
+            <li class="mobile-cta"><a href="/webinar-general.html" style="background:linear-gradient(135deg,#00D4AA,#00b894);color:#0f0f1e;"><span class="menu-icon">🎓</span> וובינר חינמי</a></li>
             <li class="mobile-cta mobile-cta-green"><a href="#register"><span class="menu-icon">&#x1F680;</span> הרשמה</a></li>
         </ul>
     </div>
@@ -2927,83 +2997,78 @@
     </section>
 
     <!-- STUDENT PROJECTS -->
-    <section style="background: var(--dark-card); padding: 3rem 0.5rem;" id="projects">
+    <section style="background: var(--dark-card); padding: 3rem 0 3.5rem;" id="projects">
         <div class="container">
             <div class="section-title reveal">
                 <h2>💻 מה התלמידים שלנו בנו?</h2>
                 <p>פרויקטים אמיתיים שנבנו בקורס &mdash; בלי ניסיון קודם.</p>
             </div>
         </div>
-        <div class="scroll-carousel">
-            <div class="scroll-track" id="projectsTrack">
-                <a href="/build-pc/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
-                    <div class="site-preview-wrap"><iframe src="/build-pc/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
-                    <div class="student-quote">"בניתי אתר שעוזר להשוות מחירים של רכיבי מחשב ולבנות את הPC המושלם לפי תקציב — כי כל שקל חשוב!"</div>
-                    <div class="student-project">🖥️ BUILD PC &mdash; השווה, חסוך, שדרג</div>
-                    <div class="student-info"><div class="student-avatar">ר</div><div><strong>רואי</strong><br><span>בן 13</span></div></div>
-                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
-                </a>
-                <a href="/spot/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
-                    <div class="site-preview-wrap"><iframe src="/spot/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
-                    <div class="student-quote">"בניתי אתר לכלבים שעוזר לבעלי כלבים למצוא טיפולים, מוצרים וטיפים לכל גזע &mdash; כי כל כלב ביומו!"</div>
-                    <div class="student-project">🐕 SPOT &mdash; כל כלב ביומו</div>
-                    <div class="student-info"><div class="student-avatar">מ</div><div><strong>מתן</strong><br><span>בן 10</span></div></div>
-                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
-                </a>
-                <a href="/free-movie-trailers/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
-                    <div class="site-preview-wrap"><iframe src="/free-movie-trailers/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
-                    <div class="student-quote">"בניתי אתר שאוסף טריילרים של סרטים חדשים במקום אחד &mdash; כדי שלא תפספס אף סרט לפני שהוא יוצא לאקרנים!"</div>
-                    <div class="student-project">🎬 Free Movie Trailers &mdash; כל הטריילרים במקום אחד</div>
-                    <div class="student-info"><div class="student-avatar">ת</div><div><strong>תאיי</strong><br><span>בן 12</span></div></div>
-                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
-                </a>
-                <a href="/trendsaver/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
-                    <div class="site-preview-wrap"><iframe src="/trendsaver/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
-                    <div class="student-quote">"בניתי אתר שמנתח מחירי מוצרי Apple ומנבא מתי המחיר הולך לרדת &mdash; כדי שלא תקנה iPhone יום לפני שמכריזים על דגם חדש!"</div>
-                    <div class="student-project">📈 TrendSaver &mdash; חזה. חסוך. קנה חכם.</div>
-                    <div class="student-info"><div class="student-avatar">א</div><div><strong>ארבל</strong><br><span>בן 12</span></div></div>
-                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
-                </a>
-                <a href="/nadavlego/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
-                    <div class="site-preview-wrap"><iframe src="/nadavlego/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
-                    <div class="student-quote">"בניתי אתר לתערוכת הלגו שלי &mdash; עם גלריה דיגיטלית של כל הדגמים, הרשמה לאירוע וחידון לגו!"</div>
-                    <div class="student-project">🧱 חגיגת לגו &mdash; תערוכה, פעילות ויצירה</div>
-                    <div class="student-info"><div class="student-avatar">נ</div><div><strong>נדב</strong><br><span>בן 10</span></div></div>
-                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
-                </a>
-                <a href="/hairmatch/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
-                    <div class="site-preview-wrap"><iframe src="/hairmatch/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
-                    <div class="student-quote">"בניתי אתר שעוזר לבנות למצוא מוצרי טיפוח לפי סוג עור ושיער. ה-AI עוזר להתאים את המוצר המושלם!"</div>
-                    <div class="student-project">✨ HairMatch &mdash; התאמת מוצרי טיפוח</div>
-                    <div class="student-info"><div class="student-avatar">נ</div><div><strong>נועם</strong><br><span>בת 13.5</span></div></div>
-                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
-                </a>
-                <a href="/horse-fashion/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
-                    <div class="site-preview-wrap"><iframe src="/horse-fashion/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
-                    <div class="student-quote">"בניתי חנות אונליין לציוד רכיבה על סוסים &mdash; עם קטלוג מוצרים, עגלת קניות ועיצוב מקצועי!"</div>
-                    <div class="student-project">🐴 Horse Fashion &mdash; ציוד לרוכבים</div>
-                    <div class="student-info"><div class="student-avatar">ש</div><div><strong>שיר</strong><br><span>בת 13.5</span></div></div>
-                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
-                </a>
-                <a href="/englishkids/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
-                    <div class="site-preview-wrap"><iframe src="/englishkids/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
-                    <div class="student-quote">"בניתי פלטפורמה ללימוד אנגלית לילדים עם אזור אישי, תרגולים ומשחקים &mdash; הכל בעיצוב צבעוני וכיפי!"</div>
-                    <div class="student-project">📚 EnglishKids &mdash; לימוד אנגלית</div>
-                    <div class="student-info"><div class="student-avatar">א</div><div><strong>איתי</strong><br><span>בן 10</span></div></div>
-                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
-                </a>
-                <a href="/gamebuddy/" target="_blank" class="student-card" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;">
-                    <div class="site-preview-wrap"><iframe src="/gamebuddy/" class="site-preview-iframe" loading="lazy" tabindex="-1"></iframe></div>
-                    <div class="student-quote">"בניתי פלטפורמה שמחברת שחקני פורטנייט ישראלים לפי רמה &mdash; כבר יש שחקנים רשומים מכל הארץ!"</div>
-                    <div class="student-project">🎮 GameBuddy &mdash; מציאת שותפי משחק</div>
-                    <div class="student-info"><div class="student-avatar">א&amp;ג</div><div><strong>אבינועם וגבריאל</strong><br><span>בני 13.5</span></div></div>
-                    <div class="site-preview-btn">🚀 לצפייה באתר</div>
-                </a>
-            </div>
-            <div class="carousel-nav" id="projectsNav">
-                <button id="projectsPrev" aria-label="הקודם">&#8249;</button>
-                <button id="projectsNext" aria-label="הבא">&#8250;</button>
-            </div>
+        <div class="proj-grid" style="margin-top:2rem;">
+            <a href="https://ai-lab.co.il/build-pc/" target="_blank" rel="noopener" class="proj-card">
+                <div class="proj-preview"><iframe src="https://ai-lab.co.il/build-pc/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-info">
+                    <div class="proj-name">🖥️ BUILD PC — השווה, חסוך, שדרג</div>
+                    <div class="proj-student">רואי, בן 13</div>
+                    <span class="proj-btn">🚀 לצפייה באתר</span>
+                </div>
+            </a>
+            <a href="https://ai-lab.co.il/spot/" target="_blank" rel="noopener" class="proj-card">
+                <div class="proj-preview"><iframe src="https://ai-lab.co.il/spot/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-info">
+                    <div class="proj-name">🐕 SPOT — כל כלב ביומו</div>
+                    <div class="proj-student">מתן, בן 10</div>
+                    <span class="proj-btn">🚀 לצפייה באתר</span>
+                </div>
+            </a>
+            <a href="https://ai-lab.co.il/free-movie-trailers/" target="_blank" rel="noopener" class="proj-card">
+                <div class="proj-preview"><iframe src="https://ai-lab.co.il/free-movie-trailers/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-info">
+                    <div class="proj-name">🎬 Free Movie Trailers</div>
+                    <div class="proj-student">תאיי, בן 12</div>
+                    <span class="proj-btn">🚀 לצפייה באתר</span>
+                </div>
+            </a>
+            <a href="https://ai-lab.co.il/trendsaver/" target="_blank" rel="noopener" class="proj-card">
+                <div class="proj-preview"><iframe src="https://ai-lab.co.il/trendsaver/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-info">
+                    <div class="proj-name">📈 TrendSaver — קנה חכם</div>
+                    <div class="proj-student">ארבל, בן 12</div>
+                    <span class="proj-btn">🚀 לצפייה באתר</span>
+                </div>
+            </a>
+            <a href="https://ai-lab.co.il/nadavlego/" target="_blank" rel="noopener" class="proj-card">
+                <div class="proj-preview"><iframe src="https://ai-lab.co.il/nadavlego/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-info">
+                    <div class="proj-name">🧱 חגיגת לגו</div>
+                    <div class="proj-student">נדב, בן 10</div>
+                    <span class="proj-btn">🚀 לצפייה באתר</span>
+                </div>
+            </a>
+            <a href="https://ai-lab.co.il/hairmatch/" target="_blank" rel="noopener" class="proj-card">
+                <div class="proj-preview"><iframe src="https://ai-lab.co.il/hairmatch/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-info">
+                    <div class="proj-name">✨ HairMatch — טיפוח חכם</div>
+                    <div class="proj-student">נועם, בת 13.5</div>
+                    <span class="proj-btn">🚀 לצפייה באתר</span>
+                </div>
+            </a>
+            <a href="https://ai-lab.co.il/horse-fashion/" target="_blank" rel="noopener" class="proj-card">
+                <div class="proj-preview"><iframe src="https://ai-lab.co.il/horse-fashion/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-info">
+                    <div class="proj-name">🐴 Horse Fashion</div>
+                    <div class="proj-student">שיר, בת 13.5</div>
+                    <span class="proj-btn">🚀 לצפייה באתר</span>
+                </div>
+            </a>
+            <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" rel="noopener" class="proj-card">
+                <div class="proj-preview"><iframe src="https://ai-lab.co.il/gamebuddy/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-info">
+                    <div class="proj-name">🎮 GameBuddy — שחקנים ביחד</div>
+                    <div class="proj-student">אבינועם וגבריאל, בני 13.5</div>
+                    <span class="proj-btn">🚀 לצפייה באתר</span>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -3503,65 +3568,21 @@
             track._resumeTimer = setTimeout(() => startAutoScroll(track), 5000);
         }
 
-        // ── Projects carousel: transform-based, 4 cards visible on desktop ──
-        (function() {
-            const track = document.getElementById('projectsTrack');
-            const prevBtn = document.getElementById('projectsPrev');
-            const nextBtn = document.getElementById('projectsNext');
-            let idx = 0;
-
-            function isMobile() { return window.innerWidth <= 768; }
-
-            function getCardW() {
-                const card = track.children[0];
-                if (!card) return 0;
-                return card.offsetWidth + (parseInt(getComputedStyle(track).gap) || 20);
-            }
-
-            function maxIdx() {
-                return Math.max(0, track.children.length - 4);
-            }
-
-            function applyTransform(instant) {
-                if (isMobile()) { track.style.transform = ''; return; }
-                const offset = idx * getCardW();
-                if (instant) {
-                    track.style.transition = 'none';
-                    track.style.transform = 'translateX(-' + offset + 'px)';
-                    track.getBoundingClientRect(); // force reflow
-                    track.style.transition = '';
-                } else {
-                    track.style.transform = 'translateX(-' + offset + 'px)';
-                }
-            }
-
-            nextBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (isMobile()) return;
-                const max = maxIdx();
-                if (idx >= max) {
-                    idx = 0;
-                    applyTransform(true); // instant wrap to start
-                } else {
-                    idx++;
-                    applyTransform(false);
+        // ── Projects iframe scaling ──
+        function scaleIframes() {
+            document.querySelectorAll('.proj-preview').forEach(wrap => {
+                const w = wrap.offsetWidth;
+                const scale = w / 900;
+                const iframe = wrap.querySelector('iframe');
+                if (iframe) {
+                    iframe.style.transform = 'scale(' + scale + ')';
+                    wrap.style.height = Math.round(600 * scale) + 'px';
                 }
             });
-
-            prevBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (isMobile()) return;
-                if (idx <= 0) {
-                    idx = maxIdx();
-                    applyTransform(true); // instant wrap to end
-                } else {
-                    idx--;
-                    applyTransform(false);
-                }
-            });
-
-            window.addEventListener('resize', function() { idx = 0; applyTransform(true); });
-        }());
+        }
+        window.addEventListener('load', scaleIframes);
+        window.addEventListener('resize', scaleIframes);
+        scaleIframes();
 
         // ===== SYLLABUS POPUPS =====
         const syllabusData = {
