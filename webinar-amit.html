@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>וובינר חינמי — AI ויזמות לילדים | AI Lab × עמיט</title>
   <meta name="description" content="וובינר חינמי מיוחד להורים: איך ילדים ובני נוער יכולים לבנות פרויקטים אמיתיים עם AI. יום שלישי 14.4.2026 — הרשמה חינם.">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-37WXJMRB9C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-37WXJMRB9C');
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -517,6 +525,12 @@
     // הצג success מיד
     document.getElementById('regForm').style.display = 'none';
     document.getElementById('successCard').style.display = 'block';
+
+    // GA event
+    gtag('event', 'webinar_registration', {
+      event_category: 'webinar',
+      event_label: 'amit',
+    });
 
     // 2. EmailJS — מייל אישור לנרשם (ברקע, לא חוסם)
     emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
