@@ -522,6 +522,19 @@
       });
     } catch(e) { console.warn('Web3Forms error:', e); }
 
+    // 2. Google Sheets — שורה חדשה בגיליון
+    fetch('https://script.google.com/macros/s/AKfycbxromgbzt6XWQND23sWxrMoJHQzKbSilDVwC_QtRe_tsA8fQRGwZsYuCbiBqwBHXbUwEQ/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:    document.getElementById('fn').value,
+        email:   document.getElementById('fe').value,
+        phone:   document.getElementById('fp').value || '—',
+        source:  'עמיט',
+        webinar: 'עמיט',
+      }),
+    }).catch(err => console.warn('Sheets error:', err));
+
     // הצג success מיד
     document.getElementById('regForm').style.display = 'none';
     document.getElementById('successCard').style.display = 'block';
