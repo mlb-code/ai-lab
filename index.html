@@ -100,15 +100,20 @@
             left: 0;
             z-index: 100;
             height: 56px;
-            padding: 0 2.5rem;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
             background: rgba(26, 26, 46, 0.6);
             backdrop-filter: blur(12px);
             transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
             direction: ltr;
+        }
+        .nav-cta-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: flex-end;
         }
 
         nav.scrolled {
@@ -2834,16 +2839,18 @@
     <!-- NAV -->
     <nav id="navbar">
         <a href="/" class="nav-logo" onclick="if(location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">AI Lab</a>
-        <ul class="nav-links nav-links-desktop" id="navLinksDesktop">
-            <li><a href="#pricing">מחיר</a></li>
-            <li><a href="#faq">שאלות</a></li>
-            <li><a href="#tools">כלי AI</a></li>
-            <li><a href="#program">תוכנית</a></li>
+        <ul class="nav-links nav-links-desktop" id="navLinksDesktop" style="justify-content:center;">
             <li><a href="#about">על הקורס</a></li>
-            <li><a href="/portal/" class="nav-cta">אזור אישי</a></li>
-            <li><a href="/webinar-general.html" class="nav-cta" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">🎓 וובינר חינמי</a></li>
-            <li><a href="#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);">הרשמה</a></li>
+            <li><a href="#program">תוכנית</a></li>
+            <li><a href="#tools">כלי AI</a></li>
+            <li><a href="#faq">שאלות</a></li>
+            <li><a href="#pricing">מחיר</a></li>
         </ul>
+        <div class="nav-cta-group">
+            <a href="/portal/" class="nav-cta">אזור אישי</a>
+            <a href="/webinar-general.html" class="nav-cta" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">🎓 וובינר חינמי</a>
+            <a href="#register" class="nav-cta" style="background:linear-gradient(135deg,var(--accent),#00b894);">הרשמה</a>
+        </div>
         <button class="mobile-menu-btn" id="menuBtn" aria-label="תפריט">&#9776;</button>
     </nav>
     <div class="mobile-menu-panel" id="mobileMenuPanel">
@@ -2852,13 +2859,11 @@
             <button class="mobile-close-btn" id="menuCloseBtn" aria-label="סגור תפריט">&times;</button>
         </div>
         <ul class="mobile-menu-links">
-            <li><a href="#audience"><span class="menu-icon">&#x1F3AF;</span> למי מיועד?</a></li>
             <li><a href="#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>
             <li><a href="#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
             <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
+            <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות</a></li>
             <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
-            <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות נפוצות</a></li>
-            <li><a href="/blog/"><span class="menu-icon">&#x1F30D;</span> עולם ה-AI</a></li>
             <li class="mobile-cta"><a href="/portal/"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
             <li class="mobile-cta"><a href="/webinar-general.html" style="background:linear-gradient(135deg,#7c3aed,#a855f7);"><span class="menu-icon">🎓</span> וובינר חינמי</a></li>
             <li class="mobile-cta mobile-cta-green"><a href="#register"><span class="menu-icon">&#x1F680;</span> הרשמה</a></li>
