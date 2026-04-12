@@ -120,7 +120,6 @@
             background: rgba(26, 26, 46, 0.92);
             backdrop-filter: blur(24px);
             box-shadow: 0 1px 20px rgba(0, 0, 0, 0.15);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .nav-logo {
@@ -188,6 +187,7 @@
             font-weight: 600 !important;
             transition: transform 0.3s, box-shadow 0.3s !important;
             white-space: nowrap;
+            text-decoration: none !important;
         }
 
         .nav-cta:hover {
@@ -579,6 +579,8 @@
             font-size: 0.85rem;
             color: var(--text-muted);
         }
+
+        .stat-icon { display: none; }
 
         /* Floating elements */
         .floating-icons {
@@ -1103,6 +1105,24 @@
             max-width: 900px;
             margin: 2rem auto 0;
         }
+        /* Claude Code spans full row on desktop */
+        #tools .build-item-featured {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            padding: 1.4rem 2rem;
+            text-align: right;
+            direction: rtl;
+            background: rgba(217, 119, 87, 0.08);
+            border: 1px solid rgba(217, 119, 87, 0.25);
+            border-radius: 16px;
+        }
+        #tools .build-item-featured svg { width: 48px; height: 48px; }
+        #tools .build-item-featured h3 { font-size: 1.3rem; font-weight: 700; margin: 0; }
+        #tools .build-item-featured p { font-size: 0.9rem; color: var(--text-muted); margin: 0.2rem 0 0; }
+        #tools .build-item-featured > div { margin-bottom: 0; }
 
         .skill-card {
             background: rgba(255, 255, 255, 0.03);
@@ -1137,11 +1157,17 @@
         }
 
         @media (max-width: 768px) {
+            #skills { padding: 1.2rem 0 !important; }
             .skills-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.45rem !important;
+                max-width: 100% !important;
+                margin-top: 0 !important;
             }
-            .skill-card { padding: 1rem 0.8rem; }
+            .skill-card { padding: 0.6rem 0.4rem !important; border-radius: 10px !important; }
+            .skill-card-icon { font-size: 1.3rem !important; margin-bottom: 0.1rem !important; }
+            .skill-card h4 { font-size: 0.72rem !important; margin-bottom: 0 !important; }
+            .skill-card p { display: none !important; }
         }
 
         /* ========== STUDENT PROJECTS ========== */
@@ -1424,9 +1450,29 @@
 
         @media (max-width: 768px) {
             .pricing-grid {
-                grid-template-columns: 1fr;
-                max-width: 420px;
+                display: flex !important;
+                overflow-x: scroll;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 0;
+                direction: rtl;
+                padding: 0 1rem;
+                max-width: none !important;
             }
+            .pricing-grid::-webkit-scrollbar { display: none; }
+            .pricing-card {
+                min-width: 88% !important;
+                max-width: 88% !important;
+                flex-shrink: 0;
+                scroll-snap-align: start;
+                direction: rtl;
+                opacity: 1 !important;
+                transform: none !important;
+                margin-right: 0.6rem;
+            }
+            .pricing-card:first-child { margin-right: 0; }
+            .pricing-card:hover { transform: none !important; }
         }
 
         @media (min-width: 769px) and (max-width: 1024px) {
@@ -1960,12 +2006,25 @@
 
             .hero-stats {
                 flex-direction: row;
-                gap: 1.5rem;
+                gap: 0.6rem;
                 margin-top: 2rem;
             }
 
+            .hero-stat {
+                background: rgba(255,255,255,0.04);
+                border: 1px solid rgba(0,212,170,0.2);
+                border-radius: 12px;
+                padding: 0.5rem 0.4rem;
+                flex: 1;
+            }
+
             .hero-stat .number {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
+                text-shadow: 0 0 18px rgba(0,212,170,0.5);
+            }
+
+            .hero-stat .label {
+                font-size: 0.65rem;
             }
 
             .hero-stat .label {
@@ -1983,10 +2042,66 @@
                 display: none;
             }
 
-            /* -- Problem cards compact -- */
+            /* -- Problem carousel -- */
+            .problem { padding: 2rem 0; }
+            .problem .section-title { margin-bottom: 1rem; }
+            .problem .section-title h2 { font-size: 1.5rem; }
+            .problem .section-title p { font-size: 0.82rem; }
             .problem-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+                display: flex;
+                overflow-x: scroll;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 0;
+                direction: ltr;
+                padding: 0 1.2rem;
+            }
+            .problem-grid::-webkit-scrollbar { display: none; }
+            .problem-card {
+                min-width: 82%;
+                max-width: 82%;
+                flex-shrink: 0;
+                scroll-snap-align: center;
+                direction: rtl;
+                text-align: center;
+                opacity: 1 !important;
+                transform: none !important;
+                padding: 1rem 1rem 1.2rem;
+                margin-left: 0.7rem;
+                overflow: hidden;
+                box-sizing: border-box;
+            }
+            .problem-card:first-child { margin-left: 0; }
+            .problem-card:hover { transform: none !important; }
+            .problem-card .problem-icon { font-size: 1.6rem; margin-bottom: 0.4rem; }
+            .problem-card h3 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+            .problem-card p {
+                font-size: 0.82rem;
+                line-height: 1.5;
+                overflow-wrap: break-word;
+                word-break: break-word;
+                white-space: normal;
+                display: block;
+                width: 100%;
+                max-width: 100%;
+            }
+            .problem-dots {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 1.2rem;
+            }
+            .problem-dots span {
+                width: 8px; height: 8px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.25);
+                cursor: pointer;
+                transition: background .2s, transform .2s;
+            }
+            .problem-dots span.active {
+                background: var(--accent);
+                transform: scale(1.3);
             }
 
             .problem-card {
@@ -2007,15 +2122,66 @@
                 font-size: 0.85rem;
             }
 
-            /* -- Build grid compact -- */
-            .build-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.8rem;
+            /* -- Tools layout mobile -- */
+            /* -- Courses carousel -- */
+            .courses-grid {
+                display: flex !important;
+                overflow-x: scroll;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 0;
+                direction: rtl;
+                padding: 0 1rem;
+                max-width: none !important;
             }
+            .courses-grid::-webkit-scrollbar { display: none; }
+            .course-track-card {
+                min-width: 88%;
+                max-width: 88%;
+                flex-shrink: 0;
+                scroll-snap-align: start;
+                direction: rtl;
+                opacity: 1 !important;
+                transform: none !important;
+                margin-right: 0.6rem;
+            }
+            .course-track-card:first-child { margin-right: 0; }
+            .course-track-card:hover { transform: none !important; }
 
-            .build-item {
-                padding: 1rem;
+            .skills-section { padding: 1.5rem 0; }
+            .skills-section .section-title { margin-bottom: 0.8rem; }
+            .skills-section .section-title h2 { font-size: 1.3rem; }
+            .skills-section .section-title p { font-size: 0.78rem; }
+            .tools-layout { display: flex; flex-direction: column; gap: 0.5rem; }
+            .build-item-featured {
+                grid-column: 1 / -1;
+                padding: 0.6rem 1rem; text-align: center; direction: rtl;
+                background: rgba(255,255,255,0.03) !important;
+                border: 1px solid rgba(255,255,255,0.08) !important;
+                border-radius: 10px !important;
+                box-shadow: none !important;
             }
+            .build-item-featured svg { width: 26px !important; height: 26px !important; }
+            .build-item-featured h3 { font-size: 0.72rem !important; margin-bottom: 0 !important; font-weight: 600; }
+            .build-item-featured p { display: none !important; }
+            .build-item-featured > div { margin-bottom: 0.1rem !important; }
+            .tools-small-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.45rem;
+            }
+            .build-item-small {
+                padding: 0.6rem 0.4rem;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.25rem;
+                direction: rtl;
+            }
+            .build-item-small .tool-icon svg { width: 30px; height: 30px; }
+            .build-item-small span { font-size: 0.68rem; font-weight: 600; color: var(--text); }
 
             .build-icon {
                 font-size: 1.8rem;
@@ -2286,12 +2452,30 @@
                 grid-template-columns: 1fr;
             }
 
-            .skills-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            .skill-card { padding: 1rem 0.8rem; }
             .skills-dots { display: none; }
+
+            #skills { padding: 1.2rem 0 !important; }
+            #skills .section-title { margin-bottom: 0.7rem !important; }
+            #skills .section-title h2 { font-size: 1.25rem !important; }
+            #skills .section-title p { font-size: 0.76rem !important; }
+            .skills-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.45rem !important;
+                max-width: 100% !important;
+                margin-top: 0 !important;
+            }
+            .skill-card {
+                padding: 0.6rem 0.4rem !important;
+                border-radius: 10px !important;
+            }
+            .skill-card-icon { font-size: 1.3rem !important; margin-bottom: 0.15rem !important; display: flex !important; justify-content: center !important; align-items: center !important; }
+            .skill-card-icon svg { width: 26px !important; height: 26px !important; }
+            .skill-card h4 { font-size: 0.72rem !important; margin-bottom: 0 !important; }
+            .skill-card p { display: none !important; }
+
+            .zoom-banner { padding: 0.7rem 1rem !important; }
+            .zoom-banner svg { width: 24px !important; height: 24px !important; }
+
 
             .audience-card {
                 padding: 1.2rem;
@@ -2850,7 +3034,6 @@
             <li><a href="#about">על הקורס</a></li>
             <li><a href="#program">תוכנית</a></li>
             <li><a href="#tools">כלי AI</a></li>
-            <li><a href="#faq">שאלות</a></li>
             <li><a href="#pricing">מחיר</a></li>
         </ul>
         <div class="nav-cta-group">
@@ -2869,7 +3052,6 @@
             <li><a href="#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>
             <li><a href="#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
             <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
-            <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות</a></li>
             <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
             <li class="mobile-cta"><a href="/portal/"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
             <li class="mobile-cta"><a href="/webinar-general.html" style="background:linear-gradient(135deg,#7c3aed,#a855f7);"><span class="menu-icon">🎓</span> וובינר חינמי</a></li>
@@ -2944,21 +3126,21 @@
             </h1>
             <p>
                 קורס מעשי שבו ילדים ובני נוער לומדים לבנות אתרים ומוצרים דיגיטליים
-                <br>עם ChatGPT, Claude Code, Cursor וכלי AI מובילים.
+                <br>עם ChatGPT, Claude Code וכלי AI מובילים.
                 <br>מתאים גם למבוגרים. ללא ניסיון קודם.
             </p>
             <div class="hero-buttons">
-                <a href="#register" class="btn-primary">&#x1F680; שריינו לי מקום</a>
+                <a href="#register" class="btn-primary">הרשמו עכשיו &#x1F680;</a>
                 <a href="/webinar-general.html" class="btn-secondary">🎓 הירשם לוובינר בחינם</a>
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <div class="number">6+</div>
-                    <div class="label">כלי AI</div>
+                    <div class="number">+50</div>
+                    <div class="label">פרויקטים שנבנו</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="number">2</div>
-                    <div class="label">רמות לימוד</div>
+                    <div class="number">8</div>
+                    <div class="label">מפגשים</div>
                 </div>
                 <div class="hero-stat">
                     <div class="number">5</div>
@@ -2993,20 +3175,6 @@
                         <span class="terminal-success">my-shop.github.io</span>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ZOOM BANNER -->
-    <section style="padding: 2rem; background: linear-gradient(135deg, rgba(45, 116, 249, 0.1), rgba(108, 60, 225, 0.08)); border-top: 1px solid rgba(45, 116, 249, 0.15); border-bottom: 1px solid rgba(45, 116, 249, 0.15);">
-        <div class="container" style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; direction: rtl; text-align: center;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-                <rect width="24" height="24" rx="5" fill="#2D74F9"/>
-                <path d="M16.5 8.5l2.5-1.5v10l-2.5-1.5M5 7.5h9a1.5 1.5 0 011.5 1.5v6a1.5 1.5 0 01-1.5 1.5H5A1.5 1.5 0 013.5 15V9A1.5 1.5 0 015 7.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div>
-                <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">המפגשים בזום &mdash; מכל מקום בארץ</div>
-                <div style="font-size: 0.9rem; color: var(--text-muted);">לא צריך להגיע לשום מקום. מחשב נייד, אינטרנט, וזהו.</div>
             </div>
         </div>
     </section>
@@ -3093,280 +3261,16 @@
         </div>
     </section>
 
-    <!-- ABOUT / PROBLEM -->
-    <section class="problem" id="about">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>למה הקורס הזה?</h2>
-                <p>העולם השתנה. מי שיודע לעבוד עם AI &mdash; יוביל. מי שלא &mdash; יישאר מאחור.</p>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card reveal">
-                    <div class="problem-icon">&#x1F3EB;</div>
-                    <h3>אף אחד לא מלמד את זה</h3>
-                    <p>בין אם אתם בכיתה ז' או בגיל 60 &mdash; AI לא נלמד בשום מקום באופן מעשי. עד עכשיו.</p>
-                </div>
-                <div class="problem-card reveal">
-                    <div class="problem-icon">&#x1F4A1;</div>
-                    <h3>רעיונות בלי כלים</h3>
-                    <p>לכולנו יש רעיונות. AI נותן את הכלים לבנות אותם &mdash; בלי קוד, בלי ניסיון קודם.</p>
-                </div>
-                <div class="problem-card reveal">
-                    <div class="problem-icon">&#x1F680;</div>
-                    <h3>יתרון לחיים</h3>
-                    <p>מי שלומד לעבוד עם AI היום &mdash; יוביל מחר. בכל גיל.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- WHAT YOU'LL BUILD -->
-    <section class="build-section" id="build" style="display:none;">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>מה תבנו בקורס?</h2>
-                <p>לא תיאוריה. לא מצגות. בונים דברים אמיתיים.</p>
-            </div>
-            <div class="build-grid">
-                <div class="build-item reveal">
-                    <div class="build-icon">&#x1F310;</div>
-                    <h3>אתר אינטרנט אמיתי</h3>
-                    <p>דף נחיתה מקצועי לסטארטאפ שלכם &mdash; עם עיצוב, תפריטים ואנימציות. באוויר!</p>
-                </div>
-                <div class="build-item reveal">
-                    <div class="build-icon">&#x1F4CB;</div>
-                    <h3>תוכנית עסקית</h3>
-                    <p>אפיון מוצר, קהל יעד, מודל עסקי ואסטרטגיית שיווק &mdash; כמו יזם אמיתי</p>
-                </div>
-                <div class="build-item reveal">
-                    <div class="build-icon">&#x1F4E3;</div>
-                    <h3>תוכן שיווקי עם AI</h3>
-                    <p>פוסטים, סלוגנים ותוכן לרשתות חברתיות &mdash; שנוצרו עם בינה מלאכותית</p>
-                </div>
-                <div class="build-item reveal">
-                    <div class="build-icon">&#x1F3AC;</div>
-                    <h3>Pitch מנצח</h3>
-                    <p>מצגת ליום ההשקה &mdash; 3 דקות מול קהל, כמו Shark Tank!</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- AI TOOLS -->
-    <section class="skills-section" id="tools">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>&#x1F916; הכלים שנלמד</h2>
-                <p>נכיר ונתנסה בכלי ה-AI המובילים בעולם</p>
-            </div>
-            <div class="build-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem;">
-                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
-                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F4AC;</div>
-                    <h3>ChatGPT</h3>
-                    <p>שיחה, כתיבה וניתוח &mdash; הכלי הכי פופולרי בעולם</p>
-                </div>
-                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
-                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F9E0;</div>
-                    <h3>Claude</h3>
-                    <p>חכם ומדויק &mdash; מעולה לקוד, ניתוח וכתיבה ארוכה</p>
-                </div>
-                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
-                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F50D;</div>
-                    <h3>Gemini</h3>
-                    <p>של גוגל &mdash; חיפוש חכם, תמונות ושילוב עם גוגל</p>
-                </div>
-                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
-                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F4BB;</div>
-                    <h3>Cursor</h3>
-                    <p>עורך קוד עם AI &mdash; הכלי שלנו לבניית האתר!</p>
-                </div>
-                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
-                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x1F3A8;</div>
-                    <h3>NanoBanana</h3>
-                    <p>יצירת תמונות ואיורים מטקסט עם AI</p>
-                </div>
-                <div class="build-item reveal" style="padding: 1.5rem 1rem;">
-                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">&#x26A1;</div>
-                    <h3>Grok</h3>
-                    <p>של xAI &mdash; מהיר, חכם ומחובר לרשת בזמן אמת</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROGRAM -->
-    <section class="timeline-section" id="program">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>תוכנית הקורסים</h2>
-                <p>בחרו את המסלול שמתאים לכם. לחצו על קורס לפרטים מלאים.</p>
-            </div>
-            <div class="courses-grid">
-                <div class="course-track-card reveal" onclick="openSyllabus('youth-basic')">
-                    <div class="course-track-badge">8 מפגשים</div>
-                    <div class="course-track-icon">&#x1F680;</div>
-                    <h3>ילדים ונוער &mdash; בסיסי</h3>
-                    <p>בניית פרויקט ראשון מאפס עם כלי AI. מרעיון לאתר אמיתי תוך 8 מפגשים.</p>
-                    <div class="course-track-meta">
-                        <span>גילאי 10&ndash;17</span>
-                        <span>ללא ניסיון קודם</span>
-                    </div>
-                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
-                </div>
-                <div class="course-track-card reveal" onclick="openSyllabus('youth-advanced')">
-                    <div class="course-track-badge">8 מפגשים</div>
-                    <div class="course-track-icon">&#x1F31F;</div>
-                    <h3>ילדים ונוער &mdash; מתקדם</h3>
-                    <p>המשך למידה לבוגרי הקורס הבסיסי. העמקה בפיתוח, כלים מתקדמים והתקדמות בפרויקט.</p>
-                    <div class="course-track-meta">
-                        <span>גילאי 10&ndash;17</span>
-                        <span>דרישה: קורס בסיסי</span>
-                    </div>
-                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
-                </div>
-                <div class="course-track-card reveal" onclick="openSyllabus('adults-basic')">
-                    <div class="course-track-badge">8 מפגשים</div>
-                    <div class="course-track-icon">&#x1F4BB;</div>
-                    <h3>מבוגרים &mdash; בסיסי</h3>
-                    <p>גם בלי רקע טכנולוגי &mdash; תלמדו לבנות אתר ולעבוד עם AI. בקצב שלכם.</p>
-                    <div class="course-track-meta">
-                        <span>גילאי 60+</span>
-                        <span>ללא ניסיון קודם</span>
-                    </div>
-                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- SYLLABUS POPUP -->
-        <div class="syllabus-overlay" id="syllabusOverlay" onclick="if(event.target===this)closeSyllabus()">
-            <div class="syllabus-modal">
-                <button class="syllabus-close" onclick="closeSyllabus()">&times;</button>
-                <div id="syllabusContent"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="skills-section" id="skills">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>כישורים שתרכשו</h2>
-                <p>שילוב של טכנולוגיה, יזמות וכישורי חיים.</p>
-            </div>
-            <div class="skills-grid" id="skillsGrid">
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F916;</div>
-                    <h4>עבודה עם AI</h4>
-                    <p>ChatGPT, Claude, Gemini ועוד</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F4BB;</div>
-                    <h4>Claude Code</h4>
-                    <p>בניית אתרים ואפליקציות עם AI</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F4A1;</div>
-                    <h4>חשיבה יזמית</h4>
-                    <p>מרעיון לסטארטאפ אמיתי</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F3A8;</div>
-                    <h4>עיצוב דיגיטלי</h4>
-                    <p>UI, אנימציות ויצירת תמונות עם AI</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F4DD;</div>
-                    <h4>הנדסת פרומפטים</h4>
-                    <p>איך לדבר עם AI ולקבל תוצאות מדויקות</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F4CA;</div>
-                    <h4>מודל עסקי</h4>
-                    <p>תוכנית עסקית, שיווק ומכירות</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F3A4;</div>
-                    <h4>הצגה בפני קהל</h4>
-                    <p>פיץ' של 3 דקות כמו Shark Tank</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F527;</div>
-                    <h4>פתרון בעיות</h4>
-                    <p>דיבאגינג, חשיבה ביקורתית ויצירתיות</p>
-                </div>
-            </div>
-            <div class="skills-dots" id="skillsDots"></div>
-        </div>
-    </section>
-
-    <!-- INSTRUCTOR -->
-    <section class="instructor-section" id="instructor">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>המנחה</h2>
-            </div>
-            <div class="instructor-card reveal">
-                <div class="instructor-avatar"><img src="meir.jpg" alt="מאיר לביא"></div>
-                <div class="instructor-info">
-                    <h3>מאיר לביא</h3>
-                    <div class="title">יזם · משקיע · מנחה AI</div>
-                    <p dir="rtl">סמנכ"ל פיתוח עסקי לשעבר בחברות הייטק. בנה מוצרים, ניהל שותפויות, והשקיע בסטארטאפים. היום מלמד ילדים ומבוגרים לחשוב ולבנות עם AI.</p>
-                    <div class="instructor-tags" style="margin-top:14px;">
-                        <span>🚀 יזם</span>
-                        <span>📈 משקיע</span>
-                        <span>🎓 האוניברסיטה העברית</span>
-                        <span>🏢 הייטק</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- FAQ -->
-    <section class="faq-section" id="faq">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>שאלות נפוצות</h2>
-            </div>
-            <div class="faq-list">
-                <div class="faq-item reveal">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>צריך ניסיון בתכנות?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        בכלל לא! הקורס מיועד למתחילים מוחלטים. ה-AI עושה את התכנות בשבילכם &mdash; אתם לומדים לכוון אותו ולחשוב כמו יזמים.
-                    </div>
-                </div>
-                <div class="faq-item reveal">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>מה הגילאים?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        הקורס פתוח לנוער (גילאי 10&ndash;17) ולמבוגרים (60+). 8 מפגשים מעשיים בזום, קבוצות מופרדות לפי גיל, עד 5 תלמידים בכיתה.
-                    </div>
-                </div>
-                <div class="faq-item reveal">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>מה אם לא אוהבים את הקורס?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        אנחנו מציעים מדיניות ביטול נוחה: אם עד סוף המפגש השני מחליטים שזה לא מתאים &mdash; החזר מלא, ללא שאלות.
-                    </div>
-                </div>
-                <div class="faq-item reveal">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>עם מה יוצאים מהקורס?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        פרויקט אמיתי שרץ באינטרנט, ניסיון מעשי בעבודה עם AI, כישורי יזמות והצגה, ותעודת סיום. וגם &mdash; ביטחון עצמי שאפשר לבנות כל דבר.
-                    </div>
-                </div>
+    <!-- ZOOM BANNER -->
+    <section class="zoom-banner" style="padding: 2rem; background: linear-gradient(135deg, rgba(45, 116, 249, 0.1), rgba(108, 60, 225, 0.08)); border-top: 1px solid rgba(45, 116, 249, 0.15); border-bottom: 1px solid rgba(45, 116, 249, 0.15);">
+        <div class="container" style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; direction: rtl; text-align: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
+                <rect width="24" height="24" rx="5" fill="#2D74F9"/>
+                <path d="M16.5 8.5l2.5-1.5v10l-2.5-1.5M5 7.5h9a1.5 1.5 0 011.5 1.5v6a1.5 1.5 0 01-1.5 1.5H5A1.5 1.5 0 013.5 15V9A1.5 1.5 0 015 7.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+                <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">המפגשים בזום &mdash; מכל מקום בארץ</div>
+                <div style="font-size: 0.9rem; color: var(--text-muted);">לא צריך להגיע לשום מקום. מחשב נייד, אינטרנט, וזהו.</div>
             </div>
         </div>
     </section>
@@ -3378,7 +3282,7 @@
                 <h2>&#x1F4B0; כמה זה עולה?</h2>
                 <p>מפגשים חיים בזום, קבוצות קטנות, יחס אישי.</p>
             </div>
-            <div class="pricing-grid">
+            <div class="pricing-grid" id="pricingGrid">
                 <div class="pricing-card reveal">
                     <h3>ילדים ונוער &mdash; בסיסי</h3>
                     <div class="price">&#x20AA;890</div>
@@ -3416,8 +3320,217 @@
                     <a onclick="gtag('event','whatsapp_click',{event_category:'contact',event_label:'direct_link'});gtag('event','conversion',{'send_to':'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'})" href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9E%D7%91%D7%95%D7%92%D7%A8%D7%99%D7%9D" class="btn-primary pricing-btn" target="_blank">שריינו מקום</a>
                 </div>
             </div>
+            <div class="problem-dots" id="pricingDots"></div>
         </div>
     </section>
+
+    <!-- PROGRAM -->
+    <section class="timeline-section" id="program">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>תוכנית הקורסים</h2>
+                <p>בחרו את המסלול שמתאים לכם. לחצו על קורס לפרטים מלאים.</p>
+            </div>
+            <div class="courses-grid" id="coursesGrid">
+                <div class="course-track-card reveal" onclick="openSyllabus('youth-basic')">
+                    <div class="course-track-badge">8 מפגשים</div>
+                    <div class="course-track-icon">&#x1F680;</div>
+                    <h3>ילדים ונוער &mdash; בסיסי</h3>
+                    <p>בניית פרויקט ראשון מאפס עם כלי AI. מרעיון לאתר אמיתי תוך 8 מפגשים.</p>
+                    <div class="course-track-meta">
+                        <span>גילאי 10&ndash;17</span>
+                        <span>ללא ניסיון קודם</span>
+                    </div>
+                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
+                </div>
+                <div class="course-track-card reveal" onclick="openSyllabus('youth-advanced')">
+                    <div class="course-track-badge">8 מפגשים</div>
+                    <div class="course-track-icon">&#x1F31F;</div>
+                    <h3>ילדים ונוער &mdash; מתקדם</h3>
+                    <p>המשך למידה לבוגרי הקורס הבסיסי. העמקה בפיתוח, כלים מתקדמים והתקדמות בפרויקט.</p>
+                    <div class="course-track-meta">
+                        <span>גילאי 10&ndash;17</span>
+                        <span>דרישה: קורס בסיסי</span>
+                    </div>
+                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
+                </div>
+                <div class="course-track-card reveal" onclick="openSyllabus('adults-basic')">
+                    <div class="course-track-badge">8 מפגשים</div>
+                    <div class="course-track-icon">&#x1F4BB;</div>
+                    <h3>מבוגרים &mdash; בסיסי</h3>
+                    <p>גם בלי רקע טכנולוגי &mdash; תלמדו לבנות אתר ולעבוד עם AI. בקצב שלכם.</p>
+                    <div class="course-track-meta">
+                        <span>גילאי 60+</span>
+                        <span>ללא ניסיון קודם</span>
+                    </div>
+                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
+                </div>
+            </div>
+            <div class="problem-dots" id="coursesDots"></div>
+        </div>
+
+        <!-- SYLLABUS POPUP -->
+        <div class="syllabus-overlay" id="syllabusOverlay" onclick="if(event.target===this)closeSyllabus()">
+            <div class="syllabus-modal">
+                <button class="syllabus-close" onclick="closeSyllabus()">&times;</button>
+                <div id="syllabusContent"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT / PROBLEM -->
+    <section class="problem" id="about">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>למה הקורס הזה?</h2>
+                <p>העולם השתנה. מי שיודע לעבוד עם AI &mdash; יוביל. מי שלא &mdash; יישאר מאחור.</p>
+            </div>
+            <div class="problem-grid" id="problemGrid">
+                <div class="problem-card">
+                    <div class="problem-icon">&#x1F3EB;</div>
+                    <h3>אף אחד לא מלמד את זה</h3>
+                    <p>AI לא נלמד בשום מקום באופן מעשי — עד עכשיו.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">&#x1F4A1;</div>
+                    <h3>רעיונות בלי כלים</h3>
+                    <p>AI נותן את הכלים לבנות רעיונות — בלי קוד, בלי ניסיון קודם.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">&#x1F680;</div>
+                    <h3>יתרון לחיים</h3>
+                    <p>מי שלומד AI היום — יוביל מחר. בכל גיל.</p>
+                </div>
+            </div>
+            <div class="problem-dots" id="problemDots"></div>
+        </div>
+    </section>
+
+    <!-- WHAT YOU'LL BUILD -->
+    <section class="build-section" id="build" style="display:none;">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>מה תבנו בקורס?</h2>
+                <p>לא תיאוריה. לא מצגות. בונים דברים אמיתיים.</p>
+            </div>
+            <div class="build-grid">
+                <div class="build-item reveal">
+                    <div class="build-icon">&#x1F310;</div>
+                    <h3>אתר אינטרנט אמיתי</h3>
+                    <p>דף נחיתה מקצועי לסטארטאפ שלכם &mdash; עם עיצוב, תפריטים ואנימציות. באוויר!</p>
+                </div>
+                <div class="build-item reveal">
+                    <div class="build-icon">&#x1F4CB;</div>
+                    <h3>תוכנית עסקית</h3>
+                    <p>אפיון מוצר, קהל יעד, מודל עסקי ואסטרטגיית שיווק &mdash; כמו יזם אמיתי</p>
+                </div>
+                <div class="build-item reveal">
+                    <div class="build-icon">&#x1F4E3;</div>
+                    <h3>תוכן שיווקי עם AI</h3>
+                    <p>פוסטים, סלוגנים ותוכן לרשתות חברתיות &mdash; שנוצרו עם בינה מלאכותית</p>
+                </div>
+                <div class="build-item reveal">
+                    <div class="build-icon">&#x1F3AC;</div>
+                    <h3>Pitch מנצח</h3>
+                    <p>מצגת ליום ההשקה &mdash; 3 דקות מול קהל, כמו Shark Tank!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOOLS + SKILLS combined -->
+    <section class="skills-section" id="tools">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>&#x1F6E0;&#xFE0F; כלים וכישורים שתרכשו</h2>
+                <p>נכיר ונתנסה בכלי ה-AI המובילים — ונצא עם כישורים אמיתיים לחיים</p>
+            </div>
+            <div class="skills-grid" id="skillsGrid">
+                <div class="build-item build-item-featured reveal">
+                    <div style="display:flex; justify-content:center;">
+                        <svg width="26" height="26" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="52" height="52" rx="14" fill="#D97757"/>
+                            <path d="M26 10 C32 10 37 14 38.5 20 L35 21 C33.8 16.8 30.2 14 26 14 C20.5 14 16 18.5 16 24 C16 29.5 20.5 34 26 34 C30.2 34 33.8 31.2 35 27 L38.5 28 C37 34 32 38 26 38 C18.3 38 12 31.7 12 24 C12 16.3 18.3 10 26 10Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Claude Code</h3>
+                        <p>הכלי המרכזי בקורס — בונים אתרים ופרויקטים אמיתיים עם AI, בלי ניסיון קודם</p>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-card-icon">
+                        <svg width="22" height="22" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="#10a37f"/><path d="M18 7C13.5 7 10.5 9.8 10.5 13.5c0 1.2.3 2.3.9 3.2C9.8 17.6 9 19.2 9 21c0 3.3 2.7 6 6 6 .7 0 1.4-.1 2-.4.8.9 2 1.4 3 1.4s2.2-.5 3-1.4c.6.3 1.3.4 2 .4 3.3 0 6-2.7 6-6 0-1.8-.8-3.4-2.1-4.3.6-.9.9-2 .9-3.2C29.8 9.8 26.5 7 22 7c-1.5 0-2.9.4-4 1.1C16.9 7.4 15.5 7 18 7z" fill="white" opacity=".9"/><path d="M22.5 15.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM13.5 15.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="#10a37f"/></svg>
+                    </div>
+                    <h4>ChatGPT</h4>
+                    <p>מודל שפה של OpenAI</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-card-icon">
+                        <svg width="22" height="22" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="white"/><defs><linearGradient id="gGem2" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4285F4"/><stop offset="50%" stop-color="#9B72CB"/><stop offset="100%" stop-color="#D96570"/></linearGradient></defs><path d="M18 4 L20.5 15.5 L32 18 L20.5 20.5 L18 32 L15.5 20.5 L4 18 L15.5 15.5 Z" fill="url(#gGem2)"/></svg>
+                    </div>
+                    <h4>Gemini</h4>
+                    <p>מודל שפה של Google</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-card-icon">
+                        <svg width="22" height="22" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="#000"/><path d="M9 9 L27 27 M27 9 L9 27" stroke="white" stroke-width="3.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <h4>Grok</h4>
+                    <p>מודל שפה של xAI</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-card-icon">&#x1F4A1;</div>
+                    <h4>חשיבה יזמית</h4>
+                    <p>מרעיון לסטארטאפ אמיתי</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-card-icon">&#x1F4DD;</div>
+                    <h4>הנדסת פרומפטים</h4>
+                    <p>איך לדבר עם AI ולקבל תוצאות מדויקות</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-card-icon">&#x1F4CA;</div>
+                    <h4>מודל עסקי</h4>
+                    <p>תוכנית עסקית, שיווק ומכירות</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-card-icon">&#x1F3A4;</div>
+                    <h4>הצגה בפני קהל</h4>
+                    <p>פיץ' של 3 דקות כמו Shark Tank</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-card-icon">&#x1F527;</div>
+                    <h4>פתרון בעיות</h4>
+                    <p>דיבאגינג, חשיבה ביקורתית ויצירתיות</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTRUCTOR -->
+    <section class="instructor-section" id="instructor">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>המנחה</h2>
+            </div>
+            <div class="instructor-card reveal">
+                <div class="instructor-avatar"><img src="meir.jpg" alt="מאיר לביא"></div>
+                <div class="instructor-info">
+                    <h3>מאיר לביא</h3>
+                    <div class="title">יזם · משקיע · מנחה AI</div>
+                    <p dir="rtl">סמנכ"ל פיתוח עסקי לשעבר בחברות הייטק. בנה מוצרים, ניהל שותפויות, והשקיע בסטארטאפים. היום מלמד ילדים ומבוגרים לחשוב ולבנות עם AI.</p>
+                    <div class="instructor-tags" style="margin-top:14px;">
+                        <span>🚀 יזם</span>
+                        <span>📈 משקיע</span>
+                        <span>🎓 האוניברסיטה העברית</span>
+                        <span>🏢 הייטק</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- REGISTER FORM -->
     <section class="cta-section" id="register">
@@ -3606,6 +3719,153 @@
             track._resumeTimer = setTimeout(() => startAutoScroll(track), 5000);
         }
 
+
+        // ── Problem carousel (mobile only) ──
+        (function() {
+            if (window.innerWidth > 768) return;
+            var grid = document.getElementById('problemGrid');
+            var dotsWrap = document.getElementById('problemDots');
+            if (!grid) return;
+            var cardEls = Array.from(grid.querySelectorAll('.problem-card'));
+            var total = cardEls.length;
+            var cur = 1;
+
+            // force visible
+            cardEls.forEach(function(c) { c.classList.add('visible'); c.style.opacity = '1'; });
+
+            // build dots
+            for (var i = 0; i < total; i++) {
+                (function(idx) {
+                    var d = document.createElement('span');
+                    if (idx === 1) d.classList.add('active');
+                    d.addEventListener('click', function() { go(idx); });
+                    dotsWrap.appendChild(d);
+                })(i);
+            }
+
+            function go(n) {
+                cur = (n + total) % total;
+                cardEls[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                dotsWrap.querySelectorAll('span').forEach(function(d, i) {
+                    d.classList.toggle('active', i === cur);
+                });
+            }
+
+            // sync dots on native scroll (swipe) — track by center distance
+            grid.addEventListener('scroll', function() {
+                var gridCenter = grid.getBoundingClientRect().left + grid.offsetWidth / 2;
+                var best = 0, bestDist = Infinity;
+                cardEls.forEach(function(c, i) {
+                    var cardCenter = c.getBoundingClientRect().left + c.offsetWidth / 2;
+                    var dist = Math.abs(cardCenter - gridCenter);
+                    if (dist < bestDist) { bestDist = dist; best = i; }
+                });
+                if (best !== cur) {
+                    cur = best;
+                    dotsWrap.querySelectorAll('span').forEach(function(d, i) {
+                        d.classList.toggle('active', i === cur);
+                    });
+                }
+            }, {passive: true});
+
+            // init at middle card
+            setTimeout(function() { go(1); }, 100);
+
+        }());
+
+        // ── Courses carousel (mobile only) ──
+        (function() {
+            if (window.innerWidth > 600) return;
+            var grid = document.getElementById('coursesGrid');
+            var dotsWrap = document.getElementById('coursesDots');
+            if (!grid) return;
+            var cardEls = Array.from(grid.querySelectorAll('.course-track-card'));
+            var total = cardEls.length;
+            var cur = 0;
+
+            // force visible
+            cardEls.forEach(function(c) { c.classList.add('visible'); c.style.opacity = '1'; });
+
+            // dots
+            for (var i = 0; i < total; i++) {
+                (function(idx) {
+                    var d = document.createElement('span');
+                    if (idx === 0) d.classList.add('active');
+                    d.addEventListener('click', function() { go(idx); });
+                    dotsWrap.appendChild(d);
+                })(i);
+            }
+
+            function go(n) {
+                cur = (n + total) % total;
+                cardEls[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                dotsWrap.querySelectorAll('span').forEach(function(d, i) {
+                    d.classList.toggle('active', i === cur);
+                });
+            }
+
+            grid.addEventListener('scroll', function() {
+                var best = 0, bestDist = Infinity;
+                cardEls.forEach(function(c, i) {
+                    var dist = Math.abs(c.getBoundingClientRect().right - grid.getBoundingClientRect().right);
+                    if (dist < bestDist) { bestDist = dist; best = i; }
+                });
+                if (best !== cur) {
+                    cur = best;
+                    dotsWrap.querySelectorAll('span').forEach(function(d, i) {
+                        d.classList.toggle('active', i === cur);
+                    });
+                }
+            }, {passive: true});
+
+            setTimeout(function() { grid.scrollLeft = 0; }, 100);
+        }());
+
+        // ── Pricing carousel (mobile only) ──
+        (function() {
+            if (window.innerWidth > 768) return;
+            var grid = document.getElementById('pricingGrid');
+            var dotsWrap = document.getElementById('pricingDots');
+            if (!grid) return;
+            var cardEls = Array.from(grid.querySelectorAll('.pricing-card'));
+            var total = cardEls.length;
+            var cur = 0;
+
+            cardEls.forEach(function(c) { c.classList.add('visible'); c.style.opacity = '1'; });
+
+            for (var i = 0; i < total; i++) {
+                (function(idx) {
+                    var d = document.createElement('span');
+                    if (idx === 0) d.classList.add('active');
+                    d.addEventListener('click', function() { go(idx); });
+                    dotsWrap.appendChild(d);
+                })(i);
+            }
+
+            function go(n) {
+                cur = (n + total) % total;
+                cardEls[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                dotsWrap.querySelectorAll('span').forEach(function(d, i) {
+                    d.classList.toggle('active', i === cur);
+                });
+            }
+
+            grid.addEventListener('scroll', function() {
+                var best = 0, bestDist = Infinity;
+                cardEls.forEach(function(c, i) {
+                    var dist = Math.abs(c.getBoundingClientRect().right - grid.getBoundingClientRect().right);
+                    if (dist < bestDist) { bestDist = dist; best = i; }
+                });
+                if (best !== cur) {
+                    cur = best;
+                    dotsWrap.querySelectorAll('span').forEach(function(d, i) {
+                        d.classList.toggle('active', i === cur);
+                    });
+                }
+            }, {passive: true});
+
+            setTimeout(function() { grid.scrollLeft = 0; }, 100);
+        }());
 
         // ── Projects iframe scaling ──
         function scaleIframes() {
