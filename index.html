@@ -3609,9 +3609,21 @@
 
     <script>
         // Force scroll to top then reveal page (hidden via opacity:0 in <head>)
-        window.scrollTo(0, 0);
-        document.documentElement.style.opacity = '1';
-        document.documentElement.style.transition = 'none';
+        // Browser restores scroll AFTER load on mobile, so we must wait
+        function revealPage() {
+            window.scrollTo(0, 0);
+            requestAnimationFrame(function() {
+                window.scrollTo(0, 0);
+                document.documentElement.style.opacity = '1';
+            });
+        }
+        if (document.readyState === 'complete') {
+            revealPage();
+        } else {
+            window.addEventListener('load', function() {
+                setTimeout(revealPage, 50);
+            });
+        }
 
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
