@@ -27,6 +27,7 @@
         gtag('config', 'G-37WXJMRB9C');
         gtag('config', 'AW-18061574299');
     </script>
+    <script>if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>קורס AI לילדים ונוער | יזמות ובינה מלאכותית | AI Lab</title>
@@ -3606,9 +3607,12 @@
     </a>
 
     <script>
-        // Force scroll to top on fresh page load
+        // Force scroll to top on fresh page load (mobile browsers restore scroll AFTER scripts)
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
+        window.addEventListener('load', function() { window.scrollTo(0, 0); });
+        setTimeout(function() { window.scrollTo(0, 0); }, 50);
+        setTimeout(function() { window.scrollTo(0, 0); }, 300);
 
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
