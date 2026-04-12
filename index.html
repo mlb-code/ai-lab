@@ -2882,6 +2882,18 @@
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
     <!-- SCROLL POPUP -->
+    <!-- WEBINAR POPUP -->
+    <div id="webinarPopup" class="scroll-popup-overlay" onclick="if(event.target===this)closeWebinarPopup()">
+        <div class="scroll-popup-box" style="max-width:420px;text-align:center;">
+            <button class="scroll-popup-close" onclick="closeWebinarPopup()" aria-label="סגור">&times;</button>
+            <div style="font-size:2.4rem;margin-bottom:10px;">🎓</div>
+            <h3 style="font-size:1.4rem;font-weight:900;margin-bottom:8px;">לא בטוחים עדיין?</h3>
+            <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:20px;line-height:1.6;">הצטרפו לוובינר חינמי שלנו — תראו בעצמכם איך ילדים בונים אתרים אמיתיים עם AI, בלי ניסיון קודם.</p>
+            <a href="/webinar-general.html" style="display:block;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-weight:700;font-size:1.05rem;padding:14px 28px;border-radius:50px;text-decoration:none;margin-bottom:12px;">🎓 הירשמו לוובינר בחינם</a>
+            <button onclick="closeWebinarPopup()" style="background:none;border:none;color:var(--text-muted);font-size:0.85rem;cursor:pointer;text-decoration:underline;">אולי בפעם אחרת</button>
+        </div>
+    </div>
+
     <div id="scrollPopup" class="scroll-popup-overlay" onclick="if(event.target===this)closePopup()">
         <div class="scroll-popup-box">
             <button class="scroll-popup-close" onclick="closePopup()" aria-label="סגור">&times;</button>
@@ -3693,8 +3705,41 @@
             });
         }());
 
+        var popupWasClosed = false;
         function closePopup() {
             document.getElementById('scrollPopup').classList.remove('popup-visible');
+            popupWasClosed = true;
+            startWebinarPopupWatch();
+        }
+
+        function closeWebinarPopup() {
+            document.getElementById('webinarPopup').classList.remove('popup-visible');
+        }
+
+        function startWebinarPopupWatch() {
+            var registerSection = document.getElementById('register');
+            if (!registerSection) return;
+            var timer = null;
+            var watching = false;
+            function checkVisibility() {
+                var rect = registerSection.getBoundingClientRect();
+                var inView = rect.top < window.innerHeight && rect.bottom > 0;
+                if (inView && !watching) {
+                    watching = true;
+                    timer = setTimeout(function() {
+                        var wp = document.getElementById('webinarPopup');
+                        var sp = document.getElementById('scrollPopup');
+                        if (!wp.classList.contains('popup-visible') && !sp.classList.contains('popup-visible')) {
+                            wp.classList.add('popup-visible');
+                        }
+                    }, 25000);
+                } else if (!inView && watching) {
+                    watching = false;
+                    clearTimeout(timer);
+                }
+            }
+            window.addEventListener('scroll', checkVisibility);
+            checkVisibility();
         }
 
         document.addEventListener('keydown', function(e) {
