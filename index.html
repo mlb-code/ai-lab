@@ -2287,16 +2287,35 @@
             }
 
             .skills-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
+                display: flex;
+                overflow: hidden;
+                position: relative;
+                gap: 0;
             }
-
             .skill-card {
-                padding: 0.8rem 0.5rem;
+                min-width: 100%;
+                padding: 2rem 1.5rem;
+                transition: transform 0.35s ease;
+                flex-shrink: 0;
             }
-
-            .skill-card h4 {
-                font-size: 0.82rem;
+            .skill-card h4 { font-size: 1.2rem; }
+            .skill-card p { font-size: 0.95rem; display: block; }
+            .skills-dots {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 16px;
+            }
+            .skills-dots span {
+                width: 8px; height: 8px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.25);
+                cursor: pointer;
+                transition: background .2s, transform .2s;
+            }
+            .skills-dots span.active {
+                background: var(--accent);
+                transform: scale(1.3);
             }
 
             .audience-card {
@@ -3260,48 +3279,49 @@
                 <h2>כישורים שתרכשו</h2>
                 <p>שילוב של טכנולוגיה, יזמות וכישורי חיים.</p>
             </div>
-            <div class="skills-grid">
-                <div class="skill-card reveal">
+            <div class="skills-grid" id="skillsGrid">
+                <div class="skill-card">
                     <div class="skill-card-icon">&#x1F916;</div>
                     <h4>עבודה עם AI</h4>
                     <p>ChatGPT, Claude, Gemini ועוד</p>
                 </div>
-                <div class="skill-card reveal">
+                <div class="skill-card">
                     <div class="skill-card-icon">&#x1F4BB;</div>
                     <h4>Claude Code</h4>
                     <p>בניית אתרים ואפליקציות עם AI</p>
                 </div>
-                <div class="skill-card reveal">
+                <div class="skill-card">
                     <div class="skill-card-icon">&#x1F4A1;</div>
                     <h4>חשיבה יזמית</h4>
                     <p>מרעיון לסטארטאפ אמיתי</p>
                 </div>
-                <div class="skill-card reveal">
+                <div class="skill-card">
                     <div class="skill-card-icon">&#x1F3A8;</div>
                     <h4>עיצוב דיגיטלי</h4>
                     <p>UI, אנימציות ויצירת תמונות עם AI</p>
                 </div>
-                <div class="skill-card reveal">
+                <div class="skill-card">
                     <div class="skill-card-icon">&#x1F4DD;</div>
                     <h4>הנדסת פרומפטים</h4>
                     <p>איך לדבר עם AI ולקבל תוצאות מדויקות</p>
                 </div>
-                <div class="skill-card reveal">
+                <div class="skill-card">
                     <div class="skill-card-icon">&#x1F4CA;</div>
                     <h4>מודל עסקי</h4>
                     <p>תוכנית עסקית, שיווק ומכירות</p>
                 </div>
-                <div class="skill-card reveal">
+                <div class="skill-card">
                     <div class="skill-card-icon">&#x1F3A4;</div>
                     <h4>הצגה בפני קהל</h4>
                     <p>פיץ' של 3 דקות כמו Shark Tank</p>
                 </div>
-                <div class="skill-card reveal">
+                <div class="skill-card">
                     <div class="skill-card-icon">&#x1F527;</div>
                     <h4>פתרון בעיות</h4>
                     <p>דיבאגינג, חשיבה ביקורתית ויצירתיות</p>
                 </div>
             </div>
+            <div class="skills-dots" id="skillsDots"></div>
         </div>
     </section>
 
@@ -3610,6 +3630,42 @@
             track.scrollTo({ left: targetIndex * cardW, behavior: 'instant' });
             track._resumeTimer = setTimeout(() => startAutoScroll(track), 5000);
         }
+
+        // ── Skills carousel (mobile only) ──
+        (function() {
+            if (window.innerWidth > 600) return;
+            var grid = document.getElementById('skillsGrid');
+            var dotsWrap = document.getElementById('skillsDots');
+            if (!grid) return;
+            var cards = grid.querySelectorAll('.skill-card');
+            var total = cards.length;
+            var cur = 0;
+            // build dots
+            for (var i = 0; i < total; i++) {
+                var d = document.createElement('span');
+                if (i === 0) d.classList.add('active');
+                d.setAttribute('data-i', i);
+                d.addEventListener('click', function() { go(+this.getAttribute('data-i')); });
+                dotsWrap.appendChild(d);
+            }
+            function go(n) {
+                cur = (n + total) % total;
+                grid.style.transform = 'translateX(' + (cur * 100) + '%)';
+                dotsWrap.querySelectorAll('span').forEach(function(d, i) {
+                    d.classList.toggle('active', i === cur);
+                });
+            }
+            // auto-advance every 3s
+            var timer = setInterval(function() { go(cur + 1); }, 3000);
+            grid.addEventListener('click', function() { clearInterval(timer); });
+            // touch swipe
+            var tx = 0;
+            grid.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; clearInterval(timer); }, {passive:true});
+            grid.addEventListener('touchend', function(e) {
+                var dx = e.changedTouches[0].clientX - tx;
+                if (Math.abs(dx) > 40) go(dx < 0 ? cur + 1 : cur - 1);
+            }, {passive:true});
+        }());
 
         // ── Projects iframe scaling ──
         function scaleIframes() {
