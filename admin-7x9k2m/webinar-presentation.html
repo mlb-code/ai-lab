@@ -1261,31 +1261,12 @@
     }
   });
 
-  // Click to advance — only outside interactive elements
-  document.addEventListener('click', e => {
-    if (e.target.closest('video, a, button, input, select, .faq-item')) return;
-    if (e.clientX < window.innerWidth * 0.3) {
-      showSlide(current - 1);
-    } else {
-      showSlide(current + 1);
-    }
-  });
-
-  // Touch swipe
-  let touchStartX = 0;
-  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
-  document.addEventListener('touchend', e => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) showSlide(current - 1); // swipe left → next (RTL)
-      else showSlide(current + 1); // swipe right → prev (RTL)
-    }
-  });
-
-  // Mouse wheel
+  // No click or wheel navigation — keyboard only
+  // Mouse wheel disabled
   let wheelTimeout = false;
   document.addEventListener('wheel', e => {
-    if (wheelTimeout) return;
+    // disabled — keyboard only
+    if (true) return;
     wheelTimeout = true;
     setTimeout(() => wheelTimeout = false, 600);
     if (e.deltaY > 0) showSlide(current + 1);
