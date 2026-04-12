@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1494500642118868');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1494500642118868&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>וובינר חינמי — AI ויזמות לילדים ישראלים בארה״ב | AI Lab</title>
+  <meta name="description" content="וובינר חינמי להורים ישראלים בארה״ב: איך ילדים ובני נוער יכולים לבנות פרויקטים אמיתיים עם AI. שיעורים בימי ראשון — הרשמה חינם.">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-37WXJMRB9C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-37WXJMRB9C');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    :root {
+      --primary: #6C3CE1;
+      --primary-light: #8B5CF6;
+      --accent: #00D4AA;
+      --dark: #0f0f1e;
+      --card: #181830;
+      --border: rgba(255,255,255,0.08);
+      --text: #eeeef5;
+      --muted: #9090b0;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      direction: rtl;
+      line-height: 1.65;
+    }
+
+    /* ── TOP BAR ── */
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 13px 20px;
+      background: rgba(15,15,30,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+    .bar-logo { display: flex; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 900; direction: ltr; }
+    .bar-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .bar-logo em { font-style:normal; color: var(--accent); }
+
+    /* ── US BADGE ── */
+    .us-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .us-badge .flag { font-size: 1.1rem; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 56px 22px 48px;
+      text-align: center;
+      background: linear-gradient(170deg, #1a1a2e 0%, var(--dark) 60%, #150d28 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content:'';
+      position:absolute; inset:0;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(108,60,225,0.15) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .hero > * { position: relative; }
+
+    .tags {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .tag {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .tag-green { background: rgba(0,212,170,.12); border: 1px solid rgba(0,212,170,.3); color: var(--accent); }
+    .tag-purple { background: rgba(108,60,225,.12); border: 1px solid rgba(108,60,225,.3); color: #b89ffa; }
+    .tag-blue { background: rgba(59,130,246,.12); border: 1px solid rgba(59,130,246,.3); color: #93bbfd; }
+
+    .hero h1 {
+      font-size: clamp(2rem, 7vw, 3rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .hero h1 .g {
+      background: linear-gradient(135deg, var(--accent), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+
+    .date-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 9px 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+    .date-row .dot { color: var(--accent); font-size: 1.1rem; }
+
+    /* Countdown */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+    .cu {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      min-width: 70px;
+      text-align: center;
+    }
+    .cu .n { display:block; font-size: 2rem; font-weight: 900; color: var(--accent); line-height:1; font-variant-numeric: tabular-nums; }
+    .cu .l { font-size: 0.68rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+
+    .cta-scroll {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 15px 38px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 22px rgba(108,60,225,.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .cta-scroll:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(108,60,225,.5); }
+
+    /* ── WHY ── */
+    .why {
+      background: #0d0d1c;
+      padding: 52px 22px;
+    }
+    .why-inner { max-width: 640px; margin: 0 auto; }
+    .section-label {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .why h2 {
+      text-align: center;
+      font-size: clamp(1.4rem, 4vw, 1.85rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .why-intro {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .points {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .point {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      text-align: right;
+      transition: border-color .2s;
+    }
+    .point:hover { border-color: rgba(0,212,170,.25); }
+    .point-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
+    .point h3 { font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .point p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section {
+      background: var(--dark);
+      padding: 52px 22px;
+    }
+    .how-inner { max-width: 640px; margin: 0 auto; }
+    .how-section h2 {
+      text-align: center;
+      font-size: clamp(1.4rem, 4vw, 1.85rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 32px;
+      line-height: 1.3;
+    }
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      text-align: right;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+    .step h3 { font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .step p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── FORM ── */
+    .form-section {
+      background: linear-gradient(160deg, #1a1a2e, var(--dark));
+      padding: 56px 22px 72px;
+    }
+    .form-section h2 {
+      text-align: center;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+    .form-section .fsub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+    }
+    .fcard {
+      max-width: 440px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .fg { margin-bottom: 18px; }
+    .fg label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .fg label .opt { font-weight: 400; color: var(--muted); font-size: .8rem; }
+    .fg input {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.97rem;
+      font-family: 'Heebo', sans-serif;
+      direction: rtl;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .fg input[type="email"], .fg input[type="tel"] { direction: ltr; text-align: left; }
+    .fg select {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.97rem;
+      font-family: 'Heebo', sans-serif;
+      direction: rtl;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239090b0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: left 14px center;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .fg select:focus { outline:none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(108,60,225,.15); }
+    .fg select option { background: #1a1a2e; color: var(--text); }
+    .fg input::placeholder { color: rgba(255,255,255,.2); }
+    .fg input:focus { outline:none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(108,60,225,.15); }
+
+    .btn-reg {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.1rem;
+      padding: 15px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Heebo', sans-serif;
+      box-shadow: 0 4px 22px rgba(108,60,225,.35);
+      transition: transform .2s, box-shadow .2s, opacity .2s;
+      margin-top: 4px;
+    }
+    .btn-reg:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(108,60,225,.5); }
+    .btn-reg:disabled { opacity: .5; cursor: not-allowed; }
+    .fnote { text-align:center; font-size:.75rem; color:rgba(255,255,255,.2); margin-top:12px; }
+
+    /* ── SUCCESS ── */
+    .success { display:none; text-align:center; animation: fadeUp .45s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+    .sicon { font-size: 3.5rem; margin-bottom: 10px; }
+    .success h3 { font-size: 1.5rem; font-weight: 900; color: var(--accent); margin-bottom: 6px; }
+    .success .ssub { color: var(--muted); font-size: .93rem; margin-bottom: 24px; line-height: 1.7; }
+    .zbox {
+      background: rgba(0,212,170,.06);
+      border: 1px solid rgba(0,212,170,.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .zbox .zlabel { font-size: .75rem; color: var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
+    .zbox a { color: var(--accent); font-weight:800; font-size:.97rem; text-decoration:none; }
+    .zbox a:hover { text-decoration: underline; }
+    .calbtns { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    .cbtn {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:10px 18px; border-radius:50px;
+      font-size:.87rem; font-weight:700;
+      font-family:'Heebo',sans-serif;
+      cursor:pointer; border:none;
+      text-decoration:none;
+      transition:transform .2s, opacity .2s;
+    }
+    .cbtn:hover { transform:scale(1.04); opacity:.9; }
+    .cbtn-g { background:#4285F4; color:#fff; }
+    .cbtn-i { background:rgba(255,255,255,.08); color:var(--text); border:1px solid var(--border); }
+
+    /* ── FAQ ── */
+    .faq-section {
+      background: #0d0d1c;
+      padding: 52px 22px;
+    }
+    .faq-inner { max-width: 640px; margin: 0 auto; }
+    .faq-section h2 {
+      text-align: center;
+      font-size: clamp(1.4rem, 4vw, 1.85rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 28px;
+    }
+    .faq-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+    .faq-item:hover { border-color: rgba(0,212,170,.25); }
+    .faq-q {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-q::after { content: '+'; font-size: 1.3rem; color: var(--accent); transition: transform .2s; }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease, margin .3s ease;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-a { max-height: 200px; margin-top: 12px; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align:center;
+      padding:28px 20px 32px;
+      border-top:1px solid var(--border);
+      font-size:.8rem;
+      color:rgba(255,255,255,.25);
+    }
+    .footer a { color:rgba(255,255,255,.35); text-decoration:none; }
+    .footer a:hover { color:var(--accent); }
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      color: rgba(255,255,255,.45);
+      text-decoration: none;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .social-link:hover { background: rgba(0,212,170,.12); border-color: rgba(0,212,170,.3); color: var(--accent); }
+
+    /* ── PROJECTS ── */
+    .projects-section {
+      background: #0d0d1c;
+      padding: 52px 0 60px;
+    }
+    .projects-section .section-label { text-align: center; }
+    .projects-section h2 {
+      text-align: center;
+      font-size: clamp(1.4rem, 4vw, 1.85rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.3;
+      padding: 0 22px;
+    }
+    .projects-section .psub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+      padding: 0 22px;
+    }
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 22px;
+    }
+    .proj-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform .22s, border-color .22s, box-shadow .22s;
+      cursor: pointer;
+    }
+    .proj-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0,212,170,.35);
+      box-shadow: 0 14px 36px rgba(0,0,0,.45);
+    }
+    .proj-preview {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      background: #0a0a18;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .proj-preview iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 900px;
+      height: 600px;
+      transform-origin: top left;
+      pointer-events: none;
+      border: none;
+    }
+    .proj-info {
+      padding: 13px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .proj-name { font-size: 0.85rem; font-weight: 800; color: #fff; line-height: 1.3; }
+    .proj-student { font-size: 0.75rem; color: var(--muted); margin-bottom: 2px; }
+    .proj-btn {
+      margin-top: auto;
+      padding-top: 10px;
+      display: block;
+      text-align: center;
+      background: rgba(0,212,170,.07);
+      border: 1px solid rgba(0,212,170,.18);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 7px;
+      border-radius: 8px;
+    }
+    .site-cta {
+      text-align: center;
+      margin-top: 36px;
+      padding: 0 22px;
+    }
+    .site-cta a {
+      display: inline-block;
+      border: 2px solid var(--primary-light);
+      color: var(--primary-light);
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 12px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .site-cta a:hover { background: var(--primary-light); color: #fff; }
+    @media(max-width:900px) {
+      .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    }
+    @media(max-width:480px) {
+      .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 14px; }
+      .proj-info { padding: 10px 11px 12px; }
+      .proj-name { font-size: 0.78rem; }
+    }
+
+    /* ── MOBILE ── */
+    @media(max-width:480px){
+      .hero { padding:44px 18px 38px; }
+      .fcard { padding:24px 18px; }
+      .cu { min-width:58px; padding:11px 12px; }
+      .cu .n { font-size:1.7rem; }
+      .form-section { padding:44px 18px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="bar">
+  <div class="bar-logo"><img src="ailab-logo.jpg" alt="AI Lab">AI <em>Lab</em></div>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="us-badge">
+    <span class="flag">🇺🇸</span> מיוחד לישראלים בארה״ב
+  </div>
+
+  <div class="tags">
+    <span class="tag tag-green">🆓 חינם לחלוטין</span>
+    <span class="tag tag-purple">💻 זום — אונליין</span>
+    <span class="tag tag-blue">🕐 שעות מותאמות לארה״ב</span>
+  </div>
+
+  <h1>
+    הילד שלכם בארה״ב יכול לבנות<br>
+    <span class="g">עסק אמיתי עם AI — בעברית</span>
+  </h1>
+  <p class="hero-lead">
+    וובינר מיוחד להורים ישראלים בארה״ב — נסביר איך ילדים ובני נוער לומדים יזמות ובינה מלאכותית בקורס אונליין בעברית, בימי ראשון בשעות נוחות
+  </p>
+
+  <!-- TODO: עדכנו תאריך ושעה כשייקבעו -->
+  <div class="date-row">
+    <span class="dot">●</span>
+    <span id="dateDisplay">התאריך יפורסם בקרוב</span>
+  </div>
+
+  <div class="countdown" id="countdown" style="display:none;">
+    <div class="cu"><span class="n" id="cd-d">--</span><span class="l">ימים</span></div>
+    <div class="cu"><span class="n" id="cd-h">--</span><span class="l">שעות</span></div>
+    <div class="cu"><span class="n" id="cd-m">--</span><span class="l">דקות</span></div>
+    <div class="cu"><span class="n" id="cd-s">--</span><span class="l">שניות</span></div>
+  </div>
+
+  <a href="#register" class="cta-scroll">הירשמו חינם ↓</a>
+</section>
+
+
+<!-- WHY -->
+<section class="why">
+  <div class="why-inner">
+    <div class="section-label">למה דווקא AI Lab?</div>
+    <h2>קורס בעברית, מהבית, בשעות שמתאימות לארה״ב</h2>
+    <p class="why-intro">
+      ילדים ישראלים בארה״ב מקבלים את אותו קורס מוביל שרץ בישראל — אונליין בזום, בעברית, בימי ראשון. בלי לוותר על השפה והתרבות.
+    </p>
+    <div class="points">
+      <div class="point">
+        <div class="point-icon">🤖</div>
+        <div>
+          <h3>AI מעשי — לא רק תיאוריה</h3>
+          <p>ילדים עובדים עם ChatGPT, Claude ועוד — בונים אתרים, אפליקציות, סרטונים ומוצרים דיגיטליים אמיתיים</p>
+        </div>
+      </div>
+      <div class="point">
+        <div class="point-icon">🌍</div>
+        <div>
+          <h3>בעברית, מכל מקום בארה״ב</h3>
+          <p>שיעורים אונליין בזום בימי ראשון — הילדים לומדים בעברית עם ילדים ישראלים, בלי לצאת מהבית</p>
+        </div>
+      </div>
+      <div class="point">
+        <div class="point-icon">🚀</div>
+        <div>
+          <h3>חשיבה יזמית מגיל צעיר</h3>
+          <p>הילדים לומדים לזהות בעיות, לחשוב על פתרונות ולהפוך רעיון לפרויקט — כישורים שיישרתו אותם כל החיים</p>
+        </div>
+      </div>
+      <div class="point">
+        <div class="point-icon">🏆</div>
+        <div>
+          <h3>תוצאות שאפשר לראות</h3>
+          <p>בסוף הקורס לכל ילד יש פרויקט אמיתי שהוא בנה — אתר, אפליקציה, או עסק קטן שהוא גאה בו</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="section-label">איך זה עובד?</div>
+    <h2>3 צעדים פשוטים</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>נרשמים לוובינר החינמי</h3>
+          <p>45 דקות שיראו לכם בדיוק מה הילדים לומדים ואיך הקורס עובד</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>מתחילים קורס בימי ראשון</h3>
+          <p>שיעור שבועי בזום, קבוצות קטנות, מותאם לגילאים 9-16. השעות מתאימות ל-EST ו-PST</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>הילד בונה פרויקט אמיתי</h3>
+          <p>אתר, אפליקציה או עסק קטן — משהו שהילד גאה להראות לחברים ולמשפחה</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- STUDENT PROJECTS -->
+<section class="projects-section">
+  <div class="section-label">עבודות תלמידים</div>
+  <h2>💻 מה התלמידים שלנו בנו?</h2>
+  <p class="psub">פרויקטים אמיתיים שנבנו בקורס — בלי ניסיון קודם</p>
+
+  <div class="proj-grid" id="projGrid">
+
+    <a href="https://ai-lab.co.il/build-pc/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/build-pc/" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="proj-info">
+        <div class="proj-name">🖥️ BUILD PC — השווה, חסוך, שדרג</div>
+        <div class="proj-student">רואי, בן 13</div>
+        <span class="proj-btn">🚀 לצפייה באתר</span>
+      </div>
+    </a>
+
+    <a href="https://ai-lab.co.il/spot/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/spot/" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="proj-info">
+        <div class="proj-name">🐕 SPOT — כל כלב ביומו</div>
+        <div class="proj-student">מתן, בן 10</div>
+        <span class="proj-btn">🚀 לצפייה באתר</span>
+      </div>
+    </a>
+
+    <a href="https://ai-lab.co.il/free-movie-trailers/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/free-movie-trailers/" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="proj-info">
+        <div class="proj-name">🎬 Free Movie Trailers</div>
+        <div class="proj-student">תאיי, בן 12</div>
+        <span class="proj-btn">🚀 לצפייה באתר</span>
+      </div>
+    </a>
+
+    <a href="https://ai-lab.co.il/trendsaver/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/trendsaver/" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="proj-info">
+        <div class="proj-name">📈 TrendSaver — קנה חכם</div>
+        <div class="proj-student">ארבל, בן 12</div>
+        <span class="proj-btn">🚀 לצפייה באתר</span>
+      </div>
+    </a>
+
+    <a href="https://ai-lab.co.il/nadavlego/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/nadavlego/" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="proj-info">
+        <div class="proj-name">🧱 חגיגת לגו</div>
+        <div class="proj-student">נדב, בן 10</div>
+        <span class="proj-btn">🚀 לצפייה באתר</span>
+      </div>
+    </a>
+
+    <a href="https://ai-lab.co.il/hairmatch/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/hairmatch/" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="proj-info">
+        <div class="proj-name">✨ HairMatch — טיפוח חכם</div>
+        <div class="proj-student">נועם, בת 13.5</div>
+        <span class="proj-btn">🚀 לצפייה באתר</span>
+      </div>
+    </a>
+
+    <a href="https://ai-lab.co.il/horse-fashion/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/horse-fashion/" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="proj-info">
+        <div class="proj-name">🐴 Horse Fashion</div>
+        <div class="proj-student">שיר, בת 13.5</div>
+        <span class="proj-btn">🚀 לצפייה באתר</span>
+      </div>
+    </a>
+
+    <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/gamebuddy/" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="proj-info">
+        <div class="proj-name">🎮 GameBuddy — שחקנים ביחד</div>
+        <div class="proj-student">אבינועם וגבריאל, בני 13.5</div>
+        <span class="proj-btn">🚀 לצפייה באתר</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="site-cta">
+    <a href="https://ai-lab.co.il" target="_blank" rel="noopener">לכל הפרויקטים והמידע על הקורס ← ai-lab.co.il</a>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-inner">
+    <div class="section-label">שאלות נפוצות</div>
+    <h2>שאלות ותשובות</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">באילו שעות השיעורים?</div>
+      <div class="faq-a">השיעורים מתקיימים בימי ראשון בשעות שמתאימות גם ל-East Coast וגם ל-West Coast. השעה המדויקת תפורסם בקרוב.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">לאיזה גילאים הקורס מתאים?</div>
+      <div class="faq-a">הקורס מיועד לילדים ובני נוער בגילאי 9-16. יש קבוצות מותאמות גיל כדי שכל ילד ילמד בקצב שלו.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">הילד שלי לא מדבר עברית שוטפת — זה בסדר?</div>
+      <div class="faq-a">בהחלט! הקורס בעברית אבל המורים מתאימים את עצמם. ילדים שגדלים בארה״ב מצליחים מצוין — וזה גם דרך נהדרת לחזק את העברית.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">צריך ידע קודם בתכנות?</div>
+      <div class="faq-a">לא! הקורס מתחיל מאפס. הילדים בונים עם כלי AI — לא צריך ניסיון קודם בקוד או בטכנולוגיה.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">כמה עולה הקורס?</div>
+      <div class="faq-a">הוובינר חינמי לחלוטין. פרטים על מחיר הקורס המלא נשתף בוובינר עצמו.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">מה צריך מבחינת ציוד?</div>
+      <div class="faq-a">מחשב (לפטופ או דסקטופ) עם חיבור אינטרנט ו-Zoom. זה הכל.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FORM -->
+<section class="form-section" id="register">
+  <h2>שמרו לכם מקום</h2>
+  <p class="fsub">הרשמה חינמית — לינק לזום יישלח ישר למייל</p>
+
+  <div class="fcard">
+
+    <form id="regForm">
+      <div class="fg">
+        <label for="fn">שם מלא</label>
+        <input type="text" id="fn" name="name" placeholder="ישראל ישראלי" required autocomplete="name">
+      </div>
+      <div class="fg">
+        <label for="fe">כתובת מייל</label>
+        <input type="email" id="fe" name="email" placeholder="name@email.com" required autocomplete="email">
+      </div>
+      <div class="fg">
+        <label for="fp">טלפון <span class="opt">(אופציונלי)</span></label>
+        <input type="tel" id="fp" name="phone" placeholder="+1 (555) 000-0000" autocomplete="tel">
+      </div>
+      <div class="fg">
+        <label for="fstate">מדינה בארה״ב <span class="opt">(אופציונלי)</span></label>
+        <select id="fstate" name="state">
+          <option value="" disabled selected>בחרו...</option>
+          <option value="CA">California</option>
+          <option value="NY">New York</option>
+          <option value="NJ">New Jersey</option>
+          <option value="FL">Florida</option>
+          <option value="TX">Texas</option>
+          <option value="IL">Illinois</option>
+          <option value="MA">Massachusetts</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="other">מדינה אחרת</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label for="fsrc">איך שמעת עלינו? <span class="opt">(חובה)</span></label>
+        <select id="fsrc" name="source" required>
+          <option value="" disabled selected>בחרו...</option>
+          <option value="פייסבוק">פייסבוק</option>
+          <option value="אינסטגרם">אינסטגרם</option>
+          <option value="טיקטוק">טיקטוק</option>
+          <option value="חבר / המלצה">חבר / המלצה</option>
+          <option value="קבוצת וואטסאפ">קבוצת וואטסאפ</option>
+          <option value="גוגל">גוגל</option>
+          <option value="אחר">אחר</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-reg" id="submitBtn">אני רוצה להצטרף לוובינר 🚀</button>
+      <p class="fnote">לא שולחים ספאם. פרטים לא מועברים לגורם שלישי.</p>
+    </form>
+
+    <div class="success" id="successCard">
+      <div class="sicon">🎉</div>
+      <h3>אתם רשומים!</h3>
+      <p class="ssub">נשלח לכם מייל עם כל הפרטים.<br>הוסיפו ליומן כדי לא לשכוח 👇</p>
+
+      <div class="zbox">
+        <div class="zlabel">לינק לכניסה לזום</div>
+        <a id="zlink" href="#" target="_blank" rel="noopener">🎥 הצטרפו לוובינר →</a>
+      </div>
+
+      <div class="calbtns">
+        <a id="gcalBtn" href="#" class="cbtn cbtn-g" target="_blank" rel="noopener">📅 Google Calendar</a>
+        <button class="cbtn cbtn-i" onclick="dlICS()">📅 Outlook / Apple</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="social-row">
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/ai.lab.il" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <!-- TikTok -->
+    <a href="https://www.tiktok.com/@ai.labisrael" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.46V13.2a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-.81-.07 4.86 4.86 0 01-.38-4.56z"/></svg>
+    </a>
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/share/18CXmH7Zum/" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/meirlavi" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+  </div>
+  <p>© 2026 AI Lab | <a href="https://ai-lab.co.il">ai-lab.co.il</a></p>
+</footer>
+
+
+<script>
+  // ══════════════════════════════════════════
+  //  ⚙️  הגדרות — עדכנו כאן כשייקבע תאריך
+  // ══════════════════════════════════════════
+  const C = {
+    // Web3Forms — התראה למייר
+    W3F_KEY:     'ac1edd62-607b-464c-a677-0f62676a9b5d',
+
+    // EmailJS — מייל אישור לנרשם
+    EJS_KEY:     'OHbhRjZEi65SHI5jx',
+    EJS_SERVICE: 'service_0n55sp2',
+    EJS_TPL:     'template_10ybisr',
+
+    // TODO: עדכנו לינק זום כשייווצר
+    ZOOM:     '',
+
+    // TODO: עדכנו תאריך ושעה (UTC)
+    // דוגמה: יום ראשון 27 באפריל 2026, 17:00 UTC = 12:00 EST / 10:00 PST
+    EVENT_DATE: null, // new Date(Date.UTC(2026, 3, 27, 17, 0))
+    UTC_H:    17,   // 12:00 EST = 17:00 UTC
+    UTC_M:    0,
+    DUR_H:    1,
+
+    // תאריך ויום בעברית (לעדכן ידנית)
+    DATE_HE:  '', // 'יום ראשון, 27 באפריל 2026 | 12:00 ET / 10:00 PT'
+  };
+
+  emailjs.init({ publicKey: C.EJS_KEY });
+
+  // Update zoom link if set
+  if (C.ZOOM) {
+    document.getElementById('zlink').href = C.ZOOM;
+  }
+
+  // Update date display if set
+  if (C.DATE_HE) {
+    document.getElementById('dateDisplay').textContent = C.DATE_HE;
+  }
+
+  // Google Calendar link
+  function p(n){ return String(n).padStart(2,'0'); }
+
+  if (C.EVENT_DATE) {
+    // Show countdown
+    document.getElementById('countdown').style.display = 'flex';
+
+    const gcal =
+      'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + encodeURIComponent('וובינר AI ויזמות לילדים — AI Lab (ארה״ב)') +
+      '&dates=' + C.EVENT_DATE.toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z/' +
+        new Date(C.EVENT_DATE.getTime() + C.DUR_H*3600000).toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z' +
+      '&details=' + encodeURIComponent('לינק לכניסה:\n' + C.ZOOM) +
+      '&location=' + encodeURIComponent('Zoom Online');
+    document.getElementById('gcalBtn').href = gcal;
+
+    // Countdown
+    function tick() {
+      const diff = C.EVENT_DATE - Date.now();
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML =
+          '<p style="color:var(--accent);font-weight:800;font-size:1.05rem">🎉 הוובינר מתחיל עכשיו!</p>';
+        return;
+      }
+      document.getElementById('cd-d').textContent = p(Math.floor(diff/86400000));
+      document.getElementById('cd-h').textContent = p(Math.floor(diff%86400000/3600000));
+      document.getElementById('cd-m').textContent = p(Math.floor(diff%3600000/60000));
+      document.getElementById('cd-s').textContent = p(Math.floor(diff%60000/1000));
+    }
+    tick(); setInterval(tick, 1000);
+  }
+
+  // Form submit → Web3Forms + Google Sheets
+  document.getElementById('regForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'שולח...';
+
+    const data = {
+      access_key: C.W3F_KEY,
+      subject:    'הרשמה חדשה לוובינר ארה״ב — ' + document.getElementById('fn').value,
+      from_name:  'AI Lab Webinar US',
+      name:       document.getElementById('fn').value,
+      email:      document.getElementById('fe').value,
+      phone:      document.getElementById('fp').value || '—',
+      state:      document.getElementById('fstate').value || '—',
+      source:     document.getElementById('fsrc').value || '—',
+    };
+
+    try {
+      // 1. Web3Forms — התראה למייר
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    } catch(e) { console.warn('Web3Forms error:', e); }
+
+    // 2. Google Sheets — שורה חדשה בגיליון
+    fetch('https://script.google.com/macros/s/AKfycbxromgbzt6XWQND23sWxrMoJHQzKbSilDVwC_QtRe_tsA8fQRGwZsYuCbiBqwBHXbUwEQ/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:    document.getElementById('fn').value,
+        email:   document.getElementById('fe').value,
+        phone:   document.getElementById('fp').value || '—',
+        state:   document.getElementById('fstate').value || '—',
+        source:  document.getElementById('fsrc').value || '—',
+        webinar: 'ארה״ב',
+      }),
+    }).catch(err => console.warn('Sheets error:', err));
+
+    // הצג success מיד
+    document.getElementById('regForm').style.display = 'none';
+    document.getElementById('successCard').style.display = 'block';
+
+    // GA event
+    gtag('event', 'webinar_registration', {
+      event_category: 'webinar',
+      event_label: 'us',
+      source: document.getElementById('fsrc').value || 'unknown',
+      state: document.getElementById('fstate').value || 'unknown',
+    });
+
+    // 3. EmailJS — מייל אישור לנרשם (ברקע)
+    if (C.ZOOM) {
+      emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
+        to_name:   document.getElementById('fn').value,
+        to_email:  document.getElementById('fe').value,
+        zoom_link: C.ZOOM,
+      }).catch(err => console.error('EmailJS error:', err));
+    }
+  });
+
+  // ── iframe preview scaling ──
+  function scaleIframes() {
+    document.querySelectorAll('.proj-preview').forEach(wrap => {
+      const w = wrap.offsetWidth;
+      const scale = w / 900;
+      const iframe = wrap.querySelector('iframe');
+      if (iframe) {
+        iframe.style.transform = 'scale(' + scale + ')';
+        wrap.style.height = Math.round(600 * scale) + 'px';
+      }
+    });
+  }
+  window.addEventListener('load', scaleIframes);
+  window.addEventListener('resize', scaleIframes);
+  scaleIframes();
+
+  // ICS download
+  function dlICS() {
+    if (!C.EVENT_DATE) { alert('התאריך טרם נקבע'); return; }
+    const dt = C.EVENT_DATE.toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z';
+    const et = new Date(C.EVENT_DATE.getTime() + C.DUR_H*3600000).toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z';
+    const ics = [
+      'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//AI Lab//HE',
+      'BEGIN:VEVENT',
+      'DTSTART:'+dt, 'DTEND:'+et,
+      'SUMMARY:וובינר AI ויזמות לילדים — AI Lab (ארה״ב)',
+      'DESCRIPTION:לינק לכניסה לזום:\\n'+C.ZOOM,
+      'LOCATION:'+C.ZOOM,
+      'BEGIN:VALARM','TRIGGER:-PT15M','ACTION:DISPLAY',
+      'DESCRIPTION:הוובינר מתחיל בעוד 15 דקות!',
+      'END:VALARM','END:VEVENT','END:VCALENDAR'
+    ].join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));
+    a.download = 'webinar-ai-lab-us.ics';
+    a.click();
+  }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
