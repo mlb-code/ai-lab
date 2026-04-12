@@ -3606,6 +3606,10 @@
     </a>
 
     <script>
+        // Force scroll to top on fresh page load
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
@@ -3949,11 +3953,13 @@
             if (e.key === 'Escape') closeSyllabus();
         });
 
-        // ── SCROLL POPUP ──
+        // ── SCROLL POPUP (only after 8s on page + 50% scroll) ──
         (function() {
             var triggered = false;
+            var pageReady = false;
+            setTimeout(function() { pageReady = true; }, 8000);
             window.addEventListener('scroll', function() {
-                if (triggered) return;
+                if (triggered || !pageReady) return;
                 var scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
                 if (scrolled >= 0.5) {
                     triggered = true;
