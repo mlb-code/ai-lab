@@ -1942,6 +1942,26 @@
         }
 
         /* ========== RESPONSIVE ========== */
+        /* -- Nav: hamburger on tablet+mobile (≤1024px) -- */
+        @media (max-width: 1024px) {
+            .nav-links-desktop {
+                display: none !important;
+            }
+            .nav-cta-group {
+                display: none !important;
+            }
+            #navbar {
+                display: flex;
+                justify-content: space-between;
+            }
+            .mobile-menu-btn {
+                display: flex;
+            }
+            .mobile-overlay {
+                display: block;
+            }
+        }
+
         @media (max-width: 768px) {
             /* -- Global mobile spacing -- */
             section {
@@ -1958,28 +1978,6 @@
 
             .section-title p {
                 font-size: 0.9rem;
-            }
-
-            /* -- Hide desktop nav links on mobile -- */
-            .nav-links-desktop {
-                display: none !important;
-            }
-            .nav-cta-group {
-                display: none !important;
-            }
-            #navbar {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            /* -- Show mobile menu button -- */
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            /* -- Show mobile overlay -- */
-            .mobile-overlay {
-                display: block;
             }
 
             /* -- Show menu icons in mobile panel -- */
