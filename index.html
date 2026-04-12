@@ -335,6 +335,60 @@
             transition: opacity 0.3s ease;
         }
 
+        /* ── SCROLL POPUP ── */
+        .scroll-popup-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(6px);
+            z-index: 9000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .scroll-popup-overlay.popup-visible {
+            display: flex;
+        }
+        .scroll-popup-box {
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 36px 32px 32px;
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+            animation: popupIn .3s ease;
+        }
+        @keyframes popupIn {
+            from { opacity:0; transform:translateY(24px) scale(.97); }
+            to   { opacity:1; transform:translateY(0) scale(1); }
+        }
+        .scroll-popup-close {
+            position: absolute;
+            top: 14px;
+            left: 16px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.6rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: color .2s, background .2s;
+        }
+        .scroll-popup-close:hover { color:#fff; background:rgba(255,255,255,0.08); }
+        .scroll-popup-header { text-align:center; margin-bottom:24px; }
+        .scroll-popup-icon { font-size: 2.2rem; margin-bottom: 8px; }
+        .scroll-popup-header h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+        .scroll-popup-header p { color: var(--text-muted); font-size: 0.9rem; }
+        @media(max-width:480px) {
+            .scroll-popup-box { padding: 28px 20px 24px; }
+            .scroll-popup-header h3 { font-size: 1.2rem; }
+        }
+
         .mobile-overlay.active {
             opacity: 1;
             pointer-events: auto;
@@ -2781,8 +2835,6 @@
     <nav id="navbar">
         <a href="/" class="nav-logo" onclick="if(location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">AI Lab</a>
         <ul class="nav-links nav-links-desktop" id="navLinksDesktop">
-            <li><a href="/blog/">עולם ה-AI</a></li>
-            <li><a href="/webinar-general.html">וובינר חינמי 🎓</a></li>
             <li><a href="#pricing">מחיר</a></li>
             <li><a href="#faq">שאלות</a></li>
             <li><a href="#tools">כלי AI</a></li>
@@ -2790,6 +2842,7 @@
             <li><a href="#audience">למי מיועד?</a></li>
             <li><a href="#about">על הקורס</a></li>
             <li><a href="/portal/" class="nav-cta">אזור אישי</a></li>
+            <li><a href="/webinar-general.html" class="nav-cta" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">🎓 וובינר חינמי</a></li>
             <li><a href="#register" class="nav-cta" style="background: linear-gradient(135deg, var(--accent), #00b894);">הרשמה</a></li>
         </ul>
         <button class="mobile-menu-btn" id="menuBtn" aria-label="תפריט">&#9776;</button>
@@ -2807,12 +2860,46 @@
             <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
             <li><a href="#faq"><span class="menu-icon">&#x2753;</span> שאלות נפוצות</a></li>
             <li><a href="/blog/"><span class="menu-icon">&#x1F30D;</span> עולם ה-AI</a></li>
-            <li><a href="/webinar-general.html" style="font-weight:700;color:var(--accent);"><span class="menu-icon">🎓</span> וובינר חינמי</a></li>
             <li class="mobile-cta"><a href="/portal/"><span class="menu-icon">&#x1F393;</span> אזור אישי</a></li>
+            <li class="mobile-cta"><a href="/webinar-general.html" style="background:linear-gradient(135deg,#7c3aed,#a855f7);"><span class="menu-icon">🎓</span> וובינר חינמי</a></li>
             <li class="mobile-cta mobile-cta-green"><a href="#register"><span class="menu-icon">&#x1F680;</span> הרשמה</a></li>
         </ul>
     </div>
     <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- SCROLL POPUP -->
+    <div id="scrollPopup" class="scroll-popup-overlay" onclick="if(event.target===this)closePopup()">
+        <div class="scroll-popup-box">
+            <button class="scroll-popup-close" onclick="closePopup()" aria-label="סגור">&times;</button>
+            <div class="scroll-popup-header">
+                <div class="scroll-popup-icon">🚀</div>
+                <h3>מחזור חדש נפתח!</h3>
+                <p>השאירו פרטים ונחזור אליכם עם כל הפרטים</p>
+            </div>
+            <div id="popupFormWrap">
+                <form onsubmit="return submitPopupForm(event)">
+                    <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
+                    <input type="hidden" name="subject" value="פנייה מפופאפ — AI Lab">
+                    <div class="form-group">
+                        <label for="popupName">שם מלא</label>
+                        <input type="text" id="popupName" name="name" placeholder="הכניסו את השם שלכם" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="popupPhone">מספר טלפון</label>
+                        <input type="tel" id="popupPhone" name="phone" placeholder="050-1234567" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="popupEmail">אימייל</label>
+                        <input type="email" id="popupEmail" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-primary" id="popupSubmitBtn">📩 שלח פנייה</button>
+                        <button type="button" class="btn-whatsapp" onclick="popupWhatsApp()">💬 שלח בוואטסאפ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- HERO -->
     <section class="hero">
@@ -3651,6 +3738,60 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeSyllabus();
         });
+
+        // ── SCROLL POPUP ──
+        (function() {
+            if (sessionStorage.getItem('popupShown')) return;
+            var triggered = false;
+            window.addEventListener('scroll', function() {
+                if (triggered) return;
+                var scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+                if (scrolled >= 0.5) {
+                    triggered = true;
+                    document.getElementById('scrollPopup').classList.add('popup-visible');
+                }
+            });
+        }());
+
+        function closePopup() {
+            document.getElementById('scrollPopup').classList.remove('popup-visible');
+            sessionStorage.setItem('popupShown', '1');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closePopup();
+        });
+
+        async function submitPopupForm(e) {
+            e.preventDefault();
+            var btn = document.getElementById('popupSubmitBtn');
+            btn.disabled = true;
+            btn.textContent = 'שולח...';
+            try {
+                var data = new FormData(e.target);
+                var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+                if (res.ok) {
+                    gtag('event', 'generate_lead', { event_category: 'popup_form', event_label: 'form_submit' });
+                    gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
+                    document.getElementById('popupFormWrap').innerHTML = '<div style="text-align:center;padding:2rem;font-size:1.1rem;color:var(--accent);font-weight:700;">הפנייה נשלחה! נחזור אליכם בהקדם 🙌</div>';
+                } else {
+                    btn.disabled = false; btn.textContent = '📩 שלח פנייה';
+                }
+            } catch(err) { btn.disabled = false; btn.textContent = '📩 שלח פנייה'; }
+            return false;
+        }
+
+        function popupWhatsApp() {
+            var name = document.getElementById('popupName').value.trim();
+            var phone = document.getElementById('popupPhone').value.trim();
+            var email = document.getElementById('popupEmail').value.trim();
+            if (!name || !phone || !email) { alert('נא למלא את כל השדות'); return; }
+            var msg = `היי, אני מתעניין/ת בקורס יזמות ו-AI\n\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email}`;
+            gtag('event', 'whatsapp_click', { event_category: 'popup', event_label: 'whatsapp_popup' });
+            gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
+            window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
+            closePopup();
+        }
 
         // Form submit via AJAX
         async function submitForm(e) {
