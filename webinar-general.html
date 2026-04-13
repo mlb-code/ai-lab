@@ -838,10 +838,12 @@
 
     // 2. EmailJS — מייל אישור לנרשם (ברקע, לא חוסם)
     emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
-      to_name:   document.getElementById('fn').value,
-      to_email:  document.getElementById('fe').value,
-      zoom_link: C.ZOOM,
-      gcal_link: gcal,
+      to_name:    document.getElementById('fn').value,
+      to_email:   document.getElementById('fe').value,
+      zoom_link:  C.ZOOM,
+      gcal_link:  gcal,
+      event_date: 'יום רביעי, 15 באפריל 2026',
+      event_time: '19:00',
     }).catch(err => console.error('EmailJS error:', err));
   });
 

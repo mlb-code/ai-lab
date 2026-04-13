@@ -1060,10 +1060,12 @@
     if (C.ZOOM) {
       const gcalLink = document.getElementById('gcalBtn') ? document.getElementById('gcalBtn').href : '';
       emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
-        to_name:   document.getElementById('fn').value,
-        to_email:  document.getElementById('fe').value,
-        zoom_link: C.ZOOM,
-        gcal_link: gcalLink,
+        to_name:    document.getElementById('fn').value,
+        to_email:   document.getElementById('fe').value,
+        zoom_link:  C.ZOOM,
+        gcal_link:  gcalLink,
+        event_date: 'יום ראשון, 19 באפריל 2026',
+        event_time: '12:00 CT / 13:00 ET / 10:00 PT (20:00 ישראל)',
       }).then(res => console.log('EmailJS sent:', res.status))
         .catch(err => console.error('EmailJS error:', err));
     }
