@@ -1012,8 +1012,8 @@
 
     const data = {
       access_key: C.W3F_KEY,
-      subject:    'הרשמה חדשה לוובינר ארה״ב — ' + document.getElementById('fn').value,
-      from_name:  'AI Lab Webinar US',
+      subject:    'הרשמה חדשה — ' + document.getElementById('fn').value,
+      from_name:  'AI Lab',
       name:       document.getElementById('fn').value,
       email:      document.getElementById('fe').value,
       phone:      document.getElementById('fp').value || '—',
@@ -1058,11 +1058,14 @@
 
     // 3. EmailJS — מייל אישור לנרשם (ברקע)
     if (C.ZOOM) {
+      const gcalLink = document.getElementById('gcalBtn') ? document.getElementById('gcalBtn').href : '';
       emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
         to_name:   document.getElementById('fn').value,
         to_email:  document.getElementById('fe').value,
         zoom_link: C.ZOOM,
-      }).catch(err => console.error('EmailJS error:', err));
+        gcal_link: gcalLink,
+      }).then(res => console.log('EmailJS sent:', res.status))
+        .catch(err => console.error('EmailJS error:', err));
     }
   });
 
