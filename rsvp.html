@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אישור הגעה — AI Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Heebo',sans-serif;
+    background:#0f0f1e;
+    color:#eeeef5;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .card {
+    background:#181830;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    max-width:480px;
+    width:100%;
+    padding:40px 32px;
+    text-align:center;
+  }
+  .logo { font-size:24px; font-weight:900; color:#00D4AA; margin-bottom:24px; }
+  .emoji { font-size:56px; margin-bottom:16px; }
+  h1 { font-size:26px; font-weight:800; margin-bottom:8px; line-height:1.3; }
+  .sub { color:#9090b0; font-size:16px; margin-bottom:24px; }
+  .yes { color:#00D4AA; }
+  .maybe { color:#F5A623; }
+  .no { color:#9090b0; }
+  .btn {
+    display:inline-block;
+    background:#6C3CE1;
+    color:#fff;
+    font-size:17px;
+    font-weight:800;
+    padding:14px 36px;
+    border-radius:50px;
+    text-decoration:none;
+    margin-top:16px;
+    font-family:'Heebo',sans-serif;
+  }
+  .btn-share {
+    background:#25D366;
+    margin-top:12px;
+  }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">AI Lab</div>
+
+  <!-- Loading state -->
+  <div id="loading">
+    <div class="emoji">⏳</div>
+    <h1>שולח את התשובה...</h1>
+  </div>
+
+  <!-- Yes response -->
+  <div id="res-yes" class="hidden">
+    <div class="emoji">🎉</div>
+    <h1 class="yes">מעולה! נתראה ביום רביעי</h1>
+    <p class="sub">15 באפריל, 19:00 בזום</p>
+    <a href="https://us06web.zoom.us/j/88285914918?pwd=YCKLQhCqpHOwsmppGiMvl21BN7Xjdk.1" class="btn">🚀 לינק לזום</a>
+    <br>
+    <a href="https://wa.me/?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%94%D7%95%D7%9C%D7%9A%2F%D7%AA%20%D7%9C%D7%95%D7%95%D7%91%D7%99%D7%A0%D7%A8%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%20%D7%A2%D7%9C%20AI%20%D7%95%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D%20%F0%9F%9A%80%0A%D7%99%D7%95%D7%9D%20%D7%A8%D7%91%D7%99%D7%A2%D7%99%2015.4%20%D7%91%D7%A9%D7%A2%D7%94%2019%3A00%0A%D7%91%D7%95%D7%90%D7%95%20%D7%AA%D7%99%D7%A8%D7%A9%D7%9E%D7%95%20%D7%92%D7%9D!%0A%F0%9F%91%89%20https%3A%2F%2Fai-lab.co.il%2Fwebinar-general.html" class="btn btn-share">📲 שלחו הזמנה לחבר</a>
+  </div>
+
+  <!-- Maybe response -->
+  <div id="res-maybe" class="hidden">
+    <div class="emoji">🤔</div>
+    <h1 class="maybe">מקווים שתצליחו להגיע!</h1>
+    <p class="sub">שמרו את הלינק ליומן למקרה שכן 👇</p>
+    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%D7%95%D7%95%D7%91%D7%99%D7%A0%D7%A8%20AI%20%D7%95%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D%20%E2%80%94%20AI%20Lab&dates=20260415T160000Z/20260415T170000Z&details=%D7%9C%D7%99%D7%A0%D7%A7%20%D7%9C%D7%9B%D7%A0%D7%99%D7%A1%D7%94%3A%0Ahttps%3A%2F%2Fus06web.zoom.us%2Fj%2F88285914918%3Fpwd%3DYCKLQhCqpHOwsmppGiMvl21BN7Xjdk.1&location=Zoom%20Online" class="btn" style="background:#F5A623;">📅 הוסיפו ליומן</a>
+  </div>
+
+  <!-- No response -->
+  <div id="res-no" class="hidden">
+    <div class="emoji">😔</div>
+    <h1 class="no">חבל, נתראה בפעם הבאה!</h1>
+    <p class="sub">אולי מכירים מישהו שזה יתאים לו?</p>
+    <a href="https://wa.me/?text=%D7%94%D7%99%D7%99%2C%20%D7%99%D7%A9%20%D7%95%D7%95%D7%91%D7%99%D7%A0%D7%A8%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%20%D7%A2%D7%9C%20AI%20%D7%95%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D%20%F0%9F%9A%80%0A%D7%99%D7%95%D7%9D%20%D7%A8%D7%91%D7%99%D7%A2%D7%99%2015.4%20%D7%91%D7%A9%D7%A2%D7%94%2019%3A00%0A%F0%9F%91%89%20https%3A%2F%2Fai-lab.co.il%2Fwebinar-general.html" class="btn btn-share">📲 שלחו לחבר במקום</a>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const rsvp = params.get('r');     // yes / maybe / no
+  const name = params.get('name') || '';
+  const email = params.get('email') || '';
+
+  // Send RSVP to Web3Forms (notification to Meir)
+  if (rsvp && email) {
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: 'ac1edd62-607b-464c-a677-0f62676a9b5d',
+        subject: 'RSVP וובינר — ' + name + ' — ' + (rsvp === 'yes' ? 'מגיע!' : rsvp === 'maybe' ? 'אולי' : 'לא מגיע'),
+        from_name: 'AI Lab RSVP',
+        name: name,
+        email: email,
+        rsvp: rsvp === 'yes' ? 'מגיע' : rsvp === 'maybe' ? 'אולי' : 'לא מגיע',
+      }),
+    }).then(() => {
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('res-' + rsvp).classList.remove('hidden');
+    }).catch(() => {
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('res-' + rsvp).classList.remove('hidden');
+    });
+  } else {
+    // No params — redirect to webinar page
+    document.getElementById('loading').innerHTML = '<h1>מעביר אתכם לדף הוובינר...</h1>';
+    setTimeout(() => window.location.href = 'webinar-general.html', 2000);
+  }
+</script>
+
+</body>
+</html>
