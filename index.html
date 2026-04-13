@@ -3609,13 +3609,19 @@
 
     <script>
         // Force scroll to top then reveal page (hidden via opacity:0 in <head>)
-        // Browser restores scroll AFTER load on mobile, so we must wait
-        function revealPage() {
+        // Mobile browsers restore scroll position AFTER load, need multiple attempts
+        function forceScrollTop() {
             window.scrollTo(0, 0);
-            requestAnimationFrame(function() {
-                window.scrollTo(0, 0);
-                document.documentElement.style.opacity = '1';
-            });
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }
+        function revealPage() {
+            forceScrollTop();
+            document.documentElement.style.opacity = '1';
+            // Extra scroll resets to beat mobile browser scroll restoration
+            setTimeout(forceScrollTop, 100);
+            setTimeout(forceScrollTop, 300);
+            setTimeout(forceScrollTop, 500);
         }
         if (document.readyState === 'complete') {
             revealPage();
