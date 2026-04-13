@@ -619,7 +619,7 @@
     וובינר מיוחד להורים ישראלים בארה״ב — נסביר איך ילדים ובני נוער לומדים יזמות ובינה מלאכותית בקורס אונליין בעברית, בימי ראשון בשעות נוחות
   </p>
 
-  <!-- TODO: עדכנו תאריך ושעה כשייקבעו -->
+  <!-- תאריך: יום ראשון 19 באפריל 2026, 20:00 ישראל -->
   <div class="date-row">
     <span class="dot">●</span>
     <span id="dateDisplay">התאריך יפורסם בקרוב</span>
@@ -806,7 +806,7 @@
 
     <div class="faq-item">
       <div class="faq-q">באילו שעות השיעורים?</div>
-      <div class="faq-a">השיעורים מתקיימים בימי ראשון בשעות שמתאימות גם ל-East Coast וגם ל-West Coast. השעה המדויקת תפורסם בקרוב.</div>
+      <div class="faq-a">הוובינר מתקיים ביום ראשון, 19 באפריל 2026 בשעה 12:00 CT / 13:00 ET / 10:00 PT (20:00 שעון ישראל).</div>
     </div>
 
     <div class="faq-item">
@@ -946,18 +946,17 @@
     EJS_SERVICE: 'service_0n55sp2',
     EJS_TPL:     'template_10ybisr',
 
-    // TODO: עדכנו לינק זום כשייווצר
-    ZOOM:     '',
+    // לינק זום
+    ZOOM:     'https://us06web.zoom.us/j/83258496795?pwd=rmCmilAbBLaiePTvPdIy1bDeVbW5GF.1',
 
-    // TODO: עדכנו תאריך ושעה (UTC)
-    // דוגמה: יום ראשון 27 באפריל 2026, 17:00 UTC = 12:00 EST / 10:00 PST
-    EVENT_DATE: null, // new Date(Date.UTC(2026, 3, 27, 17, 0))
-    UTC_H:    17,   // 12:00 EST = 17:00 UTC
+    // יום ראשון 19 באפריל 2026, 20:00 ישראל = 17:00 UTC
+    EVENT_DATE: new Date(Date.UTC(2026, 3, 19, 17, 0)),
+    UTC_H:    17,   // 20:00 Israel = 17:00 UTC = 13:00 ET / 10:00 PT
     UTC_M:    0,
     DUR_H:    1,
 
-    // תאריך ויום בעברית (לעדכן ידנית)
-    DATE_HE:  '', // 'יום ראשון, 27 באפריל 2026 | 12:00 ET / 10:00 PT'
+    // תאריך ויום בעברית
+    DATE_HE:  'יום ראשון, 19 באפריל 2026 | 12:00 CT / 13:00 ET / 10:00 PT'
   };
 
   emailjs.init({ publicKey: C.EJS_KEY });
