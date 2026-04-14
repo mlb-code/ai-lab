@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הרשמה לקורס — AI Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #0f0f1e;
+    color: #eeeef5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .form-container {
+    width: 100%;
+    max-width: 520px;
+    background: #181830;
+    border-radius: 20px;
+    padding: 40px 32px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .logo { text-align:center; margin-bottom:8px; font-size:1.4rem; font-weight:900; direction:ltr; }
+  .logo em { font-style:normal; color:#00D4AA; }
+
+  h1 {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #6C3CE1, #00D4AA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #9090b0;
+    font-size: 0.9rem;
+    margin-bottom: 28px;
+  }
+
+  .field { margin-bottom: 20px; }
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #cccce0;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="number"] {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    font-family: 'Heebo', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input:focus {
+    border-color: #6C3CE1;
+    box-shadow: 0 0 0 3px rgba(108,60,225,0.2);
+  }
+
+  .chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip-hint {
+    font-size: 0.75rem;
+    color: #00D4AA;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .chip {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: #cccce0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .chip:hover { border-color: #6C3CE1; background: rgba(108,60,225,0.1); }
+
+  .chip.selected {
+    background: #6C3CE1;
+    border-color: #6C3CE1;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(108,60,225,0.3);
+  }
+
+  .btn-submit {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #6C3CE1, #8B5CF6);
+    color: #fff;
+    font-family: 'Heebo', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 28px;
+  }
+
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(108,60,225,0.4); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .success-msg .icon { font-size: 3rem; margin-bottom: 12px; }
+  .success-msg h2 { font-size: 1.5rem; color: #00D4AA; margin-bottom: 8px; }
+  .success-msg p { color: #9090b0; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+  <div class="logo">AI <em>Lab</em></div>
+  <h1>הרשמה לקורס</h1>
+  <p class="subtitle">מלאו את הפרטים ונחזור אליכם בהקדם</p>
+
+  <form id="courseForm">
+    <!-- Hidden Web3Forms key -->
+    <input type="hidden" name="access_key" value="ac1edd62-607b-464c-a677-0f62676a9b5d">
+    <input type="hidden" name="subject" value="הרשמה חדשה מהוובינר — AI Lab">
+    <input type="hidden" name="from_name" value="AI Lab Webinar Form">
+
+    <div class="field">
+      <label>שם ההורה</label>
+      <input type="text" name="parent_name" required placeholder="שם מלא">
+    </div>
+
+    <div class="field">
+      <label>מספר טלפון</label>
+      <input type="tel" name="phone" required placeholder="050-0000000" dir="ltr" style="text-align:right;">
+    </div>
+
+    <div class="field">
+      <label>שם התלמיד/ה</label>
+      <input type="text" name="student_name" required placeholder="שם הילד/ה">
+    </div>
+
+    <div class="field">
+      <label>גיל התלמיד/ה</label>
+      <input type="number" name="student_age" required placeholder="לדוגמה: 12" min="6" max="18">
+    </div>
+
+    <div class="field">
+      <label>יום מועדף ללימודים</label>
+      <div class="chip-hint">✨ אפשר לבחור כמה ימים!</div>
+      <div class="chip-group" id="days">
+        <span class="chip" data-value="ראשון">ראשון</span>
+        <span class="chip" data-value="שני">שני</span>
+        <span class="chip" data-value="שלישי">שלישי</span>
+        <span class="chip" data-value="רביעי">רביעי</span>
+        <span class="chip" data-value="חמישי">חמישי</span>
+      </div>
+      <input type="hidden" name="preferred_days" id="daysInput">
+    </div>
+
+    <div class="field">
+      <label>שעה מועדפת</label>
+      <div class="chip-hint">✨ אפשר לבחור כמה שעות!</div>
+      <div class="chip-group" id="hours">
+        <span class="chip" data-value="16:00">16:00</span>
+        <span class="chip" data-value="17:00">17:00</span>
+        <span class="chip" data-value="18:00">18:00</span>
+        <span class="chip" data-value="19:00">19:00</span>
+      </div>
+      <input type="hidden" name="preferred_hours" id="hoursInput">
+    </div>
+
+    <button type="submit" class="btn-submit">שליחה 🚀</button>
+  </form>
+
+  <div class="success-msg" id="successMsg">
+    <div class="icon">✅</div>
+    <h2>תודה רבה!</h2>
+    <p>קיבלנו את הפרטים ונחזור אליכם בהקדם</p>
+  </div>
+</div>
+
+<script>
+  // Chip toggle
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('selected');
+      updateHiddenInputs();
+    });
+  });
+
+  function updateHiddenInputs() {
+    const days = [...document.querySelectorAll('#days .chip.selected')].map(c => c.dataset.value).join(', ');
+    const hours = [...document.querySelectorAll('#hours .chip.selected')].map(c => c.dataset.value).join(', ');
+    document.getElementById('daysInput').value = days;
+    document.getElementById('hoursInput').value = hours;
+  }
+
+  // Form submit
+  document.getElementById('courseForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'שולח...';
+
+    updateHiddenInputs();
+
+    const formData = new FormData(this);
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'שליחה 🚀';
+        alert('שגיאה בשליחה, נסו שוב');
+      }
+    } catch(err) {
+      btn.disabled = false;
+      btn.textContent = 'שליחה 🚀';
+      alert('שגיאה בשליחה, נסו שוב');
+    }
+  });
+</script>
+
+</body>
+</html>
