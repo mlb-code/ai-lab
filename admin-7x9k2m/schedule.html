@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>לו״ז שיעורים — מאיר לביא</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #0f0f1a;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 30px;
+  }
+
+  /* Lock Screen */
+  .lock-screen {
+    position: fixed; top:0; left:0; right:0; bottom:0;
+    background: #0f0f1a;
+    z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+  }
+  .lock-screen.hidden { display: none; }
+  .lock-screen h2 { color: #E2B93B; font-size: 1.5rem; }
+  .lock-screen input {
+    padding: 14px 20px; border-radius: 12px; border: 1px solid #333;
+    background: #1a1a2e; color: #fff; font-size: 1.1rem;
+    font-family: 'Heebo', sans-serif; text-align: center; width: 240px;
+    outline: none;
+  }
+  .lock-screen input:focus { border-color: #E2B93B; }
+  .lock-screen button {
+    padding: 12px 36px; border-radius: 50px; border: none;
+    background: linear-gradient(135deg, #E2B93B, #f5d76e);
+    color: #0f0f1a; font-weight: 800; font-size: 1rem;
+    cursor: pointer; font-family: 'Heebo', sans-serif;
+  }
+  .lock-screen .error { color: #e74c3c; font-size: 0.85rem; display: none; }
+  .content-hidden { display: none; }
+
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .header h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #E2B93B, #f5d76e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    color: #888;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  .header .hours-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 20px;
+    border-radius: 20px;
+    background: rgba(226, 185, 59, 0.1);
+    border: 1px solid rgba(226, 185, 59, 0.3);
+    color: #E2B93B;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: 100px repeat(5, 1fr);
+    gap: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .corner-cell {
+    background: #1a1a2e;
+    border-bottom: 2px solid #E2B93B;
+    border-left: 1px solid #2a2a3e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 8px;
+  }
+
+  .day-header {
+    background: #1a1a2e;
+    border-bottom: 2px solid #E2B93B;
+    border-left: 1px solid #2a2a3e;
+    padding: 16px 12px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #E2B93B;
+  }
+
+  .time-cell {
+    background: #151525;
+    border-bottom: 1px solid #2a2a3e;
+    border-left: 1px solid #2a2a3e;
+    padding: 6px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #aaa;
+    min-height: 120px;
+  }
+
+  .time-cell .time-hour { font-size: 1.2rem; }
+
+  .time-cell .age-group {
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: #777;
+    text-align: center;
+    line-height: 1.3;
+    padding: 2px 4px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+  }
+
+  .slot {
+    background: #151525;
+    border-bottom: 1px solid #2a2a3e;
+    border-left: 1px solid #2a2a3e;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 3px;
+    transition: background 0.2s;
+  }
+
+  .slot:hover { background: #1c1c30; }
+
+  .card {
+    width: 100%;
+    border-radius: 6px;
+    padding: 4px 6px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .card .student-name { font-size: 0.8rem; margin: 0; }
+  .card .course-tag { margin: 0; font-size: 0.55rem; white-space: nowrap; }
+
+  .empty-seat {
+    border: 1px dashed #2a2a3e;
+    border-radius: 6px;
+    padding: 3px;
+    text-align: center;
+    color: #2a2a3e;
+    font-size: 0.55rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .card.basic {
+    background: linear-gradient(135deg, #1e3a5f, #1a2d4a);
+    border: 1px solid #2a5a8a;
+    box-shadow: 0 4px 15px rgba(30, 58, 95, 0.3);
+  }
+
+  .card.advanced {
+    background: linear-gradient(135deg, #4a1a5e, #3a1548);
+    border: 1px solid #6a2a8a;
+    box-shadow: 0 4px 15px rgba(74, 26, 94, 0.3);
+  }
+
+  .card.combined {
+    background: linear-gradient(135deg, #1a4a3a, #153a2e);
+    border: 1px solid #2a6a5a;
+    box-shadow: 0 4px 15px rgba(26, 74, 58, 0.3);
+  }
+
+  .card .student-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 3px;
+    color: #fff;
+  }
+
+  .course-tag {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 8px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .course-tag.tag-basic {
+    background: rgba(106, 180, 245, 0.2);
+    color: #6ab4f5;
+    border: 1px solid rgba(106, 180, 245, 0.3);
+  }
+
+  .course-tag.tag-advanced {
+    background: rgba(199, 125, 255, 0.2);
+    color: #c77dff;
+    border: 1px solid rgba(199, 125, 255, 0.3);
+  }
+
+  .course-tag.tag-combined {
+    background: rgba(111, 207, 151, 0.2);
+    color: #6fcf97;
+    border: 1px solid rgba(111, 207, 151, 0.3);
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  .paid-badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 600;
+  }
+
+  .paid-badge.yes {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+  }
+
+  .paid-badge.no {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+  }
+
+  .connect-badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    background: rgba(255, 165, 0, 0.15);
+    color: #ffa500;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+  }
+
+  .empty-slot {
+    color: #333;
+    font-size: 0.8rem;
+  }
+
+  /* Pending section */
+  .pending-section {
+    max-width: 1400px;
+    margin: 30px auto 0;
+    background: #1a1a2e;
+    border-radius: 12px;
+    padding: 20px 24px;
+    border: 1px dashed #444;
+  }
+
+  .pending-section h3 {
+    color: #E2B93B;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .pending-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pending-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #4a1a5e, #3a1548);
+    border: 1px solid #6a2a8a;
+    border-radius: 10px;
+    padding: 12px 18px;
+    min-width: 150px;
+  }
+
+  .pending-card .student-name { font-weight: 700; color: #fff; font-size: 0.95rem; }
+  .pending-card .course-tag { margin-bottom: 0; }
+  .pending-card .connect-badge { margin-top: 2px; }
+  .pending-card .note { color: #888; font-size: 0.7rem; }
+
+  /* Legend */
+  .legend {
+    max-width: 1400px;
+    margin: 24px auto 0;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #999;
+  }
+
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+  }
+
+  .legend-dot.basic { background: linear-gradient(135deg, #1e3a5f, #2a5a8a); }
+  .legend-dot.advanced { background: linear-gradient(135deg, #4a1a5e, #6a2a8a); }
+  .legend-dot.combined { background: linear-gradient(135deg, #1a4a3a, #2a6a5a); }
+
+  /* Stats */
+  .stats {
+    max-width: 1400px;
+    margin: 24px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .stat-box {
+    background: #1a1a2e;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid #2a2a3e;
+  }
+
+  .stat-box .stat-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #E2B93B;
+  }
+
+  .stat-box .stat-label {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  .price-badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: rgba(226, 185, 59, 0.15);
+    color: #E2B93B;
+    border: 1px solid rgba(226, 185, 59, 0.3);
+  }
+
+  /* Financial Summary */
+  .finance-section {
+    max-width: 1400px;
+    margin: 30px auto 0;
+    background: #1a1a2e;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #2a2a3e;
+  }
+
+  .finance-section h3 {
+    color: #E2B93B;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .finance-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .finance-table th {
+    text-align: right;
+    padding: 10px 12px;
+    border-bottom: 2px solid #E2B93B;
+    color: #E2B93B;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .finance-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #2a2a3e;
+    font-size: 0.9rem;
+  }
+
+  .finance-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .finance-table .status-paid { color: #2ecc71; font-weight: 600; }
+  .finance-table .status-unpaid { color: #e74c3c; font-weight: 600; }
+  .finance-table .amount { font-weight: 700; color: #E2B93B; }
+
+  .finance-totals {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .finance-total-box {
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .finance-total-box.collected {
+    background: rgba(46, 204, 113, 0.1);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+  }
+
+  .finance-total-box.pending {
+    background: rgba(231, 76, 60, 0.1);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+  }
+
+  .finance-total-box.total {
+    background: rgba(226, 185, 59, 0.1);
+    border: 1px solid rgba(226, 185, 59, 0.3);
+  }
+
+  .finance-total-box .total-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+  }
+
+  .finance-total-box.collected .total-num { color: #2ecc71; }
+  .finance-total-box.pending .total-num { color: #e74c3c; }
+  .finance-total-box.total .total-num { color: #E2B93B; }
+
+  .finance-total-box .total-label {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  .update-note {
+    text-align: center;
+    margin-top: 24px;
+    color: #555;
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- Lock Screen -->
+<div class="lock-screen" id="lockScreen">
+  <h2>🔒 אזור מוגן</h2>
+  <input type="password" id="passInput" placeholder="הזן סיסמה" autofocus>
+  <button onclick="checkPass()">כניסה</button>
+  <div class="error" id="passError">סיסמה שגויה</div>
+</div>
+
+<div id="mainContent" class="content-hidden">
+<div class="header">
+  <h1>לו״ז שיעורים</h1>
+  <p>קורסי פייתון — מאיר לביא</p>
+  <div class="hours-badge">שעות פעילות: 16:00 – 19:00</div>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stat-box">
+    <div class="stat-num">15</div>
+    <div class="stat-label">תלמידים</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">5</div>
+    <div class="stat-label">ימי לימוד</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">4</div>
+    <div class="stat-label">שולם ✅</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">3</div>
+    <div class="stat-label">ממתינים לתיאום</div>
+  </div>
+</div>
+
+<!-- Schedule Grid -->
+<div style="max-width:1400px; margin:30px auto 0; overflow-x:auto;">
+<div class="schedule-grid">
+  <!-- Header Row -->
+  <div class="corner-cell">⏰</div>
+  <div class="day-header">ראשון</div>
+  <div class="day-header">שני</div>
+  <div class="day-header">שלישי</div>
+  <div class="day-header">רביעי</div>
+  <div class="day-header">חמישי</div>
+
+  <!-- 16:00 Row -->
+  <div class="time-cell">
+    <span class="time-hour">16:00</span>
+    <span class="age-group">ילדים<br>גילאי 10-12</span>
+  </div>
+  <!-- ראשון --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- שני -->
+  <div class="slot">
+    <div class="card basic"><div class="student-name">שחר</div><span class="course-tag tag-basic">בסיסי</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+  </div>
+  <!-- שלישי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- רביעי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- חמישי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+
+  <!-- 17:00 Row -->
+  <div class="time-cell">
+    <span class="time-hour">17:00</span>
+    <span class="age-group">ילדים<br>גילאי 13-14</span>
+  </div>
+  <!-- ראשון -->
+  <div class="slot">
+    <div class="card basic"><div class="student-name">ליאור</div><span class="course-tag tag-basic">בסיסי</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+  </div>
+  <!-- שני -->
+  <div class="slot">
+    <div class="card basic"><div class="student-name">יהונתן תשבי</div><span class="course-tag tag-basic">בסיסי</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+  </div>
+  <!-- שלישי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- רביעי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- חמישי -->
+  <div class="slot">
+    <div class="card advanced"><div class="student-name">גבריאל</div><span class="course-tag tag-advanced">מתקדם</span></div>
+    <div class="card advanced"><div class="student-name">אבינועם</div><span class="course-tag tag-advanced">מתקדם</span></div>
+    <div class="card advanced" style="opacity:0.5;border-style:dashed;"><div class="student-name">דניאל קהן</div><span class="course-tag tag-advanced" style="opacity:0.7;">טרם החליט</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+  </div>
+
+  <!-- 18:00 Row -->
+  <div class="time-cell">
+    <span class="time-hour">18:00</span>
+    <span class="age-group">ילדים<br>גילאי 15-17</span>
+  </div>
+  <!-- ראשון --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- שני --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- שלישי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- רביעי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- חמישי -->
+  <div class="slot">
+    <div class="card basic"><div class="student-name">דניאל תשבי</div><span class="course-tag tag-basic">בסיסי</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+  </div>
+
+  <!-- 19:00 Row -->
+  <div class="time-cell">
+    <span class="time-hour">19:00</span>
+    <span class="age-group">בוגרים<br>פרטי / משולב</span>
+  </div>
+  <!-- ראשון -->
+  <div class="slot">
+    <div class="card combined"><div class="student-name">אהרון</div><span class="course-tag tag-combined">משולב</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+  </div>
+  <!-- שני --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- שלישי -->
+  <div class="slot">
+    <div class="card advanced"><div class="student-name">ארבל</div><span class="course-tag tag-advanced">מתקדם</span></div>
+    <div class="card advanced"><div class="student-name">רואי</div><span class="course-tag tag-advanced">מתקדם</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+  </div>
+  <!-- רביעי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <!-- חמישי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+</div>
+</div>
+
+<!-- Pending -->
+<div class="pending-section">
+  <h3>⏳ ממתינים לתיאום (3 תלמידים)</h3>
+  <div class="pending-grid">
+    <div class="pending-card">
+      <span class="student-name">גבריאל ואן גלדר</span>
+      <span class="course-tag tag-advanced">מתקדם</span>
+      <span class="price-badge">1,100 ₪</span>
+      <span class="paid-badge no">לא שולם</span>
+      <span class="connect-badge">לא נשלח חיבור</span>
+    </div>
+    <div class="pending-card">
+      <span class="student-name">שיר + נועם</span>
+      <span class="course-tag tag-advanced">מתקדם</span>
+      <span class="note">לומדות ביחד</span>
+      <span class="price-badge">1,100 ₪ x2</span>
+      <span class="paid-badge no">לא שולם</span>
+      <span class="connect-badge">לא נשלח חיבור</span>
+    </div>
+    <div class="pending-card">
+      <span class="student-name">תאיי</span>
+      <span class="course-tag tag-advanced">מתקדם</span>
+      <span class="price-badge">1,100 ₪</span>
+      <span class="paid-badge no">לא שולם</span>
+      <span class="connect-badge">לא נשלח חיבור</span>
+    </div>
+  </div>
+</div>
+
+<!-- Not Suitable -->
+<div class="pending-section" style="border-color:#555;margin-top:16px;">
+  <h3 style="color:#888;">🚫 לא מתאימים כרגע</h3>
+  <div class="pending-grid">
+    <div class="pending-card" style="background:linear-gradient(135deg,#2a2a3e,#1e1e2e);border-color:#444;opacity:0.7;">
+      <span class="student-name">איתי קרמונה</span>
+      <span class="course-tag tag-advanced">מתקדם</span>
+    </div>
+    <div class="pending-card" style="background:linear-gradient(135deg,#2a2a3e,#1e1e2e);border-color:#444;opacity:0.7;">
+      <span class="student-name">נדב דוד</span>
+      <span class="course-tag tag-advanced">מתקדם</span>
+    </div>
+  </div>
+</div>
+
+<!-- Financial Summary -->
+<div class="finance-section">
+  <h3>מעקב כספי</h3>
+  <table class="finance-table">
+    <thead>
+      <tr>
+        <th>תלמיד</th>
+        <th>קורס</th>
+        <th>סכום</th>
+        <th>סטטוס</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>שחר</td>
+        <td><span class="course-tag tag-basic">בסיסי</span></td>
+        <td class="amount">890 ₪</td>
+        <td class="status-paid">שולם ✅</td>
+      </tr>
+      <tr>
+        <td>יהונתן תשבי</td>
+        <td><span class="course-tag tag-basic">בסיסי</span></td>
+        <td class="amount">890 ₪</td>
+        <td class="status-paid">שולם ✅</td>
+      </tr>
+      <tr>
+        <td>דניאל תשבי</td>
+        <td><span class="course-tag tag-basic">בסיסי</span></td>
+        <td class="amount">890 ₪</td>
+        <td class="status-paid">שולם ✅</td>
+      </tr>
+      <tr>
+        <td>גבריאל (עם אבינועם)</td>
+        <td><span class="course-tag tag-advanced">מתקדם</span></td>
+        <td class="amount">1,100 ₪</td>
+        <td class="status-paid">שולם ✅</td>
+      </tr>
+      <tr>
+        <td>ליאור</td>
+        <td><span class="course-tag tag-basic">בסיסי</span></td>
+        <td class="amount">890 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+      <tr>
+        <td>אבינועם (עם גבריאל)</td>
+        <td><span class="course-tag tag-advanced">מתקדם</span></td>
+        <td class="amount">1,100 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+      <tr>
+        <td>אהרון</td>
+        <td><span class="course-tag tag-combined">משולב</span></td>
+        <td class="amount">2,000 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+      <tr>
+        <td>גבריאל ואן גלדר</td>
+        <td><span class="course-tag tag-advanced">מתקדם</span></td>
+        <td class="amount">1,100 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+      <tr>
+        <td>שיר</td>
+        <td><span class="course-tag tag-advanced">מתקדם</span></td>
+        <td class="amount">1,100 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+      <tr>
+        <td>נועם</td>
+        <td><span class="course-tag tag-advanced">מתקדם</span></td>
+        <td class="amount">1,100 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+      <tr>
+        <td>תאיי</td>
+        <td><span class="course-tag tag-advanced">מתקדם</span></td>
+        <td class="amount">1,100 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+      <tr>
+        <td>ארבל</td>
+        <td><span class="course-tag tag-advanced">מתקדם</span></td>
+        <td class="amount">1,100 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+      <tr>
+        <td>רואי</td>
+        <td><span class="course-tag tag-advanced">מתקדם</span></td>
+        <td class="amount">1,100 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+      <tr>
+        <td>דניאל קהן</td>
+        <td><span class="course-tag tag-advanced">מתקדם</span></td>
+        <td class="amount">1,100 ₪</td>
+        <td class="status-unpaid">לא שולם ❌</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="finance-totals">
+    <div class="finance-total-box collected">
+      <div class="total-num">3,770 ₪</div>
+      <div class="total-label">נגבה (4 תלמידים)</div>
+    </div>
+    <div class="finance-total-box pending">
+      <div class="total-num">11,690 ₪</div>
+      <div class="total-label">ממתין לגבייה (10 תלמידים)</div>
+    </div>
+    <div class="finance-total-box total">
+      <div class="total-num">15,460 ₪</div>
+      <div class="total-label">סה״כ צפוי</div>
+    </div>
+  </div>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot basic"></div>
+    <span class="course-tag tag-basic">בסיסי</span>
+    <span>קורס בסיסי</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot advanced"></div>
+    <span class="course-tag tag-advanced">מתקדם</span>
+    <span>קורס מתקדם</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot combined"></div>
+    <span class="course-tag tag-combined">משולב</span>
+    <span>קורס משולב</span>
+  </div>
+</div>
+
+<div class="update-note">עדכון אחרון: 14 באפריל 2026</div>
+
+</div><!-- end mainContent -->
+
+<script>
+  // Check if already authenticated
+  if (sessionStorage.getItem('schedule_auth') === 'ok') {
+    document.getElementById('lockScreen').classList.add('hidden');
+    document.getElementById('mainContent').classList.remove('content-hidden');
+  }
+
+  document.getElementById('passInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPass();
+  });
+
+  function checkPass() {
+    var input = document.getElementById('passInput').value;
+    // Hash check — not plain text in source
+    if (hashCode(input) === 1959086927) {
+      sessionStorage.setItem('schedule_auth', 'ok');
+      document.getElementById('lockScreen').classList.add('hidden');
+      document.getElementById('mainContent').classList.remove('content-hidden');
+    } else {
+      document.getElementById('passError').style.display = 'block';
+      document.getElementById('passInput').value = '';
+    }
+  }
+
+  function hashCode(s) {
+    var h = 0;
+    for (var i = 0; i < s.length; i++) {
+      h = ((h << 5) - h) + s.charCodeAt(i);
+      h |= 0;
+    }
+    return h;
+  }
+</script>
+
+</body>
+</html>

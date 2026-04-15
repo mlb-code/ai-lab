@@ -1,0 +1,126 @@
+{
+  "last_updated": "2026-04-13",
+  "students": [
+    {
+      "name": "שחר",
+      "course": "בסיסי",
+      "day": "שני",
+      "time": "16:00",
+      "paid": true,
+      "connected": false
+    },
+    {
+      "name": "יהונתן תשבי",
+      "course": "בסיסי",
+      "day": "שני",
+      "time": "17:00",
+      "paid": true,
+      "connected": false
+    },
+    {
+      "name": "ליאור",
+      "course": "בסיסי",
+      "day": "ראשון",
+      "time": "17:00",
+      "paid": false,
+      "connected": false
+    },
+    {
+      "name": "אהרון",
+      "course": "משולב (בסיסי + מתקדם)",
+      "day": "ראשון",
+      "time": "19:00",
+      "duration": "1.5h",
+      "paid": false,
+      "connected": false
+    },
+    {
+      "name": "דניאל תשבי",
+      "course": "בסיסי",
+      "day": "חמישי",
+      "time": "18:00",
+      "paid": true,
+      "connected": false
+    },
+    {
+      "name": "גבריאל + אבינועם",
+      "course": "מתקדם",
+      "day": "חמישי",
+      "time": "17:00",
+      "paid": false,
+      "connected": false,
+      "note": "לומדים ביחד"
+    },
+    {
+      "name": "גבריאל ואן גלדר",
+      "course": "מתקדם",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "ממתין לתיאום"
+    },
+    {
+      "name": "שיר + נועם",
+      "course": "מתקדם",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "ממתין לתיאום",
+      "note": "לומדים ביחד"
+    },
+    {
+      "name": "תאיי",
+      "course": "מתקדם",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "ממתין לתיאום"
+    },
+    {
+      "name": "ארבל",
+      "course": "מתקדם",
+      "day": "שלישי",
+      "time": "19:00",
+      "paid": false,
+      "connected": false
+    },
+    {
+      "name": "רואי",
+      "course": "מתקדם",
+      "day": "שלישי",
+      "time": "19:00",
+      "paid": false,
+      "connected": false
+    },
+    {
+      "name": "דניאל קהן",
+      "course": "מתקדם",
+      "day": "חמישי",
+      "time": "17:00",
+      "paid": false,
+      "connected": false,
+      "status": "טרם החליט להירשם"
+    },
+    {
+      "name": "איתי קרמונה",
+      "course": "מתקדם",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "לא מתאים כרגע"
+    },
+    {
+      "name": "נדב דוד",
+      "course": "מתקדם",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "לא מתאים כרגע"
+    }
+  ]
+}
