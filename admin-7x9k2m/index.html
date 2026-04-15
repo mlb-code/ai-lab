@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — AI Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #0f0f1a;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .panel {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+  }
+  .logo { font-size:1.6rem; font-weight:900; direction:ltr; margin-bottom:8px; }
+  .logo em { font-style:normal; color:#00D4AA; }
+  h1 { color:#E2B93B; font-size:1.3rem; margin-bottom:32px; }
+  .grid { display:flex; flex-direction:column; gap:12px; }
+  .card-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: #1a1a2e;
+    border: 1px solid #2a2a3e;
+    border-radius: 14px;
+    text-decoration: none;
+    color: #e0e0e0;
+    transition: all 0.2s;
+  }
+  .card-link:hover {
+    border-color: #E2B93B;
+    background: #1e1e35;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .card-link .icon { font-size:2rem; }
+  .card-link .info { text-align:right; }
+  .card-link .info .title { font-weight:700; font-size:1.05rem; color:#fff; }
+  .card-link .info .desc { font-size:0.8rem; color:#888; margin-top:2px; }
+</style>
+</head>
+<body>
+<div class="panel">
+  <div class="logo">AI <em>Lab</em></div>
+  <h1>🔒 אזור אדמין</h1>
+  <div class="grid">
+    <a href="schedule.html" class="card-link">
+      <span class="icon">📅</span>
+      <div class="info">
+        <div class="title">לו״ז שיעורים ושיבוצים</div>
+        <div class="desc">ניהול תלמידים, ימים, שעות ומעקב כספי</div>
+      </div>
+    </a>
+    <a href="webinar-presentation.html" class="card-link">
+      <span class="icon">🎤</span>
+      <div class="info">
+        <div class="title">מצגת וובינר</div>
+        <div class="desc">מצגת שקפים לוובינר הכללי</div>
+      </div>
+    </a>
+  </div>
+</div>
+</body>
+</html>
