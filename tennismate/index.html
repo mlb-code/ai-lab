@@ -64,8 +64,14 @@
   .hero h1 {
     font-size: clamp(38px, 11vw, 88px); font-weight: 800; line-height: 1.05;
     position: relative; margin-bottom: 8px;
-    background: linear-gradient(135deg, #ffffff 40%, #f5c518 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f5c518 35%, #ffe066 50%, #ffffff 65%, #f5c518 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    animation: heroShimmer 4s ease infinite;
+  }
+  @keyframes heroShimmer {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 200% center; }
   }
   .hero-sub { font-size: clamp(15px, 1.8vw, 20px); color: rgba(255,255,255,0.7); margin: 10px 0 28px; max-width: clamp(320px, 50vw, 560px); line-height: 1.7; position: relative; }
   .hero-ctas { display: flex; gap: 12px; flex-direction: column; width: 100%; max-width: 300px; position: relative; }
