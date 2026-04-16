@@ -53,7 +53,7 @@
   }
   .hero::before {
     content: ''; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(18,18,18,0.78) 0%, rgba(18,18,18,0.88) 60%, rgba(18,18,18,0.97) 100%);
+    background: linear-gradient(180deg, rgba(18,18,18,0.65) 0%, rgba(18,18,18,0.78) 50%, rgba(18,18,18,0.95) 100%);
     pointer-events: none;
   }
   .hero-badge {
@@ -123,13 +123,16 @@
   .footer p { color: rgba(255,255,255,0.25); font-size: clamp(12px, 1vw, 14px); line-height: 1.8; }
 
   /* MODAL */
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: flex-end; justify-content: center; }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 1000; align-items: flex-end; justify-content: center; animation: fadeOverlay 0.25s ease; }
+  @keyframes fadeOverlay { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
   .modal-overlay.active { display: flex; }
-  .modal { background: #1e1e1e; border: 1px solid rgba(255,255,255,0.1); border-radius: 24px 24px 0 0; padding: 32px 24px 40px; width: 100%; position: relative; max-height: 92svh; overflow-y: auto; }
+  .modal { background: #1e1e1e; border: 1px solid rgba(255,255,255,0.1); border-radius: 24px 24px 0 0; padding: 32px 24px 40px; width: 100%; position: relative; max-height: 92svh; overflow-y: auto; animation: slideUp 0.3s ease; }
   .modal-handle { width: 40px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 0 auto 24px; }
   .modal h2 { font-size: 22px; font-weight: 800; margin-bottom: 4px; color: #fff; text-align: center; }
   .modal-sub { font-size: 13px; color: rgba(255,255,255,0.45); text-align: center; margin-bottom: 24px; }
-  .modal-close { position: absolute; top: 16px; left: 16px; background: rgba(255,255,255,0.08); border: none; color: rgba(255,255,255,0.6); font-size: 16px; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .modal-close { position: absolute; top: 16px; left: 16px; background: rgba(255,255,255,0.08); border: none; color: rgba(255,255,255,0.6); font-size: 16px; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+  .modal-close:hover { background: rgba(255,255,255,0.15); }
   .modal-tabs { display: flex; background: #141414; border-radius: 50px; padding: 4px; margin-bottom: 24px; }
   .modal-tab { flex: 1; text-align: center; padding: 10px; border-radius: 50px; font-size: 15px; font-weight: 600; cursor: pointer; color: rgba(255,255,255,0.45); transition: all 0.2s; border: none; background: none; }
   .modal-tab.active { background: #f5c518; color: #111; }
@@ -195,25 +198,49 @@
     .nav-links { display: flex !important; }
     .nav-auth { display: flex !important; }
     .nav { padding: 14px 40px; height: 68px; }
-    .hero { padding: 120px 40px 80px; }
-    .hero-ctas { flex-direction: row; max-width: 480px; gap: 14px; }
+
+    /* HERO - bigger on desktop */
+    .hero { padding: 140px 40px 100px; }
+    .hero h1 { font-size: clamp(60px, 8vw, 110px); margin-bottom: 16px; }
+    .hero-badge { font-size: 14px; padding: 7px 20px; margin-bottom: 18px; }
+    .hero-sub { font-size: 20px; margin: 14px 0 36px; max-width: 580px; }
+    .pill-row { gap: 12px; margin-bottom: 28px; }
+    .pill { padding: 9px 22px; font-size: 14px; }
+    .hero-ctas { flex-direction: row; max-width: 540px; gap: 16px; }
+    .hero-ctas .btn-primary { font-size: 18px; padding: 18px 40px; }
+    .hero-ctas .btn-secondary { font-size: 17px; padding: 17px 36px; }
     .hero-ctas .btn-primary,
     .hero-ctas .btn-secondary { flex: 1; }
+
+    /* STATS */
     .stats-bar { grid-template-columns: repeat(4, 1fr); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; margin: -30px auto 0; position: relative; z-index: 10; max-width: 800px; background: rgba(20,20,20,0.95); backdrop-filter: blur(12px); }
     .stat-item { border-bottom: none !important; }
     .stat-item:nth-child(odd) { border-left: 1px solid rgba(255,255,255,0.07); }
     .stat-item:last-child { border-left: none; }
+
+    /* FEATURES */
     .features-grid { flex-direction: row; gap: 20px; }
     .feat-card { flex: 1; flex-direction: column; text-align: center; padding: 32px 24px; align-items: center; }
+
+    /* CTA */
     .email-col { flex-direction: row; max-width: 480px; }
     .email-col .btn-primary { white-space: nowrap; }
+
+    /* MODAL - centered popup on desktop */
+    .modal-overlay { align-items: center; }
+    .modal { max-width: 460px; border-radius: 24px; max-height: 85vh; box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
+    .modal-handle { display: none; }
   }
 
   /* ===== DESKTOP (1024px+) ===== */
   @media (min-width: 1024px) {
     .nav { padding: 14px 60px; }
-    .hero { padding: 140px 60px 100px; }
-    .hero-ctas { max-width: 520px; }
+    .hero { padding: 160px 60px 120px; }
+    .hero h1 { font-size: clamp(80px, 9vw, 120px); }
+    .hero-sub { font-size: 22px; max-width: 620px; }
+    .hero-ctas { max-width: 580px; }
+    .hero-ctas .btn-primary { font-size: 20px; padding: 20px 48px; }
+    .hero-ctas .btn-secondary { font-size: 18px; padding: 19px 40px; }
     .stats-bar { max-width: 900px; padding: 8px 0; }
     .stat-item { padding: 24px 16px; }
     .features-section { padding: 80px 60px; }
@@ -225,11 +252,14 @@
     .cta-section { padding: 80px 60px; }
     .email-col { max-width: 520px; }
     .footer { padding: 40px 60px; }
+    .modal { max-width: 500px; }
   }
 
   /* ===== LARGE DESKTOP (1400px+) ===== */
   @media (min-width: 1400px) {
-    .hero h1 { font-size: 96px; }
+    .hero h1 { font-size: 130px; }
+    .hero-sub { font-size: 24px; max-width: 680px; }
+    .hero-ctas { max-width: 640px; }
     .stats-bar { max-width: 1000px; }
   }
 
