@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DriveLog — דשבורד מורה נהיגה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#002147;--mid:#003262;--panel:#002d5a;--panel2:#001e40;
+  --gold:#EF9B0F;--gold-l:#f5b53f;
+  --gold-dim:rgba(239,155,15,0.12);--gold-brd:rgba(239,155,15,0.22);
+  --w:#fff;--w80:rgba(255,255,255,.8);--w60:rgba(255,255,255,.6);
+  --w40:rgba(255,255,255,.4);--w20:rgba(255,255,255,.18);
+  --w10:rgba(255,255,255,.09);--w06:rgba(255,255,255,.055);
+  --green:#22c55e;--green-dim:rgba(34,197,94,.12);
+  --red:#ef4444;--red-dim:rgba(239,68,68,.12);
+  --blue:#3b82f6;--blue-dim:rgba(59,130,246,.12);
+  --purple:#a855f7;--purple-dim:rgba(168,85,247,.12);
+  --sidebar:220px;--topbar:58px;--f:'Heebo',sans-serif;--r:12px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--f);background:var(--navy);color:var(--w);direction:rtl;display:flex;flex-direction:column}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;right:0;left:0;z-index:200;height:var(--topbar);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem 0 1rem;background:rgba(0,25,60,.97);border-bottom:1px solid var(--w10);backdrop-filter:blur(16px)}
+.topbar-logo{font-size:1.35rem;font-weight:900;background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;display:flex;align-items:center;gap:.5rem;width:var(--sidebar);flex-shrink:0}
+.topbar-logo span{font-size:.65rem;font-weight:600;-webkit-text-fill-color:var(--gold);opacity:.7;margin-top:2px}
+.topbar-center{display:flex;align-items:center;gap:.6rem;flex:1;max-width:380px;background:var(--w06);border:1px solid var(--w10);border-radius:50px;padding:.4rem .9rem}
+.topbar-center input{background:transparent;border:none;outline:none;color:var(--w);font-family:var(--f);font-size:.88rem;width:100%;direction:rtl}
+.topbar-center input::placeholder{color:var(--w40)}
+.topbar-left{display:flex;align-items:center;gap:1rem}
+.notif-btn{position:relative;width:34px;height:34px;border-radius:50%;background:var(--w06);border:1px solid var(--w10);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+.notif-btn:hover{background:var(--w10)}
+.notif-btn svg{width:16px;height:16px;stroke:var(--w60);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--gold);border:1.5px solid #001528}
+.user-pill{display:flex;align-items:center;gap:.6rem;background:var(--w06);border:1px solid var(--w10);border-radius:50px;padding:.3rem .6rem .3rem .9rem;cursor:pointer;transition:background .2s}
+.user-pill:hover{background:var(--w10)}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--mid),#004080);border:1px solid var(--gold-brd);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--gold-l)}
+
+/* LAYOUT */
+.shell{display:flex;padding-top:var(--topbar);height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--panel2);border-left:1px solid var(--w10);display:flex;flex-direction:column;overflow-y:auto;padding:1.2rem .8rem 1.5rem;gap:.2rem;height:100%}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--w10)}
+.sb-label{font-size:.6rem;font-weight:700;letter-spacing:2px;color:var(--w40);text-transform:uppercase;padding:.7rem .6rem .35rem;margin-top:.4rem}
+.nav-item{display:flex;align-items:center;gap:.7rem;padding:.62rem .75rem;border-radius:var(--r);color:var(--w60);font-size:.86rem;font-weight:500;transition:all .18s;cursor:pointer;border:none;background:transparent;width:100%;text-align:right;position:relative}
+.nav-item svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.nav-item:hover{background:var(--w06);color:var(--w80)}
+.nav-item.active{background:var(--gold-dim);color:var(--gold-l);border:1px solid var(--gold-brd)}
+.nav-item.active svg{stroke:var(--gold)}
+.nb{margin-right:auto;background:var(--gold);color:#002147;font-size:.6rem;font-weight:900;padding:.1rem .45rem;border-radius:50px}
+.sb-footer{margin-top:auto;padding-top:1rem;border-top:1px solid var(--w10)}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;padding:1.8rem 1.6rem;display:flex;flex-direction:column;gap:1.4rem}
+.main::-webkit-scrollbar{width:5px}
+.main::-webkit-scrollbar-thumb{background:var(--w10);border-radius:3px}
+
+/* PAGES */
+.page{display:none;flex-direction:column;gap:1.4rem;animation:pgIn .2s ease}
+.page.active{display:flex}
+@keyframes pgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* SHARED */
+.ph{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.pt{font-size:1.5rem;font-weight:900;letter-spacing:-.3px}
+.ps{font-size:.84rem;color:var(--w60);margin-top:.2rem}
+.ha{display:flex;gap:.6rem;align-items:center}
+.btn{padding:.48rem 1rem;border-radius:8px;font-family:var(--f);font-weight:600;font-size:.82rem;cursor:pointer;transition:all .18s;border:none;display:inline-flex;align-items:center;gap:.4rem}
+.btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:#002147}
+.btn-gold:hover{opacity:.9;transform:translateY(-1px)}
+.btn-ghost{background:var(--w06);color:var(--w80);border:1px solid var(--w10)}
+.btn-ghost:hover{background:var(--w10)}
+.btn-danger{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.btn-danger:hover{background:rgba(239,68,68,.2)}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.kpi{background:var(--panel);border:1px solid var(--w10);border-radius:var(--r);padding:1.1rem 1.2rem;position:relative;overflow:hidden;transition:border-color .2s}
+.kpi:hover{border-color:var(--w20)}
+.kpi::after{content:'';position:absolute;bottom:-10px;right:-10px;width:70px;height:70px;border-radius:50%;opacity:.06;background:var(--gold)}
+.kpi-lbl{font-size:.72rem;font-weight:600;letter-spacing:1px;color:var(--w60);text-transform:uppercase;margin-bottom:.6rem}
+.kpi-val{font-size:2rem;font-weight:900;line-height:1;margin-bottom:.4rem}
+.kpi-u{font-size:.9rem;font-weight:400;color:var(--w60);margin-right:.2rem}
+.kpi-ch{font-size:.74rem;display:flex;align-items:center;gap:.3rem}
+.kpi-ch.up{color:var(--green)}.kpi-ch.dn{color:var(--red)}
+.kpi-ch svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+.grid2{display:grid;grid-template-columns:1fr 340px;gap:1.2rem}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem}
+
+.card{background:var(--panel);border:1px solid var(--w10);border-radius:var(--r);overflow:hidden}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.2rem;border-bottom:1px solid var(--w10)}
+.ct{font-size:.88rem;font-weight:700;color:var(--w80)}
+.ca{font-size:.75rem;color:var(--gold);cursor:pointer;text-decoration:none;font-weight:600}
+.ca:hover{opacity:.8}
+.cb{padding:1rem 1.2rem}
+
+/* Lesson items */
+.ll{display:flex;flex-direction:column;gap:.6rem}
+.li{display:flex;align-items:center;gap:.9rem;padding:.75rem .9rem;border-radius:10px;background:var(--w06);border:1px solid var(--w10);transition:border-color .18s;cursor:pointer}
+.li:hover{border-color:var(--w20)}
+.lt{font-size:.8rem;font-weight:700;color:var(--gold-l);min-width:38px;text-align:center;flex-shrink:0}
+.lb{width:3px;height:36px;border-radius:2px;flex-shrink:0}
+.lb-g{background:var(--green)}.lb-gold{background:var(--gold)}.lb-b{background:var(--blue)}.lb-r{background:var(--red)}
+.li-info{flex:1;min-width:0}
+.li-name{font-size:.86rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li-meta{font-size:.73rem;color:var(--w60);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{flex-shrink:0;font-size:.65rem;font-weight:700;padding:.2rem .55rem;border-radius:6px}
+.bg-green{background:var(--green-dim);color:var(--green)}
+.bg-gold{background:var(--gold-dim);color:var(--gold-l)}
+.bg-blue{background:var(--blue-dim);color:var(--blue)}
+.bg-red{background:var(--red-dim);color:var(--red)}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:.68rem;font-weight:700;letter-spacing:1px;color:var(--w40);text-transform:uppercase;text-align:right;padding:.6rem .9rem;border-bottom:1px solid var(--w10)}
+.tbl td{padding:.7rem .9rem;border-bottom:1px solid var(--w06);font-size:.83rem;color:var(--w80);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr{transition:background .15s;cursor:pointer}
+.tbl tbody tr:hover td{background:var(--w06)}
+.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--mid),#004a8f);border:1px solid var(--gold-brd);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:var(--gold-l);flex-shrink:0}
+.av-lg{width:42px;height:42px;font-size:.82rem}
+.nc{display:flex;align-items:center;gap:.6rem}
+.sn{font-weight:700;font-size:.84rem;color:var(--w)}
+.sp{font-size:.72rem;color:var(--w60)}
+.pb-wrap{width:80px;height:6px;background:var(--w10);border-radius:3px;overflow:hidden}
+.pb-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--gold-l))}
+.pb-lbl{font-size:.72rem;color:var(--w60);margin-top:.15rem}
+.st{display:flex;align-items:center;gap:.35rem;font-size:.74rem;font-weight:700}
+.std{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ai{display:flex;gap:.35rem}
+.aic{width:26px;height:26px;border-radius:6px;background:var(--w06);border:1px solid var(--w10);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.aic:hover{background:var(--w10);border-color:var(--w20)}
+.aic svg{width:13px;height:13px;stroke:var(--w60);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* Feed */
+.feed{display:flex;flex-direction:column}
+.fi{display:flex;gap:.8rem;align-items:flex-start;padding:.75rem 0;border-bottom:1px solid var(--w06)}
+.fi:last-child{border-bottom:none}
+.fd{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:.1rem}
+.fd svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fd.green{background:var(--green-dim);color:var(--green)}
+.fd.gold{background:var(--gold-dim);color:var(--gold)}
+.fd.red{background:var(--red-dim);color:var(--red)}
+.fd.blue{background:var(--blue-dim);color:var(--blue)}
+.fm{font-size:.82rem;color:var(--w80);line-height:1.45}
+.fm strong{color:var(--w);font-weight:700}
+.ftime{font-size:.7rem;color:var(--w40);margin-top:.2rem}
+
+/* Payments */
+.pay-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.65rem .9rem;border-radius:9px;background:var(--w06);border:1px solid var(--w10);transition:border-color .15s;margin-bottom:.5rem}
+.pay-row:hover{border-color:var(--w20)}
+.pay-row:last-child{margin-bottom:0}
+.pay-name{font-size:.83rem;font-weight:700}
+.pay-date{font-size:.72rem;color:var(--w60);margin-top:.1rem}
+.pay-amt{font-size:.9rem;font-weight:900;color:var(--gold)}
+.ps2{font-size:.65rem;font-weight:700;padding:.18rem .5rem;border-radius:5px;flex-shrink:0}
+.ps-paid{background:var(--green-dim);color:var(--green)}
+.ps-pend{background:var(--gold-dim);color:var(--gold-l)}
+.ps-miss{background:var(--red-dim);color:var(--red)}
+
+/* Mini stat */
+.ms{display:flex;flex-direction:column;gap:.3rem;padding:.9rem 1rem;background:var(--w06);border:1px solid var(--w10);border-radius:10px}
+.ms-val{font-size:1.4rem;font-weight:900}
+.ms-lbl{font-size:.72rem;color:var(--w60)}
+
+/* Cal strip */
+.cs{display:flex;gap:.5rem;overflow-x:auto;padding:.2rem 0 .5rem;scrollbar-width:none}
+.cs::-webkit-scrollbar{display:none}
+.cd{display:flex;flex-direction:column;align-items:center;gap:.3rem;min-width:52px;padding:.55rem .4rem;border-radius:10px;cursor:pointer;transition:all .18s;border:1px solid transparent;flex-shrink:0}
+.cd:hover{background:var(--w06)}
+.cd.active{background:var(--gold-dim);border-color:var(--gold-brd)}
+.cd.today .cdate{background:var(--gold);color:#002147;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center}
+.cdow{font-size:.65rem;color:var(--w40);font-weight:600;text-transform:uppercase}
+.cdate{font-size:.95rem;font-weight:700;color:var(--w80)}
+.cd.active .cdow,.cd.active .cdate{color:var(--gold-l)}
+.cdots{display:flex;gap:2px}
+.cdot{width:4px;height:4px;border-radius:50%;background:var(--w40)}
+.cdot.g{background:var(--gold)}
+
+/* Input */
+.inp{background:var(--w06);border:1px solid var(--w10);border-radius:9px;padding:.6rem .9rem;width:100%;font-family:var(--f);font-size:.85rem;color:var(--w);direction:rtl;outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(--gold-brd)}
+.inp::placeholder{color:var(--w40)}
+textarea.inp{resize:vertical;min-height:80px}
+.inp-lbl{font-size:.74rem;font-weight:600;color:var(--w60);margin-bottom:.35rem;display:block}
+.inp-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem}
+.inp-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+select.inp{cursor:pointer}
+select.inp option{background:var(--mid);color:var(--w)}
+
+/* Skill tag */
+.skill-tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;margin:.2rem .15rem}
+.skill-done{background:var(--green-dim);color:var(--green)}
+.skill-partial{background:var(--gold-dim);color:var(--gold-l)}
+.skill-todo{background:var(--w06);color:var(--w60);border:1px solid var(--w10)}
+
+/* Progress circle */
+.pcircle{position:relative;width:72px;height:72px;flex-shrink:0}
+.pcircle svg{transform:rotate(-90deg)}
+.pcircle-bg{fill:none;stroke:var(--w10);stroke-width:6}
+.pcircle-fill{fill:none;stroke-width:6;stroke-linecap:round}
+.pcircle-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900}
+
+/* Settings */
+.set-section{background:var(--panel);border:1px solid var(--w10);border-radius:var(--r);overflow:hidden;margin-bottom:1.2rem}
+.set-section:last-child{margin-bottom:0}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.2rem;border-bottom:1px solid var(--w06)}
+.set-row:last-child{border-bottom:none}
+.set-lbl{font-size:.86rem;font-weight:600}
+.set-desc{font-size:.75rem;color:var(--w60);margin-top:.15rem}
+.toggle{width:40px;height:22px;border-radius:50px;background:var(--w10);border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.toggle.on{background:var(--gold)}
+.toggle::after{content:'';position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:var(--w);transition:transform .2s}
+.toggle.on::after{transform:translateX(-18px)}
+
+/* Modal overlay */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,10,25,.75);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .22s}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{background:linear-gradient(160deg,#002d5a,#001e40);border:1px solid var(--w10);border-radius:20px;padding:1.8rem;width:100%;max-width:460px;transform:translateY(14px) scale(.97);transition:transform .25s cubic-bezier(.4,0,.2,1);position:relative}
+.modal-overlay.open .modal{transform:translateY(0) scale(1)}
+.modal-close{position:absolute;top:.9rem;left:.9rem;width:26px;height:26px;border-radius:50%;background:var(--w06);border:1px solid var(--w10);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--w60);font-size:.8rem;transition:background .15s}
+.modal-close:hover{background:var(--w10);color:var(--w)}
+.modal-title{font-size:1.1rem;font-weight:900;margin-bottom:.3rem}
+.modal-sub{font-size:.82rem;color:var(--w60);margin-bottom:1.4rem}
+
+/* Week hours grid */
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;margin-bottom:1rem}
+.wday{display:flex;flex-direction:column;gap:.3rem;align-items:center}
+.wday-lbl{font-size:.65rem;color:var(--w60);font-weight:700;text-align:center}
+.wday-btn{width:100%;padding:.3rem .1rem;border-radius:7px;font-size:.7rem;font-weight:700;cursor:pointer;border:1px solid var(--w10);background:var(--w06);color:var(--w60);transition:all .15s;text-align:center}
+.wday-btn.on{background:var(--gold-dim);border-color:var(--gold-brd);color:var(--gold-l)}
+.time-range{display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem}
+.time-range label{font-size:.74rem;color:var(--w60);white-space:nowrap}
+
+/* Responsive */
+@media(max-width:1100px){
+  :root{--sidebar:190px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  :root{--sidebar:0px;--topbar:52px}
+  .sidebar{display:none}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .grid3{grid-template-columns:1fr}
+  .main{padding:1.2rem 1rem}
+  .topbar-center{display:none}
+  .inp-row{grid-template-columns:1fr}
+}
+@media(max-width:480px){.kpi-val{font-size:1.6rem}}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="drivelog-landing.html" class="topbar-logo">DriveLog <span>מורה</span></a>
+  <div class="topbar-center">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.4;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" placeholder="חיפוש תלמיד, שיעור, תשלום...">
+  </div>
+  <div class="topbar-left">
+    <div class="notif-btn">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      <div class="notif-dot"></div>
+    </div>
+    <div class="user-pill">
+      <span style="font-size:.83rem;color:var(--w60)">דוד כהן</span>
+      <div class="user-avatar">דכ</div>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+<aside class="sidebar">
+  <span class="sb-label">ראשי</span>
+  <button class="nav-item active" data-page="overview">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>סקירה כללית
+  </button>
+  <button class="nav-item" data-page="calendar">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>יומן שיעורים<span class="nb">3</span>
+  </button>
+  <button class="nav-item" data-page="students">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>תלמידים
+  </button>
+  <span class="sb-label">ניהול</span>
+  <button class="nav-item" data-page="payments">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>תשלומים<span class="nb">2</span>
+  </button>
+  <button class="nav-item" data-page="progress">
+    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>התקדמות תלמידים
+  </button>
+  <span class="sb-label">הגדרות</span>
+  <button class="nav-item" data-page="settings">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>הגדרות
+  </button>
+  <div class="sb-footer">
+    <button class="nav-item" style="color:var(--red)">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>יציאה
+    </button>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- ══ סקירה כללית ══ -->
+<div class="page active" id="page-overview">
+  <div class="ph">
+    <div><div class="pt">שלום, דוד 👋</div><div class="ps">רביעי, 9 באפריל 2025 · יש לך 5 שיעורים היום</div></div>
+    <div class="ha">
+      <button class="btn btn-ghost" onclick="syncCal()">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>סנכרון לוח שנה
+      </button>
+    </div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-lbl">שיעורים החודש</div><div class="kpi-val">42</div><div class="kpi-ch up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>+8% מהחודש הקודם</div></div>
+    <div class="kpi"><div class="kpi-lbl">הכנסה החודש</div><div class="kpi-val"><span class="kpi-u">₪</span>7,140</div><div class="kpi-ch up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>+₪840 מהחודש הקודם</div></div>
+    <div class="kpi"><div class="kpi-lbl">תלמידים פעילים</div><div class="kpi-val">18</div><div class="kpi-ch up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>3 תלמידים חדשים</div></div>
+    <div class="kpi"><div class="kpi-lbl">ביטולים החודש</div><div class="kpi-val">3</div><div class="kpi-ch dn"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>מוגבר מהחודש הקודם</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="ch"><span class="ct">שיעורי היום — רביעי 9/4</span><a class="ca">כל היומן ←</a></div>
+      <div class="cb">
+        <div class="cs">
+          <div class="cd"><span class="cdow">א׳</span><span class="cdate">7</span><div class="cdots"><span class="cdot g"></span><span class="cdot g"></span></div></div>
+          <div class="cd"><span class="cdow">ב׳</span><span class="cdate">8</span><div class="cdots"><span class="cdot g"></span></div></div>
+          <div class="cd active today"><span class="cdow">ג׳</span><span class="cdate">9</span><div class="cdots"><span class="cdot g"></span><span class="cdot g"></span><span class="cdot g"></span></div></div>
+          <div class="cd"><span class="cdow">ד׳</span><span class="cdate">10</span><div class="cdots"><span class="cdot g"></span><span class="cdot g"></span></div></div>
+          <div class="cd"><span class="cdow">ה׳</span><span class="cdate">11</span><div class="cdots"><span class="cdot"></span></div></div>
+          <div class="cd"><span class="cdow">ו׳</span><span class="cdate">12</span></div>
+          <div class="cd"><span class="cdow">א׳</span><span class="cdate">14</span><div class="cdots"><span class="cdot g"></span></div></div>
+        </div>
+        <div class="ll" style="margin-top:1rem">
+          <div class="li"><div class="lt">08:00</div><div class="lb lb-g"></div><div class="li-info"><div class="li-name">נועה לוי</div><div class="li-meta">📍 הרצל 12, ת״א · שיעור #14</div></div><span class="badge bg-green">הסתיים</span></div>
+          <div class="li"><div class="lt">10:00</div><div class="lb lb-gold"></div><div class="li-info"><div class="li-name">אורי בן-דוד</div><div class="li-meta">📍 כיכר המדינה · שיעור #6</div></div><span class="badge bg-gold">עכשיו</span></div>
+          <div class="li"><div class="lt">12:30</div><div class="lb lb-b"></div><div class="li-info"><div class="li-name">שירה מזרחי</div><div class="li-meta">📍 בן גוריון 5, רמת גן · שיעור #3</div></div><span class="badge bg-blue">קרוב</span></div>
+          <div class="li"><div class="lt">14:30</div><div class="lb lb-b"></div><div class="li-info"><div class="li-name">יואב כהן</div><div class="li-meta">📍 ז׳בוטינסקי 22, פ״ת · שיעור #9</div></div><span class="badge bg-blue">קרוב</span></div>
+          <div class="li"><div class="lt">17:00</div><div class="lb lb-b"></div><div class="li-info"><div class="li-name">מיה אברהם</div><div class="li-meta">📍 שוק הכרמל, ת״א · שיעור #11</div></div><span class="badge bg-blue">קרוב</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1.2rem">
+      <div class="card">
+        <div class="ch"><span class="ct">השבוע במספרים</span></div>
+        <div class="cb" style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+          <div class="ms"><div class="ms-val" style="color:var(--gold)">12</div><div class="ms-lbl">שיעורים</div></div>
+          <div class="ms"><div class="ms-val" style="color:var(--green)">₪2,040</div><div class="ms-lbl">הכנסה</div></div>
+          <div class="ms"><div class="ms-val">1</div><div class="ms-lbl">ביטולים</div></div>
+          <div class="ms"><div class="ms-val" style="color:var(--blue)">3</div><div class="ms-lbl">מוכנים לטסט</div></div>
+        </div>
+      </div>
+      <div class="card" style="flex:1">
+        <div class="ch"><span class="ct">פעילות אחרונה</span></div>
+        <div class="cb">
+          <div class="feed">
+            <div class="fi"><div class="fd green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="fm"><strong>נועה לוי</strong> סיימה שיעור #14</div><div class="ftime">לפני 2 שעות</div></div></div>
+            <div class="fi"><div class="fd gold"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="fm"><strong>שירה מזרחי</strong> קבעה שיעור לשישי 12/4</div><div class="ftime">לפני 3 שעות</div></div></div>
+            <div class="fi"><div class="fd red"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div><div><div class="fm"><strong>אייל שמש</strong> ביטל את השיעור מחר</div><div class="ftime">לפני 5 שעות</div></div></div>
+            <div class="fi"><div class="fd blue"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="fm"><strong>יואב כהן</strong> שילם ₪680</div><div class="ftime">אתמול, 18:30</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ יומן שיעורים ══ -->
+<div class="page" id="page-calendar">
+  <div class="ph">
+    <div><div class="pt">יומן שיעורים</div><div class="ps" id="cal-week-label">7–12 אפריל 2025</div></div>
+    <div class="ha">
+      <button class="btn btn-ghost" onclick="exportCalendar()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>ייצוא XL
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ch">
+      <span class="ct" id="cal-title">שבוע 7–12 אפריל</span>
+      <div style="display:flex;gap:.5rem">
+        <button class="btn btn-ghost" id="prevWeek" style="padding:.3rem .75rem;font-size:1rem">›</button>
+        <button class="btn btn-ghost" id="nextWeek" style="padding:.3rem .75rem;font-size:1rem">‹</button>
+      </div>
+    </div>
+    <div class="cb">
+      <div class="cs" id="calStrip"></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="ch"><span class="ct" id="day-title">שיעורים — רביעי 9/4</span><span class="badge bg-gold" id="day-count">5 שיעורים</span></div>
+      <div class="cb" id="day-lessons"></div>
+    </div>
+
+    <!-- שעות עבודה לשבוע -->
+    <div class="card">
+      <div class="ch"><span class="ct">שעות עבודה לשבוע הקרוב</span></div>
+      <div class="cb">
+        <div class="week-grid">
+          <div class="wday"><span class="wday-lbl">א׳</span><button class="wday-btn on" onclick="toggleDay(this)">פעיל</button></div>
+          <div class="wday"><span class="wday-lbl">ב׳</span><button class="wday-btn on" onclick="toggleDay(this)">פעיל</button></div>
+          <div class="wday"><span class="wday-lbl">ג׳</span><button class="wday-btn on" onclick="toggleDay(this)">פעיל</button></div>
+          <div class="wday"><span class="wday-lbl">ד׳</span><button class="wday-btn on" onclick="toggleDay(this)">פעיל</button></div>
+          <div class="wday"><span class="wday-lbl">ה׳</span><button class="wday-btn" onclick="toggleDay(this)">סגור</button></div>
+          <div class="wday"><span class="wday-lbl">ו׳</span><button class="wday-btn on" onclick="toggleDay(this)">פעיל</button></div>
+          <div class="wday"><span class="wday-lbl">ש׳</span><button class="wday-btn" onclick="toggleDay(this)">סגור</button></div>
+        </div>
+        <div class="time-range">
+          <label>מ-</label>
+          <input type="time" class="inp" value="07:30" style="flex:1">
+          <label>עד</label>
+          <input type="time" class="inp" value="19:00" style="flex:1">
+        </div>
+        <div class="inp-group" style="margin-bottom:.6rem">
+          <label class="inp-lbl">הפסקה בין שיעורים (דקות)</label>
+          <select class="inp"><option>0</option><option>10</option><option selected>15</option><option>20</option><option>30</option></select>
+        </div>
+        <button class="btn btn-gold" style="width:100%;justify-content:center">פרסם לתלמידים</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ תלמידים ══ -->
+<div class="page" id="page-students">
+  <div class="ph">
+    <div><div class="pt">תלמידים</div><div class="ps">18 תלמידים פעילים</div></div>
+    <div class="ha">
+      <button class="btn btn-ghost" onclick="exportStudents()">ייצוא רשימה</button>
+      <button class="btn btn-gold" onclick="openModal('modal-new-student')">+ תלמיד חדש</button>
+    </div>
+  </div>
+
+  <!-- רשימת תלמידים -->
+  <div id="students-table-view">
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-lbl">סה״כ תלמידים</div><div class="kpi-val">18</div><div class="kpi-ch up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>+3 החודש</div></div>
+      <div class="kpi"><div class="kpi-lbl">מוכנים לטסט</div><div class="kpi-val" style="color:var(--green)">3</div></div>
+      <div class="kpi"><div class="kpi-lbl">ממוצע שיעורים</div><div class="kpi-val">14</div></div>
+      <div class="kpi"><div class="kpi-lbl">לא פעילים (30י׳)</div><div class="kpi-val" style="color:var(--red)">2</div></div>
+    </div>
+    <div class="card">
+      <div class="ch">
+        <span class="ct">כל התלמידים</span>
+        <input type="text" class="inp" style="width:180px;padding:.35rem .8rem" placeholder="חיפוש לפי שם...">
+      </div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>תלמיד</th><th>שיעורים</th><th>התקדמות</th><th>סטטוס</th><th>שיעור אחרון</th><th>יתרת תשלום</th><th>פעולות</th></tr></thead>
+          <tbody>
+            <tr><td><div class="nc"><div class="av">נל</div><div><div class="sn">נועה לוי</div><div class="sp">050-1234567</div></div></div></td><td>14/30</td><td><div class="pb-wrap"><div class="pb-fill" style="width:47%"></div></div><div class="pb-lbl">47%</div></td><td><div class="st"><span class="std" style="background:var(--gold)"></span>בתהליך</div></td><td style="color:var(--w60)">היום</td><td style="color:var(--green)">₪0</td><td><div class="ai"><div class="aic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="aic"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></div></td></tr>
+            <tr><td><div class="nc"><div class="av">אב</div><div><div class="sn">אורי בן-דוד</div><div class="sp">052-9876543</div></div></div></td><td>6/30</td><td><div class="pb-wrap"><div class="pb-fill" style="width:20%"></div></div><div class="pb-lbl">20%</div></td><td><div class="st"><span class="std" style="background:var(--blue)"></span>מתחיל</div></td><td style="color:var(--w60)">היום</td><td style="color:var(--red)">₪340</td><td><div class="ai"><div class="aic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="aic"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></div></td></tr>
+            <tr><td><div class="nc"><div class="av">יכ</div><div><div class="sn">יואב כהן</div><div class="sp">054-5551234</div></div></div></td><td>24/30</td><td><div class="pb-wrap"><div class="pb-fill" style="width:80%"></div></div><div class="pb-lbl">80%</div></td><td><div class="st"><span class="std" style="background:var(--green)"></span>מוכן לטסט</div></td><td style="color:var(--w60)">אתמול</td><td style="color:var(--green)">₪0</td><td><div class="ai"><div class="aic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="aic"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></div></td></tr>
+            <tr><td><div class="nc"><div class="av">מא</div><div><div class="sn">מיה אברהם</div><div class="sp">053-7778899</div></div></div></td><td>11/30</td><td><div class="pb-wrap"><div class="pb-fill" style="width:37%"></div></div><div class="pb-lbl">37%</div></td><td><div class="st"><span class="std" style="background:var(--gold)"></span>בתהליך</div></td><td style="color:var(--w60)">היום</td><td style="color:var(--green)">₪0</td><td><div class="ai"><div class="aic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="aic"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></div></td></tr>
+            <tr><td><div class="nc"><div class="av">שמ</div><div><div class="sn">שירה מזרחי</div><div class="sp">058-3334455</div></div></div></td><td>3/30</td><td><div class="pb-wrap"><div class="pb-fill" style="width:10%"></div></div><div class="pb-lbl">10%</div></td><td><div class="st"><span class="std" style="background:var(--blue)"></span>מתחיל</div></td><td style="color:var(--w60)">היום</td><td style="color:var(--gold-l)">₪170</td><td><div class="ai"><div class="aic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="aic"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- רשימה מלאה (מוצג בייצוא) -->
+  <div id="students-export-view" style="display:none">
+    <div class="ph" style="margin-bottom:.5rem">
+      <div><div class="pt" style="font-size:1.15rem">רשימת תלמידים — כל הפרטים</div></div>
+      <button class="btn btn-ghost" onclick="document.getElementById('students-export-view').style.display='none';document.getElementById('students-table-view').style.display='block'">← חזור</button>
+    </div>
+    <div class="card">
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>שם מלא</th><th>טלפון</th><th>אימייל</th><th>עיר</th><th>שיעורים</th><th>התקדמות</th><th>סטטוס</th><th>יתרה</th></tr></thead>
+          <tbody>
+            <tr><td><strong>נועה לוי</strong></td><td>050-1234567</td><td>noa@gmail.com</td><td>תל אביב</td><td>14/30</td><td>47%</td><td>בתהליך</td><td style="color:var(--green)">₪0</td></tr>
+            <tr><td><strong>אורי בן-דוד</strong></td><td>052-9876543</td><td>ori@gmail.com</td><td>רמת גן</td><td>6/30</td><td>20%</td><td>מתחיל</td><td style="color:var(--red)">₪340</td></tr>
+            <tr><td><strong>יואב כהן</strong></td><td>054-5551234</td><td>yoav@gmail.com</td><td>פתח תקווה</td><td>24/30</td><td>80%</td><td>מוכן לטסט</td><td style="color:var(--green)">₪0</td></tr>
+            <tr><td><strong>מיה אברהם</strong></td><td>053-7778899</td><td>mia@gmail.com</td><td>תל אביב</td><td>11/30</td><td>37%</td><td>בתהליך</td><td style="color:var(--green)">₪0</td></tr>
+            <tr><td><strong>שירה מזרחי</strong></td><td>058-3334455</td><td>shira@gmail.com</td><td>חיפה</td><td>3/30</td><td>10%</td><td>מתחיל</td><td style="color:var(--gold-l)">₪170</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ תשלומים ══ -->
+<div class="page" id="page-payments">
+  <div class="ph">
+    <div><div class="pt">תשלומים</div><div class="ps">אפריל 2025 · ₪7,140 התקבלו</div></div>
+    <div class="ha">
+      <button class="btn btn-ghost" onclick="exportPayments()">ייצוא לאקסל</button>
+    </div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-lbl">התקבל החודש</div><div class="kpi-val"><span class="kpi-u">₪</span>7,140</div><div class="kpi-ch up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>+12%</div></div>
+    <div class="kpi"><div class="kpi-lbl">חובות פתוחים</div><div class="kpi-val" style="color:var(--red)"><span class="kpi-u">₪</span>1,020</div><div class="kpi-ch dn"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>2 תלמידים</div></div>
+    <div class="kpi"><div class="kpi-lbl">ממתין לאישור</div><div class="kpi-val" style="color:var(--gold)"><span class="kpi-u">₪</span>340</div></div>
+    <div class="kpi"><div class="kpi-lbl">מחיר שיעור</div><div class="kpi-val"><span class="kpi-u">₪</span>170</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="ch"><span class="ct">כל התשלומים — אפריל</span></div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>תלמיד</th><th>תאריך</th><th>שיעורים</th><th>סכום</th><th>אמצעי</th><th>סטטוס</th></tr></thead>
+          <tbody id="payments-table">
+            <tr><td><div class="nc"><div class="av">נל</div><div class="sn">נועה לוי</div></div></td><td style="color:var(--w60)">1/4</td><td>5</td><td style="color:var(--green);font-weight:700">₪850</td><td style="color:var(--w60)">ביט</td><td><span class="ps2 ps-paid">שולם</span></td></tr>
+            <tr><td><div class="nc"><div class="av">יכ</div><div class="sn">יואב כהן</div></div></td><td style="color:var(--w60)">8/4</td><td>4</td><td style="color:var(--green);font-weight:700">₪680</td><td style="color:var(--w60)">מזומן</td><td><span class="ps2 ps-paid">שולם</span></td></tr>
+            <tr><td><div class="nc"><div class="av">רפ</div><div class="sn">רון פרידמן</div></div></td><td style="color:var(--w60)">7/4</td><td>2</td><td style="color:var(--gold);font-weight:700">₪340</td><td style="color:var(--w60)">העברה</td><td><span class="ps2 ps-pend">ממתין</span></td></tr>
+            <tr><td><div class="nc"><div class="av">אש</div><div class="sn">אייל שמש</div></div></td><td style="color:var(--red)">2/4</td><td>3</td><td style="color:var(--red);font-weight:700">₪510</td><td style="color:var(--w60)">—</td><td><span class="ps2 ps-miss">חסר</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <!-- רשום תשלום -->
+      <div class="card">
+        <div class="ch"><span class="ct">רשום תשלום</span></div>
+        <div class="cb">
+          <div class="inp-group"><label class="inp-lbl">שם תלמיד</label><select class="inp" id="pay-student"><option value="">בחר תלמיד...</option><option>נועה לוי</option><option>אורי בן-דוד</option><option>יואב כהן</option><option>שירה מזרחי</option><option>אייל שמש</option></select></div>
+          <div class="inp-group"><label class="inp-lbl">סכום (₪)</label><input type="number" class="inp" id="pay-amount" placeholder="0"></div>
+          <div class="inp-group"><label class="inp-lbl">אמצעי תשלום</label><select class="inp" id="pay-method"><option>מזומן</option><option>ביט</option><option>העברה בנקאית</option><option>אשראי</option></select></div>
+          <div class="inp-group"><label class="inp-lbl">הערות</label><textarea class="inp" id="pay-notes" placeholder="הערות..."></textarea></div>
+          <button class="btn btn-gold" style="width:100%;justify-content:center" onclick="addPayment()">אשר תשלום</button>
+        </div>
+      </div>
+      <!-- הוספת חוב -->
+      <div class="card">
+        <div class="ch"><span class="ct">הוסף חוב</span></div>
+        <div class="cb">
+          <div class="inp-group"><label class="inp-lbl">שם תלמיד</label><select class="inp" id="debt-student"><option value="">בחר תלמיד...</option><option>נועה לוי</option><option>אורי בן-דוד</option><option>יואב כהן</option><option>שירה מזרחי</option><option>אייל שמש</option></select></div>
+          <div class="inp-group"><label class="inp-lbl">סכום חוב (₪)</label><input type="number" class="inp" id="debt-amount" placeholder="0"></div>
+          <div class="inp-group"><label class="inp-lbl">סיבה</label><input type="text" class="inp" id="debt-reason" placeholder="לדוגמה: שיעורים שלא שולמו..."></div>
+          <button class="btn btn-danger" style="width:100%;justify-content:center;border:none" onclick="addDebt()">רשום חוב</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ התקדמות תלמידים ══ -->
+<div class="page" id="page-progress">
+  <div class="ph">
+    <div><div class="pt">התקדמות תלמידים</div><div class="ps">מעקב פדגוגי</div></div>
+    <div class="ha">
+      <button class="btn btn-gold" onclick="openModal('modal-note')">+ הוסף הערה</button>
+    </div>
+  </div>
+  <div class="grid3">
+    <div class="card">
+      <div class="ch"><div class="nc"><div class="av av-lg">נל</div><div><div class="sn">נועה לוי</div><div class="sp">שיעור #14</div></div></div><div class="pcircle"><svg viewBox="0 0 36 36" width="72" height="72"><circle class="pcircle-bg" cx="18" cy="18" r="15.9"/><circle class="pcircle-fill" cx="18" cy="18" r="15.9" stroke="var(--gold)" stroke-dasharray="100" stroke-dashoffset="53"/></svg><div class="pcircle-num" style="color:var(--gold)">47%</div></div></div>
+      <div class="cb">
+        <span class="skill-tag skill-done">✓ עצירה חירום</span><span class="skill-tag skill-done">✓ פניות בצומת</span><span class="skill-tag skill-done">✓ כביש מהיר</span><span class="skill-tag skill-partial">~ חניה מקבילה</span><span class="skill-tag skill-todo">○ חניה אחורה</span><span class="skill-tag skill-todo">○ נסיעה לילית</span>
+        <div style="margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--w06)">
+          <div style="font-size:.74rem;color:var(--w60);margin-bottom:.35rem;font-weight:600">הערה אחרונה</div>
+          <div style="font-size:.82rem;color:var(--w80);line-height:1.55" id="note-noa">חניה מקבילה — עדיין צריכה תרגול. שאר הדברים ברמה טובה מאד.</div>
+          <div style="font-size:.7rem;color:var(--w40);margin-top:.25rem">9/4/2025</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="nc"><div class="av av-lg">יכ</div><div><div class="sn">יואב כהן</div><div class="sp">שיעור #24</div></div></div><div class="pcircle"><svg viewBox="0 0 36 36" width="72" height="72"><circle class="pcircle-bg" cx="18" cy="18" r="15.9"/><circle class="pcircle-fill" cx="18" cy="18" r="15.9" stroke="var(--green)" stroke-dasharray="100" stroke-dashoffset="20"/></svg><div class="pcircle-num" style="color:var(--green)">80%</div></div></div>
+      <div class="cb">
+        <span class="skill-tag skill-done">✓ עצירה חירום</span><span class="skill-tag skill-done">✓ פניות בצומת</span><span class="skill-tag skill-done">✓ כביש מהיר</span><span class="skill-tag skill-done">✓ חניה מקבילה</span><span class="skill-tag skill-done">✓ חניה אחורה</span><span class="skill-tag skill-partial">~ נסיעה לילית</span>
+        <div style="margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--w06)">
+          <div style="font-size:.74rem;color:var(--w60);margin-bottom:.35rem;font-weight:600">הערה אחרונה</div>
+          <div style="font-size:.82rem;color:var(--w80);line-height:1.55" id="note-yoav">כמעט מוכן לטסט. עוד שיעור לילה אחד ומגישים.</div>
+          <div style="font-size:.7rem;color:var(--w40);margin-top:.25rem">8/4/2025</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="nc"><div class="av av-lg">אב</div><div><div class="sn">אורי בן-דוד</div><div class="sp">שיעור #6</div></div></div><div class="pcircle"><svg viewBox="0 0 36 36" width="72" height="72"><circle class="pcircle-bg" cx="18" cy="18" r="15.9"/><circle class="pcircle-fill" cx="18" cy="18" r="15.9" stroke="var(--blue)" stroke-dasharray="100" stroke-dashoffset="80"/></svg><div class="pcircle-num" style="color:var(--blue)">20%</div></div></div>
+      <div class="cb">
+        <span class="skill-tag skill-done">✓ הכרת הרכב</span><span class="skill-tag skill-partial">~ עצירה חירום</span><span class="skill-tag skill-todo">○ פניות בצומת</span><span class="skill-tag skill-todo">○ כביש מהיר</span><span class="skill-tag skill-todo">○ חניה</span>
+        <div style="margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--w06)">
+          <div style="font-size:.74rem;color:var(--w60);margin-bottom:.35rem;font-weight:600">הערה אחרונה</div>
+          <div style="font-size:.82rem;color:var(--w80);line-height:1.55" id="note-ori">מתחיל טוב, צריך לעבוד על תיאום ידיים-רגליים בשינוי הילוכים.</div>
+          <div style="font-size:.7rem;color:var(--w40);margin-top:.25rem">9/4/2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ הגדרות ══ -->
+<div class="page" id="page-settings">
+  <div class="ph">
+    <div><div class="pt">הגדרות</div><div class="ps">ניהול פרופיל ועדפויות</div></div>
+    <div class="ha"><button class="btn btn-gold">שמור שינויים</button></div>
+  </div>
+  <div class="set-section">
+    <div class="ch" style="border-bottom:1px solid var(--w10)"><span class="ct" style="font-size:.95rem">פרטים אישיים</span></div>
+    <div class="cb">
+      <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1.4rem">
+        <div class="av" style="width:58px;height:58px;font-size:1.1rem">דכ</div>
+        <div><div style="font-weight:700;font-size:1rem">דוד כהן</div><div style="font-size:.82rem;color:var(--w60)">מורה נהיגה מורשה · רישיון #IL-48291</div></div>
+        <button class="btn btn-ghost" style="margin-right:auto">שנה תמונה</button>
+      </div>
+      <div class="inp-row">
+        <div class="inp-group"><label class="inp-lbl">שם פרטי</label><input type="text" class="inp" value="דוד"></div>
+        <div class="inp-group"><label class="inp-lbl">שם משפחה</label><input type="text" class="inp" value="כהן"></div>
+      </div>
+      <div class="inp-row">
+        <div class="inp-group"><label class="inp-lbl">טלפון</label><input type="tel" class="inp" value="050-1234567"></div>
+        <div class="inp-group"><label class="inp-lbl">אימייל</label><input type="email" class="inp" value="david@drivelog.co.il"></div>
+      </div>
+      <div class="inp-group" style="max-width:220px"><label class="inp-lbl">מחיר שיעור (₪)</label><input type="number" class="inp" value="170"></div>
+    </div>
+  </div>
+  <div class="set-section">
+    <div class="ch" style="border-bottom:1px solid var(--w10)"><span class="ct" style="font-size:.95rem">התראות</span></div>
+    <div class="set-row"><div><div class="set-lbl">התראה לפני שיעור</div><div class="set-desc">30 דקות לפני כל שיעור</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+    <div class="set-row"><div><div class="set-lbl">התראה על ביטול</div><div class="set-desc">כשתלמיד מבטל שיעור</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+    <div class="set-row"><div><div class="set-lbl">תזכורת תשלום</div><div class="set-desc">תזכורת אוטומטית לתלמידים עם חוב</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+    <div class="set-row"><div><div class="set-lbl">סיכום שבועי</div><div class="set-desc">כל יום ראשון בבוקר</div></div><button class="toggle" onclick="this.classList.toggle('on')"></button></div>
+  </div>
+  <div class="set-section">
+    <div class="ch" style="border-bottom:1px solid var(--w10)"><span class="ct" style="font-size:.95rem">חיבורים</span></div>
+    <div class="set-row">
+      <div><div class="set-lbl">Google Calendar</div><div class="set-desc" id="gcal-status">מחובר · david.cohen@gmail.com</div></div>
+      <button class="btn btn-ghost" style="font-size:.78rem" id="gcal-btn" onclick="disconnectGcal()">נתק</button>
+    </div>
+    <div class="set-row"><div><div class="set-lbl">WhatsApp</div><div class="set-desc">050-1234567 · פעיל</div></div><button class="btn btn-ghost" style="font-size:.78rem">הגדרות</button></div>
+  </div>
+  <div class="set-section">
+    <div class="ch" style="border-bottom:1px solid var(--w10)"><span class="ct" style="font-size:.95rem;color:var(--red)">אזור מסוכן</span></div>
+    <div class="set-row"><div><div class="set-lbl">מחק את כל הנתונים</div><div class="set-desc">פעולה זו אינה ניתנת לביטול</div></div><button class="btn btn-danger" style="font-size:.78rem">מחק הכל</button></div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<!-- ══ MODAL: תלמיד חדש ══ -->
+<div class="modal-overlay" id="modal-new-student">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-new-student')">✕</button>
+    <div class="modal-title">תלמיד חדש</div>
+    <div class="modal-sub">מלא את פרטי התלמיד</div>
+    <div class="inp-row">
+      <div class="inp-group"><label class="inp-lbl">שם פרטי</label><input type="text" class="inp" placeholder="שם פרטי"></div>
+      <div class="inp-group"><label class="inp-lbl">שם משפחה</label><input type="text" class="inp" placeholder="שם משפחה"></div>
+    </div>
+    <div class="inp-group"><label class="inp-lbl">מספר טלפון</label><input type="tel" class="inp" placeholder="05X-XXXXXXX"></div>
+    <div class="inp-group"><label class="inp-lbl">אימייל</label><input type="email" class="inp" placeholder="example@gmail.com"></div>
+    <div class="inp-group"><label class="inp-lbl">עיר מגורים</label><input type="text" class="inp" placeholder="תל אביב, חיפה..."></div>
+    <div class="inp-group"><label class="inp-lbl">כתובת לאיסוף</label><input type="text" class="inp" placeholder="רחוב, מספר, עיר"></div>
+    <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:.4rem" onclick="closeModal('modal-new-student')">הוסף תלמיד</button>
+  </div>
+</div>
+
+<!-- ══ MODAL: הוסף הערה ══ -->
+<div class="modal-overlay" id="modal-note">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-note')">✕</button>
+    <div class="modal-title">הוסף הערה פדגוגית</div>
+    <div class="modal-sub">הערה תתעדכן בכרטיס התלמיד</div>
+    <div class="inp-group"><label class="inp-lbl">בחר תלמיד</label>
+      <select class="inp" id="note-student-select">
+        <option value="">בחר תלמיד...</option>
+        <option value="noa">נועה לוי</option>
+        <option value="yoav">יואב כהן</option>
+        <option value="ori">אורי בן-דוד</option>
+      </select>
+    </div>
+    <div class="inp-group"><label class="inp-lbl">ההערה</label><textarea class="inp" id="note-text" placeholder="כתוב הערה פדגוגית על השיעור..."></textarea></div>
+    <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:.4rem" onclick="saveNote()">שמור הערה</button>
+  </div>
+</div>
+
+<script>
+/* ── NAV ── */
+const navBtns = document.querySelectorAll('.nav-item[data-page]');
+const pages   = document.querySelectorAll('.page');
+navBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    navBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    pages.forEach(p => { p.classList.remove('active'); if(p.id==='page-'+btn.dataset.page) p.classList.add('active'); });
+    document.querySelector('.main').scrollTop = 0;
+  });
+});
+
+/* ── MODAL ── */
+function openModal(id){ document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
+document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) closeModal(o.id); }));
+document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(o=>closeModal(o.id)); });
+
+/* ── CALENDAR ── */
+const DAYS_HE = ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];
+const MONTHS_HE = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+
+// All lessons data keyed by date string YYYY-MM-DD
+const allLessons = {
+  '2025-04-07':[{t:'08:00',name:'נועה לוי',meta:'📍 הרצל 12, ת״א · שיעור #13',col:'lb-g',badge:'bg-green',label:'הסתיים'},{t:'10:00',name:'יואב כהן',meta:'📍 ז׳בוטינסקי 22 · שיעור #8',col:'lb-g',badge:'bg-green',label:'הסתיים'},{t:'14:00',name:'מיה אברהם',meta:'📍 שוק הכרמל · שיעור #10',col:'lb-g',badge:'bg-green',label:'הסתיים'}],
+  '2025-04-08':[{t:'09:00',name:'שירה מזרחי',meta:'📍 בן גוריון 5 · שיעור #2',col:'lb-g',badge:'bg-green',label:'הסתיים'},{t:'11:30',name:'אורי בן-דוד',meta:'📍 כיכר המדינה · שיעור #5',col:'lb-g',badge:'bg-green',label:'הסתיים'}],
+  '2025-04-09':[{t:'08:00',name:'נועה לוי',meta:'📍 הרצל 12, ת״א · שיעור #14',col:'lb-g',badge:'bg-green',label:'הסתיים'},{t:'10:00',name:'אורי בן-דוד',meta:'📍 כיכר המדינה · שיעור #6',col:'lb-gold',badge:'bg-gold',label:'עכשיו'},{t:'12:30',name:'שירה מזרחי',meta:'📍 בן גוריון 5, רמת גן · שיעור #3',col:'lb-b',badge:'bg-blue',label:'קרוב'},{t:'14:30',name:'יואב כהן',meta:'📍 ז׳בוטינסקי 22, פ״ת · שיעור #9',col:'lb-b',badge:'bg-blue',label:'קרוב'},{t:'17:00',name:'מיה אברהם',meta:'📍 שוק הכרמל · שיעור #11',col:'lb-b',badge:'bg-blue',label:'קרוב'}],
+  '2025-04-10':[{t:'09:00',name:'יואב כהן',meta:'📍 ז׳בוטינסקי 22 · שיעור #10',col:'lb-b',badge:'bg-blue',label:'קרוב'},{t:'13:00',name:'נועה לוי',meta:'📍 הרצל 12 · שיעור #15',col:'lb-b',badge:'bg-blue',label:'קרוב'}],
+  '2025-04-11':[{t:'10:00',name:'מיה אברהם',meta:'📍 שוק הכרמל · שיעור #12',col:'lb-b',badge:'bg-blue',label:'קרוב'}],
+  '2025-04-14':[{t:'08:00',name:'שירה מזרחי',meta:'📍 בן גוריון 5 · שיעור #4',col:'lb-b',badge:'bg-blue',label:'קרוב'}],
+};
+
+// Week start (Sunday = day 0 in JS, but we use Sunday as index 6 for Israel)
+// Start from a reference Sunday
+let weekOffset = 0; // weeks from reference
+const refMonday = new Date(2025, 3, 7); // April 7
+
+function getWeekStart(offset) {
+  const d = new Date(refMonday);
+  d.setDate(d.getDate() + offset * 7);
+  return d;
+}
+
+function dateStr(d) {
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function fmt(d){ return d.getDate()+'/'+(d.getMonth()+1); }
+
+function renderCalendar() {
+  const ws = getWeekStart(weekOffset);
+  const we = new Date(ws); we.setDate(we.getDate()+5);
+  const today = new Date(2025,3,9);
+
+  document.getElementById('cal-title').textContent = 'שבוע '+fmt(ws)+'–'+fmt(we)+' אפריל';
+  document.getElementById('cal-week-label').textContent = fmt(ws)+'–'+fmt(we)+' אפריל 2025';
+
+  const strip = document.getElementById('calStrip');
+  strip.innerHTML = '';
+  for(let i=0;i<6;i++){
+    const d = new Date(ws); d.setDate(d.getDate()+i);
+    const ds = dateStr(d);
+    const lessons = allLessons[ds]||[];
+    const isToday = ds === dateStr(today);
+    const div = document.createElement('div');
+    div.className = 'cd'+(isToday?' today active':'');
+    div.dataset.date = ds;
+    div.dataset.day = d.getDate()+'/'+(d.getMonth()+1);
+    const dots = lessons.slice(0,4).map(()=>'<span class="cdot g"></span>').join('');
+    div.innerHTML = `<span class="cdow">${DAYS_HE[i]}</span><span class="cdate">${d.getDate()}</span><div class="cdots">${dots}</div>`;
+    div.addEventListener('click', () => {
+      strip.querySelectorAll('.cd').forEach(x=>x.classList.remove('active'));
+      div.classList.add('active');
+      renderDayLessons(ds, d.getDate()+'/'+(d.getMonth()+1));
+    });
+    strip.appendChild(div);
+    if(isToday) renderDayLessons(ds, d.getDate()+'/'+(d.getMonth()+1));
+  }
+  // If today not in this week, show first day
+  const firstDs = dateStr(ws);
+  if(!document.querySelector('.cd.active')) renderDayLessons(firstDs, ws.getDate()+'/'+(ws.getMonth()+1));
+}
+
+function renderDayLessons(ds, label) {
+  const lessons = allLessons[ds]||[];
+  const d_names = {0:'ראשון',1:'שני',2:'שלישי',3:'רביעי',4:'חמישי',5:'שישי',6:'שבת'};
+  document.getElementById('day-title').textContent = 'שיעורים — '+label;
+  document.getElementById('day-count').textContent = lessons.length+' שיעורים';
+  const cont = document.getElementById('day-lessons');
+  if(!lessons.length){ cont.innerHTML='<div style="text-align:center;color:var(--w40);padding:1.5rem;font-size:.88rem">אין שיעורים ביום זה</div>'; return; }
+  cont.innerHTML = '<div class="ll">'+lessons.map(l=>`
+    <div class="li">
+      <div class="lt">${l.t}</div>
+      <div class="lb ${l.col}"></div>
+      <div class="li-info"><div class="li-name">${l.name}</div><div class="li-meta">${l.meta}</div></div>
+      <span class="badge ${l.badge}">${l.label}</span>
+    </div>`).join('')+'</div>';
+}
+
+document.getElementById('prevWeek').addEventListener('click',()=>{ weekOffset--; renderCalendar(); });
+document.getElementById('nextWeek').addEventListener('click',()=>{ weekOffset++; renderCalendar(); });
+renderCalendar();
+
+/* ── EXPORT CALENDAR ── */
+function exportCalendar(){
+  const ws = getWeekStart(weekOffset);
+  // Collect next 30 days lessons
+  let csv = 'תאריך,שעה,תלמיד,מיקום\n';
+  for(let i=0;i<30;i++){
+    const d = new Date(); d.setDate(d.getDate()+i);
+    // use allLessons approximation
+    const ds = dateStr(d);
+    (allLessons[ds]||[]).forEach(l=>{ csv+=ds+','+l.t+','+l.name+','+l.meta.replace(/📍 /,'')+'\n'; });
+  }
+  // Also add all known lessons
+  Object.entries(allLessons).forEach(([ds,ls])=>{ ls.forEach(l=>{ if(!csv.includes(ds)) csv+=ds+','+l.t+','+l.name+','+l.meta.replace(/📍 /,'')+'\n'; }); });
+  download('שיעורים_חודש_קרוב.csv', csv);
+}
+
+/* ── EXPORT STUDENTS ── */
+function exportStudents(){
+  document.getElementById('students-table-view').style.display='none';
+  document.getElementById('students-export-view').style.display='block';
+}
+
+/* ── PAYMENTS ── */
+const paymentData = [];
+function addPayment(){
+  const s=document.getElementById('pay-student').value;
+  const a=document.getElementById('pay-amount').value;
+  const m=document.getElementById('pay-method').value;
+  const n=document.getElementById('pay-notes').value;
+  if(!s||!a){alert('נא למלא שם תלמיד וסכום');return;}
+  paymentData.push({student:s,amount:a,method:m,notes:n,date:new Date().toLocaleDateString('he-IL')});
+  const tbody=document.getElementById('payments-table');
+  const initials=s.split(' ').map(w=>w[0]).join('');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><div class="nc"><div class="av">${initials}</div><div class="sn">${s}</div></div></td><td style="color:var(--w60)">${new Date().getDate()}/${new Date().getMonth()+1}</td><td>—</td><td style="color:var(--green);font-weight:700">₪${a}</td><td style="color:var(--w60)">${m}</td><td><span class="ps2 ps-paid">שולם</span></td>`;
+  tbody.prepend(tr);
+  document.getElementById('pay-student').value='';document.getElementById('pay-amount').value='';document.getElementById('pay-notes').value='';
+}
+function addDebt(){
+  const s=document.getElementById('debt-student').value;
+  const a=document.getElementById('debt-amount').value;
+  if(!s||!a){alert('נא למלא שם תלמיד וסכום');return;}
+  const tbody=document.getElementById('payments-table');
+  const initials=s.split(' ').map(w=>w[0]).join('');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><div class="nc"><div class="av">${initials}</div><div class="sn">${s}</div></div></td><td style="color:var(--red)">${new Date().getDate()}/${new Date().getMonth()+1}</td><td>חוב</td><td style="color:var(--red);font-weight:700">₪${a}</td><td style="color:var(--w60)">—</td><td><span class="ps2 ps-miss">חסר</span></td>`;
+  tbody.prepend(tr);
+  document.getElementById('debt-student').value='';document.getElementById('debt-amount').value='';document.getElementById('debt-reason').value='';
+}
+function exportPayments(){
+  let csv='תלמיד,תאריך,סכום,אמצעי תשלום,הערות\n';
+  csv+='נועה לוי,1/4,₪850,ביט,\n';
+  csv+='יואב כהן,8/4,₪680,מזומן,\n';
+  csv+='רון פרידמן,7/4,₪340,העברה,ממתין\n';
+  csv+='אייל שמש,2/4,₪510,,חסר\n';
+  paymentData.forEach(p=>{ csv+=p.student+','+p.date+',₪'+p.amount+','+p.method+','+p.notes+'\n'; });
+  download('תשלומים.csv',csv);
+}
+
+/* ── NOTE ── */
+function saveNote(){
+  const sel=document.getElementById('note-student-select').value;
+  const txt=document.getElementById('note-text').value.trim();
+  if(!sel||!txt){alert('נא לבחור תלמיד ולכתוב הערה');return;}
+  const el=document.getElementById('note-'+sel);
+  if(el) el.textContent=txt;
+  document.getElementById('note-text').value='';
+  closeModal('modal-note');
+}
+
+/* ── DAY TOGGLE ── */
+function toggleDay(btn){ btn.classList.toggle('on'); btn.textContent=btn.classList.contains('on')?'פעיל':'סגור'; }
+
+/* ── GCAL DISCONNECT ── */
+let gcalConnected=true;
+function disconnectGcal(){
+  gcalConnected=!gcalConnected;
+  document.getElementById('gcal-status').textContent=gcalConnected?'מחובר · david.cohen@gmail.com':'לא מחובר';
+  document.getElementById('gcal-btn').textContent=gcalConnected?'נתק':'חבר';
+}
+
+/* ── SYNC CAL ── */
+function syncCal(){ const b=event.target.closest('.btn'); b.textContent='מסנכרן...'; setTimeout(()=>b.innerHTML='<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>סנכרון לוח שנה',1500); }
+
+/* ── DOWNLOAD HELPER ── */
+function download(name, content){
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(content);
+  a.download=name; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+</script>
+</body>
+</html>

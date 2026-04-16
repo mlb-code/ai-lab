@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DriveLog — מערכת ניהול חכמה למורי נהיגה בישראל</title>
+<meta name="description" content="DriveLog היא מערכת הניהול החכמה למורי נהיגה בישראל. קבע שיעורים, עקוב אחרי תלמידים, נהל תשלומים ותיאם שיעורים — הכל במקום אחד. נסה 30 יום חינם.">
+<meta name="keywords" content="מורה נהיגה, תוכנה למורי נהיגה, ניהול שיעורי נהיגה, DriveLog, קביעת תורים לנהיגה">
+<meta name="robots" content="index, follow">
+<meta name="author" content="DriveLog">
+<link rel="canonical" href="https://www.drivelog.co.il/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.drivelog.co.il/">
+<meta property="og:title" content="DriveLog — מערכת ניהול חכמה למורי נהיגה">
+<meta property="og:description" content="הפסיקו לנהל את העסק שלכם בראש. DriveLog מרכז יומן, תלמידים, תשלומים ותקשורת — במקום אחד.">
+<meta property="og:locale" content="he_IL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DriveLog — מערכת ניהול למורי נהיגה">
+<meta name="twitter:description" content="קבע שיעורים, עקוב אחרי תלמידים ונהל תשלומים בקלות. נסה 30 יום חינם.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"DriveLog","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"מערכת ניהול חכמה למורי נהיגה בישראל","offers":[{"@type":"Offer","name":"מנוי חודשי","price":"79","priceCurrency":"ILS"},{"@type":"Offer","name":"מנוי שנתי","price":"120","priceCurrency":"ILS"}],"inLanguage":"he","url":"https://www.drivelog.co.il","aggregateRating":{"@type":"AggregateRating","ratingValue":"5","reviewCount":"3"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+img,svg{display:block;max-width:100%}
+
+/* ── TOKENS ── */
+:root{
+  --navy:#002147;
+  --mid:#003262;
+  --gold:#EF9B0F;
+  --gold-l:#f5b53f;
+  --gold-dim:rgba(239,155,15,0.12);
+  --gold-brd:rgba(239,155,15,0.28);
+  --w:rgba(255,255,255,1);
+  --w70:rgba(255,255,255,0.7);
+  --w50:rgba(255,255,255,0.5);
+  --w40:rgba(255,255,255,0.4);
+  --w15:rgba(255,255,255,0.11);
+  --w08:rgba(255,255,255,0.07);
+  --f:'Heebo',sans-serif;
+  --nav-h:62px;
+  --r16:16px;
+  --r20:20px;
+  --r24:24px;
+}
+
+/* ── BASE ── */
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--navy);color:var(--w);direction:rtl;overflow-x:hidden;line-height:1.6}
+
+/* ── TOPNAV ── */
+.topnav{
+  position:fixed;top:0;right:0;left:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;
+  background:rgba(0,33,71,0.96);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--w15);
+  height:var(--nav-h);
+}
+.nav-logo{
+  font-size:1.45rem;font-weight:900;
+  background:linear-gradient(135deg,var(--gold-l),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-decoration:none;flex-shrink:0;line-height:1;
+}
+.nav-center{
+  display:flex;flex-direction:row;gap:2rem;
+  list-style:none;align-items:center;margin:0;padding:0;
+}
+.nav-center a{color:var(--w70);text-decoration:none;font-size:.9rem;transition:color .2s;white-space:nowrap}
+.nav-center a:hover{color:var(--w)}
+.nav-auth{display:flex;flex-direction:row;gap:.6rem;align-items:center;flex-shrink:0}
+.btn-login{
+  background:transparent;color:var(--w70);
+  border:1px solid var(--w15);padding:.42rem 1.1rem;
+  border-radius:50px;font-family:var(--f);font-weight:500;font-size:.85rem;
+  cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block;white-space:nowrap;
+}
+.btn-login:hover{color:var(--w);border-color:var(--w40);background:var(--w08)}
+.btn-signup{
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  color:#002147;border:none;padding:.42rem 1.2rem;
+  border-radius:50px;font-family:var(--f);font-weight:800;font-size:.85rem;
+  cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block;white-space:nowrap;
+}
+.btn-signup:hover{opacity:.9;transform:translateY(-1px)}
+
+/* Hamburger */
+.nav-burger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:36px;height:36px;background:transparent;border:none;cursor:pointer;padding:4px;
+}
+.nav-burger span{
+  display:block;height:2px;width:100%;
+  background:var(--w70);border-radius:2px;transition:all .25s;
+}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── FULLSCREEN DRAWER ── */
+.nav-drawer{
+  position:fixed;inset:0;z-index:998;
+  display:flex;flex-direction:column;
+  background:linear-gradient(160deg,#001835 0%,#002147 40%,#002e5e 100%);
+  padding:calc(var(--nav-h) + 2.5rem) 2rem 3rem;
+  pointer-events:none;
+  opacity:0;
+  transform:translateY(-16px);
+  transition:opacity .35s cubic-bezier(.4,0,.2,1), transform .35s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;
+}
+.nav-drawer::before{
+  content:'';
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 10%,rgba(239,155,15,.07) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 50% at 10% 90%,rgba(0,80,160,.25) 0%,transparent 70%);
+  pointer-events:none;
+}
+.nav-drawer.open{
+  pointer-events:auto;
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Nav items */
+.drawer-nav{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;gap:.25rem;
+  flex:1;
+}
+.drawer-link{
+  display:flex;align-items:center;justify-content:space-between;
+  color:rgba(255,255,255,.55);text-decoration:none;
+  font-size:clamp(1.6rem,6vw,2.2rem);font-weight:700;line-height:1.2;
+  padding:.65rem 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  transition:color .2s, padding-right .2s;
+  opacity:0;transform:translateY(12px);
+  transition:opacity .3s ease, transform .3s ease, color .2s, padding-right .2s;
+}
+.drawer-link:last-child{border-bottom:none}
+.drawer-link:hover{color:var(--w);padding-right:.4rem}
+.drawer-link .arr{
+  font-size:1.2rem;opacity:0;transform:translateX(4px);
+  transition:opacity .2s,transform .2s;color:var(--gold);
+}
+.drawer-link:hover .arr{opacity:1;transform:translateX(0)}
+
+/* Staggered reveal */
+.nav-drawer.open .drawer-link:nth-child(1){opacity:1;transform:translateY(0);transition-delay:.05s}
+.nav-drawer.open .drawer-link:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.1s}
+.nav-drawer.open .drawer-link:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.15s}
+
+/* Bottom auth area */
+.drawer-bottom{
+  position:relative;z-index:1;
+  margin-top:2rem;padding-top:1.8rem;
+  border-top:1px solid rgba(255,255,255,.1);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .3s ease .25s, transform .3s ease .25s;
+}
+.nav-drawer.open .drawer-bottom{opacity:1;transform:translateY(0)}
+.drawer-bottom-label{
+  font-size:.72rem;font-weight:700;letter-spacing:2px;
+  color:var(--gold);text-transform:uppercase;margin-bottom:1rem;display:block;
+}
+.drawer-auth-btns{display:flex;gap:.8rem;flex-direction:column}
+.drawer-btn-login{
+  display:block;text-align:center;text-decoration:none;
+  border:1px solid rgba(255,255,255,.25);color:var(--w);
+  border-radius:14px;padding:.85rem;font-family:var(--f);
+  font-weight:600;font-size:1rem;
+  transition:background .2s,border-color .2s;
+}
+.drawer-btn-login:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.4)}
+.drawer-btn-signup{
+  display:block;text-align:center;text-decoration:none;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  color:#002147;border-radius:14px;padding:.85rem;
+  font-family:var(--f);font-weight:800;font-size:1rem;
+  transition:opacity .2s,transform .2s;
+}
+.drawer-btn-signup:hover{opacity:.9;transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:calc(var(--nav-h) + 4rem) 1.5rem 4rem;
+  text-align:center;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 25%,rgba(0,50,98,.85) 0%,transparent 75%),
+    radial-gradient(ellipse 45% 40% at 15% 75%,rgba(239,155,15,.06) 0%,transparent 60%),
+    var(--navy);
+}
+.hero-grid{
+  position:absolute;inset:0;z-index:0;opacity:.04;
+  background-image:linear-gradient(rgba(255,255,255,.8) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.8) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.hero-content{position:relative;z-index:1;max-width:820px;width:100%}
+.badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(239,155,15,.1);border:1px solid rgba(239,155,15,.22);
+  border-radius:50px;padding:.38rem 1.1rem;
+  font-size:.78rem;color:var(--gold-l);margin-bottom:1.6rem;
+  animation:fadeDown .6s ease both;
+}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold-l);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.hero h1{
+  font-size:clamp(2.2rem,7vw,5rem);font-weight:900;
+  line-height:1.08;letter-spacing:-1px;margin-bottom:1.2rem;
+  animation:fadeUp .7s .1s ease both;
+}
+.grad{
+  background:linear-gradient(135deg,var(--gold-l) 0%,var(--gold) 65%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:clamp(.95rem,2.5vw,1.12rem);color:var(--w70);
+  max-width:560px;margin:0 auto 2.2rem;font-weight:300;line-height:1.78;
+  animation:fadeUp .7s .2s ease both;
+}
+.hero-actions{
+  display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp .7s .3s ease both;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  color:#002147;border:none;padding:.85rem 2rem;
+  border-radius:50px;font-family:var(--f);font-weight:800;
+  font-size:clamp(.95rem,2.5vw,1.05rem);cursor:pointer;transition:all .25s;
+  box-shadow:0 0 28px rgba(239,155,15,.3);
+  text-decoration:none;display:inline-block;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(239,155,15,.5)}
+.btn-secondary{
+  background:var(--w08);color:var(--w);
+  border:1px solid var(--w15);padding:.85rem 2rem;
+  border-radius:50px;font-family:var(--f);font-weight:600;
+  font-size:clamp(.95rem,2.5vw,1.05rem);cursor:pointer;transition:all .25s;
+  text-decoration:none;display:inline-block;
+}
+.btn-secondary:hover{background:var(--w15);transform:translateY(-2px)}
+.hero-stats{
+  display:flex;gap:2rem;justify-content:center;margin-top:3.5rem;
+  flex-wrap:wrap;animation:fadeIn .8s .5s ease both;
+}
+.stat{text-align:center}
+.stat-num{
+  font-size:clamp(1.5rem,4vw,2rem);font-weight:900;
+  background:linear-gradient(135deg,var(--gold-l),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-label{font-size:.8rem;color:var(--w70);margin-top:.2rem}
+.hero-scroll{
+  position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  color:var(--w40);font-size:.7rem;animation:fadeIn 1s .8s ease both;
+}
+.scroll-arrow{width:14px;height:14px;border-right:1.5px solid var(--w40);border-bottom:1.5px solid var(--w40);transform:rotate(45deg);animation:bounce 1.5s infinite}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(5px)}}
+
+/* ── SHARED LAYOUT ── */
+.sec-pad{padding:5rem 1.5rem}
+.sec-inner{max-width:1100px;margin:0 auto}
+.sec-inner-sm{max-width:860px;margin:0 auto}
+.sec-inner-xs{max-width:800px;margin:0 auto}
+.section-tag{font-size:.7rem;font-weight:700;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem;display:block}
+.section-title{font-size:clamp(1.6rem,4vw,2.8rem);font-weight:900;line-height:1.18;letter-spacing:-.5px;margin-bottom:1rem}
+.section-sub{color:var(--w70);font-size:.97rem;max-width:580px;line-height:1.75}
+.divider{height:1px;max-width:1100px;margin:0 auto;background:linear-gradient(90deg,transparent,var(--w15),transparent)}
+
+/* ── PROBLEM ── */
+.problem-intro{
+  font-size:clamp(.95rem,2vw,1.08rem);color:var(--w70);
+  max-width:680px;line-height:1.82;margin-bottom:2.5rem;
+  font-weight:300;border-right:3px solid var(--gold);padding-right:1.1rem;
+}
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:0}
+.problem-card{
+  background:var(--w08);border:1px solid var(--w15);
+  border-radius:var(--r16);padding:1.5rem;
+  transition:transform .3s,border-color .3s;
+}
+.problem-card:hover{transform:translateY(-3px);border-color:var(--gold-brd)}
+.icon-wrap{
+  width:44px;height:44px;border-radius:11px;margin-bottom:1rem;
+  background:rgba(0,50,98,.8);border:1px solid var(--gold-brd);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.icon-wrap svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.problem-card h3{font-size:1rem;font-weight:700;margin-bottom:.45rem}
+.problem-card p{color:var(--w70);font-size:.86rem;line-height:1.65}
+
+/* ── FEATURES ── */
+.sol-section{padding:5rem 1.5rem;background:linear-gradient(180deg,transparent,rgba(0,50,98,.14),transparent)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:2.5rem}
+.feature-card{
+  background:var(--w08);border:1px solid var(--w15);
+  border-radius:var(--r20);padding:1.7rem;
+  transition:transform .3s,border-color .3s;
+}
+.feature-card.featured{background:linear-gradient(135deg,rgba(0,50,98,.55),rgba(0,50,98,.28));border-color:var(--gold-brd)}
+.feature-card:hover{transform:translateY(-4px);border-color:var(--gold-brd)}
+.feature-icon{
+  width:48px;height:48px;border-radius:13px;margin-bottom:1.1rem;
+  background:rgba(0,50,98,.8);border:1px solid var(--gold-brd);
+  display:flex;align-items:center;justify-content:center;
+}
+.feature-icon svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.feature-card h3{font-size:1rem;font-weight:700;margin-bottom:.45rem}
+.feature-card p{color:var(--w70);font-size:.86rem;line-height:1.65}
+.ftag{
+  display:inline-block;margin-top:.9rem;
+  background:var(--gold-dim);color:var(--gold-l);
+  border:1px solid var(--gold-brd);border-radius:50px;
+  font-size:.68rem;font-weight:700;padding:.2rem .75rem;
+}
+
+/* ── HOW ── */
+.steps{margin-top:3rem;display:flex;flex-direction:column;gap:1rem}
+.step{
+  display:flex;gap:1.2rem;align-items:flex-start;
+  background:var(--w08);border:1px solid var(--w15);
+  border-radius:var(--r16);padding:1.3rem 1.5rem;
+  transition:border-color .3s,background .3s;
+}
+.step:hover{border-color:var(--gold-brd);background:rgba(0,50,98,.28)}
+.step-num{
+  min-width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.88rem;flex-shrink:0;color:#002147;
+}
+.step-content h3{font-size:.97rem;font-weight:700;margin-bottom:.3rem}
+.step-content p{color:var(--w70);font-size:.86rem;line-height:1.65}
+
+/* ── TESTIMONIALS ── */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:2.5rem}
+.testimonial{
+  background:var(--w08);border:1px solid var(--w15);
+  border-radius:var(--r16);padding:1.6rem;
+  transition:border-color .3s;
+}
+.testimonial:hover{border-color:var(--gold-brd)}
+.t-stars{color:var(--gold);font-size:.82rem;margin-bottom:.9rem;letter-spacing:2px}
+.t-text{color:var(--w70);font-size:.88rem;line-height:1.72;margin-bottom:1.1rem}
+.t-author{display:flex;align-items:center;gap:.7rem}
+.t-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--mid),#004080);
+  border:1px solid var(--gold-brd);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.75rem;color:var(--gold-l);flex-shrink:0;
+}
+.t-name{font-weight:700;font-size:.84rem}
+.t-role{color:var(--w50);font-size:.74rem}
+
+/* ── PRICING ── */
+.pricing-bg{padding:5rem 1.5rem;background:linear-gradient(180deg,transparent,rgba(0,50,98,.1),transparent)}
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin-top:2.5rem;
+}
+.pricing-card{
+  background:var(--w08);border:1px solid var(--w15);
+  border-radius:var(--r24);padding:2rem;
+  position:relative;overflow:hidden;transition:transform .3s,border-color .3s;
+}
+.pricing-card.popular{
+  background:linear-gradient(135deg,rgba(0,50,98,.65),rgba(0,50,98,.38));
+  border-color:var(--gold-brd);
+}
+.pricing-card:hover{transform:translateY(-4px)}
+.popular-badge{
+  position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  color:#002147;font-size:.68rem;font-weight:800;
+  padding:.26rem 1.1rem;border-radius:0 0 10px 10px;white-space:nowrap;
+}
+.plan-name{font-size:.92rem;font-weight:600;color:var(--w70);margin-bottom:.3rem}
+.plan-price{font-size:2.6rem;font-weight:900;line-height:1;margin:.7rem 0;color:var(--gold)}
+.plan-price span{font-size:.9rem;font-weight:400;color:var(--w70)}
+.plan-desc{color:var(--w70);font-size:.84rem;margin-bottom:1.3rem;padding-bottom:1.3rem;border-bottom:1px solid var(--w08)}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.8rem}
+.plan-features li{display:flex;align-items:flex-start;gap:.55rem;font-size:.86rem;line-height:1.45}
+.check{color:var(--gold);font-size:.84rem;flex-shrink:0;margin-top:.1rem}
+.plan-btn{
+  width:100%;padding:.8rem;border-radius:11px;
+  font-family:var(--f);font-weight:700;font-size:.92rem;
+  cursor:pointer;transition:all .25s;text-align:center;border:none;
+}
+.plan-btn-outline{background:transparent;color:var(--w);border:1px solid var(--w40)}
+.plan-btn-outline:hover{background:var(--w08)}
+.plan-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:#002147}
+.plan-btn-gold:hover{opacity:.9}
+
+/* ── CTA ── */
+.cta-section{padding:6rem 1.5rem;text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 65% 75% at 50% 50%,rgba(0,50,98,.55),transparent)}
+.cta-content{position:relative;z-index:1;max-width:620px;margin:0 auto}
+.cta-content h2{font-size:clamp(1.8rem,5vw,3.2rem);font-weight:900;margin-bottom:1rem;line-height:1.12}
+.cta-content > p{color:var(--w70);font-size:clamp(.95rem,2vw,1.05rem);margin-bottom:2.2rem;line-height:1.72}
+
+/* ── FOOTER ── */
+.footer-outer{background:rgba(0,15,40,.5);border-top:1px solid var(--w15)}
+.footer-main{
+  max-width:1100px;margin:0 auto;
+  padding:3rem 1.5rem 2rem;
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr 1fr;
+  gap:2.5rem;
+}
+.flogo{
+  font-size:1.3rem;font-weight:900;
+  background:linear-gradient(135deg,var(--gold-l),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;margin-bottom:.75rem;
+}
+.footer-brand p{color:var(--w50);font-size:.82rem;line-height:1.65;max-width:200px}
+.footer-col h4{font-size:.68rem;font-weight:700;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;margin-bottom:.9rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.48rem;padding:0}
+.footer-col ul a{color:var(--w50);text-decoration:none;font-size:.83rem;transition:color .2s}
+.footer-col ul a:hover{color:var(--w)}
+.footer-bottom{
+  max-width:1100px;margin:0 auto;
+  padding:1rem 1.5rem;border-top:1px solid var(--w08);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;
+}
+.footer-copy{color:var(--w40);font-size:.76rem}
+.footer-legal{display:flex;gap:1.2rem}
+.footer-legal a{color:var(--w40);font-size:.76rem;text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:var(--w70)}
+
+/* ── BREAKPOINTS ── */
+
+/* Tablet — 1024px */
+@media(max-width:1024px){
+  .topnav{padding:0 1.8rem}
+  .nav-center{gap:1.4rem}
+  .footer-main{grid-template-columns:1.2fr 1fr 1fr 1fr;gap:1.8rem}
+}
+
+/* Tablet portrait — 768px */
+@media(max-width:768px){
+  :root{--nav-h:56px}
+  .topnav{padding:0 1.2rem}
+  .nav-center{display:none}
+  .nav-auth{display:none}
+  .nav-burger{display:flex}
+
+  .hero{padding:calc(var(--nav-h) + 3rem) 1.2rem 3rem}
+  .hero h1{letter-spacing:-.5px}
+  .hero-actions{flex-direction:column;align-items:center}
+  .btn-primary,.btn-secondary{width:100%;max-width:320px;text-align:center}
+  .hero-stats{gap:1.5rem;margin-top:2.5rem}
+
+  .sec-pad{padding:4rem 1.2rem}
+  .sol-section{padding:4rem 1.2rem}
+  .pricing-bg{padding:4rem 1.2rem}
+  .cta-section{padding:4.5rem 1.2rem}
+
+  .problem-grid{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr}
+  .testimonials-grid{grid-template-columns:1fr}
+
+  .pricing-grid{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}
+  .pricing-card.popular{transform:none}
+
+  .footer-main{grid-template-columns:1fr 1fr;gap:2rem}
+  .footer-brand{grid-column:1/-1}
+  .footer-brand p{max-width:100%}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:.5rem}
+}
+
+/* Mobile — 480px */
+@media(max-width:480px){
+  .hero h1{font-size:clamp(1.9rem,9vw,2.4rem)}
+  .badge{font-size:.74rem;padding:.32rem .9rem}
+  .hero-stats{flex-direction:row;justify-content:space-around;width:100%}
+  .stat-num{font-size:1.4rem}
+
+  .section-title{font-size:clamp(1.4rem,6vw,1.9rem)}
+  .problem-intro{font-size:.92rem}
+
+  .step{flex-direction:row}
+  .step-num{min-width:36px;height:36px;font-size:.8rem}
+
+  .plan-price{font-size:2.2rem}
+
+  .footer-main{grid-template-columns:1fr}
+  .footer-legal{flex-wrap:wrap;gap:.8rem}
+
+  .cta-content h2{font-size:clamp(1.6rem,7vw,2.2rem)}
+}
+
+/* Small mobile — 360px */
+@media(max-width:360px){
+  .topnav{padding:0 .9rem}
+  .nav-logo{font-size:1.25rem}
+  .btn-primary,.btn-secondary{padding:.75rem 1.4rem;font-size:.9rem}
+}
+
+/* ── LOGIN MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(0,10,25,.75);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  padding:1.5rem;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s ease;
+}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{
+  background:linear-gradient(160deg,#002d5a,#001e40);
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:22px;
+  padding:2rem 1.8rem 1.8rem;
+  width:100%;max-width:400px;
+  transform:translateY(16px) scale(.97);
+  transition:transform .28s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+.modal-overlay.open .modal{transform:translateY(0) scale(1)}
+.modal-close{
+  position:absolute;top:1rem;left:1rem;
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .15s;color:rgba(255,255,255,.5);
+  font-size:.85rem;line-height:1;
+}
+.modal-close:hover{background:rgba(255,255,255,.13);color:#fff}
+.modal-logo{
+  font-size:1.1rem;font-weight:900;
+  background:linear-gradient(135deg,var(--gold-l),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:1.4rem;display:block;
+}
+.modal-title{font-size:1.2rem;font-weight:900;margin-bottom:.35rem;letter-spacing:-.3px}
+.modal-sub{font-size:.85rem;color:rgba(255,255,255,.55);margin-bottom:1.8rem;line-height:1.55}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.4rem}
+.role-card{
+  display:flex;flex-direction:column;align-items:center;gap:.7rem;
+  padding:1.3rem 1rem;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;cursor:pointer;
+  transition:all .2s;text-align:center;text-decoration:none;color:var(--w);
+}
+.role-card:hover{background:rgba(239,155,15,.1);border-color:rgba(239,155,15,.35);transform:translateY(-2px)}
+.role-card.teacher:hover{background:rgba(239,155,15,.12);border-color:rgba(239,155,15,.4)}
+.role-card.student:hover{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.35)}
+.role-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+}
+.role-icon.t{background:rgba(239,155,15,.15);border:1px solid rgba(239,155,15,.25)}
+.role-icon.s{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.22)}
+.role-icon svg{width:22px;height:22px;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.role-icon.t svg{stroke:var(--gold)}
+.role-icon.s svg{stroke:#60a5fa}
+.role-name{font-size:.95rem;font-weight:700}
+.role-desc{font-size:.72rem;color:rgba(255,255,255,.45);line-height:1.4}
+.modal-divider{text-align:center;font-size:.74rem;color:rgba(255,255,255,.3);margin-bottom:1.1rem}
+</style>
+</head>
+<body>
+
+<!-- ══ TOPNAV ══ -->
+<div class="topnav" role="navigation" aria-label="ניווט ראשי">
+  <a href="/" class="nav-logo" aria-label="DriveLog דף הבית">DriveLog</a>
+
+  <ul class="nav-center">
+    <li><a href="#features">יכולות</a></li>
+    <li><a href="#how">איך זה עובד</a></li>
+    <li><a href="#pricing">מחירים</a></li>
+  </ul>
+
+  <div class="nav-auth">
+    <button class="btn-login" id="loginBtn">התחבר</button>
+    <a href="/signup" class="btn-signup">הירשם בחינם</a>
+  </div>
+
+  <button class="nav-burger" aria-label="פתח תפריט" aria-expanded="false" id="burger">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<!-- Fullscreen mobile menu -->
+<div class="nav-drawer" id="drawer" role="dialog" aria-modal="true" aria-label="תפריט ניווט">
+  <nav class="drawer-nav">
+    <a href="#features" class="drawer-link">יכולות <span class="arr">←</span></a>
+    <a href="#how" class="drawer-link">איך זה עובד <span class="arr">←</span></a>
+    <a href="#pricing" class="drawer-link">מחירים <span class="arr">←</span></a>
+  </nav>
+  <div class="drawer-bottom">
+    <span class="drawer-bottom-label">כניסה למערכת</span>
+    <div class="drawer-auth-btns">
+      <button class="drawer-btn-login" id="drawerLoginBtn">התחבר</button>
+      <a href="/signup" class="drawer-btn-signup">הירשם בחינם ←</a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- ══ HERO ══ -->
+<section class="hero" aria-label="כותרת ראשית">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-content">
+    <h1>ניהול שיעורי נהיגה<br><span class="grad">חכם, פשוט, ברור.</span></h1>
+    <p class="hero-sub">מערכת הניהול החכמה שתחסוך לך שעות כל שבוע — קבע תורים, עקוב אחרי תלמידים, ונהל תשלומים, הכל במקום אחד.</p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-primary">התחל 30 יום בחינם ←</a>
+      <a href="#how" class="btn-secondary">ראה איך זה עובד</a>
+    </div>
+    <div class="hero-stats" aria-label="נתוני מפתח">
+      <div class="stat"><div class="stat-num">3X</div><div class="stat-label">פחות בזבוז זמן</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">מרכוז המידע</div></div>
+      <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">גישה מכל מקום</div></div>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true"><span>גלול</span><div class="scroll-arrow"></div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PROBLEM ══ -->
+<section aria-labelledby="problem-title">
+  <div class="sec-pad">
+    <div class="sec-inner">
+      <span class="section-tag">הבעיה</span>
+      <h2 class="section-title" id="problem-title">מורי נהיגה מנהלים עסק שלם<br>בראש אחד</h2>
+      <p class="problem-intro">
+        אנחנו יודעים שהיום שלכם לא נגמר כשאתם יוצאים מהרכב. בין ניהול יומן עמוס לתיאומים בלתי נגמרים בוואטסאפ, הגיע הזמן למערכת שעובדת בשבילכם — כדי שתוכלו להתרכז בלהוביל את התלמידים שלכם לרישיון, בראש שקט.
+      </p>
+      <div class="problem-grid">
+        <article class="problem-card">
+          <div class="icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h3>לוח זמנים כאוטי</h3>
+          <p>תלמידים מבטלים ומזיזים שיעורים בזמן שאתה נוהג. כפל תורים וחורים בלו"ז הופכים לשגרה יומית מתישה.</p>
+        </article>
+        <article class="problem-card">
+          <div class="icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3>מעקב פדגוגי בראש</h3>
+          <p>מי עשה חניה? מי מוכן לטסט? כל המידע על ההתקדמות נמצא בזיכרון או במחברת — ונשכח ברגע הקריטי.</p>
+        </article>
+        <article class="problem-card">
+          <div class="icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <h3>תיאומים אינסופיים</h3>
+          <p>עשרות שיחות והודעות שקוטעות כל שיעור. כל שאלה פשוטה הופכת להסחת דעת שמסכנת את הריכוז בדרך.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ FEATURES ══ -->
+<section class="sol-section" id="features" aria-labelledby="features-title">
+  <div class="sec-inner">
+    <span class="section-tag">הפתרון</span>
+    <h2 class="section-title" id="features-title">כל מה שצריך כדי להיות<br><span class="grad">מורה נהיגה מוצלח</span></h2>
+    <p class="section-sub">DriveLog מרכז את כל ניהול הנהיגה שלך במקום אחד — כך שתוכל להתרכז בהוראה.</p>
+    <div class="features-grid">
+      <article class="feature-card featured">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>יומן חכם לתיאום שיעורים</h3>
+        <p>תלמידים קובעים, מבטלים ומזיזים שיעורים דרך המערכת — בלי להפריע לך. הכל מסונכרן אוטומטית עם לוח השנה שלך.</p>
+        <span class="ftag">חיבור Google Calendar</span>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>מיקום איסוף והורדה</h3>
+        <p>בכל קביעת תור, התלמיד מצרף את מיקום האיסוף וההורדה — בלי שיחות טלפון מיותרות לפני כל שיעור.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3>מעקב התקדמות פדגוגי</h3>
+        <p>עקוב אחרי כל תלמיד: חניה, כבישים מהירים, תיאוריה, מוכנות לטסט — הכל תועד ונגיש בכל רגע.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <h3>מעקב שיעורים ותשלומים</h3>
+        <p>כמה שיעורים נלקחו? כמה שולם? כמה נשאר? תמונה פיננסית ברורה לכל תלמיד בכל רגע.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ HOW ══ -->
+<section id="how" aria-labelledby="how-title">
+  <div class="sec-pad">
+    <div class="sec-inner-sm">
+      <span class="section-tag">איך זה עובד</span>
+      <h2 class="section-title" id="how-title">פשוט להתחיל,<br>קל להמשיך</h2>
+      <div class="steps">
+        <article class="step">
+          <div class="step-num" aria-label="שלב 1">1</div>
+          <div class="step-content">
+            <h3>הגדר את מערכת העבודה שלך לשבוע</h3>
+            <p>בתחילת כל שבוע, הגדר את שעות הזמינות שלך — DriveLog מפרסם אותן אוטומטית לתלמידים ומסתנכרן עם Google Calendar.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div class="step-num" aria-label="שלב 2">2</div>
+          <div class="step-content">
+            <h3>תלמידים בוחרים זמן ומציינים מיקום</h3>
+            <p>התלמיד נכנס, בוחר שעה נוחה, ממלא מיקום איסוף והורדה — ומקבל אישור מיידי. בלי שיחה אחת.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div class="step-num" aria-label="שלב 3">3</div>
+          <div class="step-content">
+            <h3>תעד ועקוב אחרי כל שיעור</h3>
+            <p>אחרי כל שיעור, הוסף הערות פדגוגיות, עדכן מספר שיעורים ותשלומים — הכל נשמר בענן ונגיש תמיד.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div class="step-num" aria-label="שלב 4">4</div>
+          <div class="step-content">
+            <h3>מבט 360°</h3>
+            <p>ראה את כל התמונה — מי מוכן לטסט, מי חייב כסף, מי לא קבע שיעור זה זמן. DriveLog עובד בשבילך.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section aria-labelledby="why-title">
+  <div class="sec-pad">
+    <div class="sec-inner">
+      <span class="section-tag">מה אומרים עלינו</span>
+      <h2 class="section-title" id="why-title">למה לבחור בנו</h2>
+      <div class="testimonials-grid">
+        <article class="testimonial">
+          <div class="t-stars" aria-label="5 כוכבים">★★★★★</div>
+          <p class="t-text">"סוף סוף אני לא צריך לזכור כמה שיעורים עשה כל תלמיד. הכל שם, ברור ומסודר."</p>
+          <div class="t-author">
+            <div class="t-avatar" aria-hidden="true">יד</div>
+            <div><div class="t-name">יוסי דוד</div><div class="t-role">מורה נהיגה, תל אביב</div></div>
+          </div>
+        </article>
+        <article class="testimonial">
+          <div class="t-stars" aria-label="5 כוכבים">★★★★★</div>
+          <p class="t-text">"הביטולים הפכו ממשהו שמלחיץ למשהו שמנהל את עצמו. התלמיד מבטל דרך המערכת ואני מקבל התראה — זהו."</p>
+          <div class="t-author">
+            <div class="t-avatar" aria-hidden="true">מב</div>
+            <div><div class="t-name">מיכל בן-דוד</div><div class="t-role">מורת נהיגה, חיפה</div></div>
+          </div>
+        </article>
+        <article class="testimonial">
+          <div class="t-stars" aria-label="5 כוכבים">★★★★★</div>
+          <p class="t-text">"הוואטסאפ ירד ב-80%. התלמידים מסתדרים לבד דרך המערכת ואני יכול להתרכז בנהיגה."</p>
+          <div class="t-author">
+            <div class="t-avatar" aria-hidden="true">אכ</div>
+            <div><div class="t-name">אבי כהן</div><div class="t-role">מורה נהיגה, ירושלים</div></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PRICING ══ -->
+<section class="pricing-bg" id="pricing" aria-labelledby="pricing-title">
+  <div class="sec-inner-xs">
+    <span class="section-tag" style="text-align:center;display:block">מחירים</span>
+    <h2 class="section-title" id="pricing-title" style="text-align:center">השקעה קטנה, חיסכון גדול</h2>
+    <p style="text-align:center;color:var(--w70);font-size:.95rem">ניסיון חינם של 30 יום, ללא כרטיס אשראי</p>
+    <div class="pricing-grid">
+      <article class="pricing-card">
+        <div class="plan-name">חודשי</div>
+        <div class="plan-price">₪179 <span>/ חודש</span></div>
+        <p class="plan-desc">גמישות מלאה, בטל בכל עת</p>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> יומן ותיאום שיעורים</li>
+          <li><span class="check">✓</span> מעקב תלמידים ותשלומים</li>
+          <li><span class="check">✓</span> חיבור Google Calendar</li>
+          <li><span class="check">✓</span> מיקום איסוף והורדה</li>
+          <li><span class="check">✓</span> עד 30 תלמידים פעילים</li>
+        </ul>
+        <button class="plan-btn plan-btn-outline">התחל חינם</button>
+      </article>
+      <article class="pricing-card popular">
+        <div class="popular-badge">הכי משתלם</div>
+        <div class="plan-name">שנתי</div>
+        <div class="plan-price">₪120 <span>/ חודש</span></div>
+        <p class="plan-desc">₪1,440 לשנה — חיסכון לעומת מנוי חודשי</p>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> הכל בתוכנית החודשית</li>
+          <li><span class="check">✓</span> תלמידים ללא הגבלה</li>
+          <li><span class="check">✓</span> מעקב התקדמות פדגוגי מלא</li>
+          <li><span class="check">✓</span> דוחות ונתונים</li>
+          <li><span class="check">✓</span> תמיכה בעדיפות</li>
+        </ul>
+        <button class="plan-btn plan-btn-gold">התחל 30 יום בחינם ←</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section" id="contact" aria-labelledby="cta-title">
+  <div class="cta-bg" aria-hidden="true"></div>
+  <div class="cta-content">
+    <h2 id="cta-title">מוכן לייעל את<br><span class="grad">שיעורי הנהיגה שלך?</span></h2>
+    <p>הצטרף למורי נהיגה שכבר חסכו שעות בכל שבוע.<br>30 יום בחינם, ללא כרטיס אשראי.</p>
+    <a href="/signup" class="btn-primary" style="font-size:1.05rem;padding:.9rem 2.2rem">התחל עכשיו — בחינם ←</a>
+    <p style="margin-top:1.1rem;font-size:.78rem;color:var(--w40)">ללא התחייבות · ביטול בכל עת · תמיכה בעברית</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer-outer" role="contentinfo">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <span class="flogo">DriveLog</span>
+      <p>מערכת הניהול החכמה למורי נהיגה בישראל. חסכו זמן, הגדילו הכנסות, תנו שיעורים טובים יותר.</p>
+    </div>
+    <nav class="footer-col" aria-label="מוצר">
+      <h4>מוצר</h4>
+      <ul>
+        <li><a href="#features">יכולות</a></li>
+        <li><a href="#how">איך זה עובד</a></li>
+        <li><a href="#pricing">מחירים</a></li>
+        <li><a href="/changelog">עדכונים</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="חברה">
+      <h4>חברה</h4>
+      <ul>
+        <li><a href="/about">אודות</a></li>
+        <li><a href="/blog">בלוג</a></li>
+        <li><a href="/contact">צור קשר</a></li>
+        <li><a href="/help">מרכז עזרה</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="משפטי">
+      <h4>משפטי</h4>
+      <ul>
+        <li><a href="/privacy">מדיניות פרטיות</a></li>
+        <li><a href="/terms">תנאי שימוש</a></li>
+        <li><a href="/accessibility">נגישות</a></li>
+        <li><a href="/sitemap.xml">מפת אתר</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 DriveLog בע"מ. כל הזכויות שמורות.</span>
+    <div class="footer-legal">
+      <a href="/privacy">פרטיות</a>
+      <a href="/terms">תנאים</a>
+      <a href="/sitemap.xml">מפת אתר</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ LOGIN MODAL ══ -->
+<div class="modal-overlay" id="loginModal" role="dialog" aria-modal="true" aria-label="בחר סוג משתמש">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="סגור">✕</button>
+    <span class="modal-logo">DriveLog</span>
+    <div class="modal-title">ברוכים השבים 👋</div>
+    <div class="modal-sub">בחרו כיצד להתחבר<br>כדי שנוביל אתכם למקום הנכון</div>
+    <div class="role-grid">
+      <a href="drivelog-dashboard.html" class="role-card teacher">
+        <div class="role-icon t">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><line x1="18" y1="2" x2="18" y2="8"/><line x1="15" y1="5" x2="21" y2="5"/></svg>
+        </div>
+        <div class="role-name">מורה נהיגה</div>
+        <div class="role-desc">גישה לדשבורד הניהול המלא</div>
+      </a>
+      <a href="drivelog-student.html" class="role-card student">
+        <div class="role-icon s">
+          <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <div class="role-name">תלמיד</div>
+        <div class="role-desc">גישה לאזור האישי שלי</div>
+      </a>
+    </div>
+    <div class="modal-divider">עדיין אין לך חשבון? <a href="/signup" style="color:var(--gold-l);font-weight:700;text-decoration:none">הירשם בחינם ←</a></div>
+  </div>
+</div>
+
+<script>
+/* ── Smooth scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){
+      e.preventDefault();
+      closeDrawer();
+      setTimeout(()=>t.scrollIntoView({behavior:'smooth',block:'start'}),50);
+    }
+  });
+});
+
+/* ── Hamburger / Fullscreen drawer ── */
+const burger=document.getElementById('burger');
+const drawer=document.getElementById('drawer');
+
+function openDrawer(){
+  drawer.classList.add('open');
+  burger.classList.add('open');
+  burger.setAttribute('aria-expanded','true');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  drawer.classList.remove('open');
+  burger.classList.remove('open');
+  burger.setAttribute('aria-expanded','false');
+  document.body.style.overflow='';
+}
+
+burger.addEventListener('click',()=>{
+  drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+});
+
+/* Close on backdrop tap (outside drawer content) */
+drawer.addEventListener('click',e=>{
+  if(e.target===drawer) closeDrawer();
+});
+
+/* Close on Escape */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeDrawer();
+});
+
+/* ── Login Modal ── */
+const loginModal  = document.getElementById('loginModal');
+const loginBtn    = document.getElementById('loginBtn');
+const drawerLoginBtn = document.getElementById('drawerLoginBtn');
+const modalClose  = document.getElementById('modalClose');
+
+function openModal(){
+  loginModal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  loginModal.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+loginBtn.addEventListener('click', openModal);
+drawerLoginBtn.addEventListener('click', () => { closeDrawer(); openModal(); });
+modalClose.addEventListener('click', closeModal);
+loginModal.addEventListener('click', e => { if(e.target === loginModal) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
+    }
+  });
+},{threshold:.07});
+document.querySelectorAll('.problem-card,.feature-card,.step,.testimonial,.pricing-card').forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(18px)';
+  el.style.transition='opacity .5s ease,transform .5s ease,border-color .3s,background .3s';
+  obs.observe(el);
+});
+</script>
+
+</body>
+</html>

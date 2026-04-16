@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DriveLog — האזור האישי שלי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#002147;--mid:#003262;--panel:#002d5a;--panel2:#001e40;
+  --gold:#EF9B0F;--gold-l:#f5b53f;
+  --gold-dim:rgba(239,155,15,0.12);--gold-brd:rgba(239,155,15,0.22);
+  --w:#fff;--w80:rgba(255,255,255,.8);--w60:rgba(255,255,255,.6);
+  --w40:rgba(255,255,255,.4);--w15:rgba(255,255,255,.12);
+  --w10:rgba(255,255,255,.09);--w06:rgba(255,255,255,.055);
+  --green:#22c55e;--green-dim:rgba(34,197,94,.12);
+  --red:#ef4444;--red-dim:rgba(239,68,68,.12);
+  --blue:#3b82f6;--blue-dim:rgba(59,130,246,.12);
+  --topbar:58px;--f:'Heebo',sans-serif;--r:12px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--f);background:var(--navy);color:var(--w);direction:rtl;display:flex;flex-direction:column}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:fixed;top:0;right:0;left:0;z-index:100;
+  height:var(--topbar);display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;
+  background:rgba(0,25,60,.97);border-bottom:1px solid var(--w10);
+  backdrop-filter:blur(16px);
+}
+.tlogo{font-size:1.3rem;font-weight:900;background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.tlogo span{font-size:.6rem;-webkit-text-fill-color:var(--gold);opacity:.65;margin-right:.3rem}
+.tright{display:flex;align-items:center;gap:.8rem}
+.user-pill{display:flex;align-items:center;gap:.55rem;background:var(--w06);border:1px solid var(--w10);border-radius:50px;padding:.28rem .6rem .28rem .85rem;cursor:pointer}
+.user-pill:hover{background:var(--w10)}
+.uav{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--mid),#004080);border:1px solid var(--gold-brd);display:flex;align-items:center;justify-content:center;font-size:.66rem;font-weight:700;color:var(--gold-l)}
+.uname{font-size:.8rem;color:var(--w60)}
+
+/* ── LAYOUT ── */
+.shell{display:flex;padding-top:var(--topbar);height:100vh}
+
+/* ── TABS SIDEBAR ── */
+.sidebar{
+  width:180px;flex-shrink:0;
+  background:var(--panel2);border-left:1px solid var(--w10);
+  display:flex;flex-direction:column;padding:1.2rem .7rem 1.5rem;gap:.15rem;
+  overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--w10)}
+.sb-lbl{font-size:.58rem;font-weight:700;letter-spacing:2px;color:var(--w40);text-transform:uppercase;padding:.7rem .5rem .3rem;margin-top:.3rem}
+.tab{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.58rem .7rem;border-radius:var(--r);
+  color:var(--w60);font-size:.84rem;font-weight:500;
+  cursor:pointer;border:none;background:transparent;width:100%;text-align:right;
+  transition:all .15s;
+}
+.tab svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.tab:hover{background:var(--w06);color:var(--w80)}
+.tab.active{background:var(--gold-dim);color:var(--gold-l);border:1px solid var(--gold-brd)}
+.tab.active svg{stroke:var(--gold)}
+.sb-foot{margin-top:auto;padding-top:1rem;border-top:1px solid var(--w10)}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;padding:1.6rem 1.4rem;display:flex;flex-direction:column;gap:1.2rem}
+.main::-webkit-scrollbar{width:5px}
+.main::-webkit-scrollbar-thumb{background:var(--w10);border-radius:3px}
+
+/* ── PAGES ── */
+.page{display:none;flex-direction:column;gap:1.2rem;animation:pin .2s ease}
+.page.active{display:flex}
+@keyframes pin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SHARED ── */
+.ph{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.pt{font-size:1.3rem;font-weight:900;letter-spacing:-.3px}
+.ps{font-size:.82rem;color:var(--w60);margin-top:.15rem}
+.btn{padding:.44rem .9rem;border-radius:8px;font-family:var(--f);font-weight:600;font-size:.8rem;cursor:pointer;transition:all .18s;border:none;display:inline-flex;align-items:center;gap:.35rem}
+.btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:#002147}
+.btn-gold:hover{opacity:.9}
+.btn-ghost{background:var(--w06);color:var(--w80);border:1px solid var(--w10)}
+.btn-ghost:hover{background:var(--w10)}
+.btn-wa{background:rgba(37,211,102,.15);color:#25d366;border:1px solid rgba(37,211,102,.25)}
+.btn-wa:hover{background:rgba(37,211,102,.25)}
+
+.card{background:var(--panel);border:1px solid var(--w10);border-radius:var(--r);overflow:hidden}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;border-bottom:1px solid var(--w10)}
+.ct{font-size:.86rem;font-weight:700;color:var(--w80)}
+.cb{padding:.9rem 1.1rem}
+
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+
+/* Stat box */
+.stat-box{background:var(--w06);border:1px solid var(--w10);border-radius:10px;padding:.85rem 1rem}
+.sb-val{font-size:1.6rem;font-weight:900;line-height:1}
+.sb-lbl2{font-size:.72rem;color:var(--w60);margin-top:.25rem}
+
+/* Progress ring */
+.ring-wrap{display:flex;align-items:center;gap:1.2rem;padding:.6rem 0}
+.ring{position:relative;width:80px;height:80px;flex-shrink:0}
+.ring svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--w10);stroke-width:6}
+.ring-fill{fill:none;stroke-width:6;stroke-linecap:round}
+.ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:900}
+.ring-info{}
+.ring-title{font-size:.95rem;font-weight:700}
+.ring-sub{font-size:.78rem;color:var(--w60);margin-top:.2rem;line-height:1.5}
+
+/* Skill list */
+.skill-row{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--w06)}
+.skill-row:last-child{border-bottom:none}
+.skill-name{font-size:.85rem;font-weight:500}
+.skill-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* Lesson history */
+.lesson-row{display:flex;align-items:center;gap:.8rem;padding:.65rem 0;border-bottom:1px solid var(--w06);cursor:pointer}
+.lesson-row:last-child{border-bottom:none}
+.lesson-row:hover .lr-name{color:var(--gold-l)}
+.lr-date{font-size:.78rem;color:var(--w60);min-width:65px;flex-shrink:0}
+.lr-bar{width:3px;height:28px;border-radius:2px;flex-shrink:0}
+.bar-g{background:var(--green)}.bar-gold{background:var(--gold)}.bar-b{background:var(--blue)}
+.lr-name{font-size:.84rem;font-weight:600;transition:color .15s}
+.lr-note{font-size:.74rem;color:var(--w60);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
+.lr-num{margin-right:auto;font-size:.72rem;color:var(--w40)}
+.badge{font-size:.63rem;font-weight:700;padding:.18rem .5rem;border-radius:5px;flex-shrink:0;white-space:nowrap}
+.bg-g{background:var(--green-dim);color:var(--green)}
+.bg-gold{background:var(--gold-dim);color:var(--gold-l)}
+.bg-b{background:var(--blue-dim);color:var(--blue)}
+.bg-r{background:var(--red-dim);color:var(--red)}
+
+/* Payment row */
+.pay-row{display:flex;align-items:center;justify-content:space-between;padding:.65rem 0;border-bottom:1px solid var(--w06)}
+.pay-row:last-child{border-bottom:none}
+.pay-desc{font-size:.84rem;font-weight:500}
+.pay-sub{font-size:.73rem;color:var(--w60);margin-top:.1rem}
+.pay-amt{font-size:.9rem;font-weight:700}
+
+/* Next lesson card */
+.next-card{
+  background:linear-gradient(135deg,rgba(0,50,98,.7),rgba(0,40,80,.5));
+  border:1px solid var(--gold-brd);border-radius:var(--r);
+  padding:1.1rem 1.2rem;display:flex;align-items:center;gap:1.2rem;
+}
+.next-icon{width:44px;height:44px;border-radius:12px;background:var(--gold-dim);border:1px solid var(--gold-brd);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.next-icon svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.next-info{flex:1;min-width:0}
+.next-title{font-size:.86rem;font-weight:700}
+.next-sub{font-size:.78rem;color:var(--w60);margin-top:.2rem}
+.next-actions{display:flex;gap:.5rem;flex-shrink:0}
+
+/* Note box */
+.note-box{background:var(--w06);border:1px solid var(--w10);border-radius:9px;padding:.85rem 1rem;font-size:.84rem;color:var(--w80);line-height:1.6}
+.note-date{font-size:.7rem;color:var(--w40);margin-top:.5rem}
+
+/* Input */
+.inp{background:var(--w06);border:1px solid var(--w10);border-radius:9px;padding:.55rem .85rem;font-family:var(--f);font-size:.84rem;color:var(--w);direction:rtl;outline:none;transition:border-color .2s;width:100%}
+.inp:focus{border-color:var(--gold-brd)}
+.inp::placeholder{color:var(--w40)}
+textarea.inp{resize:vertical;min-height:75px}
+
+/* Map placeholder */
+.map-ph{background:var(--w06);border:1px solid var(--w10);border-radius:9px;height:120px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;color:var(--w40);font-size:.8rem}
+.map-ph svg{width:24px;height:24px;stroke:var(--w20);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+
+/* Responsive */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .row2,.row3{grid-template-columns:1fr}
+  .main{padding:1.1rem .9rem}
+}
+@media(max-width:480px){.next-card{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="drivelog-landing.html" class="tlogo">DriveLog<span>תלמיד</span></a>
+  <div class="tright">
+    <div class="user-pill">
+      <span class="uname">נועה לוי</span>
+      <div class="uav">נל</div>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <button class="tab active" data-page="home">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    ראשי
+  </button>
+  <button class="tab" data-page="schedule">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    שיעורים
+  </button>
+  <button class="tab" data-page="progress">
+    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    התקדמות
+  </button>
+  <button class="tab" data-page="payments">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+    תשלומים
+  </button>
+  <div class="sb-foot">
+    <button class="tab" style="color:var(--red)">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      יציאה
+    </button>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- ══ ראשי ══ -->
+<div class="page active" id="page-home">
+
+  <div class="ph">
+    <div>
+      <div class="pt">שלום, נועה 👋</div>
+      <div class="ps">הנה סיכום מהיר של המצב שלך</div>
+    </div>
+    <button class="btn btn-wa">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      וואטסאפ למורה
+    </button>
+  </div>
+
+  <!-- השיעור הבא -->
+  <div class="next-card">
+    <div class="next-icon">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </div>
+    <div class="next-info">
+      <div class="next-title">שיעור #15 · יום חמישי, 10/4 בשעה 14:00</div>
+      <div class="next-sub">📍 הרצל 12, תל אביב · 60 דקות · מורה: דוד כהן</div>
+    </div>
+    <div class="next-actions">
+      <button class="btn btn-ghost">בטל</button>
+      <button class="btn btn-gold">הוסף ליומן</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="row3">
+    <div class="stat-box">
+      <div class="sb-val">14</div>
+      <div class="sb-lbl2">שיעורים עד כה</div>
+    </div>
+    <div class="stat-box">
+      <div class="sb-val" style="color:var(--gold)">47%</div>
+      <div class="sb-lbl2">התקדמות כללית</div>
+    </div>
+    <div class="stat-box">
+      <div class="sb-val" style="color:var(--green)">₪0</div>
+      <div class="sb-lbl2">יתרה לתשלום</div>
+    </div>
+  </div>
+
+  <!-- הערה אחרונה מהמורה -->
+  <div class="card">
+    <div class="ch"><span class="ct">הערה אחרונה מהמורה</span></div>
+    <div class="cb">
+      <div class="note-box">
+        צריכה לחזור על חניה מקבילה לפני הטסט. שלוש טעויות היום בקו לבן. שאר הדברים — מצוין.
+        <div class="note-date">9 באפריל 2025 · שיעור #14</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ שיעורים ══ -->
+<div class="page" id="page-schedule">
+
+  <div class="ph">
+    <div>
+      <div class="pt">שיעורים</div>
+      <div class="ps">14 שיעורים · השיעור הבא ב-10/4</div>
+    </div>
+    <button class="btn btn-gold">+ קבע שיעור</button>
+  </div>
+
+  <div class="row2">
+
+    <!-- קביעת שיעור -->
+    <div class="card">
+      <div class="ch"><span class="ct">קבע שיעור חדש</span></div>
+      <div class="cb" style="display:flex;flex-direction:column;gap:.7rem">
+        <div>
+          <label style="font-size:.74rem;color:var(--w60);display:block;margin-bottom:.3rem">תאריך</label>
+          <input type="date" class="inp" value="2025-04-14">
+        </div>
+        <div>
+          <label style="font-size:.74rem;color:var(--w60);display:block;margin-bottom:.3rem">שעה</label>
+          <select class="inp">
+            <option>08:00</option><option>09:00</option><option>10:00</option>
+            <option>11:00</option><option>12:00</option><option selected>14:00</option>
+            <option>15:00</option><option>16:00</option><option>17:00</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:.74rem;color:var(--w60);display:block;margin-bottom:.3rem">מיקום איסוף</label>
+          <input type="text" class="inp" placeholder="הכתובת שממנה תרצי להיאסף...">
+        </div>
+        <div>
+          <label style="font-size:.74rem;color:var(--w60);display:block;margin-bottom:.3rem">מיקום הורדה</label>
+          <input type="text" class="inp" placeholder="לאן להוריד אותך (אם שונה)...">
+        </div>
+        <button class="btn btn-gold" style="width:100%;justify-content:center">שלח בקשה למורה</button>
+      </div>
+    </div>
+
+    <!-- שיעורים קרובים -->
+    <div class="card">
+      <div class="ch"><span class="ct">שיעורים קרובים</span></div>
+      <div class="cb">
+        <div class="lesson-row">
+          <div class="lr-date">10/4 · 14:00</div>
+          <div class="lr-bar bar-gold"></div>
+          <div style="flex:1;min-width:0">
+            <div class="lr-name">שיעור #15</div>
+            <div class="lr-note">📍 הרצל 12, תל אביב</div>
+          </div>
+          <span class="badge bg-gold">קרוב</span>
+        </div>
+        <div class="lesson-row">
+          <div class="lr-date">14/4 · 10:00</div>
+          <div class="lr-bar bar-b"></div>
+          <div style="flex:1;min-width:0">
+            <div class="lr-name">שיעור #16</div>
+            <div class="lr-note">📍 כיכר רבין</div>
+          </div>
+          <span class="badge bg-b">ממתין</span>
+        </div>
+        <div style="padding-top:1rem;border-top:1px solid var(--w06);margin-top:.5rem">
+          <div style="font-size:.74rem;color:var(--w60);margin-bottom:.6rem;font-weight:600">שיעורים שעברו</div>
+          <div class="lesson-row">
+            <div class="lr-date">9/4 · 08:00</div>
+            <div class="lr-bar bar-g"></div>
+            <div style="flex:1;min-width:0">
+              <div class="lr-name">שיעור #14</div>
+              <div class="lr-note">חניה מקבילה, כביש מהיר</div>
+            </div>
+            <span class="badge bg-g">הסתיים</span>
+          </div>
+          <div class="lesson-row">
+            <div class="lr-date">7/4 · 16:00</div>
+            <div class="lr-bar bar-g"></div>
+            <div style="flex:1;min-width:0">
+              <div class="lr-name">שיעור #13</div>
+              <div class="lr-note">פניות בצומת, עצירה חירום</div>
+            </div>
+            <span class="badge bg-g">הסתיים</span>
+          </div>
+          <div class="lesson-row">
+            <div class="lr-date">3/4 · 08:00</div>
+            <div class="lr-bar bar-g"></div>
+            <div style="flex:1;min-width:0">
+              <div class="lr-name">שיעור #12</div>
+              <div class="lr-note">נסיעה בכביש ראשי</div>
+            </div>
+            <span class="badge bg-g">הסתיים</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ התקדמות ══ -->
+<div class="page" id="page-progress">
+
+  <div class="ph">
+    <div>
+      <div class="pt">התקדמות</div>
+      <div class="ps">שיעור 14 מתוך 30 · 47% הושלם</div>
+    </div>
+  </div>
+
+  <div class="row2">
+
+    <div style="display:flex;flex-direction:column;gap:1rem">
+
+      <!-- Progress ring -->
+      <div class="card">
+        <div class="ch"><span class="ct">התקדמות כללית</span></div>
+        <div class="cb">
+          <div class="ring-wrap">
+            <div class="ring">
+              <svg viewBox="0 0 36 36" width="80" height="80">
+                <circle class="ring-bg" cx="18" cy="18" r="15.9"/>
+                <circle class="ring-fill" cx="18" cy="18" r="15.9" stroke="var(--gold)" stroke-dasharray="100" stroke-dashoffset="53"/>
+              </svg>
+              <div class="ring-num" style="color:var(--gold)">47%</div>
+            </div>
+            <div class="ring-info">
+              <div class="ring-title">14 שיעורים הושלמו</div>
+              <div class="ring-sub">נותרו 16 שיעורים<br>עד לגמר הקורס</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- הערות מהמורה -->
+      <div class="card" style="flex:1">
+        <div class="ch"><span class="ct">הערות מהמורה</span></div>
+        <div class="cb" style="display:flex;flex-direction:column;gap:.7rem">
+          <div class="note-box">
+            חניה מקבילה — עדיין צריכה תרגול. כל השאר ברמה טובה מאד.
+            <div class="note-date">שיעור #14 · 9/4</div>
+          </div>
+          <div class="note-box">
+            שיפור משמעותי בפניות שמאלה בצומת. הגעת לרמה טובה מאד.
+            <div class="note-date">שיעור #13 · 7/4</div>
+          </div>
+          <div class="note-box">
+            צריכה לעבוד על מרחק בטיחות בכביש מהיר. קצת קרוב מדי.
+            <div class="note-date">שיעור #12 · 3/4</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- כישורים -->
+    <div class="card">
+      <div class="ch"><span class="ct">כישורים</span></div>
+      <div class="cb">
+        <div style="display:flex;gap:.7rem;margin-bottom:1rem;font-size:.72rem">
+          <span style="display:flex;align-items:center;gap:.3rem;color:var(--green)"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span>הושלם</span>
+          <span style="display:flex;align-items:center;gap:.3rem;color:var(--gold)"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>בתהליך</span>
+          <span style="display:flex;align-items:center;gap:.3rem;color:var(--w40)"><span style="width:8px;height:8px;border-radius:50%;background:var(--w10);display:inline-block"></span>לא התחיל</span>
+        </div>
+        <div class="skill-row"><span class="skill-name">הכרת הרכב והמכשירים</span><span class="skill-dot" style="background:var(--green)"></span></div>
+        <div class="skill-row"><span class="skill-name">התנעה ועצירה חלקה</span><span class="skill-dot" style="background:var(--green)"></span></div>
+        <div class="skill-row"><span class="skill-name">נסיעה ישרה ושמירת נתיב</span><span class="skill-dot" style="background:var(--green)"></span></div>
+        <div class="skill-row"><span class="skill-name">פניות ימינה ושמאלה</span><span class="skill-dot" style="background:var(--green)"></span></div>
+        <div class="skill-row"><span class="skill-name">עצירת חירום</span><span class="skill-dot" style="background:var(--green)"></span></div>
+        <div class="skill-row"><span class="skill-name">נסיעה בכביש מהיר</span><span class="skill-dot" style="background:var(--green)"></span></div>
+        <div class="skill-row"><span class="skill-name">חניה מקבילה</span><span class="skill-dot" style="background:var(--gold)"></span></div>
+        <div class="skill-row"><span class="skill-name">חניה אחורה</span><span class="skill-dot" style="background:var(--w10)"></span></div>
+        <div class="skill-row"><span class="skill-name">נסיעה לילית</span><span class="skill-dot" style="background:var(--w10)"></span></div>
+        <div class="skill-row"><span class="skill-name">עיגולים ומפגשים</span><span class="skill-dot" style="background:var(--w10)"></span></div>
+        <div class="skill-row"><span class="skill-name">תיאוריה — חוקי תנועה</span><span class="skill-dot" style="background:var(--green)"></span></div>
+        <div class="skill-row" style="border:none"><span class="skill-name">מבחן סופי</span><span class="skill-dot" style="background:var(--w10)"></span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ תשלומים ══ -->
+<div class="page" id="page-payments">
+
+  <div class="ph">
+    <div>
+      <div class="pt">תשלומים</div>
+      <div class="ps">סיכום תשלומים מול המורה</div>
+    </div>
+  </div>
+
+  <div class="row2">
+
+    <div class="card">
+      <div class="ch"><span class="ct">היסטוריית תשלומים</span></div>
+      <div class="cb">
+        <div class="pay-row">
+          <div>
+            <div class="pay-desc">5 שיעורים · מרץ</div>
+            <div class="pay-sub">שולם ב-1/4 · ביט</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.6rem">
+            <div class="pay-amt" style="color:var(--green)">₪850</div>
+            <span class="badge bg-g">שולם</span>
+          </div>
+        </div>
+        <div class="pay-row">
+          <div>
+            <div class="pay-desc">4 שיעורים · סוף מרץ</div>
+            <div class="pay-sub">שולם ב-22/3 · מזומן</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.6rem">
+            <div class="pay-amt" style="color:var(--green)">₪680</div>
+            <span class="badge bg-g">שולם</span>
+          </div>
+        </div>
+        <div class="pay-row">
+          <div>
+            <div class="pay-desc">3 שיעורים · תחילת מרץ</div>
+            <div class="pay-sub">שולם ב-8/3 · העברה</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.6rem">
+            <div class="pay-amt" style="color:var(--green)">₪510</div>
+            <span class="badge bg-g">שולם</span>
+          </div>
+        </div>
+        <div class="pay-row">
+          <div>
+            <div class="pay-desc">2 שיעורים · פברואר</div>
+            <div class="pay-sub">שולם ב-18/2 · ביט</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.6rem">
+            <div class="pay-amt" style="color:var(--green)">₪340</div>
+            <span class="badge bg-g">שולם</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <!-- סיכום -->
+      <div class="card">
+        <div class="ch"><span class="ct">סיכום</span></div>
+        <div class="cb" style="display:flex;flex-direction:column;gap:.6rem">
+          <div class="stat-box">
+            <div class="sb-val" style="color:var(--w)">₪2,380</div>
+            <div class="sb-lbl2">סה״כ שולם עד היום</div>
+          </div>
+          <div class="stat-box">
+            <div class="sb-val" style="color:var(--green)">₪0</div>
+            <div class="sb-lbl2">יתרה לתשלום</div>
+          </div>
+          <div class="stat-box">
+            <div class="sb-val" style="color:var(--w60)">₪170</div>
+            <div class="sb-lbl2">מחיר לשיעור</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- צור קשר -->
+      <div class="card">
+        <div class="ch"><span class="ct">שאלה על תשלום?</span></div>
+        <div class="cb">
+          <p style="font-size:.83rem;color:var(--w60);margin-bottom:.8rem;line-height:1.55">ליצירת קשר ישיר עם המורה דוד לגבי תשלומים</p>
+          <button class="btn btn-wa" style="width:100%;justify-content:center">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            שלח הודעה לדוד
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+const tabs  = document.querySelectorAll('.tab[data-page]');
+const pages = document.querySelectorAll('.page');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const id = tab.dataset.page;
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    pages.forEach(p => {
+      p.classList.remove('active');
+      if (p.id === 'page-' + id) p.classList.add('active');
+    });
+    document.querySelector('.main').scrollTop = 0;
+  });
+});
+</script>
+</body>
+</html>
