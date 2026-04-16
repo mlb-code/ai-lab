@@ -54,11 +54,10 @@
     {
       "name": "גבריאל ואן גלדר",
       "course": "מתקדם",
-      "day": null,
-      "time": null,
+      "day": "שלישי",
+      "time": "15:00",
       "paid": true,
-      "connected": false,
-      "status": "ממתין לתיאום"
+      "connected": false
     },
     {
       "name": "שיר + נועם",
