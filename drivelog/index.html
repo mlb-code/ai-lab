@@ -240,6 +240,14 @@ body{font-family:var(--f);background:var(--navy);color:var(--w);direction:rtl;ov
   display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;
   animation:fadeUp .7s .3s ease both;
 }
+.btn-wa-hero{
+  background:rgba(37,211,102,.15);color:#25d366;
+  border:1px solid rgba(37,211,102,.35);padding:.85rem 2rem;
+  border-radius:50px;font-family:var(--f);font-weight:700;
+  font-size:clamp(.9rem,2vw,1rem);cursor:pointer;transition:all .25s;
+  text-decoration:none;display:inline-block;
+}
+.btn-wa-hero:hover{background:rgba(37,211,102,.25);transform:translateY(-2px);box-shadow:0 4px 20px rgba(37,211,102,.25)}
 .btn-primary{
   background:linear-gradient(135deg,var(--gold),var(--gold-l));
   color:#002147;border:none;padding:.85rem 2rem;
@@ -633,6 +641,7 @@ body{font-family:var(--f);background:var(--navy);color:var(--w);direction:rtl;ov
     <div class="hero-actions">
       <a href="#pricing" class="btn-primary">התחל 30 יום בחינם ←</a>
       <a href="#how" class="btn-secondary">ראה איך זה עובד</a>
+      <a href="https://wa.me/972548687500?text=%D7%94%D7%99%D7%99%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20DriveLog" target="_blank" class="btn-wa-hero">💬 דברו איתנו בוואטסאפ</a>
     </div>
     <div class="hero-stats" aria-label="נתוני מפתח">
       <div class="stat"><div class="stat-num">3X</div><div class="stat-label">פחות בזבוז זמן</div></div>

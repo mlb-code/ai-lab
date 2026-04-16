@@ -181,7 +181,7 @@ textarea.inp{resize:vertical;min-height:75px}
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <a href="drivelog-landing.html" class="tlogo">DriveLog<span>תלמיד</span></a>
+  <a href="index.html" class="tlogo">DriveLog<span>תלמיד</span></a>
   <div class="tright">
     <div class="user-pill">
       <span class="uname">נועה לוי</span>
@@ -211,7 +211,7 @@ textarea.inp{resize:vertical;min-height:75px}
     תשלומים
   </button>
   <div class="sb-foot">
-    <button class="tab" style="color:var(--red)">
+    <button class="tab" style="color:var(--red)" onclick="window.location.href='index.html'">
       <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       יציאה
     </button>
@@ -286,7 +286,7 @@ textarea.inp{resize:vertical;min-height:75px}
       <div class="pt">שיעורים</div>
       <div class="ps">14 שיעורים · השיעור הבא ב-10/4</div>
     </div>
-    <button class="btn btn-gold">+ קבע שיעור</button>
+    <button class="btn btn-gold" onclick="document.getElementById('modal-book-lesson').classList.add('open');document.body.style.overflow='hidden'">+ קבע שיעור</button>
   </div>
 
   <div class="row2">
@@ -555,6 +555,44 @@ textarea.inp{resize:vertical;min-height:75px}
 
 </main>
 </div>
+
+<!-- ══ MODAL: קביעת שיעור ══ -->
+<div class="modal-overlay" id="modal-book-lesson" style="position:fixed;inset:0;z-index:2000;background:rgba(0,10,25,.75);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .25s ease">
+  <div style="background:linear-gradient(160deg,#002d5a,#001e40);border:1px solid rgba(255,255,255,.11);border-radius:22px;padding:2rem 1.8rem 1.8rem;width:100%;max-width:420px;transform:translateY(16px) scale(.97);transition:transform .28s cubic-bezier(.4,0,.2,1);position:relative" class="modal-box">
+    <button onclick="document.getElementById('modal-book-lesson').classList.remove('open');document.body.style.overflow=''" style="position:absolute;top:1rem;left:1rem;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.5);font-size:.85rem">✕</button>
+    <div style="font-size:1.2rem;font-weight:900;margin-bottom:.3rem">קביעת שיעור חדש 🚗</div>
+    <div style="font-size:.85rem;color:rgba(255,255,255,.55);margin-bottom:1.6rem">מלאו את הפרטים ונשלח בקשה למורה</div>
+    <div style="margin-bottom:.9rem">
+      <label style="font-size:.74rem;font-weight:600;color:rgba(255,255,255,.6);display:block;margin-bottom:.35rem">תאריך</label>
+      <input type="date" class="inp" value="2025-04-14">
+    </div>
+    <div style="margin-bottom:.9rem">
+      <label style="font-size:.74rem;font-weight:600;color:rgba(255,255,255,.6);display:block;margin-bottom:.35rem">שעה</label>
+      <select class="inp">
+        <option>08:00</option><option>09:00</option><option>10:00</option>
+        <option>11:00</option><option>12:00</option><option selected>14:00</option>
+        <option>15:00</option><option>16:00</option><option>17:00</option>
+      </select>
+    </div>
+    <div style="margin-bottom:.9rem">
+      <label style="font-size:.74rem;font-weight:600;color:rgba(255,255,255,.6);display:block;margin-bottom:.35rem">מיקום איסוף</label>
+      <input type="text" class="inp" placeholder="הכתובת שממנה תרצי להיאסף...">
+    </div>
+    <div style="margin-bottom:.9rem">
+      <label style="font-size:.74rem;font-weight:600;color:rgba(255,255,255,.6);display:block;margin-bottom:.35rem">מיקום הורדה</label>
+      <input type="text" class="inp" placeholder="לאן להוריד אותך (אם שונה)...">
+    </div>
+    <div style="margin-bottom:.9rem">
+      <label style="font-size:.74rem;font-weight:600;color:rgba(255,255,255,.6);display:block;margin-bottom:.35rem">הערות</label>
+      <textarea class="inp" placeholder="הערות למורה (אופציונלי)..."></textarea>
+    </div>
+    <button class="btn btn-gold" style="width:100%;justify-content:center;padding:.7rem" onclick="alert('הבקשה נשלחה למורה! ✅');document.getElementById('modal-book-lesson').classList.remove('open');document.body.style.overflow=''">שלח בקשה למורה</button>
+  </div>
+</div>
+<style>
+#modal-book-lesson.open{opacity:1!important;pointer-events:auto!important}
+#modal-book-lesson.open .modal-box{transform:translateY(0) scale(1)!important}
+</style>
 
 <script>
 const tabs  = document.querySelectorAll('.tab[data-page]');
