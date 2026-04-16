@@ -12,10 +12,11 @@
     {
       "name": "יהונתן תשבי",
       "course": "בסיסי",
-      "day": "שני",
-      "time": "17:00",
+      "day": null,
+      "time": null,
       "paid": true,
-      "connected": false
+      "connected": false,
+      "status": "ממתין לתיאום"
     },
     {
       "name": "ליאור",
@@ -37,10 +38,11 @@
     {
       "name": "דניאל תשבי",
       "course": "בסיסי",
-      "day": "חמישי",
-      "time": "18:00",
+      "day": null,
+      "time": null,
       "paid": true,
-      "connected": false
+      "connected": false,
+      "status": "ממתין לתיאום"
     },
     {
       "name": "גבריאל + אבינועם",
@@ -56,18 +58,17 @@
       "course": "מתקדם",
       "day": null,
       "time": null,
-      "paid": false,
+      "paid": true,
       "connected": false,
       "status": "ממתין לתיאום"
     },
     {
       "name": "שיר + נועם",
       "course": "מתקדם",
-      "day": null,
-      "time": null,
+      "day": "שני",
+      "time": "17:00",
       "paid": false,
       "connected": false,
-      "status": "ממתין לתיאום",
       "note": "לומדים ביחד"
     },
     {
