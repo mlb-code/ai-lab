@@ -123,19 +123,9 @@
       "status": "לא מתאים כרגע"
     },
     {
-      "name": "אוריאן",
-      "course": "בסיסי",
-      "day": "רביעי",
-      "time": "17:00",
-      "price": 890,
-      "paid": false,
-      "connected": false,
-      "note": "טרם נשלח חיבור"
-    },
-    {
       "name": "שלו",
       "course": "בסיסי",
-      "day": "רביעי",
+      "day": "שלישי",
       "time": "17:00",
       "price": 890,
       "paid": false,
