@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-13",
+  "last_updated": "2026-04-16",
   "students": [
     {
       "name": "שחר",
@@ -121,6 +121,26 @@
       "paid": false,
       "connected": false,
       "status": "לא מתאים כרגע"
+    },
+    {
+      "name": "אוריאן",
+      "course": "בסיסי",
+      "day": "רביעי",
+      "time": "17:00",
+      "price": 890,
+      "paid": false,
+      "connected": false,
+      "note": "טרם נשלח חיבור"
+    },
+    {
+      "name": "שלו",
+      "course": "בסיסי",
+      "day": "רביעי",
+      "time": "17:00",
+      "price": 890,
+      "paid": false,
+      "connected": false,
+      "note": "בן 12"
     }
   ]
 }
