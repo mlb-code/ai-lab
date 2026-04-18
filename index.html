@@ -1287,14 +1287,18 @@
             border-bottom: 1px solid rgba(255,255,255,0.08);
             flex-shrink: 0;
         }
-        .proj-preview iframe {
+        .proj-preview iframe,
+        .proj-preview img {
             position: absolute;
             top: 0; left: 0;
-            width: 900px;
-            height: 600px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
             transform-origin: top left;
             pointer-events: none;
             border: none;
+            display: block;
         }
         .proj-info {
             padding: 13px 14px 14px;
@@ -3192,7 +3196,7 @@
         </div>
         <div class="proj-grid">
             <a href="https://ai-lab.co.il/build-pc/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/build-pc/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/build-pc.jpg" alt="BUILD PC" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">🖥️ BUILD PC — השווה, חסוך, שדרג</div>
                     <div class="proj-student">רואי, בן 13</div>
@@ -3200,7 +3204,7 @@
                 </div>
             </a>
             <a href="https://ai-lab.co.il/spot/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/spot/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/spot.jpg" alt="SPOT - כל כלב ביומו" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">🐕 SPOT — כל כלב ביומו</div>
                     <div class="proj-student">מתן, בן 10</div>
@@ -3208,7 +3212,7 @@
                 </div>
             </a>
             <a href="https://ai-lab.co.il/free-movie-trailers/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/free-movie-trailers/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/free-movie-trailers.jpg" alt="Free Movie Trailers" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">🎬 Free Movie Trailers</div>
                     <div class="proj-student">תאיי, בן 12</div>
@@ -3216,7 +3220,7 @@
                 </div>
             </a>
             <a href="https://ai-lab.co.il/trendsaver/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/trendsaver/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/trendsaver.jpg" alt="TrendSaver" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">📈 TrendSaver — קנה חכם</div>
                     <div class="proj-student">ארבל, בן 12</div>
@@ -3224,7 +3228,7 @@
                 </div>
             </a>
             <a href="https://ai-lab.co.il/nadavlego/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/nadavlego/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/nadavlego.jpg" alt="חגיגת לגו" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">🧱 חגיגת לגו</div>
                     <div class="proj-student">נדב, בן 10</div>
@@ -3232,7 +3236,7 @@
                 </div>
             </a>
             <a href="https://ai-lab.co.il/hairmatch/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/hairmatch/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/hairmatch.jpg" alt="HairMatch" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">✨ HairMatch — טיפוח חכם</div>
                     <div class="proj-student">נועם, בת 13.5</div>
@@ -3240,7 +3244,7 @@
                 </div>
             </a>
             <a href="https://ai-lab.co.il/horse-fashion/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/horse-fashion/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/horse-fashion.jpg" alt="Horse Fashion" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">🐴 Horse Fashion</div>
                     <div class="proj-student">שיר, בת 13.5</div>
@@ -3248,7 +3252,7 @@
                 </div>
             </a>
             <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/gamebuddy/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/gamebuddy.jpg" alt="GameBuddy" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">🎮 GameBuddy — שחקנים ביחד</div>
                     <div class="proj-student">אבינועם וגבריאל, בני 13.5</div>
@@ -3256,7 +3260,7 @@
                 </div>
             </a>
             <a href="https://ai-lab.co.il/tennismate/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/tennismate/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/tennismate.jpg" alt="TennisMate" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">🎾 TennisMate — מצאו שחקני טניס</div>
                     <div class="proj-student">דניאל קהן, בן 13</div>
@@ -3264,7 +3268,7 @@
                 </div>
             </a>
             <a href="https://ai-lab.co.il/drivelog/" target="_blank" rel="noopener" class="proj-card">
-                <div class="proj-preview"><iframe src="https://ai-lab.co.il/drivelog/" loading="lazy" tabindex="-1"></iframe></div>
+                <div class="proj-preview"><img src="/project-previews/drivelog.jpg" alt="DriveLog" loading="lazy" decoding="async" width="1280" height="800"></div>
                 <div class="proj-info">
                     <div class="proj-name">🚗 DriveLog — ניהול שיעורי נהיגה</div>
                     <div class="proj-student">גבריאל, בן 16</div>
@@ -3318,18 +3322,61 @@
             pointer-events: none;
         }
         .portal-showcase .container { position: relative; z-index: 2; }
-        .portal-showcase-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 60px;
-            align-items: center;
-            max-width: 1150px;
-            margin: 40px auto 0;
-        }
-        .portal-visual {
+        /* HERO layout — phone in center, orbiting badges */
+        .portal-hero {
             position: relative;
+            max-width: 900px;
+            margin: 60px auto 0;
+            min-height: 620px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             perspective: 1400px;
         }
+        .orbit-badge {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(30, 30, 50, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            border-radius: 18px;
+            padding: 14px 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(108, 60, 225, 0.2);
+            z-index: 3;
+            transition: transform 0.4s ease;
+            animation: orbit-float 5s ease-in-out infinite;
+        }
+        .orbit-badge:hover {
+            transform: scale(1.08) translateY(-4px);
+            border-color: rgba(108, 60, 225, 0.7);
+        }
+        @keyframes orbit-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .orbit-badge .ob-emoji {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(108, 60, 225, 0.4);
+        }
+        .orbit-badge .ob-text {
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.88rem;
+            line-height: 1.35;
+            white-space: nowrap;
+        }
+        .orbit-tl { top: 40px; right: 10px; animation-delay: 0s; }
+        .orbit-tr { top: 40px; left: 10px; animation-delay: 1.2s; }
+        .orbit-bl { bottom: 60px; right: 10px; animation-delay: 2.4s; }
+        .orbit-br { bottom: 60px; left: 10px; animation-delay: 3.6s; }
         .portal-phone {
             width: 100%;
             max-width: 340px;
@@ -3539,113 +3586,106 @@
         }
 
         @media (max-width: 900px) {
-            .portal-showcase-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                text-align: right;
-            }
-            .portal-content h2 { font-size: 2rem; }
-            .portal-visual { order: 2; }
-            .portal-content { order: 1; }
-            .chat-bubble-float { left: 10px; bottom: 90px; max-width: 220px; font-size: 0.72rem; }
+            .portal-hero { min-height: auto; padding: 20px 0; max-width: 100%; }
+            .orbit-badge .ob-text { font-size: 0.78rem; }
+            .orbit-badge { padding: 10px 14px; gap: 10px; }
+            .orbit-badge .ob-emoji { width: 38px; height: 38px; font-size: 1.15rem; }
+            .orbit-tl { top: 15px; right: 0; }
+            .orbit-tr { top: 15px; left: 0; }
+            .orbit-bl { bottom: 30px; right: 0; }
+            .orbit-br { bottom: 30px; left: 0; }
+            .portal-phone { max-width: 300px; transform: none !important; }
+            .chat-bubble-float { display: none; }
         }
-        @media (max-width: 480px) {
-            .portal-showcase { padding: 56px 0; }
-            .portal-content h2 { font-size: 1.6rem; }
-            .portal-content > p.lead { font-size: 1rem; }
-            .portal-feature { padding: 14px; gap: 12px; }
-            .portal-feature-icon { width: 42px; height: 42px; font-size: 1.2rem; }
-            .portal-feature-text h3 { font-size: 0.95rem; }
-            .portal-feature-text p { font-size: 0.82rem; }
-            .portal-phone { max-width: 280px; }
+        @media (max-width: 600px) {
+            .portal-showcase { padding: 50px 0; }
+            .portal-hero { min-height: 560px; }
+            .orbit-badge { padding: 8px 10px; gap: 8px; border-radius: 14px; }
+            .orbit-badge .ob-text { font-size: 0.68rem; line-height: 1.25; }
+            .orbit-badge .ob-emoji { width: 32px; height: 32px; font-size: 0.95rem; border-radius: 10px; }
+            .orbit-tl { top: 0; right: -4px; }
+            .orbit-tr { top: 0; left: -4px; }
+            .orbit-bl { bottom: 20px; right: -4px; }
+            .orbit-br { bottom: 20px; left: -4px; }
+            .portal-phone { max-width: 240px; }
+        }
+        @media (max-width: 380px) {
+            .orbit-badge .ob-text { display: none; }
+            .orbit-badge { padding: 6px; border-radius: 12px; }
         }
     </style>
 
     <section class="portal-showcase" id="portal-showcase">
         <div class="container">
             <div class="section-title reveal">
-                <h2>&#x1F511; האזור האישי &mdash; הלמידה ממשיכה אחרי השיעור</h2>
-                <p>כל תלמיד מקבל גישה לפורטל אישי עם כל החומר, כלים, ועוזר AI זמין 24/7</p>
+                <h2>&#x1F511; האזור האישי</h2>
+                <p>כל תלמיד מקבל פורטל משלו עם כל החומר ועוזר AI שזמין תמיד</p>
             </div>
 
-            <div class="portal-showcase-grid">
-                <div class="portal-visual reveal">
-                    <div class="portal-phone">
-                        <div class="portal-phone-header">
-                            <span class="portal-phone-logo">AI Lab</span>
-                            <div class="portal-phone-pill">
-                                <span class="active">בסיסי</span>
-                                <span>מתקדם</span>
-                            </div>
-                            <div class="portal-phone-avatar">ש</div>
+            <div class="portal-hero reveal">
+                <!-- Orbiting feature badges -->
+                <div class="orbit-badge orbit-tl">
+                    <span class="ob-emoji">&#x1F916;</span>
+                    <span class="ob-text">עוזר AI<br>זמין 24/7</span>
+                </div>
+                <div class="orbit-badge orbit-tr">
+                    <span class="ob-emoji">&#x1F4DA;</span>
+                    <span class="ob-text">כל המפגשים<br>במקום אחד</span>
+                </div>
+                <div class="orbit-badge orbit-bl">
+                    <span class="ob-emoji">&#x1F3AF;</span>
+                    <span class="ob-text">תרגילים<br>ומצגות</span>
+                </div>
+                <div class="orbit-badge orbit-br">
+                    <span class="ob-emoji">&#x1F6E0;&#xFE0F;</span>
+                    <span class="ob-text">ארגז כלים<br>מלא</span>
+                </div>
+
+                <!-- Phone mockup (hero) -->
+                <div class="portal-phone">
+                    <div class="portal-phone-header">
+                        <span class="portal-phone-logo">AI Lab</span>
+                        <div class="portal-phone-pill">
+                            <span class="active">בסיסי</span>
+                            <span>מתקדם</span>
                         </div>
-                        <div class="portal-phone-body">
-                            <div class="portal-phone-title">&#x1F4DA; מפגשי הקורס</div>
-                            <div class="ss-card">
-                                <div class="ss-num">1</div>
-                                <div class="ss-info">
-                                    <div class="ss-name">ברוכים הבאים לעולם ה-AI</div>
-                                    <div class="ss-tag">היכרות &middot; Claude</div>
-                                </div>
-                            </div>
-                            <div class="ss-card">
-                                <div class="ss-num green">2</div>
-                                <div class="ss-info">
-                                    <div class="ss-name">אמנות הפרומפט</div>
-                                    <div class="ss-tag">Cursor &middot; פרומפטינג</div>
-                                </div>
-                            </div>
-                            <div class="ss-card">
-                                <div class="ss-num orange">3</div>
-                                <div class="ss-info">
-                                    <div class="ss-name">חשיבה יזמית</div>
-                                    <div class="ss-tag">סטארטאפים</div>
-                                </div>
+                        <div class="portal-phone-avatar">ש</div>
+                    </div>
+                    <div class="portal-phone-body">
+                        <div class="portal-phone-title">&#x1F4DA; מפגשי הקורס</div>
+                        <div class="ss-card">
+                            <div class="ss-num">1</div>
+                            <div class="ss-info">
+                                <div class="ss-name">ברוכים הבאים לעולם ה-AI</div>
+                                <div class="ss-tag">היכרות &middot; Claude</div>
                             </div>
                         </div>
-                        <div class="portal-phone-bar">
-                            <div class="pb-icn active"><span class="em">&#x1F4DA;</span><span>מפגשים</span></div>
-                            <div class="pb-icn"><span class="em">&#x1F916;</span><span>כלים</span></div>
-                            <div class="pb-ai"><span>AI</span><span>Lab</span></div>
-                            <div class="pb-icn"><span class="em">&#x1F680;</span><span>פרויקט</span></div>
-                            <div class="pb-icn"><span class="em">&#x2022;&#x2022;&#x2022;</span><span>עוד</span></div>
+                        <div class="ss-card">
+                            <div class="ss-num green">2</div>
+                            <div class="ss-info">
+                                <div class="ss-name">אמנות הפרומפט</div>
+                                <div class="ss-tag">Cursor &middot; פרומפטינג</div>
+                            </div>
+                        </div>
+                        <div class="ss-card">
+                            <div class="ss-num orange">3</div>
+                            <div class="ss-info">
+                                <div class="ss-name">חשיבה יזמית</div>
+                                <div class="ss-tag">סטארטאפים</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="chat-bubble-float">
-                        <span class="chat-bubble-text">היי! 👋 נתקעת בתרגיל? אני כאן לעזור לך שלב אחר שלב.</span>
+                    <div class="portal-phone-bar">
+                        <div class="pb-icn active"><span class="em">&#x1F4DA;</span><span>מפגשים</span></div>
+                        <div class="pb-icn"><span class="em">&#x1F916;</span><span>כלים</span></div>
+                        <div class="pb-ai"><span>AI</span><span>Lab</span></div>
+                        <div class="pb-icn"><span class="em">&#x1F680;</span><span>פרויקט</span></div>
+                        <div class="pb-icn"><span class="em">&#x2022;&#x2022;&#x2022;</span><span>עוד</span></div>
                     </div>
                 </div>
 
-                <div class="portal-content reveal">
-                    <span class="portal-badge">&#x1F3AF; כלול בקורס</span>
-                    <h2>הפורטל האישי של AI Lab</h2>
-                    <p class="lead">מקום אחד שבו התלמיד שלכם ימצא את כל מה שהוא צריך &mdash; חומר לימוד, תרגילים, מצגות שיעור, ועוזר AI חכם שיודע את כל תוכן הקורס.</p>
-
-                    <div class="portal-features">
-                        <div class="portal-feature">
-                            <div class="portal-feature-icon">&#x1F916;</div>
-                            <div class="portal-feature-text">
-                                <h3>עוזר AI Lab &mdash; זמין 24/7</h3>
-                                <p>מורה דיגיטלי על בסיס Claude של Anthropic. עונה על שאלות מהקורס, מסביר מושגים, ומלווה את התלמיד בבניית הפרויקט שלו &mdash; בעברית, ברמה מותאמת אישית.</p>
-                            </div>
-                        </div>
-
-                        <div class="portal-feature">
-                            <div class="portal-feature-icon">&#x1F4DA;</div>
-                            <div class="portal-feature-text">
-                                <h3>כל המפגשים במקום אחד</h3>
-                                <p>סיכום, מצגת, תרגילים ואתגרי בית לכל שיעור. חזרה נוחה בכל רגע לכל נושא שנלמד.</p>
-                            </div>
-                        </div>
-
-                        <div class="portal-feature">
-                            <div class="portal-feature-icon">&#x1F6E0;&#xFE0F;</div>
-                            <div class="portal-feature-text">
-                                <h3>ארגז כלים מלא</h3>
-                                <p>רשימת כל כלי ה-AI שנלמדו, פרומפטים מוכנים, הדרכות התקנה, והורדות &mdash; הכל ניתן לכל תלמיד ברגע שהוא נרשם.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="chat-bubble-float">
+                    <span class="chat-bubble-text">היי! 👋 נתקעת בתרגיל? בוא נעבור על זה ביחד.</span>
                 </div>
             </div>
         </div>
@@ -4266,21 +4306,16 @@
             setTimeout(function() { grid.scrollLeft = 0; }, 100);
         }());
 
-        // ── Projects iframe scaling ──
-        function scaleIframes() {
+        // ── Projects preview sizing (img 1280×800 aspect) ──
+        function scaleProjectPreviews() {
             document.querySelectorAll('.proj-preview').forEach(wrap => {
                 const w = wrap.offsetWidth;
-                const scale = w / 900;
-                const iframe = wrap.querySelector('iframe');
-                if (iframe) {
-                    iframe.style.transform = 'scale(' + scale + ')';
-                    wrap.style.height = Math.round(600 * scale) + 'px';
-                }
+                wrap.style.height = Math.round(w * 800 / 1280) + 'px';
             });
         }
-        window.addEventListener('load', scaleIframes);
-        window.addEventListener('resize', scaleIframes);
-        scaleIframes();
+        window.addEventListener('load', scaleProjectPreviews);
+        window.addEventListener('resize', scaleProjectPreviews);
+        scaleProjectPreviews();
 
         // ===== SYLLABUS POPUPS =====
         const syllabusData = {

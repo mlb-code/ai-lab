@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🅱️ Instagram Style — AI Lab Mobile</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+.phone-frame { background: var(--bg); }
+
+/* ===== HEADER — גדול כמו אינסטגרם ===== */
+.mock-header {
+    position: sticky; top: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 50;
+}
+.header-left { display: flex; align-items: center; gap: 0.7rem; }
+.mock-logo {
+    font-weight: 900; font-size: 1.4rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.course-pill {
+    display: flex; background: rgba(255,255,255,0.06);
+    border-radius: 18px; padding: 3px; gap: 2px;
+}
+.course-pill button {
+    border: none; background: transparent;
+    color: rgba(255,255,255,0.6);
+    font-family: inherit; font-size: 0.72rem; font-weight: 600;
+    padding: 4px 12px; border-radius: 16px; cursor: pointer;
+}
+.course-pill button.active {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+}
+.avatar-dot { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#E2B93B,#f5d76e); display:flex; align-items:center; justify-content:center; font-weight: 700; color: #111; font-size: 0.9rem; }
+
+/* ===== STORIES/CATEGORY RAIL ===== */
+.category-rail {
+    display: flex; gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.category-rail::-webkit-scrollbar { display: none; }
+.rail-item {
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    flex-shrink: 0; min-width: 64px;
+}
+.rail-item .icon-circle {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    padding: 2px;
+}
+.rail-item .icon-circle-inner {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+}
+.rail-item .lbl { font-size: 0.7rem; color: #bbb; }
+
+/* ===== CONTENT ===== */
+.content { padding: 0.5rem 1rem 8rem; }
+.page-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 1rem; padding: 0 0.3rem; }
+
+/* ===== BOTTOM BAR — 5 כפתורים + AI במרכז ===== */
+.bottom-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
+    display: flex; justify-content: space-around; align-items: center;
+    z-index: 60;
+}
+.bottom-bar button {
+    border: none; background: transparent;
+    color: rgba(255,255,255,0.5);
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 6px 4px; cursor: pointer; min-width: 52px;
+}
+.bottom-bar button.active { color: #fff; }
+.bottom-bar button .icn { font-size: 1.4rem; }
+.bottom-bar button .lbl { font-size: 0.6rem; font-weight: 600; }
+
+/* AI button במרכז ה-bar */
+.bottom-bar .ai-center {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    line-height: 1;
+    color: #fff; font-size: 0.68rem; font-weight: 800;
+    box-shadow: 0 4px 16px rgba(108,60,225,0.5);
+    margin: 0; padding: 0;
+    border: 3px solid var(--bg);
+    transform: translateY(-6px);
+}
+
+.ai-assistant-btn { display: none; } /* AI משולב ב-bar */
+</style>
+</head>
+<body>
+<a href="/" class="back-link">← חזרה לבחירה</a>
+
+<div class="phone-frame">
+    <div class="mock-header">
+        <div class="header-left">
+            <div class="mock-logo">AI Lab</div>
+            <div class="course-pill">
+                <button class="active">בסיסי</button>
+                <button>מתקדם</button>
+            </div>
+        </div>
+        <div class="avatar-dot">מ</div>
+    </div>
+
+    <div class="category-rail">
+        <div class="rail-item">
+            <div class="icon-circle"><div class="icon-circle-inner">📚</div></div>
+            <span class="lbl">מפגשים</span>
+        </div>
+        <div class="rail-item">
+            <div class="icon-circle"><div class="icon-circle-inner">🛠️</div></div>
+            <span class="lbl">כלים</span>
+        </div>
+        <div class="rail-item">
+            <div class="icon-circle"><div class="icon-circle-inner">🚀</div></div>
+            <span class="lbl">פרויקט</span>
+        </div>
+        <div class="rail-item">
+            <div class="icon-circle"><div class="icon-circle-inner">📖</div></div>
+            <span class="lbl">הדרכות</span>
+        </div>
+        <div class="rail-item">
+            <div class="icon-circle"><div class="icon-circle-inner">⭐</div></div>
+            <span class="lbl">המלצות</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1 class="page-title">📚 מפגשי הקורס</h1>
+
+        <div class="session-card">
+            <div class="session-card-header">
+                <div class="session-number">1</div>
+                <h3>ברוכים הבאים לעולם ה-AI</h3>
+            </div>
+            <p>הכרות עם בינה מלאכותית, ניסיון ראשון עם ChatGPT ו-Claude</p>
+            <div class="session-tags">
+                <span class="chip">היכרות</span>
+                <span class="chip">Claude</span>
+                <span class="chip">ChatGPT</span>
+            </div>
+        </div>
+
+        <div class="session-card">
+            <div class="session-card-header">
+                <div class="session-number">2</div>
+                <h3>אמנות הפרומפט</h3>
+            </div>
+            <p>טכניקות לכתיבת פרומפטים מושלמים + התקנת Cursor</p>
+            <div class="session-tags">
+                <span class="chip">פרומפט</span>
+                <span class="chip">Cursor</span>
+            </div>
+        </div>
+
+        <div class="session-card">
+            <div class="session-card-header">
+                <div class="session-number">3</div>
+                <h3>חשיבה יזמית</h3>
+            </div>
+            <p>זיהוי בעיות אמיתיות וסיפורי סטארטאפים</p>
+            <div class="session-tags">
+                <span class="chip">יזמות</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-bar">
+        <button class="active"><span class="icn">📚</span><span class="lbl">מפגשים</span></button>
+        <button><span class="icn">🛠️</span><span class="lbl">כלים</span></button>
+        <button class="ai-center" title="עוזר AI Lab">
+            <span>AI</span>
+            <span>Lab</span>
+        </button>
+        <button><span class="icn">🚀</span><span class="lbl">פרויקט</span></button>
+        <button><span class="icn">👤</span><span class="lbl">פרופיל</span></button>
+    </nav>
+</div>
+</body>
+</html>

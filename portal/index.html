@@ -1778,70 +1778,72 @@
             }
             .mpm-item:hover { background: rgba(239, 68, 68, 0.1); }
 
-            /* ===== STORIES RAIL (horizontal scroll below header) ===== */
-            .mobile-stories {
-                display: flex;
-                gap: 0.7rem;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                position: fixed;
-                top: calc(3.6rem + env(safe-area-inset-top));
-                left: 0; right: 0;
-                padding: 0.6rem 1rem;
-                background: rgba(10, 10, 20, 0.9);
-                backdrop-filter: blur(30px) saturate(180%);
-                -webkit-backdrop-filter: blur(30px) saturate(180%);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-                z-index: 54;
-            }
-            .mobile-stories::-webkit-scrollbar { display: none; }
-            .story-item {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 4px;
+            /* Top padding accounts for slim mobile header only */
+            .main-content { padding-top: calc(3.8rem + env(safe-area-inset-top)) !important; }
+
+            /* ===== HAMBURGER in mobile header ===== */
+            .mobile-header-menu {
+                background: none; border: none; color: #fff;
+                font-size: 1.4rem; cursor: pointer; padding: 0 0.3rem;
+                display: flex; align-items: center;
                 flex-shrink: 0;
-                min-width: 58px;
-                background: transparent;
-                border: none;
-                cursor: pointer;
-                padding: 0;
-                font-family: 'Heebo', sans-serif;
-            }
-            .story-ring {
-                width: 52px; height: 52px;
-                border-radius: 50%;
-                padding: 2px;
-                background: linear-gradient(135deg, rgba(108,60,225,0.4), rgba(74,144,226,0.4));
-                display: flex; align-items: center; justify-content: center;
-                transition: all 0.25s ease;
-            }
-            .story-ring.active,
-            .story-item.active .story-ring {
-                background: linear-gradient(135deg, #6c3ce1, #4a90e2);
-                box-shadow: 0 4px 12px rgba(108, 60, 225, 0.4);
-            }
-            .story-emoji {
-                width: 100%; height: 100%;
-                border-radius: 50%;
-                background: #0a0a14;
-                display: flex; align-items: center; justify-content: center;
-                font-size: 1.35rem;
-            }
-            .story-label {
-                font-size: 0.62rem;
-                font-weight: 600;
-                color: rgba(255, 255, 255, 0.7);
-                white-space: nowrap;
-            }
-            .story-item.active .story-label {
-                color: #fff;
-                font-weight: 700;
             }
 
-            /* Adjust main content top padding for fixed header + stories rail */
-            .main-content { padding-top: 8rem !important; }
+            /* ===== MORE SHEET (slide-up drawer) ===== */
+            .more-sheet-backdrop {
+                position: fixed; inset: 0;
+                background: rgba(0,0,0,0.55);
+                backdrop-filter: blur(4px);
+                opacity: 0; pointer-events: none;
+                transition: opacity 0.25s ease;
+                z-index: 59;
+            }
+            .more-sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+            .more-sheet {
+                position: fixed; left: 0; right: 0; bottom: 0;
+                background: rgba(20, 20, 35, 0.98);
+                backdrop-filter: blur(40px) saturate(180%);
+                -webkit-backdrop-filter: blur(40px) saturate(180%);
+                border-top: 1px solid rgba(255,255,255,0.1);
+                border-radius: 20px 20px 0 0;
+                padding: 0.8rem 1rem calc(1.2rem + env(safe-area-inset-bottom));
+                z-index: 60;
+                transform: translateY(100%);
+                transition: transform 0.28s cubic-bezier(.22,.9,.3,1);
+                max-height: 80vh; overflow-y: auto;
+            }
+            .more-sheet.open { transform: translateY(0); }
+            .ms-handle {
+                width: 42px; height: 4px; border-radius: 2px;
+                background: rgba(255,255,255,0.25);
+                margin: 0 auto 0.8rem;
+            }
+            .ms-title {
+                color: #fff; font-weight: 700; font-size: 1rem;
+                margin-bottom: 0.9rem; text-align: center;
+            }
+            .ms-grid {
+                display: grid; grid-template-columns: repeat(3, 1fr);
+                gap: 0.7rem;
+            }
+            .ms-item {
+                display: flex; flex-direction: column; align-items: center;
+                gap: 0.4rem;
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 14px;
+                padding: 0.9rem 0.4rem;
+                color: #fff; font-family: 'Heebo', sans-serif;
+                font-size: 0.78rem; font-weight: 600;
+                cursor: pointer;
+                transition: background 0.2s, transform 0.1s;
+            }
+            .ms-item:active { transform: scale(0.96); background: rgba(108,60,225,0.2); }
+            .ms-emoji { font-size: 1.6rem; }
+            .ms-item.active {
+                background: linear-gradient(135deg, rgba(108,60,225,0.3), rgba(74,144,226,0.3));
+                border-color: rgba(108,60,225,0.5);
+            }
         }
 
         .mobile-nav, .more-menu {
@@ -2389,60 +2391,9 @@
         </div>
     </aside>
 
-    <!-- MOBILE STORIES RAIL (horizontal scroll categories) -->
-    <div class="mobile-stories" id="mobileStories">
-        <button class="story-item" data-section="sessions" onclick="selectMoreSection('sessions')">
-            <span class="story-ring active"><span class="story-emoji">📚</span></span>
-            <span class="story-label">מפגשים</span>
-        </button>
-        <button class="story-item" data-section="ai-tools" data-nav-course="basic" onclick="selectMoreSection('ai-tools')">
-            <span class="story-ring"><span class="story-emoji">🤖</span></span>
-            <span class="story-label">כלי AI</span>
-        </button>
-        <button class="story-item" data-section="dev-tools" data-nav-course="advanced" style="display:none;" onclick="selectMoreSection('dev-tools')">
-            <span class="story-ring"><span class="story-emoji">🔧</span></span>
-            <span class="story-label">כלים</span>
-        </button>
-        <button class="story-item" data-section="project" data-nav-course="basic" onclick="selectMoreSection('project')">
-            <span class="story-ring"><span class="story-emoji">🚀</span></span>
-            <span class="story-label">הפרויקט</span>
-        </button>
-        <button class="story-item" data-section="checklist" data-nav-course="advanced" style="display:none;" onclick="selectMoreSection('checklist')">
-            <span class="story-ring"><span class="story-emoji">📋</span></span>
-            <span class="story-label">צ'קליסט</span>
-        </button>
-        <button class="story-item" data-section="prompts" data-nav-course="advanced" style="display:none;" onclick="selectMoreSection('prompts')">
-            <span class="story-ring"><span class="story-emoji">🎯</span></span>
-            <span class="story-label">פרומפטים</span>
-        </button>
-        <button class="story-item" data-section="guides" data-nav-course="basic" onclick="selectMoreSection('guides')">
-            <span class="story-ring"><span class="story-emoji">📖</span></span>
-            <span class="story-label">הדרכות</span>
-        </button>
-        <button class="story-item" data-section="guides-adv" data-nav-course="advanced" style="display:none;" onclick="selectMoreSection('guides-adv')">
-            <span class="story-ring"><span class="story-emoji">📖</span></span>
-            <span class="story-label">הדרכות</span>
-        </button>
-        <button class="story-item" data-section="recommendations" onclick="selectMoreSection('recommendations')">
-            <span class="story-ring"><span class="story-emoji">⭐</span></span>
-            <span class="story-label">המלצות</span>
-        </button>
-        <button class="story-item" data-section="community" data-nav-course="advanced" style="display:none;" onclick="selectMoreSection('community')">
-            <span class="story-ring"><span class="story-emoji">👥</span></span>
-            <span class="story-label">קהילה</span>
-        </button>
-        <button class="story-item" data-section="downloads" onclick="selectMoreSection('downloads')">
-            <span class="story-ring"><span class="story-emoji">💾</span></span>
-            <span class="story-label">הורדות</span>
-        </button>
-        <button class="story-item" data-section="help" data-nav-course="basic" onclick="selectMoreSection('help')">
-            <span class="story-ring"><span class="story-emoji">❓</span></span>
-            <span class="story-label">עזרה</span>
-        </button>
-    </div>
-
     <!-- MOBILE HEADER (Instagram-style) -->
     <header class="mobile-header" id="mobileHeader">
+        <button class="mobile-header-menu" onclick="toggleMoreSheet()" aria-label="תפריט">&#x2630;</button>
         <a href="/" class="mobile-header-logo">AI Lab</a>
         <div class="mobile-header-course advanced-only" style="display:none;">
             <button class="mh-course-btn active" id="mobileCourseBtnBasic" onclick="switchCourse('basic')">בסיסי</button>
@@ -2488,16 +2439,41 @@
             <span class="nav-icon">&#x1F4CB;</span>
             <span>צ'קליסט</span>
         </button>
-        <!-- Guides quick access (shared) -->
-        <button data-section="guides" data-nav-course="basic">
-            <span class="nav-icon">&#x1F4D6;</span>
-            <span>הדרכות</span>
-        </button>
-        <button data-section="guides-adv" data-nav-course="advanced" style="display:none;">
-            <span class="nav-icon">&#x1F4D6;</span>
-            <span>הדרכות</span>
+        <button id="moreSheetBtn" onclick="toggleMoreSheet()" aria-label="עוד">
+            <span class="nav-icon">&#x2630;</span>
+            <span>עוד</span>
         </button>
     </nav>
+
+    <!-- MORE SHEET — slide-up drawer with all overflow sections -->
+    <div class="more-sheet-backdrop" id="moreSheetBackdrop" onclick="toggleMoreSheet()"></div>
+    <div class="more-sheet" id="moreSheet" role="dialog" aria-label="כל הסעיפים">
+        <div class="ms-handle"></div>
+        <div class="ms-title">כל הסעיפים</div>
+        <div class="ms-grid">
+            <button class="ms-item" onclick="selectMoreSection('guides')" data-nav-course="basic" data-section="guides">
+                <span class="ms-emoji">&#x1F4D6;</span><span>הדרכות</span>
+            </button>
+            <button class="ms-item" onclick="selectMoreSection('guides-adv')" data-nav-course="advanced" style="display:none;" data-section="guides-adv">
+                <span class="ms-emoji">&#x1F4D6;</span><span>הדרכות</span>
+            </button>
+            <button class="ms-item" onclick="selectMoreSection('recommendations')" data-section="recommendations">
+                <span class="ms-emoji">&#x2B50;</span><span>המלצות</span>
+            </button>
+            <button class="ms-item" onclick="selectMoreSection('downloads')" data-section="downloads">
+                <span class="ms-emoji">&#x1F4BE;</span><span>הורדות</span>
+            </button>
+            <button class="ms-item" onclick="selectMoreSection('prompts')" data-nav-course="advanced" style="display:none;" data-section="prompts">
+                <span class="ms-emoji">&#x1F3AF;</span><span>פרומפטים</span>
+            </button>
+            <button class="ms-item" onclick="selectMoreSection('community')" data-nav-course="advanced" style="display:none;" data-section="community">
+                <span class="ms-emoji">&#x1F465;</span><span>קהילה</span>
+            </button>
+            <button class="ms-item" onclick="selectMoreSection('help')" data-nav-course="basic" data-section="help">
+                <span class="ms-emoji">&#x2753;</span><span>עזרה</span>
+            </button>
+        </div>
+    </div>
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
@@ -5021,20 +4997,25 @@
             window.open('https://us05web.zoom.us/j/8186142816?pwd=VEtXYVh3Z3IwZWhrZHYvWm5hYWlKQT09', '_blank');
         }
 
-        // ===== MORE MENU =====
-        function toggleMoreMenu() {
-            var menu = document.getElementById('moreMenu');
-            menu.classList.toggle('open');
+        // ===== MORE SHEET =====
+        function toggleMoreSheet() {
+            var sheet = document.getElementById('moreSheet');
+            var bd = document.getElementById('moreSheetBackdrop');
+            if (!sheet) return;
+            var isOpen = sheet.classList.toggle('open');
+            if (bd) bd.classList.toggle('open', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
         }
 
         function selectMoreSection(sectionId) {
-            var moreMenu = document.getElementById('moreMenu');
-            if (moreMenu) moreMenu.classList.remove('open');
+            var sheet = document.getElementById('moreSheet');
+            var bd = document.getElementById('moreSheetBackdrop');
+            if (sheet) sheet.classList.remove('open');
+            if (bd) bd.classList.remove('open');
+            document.body.style.overflow = '';
             switchSection(sectionId);
-            // Highlight the story rail item
-            document.querySelectorAll('.mobile-stories .story-item').forEach(function(b){
-                var isActive = b.getAttribute('data-section') === sectionId;
-                b.classList.toggle('active', isActive);
+            document.querySelectorAll('.ms-item').forEach(function(b) {
+                b.classList.toggle('active', b.getAttribute('data-section') === sectionId);
             });
         }
 

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🅲️ Drawer + FAB — AI Lab Mobile</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+.phone-frame { background: var(--bg); }
+
+/* ===== HEADER — מינימלי ===== */
+.mock-header {
+    position: sticky; top: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.8rem 1rem;
+    background: rgba(10,10,20,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 50;
+}
+.hamburger {
+    background: transparent; border: none; color: #fff;
+    font-size: 1.6rem; cursor: pointer; padding: 4px 8px;
+}
+.mock-logo {
+    font-weight: 900; font-size: 1.2rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.course-pill {
+    display: flex; background: rgba(255,255,255,0.06);
+    border-radius: 16px; padding: 3px; gap: 2px;
+}
+.course-pill button {
+    border: none; background: transparent;
+    color: rgba(255,255,255,0.6);
+    font-family: inherit; font-size: 0.72rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 14px; cursor: pointer;
+}
+.course-pill button.active {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+}
+
+/* ===== DRAWER ===== */
+.drawer-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 80; display: none;
+    backdrop-filter: blur(4px);
+}
+.drawer-backdrop.open { display: block; }
+.drawer {
+    position: fixed; top: 0; right: -300px; width: 280px; height: 100%;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    transition: right 0.3s ease;
+    z-index: 90; padding: 1rem;
+    display: flex; flex-direction: column; gap: 0.3rem;
+}
+.drawer.open { right: 0; }
+.drawer-header { padding: 0.5rem 0.5rem 1.5rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem; }
+.drawer-user { display: flex; align-items: center; gap: 0.8rem; }
+.avatar-big { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg,#E2B93B,#f5d76e); display:flex; align-items:center; justify-content:center; font-weight: 800; color: #111; font-size: 1.2rem; }
+.drawer-user .name { font-weight: 700; font-size: 1rem; }
+.drawer-user .role { font-size: 0.75rem; color: #888; }
+.drawer-item {
+    display: flex; align-items: center; gap: 0.8rem;
+    padding: 0.8rem 0.9rem;
+    color: #ccc; text-decoration: none;
+    border-radius: 12px;
+    font-size: 0.95rem; font-weight: 500;
+    cursor: pointer; background: transparent; border: none;
+    font-family: inherit;
+    text-align: right; width: 100%;
+}
+.drawer-item:hover, .drawer-item.active {
+    background: rgba(108,60,225,0.15);
+    color: #fff;
+}
+.drawer-item .icn { font-size: 1.3rem; width: 28px; text-align: center; }
+.drawer-divider { height: 1px; background: var(--border); margin: 0.5rem 0; }
+.drawer-footer { margin-top: auto; padding: 0.5rem; }
+.drawer-logout {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    color: #ef4444;
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 12px;
+    font-family: inherit; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; width: 100%;
+}
+
+/* ===== CONTENT ===== */
+.content { padding: 1rem 1rem 6rem; }
+.page-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+/* ===== FAB (Floating Action Button) ===== */
+.ai-assistant-btn {
+    bottom: 1.5rem; left: 1.5rem;
+    width: 64px; height: 64px;
+}
+</style>
+</head>
+<body>
+<a href="/" class="back-link">← חזרה לבחירה</a>
+
+<div class="phone-frame">
+    <div class="mock-header">
+        <button class="hamburger" onclick="document.getElementById('drawer').classList.add('open'); document.getElementById('backdrop').classList.add('open');">☰</button>
+        <div class="mock-logo">AI Lab</div>
+        <div class="course-pill">
+            <button class="active">בסיסי</button>
+            <button>מתקדם</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1 class="page-title">📚 מפגשי הקורס</h1>
+
+        <div class="session-card">
+            <div class="session-card-header">
+                <div class="session-number">1</div>
+                <h3>ברוכים הבאים לעולם ה-AI</h3>
+            </div>
+            <p>הכרות עם בינה מלאכותית, ניסיון ראשון עם ChatGPT ו-Claude</p>
+            <div class="session-tags">
+                <span class="chip">היכרות</span>
+                <span class="chip">Claude</span>
+                <span class="chip">ChatGPT</span>
+            </div>
+        </div>
+
+        <div class="session-card">
+            <div class="session-card-header">
+                <div class="session-number">2</div>
+                <h3>אמנות הפרומפט</h3>
+            </div>
+            <p>טכניקות לכתיבת פרומפטים מושלמים + התקנת Cursor</p>
+            <div class="session-tags">
+                <span class="chip">פרומפט</span>
+                <span class="chip">Cursor</span>
+            </div>
+        </div>
+
+        <div class="session-card">
+            <div class="session-card-header">
+                <div class="session-number">3</div>
+                <h3>חשיבה יזמית — מוצאים בעיות</h3>
+            </div>
+            <p>זיהוי בעיות אמיתיות וסיפורי סטארטאפים ישראליים</p>
+            <div class="session-tags">
+                <span class="chip">יזמות</span>
+                <span class="chip">Waze</span>
+            </div>
+        </div>
+
+        <div class="session-card">
+            <div class="session-card-header">
+                <div class="session-number">4</div>
+                <h3>מרעיון למוצר</h3>
+            </div>
+            <p>בחירת רעיון, הגדרת קהל יעד, תכנון מוצר ראשון</p>
+            <div class="session-tags">
+                <span class="chip">אסטרטגיה</span>
+                <span class="chip">MVP</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="drawer-backdrop" id="backdrop" onclick="this.classList.remove('open'); document.getElementById('drawer').classList.remove('open');"></div>
+
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <div class="drawer-user">
+                <div class="avatar-big">מ</div>
+                <div>
+                    <div class="name">שלום, מאיר</div>
+                    <div class="role">קורס בסיסי</div>
+                </div>
+            </div>
+        </div>
+        <button class="drawer-item active"><span class="icn">📚</span>מפגשים</button>
+        <button class="drawer-item"><span class="icn">🛠️</span>כלי AI</button>
+        <button class="drawer-item"><span class="icn">🚀</span>הפרויקט שלי</button>
+        <div class="drawer-divider"></div>
+        <button class="drawer-item"><span class="icn">📖</span>הדרכות</button>
+        <button class="drawer-item"><span class="icn">⭐</span>המלצות</button>
+        <button class="drawer-item"><span class="icn">💾</span>הורדות</button>
+        <div class="drawer-divider"></div>
+        <button class="drawer-item"><span class="icn">🎥</span>הצגת וובינר</button>
+        <button class="drawer-item"><span class="icn">❓</span>עזרה</button>
+
+        <div class="drawer-footer">
+            <button class="drawer-logout">יציאה</button>
+        </div>
+    </div>
+
+    <button class="ai-assistant-btn">
+        <span>AI</span>
+        <span>Lab</span>
+    </button>
+</div>
+</body>
+</html>
