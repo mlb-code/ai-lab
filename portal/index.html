@@ -1674,6 +1674,48 @@
         }
 
         /* ===== MOBILE BOTTOM NAV ===== */
+        /* Mobile course switcher — only visible on mobile, advanced users */
+        .mobile-course-switcher {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .mobile-course-switcher.advanced-only[style*="none"] { display: none !important; }
+            .mobile-course-switcher {
+                position: fixed;
+                top: 0.8rem;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(30, 30, 50, 0.85);
+                backdrop-filter: blur(40px) saturate(180%);
+                -webkit-backdrop-filter: blur(40px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 20px;
+                padding: 3px;
+                z-index: 60;
+                display: flex;
+                gap: 2px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            }
+            .mobile-course-btn {
+                border: none;
+                background: transparent;
+                color: rgba(255, 255, 255, 0.6);
+                font-family: 'Heebo', sans-serif;
+                font-size: 0.8rem;
+                font-weight: 600;
+                padding: 0.45rem 1.2rem;
+                border-radius: 16px;
+                cursor: pointer;
+                transition: all 0.25s;
+            }
+            .mobile-course-btn.active {
+                background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+                color: #fff;
+                box-shadow: 0 2px 8px rgba(108, 60, 225, 0.4);
+            }
+            .main-content { padding-top: 3.8rem !important; }
+        }
+
         .mobile-nav, .more-menu {
             display: none;
         }
@@ -2194,6 +2236,12 @@
             <a href="/" style="color: var(--text-muted); font-size: 0.75rem; text-decoration: none; opacity: 0.7; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">לאתר הראשי</a>
         </div>
     </aside>
+
+    <!-- MOBILE COURSE SWITCHER (visible only on mobile, for advanced users) -->
+    <div class="mobile-course-switcher advanced-only" id="mobileCourseSwitcher" style="display:none;">
+        <button class="mobile-course-btn active" id="mobileCourseBtnBasic" onclick="switchCourse('basic')">בסיסי</button>
+        <button class="mobile-course-btn" id="mobileCourseBtnAdvanced" onclick="switchCourse('advanced')">מתקדם</button>
+    </div>
 
     <!-- MOBILE BOTTOM NAV -->
     <nav class="mobile-nav">
@@ -4657,12 +4705,18 @@
         function switchCourse(courseType) {
             currentCourseView = courseType;
 
-            // Update switcher buttons
+            // Update switcher buttons (sidebar + mobile)
             var btnBasic = document.getElementById('courseBtnBasic');
             var btnAdvanced = document.getElementById('courseBtnAdvanced');
             if (btnBasic && btnAdvanced) {
                 btnBasic.classList.toggle('active', courseType === 'basic');
                 btnAdvanced.classList.toggle('active', courseType === 'advanced');
+            }
+            var mBtnBasic = document.getElementById('mobileCourseBtnBasic');
+            var mBtnAdvanced = document.getElementById('mobileCourseBtnAdvanced');
+            if (mBtnBasic && mBtnAdvanced) {
+                mBtnBasic.classList.toggle('active', courseType === 'basic');
+                mBtnAdvanced.classList.toggle('active', courseType === 'advanced');
             }
 
             // Show/hide sections based on course type
@@ -5528,15 +5582,43 @@
             border-top: 1px solid rgba(108, 60, 225, 0.1);
         }
 
-        @media (max-width: 480px) {
-            .ai-chat-panel {
-                width: calc(100vw - 24px);
-                left: 12px;
-                bottom: 92px;
-                height: calc(100vh - 120px);
+        @media (max-width: 768px) {
+            .ai-assistant-btn {
+                bottom: 5.5rem;
+                left: 1rem;
+                width: 52px;
+                height: 52px;
+                font-size: 22px;
             }
-            .ai-assistant-btn { bottom: 16px; left: 16px; width: 56px; height: 56px; font-size: 24px; }
-            .ai-assistant-tooltip { left: 16px; bottom: 84px; }
+            .ai-assistant-tooltip {
+                left: 1rem;
+                bottom: calc(5.5rem + 60px);
+                max-width: 220px;
+                font-size: 0.85rem;
+            }
+            .ai-chat-panel {
+                width: calc(100vw - 16px);
+                left: 8px;
+                right: 8px;
+                bottom: calc(5.5rem + 16px);
+                height: calc(100vh - 8rem - 60px);
+                max-height: calc(100dvh - 8rem - 60px);
+                border-radius: 20px;
+            }
+            .ai-chat-header { padding: 14px 16px; }
+            .ai-chat-header-avatar { width: 36px; height: 36px; font-size: 20px; }
+            .ai-chat-header h4 { font-size: 0.95rem; }
+            .ai-chat-messages { padding: 16px; gap: 10px; }
+            .ai-msg { font-size: 0.88rem; padding: 9px 13px; max-width: 90%; }
+            .ai-quick-chips { padding: 0 14px 10px; }
+            .ai-chip { font-size: 0.7rem; padding: 5px 10px; }
+            .ai-chat-input-wrap { padding: 10px; gap: 6px; }
+            .ai-chat-input { font-size: 16px; padding: 9px 14px; }
+            .ai-chat-send { width: 40px; height: 40px; font-size: 16px; }
+        }
+
+        @media (max-width: 480px) {
+            .ai-assistant-btn { width: 48px; height: 48px; font-size: 20px; }
         }
     </style>
 
