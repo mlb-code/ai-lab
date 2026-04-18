@@ -3291,6 +3291,366 @@
         </div>
     </section>
 
+    <!-- PORTAL + AI ASSISTANT SHOWCASE -->
+    <style>
+        .portal-showcase {
+            padding: 80px 0;
+            background: linear-gradient(180deg, var(--dark) 0%, #0a0a14 50%, var(--dark) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .portal-showcase::before {
+            content: '';
+            position: absolute;
+            top: -200px; right: -200px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(108,60,225,0.18) 0%, transparent 70%);
+            filter: blur(60px);
+            pointer-events: none;
+        }
+        .portal-showcase::after {
+            content: '';
+            position: absolute;
+            bottom: -200px; left: -200px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(74,144,226,0.15) 0%, transparent 70%);
+            filter: blur(60px);
+            pointer-events: none;
+        }
+        .portal-showcase .container { position: relative; z-index: 2; }
+        .portal-showcase-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1150px;
+            margin: 40px auto 0;
+        }
+        .portal-visual {
+            position: relative;
+            perspective: 1400px;
+        }
+        .portal-phone {
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto;
+            background: #0a0a14;
+            border: 8px solid #1a1a2e;
+            border-radius: 36px;
+            box-shadow: 0 30px 70px rgba(108, 60, 225, 0.35), 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            position: relative;
+            transform: rotateY(-8deg) rotateX(4deg);
+            transition: transform 0.6s ease;
+        }
+        .portal-phone:hover { transform: rotateY(-4deg) rotateX(2deg); }
+        .portal-phone-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 14px 10px;
+            background: rgba(10,10,20,0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .portal-phone-logo {
+            font-weight: 900; font-size: 1rem;
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .portal-phone-pill {
+            display: inline-flex; background: rgba(255,255,255,0.06);
+            border-radius: 14px; padding: 2px; gap: 2px;
+        }
+        .portal-phone-pill span {
+            padding: 4px 10px; font-size: 0.65rem; font-weight: 700;
+            border-radius: 12px; color: rgba(255,255,255,0.6);
+        }
+        .portal-phone-pill span.active {
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2); color: #fff;
+        }
+        .portal-phone-avatar {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: linear-gradient(135deg, #E2B93B, #f5d76e);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 800; color: #0a0a14;
+        }
+        .portal-phone-body {
+            padding: 14px;
+            min-height: 280px;
+            background: #0a0a14;
+        }
+        .portal-phone-title {
+            font-size: 0.85rem; font-weight: 800;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .ss-card {
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 8px 10px;
+            margin-bottom: 7px;
+            display: flex; gap: 8px; align-items: center;
+        }
+        .ss-num {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 800; font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+        .ss-num.green { background: linear-gradient(135deg, #10b981, #059669); }
+        .ss-num.orange { background: linear-gradient(135deg, #f97316, #ea580c); }
+        .ss-info { flex: 1; min-width: 0; }
+        .ss-name { font-size: 0.72rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .ss-tag { font-size: 0.58rem; color: #888; }
+        .portal-phone-bar {
+            background: #0a0a14;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 6px 10px 10px;
+            display: flex; justify-content: space-around; align-items: center;
+        }
+        .pb-icn {
+            display: flex; flex-direction: column; align-items: center; gap: 1px;
+            font-size: 0.55rem; color: rgba(255,255,255,0.45); font-weight: 700;
+        }
+        .pb-icn.active { color: #fff; }
+        .pb-icn .em { font-size: 1rem; }
+        .pb-ai {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            color: #fff; font-size: 0.5rem; font-weight: 800; line-height: 1;
+            gap: 1px;
+            box-shadow: 0 4px 14px rgba(108, 60, 225, 0.5);
+            transform: translateY(-6px);
+            border: 2px solid #0a0a14;
+            animation: pulse-ai 2.5s infinite;
+        }
+        @keyframes pulse-ai {
+            0%, 100% { box-shadow: 0 4px 14px rgba(108, 60, 225, 0.5), 0 0 0 0 rgba(108,60,225,0.5); }
+            50% { box-shadow: 0 4px 14px rgba(108, 60, 225, 0.5), 0 0 0 10px rgba(108,60,225,0); }
+        }
+
+        /* Chat bubble preview */
+        .chat-bubble-float {
+            position: absolute;
+            bottom: 80px;
+            left: -20px;
+            max-width: 260px;
+            background: #1a1a2e;
+            border: 1px solid rgba(108,60,225,0.4);
+            border-radius: 16px 16px 16px 4px;
+            padding: 12px 14px;
+            color: #fff;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            box-shadow: 0 10px 30px rgba(108,60,225,0.3);
+            z-index: 3;
+            animation: chat-float 3s ease-in-out infinite;
+        }
+        @keyframes chat-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .chat-bubble-float::before {
+            content: 'AI Lab';
+            display: inline-block;
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+        .chat-bubble-float .chat-bubble-text {
+            display: block;
+        }
+
+        /* Right side content */
+        .portal-content h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .portal-content > p.lead {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+        .portal-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .portal-feature {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 18px;
+            background: rgba(108, 60, 225, 0.06);
+            border: 1px solid rgba(108, 60, 225, 0.18);
+            border-radius: 16px;
+            transition: transform 0.25s, border-color 0.25s, background 0.25s;
+        }
+        .portal-feature:hover {
+            transform: translateY(-3px);
+            border-color: rgba(108, 60, 225, 0.5);
+            background: rgba(108, 60, 225, 0.1);
+        }
+        .portal-feature-icon {
+            width: 48px; height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(108, 60, 225, 0.3);
+        }
+        .portal-feature-text h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .portal-feature-text p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+        .portal-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(108, 60, 225, 0.15);
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            color: #a78bfa;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .portal-showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: right;
+            }
+            .portal-content h2 { font-size: 2rem; }
+            .portal-visual { order: 2; }
+            .portal-content { order: 1; }
+            .chat-bubble-float { left: 10px; bottom: 90px; max-width: 220px; font-size: 0.72rem; }
+        }
+        @media (max-width: 480px) {
+            .portal-showcase { padding: 56px 0; }
+            .portal-content h2 { font-size: 1.6rem; }
+            .portal-content > p.lead { font-size: 1rem; }
+            .portal-feature { padding: 14px; gap: 12px; }
+            .portal-feature-icon { width: 42px; height: 42px; font-size: 1.2rem; }
+            .portal-feature-text h3 { font-size: 0.95rem; }
+            .portal-feature-text p { font-size: 0.82rem; }
+            .portal-phone { max-width: 280px; }
+        }
+    </style>
+
+    <section class="portal-showcase" id="portal-showcase">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>&#x1F511; האזור האישי &mdash; הלמידה ממשיכה אחרי השיעור</h2>
+                <p>כל תלמיד מקבל גישה לפורטל אישי עם כל החומר, כלים, ועוזר AI זמין 24/7</p>
+            </div>
+
+            <div class="portal-showcase-grid">
+                <div class="portal-visual reveal">
+                    <div class="portal-phone">
+                        <div class="portal-phone-header">
+                            <span class="portal-phone-logo">AI Lab</span>
+                            <div class="portal-phone-pill">
+                                <span class="active">בסיסי</span>
+                                <span>מתקדם</span>
+                            </div>
+                            <div class="portal-phone-avatar">ש</div>
+                        </div>
+                        <div class="portal-phone-body">
+                            <div class="portal-phone-title">&#x1F4DA; מפגשי הקורס</div>
+                            <div class="ss-card">
+                                <div class="ss-num">1</div>
+                                <div class="ss-info">
+                                    <div class="ss-name">ברוכים הבאים לעולם ה-AI</div>
+                                    <div class="ss-tag">היכרות &middot; Claude</div>
+                                </div>
+                            </div>
+                            <div class="ss-card">
+                                <div class="ss-num green">2</div>
+                                <div class="ss-info">
+                                    <div class="ss-name">אמנות הפרומפט</div>
+                                    <div class="ss-tag">Cursor &middot; פרומפטינג</div>
+                                </div>
+                            </div>
+                            <div class="ss-card">
+                                <div class="ss-num orange">3</div>
+                                <div class="ss-info">
+                                    <div class="ss-name">חשיבה יזמית</div>
+                                    <div class="ss-tag">סטארטאפים</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portal-phone-bar">
+                            <div class="pb-icn active"><span class="em">&#x1F4DA;</span><span>מפגשים</span></div>
+                            <div class="pb-icn"><span class="em">&#x1F916;</span><span>כלים</span></div>
+                            <div class="pb-ai"><span>AI</span><span>Lab</span></div>
+                            <div class="pb-icn"><span class="em">&#x1F680;</span><span>פרויקט</span></div>
+                            <div class="pb-icn"><span class="em">&#x2022;&#x2022;&#x2022;</span><span>עוד</span></div>
+                        </div>
+                    </div>
+                    <div class="chat-bubble-float">
+                        <span class="chat-bubble-text">היי! 👋 נתקעת בתרגיל? אני כאן לעזור לך שלב אחר שלב.</span>
+                    </div>
+                </div>
+
+                <div class="portal-content reveal">
+                    <span class="portal-badge">&#x1F3AF; כלול בקורס</span>
+                    <h2>הפורטל האישי של AI Lab</h2>
+                    <p class="lead">מקום אחד שבו התלמיד שלכם ימצא את כל מה שהוא צריך &mdash; חומר לימוד, תרגילים, מצגות שיעור, ועוזר AI חכם שיודע את כל תוכן הקורס.</p>
+
+                    <div class="portal-features">
+                        <div class="portal-feature">
+                            <div class="portal-feature-icon">&#x1F916;</div>
+                            <div class="portal-feature-text">
+                                <h3>עוזר AI Lab &mdash; זמין 24/7</h3>
+                                <p>מורה דיגיטלי על בסיס Claude של Anthropic. עונה על שאלות מהקורס, מסביר מושגים, ומלווה את התלמיד בבניית הפרויקט שלו &mdash; בעברית, ברמה מותאמת אישית.</p>
+                            </div>
+                        </div>
+
+                        <div class="portal-feature">
+                            <div class="portal-feature-icon">&#x1F4DA;</div>
+                            <div class="portal-feature-text">
+                                <h3>כל המפגשים במקום אחד</h3>
+                                <p>סיכום, מצגת, תרגילים ואתגרי בית לכל שיעור. חזרה נוחה בכל רגע לכל נושא שנלמד.</p>
+                            </div>
+                        </div>
+
+                        <div class="portal-feature">
+                            <div class="portal-feature-icon">&#x1F6E0;&#xFE0F;</div>
+                            <div class="portal-feature-text">
+                                <h3>ארגז כלים מלא</h3>
+                                <p>רשימת כל כלי ה-AI שנלמדו, פרומפטים מוכנים, הדרכות התקנה, והורדות &mdash; הכל ניתן לכל תלמיד ברגע שהוא נרשם.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- PRICING -->
     <section class="pricing-section" id="pricing">
         <div class="container">
