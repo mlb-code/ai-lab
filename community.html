@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>קהילת AI Lab — הצטרפו לקבוצת הוואטסאפ</title>
+<meta name="description" content="קבוצת וואטסאפ חינמית לכל מי שמתעניין בבינה מלאכותית ויזמות. עדכונים שוטפים, טיפים יומיים, חדשות על כלי AI חדשים, ותוכן בלעדי.">
+
+<!-- Open Graph for Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="קהילת AI Lab — הצטרפו לקבוצת הוואטסאפ">
+<meta property="og:description" content="טיפים יומיים, עדכוני AI, וקהילה של יזמים ולומדים. חינם.">
+<meta property="og:url" content="https://ai-lab.co.il/community">
+<meta property="og:image" content="https://ai-lab.co.il/og-image.jpg">
+<meta property="og:locale" content="he_IL">
+<meta property="og:site_name" content="AI Lab">
+
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/favicon-180.png">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2V4B01L78V"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2V4B01L78V');
+</script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #6c3ce1;
+  --accent: #4a90e2;
+  --whatsapp: #25D366;
+  --whatsapp-dark: #128C7E;
+  --gold: #E2B93B;
+  --text: #fff;
+  --muted: #aaa;
+  --bg: #0a0a14;
+  --surface: #1a1a2e;
+  --border: rgba(255,255,255,0.08);
+}
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Heebo', sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(108,60,225,0.18), transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(37,211,102,0.12), transparent 45%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+.container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+/* HEADER */
+header {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(10,10,20,0.8);
+}
+header .logo {
+  display: inline-block;
+  font-weight: 900; font-size: 1.4rem;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* HERO */
+.hero {
+  padding: 60px 0 50px;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(37,211,102,0.12);
+  border: 1px solid rgba(37,211,102,0.4);
+  color: #4ae58a;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.hero-badge .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--whatsapp);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.6); }
+  50% { box-shadow: 0 0 0 6px rgba(37,211,102,0); }
+}
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 3.3rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, #fff, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  color: var(--muted);
+  margin-bottom: 34px;
+  max-width: 560px;
+  margin-left: auto; margin-right: auto;
+  line-height: 1.7;
+}
+.hero-sub strong { color: #fff; font-weight: 700; }
+
+/* CTA */
+.cta-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
+  color: #fff;
+  text-decoration: none;
+  padding: 18px 44px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  border-radius: 50px;
+  box-shadow: 0 12px 36px rgba(37,211,102,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+.cta-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 44px rgba(37,211,102,0.55); }
+.cta-primary svg { flex-shrink: 0; }
+
+.cta-small {
+  display: block;
+  color: #888;
+  font-size: 0.85rem;
+  margin-top: 14px;
+}
+
+/* VALUE SECTION */
+.section { padding: 50px 0; }
+.section-title {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.section-subtitle {
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 1rem;
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.value-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 20px;
+  text-align: right;
+  transition: transform 0.25s, border-color 0.25s;
+}
+.value-card:hover { transform: translateY(-4px); border-color: rgba(108,60,225,0.4); }
+.value-card .icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 14px rgba(108,60,225,0.3);
+}
+.value-card h3 { font-size: 1.05rem; margin-bottom: 6px; color: #fff; font-weight: 700; }
+.value-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
+
+/* WHO SECTION */
+.who-box {
+  background: linear-gradient(135deg, rgba(108,60,225,0.1), rgba(74,144,226,0.08));
+  border: 1px solid rgba(108,60,225,0.25);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+}
+.who-list {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 16px auto 0;
+  text-align: right;
+}
+.who-item {
+  display: flex; gap: 12px; align-items: center;
+  color: #fff; font-size: 1rem;
+  font-weight: 500;
+}
+.who-item .check {
+  width: 26px; height: 26px; flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 900; font-size: 0.95rem;
+}
+
+/* ABOUT */
+.about-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+}
+.about-box h3 { font-size: 1.3rem; margin-bottom: 12px; color: #fff; }
+.about-box p { color: var(--muted); line-height: 1.8; max-width: 560px; margin: 0 auto 14px; }
+.about-box a {
+  display: inline-block;
+  margin-top: 14px;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(108,60,225,0.4);
+  padding-bottom: 2px;
+}
+.about-box a:hover { color: #a78bfa; border-color: #a78bfa; }
+
+/* FINAL CTA */
+.final-cta {
+  text-align: center;
+  padding: 70px 0 50px;
+}
+.final-cta h2 {
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  font-weight: 900;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.final-cta p {
+  color: var(--muted);
+  margin-bottom: 30px;
+  font-size: 1.05rem;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
+  text-align: center;
+  color: #666;
+  font-size: 0.85rem;
+}
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: #fff; }
+
+@media (max-width: 480px) {
+  .hero { padding: 40px 0 36px; }
+  .cta-primary { padding: 15px 32px; font-size: 1.05rem; }
+  .value-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .value-card { padding: 18px 14px; }
+  .value-card h3 { font-size: 0.95rem; }
+  .value-card p { font-size: 0.8rem; }
+  .section { padding: 40px 0; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="/" class="logo">AI Lab</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="dot"></span> קבוצה פעילה &middot; חינם לכולם
+      </div>
+      <h1>הקהילה של AI Lab בוואטסאפ</h1>
+      <p class="hero-sub">
+        לכל מי שמתעניין ב-<strong>בינה מלאכותית</strong>, <strong>יזמות</strong>, וכלים שמשנים את הדרך שבה אנחנו עובדים.
+        <br>עדכונים שוטפים, טיפים יומיים, וקהילה של לומדים ויוצרים.
+      </p>
+      <a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli"
+         target="_blank" rel="noopener"
+         class="cta-primary"
+         onclick="gtag('event','whatsapp_community_click',{event_category:'community',event_label:'landing_hero'});gtag('event','conversion',{'send_to':'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'})">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        הצטרפו לקבוצה עכשיו
+      </a>
+      <span class="cta-small">בלי התחייבות &middot; ניתן לצאת בכל רגע</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">מה תקבלו בקבוצה?</h2>
+      <p class="section-subtitle">ערך אמיתי, בלי ספאם</p>
+      <div class="value-grid">
+        <div class="value-card">
+          <div class="icon">&#x1F4A1;</div>
+          <h3>טיפים יומיים</h3>
+          <p>פרומפט או טריק קצר שתוכלו ליישם מיד — לעבודה, ללימודים או לפרויקטים שלכם.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon">&#x1F680;</div>
+          <h3>עדכוני AI</h3>
+          <p>כלים חדשים, מודלים עדכניים, והחידושים שחשוב להכיר — בשפה פשוטה ומיידית.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon">&#x1F3AF;</div>
+          <h3>אתגרים ופרויקטים</h3>
+          <p>השראה לבניית אתרים, אפליקציות ומוצרים — עם הדרכה של איך להתחיל.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon">&#x1F91D;</div>
+          <h3>קהילה תומכת</h3>
+          <p>תשאלו שאלות, תשתפו הצלחות, ותפגשו אנשים שעוברים את אותו מסע.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="who-box">
+        <h2 class="section-title" style="margin-bottom: 6px;">הקבוצה מיועדת למי שרוצה</h2>
+        <div class="who-list">
+          <div class="who-item"><span class="check">&#x2713;</span> ללמוד איך להשתמש ב-AI חכם ויעיל</div>
+          <div class="who-item"><span class="check">&#x2713;</span> להיחשף לכלים שיחסכו שעות עבודה</div>
+          <div class="who-item"><span class="check">&#x2713;</span> לבנות פרויקטים — אתרים, אפליקציות, מוצרים</div>
+          <div class="who-item"><span class="check">&#x2713;</span> לשים יד על הגל לפני כולם</div>
+          <div class="who-item"><span class="check">&#x2713;</span> להכיר אנשים שמתעניינים באותם נושאים</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="about-box">
+        <h3>על AI Lab</h3>
+        <p>
+          AI Lab הוקם על ידי <strong style="color:#fff;">מאיר לביא</strong>, מורה ויזם עם קורסים שמלמדים
+          איך לבנות בעזרת בינה מלאכותית — מילדים בני 10 עד מבוגרים בני 60+.
+          תלמידי הקורס כבר בנו עשרות אתרים ומוצרים אמיתיים בעזרת AI.
+        </p>
+        <a href="/">ראו את הפרויקטים של התלמידים &larr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container">
+      <h2>מוכנים להצטרף?</h2>
+      <p>לחיצה אחת — והקבוצה בוואטסאפ שלכם.</p>
+      <a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli"
+         target="_blank" rel="noopener"
+         class="cta-primary"
+         onclick="gtag('event','whatsapp_community_click',{event_category:'community',event_label:'landing_footer'});gtag('event','conversion',{'send_to':'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'})">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        הצטרפו לקבוצה עכשיו
+      </a>
+      <span class="cta-small">חינם &middot; ללא התחייבות &middot; אפשר לעזוב בכל רגע</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 AI Lab — מאיר לביא &middot; <a href="/">ai-lab.co.il</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
