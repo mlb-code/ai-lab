@@ -3481,42 +3481,6 @@
             50% { box-shadow: 0 4px 14px rgba(108, 60, 225, 0.5), 0 0 0 10px rgba(108,60,225,0); }
         }
 
-        /* Chat bubble preview */
-        .chat-bubble-float {
-            position: absolute;
-            bottom: 80px;
-            left: -20px;
-            max-width: 260px;
-            background: #1a1a2e;
-            border: 1px solid rgba(108,60,225,0.4);
-            border-radius: 16px 16px 16px 4px;
-            padding: 12px 14px;
-            color: #fff;
-            font-size: 0.78rem;
-            line-height: 1.5;
-            box-shadow: 0 10px 30px rgba(108,60,225,0.3);
-            z-index: 3;
-            animation: chat-float 3s ease-in-out infinite;
-        }
-        @keyframes chat-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-        .chat-bubble-float::before {
-            content: 'AI Lab';
-            display: inline-block;
-            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
-            color: #fff;
-            font-size: 0.62rem;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 8px;
-            margin-bottom: 6px;
-        }
-        .chat-bubble-float .chat-bubble-text {
-            display: block;
-        }
-
         /* Right side content */
         .portal-content h2 {
             font-size: 2.5rem;
@@ -3684,9 +3648,6 @@
                     </div>
                 </div>
 
-                <div class="chat-bubble-float">
-                    <span class="chat-bubble-text">היי! 👋 נתקעת בתרגיל? בוא נעבור על זה ביחד.</span>
-                </div>
             </div>
         </div>
     </section>
