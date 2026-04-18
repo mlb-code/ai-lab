@@ -5644,12 +5644,6 @@
 במה אני יכול לעזור?</div>
         </div>
 
-        <div class="ai-quick-chips" id="aiQuickChips">
-            <button class="ai-chip" onclick="aiSendQuick('מה זה פרומפט?')">מה זה פרומפט?</button>
-            <button class="ai-chip" onclick="aiSendQuick('איך מתקינים Cursor?')">איך מתקינים Cursor?</button>
-            <button class="ai-chip" onclick="aiSendQuick('סכם לי את מפגש 1')">סכם מפגש 1</button>
-        </div>
-
         <div class="ai-chat-input-wrap">
             <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="כתוב שאלה..." maxlength="500" />
             <button class="ai-chat-send" id="aiChatSend" onclick="aiSendMessage()" aria-label="שלח">&#10148;</button>
@@ -5711,8 +5705,6 @@
             if (!text) return;
 
             input.value = '';
-            document.getElementById('aiQuickChips').style.display = 'none';
-
             aiAddMessage('user', text);
             aiMessages.push({ role: 'user', content: text });
 
