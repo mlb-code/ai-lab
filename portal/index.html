@@ -1674,8 +1674,8 @@
         }
 
         /* ===== MOBILE BOTTOM NAV ===== */
-        /* Mobile header (Instagram-style) — hidden on desktop */
-        .mobile-header, .mobile-stories { display: none; }
+        /* Mobile-only elements — hidden on desktop */
+        .mobile-header, .mobile-stories, .more-sheet, .more-sheet-backdrop { display: none; }
 
         @media (max-width: 768px) {
             /* ===== MOBILE HEADER ===== */
@@ -1791,6 +1791,7 @@
 
             /* ===== MORE SHEET (slide-up drawer) ===== */
             .more-sheet-backdrop {
+                display: block;
                 position: fixed; inset: 0;
                 background: rgba(0,0,0,0.55);
                 backdrop-filter: blur(4px);
@@ -1800,6 +1801,7 @@
             }
             .more-sheet-backdrop.open { opacity: 1; pointer-events: auto; }
             .more-sheet {
+                display: block;
                 position: fixed; left: 0; right: 0; bottom: 0;
                 background: rgba(20, 20, 35, 0.98);
                 backdrop-filter: blur(40px) saturate(180%);
@@ -5806,11 +5808,6 @@
             .ai-assistant-btn { width: 52px; height: 52px; font-size: 0.62rem; padding: 0; border-radius: 50%; }
         }
     </style>
-
-    <div class="ai-assistant-tooltip" id="aiTooltip">
-        <button class="ai-assistant-tooltip-close" onclick="closeAiTooltip()">&times;</button>
-        שלום! 👋 יש לך שאלה על הקורס? אני כאן!
-    </div>
 
     <button class="ai-assistant-btn" id="aiAssistantBtn" onclick="toggleAiChat()" aria-label="פתח עוזר הקורס">
         <span class="ai-btn-label">AI</span>
