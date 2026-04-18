@@ -5414,29 +5414,22 @@
             border-radius: 50%;
             background: rgba(255,255,255,0.2);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 0.58rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+            gap: 1px;
         }
+        .ai-chat-header-avatar .ai-hdr-ai,
+        .ai-chat-header-avatar .ai-hdr-lab { display: block; }
         .ai-chat-header h4 {
             color: #fff;
             margin: 0;
             font-size: 1rem;
             font-weight: 700;
-        }
-        .ai-chat-header .ai-status {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .ai-chat-header .ai-status::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #22c55e;
         }
         .ai-chat-close {
             background: rgba(255,255,255,0.15);
@@ -5632,10 +5625,12 @@
     <div class="ai-chat-panel" id="aiChatPanel">
         <div class="ai-chat-header">
             <div class="ai-chat-header-info">
-                <div class="ai-chat-header-avatar">🤖</div>
+                <div class="ai-chat-header-avatar">
+                    <span class="ai-hdr-ai">AI</span>
+                    <span class="ai-hdr-lab">Lab</span>
+                </div>
                 <div>
                     <h4>עוזר הקורס</h4>
-                    <div class="ai-status">זמין עכשיו</div>
                 </div>
             </div>
             <button class="ai-chat-close" onclick="toggleAiChat()" aria-label="סגור">&times;</button>
