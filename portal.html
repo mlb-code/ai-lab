@@ -48,7 +48,34 @@
             --sidebar-width: 240px;
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(108, 60, 225, 0.3) transparent;
+        }
+
+        /* Global custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(108, 60, 225, 0.3);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(108, 60, 225, 0.5);
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
 
         body {
             font-family: 'Heebo', sans-serif;
@@ -59,60 +86,95 @@
         }
 
         /* ===== TOP NAV BAR ===== */
+        /* topnav hidden — everything in sidebar */
         .topnav {
+            display: none;
+        }
+
+        /* ===== RIGHT SIDEBAR ===== */
+        .sidebar {
             position: fixed;
             top: 0;
-            left: 0;
             right: 0;
-            height: 64px;
-            background: rgba(26, 26, 46, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, rgba(18, 18, 38, 0.98) 0%, rgba(12, 12, 28, 0.99) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-left: 1px solid rgba(255, 255, 255, 0.06);
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            z-index: 50;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 0;
+            z-index: 51;
+            overflow-y: auto;
+            overflow-x: hidden;
             direction: rtl;
         }
 
-        .topnav-logo {
+        .sidebar-header {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 1rem;
+            padding: 1.5rem 1.2rem 1.2rem;
+            gap: 0.9rem;
         }
 
-        .topnav-logo a {
+        .sidebar-brand {
             color: var(--text);
             text-decoration: none;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.45rem;
             background: linear-gradient(135deg, var(--primary-light), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
-        .topnav-logo .back-link {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-            padding: 0.3rem 0.8rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
+        .sidebar-user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .topnav-logo .back-link:hover {
-            color: var(--accent);
-            border-color: var(--accent);
+        .sidebar-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: 0 4px 18px rgba(108, 60, 225, 0.3), 0 0 0 3px rgba(108, 60, 225, 0.15);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .sidebar-avatar:hover {
+            box-shadow: 0 4px 22px rgba(108, 60, 225, 0.4), 0 0 0 4px rgba(108, 60, 225, 0.25);
+            transform: scale(1.04);
+        }
+
+        .sidebar-divider {
+            height: 1px;
+            margin: 0.4rem 1.2rem;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+        }
+
+        /* Zoom button */
+        .sidebar .zoom-live-btn {
+            margin: 0.5rem 0.9rem;
+            justify-content: center;
         }
 
         .zoom-live-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.45rem 1.2rem;
+            padding: 0.55rem 1.2rem;
             background: linear-gradient(135deg, #2D8CFF, #0B5CFF);
             color: #fff;
             text-decoration: none;
@@ -124,11 +186,12 @@
             font-family: 'Heebo', sans-serif;
             -webkit-text-fill-color: #fff;
             -webkit-background-clip: unset;
+            box-shadow: 0 2px 10px rgba(45, 140, 255, 0.2);
         }
 
         .zoom-live-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(45, 140, 255, 0.35);
+            box-shadow: 0 4px 18px rgba(45, 140, 255, 0.4);
             background: linear-gradient(135deg, #3D9CFF, #1B6CFF) !important;
             color: #fff !important;
             -webkit-text-fill-color: #fff !important;
@@ -139,70 +202,177 @@
             flex-shrink: 0;
         }
 
-        .topnav-tabs {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            direction: rtl;
+        /* ===== COURSE SWITCHER ===== */
+        .course-switcher {
+            padding: 0.6rem 0.8rem;
+            text-align: center;
         }
 
-        .topnav-tabs button {
+        .course-switcher-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-switcher-btns {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 3px;
+            gap: 3px;
+        }
+
+        .course-btn {
+            flex: 1;
+            padding: 0.4rem 0.6rem;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .course-btn:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .course-btn.active {
+            background: linear-gradient(135deg, var(--primary), rgba(0, 212, 170, 0.4));
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(108, 60, 225, 0.3);
+        }
+
+        /* ===== SIDEBAR NAV LABEL ===== */
+        .sidebar-nav-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.8rem 1.4rem 0.3rem;
+        }
+
+        /* ===== SIDEBAR NAV ITEMS ===== */
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            flex: 1;
+        }
+
+        .sidebar-nav button {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.2rem;
+            gap: 0.75rem;
+            padding: 0.65rem 1.4rem;
+            margin: 1px 0.5rem;
             background: none;
             border: none;
             color: var(--text-muted);
             font-family: 'Heebo', sans-serif;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.25s;
+            transition: all 0.2s ease;
+            text-align: right;
+            direction: rtl;
             border-radius: 10px;
             position: relative;
         }
 
-        .topnav-tabs button:hover {
-            background: rgba(108, 60, 225, 0.12);
+        .sidebar-nav button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -0.5rem;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: height 0.25s ease;
+        }
+
+        .sidebar-nav button:hover {
+            background: rgba(108, 60, 225, 0.08);
             color: var(--text);
         }
 
-        .topnav-tabs button.active {
-            background: linear-gradient(135deg, rgba(108, 60, 225, 0.25), rgba(0, 212, 170, 0.12));
+        .sidebar-nav button.active {
+            background: rgba(108, 60, 225, 0.12);
             color: var(--accent);
             font-weight: 600;
         }
 
-        .topnav-tabs button .nav-icon {
+        .sidebar-nav button.active::before {
+            height: 60%;
+        }
+
+        .sidebar-nav button .nav-icon {
             font-size: 1.15rem;
+            width: 1.6rem;
+            text-align: center;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .sidebar-nav button:hover .nav-icon {
+            transform: scale(1.1);
+        }
+
+        .sidebar-nav button.active .nav-icon {
+            transform: scale(1.12);
+        }
+
+        /* Sidebar footer */
+        .sidebar-footer {
+            padding: 1rem 1.2rem;
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         /* ===== MAIN CONTENT ===== */
         .main-content {
-            margin-top: 64px;
-            padding: 2rem 2.5rem;
-            min-height: calc(100vh - 64px);
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-top: 0;
+            margin-right: var(--sidebar-width);
+            padding: 2rem 3rem;
+            min-height: 100vh;
+            max-width: 1100px;
+            -webkit-text-fill-color: var(--text);
+            -webkit-background-clip: border-box;
         }
 
         .page-header {
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            text-align: center;
+            margin-bottom: 2.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            text-align: right;
         }
 
         .page-header h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 0.3rem;
+            letter-spacing: -0.3px;
         }
 
         .page-header p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         /* ===== SECTIONS (hidden by default) ===== */
@@ -218,10 +388,11 @@
         .sessions-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            gap: 1.4rem;
+            max-width: 100%;
         }
 
-        @media (max-width: 900px) {
+        @media (min-width: 769px) and (max-width: 1100px) {
             .sessions-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -235,22 +406,24 @@
 
         .session-card {
             background: var(--dark-card);
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         .session-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(108, 60, 225, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 36px rgba(108, 60, 225, 0.2);
+            border-color: rgba(108, 60, 225, 0.15);
         }
 
         /* Session card image banner */
         .session-card-image {
-            height: 130px;
+            height: 120px;
             position: relative;
             overflow: hidden;
         }
@@ -385,6 +558,16 @@
             display: none;
             line-height: 2.2;
             font-size: 1.05rem;
+            direction: rtl;
+            text-align: right;
+        }
+        .session-card-body .content-list {
+            direction: rtl;
+            text-align: right;
+        }
+        .session-card-body .content-list li {
+            text-align: right;
+            direction: rtl;
         }
 
         /* ===== SESSION DETAIL VIEW ===== */
@@ -812,9 +995,13 @@
 
         /* ===== PROJECT WIZARD ===== */
         .project-wizard {
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto;
-            padding-top: 1rem;
+            padding: 2rem 1rem 1rem;
+            color: var(--text);
+            -webkit-text-fill-color: var(--text);
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
         }
 
         .wizard-progress {
@@ -837,16 +1024,21 @@
             text-align: center;
             font-size: 0.85rem;
             color: var(--text-muted);
+            -webkit-text-fill-color: var(--text-muted);
             margin-bottom: 1.5rem;
         }
 
         .wizard-card {
             background: var(--dark-card);
             border-radius: 20px;
-            padding: 2.5rem 2rem;
+            padding: 2rem 2rem 1.5rem;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.06);
             animation: wizardFade 0.3s ease;
+            color: var(--text);
+            -webkit-text-fill-color: var(--text);
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
         }
 
         @keyframes wizardFade {
@@ -857,23 +1049,39 @@
         .wizard-emoji {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            color: var(--text);
+            -webkit-text-fill-color: initial;
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
         }
 
         .wizard-question {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+            width: 100%;
+            color: var(--text) !important;
+            -webkit-text-fill-color: var(--text) !important;
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
+            opacity: 1;
+            visibility: visible;
         }
 
         .wizard-hint {
             font-size: 0.9rem;
-            color: var(--text-muted);
+            color: var(--text-muted) !important;
+            -webkit-text-fill-color: var(--text-muted) !important;
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
             margin-bottom: 1.5rem;
+            opacity: 1;
+            visibility: visible;
         }
 
         .wizard-textarea {
             width: 100%;
-            min-height: 120px;
+            min-height: 100px;
             background: var(--dark-lighter);
             border: 2px solid rgba(108, 60, 225, 0.2);
             border-radius: 14px;
@@ -1476,37 +1684,20 @@
         }
 
         /* ===== MOBILE BOTTOM NAV ===== */
-        .mobile-nav {
+        .mobile-nav, .more-menu {
             display: none;
         }
 
         /* ===== MOBILE ===== */
         @media (max-width: 768px) {
-            .topnav {
-                height: 52px;
-                padding: 0 1rem;
-            }
-
-            .topnav-tabs {
+            .sidebar {
                 display: none;
-            }
-
-            .back-link {
-                display: none;
-            }
-
-            .zoom-live-btn {
-                font-size: 0;
-                padding: 0.4rem;
-                border-radius: 8px;
-            }
-            .zoom-live-btn svg {
-                width: 20px;
-                height: 20px;
             }
 
             .main-content {
+                margin-right: 0;
                 padding: 1.2rem 1rem 6rem;
+                max-width: 100%;
             }
 
             /* ===== iOS 26 FLOATING TAB BAR ===== */
@@ -1612,6 +1803,7 @@
             .page-header {
                 margin-bottom: 1rem;
                 padding-bottom: 0.5rem;
+                text-align: center;
             }
 
             .page-header h1 {
@@ -1859,32 +2051,34 @@
         /* Greeting in topnav */
         .topnav-greeting {
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 400;
             white-space: nowrap;
         }
 
         .topnav-greeting strong {
-            color: var(--text);
-            font-weight: 600;
+            color: var(--accent);
+            font-weight: 700;
         }
 
         .logout-btn {
             background: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-muted);
             font-family: 'Heebo', sans-serif;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 6px;
+            font-size: 0.72rem;
+            padding: 0.25rem 0.8rem;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
-            margin-right: 0.5rem;
+            transition: all 0.25s ease;
+            opacity: 0.7;
         }
 
         .logout-btn:hover {
             color: #FF4D8D;
-            border-color: #FF4D8D;
+            border-color: rgba(255, 77, 141, 0.3);
+            background: rgba(255, 77, 141, 0.06);
+            opacity: 1;
         }
 
         @media (max-width: 768px) {
@@ -1893,7 +2087,11 @@
             }
 
             .topnav-greeting {
-                font-size: 0.7rem;
+                font-size: 0.75rem;
+            }
+
+            .topnav-brand {
+                font-size: 1rem;
             }
         }
     </style>
@@ -1909,58 +2107,103 @@
             <input type="tel" class="login-input" id="phoneInput" placeholder="050-000-0000" maxlength="13" autocomplete="tel">
             <button class="login-btn" id="loginBtn" onclick="handleLogin()">כניסה</button>
             <div class="login-error" id="loginError"></div>
-            <a href="index.html" class="login-back">← חזרה לאתר הראשי</a>
+            <a href="/" class="login-back">← חזרה לאתר הראשי</a>
         </div>
     </div>
 
-    <!-- TOP NAV BAR -->
-    <header class="topnav">
-        <div class="topnav-tabs">
-            <button class="active" data-section="sessions">
-                <span class="nav-icon">&#x1F4DA;</span>
-                <span>מפגשים</span>
-            </button>
-            <button data-section="ai-tools">
-                <span class="nav-icon">&#x1F916;</span>
-                <span>כלי AI</span>
-            </button>
-            <button data-section="project">
-                <span class="nav-icon">&#x1F680;</span>
-                <span>הפרויקט שלי</span>
-            </button>
-            <button data-section="guides">
-                <span class="nav-icon">&#x1F4D6;</span>
-                <span>הדרכות</span>
-            </button>
-            <button data-section="downloads">
-                <span class="nav-icon">&#x1F4BE;</span>
-                <span>הורדות</span>
-            </button>
-            <button data-section="recommendations">
-                <span class="nav-icon">&#x2B50;</span>
-                <span>המלצות</span>
-            </button>
-            <button data-section="help">
-                <span class="nav-icon">&#x2753;</span>
-                <span>עזרה</span>
-            </button>
-            <button data-section="advanced" class="advanced-only" style="display:none;">
-                <span class="nav-icon">&#x1F31F;</span>
-                <span>קורס מתקדם</span>
-            </button>
+    <!-- RIGHT SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="/" class="sidebar-brand" title="לאתר הראשי">AI Lab</a>
+            <div class="sidebar-user-info">
+                <div class="sidebar-avatar" id="sidebarAvatar"></div>
+                <span class="topnav-greeting" id="greetingArea"></span>
+                <button class="logout-btn" id="logoutBtn" onclick="handleLogout()" style="display:none;">יציאה</button>
+            </div>
         </div>
+
+        <div class="sidebar-divider"></div>
+
         <a href="#" class="zoom-live-btn" id="zoomBtn" onclick="joinZoom()" title="הצטרפו למפגש בזום">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M4 3C2.9 3 2 3.9 2 5V15C2 16.1 2.9 17 4 17H14C15.1 17 16 16.1 16 15V12L20 16V4L16 8V5C16 3.9 15.1 3 14 3H4ZM4 5H14V15H4V5Z"/>
             </svg>
             Zoom
         </a>
-        <div class="topnav-logo">
-            <span class="topnav-greeting" id="greetingArea"></span>
-            <button class="logout-btn" id="logoutBtn" onclick="handleLogout()" style="display:none;">יציאה</button>
-            <a href="index.html" title="לאתר הראשי">AI Lab</a>
+
+        <div class="sidebar-divider"></div>
+
+        <!-- Course Level Switcher -->
+        <div class="course-switcher advanced-only" id="courseSwitcher" style="display:none;">
+            <div class="course-switcher-label">קורס</div>
+            <div class="course-switcher-btns">
+                <button class="course-btn active" id="courseBtnBasic" onclick="switchCourse('basic')">בסיסי</button>
+                <button class="course-btn" id="courseBtnAdvanced" onclick="switchCourse('advanced')">מתקדם</button>
+            </div>
         </div>
-    </header>
+
+        <div class="sidebar-divider advanced-only" style="display:none;"></div>
+
+        <div class="sidebar-nav-label">תפריט</div>
+        <nav class="sidebar-nav">
+            <!-- Shared: מפגשים -->
+            <button class="active" data-section="sessions">
+                <span class="nav-icon">&#x1F4DA;</span><span>מפגשים</span>
+            </button>
+            <!-- Basic: כלי AI -->
+            <button data-section="ai-tools" data-nav-course="basic">
+                <span class="nav-icon">&#x1F916;</span><span>כלי AI</span>
+            </button>
+            <!-- Advanced: כלים לפיתוח -->
+            <button data-section="dev-tools" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F527;</span><span>כלים לפיתוח</span>
+            </button>
+            <!-- Basic: הפרויקט שלי -->
+            <button data-section="project" data-nav-course="basic">
+                <span class="nav-icon">&#x1F680;</span><span>הפרויקט שלי</span>
+            </button>
+            <!-- Advanced: פרומפטים מוכנים -->
+            <button data-section="prompts" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F3AF;</span><span>פרומפטים מוכנים</span>
+            </button>
+            <!-- Basic: הדרכות -->
+            <button data-section="guides" data-nav-course="basic">
+                <span class="nav-icon">&#x1F4D6;</span><span>הדרכות</span>
+            </button>
+            <!-- Advanced: צ'קליסט פרויקט -->
+            <button data-section="checklist" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F4CB;</span><span>צ'קליסט פרויקט</span>
+            </button>
+            <!-- Basic: המלצות -->
+            <button data-section="recommendations" data-nav-course="basic">
+                <span class="nav-icon">&#x2B50;</span><span>המלצות</span>
+            </button>
+            <!-- Shared: קהילה -->
+            <button data-section="community">
+                <span class="nav-icon">&#x1F465;</span><span>קהילה</span>
+            </button>
+            <!-- Advanced: הדרכות -->
+            <button data-section="guides-adv" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F4D6;</span><span>הדרכות</span>
+            </button>
+            <!-- Shared: הורדות -->
+            <button data-section="downloads">
+                <span class="nav-icon">&#x1F4BE;</span><span>הורדות</span>
+            </button>
+            <!-- Basic: עזרה -->
+            <button data-section="help" data-nav-course="basic">
+                <span class="nav-icon">&#x2753;</span><span>עזרה</span>
+            </button>
+            <!-- Admin only: מצגת וובינר -->
+            <button id="adminPresentationBtn" onclick="window.open('/admin-7x9k2m/webinar-presentation.html','_blank')" style="display:none;">
+                <span class="nav-icon">&#x1F3AC;</span><span>מצגת וובינר</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="/" style="color: var(--text-muted); font-size: 0.75rem; text-decoration: none; opacity: 0.7; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">לאתר הראשי</a>
+        </div>
+    </aside>
 
     <!-- MOBILE BOTTOM NAV -->
     <nav class="mobile-nav">
@@ -1968,15 +2211,33 @@
             <span class="nav-icon">&#x1F4DA;</span>
             <span>מפגשים</span>
         </button>
-        <button data-section="ai-tools">
+        <!-- Basic only -->
+        <button data-section="ai-tools" data-nav-course="basic">
             <span class="nav-icon">&#x1F916;</span>
             <span>כלי AI</span>
         </button>
-        <button data-section="project">
+        <!-- Advanced only -->
+        <button data-section="dev-tools" data-nav-course="advanced" style="display:none;">
+            <span class="nav-icon">&#x1F527;</span>
+            <span>כלים</span>
+        </button>
+        <!-- Basic only -->
+        <button data-section="project" data-nav-course="basic">
             <span class="nav-icon">&#x1F680;</span>
             <span>הפרויקט</span>
         </button>
-        <button data-section="guides">
+        <!-- Advanced only -->
+        <button data-section="checklist" data-nav-course="advanced" style="display:none;">
+            <span class="nav-icon">&#x1F4CB;</span>
+            <span>צ'קליסט</span>
+        </button>
+        <!-- Basic only -->
+        <button data-section="guides" data-nav-course="basic">
+            <span class="nav-icon">&#x1F4D6;</span>
+            <span>הדרכות</span>
+        </button>
+        <!-- Advanced only -->
+        <button data-section="guides-adv" data-nav-course="advanced" style="display:none;">
             <span class="nav-icon">&#x1F4D6;</span>
             <span>הדרכות</span>
         </button>
@@ -1990,14 +2251,15 @@
         <button data-section="downloads" onclick="selectMoreSection('downloads')">
             <span>&#x1F4BE;</span> הורדות
         </button>
+        <!-- Advanced only -->
+        <button data-section="prompts" data-nav-course="advanced" onclick="selectMoreSection('prompts')" style="display:none;">
+            <span>&#x1F3AF;</span> פרומפטים מוכנים
+        </button>
         <button data-section="recommendations" onclick="selectMoreSection('recommendations')">
             <span>&#x2B50;</span> המלצות
         </button>
-        <button data-section="help" onclick="selectMoreSection('help')">
-            <span>&#x2753;</span> עזרה
-        </button>
-        <button data-section="advanced" onclick="selectMoreSection('advanced')" class="advanced-only" style="display:none;">
-            <span>&#x1F31F;</span> קורס מתקדם
+        <button data-section="community" onclick="selectMoreSection('community')">
+            <span>&#x1F465;</span> קהילה
         </button>
     </div>
 
@@ -2012,7 +2274,7 @@
             <div class="sessions-grid">
 
                 <!-- Session 1 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">1</div>
                         <h3>ברוכים הבאים לעולם ה-AI</h3>
@@ -2030,6 +2292,7 @@
                             <li><strong>AI בחיים היומיום:</strong> Siri ו-Google Assistant (קול), נטפליקס (המלצות), Google Translate (שפה), Waze (ניווט), Face ID (זיהוי), פילטרי ספאם (אימייל)</li>
                             <li><strong>הכרות עם ChatGPT ו-Claude:</strong> שני הכלים החזקים ביותר. נכנסים, שואלים את אותה שאלה בשניהם, ורואים את ההבדלים &mdash; כל כלי חזק בדברים שונים</li>
                             <li><strong>היסטוריה קצרה:</strong> הרעיון של AI קיים מ-1950 (אלן טיורינג), אבל הפריצה הגדולה הגיעה ב-2022 עם ChatGPT. ישראל מובילה עולמית בתחום!</li>
+                            <li><strong>&#x1F3AF; 4 כוחות העל שלכם עם AI (מבוסס על Anthropic):</strong> חברת Anthropic (שיצרה את Claude) פיתחה 4 כללי זהב לשימוש נכון ב-AI: (1) <strong>תאר &#x1F4DD;</strong> &mdash; תסבירו ל-AI מה אתם רוצים בצורה ברורה ומפורטת. ככל שתתארו יותר טוב, כך התוצאה תהיה מדויקת יותר. (2) <strong>האצל &#x1F91D;</strong> &mdash; תנו ל-AI לעשות מה שהוא טוב בו (כתיבה, חיפוש, עיצוב) ותשאירו לעצמכם את ההחלטות והיצירתיות. (3) <strong>שפוט &#x1F9D0;</strong> &mdash; אל תאמינו ל-AI בעיניים עצומות! תמיד בדקו &mdash; AI יכול לטעות ולהמציא דברים. (4) <strong>הקפד &#x1F6E1;&#xFE0F;</strong> &mdash; השתמשו ב-AI בצורה אחראית. אל תשתפו מידע אישי, אל תעתיקו בלי לבדוק, ותנו קרדיט. נחזור לכללים האלה לאורך כל הקורס!</li>
                             <li><strong>&#x1F4BB; מה זה Cursor (קֶרְסוֹר)?</strong> Cursor היא תוכנה חינמית לבניית אתרים ואפליקציות בעזרת בינה מלאכותית. במקום ללמוד שפות תכנות &mdash; אתם פשוט כותבים מה אתם רוצים, וה-AI כותב את כל הקוד בשבילכם! חשבו על זה כמו &quot;עוזר בנייה חכם&quot; שיודע לבנות אתרים שלמים</li>
                             <li><strong>התקנת Cursor &mdash; צעד אחר צעד:</strong> (1) היכנסו לאתר <strong>cursor.com</strong> ולחצו על Download (הורדה). (2) הריצו את הקובץ שירד &mdash; EXE בווינדוס, DMG במק. (3) פתחו את Cursor והירשמו עם חשבון Google &mdash; הגרסה החינמית מספיקה! (4) לחצו על <strong>File &rarr; Open Folder</strong> (קובץ &rarr; פתח תיקייה) וצרו תיקייה חדשה באנגלית בלי רווחים, למשל: <code>my-project</code></li>
                             <li><strong>איך מפעילים את ה-AI בתוך Cursor?</strong> לוחצים <kbd>Ctrl+K</kbd> (ווינדוס) או <kbd>Cmd+K</kbd> (מק) &mdash; ייפתח חלון קטן שבו כותבים מה רוצים לבנות. לדוגמה: &quot;תבנה לי דף נחיתה יפה בעברית עם כותרת, תמונה וכפתור&quot; &mdash; ותוך שניות ה-AI יכתוב את כל הקוד! אפשר גם לבקש שינויים: &quot;תחליף צבע לכחול&quot; או &quot;תוסיף עוד כפתור&quot;</li>
@@ -2080,7 +2343,7 @@
                 </div>
 
                 <!-- Session 2 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">2</div>
                         <h3>אמנות הפרומפט</h3>
@@ -2099,6 +2362,9 @@
                             <li><strong>טכניקה 3 &mdash; הגדירו פורמט:</strong> "תן לי רשימה ממוספרת / טבלה / 3 פסקאות / נקודות" &mdash; תגידו ל-AI בדיוק איך אתם רוצים את התשובה</li>
                             <li><strong>טכניקה 4 &mdash; תנו דוגמה:</strong> "כתוב בסגנון דומה ל-X, אבל עם Y" &mdash; דוגמאות עוזרות ל-AI להבין מה אתם מחפשים</li>
                             <li><strong>טכניקה 5 &mdash; שפרו צעד אחר צעד:</strong> התחילו פשוט, ואז בקשו שינויים: "תקצר", "תוסיף הומור", "עכשיו תרגם לעברית". כל פעם מקבלים תוצאה טובה יותר!</li>
+                            <li><strong>טכניקה 6 &mdash; תנו תפקיד (מבוסס על Anthropic):</strong> תגידו ל-AI מי הוא! "אתה מעצב גרפי מקצועי" או "אתה מורה לאנגלית לילדים בני 12". כש-AI יודע מה התפקיד שלו, הוא נותן תשובות הרבה יותר טובות ומדויקות. זה נקרא <strong>Role Prompting</strong> (פרומפט תפקידי)</li>
+                            <li><strong>טכניקה 7 &mdash; חשיבה שלב-אחר-שלב (Chain of Thought):</strong> במקום לבקש תשובה ישירה, בקשו מה-AI "תחשוב שלב אחר שלב". לדוגמה: "תסביר את החשיבה שלך לפני שתיתן תשובה". ככה AI נותן תשובות חכמות ומדויקות יותר! מבוסס על מחקר של Anthropic</li>
+                            <li><strong>&#x1F6E1;&#xFE0F; זכרו: כלל "שפוט" מהשיעור הקודם!</strong> גם עם פרומפט מושלם, AI יכול לטעות. תמיד בדקו עובדות, במיוחד מספרים, תאריכים ושמות. AI הוא עוזר חכם &mdash; לא מורה שתמיד צודק</li>
                             <li><strong>&#x1F4BB; התקנת Cursor + Claude Code:</strong> בחצי השני של המפגש &mdash; מתקינים את Cursor (עורך הקוד עם AI) ו-Claude Code (הכלי החכם ביותר לבנייה). ההדרכה המלאה באזור "הדרכות"</li>
                         </ul>
                         <div class="session-concepts">
@@ -2129,7 +2395,7 @@
                 </div>
 
                 <!-- Session 3 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">3</div>
                         <h3>חשיבה יזמית &mdash; מוצאים בעיות</h3>
@@ -2177,7 +2443,7 @@
                 </div>
 
                 <!-- Session 4 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">4</div>
                         <h3>מרעיון למוצר</h3>
@@ -2225,7 +2491,7 @@
                 </div>
 
                 <!-- Session 5 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">5</div>
                         <h3>בונים אתר &mdash; חלק 1</h3>
@@ -2274,7 +2540,7 @@
                 </div>
 
                 <!-- Session 6 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">6</div>
                         <h3>בונים אתר &mdash; חלק 2</h3>
@@ -2323,7 +2589,7 @@
                 </div>
 
                 <!-- Session 7 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header">
                         <div class="session-number">7</div>
                         <h3>מודל עסקי ושיווק</h3>
@@ -2375,7 +2641,7 @@
                 </div>
 
                 <!-- Session 8 -->
-                <div class="session-card">
+                <div class="session-card" data-course="basic">
                     <div class="session-card-header" style="background: linear-gradient(135deg, var(--gold), var(--orange));">
                         <div class="session-number">8</div>
                         <h3>&#x1F3C6; יום הפיץ'</h3>
@@ -2415,6 +2681,397 @@
                         </div>
                         <div class="session-actions">
                             <button class="session-presentation" onclick="openPresentation(8)">&#x1F4CA; צפו במצגת השיעור</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== ADVANCED COURSE SESSIONS ===== -->
+
+                <!-- Advanced Session 1 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">1</div>
+                        <h3>חזרה ושדרוג</h3>
+                        <span class="session-tag">שדרוג</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נסתכל על מה שבנינו בקורס הקודם, נחשוב מה אפשר לשפר, ונתכנן את השדרוג</div>
+                        <div class="session-discussion" style="margin-top:0; margin-bottom:1rem; border-right-color: var(--primary-light); background: rgba(108,60,225,0.08);">
+                            <div class="disc-label" style="color:var(--primary-light);">&#x1F3A4; שאלת פתיחה (5 דקות)</div>
+                            <p>מה הדבר הכי מגניב שבניתם בקורס הקודם? מה הייתם רוצים להוסיף?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>מה בנינו עד עכשיו:</strong> בקורס הקודם כל אחד בנה אתר משלו. עכשיו נסתכל עליו ביחד — מה עובד טוב? מה אפשר לשפר? מה חסר?</li>
+                            <li><strong>מה זה מוצר מינימלי (MVP):</strong> בקורס הקודם בנינו גרסה ראשונה — את הדבר הכי בסיסי שעובד. עכשיו הגיע הזמן להפוך אותו למשהו יותר מקצועי ויותר שלם</li>
+                            <li><strong>תכנון השדרוג:</strong> נכין רשימה של כל מה שנרצה להוסיף ונחליט מה הכי חשוב. קודם הדברים ההכרחיים, אחר כך הבונוסים</li>
+                            <li><strong>מה נלמד בקורס הזה:</strong> שמירת מידע, הרשמה והתחברות, חיבור לשירותים חיצוניים, בניית עוזר חכם, עיצוב מקצועי, העלאה לאינטרנט ושיווק — הכל צעד אחרי צעד</li>
+                            <li><strong>&#x1F4CA; כמה אתם באמת מכירים AI? מבחן מהיר!</strong> לפני שמתחילים, בואו נבדוק! דרגו את עצמכם 1-5 על כל שאלה: (1) &quot;אני יודע לכתוב פרומפט שגורם ל-AI לתת בדיוק מה שאני רוצה&quot; &mdash; למשל: לבקש ממנו לכתוב סיפור על דרקון בסגנון הארי פוטר, עם 3 פרקים. (2) &quot;אני יודע מתי AI יעזור לי ומתי עדיף לעשות לבד&quot; &mdash; למשל: AI מעולה בכתיבת רעיונות, אבל לא תמיד צודק בחשבון. (3) &quot;אני בודק את מה ש-AI אומר לפני שאני משתמש בזה&quot; &mdash; למשל: אם AI אומר ש&quot;תל אביב היא בירת ישראל&quot; &mdash; אתם יודעים שזה לא מדויק! (4) &quot;אני משתמש ב-AI בצורה חכמה ואחראית&quot; &mdash; למשל: לא מעתיקים שיעורי בית בלי להבין, ולא שולחים מידע אישי. רשמו את הציונים! במפגש האחרון נבדוק שוב ונראה כמה קפצתם &#x1F680;</li>
+                            <li><strong>שיפור העיצוב:</strong> נסתכל על האתר שלנו בעיניים חדשות. מה נראה טוב? מה צריך שיפור? נלמד איך לזהות עיצוב מקצועי</li>
+                            <li><strong>חשיבה גדולה:</strong> איך נראה האתר המושלם שלכם? מה הוא יוכל לעשות? מי ישתמש בו? בואו נחלום בגדול ונתכנן איך להגיע לשם</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">שדרוג</span>
+                            <span class="concept-tag">תכנון</span>
+                            <span class="concept-tag">מוצר מינימלי</span>
+                            <span class="concept-tag">חשיבה גדולה</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>מה הפיצ'ר הכי חשוב שחסר בפרויקט שלכם? &bull; למה לא כדאי לבנות הכל בבת אחת?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> פתחו את האתר שלכם ורשמו על דף — 3 דברים טובים ו-3 דברים שאפשר לשפר. ציירו איך האתר ייראה אחרי השדרוג.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> רשמו רשימת שדרוגים ודרגו אותם לפי חשיבות. הכינו תוכנית — מה נעשה בכל מפגש?</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> בנו מפת דרכים מפורטת — אילו תכונות נוסיף, באיזה סדר, ומה היעד ליום ההצגה. חפשו 3 אתרים שמעצבים אתכם ורשמו למה.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. רשמו רשימה של 5 שיפורים שתרצו לעשות באתר, ודרגו מ-1 (הכי חשוב) ל-5.</p>
+                            <p>2. חפשו 3 אתרים שאתם אוהבים ורשמו מה בדיוק טוב בהם.</p>
+                            <p>3. חשבו — מי יהיו המשתמשים של האתר שלכם? מה הם צריכים?</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד איך לשמור מידע — שהאתר שלנו יזכור דברים!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 2 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">2</div>
+                        <h3>שמירת מידע — מאגר נתונים</h3>
+                        <span class="session-tag">מאגר נתונים</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נלמד איך לשמור מידע כדי שהאתר שלנו יזכור דברים — שמות, הודעות ועוד</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם סקרנו את הפרויקטים ותכננו את השדרוג. &bull; <strong>בדיקת משימת בית:</strong> מי הכין רשימת שיפורים? מה המשתמשים שלכם צריכים?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>למה צריך לשמור מידע:</strong> כרגע האתר שלכם כמו מחברת שנמחקת כל פעם שסוגרים אותה. אם מישהו ממלא טופס או נרשם — המידע נעלם! אנחנו רוצים שהאתר יזכור הכל</li>
+                            <li><strong>מה זה מאגר נתונים (Database באנגלית):</strong> מקום מסודר לשמור מידע. דמיינו טבלה כמו אקסל או גוגל שיטס — שורות ועמודות. כל שורה זה פריט מידע (למשל: שם, אימייל, הודעה)</li>
+                            <li><strong>הצד שרואים והצד שמאחורי הקלעים:</strong> מה שהגולש רואה באתר זה הצד הקדמי (Frontend באנגלית). מה שעובד מאחורי הקלעים — שמירת מידע, שליחת מיילים, ניהול משתמשים — זה הצד האחורי (Backend באנגלית)</li>
+                            <li><strong>הכרות עם Supabase (סופאבייס):</strong> שירות חינמי באינטרנט שנותן לנו מאגר נתונים מוכן. במקום לבנות הכל לבד, פשוט נרשמים ומתחילים לשמור מידע. כמו גוגל שיטס — אבל חכם יותר</li>
+                            <li><strong>בניית טבלה ראשונה:</strong> ניצור טבלה ראשונה ב-Supabase — למשל טבלה ששומרת הודעות מטופס יצירת קשר. נגדיר שדות: שם, אימייל, הודעה, תאריך</li>
+                            <li><strong>חיבור האתר למאגר:</strong> נחבר את האתר שלנו ל-Supabase — ככה כשמישהו ממלא טופס, המידע נשמר אוטומטית. וגם נלמד איך לשלוף מידע ולהציג אותו באתר</li>
+                        </ul>
+                        <div class="session-exercise" style="background: rgba(0, 212, 170, 0.1); border: 1px solid rgba(0, 212, 170, 0.2);">
+                            <div class="exercise-label" style="color: var(--accent);">&#x1F4D6; מילון מושגים</div>
+                            <p style="line-height:2;">
+                                <strong>מאגר נתונים (Database באנגלית)</strong> — מקום מסודר לשמור מידע, כמו טבלת אקסל חכמה בענן<br>
+                                <strong>צד קדמי (Frontend באנגלית)</strong> — מה שהגולש רואה באתר — העיצוב, הכפתורים, הטקסט<br>
+                                <strong>צד אחורי (Backend באנגלית)</strong> — מה שעובד מאחורי הקלעים — שמירת מידע, שליחה, חישובים<br>
+                                <strong>טבלה (Table באנגלית)</strong> — מבנה מסודר של מידע בשורות ועמודות<br>
+                                <strong>Supabase (סופאבייס)</strong> — שירות חינמי שנותן מאגר נתונים מוכן לשימוש<br>
+                                <strong>שליפה ושמירה</strong> — שליפה = לקחת מידע מהמאגר. שמירה = להכניס מידע חדש למאגר
+                            </p>
+                        </div>
+                        <div class="session-concepts">
+                            <span class="concept-tag">מאגר נתונים</span>
+                            <span class="concept-tag">טבלה</span>
+                            <span class="concept-tag">Supabase</span>
+                            <span class="concept-tag">צד אחורי</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>למה האתר שלכם צריך לשמור מידע? &bull; איזה מידע הפרויקט שלכם צריך לזכור?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נירשם ל-Supabase וניצור פרויקט. נבנה טבלה ראשונה דרך הממשק — שם, אימייל, הודעה. נכניס 3 שורות לדוגמה ביד.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — נחבר טופס יצירת קשר מהאתר ל-Supabase. כשממלאים ושולחים — המידע נשמר!</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נבנה טבלה שנייה שמתאימה לפרויקט (מוצרים, הזמנות, פוסטים) ונציג את המידע באתר.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. הוסיפו טבלה ב-Supabase שמתאימה לפרויקט שלכם ומלאו אותה ב-5 שורות לדוגמה.</p>
+                            <p>2. נסו לחבר את הטבלה לאתר — שהמידע יופיע בדף.</p>
+                            <p>3. חשבו — איזה עוד מידע האתר שלכם צריך לשמור? רשמו רשימה.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד איך להוסיף הרשמה והתחברות — שלכל משתמש יהיה חשבון משלו!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 3 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">3</div>
+                        <h3>הרשמה והתחברות — חשבונות משתמשים</h3>
+                        <span class="session-tag">חשבונות</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נוסיף לאתר אפשרות הרשמה והתחברות — שלכל משתמש יהיה חשבון אישי</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם למדנו לשמור מידע ב-Supabase ולחבר טבלאות לאתר. &bull; <strong>בדיקת משימת בית:</strong> מי בנה טבלה נוספת? מי הצליח להציג מידע באתר?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>למה צריך הרשמה:</strong> כשנכנסים לאינסטגרם, טיקטוק או ספוטיפיי — מה הדבר הראשון? מתחברים! בלי התחברות, האתר לא יודע מי אתה ולא יכול לשמור את הדברים שלך</li>
+                            <li><strong>מה זה זיהוי משתמשים (Authentication באנגלית):</strong> זה התהליך של לוודא שמי שנכנס הוא באמת מי שהוא אומר שהוא. כמו תעודת תלמיד בבית הספר — מזהים אותך ונותנים לך גישה</li>
+                            <li><strong>דרכי התחברות:</strong> אימייל וסיסמה (הרגיל), התחברות עם גוגל (נכנסים עם חשבון גוגל — בלי לזכור סיסמה חדשה), קישור חד-פעמי למייל. Supabase תומכת בכולם!</li>
+                            <li><strong>בניית טופס הרשמה:</strong> נבנה דף הרשמה שבו המשתמש בוחר אימייל וסיסמה ויוצר חשבון. נוסיף גם בדיקות — האם האימייל תקין? האם הסיסמה חזקה מספיק?</li>
+                            <li><strong>אזור אישי:</strong> אחרי שהמשתמש מתחבר, הוא רואה דף מיוחד רק בשבילו — עם השם שלו, המידע שלו, וההיסטוריה שלו. כמו האזור האישי הזה בדיוק!</li>
+                            <li><strong>הגנה על דפים:</strong> דפים מסוימים באתר צריכים להיות רק למשתמשים מחוברים. אם מישהו מנסה להיכנס בלי להתחבר — הוא מועבר לדף ההתחברות</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">זיהוי משתמשים</span>
+                            <span class="concept-tag">הרשמה</span>
+                            <span class="concept-tag">התחברות</span>
+                            <span class="concept-tag">אזור אישי</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>למה אתרים צריכים התחברות? &bull; מה היתרונות של התחברות עם גוגל? &bull; איך שומרים על הסיסמה?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נפעיל זיהוי משתמשים ב-Supabase. ניצור חשבון ניסיון, נתחבר ונראה שזה עובד.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> נבנה טופס הרשמה + התחברות באתר שלנו. כשמתחברים — רואים הודעת "שלום [שם]!".</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נבנה אזור אישי ודף מוגן. נוסיף גם כפתור "התחבר עם גוגל".</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. ודאו שההרשמה וההתחברות עובדות באתר שלכם. נסו להירשם עם אימייל אמיתי.</p>
+                            <p>2. הוסיפו הודעת ברוכים הבאים שמציגה את שם המשתמש אחרי התחברות.</p>
+                            <p>3. חשבו — מה המשתמש שלכם צריך לראות באזור האישי? רשמו רשימה.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד איך לחבר את האתר לשירותים חיצוניים שישדרגו את הפרויקט שלכם!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 4 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">4</div>
+                        <h3>חיבור לשירותים חיצוניים</h3>
+                        <span class="session-tag">חיבורים</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נלמד איך האתר שלנו יכול לקבל מידע מאתרים ושירותים אחרים — ולהציג אותו</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם הוספנו הרשמה והתחברות לאתר. &bull; <strong>בדיקת משימת בית:</strong> מי בנה אזור אישי? מה המשתמשים שלכם רואים אחרי התחברות?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>מה זה ממשק חיבור (API באנגלית):</strong> דמיינו מלצר במסעדה. אתם (האתר) מזמינים מנה (בקשה), המלצר הולך למטבח (שירות חיצוני) ומביא לכם את האוכל (מידע). ממשק חיבור (API באנגלית) זה בדיוק המלצר הזה — הדרך שבה אתרים ותוכנות מעבירים מידע ביניהם</li>
+                            <li><strong>סוגי בקשות:</strong> יש 4 פעולות שאפשר לעשות: לבקש מידע (שלוף), לשלוח מידע חדש (שמור), לעדכן מידע קיים (עדכן), למחוק מידע (מחק). כמו 4 פעולות בסיסיות שעושים עם כל מידע</li>
+                            <li><strong>שפת המידע (JSON באנגלית):</strong> כשאתרים שולחים מידע ביניהם, הם משתמשים בשפה מסודרת. למשל: {"שם": "דני", "גיל": 15, "עיר": "תל אביב"} — מפתח ומה שהוא שווה. פשוט ומסודר!</li>
+                            <li><strong>מפתח גישה:</strong> כדי להשתמש בשירות חיצוני, צריך מפתח מיוחד (כמו סיסמה). השירות נותן לכם מפתח ייחודי ואתם שולחים אותו עם כל בקשה. חשוב מאוד לא לחשוף אותו!</li>
+                            <li><strong>חיבור שירותים אמיתיים לפרויקט שלכם:</strong> נחבר את האתר שלנו לשירות חיצוני שמתאים לפרויקט! דוגמאות: אתר מתכונים? חיבור ל-API של מתכונים. אתר ספורט? תוצאות משחקים בזמן אמת. חנות? תשלומים אונליין. כל פרויקט מתחבר לשירות אחר!</li>
+                            <li><strong>שירותים של חברות גדולות:</strong> גוגל, פייסבוק, אפל — כולם נותנים שירותים שאפשר לחבר לאתר שלכם. מפות של גוגל, שיתוף לפייסבוק, התחברות עם אפל — הכל דרך ממשקי חיבור</li>
+                            <li><strong>&#x1F916; Claude API &mdash; חיבור AI לאתר שלכם:</strong> גם Claude של Anthropic נותן ממשק חיבור! אפשר לחבר את Claude ישירות לאתר שלכם &mdash; ככה המשתמשים שלכם יכולים לדבר עם AI בתוך האתר. במפגש הבא (עוזר חכם) נשתמש בזה בדיוק &mdash; נבנה צ׳אט חכם שמופעל על ידי Claude!</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">ממשק חיבור (API)</span>
+                            <span class="concept-tag">בקשה ותשובה</span>
+                            <span class="concept-tag">שפת מידע (JSON)</span>
+                            <span class="concept-tag">מפתח גישה</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>אילו שירותים חיצוניים יכולים לשדרג את הפרויקט שלכם? &bull; למה חשוב לא לחשוף את המפתח?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נבחר שירות חיצוני שמתאים לפרויקט שלנו &mdash; נשלוף מידע ממנו ונציג אותו באתר בצורה יפה!</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — נבחר שירות נוסף שמתאים לפרויקט שלנו ונחבר גם אותו.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נעצב את תצוגת המידע בצורה יפה ונוסיף עדכון אוטומטי.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. חברו לפחות שירות חיצוני אחד לאתר שלכם שנותן ערך למשתמשים.</p>
+                            <p>2. הציגו את המידע בעיצוב יפה — לא רק טקסט, אלא עם צבעים ואייקונים.</p>
+                            <p>3. חפשו באינטרנט 3 שירותים חיצוניים מעניינים ורשמו מה הם עושים ואיך הם יכולים לעזור לפרויקט שלכם.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נבנה עוזר חכם — בוט AI שעונה למשתמשים שלכם!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 5 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">5</div>
+                        <h3>בניית עוזר חכם</h3>
+                        <span class="session-tag">עוזר AI</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נבנה עוזר חכם שיודע לענות לשאלות ולעזור למשתמשים באתר שלנו</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם חיברנו שירותים חיצוניים לאתר שמתאימים לפרויקט שלנו. &bull; <strong>בדיקת משימת בית:</strong> מי חיבר שירות לפרויקט? מה הוספתם?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>מה ההבדל בין צ׳אט רגיל לעוזר חכם:</strong> צ׳אט רגיל (כמו ChatGPT) רק עונה לשאלות. עוזר חכם (Agent באנגלית) גם עושה דברים — שולח הודעות, שומר מידע, מחפש תשובות. כמו ההבדל בין חבר שנותן עצות לעוזר אישי שגם מבצע משימות</li>
+                            <li><strong>הוראות הפעלה (System Prompt באנגלית):</strong> כדי שהעוזר ידע מה התפקיד שלו, כותבים לו הוראות. כמו שמסבירים לעובד חדש: "אתה עוזר של חנות צעצועים. עזור ללקוחות לבחור מתנה. תמיד תשאל לאיזה גיל." &mdash; ככה העוזר יודע מה לעשות</li>
+                            <li><strong>&#x1F4DD; איך כותבים System Prompt מושלם (מבוסס על Anthropic):</strong> Anthropic מלמדים שהוראות הפעלה טובות כוללות 5 חלקים: (1) <strong>תפקיד</strong> &mdash; "אתה נציג שירות של חנות ספרים". (2) <strong>ידע</strong> &mdash; "אתה מכיר את כל הספרים בחנות". (3) <strong>סגנון</strong> &mdash; "דבר בעברית, בצורה ידידותית ובגובה העיניים". (4) <strong>כללים</strong> &mdash; "אם לא יודע &mdash; תגיד שלא יודע. אל תמציא". (5) <strong>מטרה</strong> &mdash; "עזור ללקוח למצוא ספר מתאים ולסיים הזמנה". ככל שההוראות מפורטות יותר, העוזר עובד טוב יותר!</li>
+                            <li><strong>יכולות (כלים &mdash; Tool Use):</strong> אפשר לתת לעוזר "כלים" &mdash; דברים שהוא יודע לעשות. למשל: לחפש מוצרים, לשלוח מייל, לשמור הזמנה. העוזר מחליט לבד מתי להשתמש בכל כלי &mdash; כמו ארגז כלים חכם. Anthropic קוראים לזה <strong>Tool Use</strong> &mdash; נותנים ל-AI כלים והוא בוחר איזה כלי להשתמש ומתי</li>
+                            <li><strong>&#x1F4AD; חשיבה פנימית (Thinking):</strong> טריק מתקדם מ-Anthropic &mdash; אפשר לבקש מהעוזר "לחשוב בקול" לפני שהוא עונה. ככה הוא נותן תשובות יותר מדויקות כי הוא עובר תהליך חשיבה. זה אותו Chain of Thought שלמדנו בקורס הבסיסי, אבל הפעם העוזר עושה את זה לבד!</li>
+                            <li><strong>דברים שקורים אוטומטית:</strong> אפשר להגדיר שדברים יקרו לבד. כשמישהו נרשם — ישלח מייל ברוכים הבאים. כשיש הזמנה חדשה — תגיע התראה. הכל בלי שתצטרכו לעשות שום דבר!</li>
+                            <li><strong>חלון צ׳אט באתר:</strong> נבנה חלון צ׳אט קטן שנכנס לאתר שלכם. המשתמשים כותבים שאלות והעוזר החכם עונה בזמן אמת — כמו נציג שירות שעובד 24 שעות ביממה</li>
+                            <li><strong>גבולות ובטיחות:</strong> חשוב שהעוזר ידע מה לא לעשות. למשל: לא לתת מידע שגוי, לא לדבר על נושאים לא קשורים, ולהעביר לאדם אמיתי כשהוא לא יודע. עוזר חכם = עוזר אחראי</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">עוזר חכם</span>
+                            <span class="concept-tag">הוראות הפעלה</span>
+                            <span class="concept-tag">יכולות</span>
+                            <span class="concept-tag">חלון צ׳אט</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>איזה עוזר חכם הייתם רוצים שיעבוד בשביל הפרויקט שלכם? מה הוא צריך לדעת? מה הוא לא צריך לעשות?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נכתוב הוראות הפעלה מושלמות לעוזר שמתאים לפרויקט שלנו — מה התפקיד שלו, מה הוא יודע, ומה הכללים. נבדוק אותו ב-ChatGPT או Claude.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — נבנה חלון צ׳אט באתר שלנו שהעוזר החכם עונה בו למשתמשים.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נוסיף לעוזר "זיכרון" (שיזכור שיחות קודמות) ולפחות כלי אחד (חיפוש, שמירת מידע).</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. שפרו את הוראות ההפעלה של העוזר — הוסיפו לפחות 5 כללים ברורים.</p>
+                            <p>2. בדקו את העוזר עם 10 שאלות שונות — האם הוא עונה נכון? מה צריך לשפר?</p>
+                            <p>3. חשבו על 3 דברים שהעוזר יכול לעשות אוטומטית בפרויקט שלכם.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נשפר את העיצוב ונעלה את האתר לאינטרנט — שכולם יוכלו לראות!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 6 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">6</div>
+                        <h3>עיצוב, שיפור והעלאה לאינטרנט</h3>
+                        <span class="session-tag">העלאה</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נשפר את העיצוב של האתר, נוודא שהוא נראה טוב בטלפון, ונעלה אותו לאינטרנט</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם בנינו עוזר חכם עם הוראות הפעלה וחלון צ׳אט. &bull; <strong>בדיקת משימת בית:</strong> מי שיפר את העוזר? מה הכללים שהוספתם?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>עקרונות עיצוב פשוטים:</strong> שלושה כללים שהופכים כל אתר למקצועי: פחות זה יותר (אל תעמיסו), דברים חשובים בולטים יותר (גודל, צבע), ורווחים בין דברים (נשימה לעיניים)</li>
+                            <li><strong>תנועה ואנימציה:</strong> אפקטים קטנים שמחיים את האתר — כפתור שזז כשמעבירים עליו, תמונה שמופיעה בהדרגה, צבע שמשתנה. הכל בעדינות — אנימציה טובה לא מורגשת, מורגשת רק כשהיא חסרה</li>
+                            <li><strong>התאמה לטלפון:</strong> רוב האנשים גולשים מהטלפון. האתר חייב להיראות מעולה גם במסך קטן. נלמד איך לבנות אתר שמתאים את עצמו אוטומטית לכל מסך</li>
+                            <li><strong>העלאה לאינטרנט (Deploy באנגלית):</strong> עד עכשיו האתר חי רק במחשב שלכם. הגיע הזמן להעלות אותו לאינטרנט! נשתמש בשירות חינמי שנותן לכם כתובת אינטרנט אמיתית שכל אחד בעולם יכול לגלוש בה</li>
+                            <li><strong>כתובת אינטרנט משלכם:</strong> במקום כתובת ארוכה ומוזרה, אפשר לקנות כתובת אישית כמו myproject.co.il! נלמד איך זה עובד ואיך מחברים</li>
+                            <li><strong>מהירות האתר:</strong> אתר איטי = משתמשים עוזבים. נלמד איך לבדוק את מהירות האתר ואיך לשפר — תמונות קטנות יותר, קוד נקי, טעינה חכמה</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">עיצוב</span>
+                            <span class="concept-tag">התאמה לטלפון</span>
+                            <span class="concept-tag">העלאה</span>
+                            <span class="concept-tag">מהירות</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>למה אתרים צריכים להיראות טוב בטלפון? איזה אנימציות מוסיפות ערך ואילו מפריעות?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נשפר את העיצוב — צבעים, גדלים, רווחים. נעלה את האתר לאינטרנט עם עזרת המנחה ונקבל כתובת אמיתית!</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — נוסיף אנימציות ונוודא שהאתר נראה מושלם בטלפון.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נחבר כתובת אינטרנט אישית ונבדוק את מהירות האתר עם כלי בדיקה.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. ודאו שהאתר שלכם נראה מעולה בטלפון — פתחו אותו בנייד ותקנו מה שצריך.</p>
+                            <p>2. הוסיפו לפחות 3 אפקטים עדינים שמשפרים את החוויה.</p>
+                            <p>3. שלחו את הכתובת של האתר ל-3 חברים ובקשו מהם לגלוש — מה הם חושבים?</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא נלמד שיווק — איך להביא אנשים לאתר שלכם!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 7 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header">
+                        <div class="session-number">7</div>
+                        <h3>שיווק ופרסום דיגיטלי</h3>
+                        <span class="session-tag">שיווק</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: נלמד איך להביא אנשים לאתר — שיווק, תוכן ופרסום עם עזרת AI</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם שדרגנו את העיצוב, הוספנו אנימציות, והעלינו את האתר לאינטרנט! &bull; <strong>בדיקת משימת בית:</strong> מי שלח את הכתובת לחברים? מה הם אמרו?</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>איך אנשים מוצאים אתרים:</strong> בעיקר דרך חיפוש בגוגל ודרך רשתות חברתיות. אם האתר שלכם לא מופיע בגוגל ואף אחד לא שיתף אותו — אף אחד לא יגיע. שיווק = לגרום לאנשים לדעת שאתם קיימים</li>
+                            <li><strong>גילוי בגוגל (SEO באנגלית):</strong> איך לגרום לגוגל להציג את האתר שלכם כשמישהו מחפש? כותרות ברורות, תיאורים טובים, תמונות עם שמות, וכתובות מסודרות. כל הדברים הקטנים שגורמים לגוגל "לאהוב" את האתר</li>
+                            <li><strong>מעקב אחרי מבקרים:</strong> כלי חינמי של גוגל שמראה כמה אנשים נכנסו לאתר, מאיפה הם הגיעו, כמה זמן נשארו, ומה הדפים הכי פופולריים. מידע = כוח!</li>
+                            <li><strong>שיווק ברשתות חברתיות:</strong> איך יוצרים תוכן שאנשים רוצים לשתף? שלושה סודות: עקביות (לפרסם באופן קבוע), ערך (לתת משהו שימושי), וסיפור (לספר את הסיפור מאחורי הפרויקט). AI עוזר ליצור את כל התוכן!</li>
+                            <li><strong>יצירת תוכן עם AI:</strong> בעשר דקות אפשר ליצור פוסטים לרשתות, טקסטים לאתר, ורעיונות לפרסום. AI הוא שותף השיווק הכי טוב שיש — מהיר, יצירתי, וחינמי</li>
+                            <li><strong>דף נחיתה שמוכר:</strong> דף שגורם לאנשים לעשות משהו — להירשם, לקנות, ליצור קשר. המבנה: משפט פתיחה חזק, הבעיה, הפתרון, המלצות, וכפתור פעולה ברור</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">שיווק</span>
+                            <span class="concept-tag">גילוי בגוגל</span>
+                            <span class="concept-tag">רשתות חברתיות</span>
+                            <span class="concept-tag">תוכן</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>איך אתם מגלים אתרים חדשים? מה גורם לכם ללחוץ על פוסט? למה תוכן טוב עדיף על פרסום יקר?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול כיתה (25 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> נוסיף כותרות ותיאורים לכל דף באתר (כדי שגוגל יבין מה יש שם). ניצור פוסט אחד לרשת חברתית עם עזרת AI.</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> כמו רמה 1, ובנוסף — ניצור 3 פוסטים שונים ונחבר מעקב מבקרים לאתר.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> כמו רמה 2, ובנוסף — נבנה דף נחיתה מושלם ונתכנן קמפיין שיווקי שלם לשבוע.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3E0; אתגר בית</div>
+                            <p>1. ודאו שלכל דף באתר יש כותרת ותיאור מתאימים.</p>
+                            <p>2. צרו 5 פוסטים לרשת חברתית שבחרתם — עם עזרת AI!</p>
+                            <p>3. הכינו הצגה מעודכנת — 5 נקודות שמוכרות את הפרויקט שלכם.</p>
+                            <div class="hw-connection">&#x1F517; במפגש הבא — יום ההצגה הגדול! הכינו הכל, התאמנו, ובואו להרשים! &#x1F3C6;</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Session 8 -->
+                <div class="session-card" data-course="advanced" style="display:none;">
+                    <div class="session-card-header" style="background: linear-gradient(135deg, var(--gold), var(--orange));">
+                        <div class="session-number">8</div>
+                        <h3>&#x1F3C6; יום ההצגה הגדול</h3>
+                        <span class="session-tag">הצגה!</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: הצגת הפרויקט שלכם — הדגמה חיה, שאלות מהקהל, ותעודות סיום!</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>במפגש הקודם למדנו שיווק, יצרנו תוכן עם AI, וחיברנו מעקב מבקרים. &bull; <strong>בדיקת משימת בית:</strong> מי הכין הצגה? מי התאמן? הגיע הרגע!</p>
+                        </div>
+                        <ul class="content-list">
+                            <li><strong>מבנה ההצגה:</strong> כל תלמיד מציג את הפרויקט שלו! מתחילים עם משפט פתיחה חזק שתופס את תשומת הלב, מסבירים מה הבעיה שפותרים, מראים את הפתרון, ומדגימים את האתר חי — שכולם רואים שזה באמת עובד</li>
+                            <li><strong>הדגמה חיה:</strong> הרגע הכי מרשים — להראות את האתר האמיתי עובד! לא מצגת, לא תמונות מסך — הדבר האמיתי. הקהל רוצה לראות שזה חי, שזה עובד, שזה אמיתי</li>
+                            <li><strong>שאלות מהקהל:</strong> אחרי כל הצגה הקהל שואל שאלות. התכוננו לשאלות כמו: "למי זה מיועד?", "מה המיוחד בפרויקט שלכם?", "מה השלב הבא?", "למה שמישהו ישתמש בזה?"</li>
+                            <li><strong>שופטים ופרסים:</strong> שופטים מעולם הטכנולוגיה והיזמות ייתנו משוב מקצועי ויבחרו את ההצגה הכי טובה, העיצוב הכי יפה, והרעיון הכי חדשני!</li>
+                            <li><strong>קשרים (נטוורקינג):</strong> אחרי ההצגות — הזדמנות לדבר עם אורחים, לשאול שאלות, ולספר על הפרויקט. לפעמים מקשר אחד מגיעה הזדמנות ענקית!</li>
+                            <li><strong>&#x1F389; טקס סיום ותעודות:</strong> כל מי שסיים את הקורס מקבל תעודת "יזם טכנולוגי צעיר"! פרסים למצטיינים, ואחלה חגיגה!</li>
+                        </ul>
+                        <div class="session-concepts">
+                            <span class="concept-tag">הצגה</span>
+                            <span class="concept-tag">הדגמה חיה</span>
+                            <span class="concept-tag">קשרים</span>
+                            <span class="concept-tag">&#x1F3C6; חגיגה!</span>
+                        </div>
+                        <div class="session-discussion">
+                            <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
+                            <p>מה השתנה מהקורס הקודם? מה הדבר הכי מפתיע שלמדתם? מה התוכניות לעתיד?</p>
+                        </div>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; יום ההצגה הגדול! (60 דקות)</div>
+                            <p>&#x1F331; <strong>רמה 1:</strong> הצגה של 3 דקות — ספרו על הפרויקט, הראו את האתר, וענו לשאלה אחת מהקהל. מצגת לא חובה — הדגמה חיה עדיפה!</p>
+                            <p>&#x1F33F; <strong>רמה 2:</strong> הצגה של 4 דקות — הסבירו את הבעיה שאתם פותרים, הדגימו את האתר חי, וענו ל-2 שאלות מהקהל.</p>
+                            <p>&#x1F333; <strong>רמה 3:</strong> הצגה של 5 דקות — פתיח, בעיה, פתרון, הדגמה חיה, ומודל עסקי. ענו ל-3 שאלות מהקהל והציגו תוכניות לעתיד.</p>
+                        </div>
+                        <div class="session-homework">
+                            <div class="homework-label">&#x1F3C6; &#x1F389; Congratulations — מזל טוב!</div>
+                            <p>סיימתם את הקורס! יש לכם אתר אמיתי באינטרנט עם מאגר נתונים, חשבונות משתמשים, עוזר חכם, ועיצוב מקצועי. יש לכם יותר ידע מרוב המבוגרים!</p>
+                            <p><strong>&#x1F4A1; מה עכשיו?</strong> המשיכו לבנות, לשפר, ולחלום גדול. השתתפו בתחרויות, בנו פרויקטים חדשים, ובעיקר — אל תפסיקו ליצור! העולם שייך ליוצרים הצעירים! &#x1F680;</p>
                         </div>
                     </div>
                 </div>
@@ -3341,66 +3998,548 @@
             </div>
         </div>
 
-        <!-- ==================== ADVANCED COURSE ==================== -->
-        <div class="portal-section advanced-only" id="section-advanced" style="display:none;">
+        <!-- ==================== COMMUNITY ==================== -->
+        <div class="portal-section" id="section-community">
+            <!-- HEADER -->
             <div class="page-header">
-                <h1>&#x1F31F; קורס מתקדם</h1>
-                <p>ברוכים הבאים לשלב הבא! כאן תמצאו תכנים מתקדמים להמשך הלמידה</p>
+                <h1>&#x1F465; קהילת AI Lab</h1>
+                <p>המקום של היזמים הצעירים</p>
             </div>
-            <div class="sessions-grid">
 
-                <div class="session-card" onclick="this.classList.toggle('expanded')">
-                    <div class="session-banner" style="background: linear-gradient(135deg, #6C3CE1, #FF4D8D);">
-                        <div class="session-number">1</div>
+            <div style="max-width:800px; margin:0 auto;">
+
+                <!-- ABOUT -->
+                <div style="background:var(--dark-card); border-radius:20px; padding:2rem; margin-bottom:2rem; border:1px solid rgba(255,255,255,0.06);">
+                    <h2 style="font-size:1.3rem; margin-bottom:1rem;">&#x1F31F; מה זה קהילת AI Lab?</h2>
+                    <p style="color:var(--text-muted); line-height:1.9; font-size:1rem;">
+                        מקום אחד שבו תלמידים מכל המחזורים נפגשים, עוזרים אחד לשני, משתפים פרויקטים ולומדים ביחד.
+                        <br>כל יום אתגר חדש, כל שבוע סדנה בלייב, ותוכן בלעדי על בינה מלאכותית ויזמות — הכל במקום אחד ב-Discord.
+                    </p>
+                </div>
+
+                <!-- CHANNELS GRID -->
+                <h3 style="font-size:1.15rem; margin-bottom:1rem; padding-right:0.5rem;">&#x1F4E2; מה יש בקהילה?</h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:1rem; margin-bottom:2rem;">
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--accent);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F3AF;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">אתגר יומי</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">משימה קטנה כל יום שמשפרת את הכישורים שלכם</div>
                     </div>
-                    <div class="session-body">
-                        <h3>Backend ושרתים</h3>
-                        <p class="session-preview">מבוא ל-backend, שרתים, APIs ואיך האתר שלכם מדבר עם העולם</p>
-                        <div class="session-detail">
-                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--gold);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F3C6;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">אתגר שבועי</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">פרויקט שלם קטן — בנו, שתפו, וקבלו פידבק</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--primary-light);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F3A5;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">סדנאות שבועיות</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">סדנה בלייב כל שבוע + הקלטות לצפייה חוזרת</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--blue);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F4E2;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">עדכוני AI</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">כלים חדשים, חדשות ועדכונים מעולם הבינה המלאכותית</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--orange);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F4A1;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">סיפורי יזמים</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">השראה מיזמים ישראלים ובינלאומיים</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--pink);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F6E0;&#xFE0F;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">עזרה טכנית</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">נתקעתם? בוט AI + חברי קהילה עוזרים בזמן אמת</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid #9B59B6;">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F3AE;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">פיתוח משחקים</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">משחקים, Roblox ואפליקציות — בנו את המשחק שלכם</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--accent);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F4BC;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">הזדמנויות</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">האקתונים, תחרויות, מלגות והזדמנויות פרילנס</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--gold);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F5BC;&#xFE0F;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">שיתוף פרויקטים</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">"תראו מה בניתי!" — הציגו את היצירות שלכם</div>
+                    </div>
+                    <div style="background:var(--dark-card); border-radius:14px; padding:1.2rem; border-right:3px solid var(--text-muted);">
+                        <div style="font-size:1.3rem; margin-bottom:0.4rem;">&#x1F4AC;</div>
+                        <div style="font-weight:600; margin-bottom:0.3rem;">ועוד...</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">תכנות, אי-קומרס, תדמית, סוכני AI, דאטה בייס, טיפים</div>
+                    </div>
+                </div>
+
+                <!-- TEASERS (blurred for non-members) -->
+                <h3 style="font-size:1.15rem; margin-bottom:1rem; padding-right:0.5rem;">&#x1F525; קורה עכשיו בקהילה</h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:1rem; margin-bottom:2rem; position:relative;">
+                    <!-- Daily Challenge Teaser -->
+                    <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(0,212,170,0.2); filter:blur(3px); user-select:none; pointer-events:none;">
+                        <div style="font-size:0.75rem; color:var(--accent); font-weight:600; margin-bottom:0.5rem;">&#x1F3AF; אתגר יומי #42</div>
+                        <div style="font-weight:700; margin-bottom:0.5rem;">הוסיפו מצב חשוך (Dark Mode) לאתר שלכם</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">17 חברים כבר סיימו!</div>
+                    </div>
+                    <!-- AI Update Teaser -->
+                    <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(108,60,225,0.2); filter:blur(3px); user-select:none; pointer-events:none;">
+                        <div style="font-size:0.75rem; color:var(--primary-light); font-weight:600; margin-bottom:0.5rem;">&#x1F4E2; עדכון AI</div>
+                        <div style="font-weight:700; margin-bottom:0.5rem;">Claude 4 יצא! הנה מה שהשתנה ואיך להשתמש</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">לפני 3 שעות</div>
+                    </div>
+                    <!-- Project of the Month Teaser -->
+                    <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(245,200,66,0.2); filter:blur(3px); user-select:none; pointer-events:none;">
+                        <div style="font-size:0.75rem; color:var(--gold); font-weight:600; margin-bottom:0.5rem;">&#x1F5BC;&#xFE0F; פרויקט החודש</div>
+                        <div style="font-weight:700; margin-bottom:0.5rem;">נועם (15) בנה אפליקציה לניהול משימות</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">47 לייקים &#x2764;&#xFE0F;</div>
+                    </div>
+                    <!-- Overlay -->
+                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(26,26,46,0.3); border-radius:16px;">
+                        <span style="background:var(--dark-card); padding:0.6rem 1.5rem; border-radius:12px; font-weight:600; font-size:0.95rem; border:1px solid rgba(255,255,255,0.1);">&#x1F512; תוכן לחברי קהילה</span>
+                    </div>
+                </div>
+
+                <!-- STATS -->
+                <div style="display:flex; justify-content:center; gap:2.5rem; margin-bottom:2.5rem; flex-wrap:wrap;">
+                    <div style="text-align:center;">
+                        <div style="font-size:2rem; font-weight:800; color:var(--accent);">47</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">חברים בקהילה</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2rem; font-weight:800; color:var(--primary-light);">12</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">פרויקטים החודש</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2rem; font-weight:800; color:var(--gold);">#42</div>
+                        <div style="color:var(--text-muted); font-size:0.85rem;">אתגר יומי</div>
+                    </div>
+                </div>
+
+                <!-- GALLERY BUTTON -->
+                <div style="text-align:center; margin-bottom:2rem;">
+                    <a href="/#students" style="display:inline-flex; align-items:center; gap:0.6rem; background:var(--dark-card); color:var(--text); text-decoration:none; padding:0.9rem 2rem; border-radius:14px; font-weight:600; border:1px solid rgba(255,255,255,0.08); transition:transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        &#x1F5BC;&#xFE0F; הכירו את הפרויקטים של התלמידים
+                    </a>
+                </div>
+
+                <!-- FREE JOIN -->
+                <div style="background: linear-gradient(135deg, rgba(0,212,170,0.1), rgba(108,60,225,0.1)); border-radius:20px; padding:2rem; margin-bottom:1.5rem; border:1px solid rgba(0,212,170,0.2); text-align:center;">
+                    <div style="font-size:1.8rem; margin-bottom:0.5rem;">&#x1F44B;</div>
+                    <h3 style="font-size:1.2rem; margin-bottom:0.5rem;">הצטרפו לערוץ המחזור — בחינם!</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.2rem; line-height:1.7;">קבלו גישה לערוץ המחזור שלכם ב-Discord — דברו עם חברי הכיתה, שאלו שאלות ועזרו אחד לשני.</p>
+                    <a href="#" onclick="joinFreeCommunity(); return false;" style="display:inline-block; background:linear-gradient(135deg, var(--accent), #00b894); color:#fff; padding:0.8rem 2.5rem; border-radius:12px; text-decoration:none; font-weight:700; font-size:1.05rem; transition:transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(0,212,170,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        &#x1F517; חברו את ה-Discord (חינם)
+                    </a>
+                </div>
+
+                <!-- PAID UPGRADE -->
+                <div style="background: linear-gradient(135deg, rgba(108,60,225,0.15), rgba(245,200,66,0.1)); border-radius:20px; padding:2rem; margin-bottom:1.5rem; border:1px solid rgba(108,60,225,0.25); text-align:center;">
+                    <div style="font-size:1.8rem; margin-bottom:0.5rem;">&#x1F680;</div>
+                    <h3 style="font-size:1.2rem; margin-bottom:0.5rem;">שדרגו לקהילה המלאה</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0.8rem; line-height:1.7;">אתגרים יומיים, סדנאות בלייב, עדכוני AI, סיפורי יזמים, עזרה טכנית עם AI ועוד — הכל נפתח.</p>
+                    <div style="font-size:1.6rem; font-weight:800; color:var(--gold); margin-bottom:1rem;">בקרוב &#x1F389;</div>
+                    <button disabled style="display:inline-block; background:var(--dark-lighter); color:var(--text-muted); padding:0.8rem 2.5rem; border-radius:12px; border:1px solid rgba(255,255,255,0.1); font-weight:600; font-size:1rem; cursor:not-allowed; font-family:inherit;">
+                        &#x1F514; עדכנו אותי כשנפתח
+                    </button>
+                </div>
+
+                <!-- MEMBER STATUS (hidden by default, shown when member) -->
+                <div id="communityMemberStatus" style="display:none; background:var(--dark-card); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; border:1px solid rgba(0,212,170,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                        <div>
+                            <span style="color:var(--accent); font-weight:700;">&#x2705; חבר קהילה</span>
+                            <span style="color:var(--text-muted); font-size:0.85rem; margin-right:0.5rem;">מנוי פעיל</span>
+                        </div>
+                        <div style="display:flex; gap:0.8rem; align-items:center;">
+                            <span id="discordStatus" style="color:var(--text-muted); font-size:0.85rem;">Discord: לא מחובר</span>
+                            <button onclick="cancelMembership()" style="background:none; border:1px solid rgba(255,77,141,0.3); color:var(--pink); padding:0.4rem 1rem; border-radius:8px; font-size:0.8rem; cursor:pointer; font-family:inherit;">ביטול מנוי</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="session-card" onclick="this.classList.toggle('expanded')">
-                    <div class="session-banner" style="background: linear-gradient(135deg, #00D4AA, #4DA3FF);">
-                        <div class="session-number">2</div>
+            </div>
+        </div>
+
+        <!-- ==================== DEV-TOOLS (Advanced) ==================== -->
+        <div class="portal-section" id="section-dev-tools">
+            <div class="page-header">
+                <h1>&#x1F527; כלים לפיתוח</h1>
+                <p>כל הכלים שתשתמשו בהם לבניית הפרויקט המתקדם</p>
+            </div>
+            <div class="ai-tools-grid">
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #3ECF8E, #2B9F6F);">&#x1F4BE;</div>
+                    <div class="ai-tool-info">
+                        <h3>Supabase (סופאבייס)</h3>
+                        <p class="ai-tool-desc">שירות חינמי שנותן לכם מאגר נתונים, הרשמה והתחברות, ואחסון קבצים. במקום לבנות שרת מאפס &mdash; הכל מוכן!</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: שמירת מידע, חשבונות משתמשים, אחסון תמונות</div>
+                        <a href="https://supabase.com" target="_blank" class="ai-tool-link">כניסה ל-Supabase</a>
                     </div>
-                    <div class="session-body">
-                        <h3>בסיס נתונים</h3>
-                        <p class="session-preview">איך שומרים מידע? מבוא לבסיסי נתונים ו-Supabase</p>
-                        <div class="session-detail">
-                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #7B2FBE, #4C1D95);">&#x1F682;</div>
+                    <div class="ai-tool-info">
+                        <h3>Railway (ריילווי)</h3>
+                        <p class="ai-tool-desc">שירות להעלאת אתרים ואפליקציות לאינטרנט. מחברים את הפרויקט ותוך דקה האתר באוויר עם כתובת אמיתית! תוכנית Hobby &mdash; $5/חודש עם $5 שימוש כלול.</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: העלאה לאינטרנט, כתובת אינטרנט, הרצת שרתים</div>
+                        <a href="https://railway.app" target="_blank" class="ai-tool-link">כניסה ל-Railway</a>
+                    </div>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #24292e, #555);">&#x1F4BB;</div>
+                    <div class="ai-tool-info">
+                        <h3>GitHub (גיטהאב)</h3>
+                        <p class="ai-tool-desc">מקום לשמור את הקוד שלכם בענן. כמו גוגל דרייב &mdash; אבל לקוד. שומר גרסאות, מאפשר שיתוף, ומחובר ל-Railway.</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: שמירת קוד, ניהול גרסאות, שיתוף פרויקטים</div>
+                        <a href="https://github.com" target="_blank" class="ai-tool-link">כניסה ל-GitHub</a>
+                    </div>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #FF6B35, #FF8C42);">&#x1F310;</div>
+                    <div class="ai-tool-info">
+                        <h3>שירותים חיצוניים (APIs)</h3>
+                        <p class="ai-tool-desc">שירותים שאפשר לחבר לאתר שלכם ולתת לו יכולות חדשות &mdash; תשלומים, חיפוש, תרגום, מפות ועוד. בחרו שירות שמתאים לפרויקט שלכם!</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: מידע בזמן אמת, מפות, חדשות, תרגום</div>
+                        <a href="https://rapidapi.com" target="_blank" class="ai-tool-link">חיפוש שירותים ב-RapidAPI</a>
+                    </div>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #6C3CE1, #8B5CF6);">&#x1F916;</div>
+                    <div class="ai-tool-info">
+                        <h3>Claude API</h3>
+                        <p class="ai-tool-desc">ממשק חיבור ל-Claude שמאפשר לבנות עוזר חכם באתר שלכם. המשתמשים שואלים שאלות וה-AI עונה בזמן אמת.</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: עוזר חכם, צ'אטבוט, מענה אוטומטי</div>
+                        <a href="https://console.anthropic.com" target="_blank" class="ai-tool-link">כניסה ל-Claude API</a>
+                    </div>
+                </div>
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #4285F4, #34A853);">&#x1F4CA;</div>
+                    <div class="ai-tool-info">
+                        <h3>Google Analytics</h3>
+                        <p class="ai-tool-desc">כלי חינמי של גוגל שמראה כמה אנשים נכנסו לאתר, מאיפה הגיעו, וכמה זמן נשארו. מידע חיוני לשיווק!</p>
+                        <div class="ai-tool-good-for">&#x2B50; משמש ל: מעקב מבקרים, ניתוח נתונים, שיפור האתר</div>
+                        <a href="https://analytics.google.com" target="_blank" class="ai-tool-link">כניסה ל-Google Analytics</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CHECKLIST (Advanced) ==================== -->
+        <div class="portal-section" id="section-checklist">
+            <div class="page-header">
+                <h1>&#x1F4CB; צ'קליסט פרויקט</h1>
+                <p>רשימת כל מה שצריך לעשות כדי שהפרויקט יהיה מוכן ליום ההצגה</p>
+            </div>
+            <div style="max-width:700px; margin:0 auto; direction:rtl;">
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; border-right:3px solid var(--accent);">
+                    <h3 style="color:var(--accent); margin-bottom:1rem; font-size:1.1rem;">&#x1F527; תשתית (מפגשים 1-3)</h3>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent); flex-shrink:0; margin-top:2px;">
+                        <div><strong>סקירת האתר ותכנון שדרוג</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">נסתכל על מה שבנינו בקורס הקודם, נזהה מה חסר, ונכין רשימת שיפורים</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent); flex-shrink:0; margin-top:2px;">
+                        <div><strong>יצירת פרויקט ב-Supabase</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">פתיחת חשבון חינמי ב-Supabase &mdash; המאגר שישמור את כל המידע של האתר שלכם</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent); flex-shrink:0; margin-top:2px;">
+                        <div><strong>בניית טבלאות במאגר הנתונים</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">יצירת טבלאות שמתאימות לפרויקט שלכם (למשל: משתמשים, הזמנות, מוצרים)</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent); flex-shrink:0; margin-top:2px;">
+                        <div><strong>חיבור טפסים ל-Supabase</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">כשמישהו ממלא טופס באתר &mdash; המידע נשמר אוטומטית במאגר שלכם</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer;">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--accent); flex-shrink:0; margin-top:2px;">
+                        <div><strong>הוספת הרשמה והתחברות</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">לתת למשתמשים אפשרות להירשם, להתחבר, ולראות אזור אישי משלהם</span></div>
+                    </label>
+                </div>
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; border-right:3px solid var(--primary-light);">
+                    <h3 style="color:var(--primary-light); margin-bottom:1rem; font-size:1.1rem;">&#x1F680; תכונות (מפגשים 4-5)</h3>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--primary-light); flex-shrink:0; margin-top:2px;">
+                        <div><strong>חיבור שירות חיצוני (API)</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">לחבר את האתר לשירות שנותן לו יכולות חדשות &mdash; מידע בזמן אמת, תרגום, חיפוש ועוד</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--primary-light); flex-shrink:0; margin-top:2px;">
+                        <div><strong>כתיבת הוראות הפעלה לעוזר חכם</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">להגדיר בדיוק מה העוזר יודע, איך הוא מדבר, ומה הכללים שלו &mdash; כמו להכשיר עובד חדש</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer;">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--primary-light); flex-shrink:0; margin-top:2px;">
+                        <div><strong>בניית חלון צ'אט עם AI באתר</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">להוסיף עוזר חכם שעונה למשתמשים באתר שלכם 24/7 &mdash; כמו נציג שירות אוטומטי</span></div>
+                    </label>
+                </div>
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; border-right:3px solid var(--gold);">
+                    <h3 style="color:var(--gold); margin-bottom:1rem; font-size:1.1rem;">&#x2728; גימור (מפגשים 6-7)</h3>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold); flex-shrink:0; margin-top:2px;">
+                        <div><strong>עיצוב מקצועי ואנימציות</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">לשפר את המראה &mdash; צבעים, אפקטים, ותנועה שגורמים לאתר להרגיש מקצועי</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold); flex-shrink:0; margin-top:2px;">
+                        <div><strong>התאמה לטלפון (רספונסיבי)</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">לוודא שהאתר נראה מעולה גם במסך קטן &mdash; 60% מהגולשים גולשים מהטלפון!</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold); flex-shrink:0; margin-top:2px;">
+                        <div><strong>העלאה לאינטרנט (Deploy)</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">להעלות את האתר עם Railway או GitHub Pages &mdash; שכל העולם יוכל לגלוש בו</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold); flex-shrink:0; margin-top:2px;">
+                        <div><strong>הוספת SEO &mdash; כותרות ותיאורים</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">לגרום לגוגל למצוא את האתר שלכם &mdash; כותרות ברורות ותיאורים לכל דף</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer;">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--gold); flex-shrink:0; margin-top:2px;">
+                        <div><strong>יצירת תוכן שיווקי עם AI</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">להשתמש ב-AI ליצירת פוסטים, טקסטים ותמונות לרשתות חברתיות</span></div>
+                    </label>
+                </div>
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border-right:3px solid var(--orange);">
+                    <h3 style="color:var(--orange); margin-bottom:1rem; font-size:1.1rem;">&#x1F3C6; הצגה (מפגש 8)</h3>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--orange); flex-shrink:0; margin-top:2px;">
+                        <div><strong>הכנת נקודות להצגה</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">3-5 דקות: הבעיה, הפתרון, הדגמה חיה של האתר, ומה הלאה</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--orange); flex-shrink:0; margin-top:2px;">
+                        <div><strong>תרגול הדגמה חיה</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">לפתוח את האתר חי ולהראות שהוא עובד &mdash; הרגע הכי מרשים בהצגה!</span></div>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:0.8rem; padding:0.7rem 0; color:var(--text); cursor:pointer;">
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--orange); flex-shrink:0; margin-top:2px;">
+                        <div><strong>הכנת תשובות לשאלות</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">למי זה מיועד? מה המיוחד? מה השלב הבא? &mdash; תכינו תשובות מראש</span></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== GUIDES-ADV (Advanced) ==================== -->
+        <div class="portal-section" id="section-guides-adv">
+            <div class="page-header">
+                <h1>&#x1F4D6; הדרכות</h1>
+                <p>מדריכים צעד אחר צעד לכל נושא בקורס המתקדם</p>
+            </div>
+            <div class="help-list">
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך נרשמים ל-Supabase ויוצרים פרויקט?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>היכנסו לאתר <a href="https://supabase.com" target="_blank" style="color: var(--accent);">supabase.com</a></li>
+                                <li>לחצו על "Start your project" והירשמו עם חשבון GitHub</li>
+                                <li>לחצו "New Project" &mdash; בחרו שם, סיסמה, ואזור (בחרו את הקרוב אליכם)</li>
+                                <li>חכו דקה עד שהפרויקט מוכן &mdash; תקבלו URL ומפתח (API Key)</li>
+                                <li>שמרו את המפתחות! תצטרכו אותם כדי לחבר את האתר</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
-
-                <div class="session-card" onclick="this.classList.toggle('expanded')">
-                    <div class="session-banner" style="background: linear-gradient(135deg, #FF7849, #F5C842);">
-                        <div class="session-number">3</div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך יוצרים טבלה ב-Supabase?</span>
+                        <span class="toggle-icon">+</span>
                     </div>
-                    <div class="session-body">
-                        <h3>Authentication ומשתמשים</h3>
-                        <p class="session-preview">איך מוסיפים הרשמה והתחברות לאתר שלכם</p>
-                        <div class="session-detail">
-                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>בפרויקט ב-Supabase, לחצו על "Table Editor" בתפריט השמאלי</li>
+                                <li>לחצו "New Table" ותנו שם (למשל: contacts, products, messages)</li>
+                                <li>הוסיפו עמודות &mdash; למשל: name (טקסט), email (טקסט), message (טקסט), created_at (תאריך)</li>
+                                <li>לחצו "Save" &mdash; הטבלה מוכנה!</li>
+                                <li>אפשר להוסיף שורות ביד בלחיצה על "Insert Row"</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
-
-                <div class="session-card" onclick="this.classList.toggle('expanded')">
-                    <div class="session-banner" style="background: linear-gradient(135deg, #FF4D8D, #6C3CE1);">
-                        <div class="session-number">4</div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך מפעילים הרשמה והתחברות ב-Supabase?</span>
+                        <span class="toggle-icon">+</span>
                     </div>
-                    <div class="session-body">
-                        <h3>API וחיבור לשירותים</h3>
-                        <p class="session-preview">חיבור ל-APIs חיצוניים ושימוש בנתונים אמיתיים</p>
-                        <div class="session-detail">
-                            <p>בקרוב! התוכן יעלה עם תחילת הקורס המתקדם.</p>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>ב-Supabase, לחצו על "Authentication" בתפריט השמאלי</li>
+                                <li>לחצו "Providers" &mdash; תראו רשימה של דרכי התחברות</li>
+                                <li>Email כבר מופעל כברירת מחדל</li>
+                                <li>בשביל "התחבר עם גוגל" &mdash; לחצו על Google והפעילו. תצטרכו מפתחות מ-Google Cloud Console</li>
+                                <li>בקשו מה-AI שלכם שיעזור לחבר את טופס ההרשמה לאתר!</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך מחברים שירות חיצוני (API) לאתר?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>חשבו איזה שירות חיצוני ישדרג את הפרויקט שלכם (למשל: תשלומים, חיפוש, תרגום, מפות)</li>
+                                <li>הירשמו לשירות וקבלו מפתח גישה (API Key)</li>
+                                <li>בקשו מה-AI ב-Cursor: "חבר לי את ה-API של [שם השירות] &mdash; הנה המפתח: [...]"</li>
+                                <li>ה-AI יכתוב את הקוד שמביא את המידע ומציג אותו באתר</li>
+                                <li>בדקו שהמידע מופיע נכון ועצבו את התצוגה</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך מעלים את האתר לאינטרנט (Railway)?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>ודאו שהפרויקט שלכם ב-GitHub (בקשו מה-AI לעזור לדחוף לשם)</li>
+                                <li>היכנסו ל-<a href="https://railway.app" target="_blank" style="color:var(--accent);">railway.app</a> והתחברו עם GitHub</li>
+                                <li>לחצו "New Project" ובחרו את הפרויקט שלכם מ-GitHub</li>
+                                <li>לחצו "Deploy" &mdash; תוך דקה האתר באוויר!</li>
+                                <li>תקבלו כתובת כמו myproject.up.railway.app &mdash; שלחו לחברים!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך בונים עוזר חכם (AI Agent) לאתר?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>כתבו הוראות הפעלה (System Prompt) &mdash; מה התפקיד של העוזר, מה הכללים, מה הוא יודע</li>
+                                <li>בדקו את ההוראות ב-ChatGPT או Claude &mdash; שלחו הודעות ובדקו שהתשובות טובות</li>
+                                <li>בקשו מה-AI ב-Cursor: "בנה לי חלון צ'אט באתר שמשתמש ב-Claude API"</li>
+                                <li>הוסיפו את מפתח ה-API של Claude (מ-<a href="https://console.anthropic.com" target="_blank" style="color:var(--accent);">console.anthropic.com</a>)</li>
+                                <li>בדקו שהעוזר עונה נכון ושפרו את ההוראות לפי הצורך</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- ==================== PROMPTS (Advanced) ==================== -->
+        <div class="portal-section" id="section-prompts">
+            <div class="page-header">
+                <h1>&#x1F3AF; פרומפטים מוכנים</h1>
+                <p>העתיקו את הפרומפט, הדביקו ב-Cursor או Claude, ותנו ל-AI לעשות את העבודה</p>
+            </div>
+            <div style="max-width:800px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem;">
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F4BE; חיבור ל-Supabase</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        חבר את האתר שלי ל-Supabase. הנה הפרטים:<br>
+                        - כתובת Supabase: [הדביקו כאן את הכתובת]<br>
+                        - מפתח Supabase: [הדביקו כאן את המפתח]<br>
+                        <br>
+                        בנה טופס יצירת קשר ששומר מידע בטבלה בשם "contacts" עם השדות: name, email, message, created_at.<br>
+                        הוסף הודעות הצלחה ושגיאה בעברית.
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F510; הרשמה והתחברות</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        הוסף מערכת הרשמה והתחברות לאתר שלי עם Supabase Auth.<br>
+                        - בנה דף הרשמה עם אימייל + סיסמה<br>
+                        - בנה דף התחברות<br>
+                        - הוסף כפתור "התחבר עם גוגל"<br>
+                        - אחרי התחברות, העבר לאזור אישי שמציג "שלום, [שם המשתמש]!"<br>
+                        - הגן על האזור האישי — אם לא מחובר, העבר לדף ההתחברות<br>
+                        - כל הטקסטים בעברית, כיוון RTL
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x2728; שדרוג עיצוב האתר</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        שדרג את האתר שלי לעיצוב מקצועי:<br>
+                        - הוסף אנימציות חלקות כשגוללים למטה (fade-in)<br>
+                        - אפקט hover על כפתורים וכרטיסים<br>
+                        - תפריט ניווט קבוע למעלה עם לוגו, קישורים והמבורגר במובייל<br>
+                        - תעשה את כל האתר רספונסיבי &mdash; שיעבוד מושלם בטלפון<br>
+                        - כיוון RTL, עברית, עיצוב מודרני וחשוך<br>
+                        - הוסף footer (כותרת תחתונה) עם קישורים ו-copyright
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F916; בניית עוזר חכם (צ'אטבוט)</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        בנה חלון צ'אט באתר שלי עם עוזר חכם AI.<br>
+                        - השתמש ב-Claude API (מפתח: [הדביקו כאן])<br>
+                        - תפקיד העוזר: [תארו מה העוזר עושה]<br>
+                        - הוראות הפעלה: "אתה עוזר של [שם הפרויקט]. אתה עוזר למשתמשים עם [מה]. תמיד ענה בעברית. היה ידידותי וקצר."<br>
+                        - הצ'אט מופיע ככפתור צף בפינה השמאלית למטה<br>
+                        - שמור היסטוריית שיחה<br>
+                        - ממשק בעברית, כיוון RTL
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F680; העלאה לאינטרנט</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        עזור לי להעלות את האתר שלי לאינטרנט:<br>
+                        1. צור ריפוזיטורי (מאגר קוד) ב-GitHub לפרויקט שלי<br>
+                        2. העלה את כל הקוד ל-GitHub<br>
+                        3. חבר ל-Railway והעלה לאינטרנט<br>
+                        4. תן לי הוראות צעד אחרי צעד לכל חלק<br>
+                        <br>
+                        הפרויקט שלי נמצא בתיקייה: [הדביקו כאן את הנתיב לתיקייה]
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F4C8; הוספת SEO ו-Analytics</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        שפר את האתר שלי לקידום בגוגל והוסף מעקב מבקרים:<br>
+                        - הוסף כותרות ותיאורים מתאימים לכל דף (בעברית)<br>
+                        - הוסף טקסט חלופי לכל התמונות<br>
+                        - הוסף תגיות לשיתוף ברשתות חברתיות<br>
+                        - הוסף קוד מעקב של Google Analytics (מזהה: [הדביקו כאן את המזהה])<br>
+                        - צור קובץ sitemap.xml<br>
+                        - צור קובץ robots.txt
+                    </div>
+                </div>
+
+                <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                        <h3 style="font-size:1.05rem; color:var(--accent);">&#x1F3A8; שיפור עיצוב + מובייל</h3>
+                        <button onclick="copyPrompt(this)" style="background:var(--primary); color:#fff; border:none; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; font-family:inherit;">העתק</button>
+                    </div>
+                    <div class="prompt-text" style="background:var(--dark); padding:1rem; border-radius:10px; font-size:0.9rem; line-height:1.8; color:var(--text-muted);">
+                        שפר את העיצוב של האתר שלי:<br>
+                        - תתאים אותו לטלפון נייד (רספונסיבי)<br>
+                        - הוסף אפקטים עדינים על כפתורים וכרטיסים כשמעבירים עליהם עכבר<br>
+                        - הוסף אנימציות כניסה עדינות (הופעה הדרגתית, החלקה מלמטה)<br>
+                        - שפר רווחים וגדלי טקסט<br>
+                        - ודא שזה נראה מעולה באייפון, אייפד ומחשב<br>
+                        - שמור על הצבעים הקיימים והכיוון RTL
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -3472,7 +4611,10 @@
                         if (expires && new Date(expires) < new Date()) {
                             return { valid: false, reason: 'expired' };
                         }
-                        return { valid: true, name: row[1] || '', group: row[3] || '', level: row[4] || 'basic' };
+                        var userLevel = row[4] || 'basic';
+                        // Admin override for specific name
+                        if ((row[1] || '').indexOf('מאיר') !== -1) userLevel = 'admin';
+                        return { valid: true, name: row[1] || '', group: row[3] || '', level: userLevel };
                     }
                 }
                 return { valid: false, reason: 'not_found' };
@@ -3510,16 +4652,93 @@
             }
         }
 
+        var currentUserLevel = 'basic';
+        var currentCourseView = 'basic';
+
         function showPortal(name, level) {
             document.getElementById('loginGate').classList.add('hidden');
             var greeting = document.getElementById('greetingArea');
-            if (name) greeting.innerHTML = 'שלום, <strong>' + name + '</strong>';
+            if (name) {
+                greeting.innerHTML = 'שלום, <strong>' + name + '</strong>';
+                var avatar = document.getElementById('sidebarAvatar');
+                if (avatar) avatar.textContent = name.charAt(0);
+            }
             document.getElementById('logoutBtn').style.display = '';
-            // Show/hide advanced content
+
+            // Store user level
+            currentUserLevel = level || 'basic';
+            var isAdvanced = currentUserLevel === 'advanced' || currentUserLevel === 'admin';
+
+            // Show/hide advanced-only elements (switcher, advanced nav items)
             var advancedEls = document.querySelectorAll('.advanced-only');
-            var isAdvanced = level === 'advanced' || level === 'admin';
             for (var i = 0; i < advancedEls.length; i++) {
                 advancedEls[i].style.display = isAdvanced ? '' : 'none';
+            }
+
+            // Show admin-only elements
+            if (currentUserLevel === 'admin') {
+                var adminBtn = document.getElementById('adminPresentationBtn');
+                if (adminBtn) adminBtn.style.display = '';
+            }
+
+            // Default to basic view for all users
+            switchCourse('basic');
+        }
+
+        function switchCourse(courseType) {
+            currentCourseView = courseType;
+
+            // Update switcher buttons
+            var btnBasic = document.getElementById('courseBtnBasic');
+            var btnAdvanced = document.getElementById('courseBtnAdvanced');
+            if (btnBasic && btnAdvanced) {
+                btnBasic.classList.toggle('active', courseType === 'basic');
+                btnAdvanced.classList.toggle('active', courseType === 'advanced');
+            }
+
+            // Show/hide sections based on course type
+            // Elements with data-course="basic" show in basic view
+            // Elements with data-course="advanced" show in advanced view
+            // Elements without data-course show in both views
+            var courseElements = document.querySelectorAll('[data-course]');
+            courseElements.forEach(function(el) {
+                var elCourse = el.getAttribute('data-course');
+                if (courseType === 'advanced') {
+                    // Advanced view: show only advanced content
+                    el.style.display = (elCourse === 'advanced') ? '' : 'none';
+                } else {
+                    // Basic view: show only basic content
+                    el.style.display = (elCourse === 'basic') ? '' : 'none';
+                }
+            });
+
+            // Show/hide nav buttons based on course type
+            var navButtons = document.querySelectorAll('[data-nav-course]');
+            navButtons.forEach(function(btn) {
+                var btnCourse = btn.getAttribute('data-nav-course');
+                if (courseType === 'advanced') {
+                    btn.style.display = (btnCourse === 'advanced') ? '' : 'none';
+                } else {
+                    btn.style.display = (btnCourse === 'basic') ? '' : 'none';
+                }
+            });
+
+            // When switching course, go back to sessions (shared section)
+            var allNavBtnsSwitch = document.querySelectorAll('.sidebar-nav button, .mobile-nav button');
+            allNavBtnsSwitch.forEach(function(b) { b.classList.remove('active'); });
+            var sessionsBtn = document.querySelector('.sidebar-nav button[data-section="sessions"]');
+            if (sessionsBtn) sessionsBtn.classList.add('active');
+            var sessionsBtnMobile = document.querySelector('.mobile-nav button[data-section="sessions"]');
+            if (sessionsBtnMobile) sessionsBtnMobile.classList.add('active');
+            switchSection('sessions');
+
+            // Update page header if exists
+            var activeSection = document.querySelector('.portal-section[style*="block"], .portal-section.active');
+            if (activeSection) {
+                var headers = activeSection.querySelectorAll('.page-header h1 .course-label');
+                headers.forEach(function(h) {
+                    h.textContent = courseType === 'advanced' ? 'מתקדם' : 'בסיסי';
+                });
             }
         }
 
@@ -3543,7 +4762,7 @@
                     var hoursSinceLogin = (Date.now() - data.loginTime) / (1000 * 60 * 60);
                     if (hoursSinceLogin < RECHECK_HOURS) {
                         // Still within valid window, show portal
-                        showPortal(data.name, data.level);
+                        showPortal(data.name, data.level || 'basic');
                         return;
                     }
                     // Re-verify in background
@@ -3603,7 +4822,7 @@
         });
 
         // ===== NAVIGATION =====
-        const allNavBtns = document.querySelectorAll('.mobile-nav button[data-section], .topnav-tabs button[data-section]');
+        const allNavBtns = document.querySelectorAll('.mobile-nav button[data-section], .sidebar-nav button[data-section]');
         const allSections = document.querySelectorAll('.portal-section');
 
         function switchSection(sectionId) {
@@ -3624,7 +4843,7 @@
         });
 
         // ===== SESSION CARDS: COMPACT GRID + DETAIL VIEW =====
-        const sessionData = [
+        const sessionDataBasic = [
             { desc: '\u05D4\u05DB\u05E8\u05D5\u05EA \u05E2\u05DD \u05D1\u05D9\u05E0\u05D4 \u05DE\u05DC\u05D0\u05DB\u05D5\u05EA\u05D9\u05EA, \u05E0\u05D9\u05E1\u05D9\u05D5\u05DF \u05E8\u05D0\u05E9\u05D5\u05DF \u05E2\u05DD ChatGPT \u05D5-Claude', topics: ['\u05DE\u05D4 \u05D6\u05D4 AI?', 'ChatGPT', 'Claude', '\u05DE\u05D9\u05DC\u05D5\u05DF \u05DE\u05D5\u05E9\u05D2\u05D9\u05DD'],
               bg: 'linear-gradient(135deg, #1a0533 0%, #4a00e0 50%, #3f5efb 100%)' },
             { desc: '\u05D8\u05DB\u05E0\u05D9\u05E7\u05D5\u05EA \u05DC\u05DB\u05EA\u05D9\u05D1\u05EA \u05E4\u05E8\u05D5\u05DE\u05E4\u05D8\u05D9\u05DD \u05DE\u05D5\u05E9\u05DC\u05DE\u05D9\u05DD + \u05D4\u05EA\u05E7\u05E0\u05EA Cursor \u05D5-Claude Code', topics: ['\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8', '5 \u05D8\u05DB\u05E0\u05D9\u05E7\u05D5\u05EA', 'Cursor', 'Claude Code'],
@@ -3643,43 +4862,73 @@
               bg: 'linear-gradient(135deg, #e65100 0%, #ff9800 50%, #ffd54f 100%)' }
         ];
 
+        const sessionDataAdvanced = [
+            { desc: 'סקירת הפרויקט מהקורס הבסיסי — מה עובד, מה חסר, ומה המטרה לקורס המתקדם', topics: ['MVP', 'Roadmap', 'Git', 'שדרוג'],
+              bg: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' },
+            { desc: 'מה זה שרת ו-Database? הכרות עם Supabase, שמירה ושליפה של מידע אמיתי', topics: ['Backend', 'Database', 'Supabase', 'SQL'],
+              bg: 'linear-gradient(135deg, #0d2137 0%, #0f4c75 50%, #3282b8 100%)' },
+            { desc: 'מערכת הרשמה, התחברות ואזור אישי — האתר שלכם הופך לאפליקציה', topics: ['Auth', 'OAuth', 'Session', 'Token'],
+              bg: 'linear-gradient(135deg, #1a0a2e 0%, #5b2c8e 50%, #8e44ad 100%)' },
+            { desc: 'שליפת מידע מ-APIs חיצוניים וחיבור שירותים חיצוניים לאתר', topics: ['API', 'REST', 'JSON', 'HTTP'],
+              bg: 'linear-gradient(135deg, #0c3547 0%, #11698e 50%, #19d3da 100%)' },
+            { desc: 'בניית AI Agent שעושה דברים בשבילכם — אוטומציות חכמות עם Claude', topics: ['AI Agent', 'Automation', 'System Prompt', 'Functions'],
+              bg: 'linear-gradient(135deg, #1a0533 0%, #6a0572 50%, #ab83a1 100%)' },
+            { desc: 'עיצוב מקצועי, אנימציות, תמיכה במובייל, והעלאה לאינטרנט עם דומיין', topics: ['Responsive', 'Animation', 'Deploy', 'Railway'],
+              bg: 'linear-gradient(135deg, #0a3d62 0%, #0c5298 50%, #2e86de 100%)' },
+            { desc: 'איך מגיעים ללקוחות? קמפיינים, תוכן שיווקי עם AI, ואנליטיקס', topics: ['SEO', 'Analytics', 'Marketing', 'Content'],
+              bg: 'linear-gradient(135deg, #1e3a1e 0%, #2d6a2d 50%, #4caf50 100%)' },
+            { desc: 'הצגת הפרויקט המתקדם — דמו חי, שאלות מהקהל, ותעודות סיום!', topics: ['פיץ\'', 'Demo', 'Networking', 'חגיגה!'],
+              bg: 'linear-gradient(135deg, #b45309 0%, #d97706 50%, #fbbf24 100%)' }
+        ];
+
         // On load: inject image banners + previews + hide bodies + add click handlers
         (function initSessionCards() {
-            const cards = document.querySelectorAll('.session-card');
-            cards.forEach((card, i) => {
-                const body = card.querySelector('.session-card-body');
-                if (body) body.style.display = 'none';
-                const header = card.querySelector('.session-card-header');
-                const d = sessionData[i] || { desc: '', topics: [], bg: '' };
+            var basicCards = document.querySelectorAll('.session-card[data-course="basic"]');
+            var advancedCards = document.querySelectorAll('.session-card[data-course="advanced"]');
 
-                // Add gradient image banner before header
-                const imgBanner = document.createElement('div');
-                imgBanner.className = 'session-card-image';
-                imgBanner.style.background = d.bg;
-                imgBanner.innerHTML = '<span class="img-num">' + (i + 1) + '</span><div class="img-deco"></div>';
-                header.parentNode.insertBefore(imgBanner, header);
+            function setupCards(cards, dataArr, courseType) {
+                cards.forEach(function(card, i) {
+                    var body = card.querySelector('.session-card-body');
+                    if (body) body.style.display = 'none';
+                    var header = card.querySelector('.session-card-header');
+                    if (!header) return;
+                    var d = dataArr[i] || { desc: '', topics: [], bg: '' };
 
-                // Remove the old background from header (now it's a separate element)
-                header.style.background = 'none';
+                    // Add gradient image banner before header
+                    var imgBanner = document.createElement('div');
+                    imgBanner.className = 'session-card-image';
+                    imgBanner.style.background = d.bg;
+                    imgBanner.innerHTML = '<span class="img-num">' + (i + 1) + '</span><div class="img-deco"></div>';
+                    header.parentNode.insertBefore(imgBanner, header);
 
-                // Create preview text
-                const preview = document.createElement('div');
-                preview.className = 'session-card-preview';
-                preview.innerHTML = '<p>' + d.desc + '</p>' +
-                    '<div class="preview-topics">' + d.topics.map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
-                    '<div class="preview-enter">\u05D4\u05D9\u05DB\u05E0\u05E1\u05D5 \u05DC\u05DE\u05E4\u05D2\u05E9 \u2190</div>';
-                header.insertAdjacentElement('afterend', preview);
+                    // Remove the old background from header (now it's a separate element)
+                    header.style.background = 'none';
 
-                // Click handler
-                card.addEventListener('click', function(e) {
-                    if (e.target.closest('.session-presentation')) return;
-                    openSession(i);
+                    // Create preview text
+                    var preview = document.createElement('div');
+                    preview.className = 'session-card-preview';
+                    preview.innerHTML = '<p>' + d.desc + '</p>' +
+                        '<div class="preview-topics">' + d.topics.map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
+                        '<div class="preview-enter">\u05D4\u05D9\u05DB\u05E0\u05E1\u05D5 \u05DC\u05DE\u05E4\u05D2\u05E9 \u2190</div>';
+                    header.insertAdjacentElement('afterend', preview);
+
+                    // Click handler — store course type and index on the card
+                    card.dataset.sessionIndex = i;
+                    card.dataset.courseType = courseType;
+                    card.addEventListener('click', function(e) {
+                        if (e.target.closest('.session-presentation')) return;
+                        openSession(parseInt(card.dataset.sessionIndex), card.dataset.courseType);
+                    });
                 });
-            });
+            }
+
+            setupCards(basicCards, sessionDataBasic, 'basic');
+            setupCards(advancedCards, sessionDataAdvanced, 'advanced');
         })();
 
-        function openSession(idx) {
-            const cards = document.querySelectorAll('.session-card');
+        function openSession(idx, courseType) {
+            courseType = courseType || 'basic';
+            const cards = document.querySelectorAll('.session-card[data-course="' + courseType + '"]');
             const card = cards[idx];
             if (!card) return;
             const grid = document.querySelector('.sessions-grid');
@@ -3691,7 +4940,8 @@
             const body = card.querySelector('.session-card-body');
             const content = document.getElementById('detailContent');
             // Put presentation button at TOP, then content
-            var presBtn = '<button class="session-detail-presentation" onclick="openPresentation(' + (idx + 1) + ')">\u{1F4CA} \u05E6\u05E4\u05D5 \u05D1\u05DE\u05E6\u05D2\u05EA \u05D4\u05E9\u05D9\u05E2\u05D5\u05E8</button>';
+            var presOffset = (courseType === 'advanced') ? 8 : 0;
+            var presBtn = '<button class="session-detail-presentation" onclick="openPresentation(' + (idx + 1 + presOffset) + ')">\u{1F4CA} \u05E6\u05E4\u05D5 \u05D1\u05DE\u05E6\u05D2\u05EA \u05D4\u05E9\u05D9\u05E2\u05D5\u05E8</button>';
             // Get body HTML but remove the old session-actions/presentation button
             var bodyHTML = body.innerHTML;
             bodyHTML = bodyHTML.replace(/<div class="session-actions">[\s\S]*?<\/div>\s*$/, '');
@@ -3700,7 +4950,7 @@
             grid.style.display = 'none';
             detail.classList.add('active');
             // Push state so browser back button returns to grid
-            history.pushState({ view: 'session', idx: idx }, '', '#session-' + (idx + 1));
+            history.pushState({ view: 'session', idx: idx, course: courseType }, '', '#session-' + courseType + '-' + (idx + 1));
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -3741,6 +4991,19 @@
             if (!wasOpen) item.classList.add('open');
             document.querySelectorAll('.help-item .toggle-icon').forEach(icon => icon.textContent = '+');
             if (!wasOpen) item.querySelector('.toggle-icon').textContent = '\u00D7';
+        }
+
+        // ===== COPY PROMPT =====
+        function copyPrompt(btn) {
+            var promptText = btn.closest('div').nextElementSibling.textContent.trim();
+            navigator.clipboard.writeText(promptText).then(function() {
+                btn.textContent = 'הועתק!';
+                btn.style.background = 'var(--accent)';
+                setTimeout(function() {
+                    btn.textContent = 'העתק';
+                    btn.style.background = 'var(--primary)';
+                }, 2000);
+            });
         }
 
         // ===== PROJECT WIZARD =====
@@ -3890,6 +5153,7 @@
                 { title: 'AI \u05D1\u05D7\u05D9\u05D9\u05DD', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F30D; AI \u05D1\u05D7\u05D9\u05D9\u05DD \u05D4\u05D9\u05D5\u05DE\u05D9\u05D5\u05DD</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:linear-gradient(135deg, rgba(77,163,255,0.2), rgba(77,163,255,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F4F1;</div><p style="font-size:1.2rem; font-weight:600;">Siri / Google Assistant</p></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), rgba(255,77,141,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F3AC;</div><p style="font-size:1.2rem; font-weight:600;">\u05D4\u05DE\u05DC\u05E6\u05D5\u05EA \u05E0\u05D8\u05E4\u05DC\u05D9\u05E7\u05E1</p></div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), rgba(0,212,170,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F697;</div><p style="font-size:1.2rem; font-weight:600;">\u05E8\u05DB\u05D1 \u05D0\u05D5\u05D8\u05D5\u05E0\u05D5\u05DE\u05D9</p></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), rgba(245,200,66,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F4AC;</div><p style="font-size:1.2rem; font-weight:600;">ChatGPT</p></div></div>' },
                 { title: '\u05E1\u05D5\u05D2\u05D9 AI', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4A1; \u05E1\u05D5\u05D2\u05D9 \u05D1\u05D9\u05E0\u05D4 \u05DE\u05DC\u05D0\u05DB\u05D5\u05EA\u05D9\u05EA</h1><div style="display:grid; grid-template-columns:1fr; gap:1rem; max-width:600px; margin:0 auto;"><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), transparent); padding:1.5rem 2rem; border-radius:16px; display:flex; align-items:center; gap:1.2rem;"><span style="font-size:2.5rem;">&#x1F4DD;</span><div><strong style="font-size:1.2rem; color:var(--accent);">\u05D8\u05E7\u05E1\u05D8</strong><p style="color:var(--text-muted); font-size:1rem;">ChatGPT, Claude \u2014 \u05E9\u05D9\u05D7\u05D5\u05EA, \u05DB\u05EA\u05D9\u05D1\u05D4</p></div></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), transparent); padding:1.5rem 2rem; border-radius:16px; display:flex; align-items:center; gap:1.2rem;"><span style="font-size:2.5rem;">&#x1F3A8;</span><div><strong style="font-size:1.2rem; color:var(--pink);">\u05EA\u05DE\u05D5\u05E0\u05D5\u05EA</strong><p style="color:var(--text-muted); font-size:1rem;">NanoBanana, DALL-E \u2014 \u05E2\u05D9\u05E6\u05D5\u05D1\u05D9\u05DD</p></div></div><div style="background:linear-gradient(135deg, rgba(255,120,73,0.2), transparent); padding:1.5rem 2rem; border-radius:16px; display:flex; align-items:center; gap:1.2rem;"><span style="font-size:2.5rem;">&#x1F3AC;</span><div><strong style="font-size:1.2rem; color:var(--orange);">\u05D5\u05D9\u05D3\u05D0\u05D5</strong><p style="color:var(--text-muted); font-size:1rem;">Novo, Sora \u2014 \u05E1\u05E8\u05D8\u05D5\u05E0\u05D9\u05DD</p></div></div><div style="background:linear-gradient(135deg, rgba(77,163,255,0.2), transparent); padding:1.5rem 2rem; border-radius:16px; display:flex; align-items:center; gap:1.2rem;"><span style="font-size:2.5rem;">&#x1F4BB;</span><div><strong style="font-size:1.2rem; color:var(--blue);">\u05E7\u05D5\u05D3</strong><p style="color:var(--text-muted); font-size:1rem;">Cursor, Claude Code \u2014 \u05D1\u05E0\u05D9\u05D9\u05EA \u05D0\u05EA\u05E8\u05D9\u05DD</p></div></div></div>' },
                 { title: '\u05D4\u05DB\u05DC\u05D9\u05DD \u05E9\u05DC\u05E0\u05D5', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F6E0; \u05D4\u05DB\u05DC\u05D9\u05DD \u05E9\u05E0\u05E9\u05EA\u05DE\u05E9 \u05D1\u05D4\u05DD</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:linear-gradient(135deg, #10a37f, #1a7f5a); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F4AC;</div><strong style="font-size:1.3rem;">ChatGPT</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem;">\u05E9\u05D9\u05D7\u05D5\u05EA, \u05E8\u05E2\u05D9\u05D5\u05E0\u05D5\u05EA, \u05DB\u05EA\u05D9\u05D1\u05D4</p></div><div style="background:linear-gradient(135deg, #D97757, #b85c3e); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F9E0;</div><strong style="font-size:1.3rem;">Claude</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem;">\u05E0\u05D9\u05EA\u05D5\u05D7, \u05E7\u05D5\u05D3, \u05D3\u05D9\u05D5\u05E7</p></div><div style="background:linear-gradient(135deg, #6C3CE1, #8B5CF6); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F4BB;</div><strong style="font-size:1.3rem;">Cursor</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem;">\u05D1\u05E0\u05D9\u05D9\u05EA \u05D0\u05EA\u05E8\u05D9\u05DD \u05E2\u05DD AI</p></div><div style="background:linear-gradient(135deg, #4285f4, #3367d6); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F30D;</div><strong style="font-size:1.3rem;">Gemini</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem;">\u05D7\u05D9\u05E4\u05D5\u05E9, \u05EA\u05DE\u05D5\u05E0\u05D5\u05EA, \u05D2\u05D5\u05D2\u05DC</p></div></div>' },
+                { title: '4 \u05DB\u05D5\u05D7\u05D5\u05EA \u05D4\u05E2\u05DC', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem; direction:rtl;">&#x1F3AF; 4 \u05DB\u05D5\u05D7\u05D5\u05EA \u05D4\u05E2\u05DC \u05E9\u05DC\u05DB\u05DD \u05E2\u05DD AI</h1><p style="text-align:center; color:var(--text-muted); margin-bottom:1.5rem; font-size:1.1rem; direction:rtl;">\u05DE\u05D1\u05D5\u05E1\u05E1 \u05E2\u05DC Anthropic (\u05D4\u05D7\u05D1\u05E8\u05D4 \u05E9\u05D9\u05E6\u05E8\u05D4 \u05D0\u05EA Claude)</p><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; max-width:550px; margin:0 auto; direction:rtl;"><div style="background:linear-gradient(135deg, rgba(108,60,225,0.2), transparent); padding:1.5rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4DD;</div><strong style="font-size:1.2rem;">\u05EA\u05D0\u05E8</strong><p style="color:var(--text-muted); font-size:0.95rem; margin-top:0.5rem;">\u05EA\u05E1\u05D1\u05D9\u05E8\u05D5 \u05DC-AI \u05DE\u05D4 \u05D0\u05EA\u05DD \u05E8\u05D5\u05E6\u05D9\u05DD \u05D1\u05E6\u05D5\u05E8\u05D4 \u05D1\u05E8\u05D5\u05E8\u05D4</p></div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), transparent); padding:1.5rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F91D;</div><strong style="font-size:1.2rem;">\u05D4\u05D0\u05E6\u05DC</strong><p style="color:var(--text-muted); font-size:0.95rem; margin-top:0.5rem;">\u05EA\u05E0\u05D5 \u05DC-AI \u05DC\u05E2\u05E9\u05D5\u05EA \u05DE\u05D4 \u05E9\u05D4\u05D5\u05D0 \u05D8\u05D5\u05D1 \u05D1\u05D5</p></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), transparent); padding:1.5rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F9D0;</div><strong style="font-size:1.2rem;">\u05E9\u05E4\u05D5\u05D8</strong><p style="color:var(--text-muted); font-size:0.95rem; margin-top:0.5rem;">\u05D0\u05DC \u05EA\u05D0\u05DE\u05D9\u05E0\u05D5 \u05D1\u05E2\u05D9\u05E0\u05D9\u05D9\u05DD \u05E2\u05E6\u05D5\u05DE\u05D5\u05EA! \u05EA\u05DE\u05D9\u05D3 \u05EA\u05D1\u05D3\u05E7\u05D5</p></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), transparent); padding:1.5rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F6E1;&#xFE0F;</div><strong style="font-size:1.2rem;">\u05D4\u05E7\u05E4\u05D3</strong><p style="color:var(--text-muted); font-size:0.95rem; margin-top:0.5rem;">\u05D4\u05E9\u05EA\u05DE\u05E9\u05D5 \u05D1-AI \u05D1\u05E6\u05D5\u05E8\u05D4 \u05D0\u05D7\u05E8\u05D0\u05D9\u05EA</p></div></div>' },
                 { title: '\u05EA\u05E8\u05D2\u05D5\u05DC!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; display:inline-block; text-align:center;"><p style="font-size:1.4rem; margin-bottom:1.5rem; font-weight:600;">\u05E9\u05D0\u05DC\u05D5 \u05D0\u05EA \u05D4-AI 5 \u05E9\u05D0\u05DC\u05D5\u05EA \u05E9\u05D5\u05E0\u05D5\u05EA</p><p style="color:var(--text-muted); font-size:1.1rem; margin-bottom:1.5rem;">\u05E0\u05E1\u05D5 \u05D0\u05EA ChatGPT \u05D5\u05D0\u05EA Claude \u2014 \u05E9\u05D9\u05DE\u05D5 \u05DC\u05D1 \u05DC\u05D4\u05D1\u05D3\u05DC\u05D9\u05DD!</p><div style="display:grid; grid-template-columns:1fr; gap:0.8rem; text-align:right; max-width:350px; margin:0 auto;"><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05E9\u05D0\u05DC\u05D4 \u05E2\u05DC \u05D4\u05D9\u05E1\u05D8\u05D5\u05E8\u05D9\u05D4</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05E9\u05D0\u05DC\u05D4 \u05E2\u05DC \u05DE\u05D3\u05E2</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D1\u05E7\u05E9\u05D4 \u05DC\u05DB\u05EA\u05D5\u05D1 \u05E9\u05D9\u05E8</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D1\u05E7\u05E9\u05D4 \u05DC\u05E4\u05EA\u05D5\u05E8 \u05EA\u05E8\u05D2\u05D9\u05DC</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05E9\u05D0\u05DC\u05D4 \u05D0\u05D9\u05E9\u05D9\u05EA (\u05EA\u05D7\u05D1\u05D9\u05D1\u05D9\u05DD)</div></div></div></div>' }
             ],
             2: [
@@ -3935,11 +5199,51 @@
                 { title: '\u05EA\u05E8\u05D2\u05D5\u05DC!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.3rem; margin-bottom:1.5rem; font-weight:600;">\u05D1\u05E0\u05D5 \u05EA\u05D5\u05DB\u05E0\u05D9\u05EA \u05E2\u05E1\u05E7\u05D9\u05EA + 3 \u05E4\u05D5\u05E1\u05D8\u05D9\u05DD!</p><div style="display:grid; grid-template-columns:1fr; gap:0.8rem; text-align:right; max-width:380px; margin:0 auto;"><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D1\u05D7\u05E8\u05D5 \u05DE\u05D5\u05D3\u05DC \u05E2\u05E1\u05E7\u05D9 \u05DC\u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05E6\u05E8\u05D5 3 \u05E4\u05D5\u05E1\u05D8\u05D9\u05DD \u05E2\u05DD AI</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D4\u05DB\u05D9\u05E0\u05D5 \u05EA\u05D5\u05DB\u05E0\u05D9\u05EA \u05EA\u05D5\u05DB\u05DF \u05DC\u05E9\u05D1\u05D5\u05E2</div></div><p style="color:var(--accent); font-size:1.1rem; font-weight:600; margin-top:1.5rem;">\u05D4\u05E9\u05EA\u05DE\u05E9\u05D5 \u05D1-ChatGPT \u05D0\u05D5 Claude!</p></div></div>' }
             ],
             8: [
+            // NOTE: Presentations 9-16 are for Advanced course (mapped via offset in openSession)
+
                 { title: '\u05D9\u05D5\u05DD \u05D4\u05E4\u05D9\u05E5\'!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--gold), var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">&#x1F3C6; \u05D9\u05D5\u05DD \u05D4\u05E4\u05D9\u05E5\'!</h1><p style="font-size:1.4rem; color:var(--gold); margin-bottom:0.5rem; font-weight:600;">\u05D4\u05D9\u05D5\u05DD \u05D0\u05EA\u05DD \u05DE\u05E6\u05D9\u05D2\u05D9\u05DD \u05D0\u05EA \u05D4\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8!</p><p style="font-size:1.3rem; color:var(--text-muted);">3 \u05D3\u05E7\u05D5\u05EA. \u05D1\u05E2\u05D9\u05D4. \u05E4\u05EA\u05E8\u05D5\u05DF. \u05D3\u05DE\u05D5.</p><div style="display:flex; justify-content:center; gap:1.5rem; margin-top:2rem;"><div style="font-size:3rem;">&#x1F3C6;</div><div style="font-size:3rem;">&#x1F389;</div><div style="font-size:3rem;">&#x1F31F;</div></div></div>' },
                 { title: '\u05DE\u05D1\u05E0\u05D4 \u05D4\u05E4\u05D9\u05E5\'', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4CB; \u05DE\u05D1\u05E0\u05D4 \u05D4\u05E4\u05D9\u05E5\' &mdash; 3 \u05D3\u05E7\u05D5\u05EA</h1><div style="display:flex; justify-content:center; align-items:center; gap:1rem; flex-wrap:wrap; margin:2rem 0;"><div style="background:linear-gradient(135deg, var(--pink), #e63976); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F6A8;</div><strong style="font-size:1.1rem;">\u05D4\u05D1\u05E2\u05D9\u05D4</strong><p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:0.3rem;">30 \u05E9\u05E0\u05D9\u05D5\u05EA</p></div><div style="font-size:2rem; color:var(--gold);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--accent), #00b894); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4A1;</div><strong style="font-size:1.1rem;">\u05D4\u05E4\u05EA\u05E8\u05D5\u05DF</strong><p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:0.3rem;">30 \u05E9\u05E0\u05D9\u05D5\u05EA</p></div><div style="font-size:2rem; color:var(--gold);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--gold), var(--orange)); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4BB;</div><strong style="font-size:1.1rem;">\u05D3\u05DE\u05D5 \u05D7\u05D9!</strong><p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:0.3rem;">90 \u05E9\u05E0\u05D9\u05D5\u05EA</p></div><div style="font-size:2rem; color:var(--gold);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--blue), #3367d6); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F3AF;</div><strong style="font-size:1.1rem;">\u05E1\u05D9\u05DB\u05D5\u05DD</strong><p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:0.3rem;">30 \u05E9\u05E0\u05D9\u05D5\u05EA</p></div></div>' },
                 { title: '\u05D8\u05D9\u05E4\u05D9\u05DD \u05DC\u05D4\u05E6\u05D2\u05D4', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4A1; \u05D8\u05D9\u05E4\u05D9\u05DD \u05DC\u05D4\u05E6\u05D2\u05D4 \u05DE\u05E2\u05D5\u05DC\u05D4</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:linear-gradient(135deg, rgba(0,212,170,0.15), transparent); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F5E3;</div><strong style="font-size:1.1rem;">\u05D3\u05D1\u05E8\u05D5 \u05DC\u05D0\u05D8 \u05D5\u05D1\u05E8\u05D5\u05E8</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05D0\u05DC \u05EA\u05DE\u05D4\u05E8\u05D5 &mdash; \u05D4\u05E7\u05D4\u05DC \u05E6\u05E8\u05D9\u05DA \u05DC\u05D4\u05D1\u05D9\u05DF</p></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.15), transparent); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F440;</div><strong style="font-size:1.1rem;">\u05EA\u05E1\u05EA\u05DB\u05DC\u05D5 \u05E2\u05DC \u05D4\u05E7\u05D4\u05DC</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05E7\u05E9\u05E8 \u05E2\u05D9\u05DF \u05D9\u05D5\u05E6\u05E8 \u05D0\u05DE\u05D5\u05DF!</p></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.15), transparent); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F525;</div><strong style="font-size:1.1rem;">\u05EA\u05EA\u05DC\u05D4\u05D1\u05D5!</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05D0\u05DD \u05D0\u05EA\u05DD \u05DC\u05D0 \u05DE\u05EA\u05DC\u05D4\u05D1\u05D9\u05DD &mdash; \u05D4\u05E7\u05D4\u05DC \u05DC\u05D0 \u05D9\u05EA\u05DC\u05D4\u05D1</p></div><div style="background:linear-gradient(135deg, rgba(108,60,225,0.15), transparent); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4AA;</div><strong style="font-size:1.1rem;">\u05EA\u05EA\u05D0\u05DE\u05E0\u05D5 \u05DC\u05E4\u05E0\u05D9!</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05DC\u05E4\u05D7\u05D5\u05EA \u05E4\u05E2\u05DE\u05D9\u05D9\u05DD &mdash; \u05D6\u05D4 \u05DE\u05E9\u05EA\u05DC\u05DD!</p></div></div>' },
                 { title: '\u05DE\u05D4 \u05DC\u05DE\u05D3\u05EA\u05DD', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F31F; \u05DE\u05D4 \u05DC\u05DE\u05D3\u05EA\u05DD \u05D1\u05E7\u05D5\u05E8\u05E1 \u05D4\u05D6\u05D4</h1><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem;"><div style="background:linear-gradient(135deg, var(--primary), var(--primary-light)); padding:2rem 1rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F4A1;</div><strong style="font-size:1.2rem;">\u05D7\u05E9\u05D9\u05D1\u05D4 \u05D9\u05D6\u05DE\u05D9\u05EA</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem; font-size:0.95rem;">\u05DC\u05E8\u05D0\u05D5\u05EA \u05D1\u05E2\u05D9\u05D5\u05EA, \u05DC\u05DE\u05E6\u05D5\u05D0 \u05E4\u05EA\u05E8\u05D5\u05E0\u05D5\u05EA, \u05DC\u05D7\u05E9\u05D5\u05D1 \u05DB\u05DE\u05D5 \u05D9\u05D6\u05DE\u05D9\u05DD</p></div><div style="background:linear-gradient(135deg, var(--accent), #00b894); padding:2rem 1rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F916;</div><strong style="font-size:1.2rem;">\u05E9\u05DC\u05D9\u05D8\u05D4 \u05D1-AI</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem; font-size:0.95rem;">ChatGPT, Claude, Cursor &mdash; \u05DB\u05DC\u05D9\u05DD \u05E9\u05D9\u05E9\u05E0\u05D5 \u05D0\u05EA \u05D4\u05E2\u05D5\u05DC\u05DD</p></div><div style="background:linear-gradient(135deg, var(--gold), var(--orange)); padding:2rem 1rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F3D7;</div><strong style="font-size:1.2rem;">\u05D1\u05E0\u05D9\u05D9\u05EA \u05DE\u05D5\u05E6\u05E8</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem; font-size:0.95rem;">\u05D0\u05EA\u05E8 \u05D0\u05DE\u05D9\u05EA\u05D9, \u05D7\u05D9 \u05D1\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8, \u05E9\u05DC\u05DB\u05DD!</p></div></div>' },
                 { title: '\u05D1\u05D4\u05E6\u05DC\u05D7\u05D4!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1rem;">&#x1F389;&#x1F389;&#x1F389;</h1><h1 style="font-size:2.2rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--gold), var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">\u05E1\u05D9\u05D9\u05DE\u05EA\u05DD \u05D0\u05EA \u05D4\u05E7\u05D5\u05E8\u05E1!</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:2rem;">\u05D9\u05D6\u05DE\u05D5\u05EA \u05D5\u05D1\u05D9\u05E0\u05D4 \u05DE\u05DC\u05D0\u05DB\u05D5\u05EA\u05D9\u05EA \u05DC\u05E0\u05D5\u05E2\u05E8</p><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2rem; border-radius:24px; max-width:450px; margin:0 auto;"><p style="font-size:1.3rem; font-weight:700; color:var(--gold); margin-bottom:1rem;">\u05D4\u05E2\u05EA\u05D9\u05D3 \u05E8\u05E7 \u05D4\u05EA\u05D7\u05D9\u05DC!</p><p style="font-size:1.1rem; color:var(--text-muted);">\u05D4\u05DE\u05E9\u05D9\u05DB\u05D5 \u05DC\u05D1\u05E0\u05D5\u05EA, \u05DC\u05D9\u05E6\u05D5\u05E8, \u05DC\u05D7\u05DC\u05D5\u05DD \u2014</p><p style="font-size:1.1rem; color:var(--text-muted);">\u05D4\u05DB\u05DC\u05D9\u05DD \u05D1\u05D9\u05D3\u05D9\u05D9\u05DD \u05E9\u05DC\u05DB\u05DD!</p><p style="font-size:2rem; margin-top:1.5rem;">&#x1F680;&#x2B50;&#x1F4AA;</p></div></div>' }
+            ],
+            // ===== ADVANCED COURSE PRESENTATIONS (9-16) =====
+            9: [
+                { title: '\u05D7\u05D6\u05E8\u05D4 \u05D5\u05E9\u05D3\u05E8\u05D5\u05D2', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--primary-light), var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">\u05E7\u05D5\u05E8\u05E1 \u05DE\u05EA\u05E7\u05D3\u05DD</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:0.5rem;">\u05DE\u05D4\u05E4\u05DB\u05D9\u05DD \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8 \u05DC\u05DE\u05D5\u05E6\u05E8 \u05DE\u05E7\u05E6\u05D5\u05E2\u05D9!</p><div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-top:2rem;"><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), transparent); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x1F4BE;</div><div style="background:linear-gradient(135deg, rgba(108,60,225,0.2), transparent); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x1F510;</div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), transparent); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x1F916;</div><div style="background:linear-gradient(135deg, rgba(255,120,73,0.2), transparent); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x1F680;</div></div><p style="margin-top:1.5rem; font-size:0.9rem; color:var(--text-muted);">\u05DE\u05D0\u05D2\u05E8 \u05E0\u05EA\u05D5\u05E0\u05D9\u05DD \u2022 \u05D7\u05E9\u05D1\u05D5\u05E0\u05D5\u05EA \u2022 \u05E2\u05D5\u05D6\u05E8 \u05D7\u05DB\u05DD \u2022 \u05D4\u05E2\u05DC\u05D0\u05D4</p></div>' },
+                { title: '\u05D1\u05D3\u05D9\u05E7\u05EA \u05E8\u05DE\u05EA AI', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem; direction:rtl;">&#x1F4CA; \u05DB\u05DE\u05D4 \u05D0\u05EA\u05DD \u05D1\u05D0\u05DE\u05EA \u05DE\u05DB\u05D9\u05E8\u05D9\u05DD AI?</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; max-width:550px; margin:0 auto; direction:rtl;"><div style="background:linear-gradient(135deg, rgba(108,60,225,0.2), transparent); padding:1.5rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4DD;</div><strong style="font-size:1.1rem;">\u05EA\u05D0\u05E8</strong><p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem;">\u05D0\u05E0\u05D9 \u05D9\u05D5\u05D3\u05E2 \u05DC\u05DB\u05EA\u05D5\u05D1 \u05E4\u05E8\u05D5\u05DE\u05E4\u05D8 \u05DE\u05D3\u05D5\u05D9\u05E7?</p></div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), transparent); padding:1.5rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F91D;</div><strong style="font-size:1.1rem;">\u05D4\u05D0\u05E6\u05DC</strong><p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem;">\u05D0\u05E0\u05D9 \u05D9\u05D5\u05D3\u05E2 \u05DE\u05EA\u05D9 \u05DC\u05EA\u05EA \u05DC-AI \u05DC\u05E2\u05E9\u05D5\u05EA?</p></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), transparent); padding:1.5rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F9D0;</div><strong style="font-size:1.1rem;">\u05E9\u05E4\u05D5\u05D8</strong><p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem;">\u05D0\u05E0\u05D9 \u05D1\u05D5\u05D3\u05E7 \u05EA\u05E9\u05D5\u05D1\u05D5\u05EA \u05E9\u05DC AI?</p></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), transparent); padding:1.5rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F6E1;&#xFE0F;</div><strong style="font-size:1.1rem;">\u05D4\u05E7\u05E4\u05D3</strong><p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem;">\u05D0\u05E0\u05D9 \u05DE\u05E9\u05EA\u05DE\u05E9 \u05D1\u05D0\u05D7\u05E8\u05D0\u05D9\u05D5\u05EA?</p></div></div><p style="text-align:center; color:var(--gold); font-size:1.1rem; margin-top:1.5rem; font-weight:600; direction:rtl;">\u05D3\u05E8\u05D2\u05D5 1-5 \u2014 \u05E0\u05D7\u05D6\u05D5\u05E8 \u05DC\u05D6\u05D4 \u05D1\u05DE\u05E4\u05D2\u05E9 \u05D4\u05D0\u05D7\u05E8\u05D5\u05DF!</p>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.4rem; margin-bottom:1.5rem; font-weight:600;">\u05E1\u05D9\u05E7\u05E8\u05D5 \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8 + \u05EA\u05DB\u05E0\u05E0\u05D5 \u05E9\u05D3\u05E8\u05D5\u05D2</p><div style="display:grid; grid-template-columns:1fr; gap:0.8rem; text-align:right; max-width:380px; margin:0 auto;"><div style="background:rgba(0,212,170,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; 3 \u05D3\u05D1\u05E8\u05D9\u05DD \u05D8\u05D5\u05D1\u05D9\u05DD \u05D1\u05D0\u05EA\u05E8</div><div style="background:rgba(0,212,170,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; 3 \u05D3\u05D1\u05E8\u05D9\u05DD \u05DC\u05E9\u05D9\u05E4\u05D5\u05E8</div><div style="background:rgba(0,212,170,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05EA\u05D5\u05DB\u05E0\u05D9\u05EA \u05E9\u05D3\u05E8\u05D5\u05D2</div></div></div></div>' }
+            ],
+            10: [
+                { title: '\u05DE\u05D0\u05D2\u05E8 \u05E0\u05EA\u05D5\u05E0\u05D9\u05DD', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem;">&#x1F4BE; \u05E9\u05DE\u05D9\u05E8\u05EA \u05DE\u05D9\u05D3\u05E2</h1><p style="font-size:1.4rem; color:var(--text-muted);">\u05E9\u05D4\u05D0\u05EA\u05E8 \u05E9\u05DC\u05DB\u05DD \u05D9\u05D6\u05DB\u05D5\u05E8 \u05D4\u05DB\u05DC!</p></div>' },
+                { title: '\u05DE\u05D4 \u05D6\u05D4 Database?', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem; direction:rtl;">&#x1F4CA; \u05DE\u05D4 \u05D6\u05D4 \u05DE\u05D0\u05D2\u05E8 \u05E0\u05EA\u05D5\u05E0\u05D9\u05DD?</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; direction:rtl;"><div style="background:rgba(255,77,141,0.12); padding:2rem; border-radius:20px; border:2px solid var(--pink); text-align:center;"><div style="font-size:2.5rem; margin-bottom:1rem;">&#x274C;</div><strong style="font-size:1.2rem;">\u05D1\u05DC\u05D9 \u05DE\u05D0\u05D2\u05E8</strong><p style="font-size:1rem; margin-top:0.8rem; color:var(--text-muted);">\u05DE\u05E9\u05EA\u05DE\u05E9 \u05DE\u05DE\u05DC\u05D0 \u05D8\u05D5\u05E4\u05E1...<br>\u05D5\u05D4\u05DE\u05D9\u05D3\u05E2 \u05E0\u05E2\u05DC\u05DD!</p></div><div style="background:rgba(0,212,170,0.12); padding:2rem; border-radius:20px; border:2px solid var(--accent); text-align:center;"><div style="font-size:2.5rem; margin-bottom:1rem;">&#x2705;</div><strong style="font-size:1.2rem;">\u05E2\u05DD \u05DE\u05D0\u05D2\u05E8</strong><p style="font-size:1rem; margin-top:0.8rem; color:var(--text-muted);">\u05DE\u05E9\u05EA\u05DE\u05E9 \u05DE\u05DE\u05DC\u05D0 \u05D8\u05D5\u05E4\u05E1...<br>\u05D5\u05D4\u05DE\u05D9\u05D3\u05E2 \u05E0\u05E9\u05DE\u05E8 \u05DC\u05EA\u05DE\u05D9\u05D3!</p></div></div>' },
+                { title: 'Supabase', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem; direction:rtl;">&#x1F4A1; Supabase &mdash; \u05D4\u05DE\u05D0\u05D2\u05E8 \u05E9\u05DC\u05E0\u05D5</h1><div style="display:grid; grid-template-columns:1fr; gap:1rem; max-width:500px; margin:0 auto; direction:rtl;"><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; display:flex; align-items:center; gap:1rem; font-size:1.15rem;"><span style="font-size:2rem;">&#x1F4DD;</span>\u05D7\u05D9\u05E0\u05DE\u05D9 &mdash; \u05DC\u05EA\u05DE\u05D9\u05D3!</div><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; display:flex; align-items:center; gap:1rem; font-size:1.15rem;"><span style="font-size:2rem;">&#x1F4CA;</span>\u05D8\u05D1\u05DC\u05D0\u05D5\u05EA \u05DB\u05DE\u05D5 \u05D0\u05E7\u05E1\u05DC</div><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; display:flex; align-items:center; gap:1rem; font-size:1.15rem;"><span style="font-size:2rem;">&#x1F517;</span>\u05DE\u05EA\u05D7\u05D1\u05E8 \u05DC\u05D0\u05EA\u05E8 \u05E9\u05DC\u05DB\u05DD</div></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.4rem; margin-bottom:1rem; font-weight:600;">\u05E0\u05D9\u05E8\u05E9\u05DD \u05DC-Supabase \u05D5\u05E0\u05D9\u05E6\u05D5\u05E8 \u05D8\u05D1\u05DC\u05D4!</p><p style="color:var(--text-muted); font-size:1.1rem;">\u05E9\u05DD, \u05D0\u05D9\u05DE\u05D9\u05D9\u05DC, \u05D4\u05D5\u05D3\u05E2\u05D4, \u05EA\u05D0\u05E8\u05D9\u05DA</p></div></div>' }
+            ],
+            11: [
+                { title: '\u05D7\u05E9\u05D1\u05D5\u05E0\u05D5\u05EA', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem;">&#x1F510; \u05D4\u05E8\u05E9\u05DE\u05D4 \u05D5\u05D4\u05EA\u05D7\u05D1\u05E8\u05D5\u05EA</h1><p style="font-size:1.4rem; color:var(--text-muted);">\u05E9\u05DC\u05DB\u05DC \u05DE\u05E9\u05EA\u05DE\u05E9 \u05D9\u05D4\u05D9\u05D4 \u05D7\u05E9\u05D1\u05D5\u05DF \u05D0\u05D9\u05E9\u05D9!</p><div style="display:flex; justify-content:center; gap:1.5rem; margin-top:2rem;"><div style="background:var(--dark-lighter); padding:1.5rem 2rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem;">&#x1F4E7;</div><p style="margin-top:0.5rem;">\u05D0\u05D9\u05DE\u05D9\u05D9\u05DC + \u05E1\u05D9\u05E1\u05DE\u05D4</p></div><div style="background:var(--dark-lighter); padding:1.5rem 2rem; border-radius:16px; text-align:center;"><div style="font-size:2.5rem;">&#x1F310;</div><p style="margin-top:0.5rem;">\u05D4\u05EA\u05D7\u05D1\u05E8 \u05E2\u05DD \u05D2\u05D5\u05D2\u05DC</p></div></div></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.4rem; margin-bottom:1rem; font-weight:600;">\u05D1\u05E0\u05D5 \u05D3\u05E3 \u05D4\u05E8\u05E9\u05DE\u05D4 + \u05D4\u05EA\u05D7\u05D1\u05E8\u05D5\u05EA!</p><p style="color:var(--gold); font-size:1.1rem;">\u05D0\u05D7\u05E8\u05D9 \u05D4\u05EA\u05D7\u05D1\u05E8\u05D5\u05EA: &ldquo;\u05E9\u05DC\u05D5\u05DD, [\u05E9\u05DD]!&rdquo;</p></div></div>' }
+            ],
+            12: [
+                { title: '\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD \u05D7\u05D9\u05E6\u05D5\u05E0\u05D9\u05D9\u05DD', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem;">&#x1F517; \u05D7\u05D9\u05D1\u05D5\u05E8 \u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD \u05D7\u05D9\u05E6\u05D5\u05E0\u05D9\u05D9\u05DD</h1><p style="font-size:1.4rem; color:var(--text-muted);">\u05EA\u05E0\u05D5 \u05DC\u05D0\u05EA\u05E8 \u05E9\u05DC\u05DB\u05DD \u05D9\u05DB\u05D5\u05DC\u05D5\u05EA \u05D7\u05D3\u05E9\u05D5\u05EA!</p></div>' },
+                { title: 'API = \u05DE\u05DC\u05E6\u05E8', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem; direction:rtl;">&#x1F37D; API = \u05DE\u05DC\u05E6\u05E8 \u05D1\u05DE\u05E1\u05E2\u05D3\u05D4</h1><div style="display:flex; justify-content:center; align-items:center; gap:1.5rem; flex-wrap:wrap; margin:2rem 0; direction:rtl;"><div style="background:linear-gradient(135deg, var(--primary), var(--primary-light)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4BB;</div><strong>\u05D0\u05EA\u05DD</strong><p style="font-size:0.9rem; opacity:0.8;">\u05DE\u05D6\u05DE\u05D9\u05E0\u05D9\u05DD</p></div><div style="font-size:2.5rem;">&#x2194;</div><div style="background:linear-gradient(135deg, var(--gold), var(--orange)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F468;&#x200D;&#x1F373;</div><strong>API</strong><p style="font-size:0.9rem; opacity:0.8;">\u05D4\u05DE\u05DC\u05E6\u05E8</p></div><div style="font-size:2.5rem;">&#x2194;</div><div style="background:linear-gradient(135deg, var(--accent), #00b894); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F3E2;</div><strong>\u05E9\u05D9\u05E8\u05D5\u05EA</strong><p style="font-size:0.9rem; opacity:0.8;">\u05D4\u05DE\u05D8\u05D1\u05D7</p></div></div>' },
+                { title: 'Claude API', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem; direction:rtl;">&#x1F916; Claude API</h1><div style="background:linear-gradient(135deg, rgba(217,119,87,0.2), transparent); padding:2rem; border-radius:20px; max-width:500px; margin:0 auto; text-align:center; direction:rtl;"><div style="font-size:3rem; margin-bottom:1rem;">&#x1F9E0;</div><p style="font-size:1.2rem; font-weight:700; margin-bottom:0.8rem;">\u05D0\u05E4\u05E9\u05E8 \u05DC\u05D7\u05D1\u05E8 \u05D0\u05EA Claude \u05DC\u05D0\u05EA\u05E8 \u05E9\u05DC\u05DB\u05DD!</p><p style="color:var(--text-muted); font-size:1rem;">\u05D4\u05DE\u05E9\u05EA\u05DE\u05E9\u05D9\u05DD \u05E9\u05D5\u05D0\u05DC\u05D9\u05DD \u05E9\u05D0\u05DC\u05D5\u05EA \u05D5-AI \u05E2\u05D5\u05E0\u05D4 \u05D1\u05D6\u05DE\u05DF \u05D0\u05DE\u05EA</p><p style="color:var(--gold); font-size:1.1rem; font-weight:600; margin-top:1rem;">\u05D1\u05DE\u05E4\u05D2\u05E9 \u05D4\u05D1\u05D0 \u05E0\u05D1\u05E0\u05D4 \u05D0\u05EA \u05D6\u05D4!</p></div>' }
+            ],
+            13: [
+                { title: '\u05E2\u05D5\u05D6\u05E8 \u05D7\u05DB\u05DD', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem;">&#x1F916; \u05D1\u05E0\u05D9\u05D9\u05EA \u05E2\u05D5\u05D6\u05E8 \u05D7\u05DB\u05DD</h1><p style="font-size:1.4rem; color:var(--text-muted);">\u05E0\u05E6\u05D9\u05D2 \u05E9\u05D9\u05E8\u05D5\u05EA 24/7 \u05D1\u05D0\u05EA\u05E8 \u05E9\u05DC\u05DB\u05DD!</p></div>' },
+                { title: 'System Prompt', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem; direction:rtl;">&#x1F4DD; 5 \u05D7\u05DC\u05E7\u05D9\u05DD \u05DC-System Prompt \u05DE\u05D5\u05E9\u05DC\u05DD</h1><p style="text-align:center; color:var(--text-muted); margin-bottom:1.5rem; direction:rtl;">\u05DE\u05D1\u05D5\u05E1\u05E1 \u05E2\u05DC Anthropic</p><div style="display:grid; grid-template-columns:1fr; gap:0.8rem; max-width:500px; margin:0 auto; direction:rtl;"><div style="background:linear-gradient(135deg, rgba(108,60,225,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.1rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--primary); width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">1</span><strong>\u05EA\u05E4\u05E7\u05D9\u05D3</strong> &mdash; \u05DE\u05D9 \u05D0\u05EA\u05D4?</div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.1rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--accent); color:#000; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">2</span><strong>\u05D9\u05D3\u05E2</strong> &mdash; \u05DE\u05D4 \u05D0\u05EA\u05D4 \u05DE\u05DB\u05D9\u05E8?</div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.1rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--gold); color:#000; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">3</span><strong>\u05E1\u05D2\u05E0\u05D5\u05DF</strong> &mdash; \u05D0\u05D9\u05DA \u05DC\u05D3\u05D1\u05E8?</div><div style="background:linear-gradient(135deg, rgba(255,120,73,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.1rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--orange); width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">4</span><strong>\u05DB\u05DC\u05DC\u05D9\u05DD</strong> &mdash; \u05DE\u05D4 \u05DC\u05D0 \u05DC\u05E2\u05E9\u05D5\u05EA?</div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.1rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--pink); width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">5</span><strong>\u05DE\u05D8\u05E8\u05D4</strong> &mdash; \u05DE\u05D4 \u05D4\u05D9\u05E2\u05D3?</div></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.4rem; margin-bottom:1rem; font-weight:600;">\u05DB\u05EA\u05D1\u05D5 System Prompt \u05DC\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 \u05E9\u05DC\u05DB\u05DD!</p><p style="color:var(--gold); font-size:1.1rem;">\u05D1\u05D3\u05E7\u05D5 \u05D0\u05D5\u05EA\u05D5 \u05E2\u05DD 10 \u05E9\u05D0\u05DC\u05D5\u05EA</p></div></div>' }
+            ],
+            14: [
+                { title: '\u05E2\u05D9\u05E6\u05D5\u05D1 \u05D5\u05D4\u05E2\u05DC\u05D0\u05D4', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem;">&#x2728; \u05E2\u05D9\u05E6\u05D5\u05D1, \u05E9\u05D9\u05E4\u05D5\u05E8 \u05D5\u05D4\u05E2\u05DC\u05D0\u05D4</h1><p style="font-size:1.4rem; color:var(--text-muted);">\u05E9\u05DB\u05DC \u05D4\u05E2\u05D5\u05DC\u05DD \u05D9\u05E8\u05D0\u05D4 \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8!</p></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.4rem; margin-bottom:1rem; font-weight:600;">\u05E9\u05D3\u05E8\u05D2\u05D5, \u05D4\u05E2\u05DC\u05D5, \u05D5\u05E9\u05DC\u05D7\u05D5 \u05DC\u05D7\u05D1\u05E8\u05D9\u05DD!</p><p style="color:var(--gold); font-size:1.1rem;">Railway \u2192 \u05D4\u05D0\u05EA\u05E8 \u05D1\u05D0\u05D5\u05D5\u05D9\u05E8!</p></div></div>' }
+            ],
+            15: [
+                { title: '\u05E9\u05D9\u05D5\u05D5\u05E7 \u05D3\u05D9\u05D2\u05D9\u05D8\u05DC\u05D9', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem;">&#x1F4E3; \u05E9\u05D9\u05D5\u05D5\u05E7 \u05D5\u05E4\u05E8\u05E1\u05D5\u05DD</h1><p style="font-size:1.4rem; color:var(--text-muted);">\u05D0\u05D9\u05DA \u05DE\u05D1\u05D9\u05D0\u05D9\u05DD \u05D0\u05E0\u05E9\u05D9\u05DD \u05DC\u05D0\u05EA\u05E8?</p></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.4rem; margin-bottom:1rem; font-weight:600;">\u05E6\u05E8\u05D5 5 \u05E4\u05D5\u05E1\u05D8\u05D9\u05DD \u05E2\u05DD AI!</p><p style="color:var(--gold); font-size:1.1rem;">SEO + \u05EA\u05D5\u05DB\u05DF + \u05E8\u05E9\u05EA\u05D5\u05EA</p></div></div>' }
+            ],
+            16: [
+                { title: '\u05D9\u05D5\u05DD \u05D4\u05D4\u05E6\u05D2\u05D4!', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--gold), var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">&#x1F3C6; \u05D9\u05D5\u05DD \u05D4\u05D4\u05E6\u05D2\u05D4 \u05D4\u05D2\u05D3\u05D5\u05DC!</h1><p style="font-size:1.4rem; color:var(--gold); font-weight:600;">\u05D4\u05D2\u05D9\u05E2 \u05D4\u05E8\u05D2\u05E2 \u05DC\u05D4\u05E8\u05D0\u05D5\u05EA \u05DE\u05D4 \u05D1\u05E0\u05D9\u05EA\u05DD!</p><div style="display:flex; justify-content:center; gap:1.5rem; margin-top:2rem;"><div style="font-size:3rem;">&#x1F3C6;</div><div style="font-size:3rem;">&#x1F389;</div><div style="font-size:3rem;">&#x1F31F;</div></div></div>' },
+                { title: '\u05DE\u05D6\u05DC \u05D8\u05D5\u05D1!', content: '<div style="text-align:center; padding:2rem 0; direction:rtl;"><h1 style="font-size:2.5rem; margin-bottom:1rem;">&#x1F389;&#x1F389;&#x1F389;</h1><h1 style="font-size:2.2rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--gold), var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">\u05E1\u05D9\u05D9\u05DE\u05EA\u05DD \u05D0\u05EA \u05D4\u05E7\u05D5\u05E8\u05E1 \u05D4\u05DE\u05EA\u05E7\u05D3\u05DD!</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:2rem;">\u05D9\u05E9 \u05DC\u05DB\u05DD \u05D0\u05EA\u05E8 \u05D0\u05DE\u05D9\u05EA\u05D9 \u05E2\u05DD \u05DE\u05D0\u05D2\u05E8, \u05D7\u05E9\u05D1\u05D5\u05E0\u05D5\u05EA, \u05E2\u05D5\u05D6\u05E8 \u05D7\u05DB\u05DD \u05D5\u05E9\u05D9\u05D5\u05D5\u05E7</p><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2rem; border-radius:24px; max-width:450px; margin:0 auto;"><p style="font-size:1.3rem; font-weight:700; color:var(--gold); margin-bottom:1rem;">\u05D4\u05E2\u05EA\u05D9\u05D3 \u05E8\u05E7 \u05D4\u05EA\u05D7\u05D9\u05DC!</p><p style="font-size:2rem; margin-top:1rem;">&#x1F680;&#x2B50;&#x1F4AA;</p></div></div>' }
             ]
         };
 
