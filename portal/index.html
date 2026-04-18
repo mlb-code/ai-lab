@@ -1674,6 +1674,82 @@
         }
 
         /* ===== MOBILE BOTTOM NAV ===== */
+        /* ===== ANTHROPIC PROMPTS LIBRARY ===== */
+        .prompt-tab {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 22px;
+            padding: 0.55rem 1.1rem;
+            color: rgba(255,255,255,0.7);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .prompt-tab:hover { background: rgba(108,60,225,0.15); color: #fff; border-color: rgba(108,60,225,0.4); }
+        .prompt-tab.active {
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(108,60,225,0.4);
+        }
+        .prompt-tab-count {
+            background: rgba(0,0,0,0.25);
+            border-radius: 10px;
+            padding: 1px 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .prompt-tab.active .prompt-tab-count { background: rgba(255,255,255,0.2); }
+
+        .anthropic-prompt-card {
+            background: var(--dark-card, #1a1a2e);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.3rem 1.5rem;
+            transition: border-color 0.2s;
+        }
+        .anthropic-prompt-card:hover { border-color: rgba(108,60,225,0.3); }
+        .apc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+        .apc-header h3 { font-size: 1.05rem; color: var(--accent, #4a90e2); margin: 0 0 4px; font-weight: 700; }
+        .apc-desc { font-size: 0.82rem; color: rgba(255,255,255,0.55); margin: 0; }
+        .apc-copy {
+            background: var(--primary, #6c3ce1);
+            color: #fff;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: 'Heebo', sans-serif;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .apc-body {
+            background: var(--dark, #0f0f1e);
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            line-height: 1.75;
+            color: rgba(255,255,255,0.75);
+        }
+        @media (max-width: 600px) {
+            .prompt-tab { font-size: 0.82rem; padding: 0.45rem 0.9rem; }
+            .apc-header { flex-direction: column; align-items: stretch; }
+            .apc-copy { align-self: flex-start; }
+        }
+
         /* Mobile-only elements — hidden on desktop */
         .mobile-header, .mobile-stories, .more-sheet, .more-sheet-backdrop { display: none; }
 
@@ -4513,6 +4589,18 @@
                 <h1>&#x1F3AF; פרומפטים מוכנים</h1>
                 <p>העתיקו את הפרומפט, הדביקו ב-Cursor או Claude, ותנו ל-AI לעשות את העבודה</p>
             </div>
+
+            <!-- Category buttons -->
+            <div class="prompts-tabs" id="promptsTabs" style="max-width:900px; margin:0 auto 1.5rem; display:flex; flex-wrap:wrap; gap:0.6rem; justify-content:center;"></div>
+
+            <!-- Prompts grid (populated by JS) -->
+            <div class="prompts-grid" id="promptsGrid" style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; gap:1rem;"></div>
+
+            <!-- Course-specific prompts header -->
+            <div style="max-width:900px; margin:2.5rem auto 1rem; text-align:center; padding:0 1rem;">
+                <h2 style="font-size:1.3rem; color:var(--primary-light); margin-bottom:0.3rem;">&#x1F3D7;&#xFE0F; פרומפטים לפרויקט הקורס</h2>
+                <p style="font-size:0.9rem; color:var(--text-muted);">פרומפטים מותאמים לשלבים שלנו בקורס המתקדם</p>
+            </div>
             <div style="max-width:800px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem;">
 
                 <div style="background:var(--dark-card); border-radius:16px; padding:1.5rem; border:1px solid rgba(255,255,255,0.06);">
@@ -5105,6 +5193,91 @@
                 }, 2000);
             });
         }
+
+        // ===== ANTHROPIC PROMPTS LIBRARY =====
+        let _anthropicPrompts = null;
+        let _activeCat = null;
+
+        async function loadAnthropicPrompts() {
+            if (_anthropicPrompts) return _anthropicPrompts;
+            try {
+                const res = await fetch('/portal/guides/anthropic-prompts-he.json');
+                _anthropicPrompts = await res.json();
+                return _anthropicPrompts;
+            } catch (e) {
+                console.error('Failed to load prompts:', e);
+                return null;
+            }
+        }
+
+        async function initPromptsSection() {
+            const tabsEl = document.getElementById('promptsTabs');
+            const gridEl = document.getElementById('promptsGrid');
+            if (!tabsEl || !gridEl || tabsEl.children.length > 0) return;
+
+            const data = await loadAnthropicPrompts();
+            if (!data) {
+                gridEl.innerHTML = '<p style="text-align:center;color:var(--text-muted);">טעינת הפרומפטים נכשלה</p>';
+                return;
+            }
+
+            // Build category buttons
+            tabsEl.innerHTML = data.categories.map(function(cat, i) {
+                return '<button class="prompt-tab' + (i === 0 ? ' active' : '') + '" data-cat="' + cat.id + '" onclick="showPromptCategory(\'' + cat.id + '\')">' +
+                    '<span>' + cat.emoji + '</span> ' + cat.name +
+                    ' <span class="prompt-tab-count">' + cat.prompts.length + '</span>' +
+                    '</button>';
+            }).join('');
+
+            showPromptCategory(data.categories[0].id);
+        }
+
+        function showPromptCategory(catId) {
+            if (!_anthropicPrompts) return;
+            _activeCat = catId;
+            const cat = _anthropicPrompts.categories.find(c => c.id === catId);
+            if (!cat) return;
+
+            // Update active tab
+            document.querySelectorAll('.prompt-tab').forEach(function(b) {
+                b.classList.toggle('active', b.getAttribute('data-cat') === catId);
+            });
+
+            // Render prompts
+            const gridEl = document.getElementById('promptsGrid');
+            gridEl.innerHTML = cat.prompts.map(function(p) {
+                const body = (p.body || '').replace(/\n/g, '<br>');
+                return '<div class="anthropic-prompt-card">' +
+                    '<div class="apc-header">' +
+                        '<div>' +
+                            '<h3>' + cat.emoji + ' ' + escapeHtml(p.title) + '</h3>' +
+                            '<p class="apc-desc">' + escapeHtml(p.description || '') + '</p>' +
+                        '</div>' +
+                        '<button onclick="copyPrompt(this)" class="apc-copy">העתק</button>' +
+                    '</div>' +
+                    '<div class="prompt-text apc-body">' + body + '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        function escapeHtml(s) {
+            const div = document.createElement('div');
+            div.textContent = s || '';
+            return div.innerHTML;
+        }
+
+        // Init on first visit to prompts section
+        const _promptsObserver = new MutationObserver(function() {
+            const sec = document.getElementById('section-prompts');
+            if (sec && sec.classList.contains('active')) initPromptsSection();
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const sec = document.getElementById('section-prompts');
+            if (sec) {
+                _promptsObserver.observe(sec, { attributes: true, attributeFilter: ['class'] });
+                if (sec.classList.contains('active')) initPromptsSection();
+            }
+        });
 
         // ===== PROJECT WIZARD =====
         const STORAGE_KEY = 'youth-ai-project';
