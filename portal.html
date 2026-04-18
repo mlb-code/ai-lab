@@ -5306,5 +5306,471 @@
         // Init
         loadWizard();
     </script>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- AI Assistant Floating Widget                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <style>
+        .ai-assistant-btn {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(108, 60, 225, 0.4);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            color: #fff;
+            font-size: 28px;
+        }
+        .ai-assistant-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 32px rgba(108, 60, 225, 0.6);
+        }
+        .ai-assistant-btn .ai-online-dot {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #22c55e;
+            border: 2px solid #fff;
+            animation: ai-pulse 2s infinite;
+        }
+        @keyframes ai-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+            50% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+        }
+        .ai-assistant-tooltip {
+            position: fixed;
+            bottom: 100px;
+            left: 24px;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 9997;
+            max-width: 240px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+            border: 1px solid rgba(108, 60, 225, 0.3);
+        }
+        .ai-assistant-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .ai-assistant-tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 28px;
+            width: 12px;
+            height: 12px;
+            background: #1a1a2e;
+            transform: rotate(45deg);
+            border-right: 1px solid rgba(108, 60, 225, 0.3);
+            border-bottom: 1px solid rgba(108, 60, 225, 0.3);
+        }
+        .ai-assistant-tooltip-close {
+            position: absolute;
+            top: 4px;
+            right: 6px;
+            background: transparent;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 6px;
+        }
+
+        .ai-chat-panel {
+            position: fixed;
+            bottom: 100px;
+            left: 24px;
+            width: 380px;
+            max-width: calc(100vw - 48px);
+            height: 560px;
+            max-height: calc(100vh - 140px);
+            background: #0f0f1e;
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            transform-origin: bottom left;
+            animation: ai-panel-in 0.25s ease-out;
+        }
+        .ai-chat-panel.open { display: flex; }
+        @keyframes ai-panel-in {
+            from { opacity: 0; transform: scale(0.85) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .ai-chat-header {
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .ai-chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .ai-chat-header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+        .ai-chat-header h4 {
+            color: #fff;
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .ai-chat-header .ai-status {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ai-chat-header .ai-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+        }
+        .ai-chat-close {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-chat-close:hover { background: rgba(255,255,255,0.25); }
+
+        .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .ai-msg {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        .ai-msg.bot {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            border-bottom-right-radius: 4px;
+            align-self: flex-end;
+            border: 1px solid rgba(108, 60, 225, 0.2);
+        }
+        .ai-msg.user {
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            color: #fff;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+        }
+        .ai-msg.error {
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            align-self: center;
+            font-size: 0.8rem;
+        }
+        .ai-typing {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: #1a1a2e;
+            border-radius: 16px;
+            align-self: flex-end;
+            width: fit-content;
+        }
+        .ai-typing span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #6c3ce1;
+            animation: ai-bounce 1.4s infinite;
+        }
+        .ai-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .ai-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes ai-bounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        .ai-quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 0 20px 12px;
+        }
+        .ai-chip {
+            background: rgba(108, 60, 225, 0.15);
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            color: #a78bfa;
+            padding: 6px 12px;
+            border-radius: 14px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+        .ai-chip:hover { background: rgba(108, 60, 225, 0.3); }
+
+        .ai-chat-input-wrap {
+            padding: 12px;
+            border-top: 1px solid rgba(108, 60, 225, 0.2);
+            display: flex;
+            gap: 8px;
+            background: #0a0a14;
+        }
+        .ai-chat-input {
+            flex: 1;
+            background: #1a1a2e;
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            border-radius: 24px;
+            padding: 10px 16px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            direction: rtl;
+        }
+        .ai-chat-input:focus { border-color: #6c3ce1; }
+        .ai-chat-send {
+            background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ai-chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .ai-chat-footer {
+            text-align: center;
+            padding: 6px;
+            color: #555;
+            font-size: 0.65rem;
+            background: #0a0a14;
+            border-top: 1px solid rgba(108, 60, 225, 0.1);
+        }
+
+        @media (max-width: 480px) {
+            .ai-chat-panel {
+                width: calc(100vw - 24px);
+                left: 12px;
+                bottom: 92px;
+                height: calc(100vh - 120px);
+            }
+            .ai-assistant-btn { bottom: 16px; left: 16px; width: 56px; height: 56px; font-size: 24px; }
+            .ai-assistant-tooltip { left: 16px; bottom: 84px; }
+        }
+    </style>
+
+    <div class="ai-assistant-tooltip" id="aiTooltip">
+        <button class="ai-assistant-tooltip-close" onclick="closeAiTooltip()">&times;</button>
+        שלום! 👋 יש לך שאלה על הקורס? אני כאן!
+    </div>
+
+    <button class="ai-assistant-btn" id="aiAssistantBtn" onclick="toggleAiChat()" aria-label="פתח עוזר הקורס">
+        <span>🤖</span>
+        <span class="ai-online-dot"></span>
+    </button>
+
+    <div class="ai-chat-panel" id="aiChatPanel">
+        <div class="ai-chat-header">
+            <div class="ai-chat-header-info">
+                <div class="ai-chat-header-avatar">🤖</div>
+                <div>
+                    <h4>עוזר הקורס</h4>
+                    <div class="ai-status">זמין עכשיו</div>
+                </div>
+            </div>
+            <button class="ai-chat-close" onclick="toggleAiChat()" aria-label="סגור">&times;</button>
+        </div>
+
+        <div class="ai-chat-messages" id="aiChatMessages">
+            <div class="ai-msg bot">שלום! 👋 אני עוזר הקורס של AI Lab.
+
+אני כאן לעזור לך בכל מה שקשור לתוכן הקורסים — מושגי AI, פרומפטים, Cursor, תרגילי בית ועוד.
+
+במה אני יכול לעזור?</div>
+        </div>
+
+        <div class="ai-quick-chips" id="aiQuickChips">
+            <button class="ai-chip" onclick="aiSendQuick('מה זה פרומפט?')">מה זה פרומפט?</button>
+            <button class="ai-chip" onclick="aiSendQuick('איך מתקינים Cursor?')">איך מתקינים Cursor?</button>
+            <button class="ai-chip" onclick="aiSendQuick('סכם לי את מפגש 1')">סכם מפגש 1</button>
+        </div>
+
+        <div class="ai-chat-input-wrap">
+            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="כתוב שאלה..." maxlength="500" />
+            <button class="ai-chat-send" id="aiChatSend" onclick="aiSendMessage()" aria-label="שלח">&#10148;</button>
+        </div>
+
+        <div class="ai-chat-footer">מופעל על ידי Claude · AI Lab</div>
+    </div>
+
+    <script>
+        // ═════════ AI Assistant Configuration ═════════
+        const AI_WORKER_URL = 'https://ai-lab-assistant.laviemb.workers.dev';
+
+        let aiMessages = [];
+        let aiIsLoading = false;
+
+        function toggleAiChat() {
+            const panel = document.getElementById('aiChatPanel');
+            const open = panel.classList.toggle('open');
+            if (open) {
+                closeAiTooltip();
+                sessionStorage.setItem('ai_chat_opened', '1');
+                setTimeout(() => document.getElementById('aiChatInput').focus(), 300);
+            }
+        }
+
+        function closeAiTooltip() {
+            document.getElementById('aiTooltip').classList.remove('visible');
+            localStorage.setItem('ai_tooltip_dismissed', '1');
+        }
+
+        function aiAddMessage(role, text, isError) {
+            const container = document.getElementById('aiChatMessages');
+            const msg = document.createElement('div');
+            msg.className = 'ai-msg ' + (isError ? 'error' : role);
+            msg.textContent = text;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function aiShowTyping() {
+            const container = document.getElementById('aiChatMessages');
+            const t = document.createElement('div');
+            t.className = 'ai-typing';
+            t.id = 'aiTypingIndicator';
+            t.innerHTML = '<span></span><span></span><span></span>';
+            container.appendChild(t);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function aiHideTyping() {
+            const t = document.getElementById('aiTypingIndicator');
+            if (t) t.remove();
+        }
+
+        async function aiSendMessage() {
+            if (aiIsLoading) return;
+            const input = document.getElementById('aiChatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            document.getElementById('aiQuickChips').style.display = 'none';
+
+            aiAddMessage('user', text);
+            aiMessages.push({ role: 'user', content: text });
+
+            aiIsLoading = true;
+            document.getElementById('aiChatSend').disabled = true;
+            aiShowTyping();
+
+            try {
+                const res = await fetch(AI_WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: aiMessages,
+                        course: (typeof currentCourseView !== 'undefined' ? currentCourseView : 'basic'),
+                    }),
+                });
+
+                aiHideTyping();
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    aiAddMessage('bot', err.error || 'שגיאה. נסו שוב בעוד רגע.', true);
+                } else {
+                    const data = await res.json();
+                    aiAddMessage('bot', data.reply);
+                    aiMessages.push({ role: 'assistant', content: data.reply });
+                }
+            } catch (err) {
+                aiHideTyping();
+                aiAddMessage('bot', 'לא הצלחתי להתחבר. בדקו חיבור לאינטרנט ונסו שוב.', true);
+            } finally {
+                aiIsLoading = false;
+                document.getElementById('aiChatSend').disabled = false;
+                input.focus();
+            }
+        }
+
+        function aiSendQuick(text) {
+            document.getElementById('aiChatInput').value = text;
+            aiSendMessage();
+        }
+
+        document.getElementById('aiChatInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                aiSendMessage();
+            }
+        });
+
+        // Show tooltip once per visitor after 3 seconds
+        if (!localStorage.getItem('ai_tooltip_dismissed')) {
+            setTimeout(() => {
+                if (!document.getElementById('aiChatPanel').classList.contains('open')) {
+                    document.getElementById('aiTooltip').classList.add('visible');
+                }
+            }, 3000);
+            setTimeout(() => closeAiTooltip(), 12000);
+        }
+    </script>
 </body>
 </html>
