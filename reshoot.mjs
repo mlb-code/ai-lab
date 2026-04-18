@@ -27,16 +27,16 @@ for (const slug of projects) {
   const outPath = path.join(outDir, `${slug}.jpg`);
   console.log(`Shooting ${url}...`);
   const page = await browser.newPage();
-  // Tight viewport: forces hero to fill the frame (no empty bottom space)
-  await page.setViewport({ width: 1400, height: 520, deviceScaleFactor: 1 });
+  // 16:9 classic viewport — focuses on hero with minimal empty space
+  await page.setViewport({ width: 1280, height: 720, deviceScaleFactor: 1 });
   try {
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
-    await new Promise(r => setTimeout(r, 2000));
+    await new Promise(r => setTimeout(r, 2500));
     await page.screenshot({
       path: outPath,
       type: 'jpeg',
       quality: 82,
-      clip: { x: 0, y: 0, width: 1400, height: 520 },
+      clip: { x: 0, y: 0, width: 1280, height: 720 },
     });
     const kb = (fs.statSync(outPath).size / 1024).toFixed(1);
     console.log(`  → ${kb}KB`);
