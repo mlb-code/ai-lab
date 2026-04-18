@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>איך כותבים פרומפט מנצח · AI Lab</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #6c3ce1;
+  --accent: #4a90e2;
+  --gold: #E2B93B;
+  --green: #22c55e;
+  --red: #ef4444;
+  --bg: #0a0a14;
+  --surface: #1a1a2e;
+}
+html, body { height: 100%; overflow: hidden; background: var(--bg); color: #fff; font-family: 'Heebo', sans-serif; }
+.slides { position: fixed; inset: 0; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 40px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  transform: translateX(30px);
+  overflow-y: auto;
+}
+.slide.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
+.slide-inner { max-width: 900px; width: 100%; text-align: center; }
+.slide h1 {
+  font-size: clamp(2rem, 5vw, 3.8rem); font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 18px; line-height: 1.15;
+}
+.slide h2 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 30px; color: #fff; }
+.slide h3 { font-size: clamp(1.1rem, 2.3vw, 1.4rem); font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+.slide p { font-size: clamp(1rem, 1.8vw, 1.3rem); color: #aaa; line-height: 1.6; margin-bottom: 14px; }
+.slide p strong { color: #fff; }
+.emoji-hero { font-size: clamp(4rem, 10vw, 7rem); display: block; margin-bottom: 20px; }
+.tag {
+  display: inline-block; padding: 6px 18px; border-radius: 20px;
+  background: rgba(108,60,225,0.15);
+  border: 1px solid rgba(108,60,225,0.4);
+  color: var(--primary); font-weight: 700; margin-bottom: 20px; font-size: 0.9rem;
+}
+
+/* Prompt comparison */
+.prompt-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; text-align: right; }
+.prompt-box { padding: 20px; border-radius: 14px; border: 1px solid; }
+.prompt-box.bad { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.06); }
+.prompt-box.good { border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.06); }
+.prompt-box .label { display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 10px; margin-bottom: 10px; }
+.prompt-box.bad .label { background: rgba(239,68,68,0.2); color: #ef4444; }
+.prompt-box.good .label { background: rgba(34,197,94,0.2); color: #22c55e; }
+.prompt-box p { color: #fff; font-size: 0.95rem; margin: 0; font-weight: 500; }
+
+/* Rules list */
+.rules-list { display: flex; flex-direction: column; gap: 14px; text-align: right; margin-top: 20px; }
+.rule { display: flex; gap: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(108,60,225,0.25); border-radius: 14px; padding: 18px 22px; align-items: flex-start; }
+.rule-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #f5d76e);
+  color: #0a0a14; font-weight: 900; font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.rule-body h4 { font-size: 1.15rem; color: #fff; margin-bottom: 4px; font-weight: 700; }
+.rule-body p { font-size: 0.95rem; margin: 0; text-align: right; }
+
+/* Template box */
+.template-box {
+  background: rgba(108,60,225,0.1);
+  border: 2px dashed rgba(108,60,225,0.4);
+  border-radius: 14px;
+  padding: 24px;
+  margin: 20px 0;
+  text-align: right;
+  font-family: 'Heebo', sans-serif;
+  font-size: 1rem;
+  line-height: 2.1;
+  color: #fff;
+}
+.template-box .placeholder {
+  display: inline-block;
+  background: rgba(226,185,59,0.2);
+  color: var(--gold);
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.checklist {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 20px; text-align: right;
+}
+.check-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+}
+.check-item .check-box {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--green), #1da050);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-weight: 900; flex-shrink: 0;
+}
+.check-item span:last-child { color: #fff; font-size: 0.95rem; font-weight: 500; }
+
+/* Navigation */
+.nav-bar {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 10px; align-items: center;
+  background: rgba(30,30,50,0.85); backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 30px;
+  padding: 8px 14px; z-index: 100;
+}
+.nav-btn {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff; border: none; cursor: pointer;
+  width: 42px; height: 42px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; font-weight: 700;
+  transition: transform 0.2s;
+}
+.nav-btn:hover { transform: scale(1.08); }
+.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.slide-counter { color: #fff; font-weight: 700; font-size: 0.95rem; min-width: 50px; text-align: center; direction: ltr; }
+.close-btn {
+  position: fixed; top: 20px; left: 20px;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+  color: #fff; border: none; cursor: pointer;
+  width: 44px; height: 44px; border-radius: 50%;
+  font-size: 1.2rem; z-index: 100;
+  text-decoration: none; display: flex; align-items: center; justify-content: center;
+}
+.progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: rgba(255,255,255,0.08); z-index: 100; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.4s ease; }
+
+.slide::before {
+  content: ''; position: absolute; top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(108,60,225,0.15), transparent 70%);
+  pointer-events: none; filter: blur(50px);
+}
+
+.tip { background: rgba(226,185,59,0.1); border: 1px solid rgba(226,185,59,0.4); border-radius: 12px; padding: 14px 18px; margin: 16px 0; color: var(--gold); font-weight: 600; text-align: right; font-size: 0.95rem; }
+.tip strong { color: #f5d76e; }
+
+.big-cta {
+  display: inline-block; margin-top: 20px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff; padding: 16px 40px; border-radius: 50px;
+  text-decoration: none; font-weight: 800; font-size: 1.1rem;
+  box-shadow: 0 10px 30px rgba(108,60,225,0.5);
+}
+
+@media (max-width: 600px) {
+  .slide { padding: 60px 20px 100px; }
+  .prompt-compare { grid-template-columns: 1fr; }
+  .rule { padding: 14px; gap: 12px; }
+  .rule-num { width: 36px; height: 36px; font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<a href="/portal/" class="close-btn">&#x2715;</a>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="slides" id="slides">
+
+  <div class="slide active">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F3AF;</span>
+      <span class="tag">מיומנות #1 בעבודה עם AI</span>
+      <h1>פרומפט מנצח</h1>
+      <h2>איך לבקש מ-AI ולקבל בדיוק מה שרצית</h2>
+      <p style="font-size: 1.2rem;">הדבר הכי חשוב שתלמד בקורס —<br>כי עם פרומפט טוב, AI יכול הכל.</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F4AC;</span>
+      <h2>מה זה פרומפט?</h2>
+      <p style="font-size: 1.2rem;">פרומפט = <strong>הבקשה שלך ל-AI</strong>.</p>
+      <p>כל מה שאתה כותב ל-Claude, ChatGPT או Cursor — זה פרומפט.</p>
+      <p>ככל שהפרומפט ברור ומדויק יותר, התוצאה תהיה טובה יותר. זה <strong>הכלי הכי חזק שיש לך</strong>.</p>
+      <div class="tip">&#x1F4A1; חשוב על זה כמו לדבר עם עוזר חכם מאוד שלא יודע אותך. ככל שתסביר טוב יותר, הוא יעזור טוב יותר.</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F50D;</span>
+      <h2>הבדל שינה כל משמעות</h2>
+      <p>אותה משימה, שני פרומפטים שונים:</p>
+      <div class="prompt-compare">
+        <div class="prompt-box bad">
+          <span class="label">&#x274C; פרומפט חלש</span>
+          <p>"כתוב סיפור"</p>
+        </div>
+        <div class="prompt-box good">
+          <span class="label">&#x2705; פרומפט חזק</span>
+          <p>"כתוב סיפור קצר (300 מילים) על דרקון ידידותי שאוהב עוגיות. בעברית פשוטה, עם סוף שמחה."</p>
+        </div>
+      </div>
+      <p style="margin-top: 20px; color: #fff; font-weight: 600;">תוצאה ראשונה = משעמם וגנרי. תוצאה שניה = בדיוק מה שרצית.</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F947;</span>
+      <h2>5 כללי זהב</h2>
+      <p>פרומפט מנצח תמיד מכיל לפחות 3 מתוכם:</p>
+      <div class="rules-list">
+        <div class="rule"><div class="rule-num">1</div><div class="rule-body"><h4>היה ספציפי</h4><p>במקום "על כלבים" — "על גורי לברדור שמחפשים כדור בגינה"</p></div></div>
+        <div class="rule"><div class="rule-num">2</div><div class="rule-body"><h4>תן הקשר</h4><p>"אני תלמיד בן 13 שבונה אתר לכיתה..." — AI יתאים את הסגנון</p></div></div>
+        <div class="rule"><div class="rule-num">3</div><div class="rule-body"><h4>הגדר פורמט</h4><p>רשימה? טבלה? 3 פסקאות? תגיד איך אתה רוצה את התשובה</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <h2>5 כללי זהב — המשך</h2>
+      <div class="rules-list">
+        <div class="rule"><div class="rule-num">4</div><div class="rule-body"><h4>תן דוגמה</h4><p>"כמו הכותרת של ויקיפדיה, אבל בסגנון מצחיק" — דוגמה מבהירה הכל</p></div></div>
+        <div class="rule"><div class="rule-num">5</div><div class="rule-body"><h4>תן תפקיד ל-AI</h4><p>"אתה מעצב לוגואים מקצועי..." או "אתה מורה למדעים..." — מעלה את רמת התשובה</p></div></div>
+      </div>
+      <div class="tip">&#x1F4A1; <strong>בונוס</strong> — בקש "תחשוב שלב אחר שלב" לפני התשובה. Claude עוצר לחשוב ונותן תשובות הרבה יותר טובות!</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F3A8;</span>
+      <h2>דוגמה — יצירת לוגו</h2>
+      <div class="prompt-compare">
+        <div class="prompt-box bad">
+          <span class="label">&#x274C; חלש</span>
+          <p>"תצור לוגו לחנות שלי"</p>
+        </div>
+        <div class="prompt-box good">
+          <span class="label">&#x2705; חזק</span>
+          <p>"אתה מעצב גרפי. צור לוגו לחנות ספרים לילדים בשם "ספרלנד". סגנון: צעיר ומזמין. צבעים: תכלת וכתום. עם אייקון של ספר פתוח. תן לי 3 וריאציות."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F4BB;</span>
+      <h2>דוגמה — בניית אתר</h2>
+      <div class="prompt-compare">
+        <div class="prompt-box bad">
+          <span class="label">&#x274C; חלש</span>
+          <p>"תבנה אתר"</p>
+        </div>
+        <div class="prompt-box good">
+          <span class="label">&#x2705; חזק</span>
+          <p>"בנה לי דף אינטרנט בעברית עם: כותרת ראשית "ברוכים הבאים", תמונה במרכז, פסקת היכרות של 3 שורות, וכפתור ירוק שכתוב עליו "צור קשר". עיצוב מודרני עם רקע כהה.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F4DD;</span>
+      <h2>התבנית האולטימטיבית</h2>
+      <p>העתק את זה והמלא את הפרטים:</p>
+      <div class="template-box">
+        אתה <span class="placeholder">תפקיד</span>.<br>
+        המשימה: <span class="placeholder">מה לעשות</span>.<br>
+        הקהל: <span class="placeholder">מי יראה את זה</span>.<br>
+        הסגנון: <span class="placeholder">איך שיראה</span>.<br>
+        פורמט: <span class="placeholder">רשימה / טבלה / פסקאות</span>.<br>
+        אורך: <span class="placeholder">כמה מילים / שורות</span>.
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x26A0;&#xFE0F;</span>
+      <h2>5 טעויות נפוצות</h2>
+      <div class="checklist">
+        <div class="check-item"><span class="check-box">&#x2717;</span><span>פרומפט קצר מדי — "תכתוב משהו יפה"</span></div>
+        <div class="check-item"><span class="check-box">&#x2717;</span><span>לא לתת הקשר — AI לא יודע מי אתה</span></div>
+        <div class="check-item"><span class="check-box">&#x2717;</span><span>לבקש הכל בפרומפט אחד — מפורק לשלבים עובד יותר</span></div>
+        <div class="check-item"><span class="check-box">&#x2717;</span><span>לא לבקש שינויים — התוצאה הראשונה היא טיוטה</span></div>
+        <div class="check-item"><span class="check-box">&#x2717;</span><span>להאמין לכל מילה — AI לפעמים טועה, בדוק עובדות!</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F504;</span>
+      <h2>שיפור בשלבים</h2>
+      <p>אל תיתקע בתשובה הראשונה. תשפר אותה:</p>
+      <div class="rules-list">
+        <div class="rule"><div class="rule-num" style="background: linear-gradient(135deg, #6ab4f5, #4a90e2);">1</div><div class="rule-body"><h4>"תוסיף הומור"</h4><p>הופך טקסט יבש למצחיק</p></div></div>
+        <div class="rule"><div class="rule-num" style="background: linear-gradient(135deg, #3ece7b, #2a9960);">2</div><div class="rule-body"><h4>"תקצר ל-2 משפטים"</h4><p>מעלה את הצפיפות והעניין</p></div></div>
+        <div class="rule"><div class="rule-num" style="background: linear-gradient(135deg, var(--gold), #f5d76e); color: #0a0a14;">3</div><div class="rule-body"><h4>"תן לי 3 גרסאות"</h4><p>בוחר את הטובה ביותר</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F3AF;</span>
+      <h2>צ׳קליסט לפני שליחה</h2>
+      <p>לפני שאתה לוחץ Enter, בדוק:</p>
+      <div class="checklist">
+        <div class="check-item"><span class="check-box">&#x2713;</span><span>כתבתי בדיוק מה אני רוצה?</span></div>
+        <div class="check-item"><span class="check-box">&#x2713;</span><span>הוספתי הקשר — מי אני ולמה אני צריך?</span></div>
+        <div class="check-item"><span class="check-box">&#x2713;</span><span>ציינתי את הפורמט?</span></div>
+        <div class="check-item"><span class="check-box">&#x2713;</span><span>ציינתי אורך/כמות?</span></div>
+        <div class="check-item"><span class="check-box">&#x2713;</span><span>הוספתי דוגמה או השראה?</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F680;</span>
+      <h1>עכשיו אתה מוכן!</h1>
+      <p style="font-size: 1.2rem;">פרומפט טוב = תוצאה טובה. פשוט ככה.</p>
+      <p style="color: var(--gold); font-weight: 700; font-size: 1.1rem;">תתחיל בקטן, תשפר בכל פעם, ותראה איך אתה הופך למקצוען &#x1F389;</p>
+      <div class="tip" style="margin-top: 30px;">&#x1F4A1; רוצה לתרגל? שאל את <strong>עוזר AI Lab</strong> (הכפתור הכחול בפורטל) "תן לי אתגר פרומפט" — הוא ייתן לך משימה!</div>
+      <a href="/portal/" class="big-cta">חזרה לפורטל &larr;</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn">&#x2192;</button>
+  <span class="slide-counter" id="counter">1 / 12</span>
+  <button class="nav-btn" id="nextBtn">&#x2190;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+const counter = document.getElementById('counter');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const progressFill = document.getElementById('progressFill');
+
+function showSlide(n) {
+  current = Math.max(0, Math.min(total - 1, n));
+  slides.forEach((s, i) => s.classList.toggle('active', i === current));
+  counter.textContent = (current + 1) + ' / ' + total;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === total - 1;
+  progressFill.style.width = ((current + 1) / total * 100) + '%';
+}
+prevBtn.addEventListener('click', () => showSlide(current - 1));
+nextBtn.addEventListener('click', () => showSlide(current + 1));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') showSlide(current + 1);
+  if (e.key === 'ArrowRight') showSlide(current - 1);
+  if (e.key === 'Escape') window.location.href = '/portal/';
+});
+let tx = 0;
+document.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; });
+document.addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) { if (dx > 0) showSlide(current - 1); else showSlide(current + 1); }
+});
+showSlide(0);
+</script>
+</body>
+</html>
