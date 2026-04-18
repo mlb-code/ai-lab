@@ -1281,6 +1281,7 @@
         }
         .proj-preview {
             width: 100%;
+            aspect-ratio: 1280 / 720;
             overflow: hidden;
             position: relative;
             background: #0a0a18;
@@ -1299,6 +1300,10 @@
             pointer-events: none;
             border: none;
             display: block;
+        }
+        /* Hide specific card on mobile */
+        @media (max-width: 768px) {
+            .proj-card.hide-mobile { display: none !important; }
         }
         .proj-info {
             padding: 13px 14px 14px;
@@ -3275,6 +3280,14 @@
                     <span class="proj-btn">🚀 לצפייה באתר</span>
                 </div>
             </a>
+            <a href="https://ai-lab.co.il/englishkids/" target="_blank" rel="noopener" class="proj-card hide-mobile">
+                <div class="proj-preview"><img src="/project-previews/englishkids.jpg" alt="EnglishKids" loading="lazy" decoding="async" width="1280" height="720"></div>
+                <div class="proj-info">
+                    <div class="proj-name">🎓 EnglishKids — אנגלית לילדים</div>
+                    <div class="proj-student">איתי קרמונה</div>
+                    <span class="proj-btn">🚀 לצפייה באתר</span>
+                </div>
+            </a>
         </div>
         <div style="text-align:center;margin-top:36px;">
             <a href="#register" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-weight:700;font-size:1rem;padding:13px 32px;border-radius:50px;text-decoration:none;box-shadow:0 4px 20px rgba(108,60,225,0.4);">🚀 רוצה שגם הילד שלך יבנה? שריינו מקום</a>
@@ -4267,16 +4280,7 @@
             setTimeout(function() { grid.scrollLeft = 0; }, 100);
         }());
 
-        // ── Projects preview sizing (1280×800 aspect) ──
-        function scaleProjectPreviews() {
-            document.querySelectorAll('.proj-preview').forEach(wrap => {
-                const w = wrap.offsetWidth;
-                wrap.style.height = Math.round(w * 720 / 1280) + 'px';
-            });
-        }
-        window.addEventListener('load', scaleProjectPreviews);
-        window.addEventListener('resize', scaleProjectPreviews);
-        scaleProjectPreviews();
+        // Projects preview sizing now handled via CSS aspect-ratio — no JS needed
 
         // ===== SYLLABUS POPUPS =====
         const syllabusData = {
