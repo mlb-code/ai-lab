@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code — מתחילים! · AI Lab</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #6c3ce1;
+  --accent: #4a90e2;
+  --gold: #E2B93B;
+  --text: #fff;
+  --muted: #aaa;
+  --bg: #0a0a14;
+  --surface: #1a1a2e;
+}
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Heebo', sans-serif;
+}
+
+/* Slide container */
+.slides { position: fixed; inset: 0; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  transform: translateX(30px);
+  overflow-y: auto;
+}
+.slide.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
+
+.slide-inner { max-width: 900px; width: 100%; text-align: center; }
+
+/* Typography */
+.slide h1 {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 18px;
+  line-height: 1.15;
+}
+.slide h2 {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 800;
+  margin-bottom: 30px;
+  color: #fff;
+}
+.slide h3 {
+  font-size: clamp(1.1rem, 2.3vw, 1.4rem);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.slide p {
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.slide p strong { color: #fff; }
+
+.emoji-hero { font-size: clamp(4rem, 10vw, 7rem); display: block; margin-bottom: 20px; }
+.tag {
+  display: inline-block;
+  padding: 6px 18px; border-radius: 20px;
+  background: rgba(108, 60, 225, 0.15);
+  border: 1px solid rgba(108, 60, 225, 0.4);
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+/* Cards grid */
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+  text-align: right;
+}
+.mini-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 20px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.mini-card:hover { transform: translateY(-4px); border-color: rgba(108,60,225,0.5); }
+.mini-card .mc-num {
+  display: inline-block;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 10px;
+}
+.mini-card h4 { font-size: 1rem; margin-bottom: 6px; color: #fff; font-weight: 700; }
+.mini-card p { font-size: 0.88rem; margin: 0; color: var(--muted); }
+
+/* Command block */
+.cmd {
+  background: #000;
+  border: 1px solid rgba(108,60,225,0.4);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: 'Courier New', monospace;
+  direction: ltr;
+  text-align: left;
+  color: #6ae7a0;
+  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+  margin: 14px 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+.cmd::before {
+  content: '$ ';
+  color: var(--gold);
+}
+.cmd.no-prefix::before { content: ''; }
+
+/* OS boxes */
+.os-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+  text-align: right;
+}
+.os-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 24px;
+}
+.os-box.mac { border-top: 4px solid #6ab4f5; }
+.os-box.win { border-top: 4px solid #3ece7b; }
+.os-box h3 { display: flex; align-items: center; gap: 10px; color: #fff; margin-bottom: 14px; }
+.os-box h3 span { font-size: 1.4rem; }
+.os-box p { font-size: 0.95rem; text-align: right; }
+
+/* Rules list */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: right;
+  margin-top: 20px;
+}
+.rule {
+  display: flex; gap: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(108,60,225,0.25);
+  border-radius: 14px;
+  padding: 18px 22px;
+  align-items: flex-start;
+}
+.rule-num {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #f5d76e);
+  color: #0a0a14;
+  font-weight: 900; font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.rule-body h4 { font-size: 1.15rem; color: #fff; margin-bottom: 4px; font-weight: 700; }
+.rule-body p { font-size: 0.95rem; margin: 0; text-align: right; }
+
+/* Navigation */
+.nav-bar {
+  position: fixed;
+  bottom: 20px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 10px; align-items: center;
+  background: rgba(30,30,50,0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 30px;
+  padding: 8px 14px;
+  z-index: 100;
+}
+.nav-btn {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff; border: none; cursor: pointer;
+  width: 42px; height: 42px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; font-weight: 700;
+  transition: transform 0.2s;
+}
+.nav-btn:hover { transform: scale(1.08); }
+.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.slide-counter {
+  color: #fff; font-weight: 700; font-size: 0.95rem;
+  min-width: 50px; text-align: center;
+  direction: ltr;
+}
+.close-btn {
+  position: fixed;
+  top: 20px; left: 20px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  color: #fff; border: none; cursor: pointer;
+  width: 44px; height: 44px; border-radius: 50%;
+  font-size: 1.2rem;
+  z-index: 100;
+  text-decoration: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.close-btn:hover { background: rgba(255,255,255,0.15); }
+
+/* Progress */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+  z-index: 100;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.4s ease;
+}
+
+/* Backgrounds */
+.slide::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(108,60,225,0.15), transparent 70%);
+  pointer-events: none;
+  filter: blur(50px);
+}
+
+/* Tip block */
+.tip {
+  background: rgba(226,185,59,0.1);
+  border: 1px solid rgba(226,185,59,0.4);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  color: var(--gold);
+  font-weight: 600;
+  text-align: right;
+  font-size: 0.95rem;
+}
+.tip strong { color: #f5d76e; }
+
+.warn {
+  background: rgba(231,76,60,0.1);
+  border: 1px solid rgba(231,76,60,0.4);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  color: #ef9a9a;
+  font-weight: 600;
+  text-align: right;
+  font-size: 0.95rem;
+}
+
+/* Final slide CTA */
+.big-cta {
+  display: inline-block;
+  margin-top: 20px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  padding: 16px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 30px rgba(108,60,225,0.5);
+  transition: transform 0.2s;
+}
+.big-cta:hover { transform: translateY(-3px); }
+
+@media (max-width: 600px) {
+  .slide { padding: 60px 20px 100px; }
+  .cards-row { grid-template-columns: 1fr; }
+  .os-boxes { grid-template-columns: 1fr; }
+  .rule { padding: 14px; gap: 12px; }
+  .rule-num { width: 36px; height: 36px; font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<a href="/portal/" class="close-btn" title="סגור">&#x2715;</a>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="slides" id="slides">
+
+  <!-- Slide 1: Intro -->
+  <div class="slide active" data-slide="1">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F680;</span>
+      <span class="tag">מדריך לגילאי 10-14</span>
+      <h1>Claude Code</h1>
+      <h2>מתחילים לבנות עם AI</h2>
+      <p style="font-size: 1.2rem;">כל מה שצריך כדי להתחיל לבנות אתרים, משחקים ואפליקציות<br>באמצעות העוזר החכם של Anthropic</p>
+      <p style="margin-top: 30px; font-size: 0.95rem; color: #777;">לחץ <strong style="color: var(--gold);">חץ ימינה</strong> להמשך ⬅️</p>
+    </div>
+  </div>
+
+  <!-- Slide 2: What is Claude Code -->
+  <div class="slide" data-slide="2">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F916;</span>
+      <h2>מה זה Claude Code?</h2>
+      <p>תוכנה חכמה מאוד שמבינה עברית ויודעת לכתוב בשבילך <strong>קוד אמיתי</strong> — אתרים, משחקים, אפליקציות.</p>
+      <p>במקום ללמוד שפות תכנות מסובכות, אתה פשוט <strong>מתאר מה אתה רוצה</strong>, ו-Claude בונה את זה. כמו מורה פרטי למתכנתים.</p>
+      <div class="tip">&#x1F4A1; <strong>דוגמה:</strong> "תבנה לי דף עם כותרת כחולה וכפתור שאומר שלום" — וזה קורה!</div>
+    </div>
+  </div>
+
+  <!-- Slide 3: What you need to install -->
+  <div class="slide" data-slide="3">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F4E6;</span>
+      <h2>מה צריך להתקין?</h2>
+      <p>4 דברים קטנים. כל אחד לוקח 2-5 דקות:</p>
+      <div class="cards-row">
+        <div class="mini-card"><div class="mc-num">1</div><h4>Node.js</h4><p>המנוע שמפעיל את Claude Code</p></div>
+        <div class="mini-card"><div class="mc-num">2</div><h4>Git</h4><p>כלי שומר גרסאות — חוזר אחורה כשטועים</p></div>
+        <div class="mini-card"><div class="mc-num">3</div><h4>Claude Code</h4><p>הכלי עצמו — פקודה אחת בטרמינל</p></div>
+        <div class="mini-card"><div class="mc-num">4</div><h4>חשבון Anthropic</h4><p>התחברות עם Google, חינם להתחלה</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Install Node.js -->
+  <div class="slide" data-slide="4">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F7E2;</span>
+      <h2>1. התקנת Node.js</h2>
+      <p>היכנס לאתר הרשמי ולחץ על הכפתור הירוק:</p>
+      <div class="cmd no-prefix">nodejs.org</div>
+      <div class="os-boxes">
+        <div class="os-box mac">
+          <h3><span>&#x1F34E;</span> Mac</h3>
+          <p>הורד את ה-<strong>.pkg</strong>, לחץ פעמיים, Next → Next → Install</p>
+        </div>
+        <div class="os-box win">
+          <h3><span>&#x1FA9F;</span> Windows</h3>
+          <p>הורד את ה-<strong>.msi</strong>, לחץ פעמיים, אשר את כל השלבים</p>
+        </div>
+      </div>
+      <div class="tip">&#x1F4A1; בקש עזרה מהורה! זה מותקן על המחשב רק פעם אחת.</div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Install Git -->
+  <div class="slide" data-slide="5">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F4BE;</span>
+      <h2>2. התקנת Git</h2>
+      <p>Git זה כמו "שחזור" — אפשר לחזור אחורה בכל רגע אם משהו נשבר.</p>
+      <div class="cmd no-prefix">git-scm.com/downloads</div>
+      <div class="os-boxes">
+        <div class="os-box mac">
+          <h3><span>&#x1F34E;</span> Mac</h3>
+          <p>פתח את Terminal (חיפוש → "Terminal") והקלד:</p>
+          <div class="cmd">git --version</div>
+          <p>אם יש מספר — מותקן! אם לא, זה יציע להתקין.</p>
+        </div>
+        <div class="os-box win">
+          <h3><span>&#x1FA9F;</span> Windows</h3>
+          <p>הורד את ה-<strong>.exe</strong>, לחץ <strong>Next</strong> על הכל (ברירות מחדל בסדר).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Install Claude Code -->
+  <div class="slide" data-slide="6">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x2728;</span>
+      <h2>3. התקנת Claude Code</h2>
+      <p>פתח את <strong>Terminal</strong> (מק) או <strong>PowerShell</strong> (ווינדוס) והרץ:</p>
+      <div class="cmd">npm install -g @anthropic-ai/claude-code</div>
+      <p style="margin-top: 20px;">ההתקנה לוקחת 1-2 דקות. תראה הרבה שורות — זה נורמלי!</p>
+      <div class="tip">&#x1F4A1; <strong>המפתח:</strong> הקלד ← <span style="direction:ltr;display:inline-block;">npm install</span>. אל תקליד <span style="direction:ltr;display:inline-block;">$</span>. הסימן $ רק מראה שזו פקודה בטרמינל.</div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Login -->
+  <div class="slide" data-slide="7">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F511;</span>
+      <h2>4. התחברות לחשבון</h2>
+      <p>הרץ את הפקודה:</p>
+      <div class="cmd">claude</div>
+      <p>ייפתח דפדפן — לחץ <strong>Continue with Google</strong>. אם אין לך חשבון Anthropic, הוא ייווצר אוטומטית.</p>
+      <div class="tip">&#x1F4A1; השלב הזה הכי חשוב! בלעדיו Claude לא יעבוד. בקש עזרה מההורים אם צריך.</div>
+      <div class="warn">&#x26A0;&#xFE0F; <strong>חשוב:</strong> אל תשתף עם אף אחד את הסיסמה או את הקוד שמופיע לך. זה אישי לך בלבד!</div>
+    </div>
+  </div>
+
+  <!-- Slide 8: First use -->
+  <div class="slide" data-slide="8">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F389;</span>
+      <h2>השיעור הראשון!</h2>
+      <p>צור תיקייה חדשה ותיכנס אליה:</p>
+      <div class="cmd">mkdir my-first-project
+cd my-first-project
+git init
+claude</div>
+      <p style="margin-top: 20px;">עכשיו אתה בתוך Claude Code. תקליד:</p>
+      <div class="cmd no-prefix" style="color: #fff;">תבנה לי דף אינטרנט עם כותרת "שלום עולם" וכפתור ירוק</div>
+      <p style="margin-top: 16px;">Claude יבנה בשבילך את האתר! תוך 30 שניות יהיה לך דף אמיתי.</p>
+    </div>
+  </div>
+
+  <!-- Slide 9: Rule 1 -->
+  <div class="slide" data-slide="9">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F947;</span>
+      <h2>4 כללי זהב לעבודה נכונה</h2>
+      <div class="rules-list">
+        <div class="rule">
+          <div class="rule-num">1</div>
+          <div class="rule-body">
+            <h4>תמיד Git קודם</h4>
+            <p>לפני שמבקשים מ-Claude לשנות משהו — תעשה <code style="color:var(--gold);">git commit</code>. ככה תוכל לחזור אחורה אם יתקלקל משהו.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-num">2</div>
+          <div class="rule-body">
+            <h4>פרומפט ברור וספציפי</h4>
+            <p>במקום "תתקן" → <strong>"תוסיף כפתור ירוק בפינה הימנית שיגיד שלום"</strong>. ככל שתהיה ברור יותר, התוצאה תהיה מדויקת יותר.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 10: Rule 3-4 -->
+  <div class="slide" data-slide="10">
+    <div class="slide-inner">
+      <h2 style="margin-top: 20px;">כללי זהב — המשך</h2>
+      <div class="rules-list">
+        <div class="rule">
+          <div class="rule-num">3</div>
+          <div class="rule-body">
+            <h4>אל תאשר עיניים עצומות</h4>
+            <p>Claude יראה לך מה הוא רוצה לשנות לפני שהוא משנה. <strong>תקרא את זה!</strong> אם לא מבין — שאל אותו להסביר. אתה הבוס.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-num">4</div>
+          <div class="rule-body">
+            <h4>שומרים אחרי כל הצלחה</h4>
+            <p>עבד לך משהו? <code style="color:var(--gold);">git add .</code> ואז <code style="color:var(--gold);">git commit -m "תיאור"</code>. ככה לא מאבדים את ההצלחה הבאה.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 11: 3 must-know commands -->
+  <div class="slide" data-slide="11">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F6E0;&#xFE0F;</span>
+      <h2>3 פקודות חובה להכיר</h2>
+      <div class="rules-list">
+        <div class="rule">
+          <div class="rule-num" style="background: linear-gradient(135deg, #6ab4f5, #4a90e2);">1</div>
+          <div class="rule-body">
+            <h4>claude</h4>
+            <p>מפעיל את Claude Code. מכאן מתחילים לעבוד.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-num" style="background: linear-gradient(135deg, #3ece7b, #2a9960);">2</div>
+          <div class="rule-body">
+            <h4>git status</h4>
+            <p>מראה לך מה השתנה בפרויקט שלך.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-num" style="background: linear-gradient(135deg, #E2B93B, #f5d76e); color: #0a0a14;">3</div>
+          <div class="rule-body">
+            <h4>git commit -m "מה עשיתי"</h4>
+            <p>שומר את השינויים בצורה קבועה. כתוב תיאור קצר של מה שינית.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 12: Final -->
+  <div class="slide" data-slide="12">
+    <div class="slide-inner">
+      <span class="emoji-hero">&#x1F680;</span>
+      <h1>יצאת לדרך!</h1>
+      <p style="font-size: 1.2rem;">עכשיו אתה מוכן לבנות כל מה שתרצה — אתרים, משחקים, אפליקציות.</p>
+      <p style="color: var(--gold); font-weight: 700; font-size: 1.1rem;">תזכור את 4 כללי הזהב, ותהנה! &#x1F389;</p>
+      <div class="tip" style="margin-top: 30px;">&#x1F4A1; נתקעת? יש לך <strong>עוזר AI</strong> בפורטל האישי שענה על כל שאלה מהקורס — 24/7!</div>
+      <a href="/portal/" class="big-cta">חזרה לפורטל &larr;</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" aria-label="שקף קודם">&#x2192;</button>
+  <span class="slide-counter" id="counter">1 / 12</span>
+  <button class="nav-btn" id="nextBtn" aria-label="שקף הבא">&#x2190;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+
+const counter = document.getElementById('counter');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const progressFill = document.getElementById('progressFill');
+
+function showSlide(n) {
+  current = Math.max(0, Math.min(total - 1, n));
+  slides.forEach((s, i) => s.classList.toggle('active', i === current));
+  counter.textContent = (current + 1) + ' / ' + total;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === total - 1;
+  progressFill.style.width = ((current + 1) / total * 100) + '%';
+}
+
+prevBtn.addEventListener('click', () => showSlide(current - 1));
+nextBtn.addEventListener('click', () => showSlide(current + 1));
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') showSlide(current + 1); // RTL: left = next
+  if (e.key === 'ArrowRight') showSlide(current - 1); // RTL: right = prev
+  if (e.key === 'Escape') window.location.href = '/portal/';
+});
+
+// Touch swipe
+let tx = 0;
+document.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; });
+document.addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) {
+    if (dx > 0) showSlide(current - 1);
+    else showSlide(current + 1);
+  }
+});
+
+showSlide(0);
+</script>
+</body>
+</html>
