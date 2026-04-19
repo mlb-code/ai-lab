@@ -7,7 +7,8 @@
       "day": "שני",
       "time": "16:00",
       "paid": true,
-      "connected": false
+      "connected": false,
+      "payment_method": "העברה בנקאית"
     },
     {
       "name": "יהונתן תשבי",
@@ -15,14 +16,16 @@
       "day": "שני",
       "time": "16:00",
       "paid": true,
-      "connected": false
+      "connected": false,
+      "payment_method": "פייבוקס"
     },
     {
       "name": "ליאור",
       "course": "בסיסי",
       "day": "ראשון",
       "time": "17:00",
-      "paid": false,
+      "paid": true,
+      "payment_method": "ביט",
       "connected": false
     },
     {
@@ -31,7 +34,8 @@
       "day": "ראשון",
       "time": "19:00",
       "duration": "1.5h",
-      "paid": false,
+      "paid": true,
+      "payment_method": "ביט",
       "connected": false
     },
     {
@@ -40,7 +44,8 @@
       "day": "רביעי",
       "time": "18:00",
       "paid": true,
-      "connected": false
+      "connected": false,
+      "payment_method": "פייבוקס"
     },
     {
       "name": "גבריאל + אבינועם",
@@ -57,6 +62,7 @@
       "day": "שלישי",
       "time": "15:00",
       "paid": true,
+      "payment_method": "ביט",
       "connected": false
     },
     {
