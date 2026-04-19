@@ -582,20 +582,25 @@
     }
     .proj-preview {
       width: 100%;
+      aspect-ratio: 1280 / 720;
       overflow: hidden;
       position: relative;
       background: #0a0a18;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
-    .proj-preview iframe {
+    .proj-preview iframe,
+    .proj-preview img {
       position: absolute;
       top: 0; left: 0;
-      width: 900px;
-      height: 600px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
       transform-origin: top left;
       pointer-events: none;
       border: none;
+      display: block;
     }
     .proj-info {
       padding: 10px 12px 12px;
@@ -851,75 +856,6 @@
   </div>
 
 
-  <!-- ══════════════════════════════════════ -->
-  <!-- SLIDE 7: BASIC COURSE OVERVIEW -->
-  <!-- ══════════════════════════════════════ -->
-  <div class="slide bg-accent">
-    <div class="slide-label">הקורס הבסיסי</div>
-    <h2>8 מפגשים — <span class="gradient-text">מרעיון לאתר חי</span></h2>
-    <p class="subtitle" style="margin-bottom:12px;">
-      כל מפגש שעה וחצי בזום, קבוצות קטנות של עד 5 תלמידים, ימי ראשון
-    </p>
-    <div class="session-list">
-      <div class="session-item">
-        <div class="session-num">1</div>
-        <div>
-          <h4>היכרות עם AI</h4>
-          <p>מה זה AI? התקנת כלים, ניסוי ראשון</p>
-        </div>
-      </div>
-      <div class="session-item">
-        <div class="session-num">2</div>
-        <div>
-          <h4>אומנות הפרומפט</h4>
-          <p>5 טכניקות לכתיבת פרומפטים מנצחים</p>
-        </div>
-      </div>
-      <div class="session-item">
-        <div class="session-num">3</div>
-        <div>
-          <h4>חשיבה יזמית</h4>
-          <p>זיהוי בעיות, פיתוח רעיון לסטארטאפ</p>
-        </div>
-      </div>
-      <div class="session-item">
-        <div class="session-num">4</div>
-        <div>
-          <h4>מחקר שוק</h4>
-          <p>קהל יעד, ולידציה, ניתוח מתחרים</p>
-        </div>
-      </div>
-      <div class="session-item">
-        <div class="session-num">5</div>
-        <div>
-          <h4>בניית אתר עם AI</h4>
-          <p>Cursor + Claude = אתר אמיתי</p>
-        </div>
-      </div>
-      <div class="session-item">
-        <div class="session-num">6</div>
-        <div>
-          <h4>עיצוב ואנימציות</h4>
-          <p>מובייל, אנימציות, חוויית משתמש</p>
-        </div>
-      </div>
-      <div class="session-item">
-        <div class="session-num">7</div>
-        <div>
-          <h4>שיווק דיגיטלי</h4>
-          <p>תוכן AI לרשתות חברתיות</p>
-        </div>
-      </div>
-      <div class="session-item">
-        <div class="session-num">8</div>
-        <div>
-          <h4>פיץ׳ והשקה!</h4>
-          <p>מצגת פיץ׳, פיתוח יכולות מכירה + השקה חגיגית</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
   <!-- ══════════════════════════════════════ -->
   <!-- SLIDE 8: WHAT STUDENTS BUILD -->
@@ -929,60 +865,81 @@
     <h2>מה הילדים <span class="gradient-text">באמת בונים?</span></h2>
     <p class="subtitle" style="margin-bottom:12px;">פרויקטים אמיתיים של תלמידים — בלי ניסיון קודם</p>
     <div class="proj-grid" id="projGrid">
+      <a href="https://ai-lab.co.il/nadavlego/" target="_blank" class="proj-card">
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/nadavlego.jpg" alt="חגיגת לגו" loading="lazy" decoding="async" width="1280" height="720"></div>
+        <div class="proj-info">
+          <div class="proj-name">🧱 חגיגת לגו</div>
+          <div class="proj-student">נדב, בן 10</div>
+        </div>
+      </a>
+      <a href="https://ai-lab.co.il/drivelog/" target="_blank" class="proj-card">
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/drivelog.jpg" alt="DriveLog" loading="lazy" decoding="async" width="1280" height="720"></div>
+        <div class="proj-info">
+          <div class="proj-name">🚗 DriveLog — ניהול שיעורי נהיגה</div>
+          <div class="proj-student">גבריאל, בן 16</div>
+        </div>
+      </a>
+      <a href="https://ai-lab.co.il/horse-fashion/" target="_blank" class="proj-card">
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/horse-fashion.jpg" alt="Horse Fashion" loading="lazy" decoding="async" width="1280" height="720"></div>
+        <div class="proj-info">
+          <div class="proj-name">🐴 Horse Fashion</div>
+          <div class="proj-student">שיר, בת 13.5</div>
+        </div>
+      </a>
+      <a href="https://ai-lab.co.il/hairmatch/" target="_blank" class="proj-card">
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/hairmatch.jpg" alt="HairMatch" loading="lazy" decoding="async" width="1280" height="720"></div>
+        <div class="proj-info">
+          <div class="proj-name">✨ HairMatch — טיפוח חכם</div>
+          <div class="proj-student">נועם, בת 13.5</div>
+        </div>
+      </a>
+      <a href="https://ai-lab.co.il/trendsaver/" target="_blank" class="proj-card">
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/trendsaver.jpg" alt="TrendSaver" loading="lazy" decoding="async" width="1280" height="720"></div>
+        <div class="proj-info">
+          <div class="proj-name">📈 TrendSaver — קנה חכם</div>
+          <div class="proj-student">ארבל, בן 12</div>
+        </div>
+      </a>
+      <a href="https://ai-lab.co.il/free-movie-trailers/" target="_blank" class="proj-card">
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/free-movie-trailers.jpg" alt="Free Movie Trailers" loading="lazy" decoding="async" width="1280" height="720"></div>
+        <div class="proj-info">
+          <div class="proj-name">🎬 Free Movie Trailers</div>
+          <div class="proj-student">תאיי, בן 12</div>
+        </div>
+      </a>
+      <a href="https://ai-lab.co.il/tennismate/" target="_blank" class="proj-card">
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/tennismate.jpg" alt="TennisMate" loading="lazy" decoding="async" width="1280" height="720"></div>
+        <div class="proj-info">
+          <div class="proj-name">🎾 TennisMate — מצאו שחקני טניס</div>
+          <div class="proj-student">דניאל קהן, בן 13</div>
+        </div>
+      </a>
+      <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" class="proj-card">
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/gamebuddy.jpg" alt="GameBuddy" loading="lazy" decoding="async" width="1280" height="720"></div>
+        <div class="proj-info">
+          <div class="proj-name">🎮 GameBuddy — שחקנים ביחד</div>
+          <div class="proj-student">אבינועם וגבריאל, בני 13.5</div>
+        </div>
+      </a>
       <a href="https://ai-lab.co.il/build-pc/" target="_blank" class="proj-card">
-        <div class="proj-preview"><iframe src="https://ai-lab.co.il/build-pc/" loading="lazy" tabindex="-1"></iframe></div>
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/build-pc.jpg" alt="BUILD PC" loading="lazy" decoding="async" width="1280" height="720"></div>
         <div class="proj-info">
           <div class="proj-name">🖥️ BUILD PC — השווה, חסוך, שדרג</div>
           <div class="proj-student">רואי, בן 13</div>
         </div>
       </a>
       <a href="https://ai-lab.co.il/spot/" target="_blank" class="proj-card">
-        <div class="proj-preview"><iframe src="https://ai-lab.co.il/spot/" loading="lazy" tabindex="-1"></iframe></div>
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/spot.jpg" alt="SPOT - כל כלב ביומו" loading="lazy" decoding="async" width="1280" height="720"></div>
         <div class="proj-info">
           <div class="proj-name">🐕 SPOT — כל כלב ביומו</div>
           <div class="proj-student">מתן, בן 10</div>
         </div>
       </a>
-      <a href="https://ai-lab.co.il/hairmatch/" target="_blank" class="proj-card">
-        <div class="proj-preview"><iframe src="https://ai-lab.co.il/hairmatch/" loading="lazy" tabindex="-1"></iframe></div>
+      <a href="https://ai-lab.co.il/englishkids/" target="_blank" class="proj-card">
+        <div class="proj-preview"><img src="https://ai-lab.co.il/project-previews/englishkids.jpg" alt="EnglishKids" loading="lazy" decoding="async" width="1280" height="720"></div>
         <div class="proj-info">
-          <div class="proj-name">✨ HairMatch — טיפוח חכם</div>
-          <div class="proj-student">נועם, בת 13.5</div>
-        </div>
-      </a>
-      <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" class="proj-card">
-        <div class="proj-preview"><iframe src="https://ai-lab.co.il/gamebuddy/" loading="lazy" tabindex="-1"></iframe></div>
-        <div class="proj-info">
-          <div class="proj-name">🎮 GameBuddy — שחקנים ביחד</div>
-          <div class="proj-student">אבינועם וגבריאל, בני 13.5</div>
-        </div>
-      </a>
-      <a href="https://ai-lab.co.il/free-movie-trailers/" target="_blank" class="proj-card">
-        <div class="proj-preview"><iframe src="https://ai-lab.co.il/free-movie-trailers/" loading="lazy" tabindex="-1"></iframe></div>
-        <div class="proj-info">
-          <div class="proj-name">🎬 Free Movie Trailers</div>
-          <div class="proj-student">תאיי, בן 12</div>
-        </div>
-      </a>
-      <a href="https://ai-lab.co.il/trendsaver/" target="_blank" class="proj-card">
-        <div class="proj-preview"><iframe src="https://ai-lab.co.il/trendsaver/" loading="lazy" tabindex="-1"></iframe></div>
-        <div class="proj-info">
-          <div class="proj-name">📈 TrendSaver — קנה חכם</div>
-          <div class="proj-student">ארבל, בן 12</div>
-        </div>
-      </a>
-      <a href="https://ai-lab.co.il/nadavlego/" target="_blank" class="proj-card">
-        <div class="proj-preview"><iframe src="https://ai-lab.co.il/nadavlego/" loading="lazy" tabindex="-1"></iframe></div>
-        <div class="proj-info">
-          <div class="proj-name">🧱 חגיגת לגו</div>
-          <div class="proj-student">נדב, בן 10</div>
-        </div>
-      </a>
-      <a href="https://ai-lab.co.il/horse-fashion/" target="_blank" class="proj-card">
-        <div class="proj-preview"><iframe src="https://ai-lab.co.il/horse-fashion/" loading="lazy" tabindex="-1"></iframe></div>
-        <div class="proj-info">
-          <div class="proj-name">🐴 Horse Fashion</div>
-          <div class="proj-student">שיר, בת 13.5</div>
+          <div class="proj-name">🎓 EnglishKids — אנגלית לילדים</div>
+          <div class="proj-student">איתי קרמונה</div>
         </div>
       </a>
     </div>
@@ -991,44 +948,6 @@
     </p>
   </div>
 
-
-  <!-- ══════════════════════════════════════ -->
-  <!-- SLIDE 9: ADVANCED COURSE -->
-  <!-- ══════════════════════════════════════ -->
-  <div class="slide bg-purple">
-    <div class="slide-label">קורס מתקדם</div>
-    <h2>רוצים להמשיך? <span class="gold-text">הקורס המתקדם</span></h2>
-    <p class="subtitle">
-      לבוגרי הקורס הבסיסי — שלב הבא של בניית מוצר אמיתי
-    </p>
-    <div class="cards cards-2">
-      <div class="card">
-        <span class="card-icon">🔧</span>
-        <h3>Backend ושרתים</h3>
-        <p>איך אתרים מדברים עם העולם — APIs, שרתים, ותקשורת</p>
-      </div>
-      <div class="card">
-        <span class="card-icon">🗄️</span>
-        <h3>מסדי נתונים</h3>
-        <p>איפה המידע נשמר? היכרות עם Supabase ועבודה עם דאטה</p>
-      </div>
-      <div class="card">
-        <span class="card-icon">🔐</span>
-        <h3>משתמשים והרשמה</h3>
-        <p>מערכת הרשמה, התחברות, וניהול משתמשים — כמו אתר אמיתי</p>
-      </div>
-      <div class="card">
-        <span class="card-icon">🔌</span>
-        <h3>אינטגרציות</h3>
-        <p>חיבור לשירותים חיצוניים, API של צד שלישי, ודאטה אמיתי</p>
-      </div>
-    </div>
-    <div class="highlight-box purple" style="margin-top:24px;">
-      <p style="font-size:0.95rem; color:var(--text);">
-        💡 <strong>תנאי קדם:</strong> סיום הקורס הבסיסי | <strong>8 מפגשים</strong> נוספים | אותו פורמט ימי ראשון
-      </p>
-    </div>
-  </div>
 
 
   <!-- ══════════════════════════════════════ -->
@@ -1294,24 +1213,7 @@
     else showSlide(current - 1);
   });
 
-  // ── iframe preview scaling ──
-  function scaleIframes() {
-    document.querySelectorAll('.proj-preview').forEach(wrap => {
-      const w = wrap.offsetWidth;
-      const scale = w / 900;
-      const iframe = wrap.querySelector('iframe');
-      if (iframe) {
-        iframe.style.transform = 'scale(' + scale + ')';
-        wrap.style.height = Math.round(600 * scale) + 'px';
-      }
-    });
-  }
-  window.addEventListener('load', scaleIframes);
-  window.addEventListener('resize', scaleIframes);
-  // Re-scale when project slide becomes active
-  const origShow = showSlide;
-  showSlide = function(n) { origShow(n); setTimeout(scaleIframes, 100); };
-  scaleIframes();
+  // Project preview sizing now handled via CSS aspect-ratio — no JS needed
 </script>
 </body>
 </html>
