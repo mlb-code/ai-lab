@@ -497,7 +497,7 @@
 <!-- Stats -->
 <div class="stats">
   <div class="stat-box">
-    <div class="stat-num">16</div>
+    <div class="stat-num">15</div>
     <div class="stat-label">תלמידים</div>
   </div>
   <div class="stat-box">
@@ -505,7 +505,7 @@
     <div class="stat-label">ימי לימוד</div>
   </div>
   <div class="stat-box">
-    <div class="stat-num">4</div>
+    <div class="stat-num">5</div>
     <div class="stat-label">שולם ✅</div>
   </div>
   <div class="stat-box">
@@ -564,8 +564,9 @@
   <!-- ראשון --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
   <!-- שני -->
   <div class="slot">
-    <div class="card advanced"><div class="student-name">שיר + נועם</div><span class="course-tag tag-advanced">מתקדם</span></div>
-    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+    <div class="card advanced"><div class="student-name">שיר</div><span class="course-tag tag-advanced">מתקדם</span></div>
+    <div class="card advanced"><div class="student-name">נועם</div><span class="course-tag tag-advanced">מתקדם</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
   </div>
   <!-- שלישי -->
   <div class="slot">
@@ -577,8 +578,7 @@
   <div class="slot">
     <div class="card advanced"><div class="student-name">גבריאל</div><span class="course-tag tag-advanced">מתקדם</span></div>
     <div class="card advanced"><div class="student-name">אבינועם</div><span class="course-tag tag-advanced">מתקדם</span></div>
-    <div class="card advanced" style="opacity:0.5;border-style:dashed;"><div class="student-name">דניאל קהן</div><span class="course-tag tag-advanced" style="opacity:0.7;">טרם החליט</span></div>
-    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
   </div>
 
   <!-- 18:00 Row -->
@@ -596,7 +596,10 @@
     <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
   </div>
   <!-- חמישי -->
-  <div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
+  <div class="slot">
+    <div class="card advanced"><div class="student-name">דניאל קהן</div><span class="course-tag tag-advanced">מתקדם</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+  </div>
 
   <!-- 19:00 Row -->
   <div class="time-cell">
@@ -626,12 +629,19 @@
 
 <!-- Pending -->
 <div class="pending-section">
-  <h3>⏳ ממתינים לתיאום (1 תלמיד)</h3>
+  <h3>⏳ ממתינים לתיאום (2 תלמידים)</h3>
   <div class="pending-grid">
     <div class="pending-card">
-      <span class="student-name">תאיי</span>
-      <span class="course-tag tag-advanced">מתקדם</span>
-      <span class="price-badge">1,100 ₪</span>
+      <span class="student-name">ליאם</span>
+      <span class="course-tag tag-basic">בסיסי</span>
+      <span class="price-badge">890 ₪</span>
+      <span class="paid-badge no">לא שולם</span>
+      <span class="connect-badge">לא נשלח חיבור</span>
+    </div>
+    <div class="pending-card">
+      <span class="student-name">מאי</span>
+      <span class="course-tag tag-basic">בסיסי</span>
+      <span class="price-badge">890 ₪</span>
       <span class="paid-badge no">לא שולם</span>
       <span class="connect-badge">לא נשלח חיבור</span>
     </div>
@@ -640,8 +650,13 @@
 
 <!-- Not Suitable -->
 <div class="pending-section" style="border-color:#555;margin-top:16px;">
-  <h3 style="color:#888;">🚫 לא מתאימים כרגע</h3>
+  <h3 style="color:#888;">🚫 לא מעוניינים / לא מתאימים כרגע</h3>
   <div class="pending-grid">
+    <div class="pending-card" style="background:linear-gradient(135deg,#2a2a3e,#1e1e2e);border-color:#444;opacity:0.7;">
+      <span class="student-name">תאיי</span>
+      <span class="course-tag tag-advanced">מתקדם</span>
+      <span style="font-size:0.7rem;color:#888;">לא מעוניין כרגע</span>
+    </div>
     <div class="pending-card" style="background:linear-gradient(135deg,#2a2a3e,#1e1e2e);border-color:#444;opacity:0.7;">
       <span class="student-name">איתי קרמונה</span>
       <span class="course-tag tag-advanced">מתקדם</span>
@@ -727,12 +742,6 @@
         <td class="status-unpaid">לא שולם ❌</td>
       </tr>
       <tr>
-        <td>תאיי</td>
-        <td><span class="course-tag tag-advanced">מתקדם</span></td>
-        <td class="amount">1,100 ₪</td>
-        <td class="status-unpaid">לא שולם ❌</td>
-      </tr>
-      <tr>
         <td>ארבל</td>
         <td><span class="course-tag tag-advanced">מתקדם</span></td>
         <td class="amount">1,100 ₪</td>
@@ -765,11 +774,11 @@
       <div class="total-label">נגבה (5 תלמידים)</div>
     </div>
     <div class="finance-total-box pending">
-      <div class="total-num">11,480 ₪</div>
-      <div class="total-label">ממתין לגבייה (10 תלמידים)</div>
+      <div class="total-num">10,380 ₪</div>
+      <div class="total-label">ממתין לגבייה (9 תלמידים)</div>
     </div>
     <div class="finance-total-box total">
-      <div class="total-num">16,350 ₪</div>
+      <div class="total-num">15,250 ₪</div>
       <div class="total-label">סה״כ צפוי</div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-16",
+  "last_updated": "2026-04-19",
   "students": [
     {
       "name": "שחר",
@@ -60,22 +60,20 @@
       "connected": false
     },
     {
-      "name": "שיר + נועם",
+      "name": "שיר",
       "course": "מתקדם",
       "day": "שני",
       "time": "17:00",
       "paid": false,
-      "connected": false,
-      "note": "לומדים ביחד"
+      "connected": false
     },
     {
-      "name": "תאיי",
+      "name": "נועם",
       "course": "מתקדם",
-      "day": null,
-      "time": null,
+      "day": "שני",
+      "time": "17:00",
       "paid": false,
-      "connected": false,
-      "status": "ממתין לתיאום"
+      "connected": false
     },
     {
       "name": "ארבל",
@@ -97,10 +95,47 @@
       "name": "דניאל קהן",
       "course": "מתקדם",
       "day": "חמישי",
-      "time": "17:00",
+      "time": "18:00",
       "paid": false,
       "connected": false,
-      "status": "טרם החליט להירשם"
+      "note": "טרם נשלחה הודעה"
+    },
+    {
+      "name": "שלו",
+      "course": "בסיסי",
+      "day": "שלישי",
+      "time": "17:00",
+      "price": 890,
+      "paid": false,
+      "connected": false,
+      "note": "בן 12"
+    },
+    {
+      "name": "ליאם",
+      "course": "בסיסי",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "ממתין לתיאום"
+    },
+    {
+      "name": "מאי",
+      "course": "בסיסי",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "ממתין לתיאום"
+    },
+    {
+      "name": "תאיי",
+      "course": "מתקדם",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "לא מעוניין כרגע"
     },
     {
       "name": "איתי קרמונה",
@@ -119,16 +154,6 @@
       "paid": false,
       "connected": false,
       "status": "לא מתאים כרגע"
-    },
-    {
-      "name": "שלו",
-      "course": "בסיסי",
-      "day": "שלישי",
-      "time": "17:00",
-      "price": 890,
-      "paid": false,
-      "connected": false,
-      "note": "בן 12"
     }
   ]
 }
