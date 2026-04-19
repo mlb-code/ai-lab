@@ -3074,12 +3074,28 @@
     <!-- SCROLL POPUP -->
     <!-- WEBINAR POPUP -->
     <div id="webinarPopup" class="scroll-popup-overlay" onclick="if(event.target===this)closeWebinarPopup()">
-        <div class="scroll-popup-box" style="max-width:420px;text-align:center;">
+        <div class="scroll-popup-box" style="max-width:460px;text-align:center;">
             <button class="scroll-popup-close" onclick="closeWebinarPopup()" aria-label="סגור">&times;</button>
             <div style="font-size:2.4rem;margin-bottom:10px;">🎓</div>
-            <h3 style="font-size:1.4rem;font-weight:900;margin-bottom:8px;">לא בטוחים עדיין?</h3>
-            <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:20px;line-height:1.6;">הצטרפו לוובינר חינמי שלנו — תראו בעצמכם איך ילדים בונים אתרים אמיתיים עם AI, בלי ניסיון קודם.</p>
-            <a href="/webinar-general.html" style="display:block;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-weight:700;font-size:1.05rem;padding:14px 28px;border-radius:50px;text-decoration:none;margin-bottom:12px;">🎓 הירשמו לוובינר בחינם</a>
+            <h3 style="font-size:1.4rem;font-weight:900;margin-bottom:8px;">הוובינר האחרון היה לפני 24 שעות</h3>
+            <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:18px;line-height:1.6;">פספסתם? אין בעיה — השאירו פרטים ונשלח לכם הזמנה ברגע שהוובינר הבא יתפרסם.</p>
+            <div id="webinarPopupFormWrap">
+                <form id="nextWebinarForm" onsubmit="return submitNextWebinarForm(event)">
+                    <div class="form-group">
+                        <label for="nwName">שם מלא</label>
+                        <input type="text" id="nwName" name="name" placeholder="הכניסו את השם שלכם" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nwEmail">אימייל</label>
+                        <input type="email" id="nwEmail" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nwPhone">מספר טלפון</label>
+                        <input type="tel" id="nwPhone" name="phone" placeholder="050-1234567" required>
+                    </div>
+                    <button type="submit" id="nwSubmitBtn" style="display:block;width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-weight:700;font-size:1.05rem;padding:14px 28px;border-radius:50px;text-decoration:none;margin-bottom:10px;border:none;cursor:pointer;">🔔 עדכנו אותי על הוובינר הבא</button>
+                </form>
+            </div>
             <button onclick="closeWebinarPopup()" style="background:none;border:none;color:var(--text-muted);font-size:0.85rem;cursor:pointer;text-decoration:underline;">אולי בפעם אחרת</button>
         </div>
     </div>
@@ -4381,6 +4397,69 @@
 
         function closeWebinarPopup() {
             document.getElementById('webinarPopup').classList.remove('popup-visible');
+        }
+
+        function openWebinarPopup() {
+            var wp = document.getElementById('webinarPopup');
+            if (wp) wp.classList.add('popup-visible');
+        }
+
+        // Intercept all webinar button clicks → open popup instead of navigating
+        document.addEventListener('click', function(e) {
+            var a = e.target.closest('a[href*="webinar-general.html"], a[href*="webinar-us.html"], a[href*="webinar-amit.html"]');
+            if (!a) return;
+            e.preventDefault();
+            openWebinarPopup();
+        });
+
+        async function submitNextWebinarForm(e) {
+            e.preventDefault();
+            var btn = document.getElementById('nwSubmitBtn');
+            btn.disabled = true;
+            btn.textContent = 'שולח...';
+
+            var name  = document.getElementById('nwName').value.trim();
+            var email = document.getElementById('nwEmail').value.trim();
+            var phone = document.getElementById('nwPhone').value.trim();
+
+            // 1. Web3Forms — התראה למייר
+            try {
+                await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        access_key: '9ba5abaf-d501-44db-a33d-d5028c89e0ef',
+                        subject:    'הרשמה להודעה על הוובינר הבא — ' + name,
+                        from_name:  'AI Lab — Next Webinar',
+                        name:       name,
+                        email:      email,
+                        phone:      phone,
+                        source:     'popup_next_webinar',
+                    }),
+                });
+            } catch (err) { console.warn('Web3Forms error:', err); }
+
+            // 2. Google Sheets — שורה חדשה בגיליון
+            try {
+                fetch('https://script.google.com/macros/s/AKfycbxromgbzt6XWQND23sWxrMoJHQzKbSilDVwC_QtRe_tsA8fQRGwZsYuCbiBqwBHXbUwEQ/exec', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name:    name,
+                        email:   email,
+                        phone:   phone,
+                        source:  'popup_next_webinar',
+                        webinar: 'next_webinar_interest',
+                    }),
+                }).catch(err => console.warn('Sheets error:', err));
+            } catch (err) { console.warn('Sheets error:', err); }
+
+            try {
+                gtag('event', 'generate_lead', { event_category: 'webinar', event_label: 'next_webinar_interest' });
+            } catch (err) {}
+
+            document.getElementById('webinarPopupFormWrap').innerHTML = '<div style="text-align:center;padding:1.5rem 0;font-size:1.05rem;color:var(--accent);font-weight:700;line-height:1.6;">תודה! 🙌<br>נשלח לכם הזמנה ברגע שהוובינר הבא יתפרסם.</div>';
+            return false;
         }
 
         function startWebinarPopupWatch() {
