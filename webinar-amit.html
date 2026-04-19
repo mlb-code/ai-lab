@@ -270,6 +270,17 @@
     .fg input[type="email"], .fg input[type="tel"] { direction: ltr; text-align: left; }
     .fg input::placeholder { color: rgba(255,255,255,.2); }
     .fg input:focus { outline:none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(108,60,225,.15); }
+    .fg input[readonly] {
+      background: rgba(108,60,225,.08);
+      border-color: rgba(108,60,225,.25);
+      color: var(--primary-light);
+      font-weight: 700;
+      cursor: default;
+    }
+    .fg input[readonly]:focus {
+      border-color: rgba(108,60,225,.25);
+      box-shadow: none;
+    }
 
     .btn-reg {
       width: 100%;
@@ -379,8 +390,8 @@
   </div>
 
   <h1>
-    הילד שלכם יכול לבנות<br>
-    <span class="g">עסק אמיתי עם AI</span>
+    הילד שלכם יכול<br>
+    <span class="g">לשנות את העתיד עם AI</span>
   </h1>
   <p class="hero-lead">
     וובינר מיוחד להורים, ילדים ובני נוער — נסביר איך לומדים יזמות ובינה מלאכותית בקורסים של AI Lab
@@ -388,7 +399,7 @@
 
   <div class="date-row">
     <span class="dot">●</span>
-    יום שלישי, 14 באפריל 2026 &nbsp;|&nbsp; 19:00
+    יום שלישי, 14 באפריל 2026 &nbsp;|&nbsp; 20:30
   </div>
 
   <div class="countdown" id="countdown">
@@ -412,24 +423,24 @@
     </p>
     <div class="points">
       <div class="point">
+        <div class="point-icon">🎬</div>
+        <div>
+          <h3>הדגמה חיה בוובינר</h3>
+          <p>תראו איך ילד בונה יוזמה מול העיניים — מפרומפט ראשון ועד תוצר חי באינטרנט, תוך כמה דקות. לא הבטחות, אלא הוכחה בזמן אמת.</p>
+        </div>
+      </div>
+      <div class="point">
         <div class="point-icon">🤖</div>
         <div>
           <h3>AI מעשי — לא רק תיאוריה</h3>
-          <p>ילדים עובדים עם ChatGPT, Claude ועוד — בונים אתרים, אפליקציות, סרטונים ומוצרים דיגיטליים אמיתיים</p>
+          <p>הילדים עובדים בפועל עם Claude ו-Claude Code — בונים יוזמות, אפליקציות ומוצרים דיגיטליים אמיתיים. לא לצפות בסרטונים, לבנות.</p>
         </div>
       </div>
       <div class="point">
         <div class="point-icon">🚀</div>
         <div>
-          <h3>חשיבה יזמית מגיל צעיר</h3>
-          <p>הילדים לומדים לזהות בעיות, לחשוב על פתרונות ולהפוך רעיון לפרויקט — כישורים שיישרתו אותם כל החיים</p>
-        </div>
-      </div>
-      <div class="point">
-        <div class="point-icon">🏆</div>
-        <div>
-          <h3>תוצאות שאפשר לראות</h3>
-          <p>בסוף הקורס לכל ילד יש פרויקט אמיתי שהוא בנה — אתר, אפליקציה, או עסק קטן שהוא גאה בו</p>
+          <h3>חשיבה יזמית + ביקורתית</h3>
+          <p>לזהות בעיות אמיתיות, לפתח רעיון ולהפוך אותו למוצר. ובו-זמנית ללמוד לבדוק ולהטיל ספק ב-AI — לא לקבל בעיניים עצומות.</p>
         </div>
       </div>
     </div>
@@ -447,9 +458,9 @@
       <div class="proj-preview"><iframe src="https://ai-lab.co.il/build-pc/" loading="lazy" tabindex="-1"></iframe></div>
       <div class="proj-info"><div class="proj-name">🖥️ BUILD PC — השווה, חסוך, שדרג</div><div class="proj-student">רואי, בן 13</div><span class="proj-btn">🚀 לצפייה באתר</span></div>
     </a>
-    <a href="https://ai-lab.co.il/spot/" target="_blank" rel="noopener" class="proj-card">
-      <div class="proj-preview"><iframe src="https://ai-lab.co.il/spot/" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="proj-info"><div class="proj-name">🐕 SPOT — כל כלב ביומו</div><div class="proj-student">מתן, בן 10</div><span class="proj-btn">🚀 לצפייה באתר</span></div>
+    <a href="https://ai-lab.co.il/drivelog/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/drivelog/" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="proj-info"><div class="proj-name">🚗 DriveLog — ניהול שיעורי נהיגה</div><div class="proj-student">גבריאל, בן 16</div><span class="proj-btn">🚀 לצפייה באתר</span></div>
     </a>
     <a href="https://ai-lab.co.il/free-movie-trailers/" target="_blank" rel="noopener" class="proj-card">
       <div class="proj-preview"><iframe src="https://ai-lab.co.il/free-movie-trailers/" loading="lazy" tabindex="-1"></iframe></div>
@@ -499,8 +510,12 @@
         <input type="email" id="fe" name="email" placeholder="name@email.com" required autocomplete="email">
       </div>
       <div class="fg">
-        <label for="fp">טלפון <span class="opt">(אופציונלי)</span></label>
-        <input type="tel" id="fp" name="phone" placeholder="050-0000000" autocomplete="tel">
+        <label for="fp">טלפון</label>
+        <input type="tel" id="fp" name="phone" placeholder="050-0000000" required autocomplete="tel">
+      </div>
+      <div class="fg">
+        <label for="fsrc">הרשמה דרך</label>
+        <input type="text" id="fsrc" name="source" value="עמותת עמיט" readonly>
       </div>
       <button type="submit" class="btn-reg" id="submitBtn">אני רוצה להצטרף לוובינר 🚀</button>
       <p class="fnote">לא שולחים ספאם. פרטים לא מועברים לגורם שלישי.</p>
@@ -509,7 +524,7 @@
     <div class="success" id="successCard">
       <div class="sicon">🎉</div>
       <h3>אתם רשומים!</h3>
-      <p class="ssub">מחכים לכם ביום שלישי 14 באפריל בשעה 19:00.<br>הוסיפו ליומן כדי לא לשכוח 👇</p>
+      <p class="ssub">מחכים לכם ביום שלישי 14 באפריל בשעה 20:30.<br>הוסיפו ליומן כדי לא לשכוח 👇</p>
 
       <div class="zbox">
         <div class="zlabel">לינק לכניסה לזום</div>
@@ -547,8 +562,8 @@
     EJS_TPL:     'template_10ybisr',
 
     ZOOM:     'https://us06web.zoom.us/j/87248723485?pwd=sZlPgGc9tisWk0RekVktLNvA',
-    UTC_H:    16,   // 19:00 ישראל = 16:00 UTC (UTC+3 בקיץ)
-    UTC_M:    0,
+    UTC_H:    16,   // 20:30 ישראל = 16:00 UTC (UTC+3 בקיץ)
+    UTC_M:    30,
     DUR_H:    1,    // משך שעה
   };
 
@@ -567,15 +582,14 @@
   // Countdown
   function tick() {
     const diff = new Date(Date.UTC(2026,3,14,C.UTC_H,C.UTC_M)) - Date.now();
-    if (diff <= 0) {
-      document.getElementById('countdown').innerHTML =
-        '<p style="color:var(--accent);font-weight:800;font-size:1.05rem">🎉 הוובינר מתחיל עכשיו!</p>';
-      return;
-    }
-    document.getElementById('cd-d').textContent = p(Math.floor(diff/86400000));
-    document.getElementById('cd-h').textContent = p(Math.floor(diff%86400000/3600000));
-    document.getElementById('cd-m').textContent = p(Math.floor(diff%3600000/60000));
-    document.getElementById('cd-s').textContent = p(Math.floor(diff%60000/1000));
+    const d = Math.max(0, Math.floor(diff/86400000));
+    const h = Math.max(0, Math.floor(diff%86400000/3600000));
+    const m = Math.max(0, Math.floor(diff%3600000/60000));
+    const s = Math.max(0, Math.floor(diff%60000/1000));
+    document.getElementById('cd-d').textContent = p(d);
+    document.getElementById('cd-h').textContent = p(h);
+    document.getElementById('cd-m').textContent = p(m);
+    document.getElementById('cd-s').textContent = p(s);
   }
   tick(); setInterval(tick, 1000);
 
@@ -612,7 +626,7 @@
         name:    document.getElementById('fn').value,
         email:   document.getElementById('fe').value,
         phone:   document.getElementById('fp').value || '—',
-        source:  'עמיט',
+        source:  document.getElementById('fsrc').value || 'עמותת עמיט',
         webinar: 'עמיט',
       }),
     }).catch(err => console.warn('Sheets error:', err));
@@ -634,7 +648,7 @@
       zoom_link:  C.ZOOM,
       gcal_link:  gcal,
       event_date: 'יום שלישי, 14 באפריל 2026',
-      event_time: '19:00',
+      event_time: '20:30',
     }).catch(err => console.error('EmailJS error:', err));
   });
 
