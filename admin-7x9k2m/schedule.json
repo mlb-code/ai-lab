@@ -22,8 +22,8 @@
     {
       "name": "ליאור",
       "course": "בסיסי",
-      "day": "ראשון",
-      "time": "17:00",
+      "day": "רביעי",
+      "time": "18:00",
       "paid": true,
       "payment_method": "ביט",
       "connected": false
@@ -119,20 +119,18 @@
     {
       "name": "ליאם",
       "course": "בסיסי",
-      "day": null,
-      "time": null,
+      "day": "רביעי",
+      "time": "18:00",
       "paid": false,
-      "connected": false,
-      "status": "ממתין לתיאום"
+      "connected": false
     },
     {
       "name": "מאי",
       "course": "בסיסי",
-      "day": null,
-      "time": null,
+      "day": "שלישי",
+      "time": "16:00",
       "paid": false,
-      "connected": false,
-      "status": "ממתין לתיאום"
+      "connected": false
     },
     {
       "name": "תאיי",
@@ -160,6 +158,26 @@
       "paid": false,
       "connected": false,
       "status": "לא מתאים כרגע"
+    },
+    {
+      "name": "שי",
+      "course": "בסיסי",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "ממתין לתיאום",
+      "audience": "קהל אמריקאי"
+    },
+    {
+      "name": "מאור",
+      "course": "בסיסי",
+      "day": null,
+      "time": null,
+      "paid": false,
+      "connected": false,
+      "status": "ממתין לתיאום",
+      "audience": "קהל אמריקאי"
     }
   ]
 }
