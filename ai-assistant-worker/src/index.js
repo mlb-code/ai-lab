@@ -231,7 +231,7 @@ export default {
       });
     }
 
-    const { messages, course } = body;
+    const { messages, course, session } = body;
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return new Response(JSON.stringify({ error: 'Missing messages' }), {
@@ -248,6 +248,22 @@ export default {
     const courseContext = course === 'advanced'
       ? '\n\n**הקשר: התלמיד במסלול המתקדם.**'
       : '\n\n**הקשר: התלמיד במסלול הבסיסי.**';
+
+    // Per-session expert context for the advanced course
+    const ADVANCED_SESSION_EXPERTS = {
+      1: `\n\n**שיעור 1 — חזרה ושדרוג · MVP + Roadmap:** אתה מומחה בנושאים של MVP (Minimum Viable Product), תכנון roadmap, דירוג שדרוגים (Must-have vs Nice-to-have), וניהול גרסאות עם Git. אם התלמיד שואל על נושאים של שיעורים אחרים (שמירת מידע, התחברות, APIs, AI agents, עיצוב, שיווק) — ענה קצר ותפנה אותו לשיעור הרלוונטי. התמקד בעזרה לתלמיד לתכנן את השדרוג של הפרויקט שלו.`,
+      2: `\n\n**שיעור 2 — שמירת מידע · Supabase:** אתה מומחה במאגרי נתונים (databases), הבדל בין Frontend ל-Backend, Supabase, בניית טבלאות (tables), ועיצוב סכמות מידע. עזור לתלמיד לתכנן איזה מידע לשמור ואיך. אם שואלים על התחברות/APIs/AI/שיווק — ענה קצר והפנה לשיעור הרלוונטי.`,
+      3: `\n\n**שיעור 3 — הרשמה והתחברות · Authentication:** אתה מומחה ב-Authentication, Supabase Auth, דרכי התחברות (email+password, Google, Magic Link), טוקנים, אזור אישי, ודפים מוגנים. עזור לתלמיד לתכנן את מערכת המשתמשים שלו. אם שואלים על נושאים של שיעורים אחרים — ענה קצר והפנה.`,
+      4: `\n\n**שיעור 4 — חיבור לשירותים חיצוניים · APIs:** אתה מומחה ב-APIs (REST), JSON, בקשות GET/POST/PUT/DELETE, ניהול API keys בבטחה, וחיבור שירותים פופולריים (OpenWeather, NewsAPI, TMDB וכו'). עזור לתלמיד לבחור API שמתאים לפרויקט שלו.`,
+      5: `\n\n**שיעור 5 — עוזר חכם · AI Agent:** אתה מומחה בבניית AI Agents, System Prompts, Tool Use (function calling), חלונות צ'אט באתר, ובטיחות. עזור לתלמיד לכתוב System Prompt טוב ולהגדיר כלים שהסוכן צריך. הזכר את חשיבות הגבולות וה-safety.`,
+      6: `\n\n**שיעור 6 — עיצוב ועלייה לאינטרנט · Railway:** אתה מומחה בעקרונות עיצוב (פחות זה יותר, היררכיה, רווחים), צבעים וטיפוגרפיה, אנימציות, responsive design, והעלאת אתרים ל-**Railway** (לא Vercel). הסבר שלבי Deployment עם Railway, והתקדמות לדומיין אישי. אם שואלים על Vercel — הסבר שבקורס הזה משתמשים ב-Railway.`,
+      7: `\n\n**שיעור 7 — שיווק דיגיטלי · SEO:** אתה מומחה ב-SEO (title, description, URL structure), Google Analytics, שיווק ברשתות חברתיות (עקביות, ערך, סיפור), יצירת תוכן עם AI, ודפי נחיתה שמוכרים. עזור לתלמיד ליצור תוכן שיווקי ולשפר גילוי בגוגל.`,
+      8: `\n\n**שיעור 8 — הצגה + פיץ'** אתה מומחה בבניית פיצ'ים (pitch), מבנה הצגה מנצחת, elevator pitch של 60 שניות, הדגמות חיות, התמודדות עם שאלות, טיפים לביטחון במה, ו-networking. עזור לתלמיד להתכונן להצגה שלו.`,
+    };
+
+    const sessionContext = (course === 'advanced' && typeof session === 'number' && ADVANCED_SESSION_EXPERTS[session])
+      ? ADVANCED_SESSION_EXPERTS[session]
+      : '';
 
     try {
       const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
@@ -268,7 +284,7 @@ export default {
             },
             {
               type: 'text',
-              text: courseContext,
+              text: courseContext + sessionContext,
             },
           ],
           messages: trimmedMessages,
