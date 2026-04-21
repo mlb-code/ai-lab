@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-19",
+  "last_updated": "2026-04-21",
   "students": [
     {
       "name": "שחר",
@@ -52,7 +52,8 @@
       "course": "מתקדם",
       "day": "חמישי",
       "time": "17:00",
-      "paid": false,
+      "paid": true,
+      "payment_method": "פייבוקס",
       "connected": false,
       "note": "לומדים ביחד"
     },
@@ -86,7 +87,8 @@
       "course": "מתקדם",
       "day": "שלישי",
       "time": "19:00",
-      "paid": false,
+      "paid": true,
+      "payment_method": "ביט",
       "connected": false
     },
     {
@@ -94,17 +96,18 @@
       "course": "מתקדם",
       "day": "שלישי",
       "time": "19:00",
-      "paid": false,
+      "paid": true,
+      "payment_method": "ביט",
       "connected": false
     },
     {
       "name": "דניאל קהן",
       "course": "מתקדם",
       "day": "חמישי",
-      "time": "18:00",
+      "time": "16:00",
       "paid": false,
       "connected": false,
-      "note": "טרם נשלחה הודעה"
+      "note": "טרם שילם"
     },
     {
       "name": "שלו",
