@@ -375,6 +375,145 @@
             font-size: 0.9rem;
         }
 
+        /* ===== SESSIONS HERO (daily tip + progress) ===== */
+        .sessions-hero {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+        }
+        @media (max-width: 768px) {
+            .sessions-hero { grid-template-columns: 1fr; gap: 0.8rem; margin-bottom: 1.3rem; }
+        }
+        .tip-widget {
+            background: linear-gradient(135deg, rgba(108,60,225,0.12), rgba(0,212,170,0.08));
+            border: 1px solid rgba(108,60,225,0.25);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+        }
+        .tip-widget-title {
+            display: flex; align-items: center; gap: 8px;
+            font-weight: 800; font-size: 0.95rem;
+            margin-bottom: 0.7rem;
+        }
+        .tip-pulse {
+            display: inline-block; width: 8px; height: 8px;
+            background: #25D366; border-radius: 50%;
+            animation: tipPulse 2s infinite;
+        }
+        @keyframes tipPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+        .tip-widget-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-right: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+        }
+        .tip-widget-cat {
+            font-size: 0.72rem;
+            color: var(--accent);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.35rem;
+        }
+        .tip-widget-text {
+            font-size: 0.88rem;
+            color: var(--text);
+            line-height: 1.55;
+            font-weight: 500;
+        }
+
+        .progress-widget {
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .progress-widget-title {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+        .progress-widget-num {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        .progress-widget-total { color: var(--text-muted); font-weight: 500; font-size: 1rem; }
+        .progress-widget-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress-widget-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--primary-light));
+            border-radius: 999px;
+            transition: width 0.4s cubic-bezier(.2,.8,.2,1);
+        }
+        .progress-widget-hint {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-top: 0.2rem;
+        }
+
+        /* Session complete toggle */
+        .session-complete-toggle {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.15);
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            color: transparent;
+            font-size: 0.9rem;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 5;
+            font-family: inherit;
+        }
+        .session-complete-toggle:hover { border-color: var(--accent); color: var(--accent); }
+        .session-card.completed .session-complete-toggle {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+        }
+        .session-card.completed .session-card-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,212,170,0.08);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Discord "בקרוב" badge on nav items */
+        .nav-soon {
+            opacity: 0.55;
+            cursor: not-allowed !important;
+        }
+        .nav-soon-badge {
+            margin-right: auto;
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            background: rgba(245,200,66,0.18);
+            color: #F5C842;
+            border-radius: 999px;
+            letter-spacing: 0.04em;
+        }
+
         /* ===== SECTIONS (hidden by default) ===== */
         .portal-section {
             display: none;
@@ -2452,6 +2591,11 @@
             <button data-section="community">
                 <span class="nav-icon">&#x1F465;</span><span>קהילה</span>
             </button>
+            <!-- Discord — coming soon -->
+            <button class="nav-soon" disabled aria-disabled="true">
+                <span class="nav-icon">&#x1F3AE;</span><span>דיסקורד</span>
+                <span class="nav-soon-badge">בקרוב</span>
+            </button>
             <!-- Advanced: הדרכות -->
             <button data-section="guides-adv" data-nav-course="advanced" style="display:none;">
                 <span class="nav-icon">&#x1F4D6;</span><span>הדרכות</span>
@@ -2552,6 +2696,10 @@
             <button class="ms-item" onclick="selectMoreSection('community')" data-section="community">
                 <span class="ms-emoji">&#x1F465;</span><span>קהילה</span>
             </button>
+            <button class="ms-item" disabled aria-disabled="true" style="opacity:0.55; cursor:not-allowed; position:relative;">
+                <span class="ms-emoji">&#x1F3AE;</span><span>דיסקורד</span>
+                <span style="position:absolute; top:6px; left:6px; font-size:0.55rem; font-weight:800; padding:1px 6px; background:rgba(245,200,66,0.22); color:#F5C842; border-radius:999px;">בקרוב</span>
+            </button>
             <button class="ms-item" onclick="selectMoreSection('help')" data-nav-course="basic" data-section="help">
                 <span class="ms-emoji">&#x2753;</span><span>עזרה</span>
             </button>
@@ -2566,6 +2714,27 @@
             <div class="page-header">
                 <h1>&#x1F4DA; מפגשי הקורס</h1>
             </div>
+
+            <!-- Hero row: Daily tip + Progress (new design) -->
+            <div class="sessions-hero">
+                <div class="tip-widget">
+                    <div class="tip-widget-title">
+                        <span class="tip-pulse"></span>
+                        <span>💡 טיפ היום</span>
+                    </div>
+                    <div class="tip-widget-card">
+                        <div class="tip-widget-cat" id="tipWidgetCat">AI ופרומפטים</div>
+                        <div class="tip-widget-text" id="tipWidgetText">טוען...</div>
+                    </div>
+                </div>
+                <div class="progress-widget" id="progressWidget">
+                    <div class="progress-widget-title">ההתקדמות שלי</div>
+                    <div class="progress-widget-num"><span id="progressDone">0</span><span class="progress-widget-total"> / <span id="progressTotal">8</span> שיעורים</span></div>
+                    <div class="progress-widget-bar"><div class="progress-widget-fill" id="progressFill" style="width:0%"></div></div>
+                    <div class="progress-widget-hint" id="progressHint">סמן שיעור כהושלם בעזרת ✓ שמופיע בכרטיס</div>
+                </div>
+            </div>
+
             <div class="sessions-grid">
 
                 <!-- Session 1 -->
@@ -4926,6 +5095,9 @@
             if (sessionsBtnMobile) sessionsBtnMobile.classList.add('active');
             switchSection('sessions');
 
+            // Recompute progress for the newly-selected course
+            if (typeof updateProgressWidget === 'function') updateProgressWidget();
+
             // Update page header if exists
             var activeSection = document.querySelector('.portal-section[style*="block"], .portal-section.active');
             if (activeSection) {
@@ -5113,11 +5285,24 @@
                         '<div class="preview-enter">\u05D4\u05D9\u05DB\u05E0\u05E1\u05D5 \u05DC\u05DE\u05E4\u05D2\u05E9 \u2190</div>';
                     header.insertAdjacentElement('afterend', preview);
 
-                    // Click handler — store course type and index on the card
-                    card.dataset.sessionIndex = i;
+                    // Complete toggle button (top-left corner of the card)
+                    var toggleBtn = document.createElement('button');
+                    toggleBtn.className = 'session-complete-toggle';
+                    toggleBtn.setAttribute('aria-label', 'סמן כהושלם');
+                    toggleBtn.textContent = '✓';
+                    toggleBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        toggleSessionComplete(courseType, i + 1);
+                    });
+                    card.style.position = 'relative';
+                    card.appendChild(toggleBtn);
                     card.dataset.courseType = courseType;
+                    card.dataset.sessionIndex = i;
+                    card.dataset.sessionNum = i + 1;
+
                     card.addEventListener('click', function(e) {
                         if (e.target.closest('.session-presentation')) return;
+                        if (e.target.closest('.session-complete-toggle')) return;
                         openSession(parseInt(card.dataset.sessionIndex), card.dataset.courseType);
                     });
                 });
@@ -5125,7 +5310,128 @@
 
             setupCards(basicCards, sessionDataBasic, 'basic');
             setupCards(advancedCards, sessionDataAdvanced, 'advanced');
+            // Apply any saved completion state now that cards are initialized
+            if (typeof applySessionCompletionState === 'function') applySessionCompletionState();
         })();
+
+        // ═══════════════════════════════════════════════════════════════
+        // Session progress tracking (LocalStorage per course)
+        // ═══════════════════════════════════════════════════════════════
+        function getProgressKey(courseType) { return 'ai-lab-progress-' + courseType; }
+        function getProgress(courseType) {
+            try { return JSON.parse(localStorage.getItem(getProgressKey(courseType))) || {}; }
+            catch { return {}; }
+        }
+        function saveProgress(courseType, p) {
+            try { localStorage.setItem(getProgressKey(courseType), JSON.stringify(p)); } catch {}
+        }
+        function toggleSessionComplete(courseType, num) {
+            var p = getProgress(courseType);
+            p[num] = !p[num];
+            saveProgress(courseType, p);
+            applySessionCompletionState();
+            updateProgressWidget();
+        }
+        function applySessionCompletionState() {
+            ['basic', 'advanced'].forEach(function(courseType) {
+                var p = getProgress(courseType);
+                document.querySelectorAll('.session-card[data-course="' + courseType + '"]').forEach(function(card) {
+                    var num = parseInt(card.dataset.sessionNum);
+                    card.classList.toggle('completed', !!p[num]);
+                });
+            });
+        }
+        function updateProgressWidget() {
+            var courseType = (typeof currentCourseView !== 'undefined') ? currentCourseView : 'basic';
+            var cards = document.querySelectorAll('.session-card[data-course="' + courseType + '"]');
+            var total = cards.length;
+            var p = getProgress(courseType);
+            var done = 0;
+            cards.forEach(function(c) { if (p[parseInt(c.dataset.sessionNum)]) done++; });
+            var pct = total > 0 ? Math.round(done / total * 100) : 0;
+            var doneEl = document.getElementById('progressDone');
+            var totalEl = document.getElementById('progressTotal');
+            var fillEl = document.getElementById('progressFill');
+            if (doneEl) doneEl.textContent = done;
+            if (totalEl) totalEl.textContent = total;
+            if (fillEl) fillEl.style.width = pct + '%';
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // Daily tip — 60 tips, rotates daily (plain Hebrew, no symbols)
+        // ═══════════════════════════════════════════════════════════════
+        var DAILY_TIPS = [
+            { cat: 'AI ופרומפטים', text: 'פרומפט טוב מתחיל בתפקיד: "אתה מעצב מקצועי". התוצאות יהיו טובות פי שלוש.' },
+            { cat: 'AI ופרומפטים', text: 'תמיד תוסיף דוגמאות לפרומפט. AI לומד מהן מיד.' },
+            { cat: 'AI ופרומפטים', text: 'ב-Claude Code תבקש "תתכנן לפני שתעבוד". חוסך פעולות מיותרות.' },
+            { cat: 'AI ופרומפטים', text: 'פרומפט קצר לא תמיד עדיף על ארוך. תנסה כמה ותבדוק מה עובד.' },
+            { cat: 'AI ופרומפטים', text: 'תן ל-AI הקשר: מי אתה, מי הקהל, מה המטרה. הכל משנה.' },
+            { cat: 'AI ופרומפטים', text: 'ב-ChatGPT תבקש "שאל אותי שאלות לפני שתענה". משפר תוצאות בענק.' },
+            { cat: 'AI ופרומפטים', text: 'Temperature נמוך נותן תשובות עקביות. Temperature גבוה נותן תשובות יצירתיות.' },
+            { cat: 'AI ופרומפטים', text: 'אל תסמוך על AI במאה אחוז. תמיד תבדוק עובדות באינטרנט.' },
+            { cat: 'AI ופרומפטים', text: 'Chain of Thought: תבקש "תחשוב שלב אחר שלב". התשובה תהיה מדויקת יותר.' },
+            { cat: 'AI ופרומפטים', text: 'תבקש "תחקור ותן לי שלוש אפשרויות" במקום לבקש תשובה אחת.' },
+            { cat: 'AI ופרומפטים', text: 'System Prompt זה תפקיד קבוע לעוזר. User Prompt זו שאלה ספציפית.' },
+            { cat: 'AI ופרומפטים', text: 'הסוד: תשאל שאלות. אל תיתן פקודות יבשות.' },
+            { cat: 'AI ופרומפטים', text: 'אם תשובת AI לא טובה, תגיד לו מה שגוי. הוא ילמד.' },
+            { cat: 'AI ופרומפטים', text: 'פרומפט זה כמו הוראות לעובד חדש. ככל שהן ברורות יותר, הוא עובד טוב יותר.' },
+            { cat: 'AI ופרומפטים', text: 'תבקש מ-Claude לכתוב Artifact לקוד ארוך. נוח פי עשרה.' },
+            { cat: 'יזמות', text: 'MVP זה הדבר הכי פשוט שעובד. אל תבנה הכל מההתחלה.' },
+            { cat: 'יזמות', text: 'לקוח אחד מרוצה שווה יותר ממאה רעיונות תיאורטיים.' },
+            { cat: 'יזמות', text: 'תמיד תשאל "מי הלקוח שלי" לפני שתשאל "מה אני בונה".' },
+            { cat: 'יזמות', text: 'פיצ\'ר אחד שעובד מושלם עדיף על עשרה פיצ\'רים חצי-עובדים.' },
+            { cat: 'יזמות', text: 'יזם זה לא מי שיש לו רעיון. יזם זה מי שמבצע את הרעיון.' },
+            { cat: 'יזמות', text: 'רוצה לעשות משהו חדש? תשאל קודם איזו בעיה אמיתית זה פותר.' },
+            { cat: 'יזמות', text: 'תבדוק את הרעיון עם חמישה אנשים לפני שתתחיל לבנות.' },
+            { cat: 'יזמות', text: 'Pivot זה שינוי כיוון. זה לא כישלון, זו חוכמה.' },
+            { cat: 'יזמות', text: 'תעקוב אחרי המתחרים. מה הם עושים טוב ומה הם מפספסים?' },
+            { cat: 'יזמות', text: 'פיץ\' של דקה עדיף על מצגת של שעה. תלמד לדחוס את הערך.' },
+            { cat: 'פיתוח', text: 'תעשה Commit קטן בכל פעם שמשהו עובד. קל לחזור אחורה.' },
+            { cat: 'פיתוח', text: 'קוד שעובד עדיף על קוד "יפה". קודם שיעבוד, אחר כך לסדר.' },
+            { cat: 'פיתוח', text: 'אפשר להעתיק ולהדביק, אבל תבין קודם מה שהדבקת.' },
+            { cat: 'פיתוח', text: 'תלמד קיצורי מקלדת. זה חוסך שעות בשבוע.' },
+            { cat: 'פיתוח', text: 'תחפש בגוגל לפני שאתה שואל. שמונים אחוז מהתשובות שם.' },
+            { cat: 'פיתוח', text: 'שם קובץ ברור עדיף על תיעוד רע. תיתן שמות מובנים.' },
+            { cat: 'פיתוח', text: 'Git Pull לפני Git Push. מונע בעיות.' },
+            { cat: 'פיתוח', text: 'console.log עוזר לך לראות מה קורה בקוד. תשתמש בו תמיד.' },
+            { cat: 'פיתוח', text: 'תכתוב קוד כאילו מישהו אחר יקרא אותו מחר.' },
+            { cat: 'פיתוח', text: 'ב-Claude Code תבקש "רפקטר את זה". הוא יסדר הכל אוטומטית.' },
+            { cat: 'פיתוח', text: 'תמיד תעשה גיבוי. פעם אחת תלמד למה.' },
+            { cat: 'פיתוח', text: 'Mobile First: תעצב קודם לטלפון, ואז למחשב.' },
+            { cat: 'פיתוח', text: 'אתר איטי מבריח גולשים. תכווץ תמונות.' },
+            { cat: 'פיתוח', text: 'משהו לא עובד? תסגור Tabs. הרעש מפריע לחשיבה.' },
+            { cat: 'פיתוח', text: 'תעבוד עם מסך נקי. גרפיקה פתוחה גורעת מהפוקוס.' },
+            { cat: 'עיצוב', text: 'עיצוב טוב לא מורגש. מה שמפריע זה עיצוב רע.' },
+            { cat: 'עיצוב', text: 'שלושה צבעים בלבד. יותר מזה הופך לבלגן.' },
+            { cat: 'עיצוב', text: 'רווחים הם חלק מהעיצוב. אל תעמיס על הדף.' },
+            { cat: 'עיצוב', text: 'פונט אחד לכותרות, פונט אחד לטקסט. זה הכל.' },
+            { cat: 'עיצוב', text: 'מה שבולט הוא מה שחשוב. תחליט מראש מה חשוב.' },
+            { cat: 'עיצוב', text: 'Mobile מדבר אמת. אם לא טוב בטלפון, זה לא טוב.' },
+            { cat: 'עיצוב', text: 'עיצוב סימטרי נוח לעין. Grid הוא חבר שלך.' },
+            { cat: 'עיצוב', text: 'תגנוב השראה מ-Linear, Stripe ו-Anthropic. הם הטובים ביותר.' },
+            { cat: 'שיווק', text: 'הכותרת הראשונה קובעת שמונים אחוז מההצלחה. תעבוד עליה הכי הרבה.' },
+            { cat: 'שיווק', text: 'SEO זה לענות על שאלה שאנשים שואלים בגוגל.' },
+            { cat: 'שיווק', text: 'תוכן שימושי עדיף על תוכן פרסומי. תיתן ערך קודם, תבקש אחר כך.' },
+            { cat: 'שיווק', text: 'עקביות ברשתות חברתיות עדיפה על ויראליות חד-פעמית.' },
+            { cat: 'שיווק', text: 'פוסט אחד טוב עדיף על עשרה פוסטים בינוניים.' },
+            { cat: 'שיווק', text: 'תספר סיפור. סיפור נזכר, עובדות נשכחות.' },
+            { cat: 'שיווק', text: 'סטוריז זו הזדמנות להכיר את הקהל. לא רק להצטלם.' },
+            { cat: 'מיינדסט', text: 'עשרים דקות ביום עדיפות על שלוש שעות בסופ"ש. עקביות עובדת.' },
+            { cat: 'מיינדסט', text: '"אני לא יודע" זו התחלה של ידע. אל תפחד להודות.' },
+            { cat: 'מיינדסט', text: 'נתקעת? תעשה Screenshot ותשאל. מהיר יותר מלנסות לבד.' },
+            { cat: 'מיינדסט', text: 'תלמד מהתוצאה, לא מהכוונה. מה באמת קרה?' },
+            { cat: 'מיינדסט', text: 'כל מומחה היה פעם מתחיל. המתחיל היום הוא המומחה של מחר.' }
+        ];
+        function renderDailyTip() {
+            var dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+            var tip = DAILY_TIPS[dayOfYear % DAILY_TIPS.length];
+            var catEl = document.getElementById('tipWidgetCat');
+            var txtEl = document.getElementById('tipWidgetText');
+            if (catEl) catEl.textContent = tip.cat;
+            if (txtEl) txtEl.textContent = tip.text;
+        }
+        renderDailyTip();
+        updateProgressWidget();
 
         // Track which session the student is currently viewing — used to route AI agent context
         let currentSessionContext = null; // { course: 'advanced', session: 3 }
