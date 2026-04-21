@@ -521,16 +521,20 @@
 
         /* ========== HERO ========== */
         .hero {
-            min-height: 100vh;
+            height: 100vh;
+            height: 100svh;  /* modern small-viewport unit */
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 6rem 2rem 6.5rem;  /* extra bottom space for the scroll indicator */
+            padding: 5rem 2rem 5rem;  /* room for top nav + bottom scroll indicator */
             position: relative;
             overflow: hidden;
             direction: rtl;
         }
+
+        /* Hide the Cursor terminal demo on desktop too — keeps the hero viewport-sized and focused */
+        .hero .terminal { display: none; }
 
         /* Removed corner gradients — let the neural canvas be the focus.
            Instead, one very subtle vignette for readability. */
