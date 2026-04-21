@@ -446,7 +446,7 @@
 
         .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 10;
             max-width: 850px;
         }
 
@@ -594,33 +594,27 @@
 
         .stat-icon { display: none; }
 
-        /* Floating elements */
-        .floating-icons {
+        /* Hero neural-pulse background */
+        .hero-neural-canvas {
             position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
             z-index: 1;
+            pointer-events: none;
         }
-
-        .float-icon {
+        .hero-text-veil {
             position: absolute;
-            font-size: 2rem;
-            opacity: 0.15;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .float-icon:nth-child(1) { top: 15%; right: 10%; animation-delay: 0s; }
-        .float-icon:nth-child(2) { top: 25%; left: 8%; animation-delay: 1s; }
-        .float-icon:nth-child(3) { bottom: 30%; right: 15%; animation-delay: 2s; }
-        .float-icon:nth-child(4) { bottom: 20%; left: 12%; animation-delay: 3s; }
-        .float-icon:nth-child(5) { top: 40%; right: 5%; animation-delay: 4s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85vw;
+            max-width: 900px;
+            height: 55vh;
+            max-height: 480px;
+            background: radial-gradient(ellipse at center, rgba(10,10,26,0.7) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 2;
         }
 
         /* ========== SECTIONS ========== */
@@ -3145,13 +3139,8 @@
 
     <!-- HERO -->
     <section class="hero">
-        <div class="floating-icons">
-            <span class="float-icon">&#x1F680;</span>
-            <span class="float-icon">&#x1F4A1;</span>
-            <span class="float-icon">&#x1F916;</span>
-            <span class="float-icon">&#x1F4BB;</span>
-            <span class="float-icon">&#x26A1;</span>
-        </div>
+        <canvas id="heroNeuralCanvas" class="hero-neural-canvas"></canvas>
+        <div class="hero-text-veil"></div>
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="pulse-dot"></span>
@@ -4575,6 +4564,112 @@
             gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
             window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
         }
+
+        // Hero neural-pulse background — dots, lines, triangles, pulses
+        (function() {
+            const canvas = document.getElementById('heroNeuralCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            let w, h, nodes = [], pulses = [];
+            const DENSITY = 14000;
+            const MAX_DIST_BASE = 170;
+            const TRI_DIST = 140;
+
+            function resize() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                canvas.width = rect.width * dpr;
+                canvas.height = rect.height * dpr;
+                canvas.style.width = rect.width + 'px';
+                canvas.style.height = rect.height + 'px';
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                w = rect.width; h = rect.height;
+            }
+            function init() {
+                resize();
+                const count = Math.max(15, Math.round((w * h) / DENSITY));
+                nodes = [];
+                for (let i = 0; i < count; i++) {
+                    nodes.push({
+                        x: Math.random()*w, y: Math.random()*h,
+                        vx: (Math.random()-0.5)*0.35, vy: (Math.random()-0.5)*0.35,
+                        r: Math.random()*1.3 + 0.8,
+                    });
+                }
+            }
+            function spawnPulse() {
+                if (nodes.length < 2) return;
+                const a = nodes[Math.floor(Math.random()*nodes.length)];
+                let b = null, bd = Infinity;
+                for (const n of nodes) {
+                    if (n === a) continue;
+                    const d = Math.hypot(a.x-n.x, a.y-n.y);
+                    if (d < MAX_DIST_BASE && d < bd) { bd = d; b = n; }
+                }
+                if (b) pulses.push({ a, b, t: 0, speed: 0.014 + Math.random()*0.008 });
+            }
+            setInterval(spawnPulse, 450);
+            function draw() {
+                ctx.clearRect(0,0,w,h);
+                // Triangles
+                for (let i=0;i<nodes.length;i++) {
+                    for (let j=i+1;j<nodes.length;j++) {
+                        for (let k=j+1;k<nodes.length;k++) {
+                            const a=nodes[i], b=nodes[j], c=nodes[k];
+                            const d1=Math.hypot(a.x-b.x, a.y-b.y); if (d1 >= TRI_DIST) continue;
+                            const d2=Math.hypot(b.x-c.x, b.y-c.y); if (d2 >= TRI_DIST) continue;
+                            const d3=Math.hypot(c.x-a.x, c.y-a.y); if (d3 >= TRI_DIST) continue;
+                            const avg = (d1+d2+d3)/3;
+                            const alpha = 0.04 * (1 - avg/TRI_DIST);
+                            ctx.fillStyle = `rgba(108, 60, 225, ${alpha})`;
+                            ctx.beginPath();
+                            ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.lineTo(c.x,c.y);
+                            ctx.closePath(); ctx.fill();
+                        }
+                    }
+                }
+                // Lines
+                for (let i=0;i<nodes.length;i++) {
+                    for (let j=i+1;j<nodes.length;j++) {
+                        const a=nodes[i], b=nodes[j];
+                        const d=Math.hypot(a.x-b.x, a.y-b.y);
+                        if (d < MAX_DIST_BASE) {
+                            ctx.strokeStyle = `rgba(139, 92, 246, ${(1 - d/MAX_DIST_BASE) * 0.18})`;
+                            ctx.lineWidth = 0.6;
+                            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+                        }
+                    }
+                }
+                // Dots + movement
+                nodes.forEach(n => {
+                    n.x += n.vx; n.y += n.vy;
+                    if (n.x < 0 || n.x > w) n.vx *= -1;
+                    if (n.y < 0 || n.y > h) n.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+                    ctx.fillStyle = 'rgba(0, 212, 170, 0.75)';
+                    ctx.shadowBlur = 5; ctx.shadowColor = '#00D4AA';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                });
+                // Pulses
+                pulses = pulses.filter(p => p.t <= 1);
+                pulses.forEach(p => {
+                    const x = p.a.x + (p.b.x-p.a.x)*p.t;
+                    const y = p.a.y + (p.b.y-p.a.y)*p.t;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 2.2, 0, Math.PI*2);
+                    ctx.fillStyle = 'rgba(255,255,255,0.95)';
+                    ctx.shadowBlur = 14; ctx.shadowColor = '#00D4AA';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                    p.t += p.speed;
+                });
+                requestAnimationFrame(draw);
+            }
+            window.addEventListener('resize', init);
+            init(); draw();
+        })();
     </script>
 </body>
 </html>
