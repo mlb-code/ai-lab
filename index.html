@@ -68,15 +68,27 @@
             --primary-dark: #5228CC;
             --accent: #00D4AA;
             --accent-light: #34EABB;
-            --dark: #1a1a2e;
-            --dark-card: #25253e;
-            --dark-lighter: #32324e;
+            /* Unified dark scale — only 3 shades (was 6+) */
+            --dark: #0f0f1e;            /* page background */
+            --dark-card: #181830;       /* cards / raised panels */
+            --dark-lighter: #22224a;    /* hover / subtle surfaces */
+            --border: rgba(255,255,255,0.08);
             --text: #f0eef5;
             --text-muted: #b8b0d0;
             --gold: #F5C842;
             --orange: #FF7849;
             --pink: #FF4D8D;
             --blue: #4DA3FF;
+
+            /* Unified design tokens — 3 sizes only */
+            --radius-sm: 8px;         /* badges, inputs, small tags */
+            --radius-md: 16px;        /* cards, panels */
+            --radius-pill: 9999px;    /* buttons, pills */
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+            --shadow-brand: 0 8px 24px rgba(108, 60, 225, 0.35);
         }
 
         html {
@@ -94,6 +106,102 @@
             text-align: right;
         }
 
+        /* ========== GLOBAL A11Y + HOVER CONSISTENCY ========== */
+        /* Focus indicator — shown only when navigating by keyboard */
+        *:focus { outline: none; }
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Unified section rhythm */
+        section {
+            padding: 5rem 2rem;
+        }
+        @media (max-width: 768px) {
+            section {
+                padding: 3rem 1.2rem !important;
+            }
+        }
+
+        /* Minimum tap target on mobile (WCAG / Apple HIG) */
+        @media (max-width: 768px) {
+            a, button {
+                min-height: 44px;
+            }
+            a.nav-logo { min-height: auto; } /* logo is not a tappable area in the same way */
+        }
+
+        /* ========== STICKY BOTTOM BAR (soft lead capture) ========== */
+        .sticky-bar {
+            position: fixed;
+            left: 0; right: 0;
+            bottom: 0;
+            z-index: 90;
+            background: rgba(15, 15, 30, 0.94);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(108, 60, 225, 0.25);
+            transform: translateY(110%);
+            transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+            padding: env(safe-area-inset-bottom, 0);
+        }
+        .sticky-bar.visible { transform: translateY(0); }
+        .sticky-bar-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1.2rem;
+            direction: rtl;
+        }
+        .sticky-bar-text {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            line-height: 1.3;
+        }
+        .sticky-bar-text strong { font-size: 0.95rem; color: var(--text); }
+        .sticky-bar-text span { font-size: 0.82rem; color: var(--text-muted); }
+        .sticky-bar-btn {
+            background: linear-gradient(135deg, var(--accent), #00b894);
+            color: #000 !important;
+            font-weight: 700;
+            padding: 0.6rem 1.3rem;
+            border-radius: var(--radius-pill);
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 0.95rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+        .sticky-bar-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .sticky-bar-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+            width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s, color 0.2s;
+            flex-shrink: 0;
+        }
+        .sticky-bar-close:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+        @media (max-width: 768px) {
+            .sticky-bar-inner { padding: 0.65rem 0.9rem; gap: 0.6rem; }
+            .sticky-bar-text strong { font-size: 0.85rem; }
+            .sticky-bar-text span { font-size: 0.72rem; }
+            .sticky-bar-btn { padding: 0.55rem 1rem; font-size: 0.85rem; }
+        }
+
         /* ========== NAV ========== */
         nav {
             position: fixed;
@@ -101,31 +209,33 @@
             right: 0;
             left: 0;
             z-index: 100;
-            height: 56px;
-            padding: 0 2rem;
+            height: 72px;
+            padding: 0 2.5rem;
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            background: rgba(26, 26, 46, 0.6);
-            backdrop-filter: blur(12px);
+            background: rgba(15, 15, 30, 0.75);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid transparent;
             transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
             direction: ltr;
         }
         .nav-cta-group {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.7rem;
             justify-content: flex-end;
         }
 
         nav.scrolled {
-            background: rgba(26, 26, 46, 0.92);
+            background: rgba(15, 15, 30, 0.92);
             backdrop-filter: blur(24px);
-            box-shadow: 0 1px 20px rgba(0, 0, 0, 0.15);
+            border-bottom-color: var(--border);
         }
 
         .nav-logo {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, var(--accent), var(--primary-light));
@@ -139,7 +249,7 @@
         .nav-links {
             display: flex;
             flex-direction: row;
-            gap: 0.8rem;
+            gap: 1.6rem;
             list-style: none;
             direction: ltr;
             align-items: center;
@@ -149,8 +259,8 @@
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.82rem;
-            transition: color 0.3s;
+            font-size: 0.95rem;
+            transition: color 0.2s;
             direction: rtl;
             white-space: nowrap;
             unicode-bidi: plaintext;
@@ -181,20 +291,22 @@
         }
 
         .nav-cta {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: #fff !important;
-            padding: 0.35rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.78rem !important;
+            padding: 0.55rem 1.1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.88rem !important;
             font-weight: 600 !important;
-            transition: transform 0.3s, box-shadow 0.3s !important;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s !important;
             white-space: nowrap;
             text-decoration: none !important;
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
         }
 
         .nav-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.4);
+            box-shadow: var(--shadow-md);
         }
 
         /* Hide menu icons on desktop */
@@ -238,7 +350,7 @@
             bottom: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(160deg, #1a1a2e 0%, #16162a 40%, #1e1040 100%);
+            background: var(--dark);
             z-index: 250;
             flex-direction: column;
             justify-content: center;
@@ -420,28 +532,45 @@
             direction: rtl;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -30%;
-            width: 80vw;
-            height: 80vw;
-            background: radial-gradient(circle, rgba(108, 60, 225, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
+        /* Removed corner gradients — let the neural canvas be the focus.
+           Instead, one very subtle vignette for readability. */
         .hero::after {
             content: '';
             position: absolute;
-            bottom: -30%;
-            left: -20%;
-            width: 60vw;
-            height: 60vw;
-            background: radial-gradient(circle, rgba(0, 212, 170, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 10, 22, 0.45) 100%);
             pointer-events: none;
+            z-index: 3;
+        }
+
+        /* Scroll indicator — shown on mobile only */
+        .hero-scroll-indicator {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .hero-scroll-indicator {
+                display: flex;
+                position: absolute;
+                bottom: calc(1.5rem + env(safe-area-inset-bottom, 0));
+                left: 50%;
+                transform: translateX(-50%);
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+                color: var(--text-muted);
+                font-size: 0.8rem;
+                font-weight: 600;
+                text-decoration: none;
+                z-index: 20;
+                animation: scrollBounce 2.2s ease-in-out infinite;
+                min-height: auto !important; /* override the global 44px mobile rule */
+            }
+            .hero-scroll-indicator svg { opacity: 0.7; }
+            .hero-scroll-indicator:hover { color: var(--accent); }
+        }
+        @keyframes scrollBounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, 8px); }
         }
 
         .hero-content {
@@ -458,7 +587,7 @@
             border: 1px solid rgba(108, 60, 225, 0.3);
             color: var(--primary-light);
             padding: 0.5rem 1.2rem;
-            border-radius: 50px;
+            border-radius: var(--radius-pill);
             font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 2rem;
@@ -484,6 +613,7 @@
             line-height: 1.2;
             margin-bottom: 1.5rem;
             animation: fadeInUp 0.8s ease;
+            text-shadow: 0 2px 20px rgba(10, 10, 22, 0.6);
         }
 
         .hero h1 .gradient-text {
@@ -507,16 +637,18 @@
             margin-bottom: 1.6rem;
             letter-spacing: 0.02em;
             animation: fadeInUp 0.8s ease 0.15s both;
+            text-shadow: 0 2px 16px rgba(10, 10, 22, 0.7);
         }
 
         .hero p {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            font-size: clamp(1.05rem, 2.2vw, 1.25rem);
             color: var(--text-muted);
             margin-bottom: 2.5rem;
-            max-width: 650px;
+            max-width: 640px;
             margin-left: auto;
             margin-right: auto;
             animation: fadeInUp 0.8s ease 0.2s both;
+            text-shadow: 0 2px 12px rgba(10, 10, 22, 0.7);
         }
 
         .hero-buttons {
@@ -531,41 +663,42 @@
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: #fff;
             padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.15rem;
+            border-radius: var(--radius-pill);
+            font-size: 1.1rem;
             font-weight: 700;
             text-decoration: none;
             border: none;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             font-family: 'Heebo', sans-serif;
+            box-shadow: var(--shadow-sm);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(108, 60, 225, 0.4);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-brand);
         }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text);
             padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.15rem;
+            border-radius: var(--radius-pill);
+            font-size: 1.1rem;
             font-weight: 600;
             text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             border-color: var(--primary-light);
         }
 
@@ -658,13 +791,14 @@
         }
 
         .problem-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
             padding: 2rem;
             text-align: center;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: transform 0.2s, border-color 0.2s;
             direction: rtl;
+            box-shadow: var(--shadow-sm);
         }
 
         .problem-card:hover {
@@ -1288,7 +1422,10 @@
             aspect-ratio: 1280 / 720;
             overflow: hidden;
             position: relative;
-            background: #0a0a18;
+            /* Skeleton shimmer while image loads */
+            background: linear-gradient(110deg, #161628 30%, #22223f 50%, #161628 70%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.8s linear infinite;
             border-bottom: 1px solid rgba(255,255,255,0.08);
             flex-shrink: 0;
         }
@@ -1304,6 +1441,13 @@
             pointer-events: none;
             border: none;
             display: block;
+            /* Hide shimmer once image is in place */
+            background: #0a0a18;
+        }
+        .proj-preview img[src] { animation: none; }
+        @keyframes skeleton-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         /* Hide specific card on mobile */
         @media (max-width: 768px) {
@@ -1388,11 +1532,12 @@
             gap: 3rem;
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
             padding: 3rem;
             direction: rtl;
+            box-shadow: var(--shadow-md);
         }
 
         .instructor-avatar {
@@ -1498,9 +1643,9 @@
         }
 
         .pricing-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
             padding: 2rem 1.5rem;
             text-align: center;
             position: relative;
@@ -1508,12 +1653,14 @@
             direction: rtl;
             display: flex;
             flex-direction: column;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
         }
 
         .pricing-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 8px 30px rgba(108, 60, 225, 0.1);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
 
         .pricing-card .pricing-btn {
@@ -1853,12 +2000,12 @@
 
         /* ========== FOOTER ========== */
         footer {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 3rem 2rem 2rem;
+            background: var(--dark-card);
+            padding: 4rem 2rem 2rem;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             direction: rtl;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid var(--border);
         }
 
         .footer-content {
@@ -1866,15 +2013,16 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 2rem;
+            gap: 3rem;
             text-align: right;
         }
 
         .footer-section h4 {
             color: var(--text);
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 0.02em;
         }
 
         .footer-section p,
@@ -1882,9 +2030,10 @@
             display: block;
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
-            line-height: 2;
+            font-size: 0.9rem;
+            line-height: 2.1;
             transition: color 0.2s;
+            padding: 2px 0;
         }
 
         .footer-section a:hover {
@@ -1893,32 +2042,41 @@
 
         .footer-social {
             max-width: 1100px;
-            margin: 1.5rem auto 0;
+            margin: 2.5rem auto 0;
             display: flex;
             justify-content: center;
-            gap: 1.2rem;
+            gap: 0.8rem;
         }
 
         .footer-social a {
             color: var(--text-muted);
-            transition: color 0.3s, transform 0.3s;
-            display: flex;
+            transition: color 0.2s, background 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
         }
 
         .footer-social a:hover {
             color: var(--accent);
+            background: rgba(0, 212, 170, 0.1);
+            border-color: rgba(0, 212, 170, 0.3);
             transform: translateY(-2px);
         }
 
         .footer-bottom {
             max-width: 1100px;
-            margin: 1.5rem auto 0;
+            margin: 2rem auto 0;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
         }
 
         @media (max-width: 768px) {
@@ -1935,13 +2093,14 @@
         }
 
         /* ========== ANIMATIONS ========== */
+        /* Reduced translateY to prevent perceived layout jumps on load */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -2001,14 +2160,15 @@
                 font-size: 1.3rem;
             }
 
-            /* -- Hero compact -- */
+            /* -- Hero: full-height on mobile for strong first impression -- */
             .hero {
-                min-height: auto;
-                padding: 5rem 1.2rem 2.5rem;
+                min-height: 100vh;
+                min-height: 100svh;  /* modern small-viewport unit for iOS */
+                padding: 5rem 1.2rem 4rem !important;
             }
 
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.3rem;
                 margin-bottom: 0.8rem;
             }
 
@@ -2486,8 +2646,7 @@
             .skill-card h4 { font-size: 0.72rem !important; margin-bottom: 0 !important; }
             .skill-card p { display: none !important; }
 
-            .zoom-banner { padding: 0.7rem 1rem !important; }
-            .zoom-banner svg { width: 24px !important; height: 24px !important; }
+            .zoom-banner { display: none !important; }
 
 
             .audience-card {
@@ -2611,7 +2770,7 @@
         }
 
         .terminal-header {
-            background: #16162a;
+            background: var(--dark);
             padding: 0.8rem 1rem;
             display: flex;
             flex-direction: row;
@@ -2849,13 +3008,20 @@
             justify-content: center;
             box-shadow: 0 5px 25px rgba(37, 211, 102, 0.4);
             z-index: 99;
-            transition: transform 0.3s;
+            transition: transform 0.25s, opacity 0.3s;
             text-decoration: none;
             font-size: 1.8rem;
         }
 
         .whatsapp-float:hover {
             transform: scale(1.1);
+        }
+
+        /* Hide WhatsApp float while the sticky bar is visible (avoid stacking UI at bottom) */
+        body.sticky-bar-active .whatsapp-float {
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            pointer-events: none;
         }
     </style>
 
@@ -3104,43 +3270,21 @@
         </div>
     </div>
 
-    <div id="scrollPopup" class="scroll-popup-overlay" onclick="if(event.target===this)closePopup()">
-        <div class="scroll-popup-box">
-            <button class="scroll-popup-close" onclick="closePopup()" aria-label="סגור">&times;</button>
-            <div class="scroll-popup-header">
-                <div class="scroll-popup-icon">🚀</div>
-                <h3>מחזור חדש נפתח!</h3>
-                <p>השאירו פרטים ונחזור אליכם עם כל הפרטים</p>
+    <!-- Sticky bottom bar CTA (non-intrusive) -->
+    <div id="stickyBar" class="sticky-bar" role="region" aria-label="הצטרפות לקורס">
+        <div class="sticky-bar-inner">
+            <div class="sticky-bar-text">
+                <strong>🗓️ מחזור חדש נפתח</strong>
+                <span>מפגשים חיים בזום · מקומות מוגבלים</span>
             </div>
-            <div id="popupFormWrap">
-                <form onsubmit="return submitPopupForm(event)">
-                    <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
-                    <input type="hidden" name="subject" value="פנייה מפופאפ — AI Lab">
-                    <div class="form-group">
-                        <label for="popupName">שם מלא</label>
-                        <input type="text" id="popupName" name="name" placeholder="הכניסו את השם שלכם" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="popupPhone">מספר טלפון</label>
-                        <input type="tel" id="popupPhone" name="phone" placeholder="050-1234567" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="popupEmail">אימייל</label>
-                        <input type="email" id="popupEmail" name="email" placeholder="your@email.com" required>
-                    </div>
-                    <div class="form-buttons">
-                        <button type="submit" class="btn-primary" id="popupSubmitBtn">📩 שלח פנייה</button>
-                        <button type="button" class="btn-whatsapp" onclick="popupWhatsApp()">💬 שלח בוואטסאפ</button>
-                    </div>
-                </form>
-            </div>
+            <a href="#register" class="sticky-bar-btn">הרשמה עכשיו ←</a>
+            <button type="button" class="sticky-bar-close" onclick="closeStickyBar()" aria-label="סגור">&times;</button>
         </div>
     </div>
 
     <!-- HERO -->
     <section class="hero">
         <canvas id="heroNeuralCanvas" class="hero-neural-canvas"></canvas>
-        <div class="hero-text-veil"></div>
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="pulse-dot"></span>
@@ -3204,10 +3348,16 @@
                 </div>
             </div>
         </div>
+        <a href="#projects" class="hero-scroll-indicator" aria-label="פרויקטים של תלמידים">
+            <span>מה תלמידים בנו?</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </a>
     </section>
 
     <!-- STUDENT PROJECTS -->
-    <section id="projects" style="background: linear-gradient(180deg, #13132a 0%, var(--dark-card) 100%); padding: 4rem 0 4.5rem; position:relative; overflow:hidden;">
+    <section id="projects" style="background: var(--dark-card); padding: 4rem 0 4.5rem; position:relative; overflow:hidden;">
         <div style="pointer-events:none;position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(108,60,225,0.18) 0%,transparent 70%);"></div>
         <div style="pointer-events:none;position:absolute;bottom:-60px;left:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,212,170,0.12) 0%,transparent 70%);"></div>
         <div class="container" style="position:relative;">
@@ -3313,19 +3463,6 @@
     </section>
 
     <!-- ZOOM BANNER -->
-    <section class="zoom-banner" style="padding: 2rem; background: linear-gradient(135deg, rgba(45, 116, 249, 0.1), rgba(108, 60, 225, 0.08)); border-top: 1px solid rgba(45, 116, 249, 0.15); border-bottom: 1px solid rgba(45, 116, 249, 0.15);">
-        <div class="container" style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; direction: rtl; text-align: center;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-                <rect width="24" height="24" rx="5" fill="#2D74F9"/>
-                <path d="M16.5 8.5l2.5-1.5v10l-2.5-1.5M5 7.5h9a1.5 1.5 0 011.5 1.5v6a1.5 1.5 0 01-1.5 1.5H5A1.5 1.5 0 013.5 15V9A1.5 1.5 0 015 7.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div>
-                <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">המפגשים בזום &mdash; מכל מקום בארץ</div>
-                <div style="font-size: 0.9rem; color: var(--text-muted);">לא צריך להגיע לשום מקום. מחשב נייד, אינטרנט, וזהו.</div>
-            </div>
-        </div>
-    </section>
-
     <!-- PORTAL + AI ASSISTANT SHOWCASE -->
     <style>
         .portal-showcase {
@@ -3358,7 +3495,7 @@
             position: relative;
             max-width: 900px;
             margin: 60px auto 0;
-            min-height: 620px;
+            min-height: 760px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -3410,7 +3547,7 @@
         .orbit-br { bottom: 60px; left: 10px; animation-delay: 3.6s; }
         .portal-phone {
             width: 100%;
-            max-width: 340px;
+            max-width: 320px;
             margin: 0 auto;
             background: #0a0a14;
             border: 8px solid #1a1a2e;
@@ -3426,9 +3563,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 14px 10px;
+            padding: 12px 12px 10px;
             background: rgba(10,10,20,0.95);
             border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .portal-phone-zoom {
+            background: linear-gradient(135deg, #2D74F9, #1a5cd9);
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            box-shadow: 0 3px 8px rgba(45,116,249,0.35);
         }
         .portal-phone-logo {
             font-weight: 900; font-size: 1rem;
@@ -3436,65 +3582,110 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        /* Course switcher row under the header */
+        .portal-phone-switcher-row {
+            display: flex;
+            justify-content: center;
+            padding: 8px 12px;
+            background: rgba(10,10,20,0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
         .portal-phone-pill {
             display: inline-flex; background: rgba(255,255,255,0.06);
-            border-radius: 14px; padding: 2px; gap: 2px;
+            border-radius: 20px; padding: 3px; gap: 3px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
         .portal-phone-pill span {
-            padding: 4px 10px; font-size: 0.65rem; font-weight: 700;
-            border-radius: 12px; color: rgba(255,255,255,0.6);
+            padding: 3px 10px; font-size: 0.62rem; font-weight: 700;
+            border-radius: 14px; color: rgba(255,255,255,0.5);
         }
         .portal-phone-pill span.active {
             background: linear-gradient(135deg, #6c3ce1, #4a90e2); color: #fff;
         }
-        .portal-phone-avatar {
-            width: 26px; height: 26px; border-radius: 50%;
-            background: linear-gradient(135deg, #E2B93B, #f5d76e);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.7rem; font-weight: 800; color: #0a0a14;
-        }
         .portal-phone-body {
-            padding: 14px;
-            min-height: 280px;
+            padding: 12px;
+            min-height: 420px;
             background: #0a0a14;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
+        /* Daily tip mini widget */
+        .pp-tip {
+            background: linear-gradient(135deg, rgba(108,60,225,0.14), rgba(0,212,170,0.08));
+            border: 1px solid rgba(108,60,225,0.25);
+            border-right: 3px solid #00D4AA;
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+        .pp-tip-label { font-size: 0.58rem; color: #00D4AA; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 2px; }
+        .pp-tip-text { font-size: 0.7rem; color: #eee; line-height: 1.4; }
+
+        /* Progress summary */
+        .pp-progress {
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+        .pp-progress-label {
+            display: flex; justify-content: space-between;
+            font-size: 0.62rem; color: #999; margin-bottom: 4px; font-weight: 600;
+        }
+        .pp-progress-bar {
+            height: 4px; background: rgba(255,255,255,0.08);
+            border-radius: 2px; overflow: hidden;
+        }
+        .pp-progress-fill {
+            height: 100%; width: 37%;
+            background: linear-gradient(90deg, #00D4AA, #8B5CF6);
+            border-radius: 2px;
+        }
+
         .portal-phone-title {
-            font-size: 0.85rem; font-weight: 800;
-            margin-bottom: 10px;
+            font-size: 0.72rem; font-weight: 800;
             color: #fff;
+            margin-top: 2px;
         }
         .ss-card {
             background: #1a1a2e;
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 10px;
-            padding: 8px 10px;
-            margin-bottom: 7px;
+            padding: 7px 9px;
             display: flex; gap: 8px; align-items: center;
         }
         .ss-num {
-            width: 26px; height: 26px; border-radius: 50%;
+            width: 24px; height: 24px; border-radius: 50%;
             background: linear-gradient(135deg, #6c3ce1, #4a90e2);
             display: flex; align-items: center; justify-content: center;
-            color: #fff; font-weight: 800; font-size: 0.7rem;
+            color: #fff; font-weight: 800; font-size: 0.65rem;
             flex-shrink: 0;
         }
-        .ss-num.green { background: linear-gradient(135deg, #10b981, #059669); }
-        .ss-num.orange { background: linear-gradient(135deg, #f97316, #ea580c); }
+        .ss-num.done { background: linear-gradient(135deg, #00D4AA, #059669); }
+        .ss-num.next { background: linear-gradient(135deg, #f97316, #ea580c); }
         .ss-info { flex: 1; min-width: 0; }
-        .ss-name { font-size: 0.72rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
-        .ss-tag { font-size: 0.58rem; color: #888; }
+        .ss-name { font-size: 0.68rem; font-weight: 700; color: #fff; margin-bottom: 1px; }
+        .ss-tag { font-size: 0.55rem; color: #888; }
         .portal-phone-bar {
             background: #0a0a14;
             border-top: 1px solid rgba(255,255,255,0.06);
             padding: 6px 10px 10px;
-            display: flex; justify-content: space-around; align-items: center;
+            display: flex; justify-content: space-around; align-items: flex-end;
         }
         .pb-icn {
-            display: flex; flex-direction: column; align-items: center; gap: 1px;
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
             font-size: 0.55rem; color: rgba(255,255,255,0.45); font-weight: 700;
+            width: 44px;
         }
         .pb-icn.active { color: #fff; }
-        .pb-icn .em { font-size: 1rem; }
+        /* Fixed height for icons so all labels sit on the same baseline */
+        .pb-icn .em {
+            font-size: 1rem;
+            height: 18px;
+            line-height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .pb-ai {
             width: 38px; height: 38px; border-radius: 50%;
             background: linear-gradient(135deg, #6c3ce1, #4a90e2);
@@ -3594,7 +3785,7 @@
         }
         @media (max-width: 600px) {
             .portal-showcase { padding: 50px 0; }
-            .portal-hero { min-height: 560px; }
+            .portal-hero { min-height: 620px; }
             .orbit-badge { padding: 8px 10px; gap: 8px; border-radius: 14px; }
             .orbit-badge .ob-text { font-size: 0.68rem; line-height: 1.25; }
             .orbit-badge .ob-emoji { width: 32px; height: 32px; font-size: 0.95rem; border-radius: 10px; }
@@ -3602,7 +3793,18 @@
             .orbit-tr { top: 0; left: -4px; }
             .orbit-bl { bottom: 20px; right: -4px; }
             .orbit-br { bottom: 20px; left: -4px; }
-            .portal-phone { max-width: 240px; }
+            .portal-phone { max-width: 260px; }
+            .portal-phone-body { min-height: auto; padding: 10px; gap: 8px; }
+            /* Trim the mockup on small phones — hide extras, shrink typography */
+            .portal-phone .ss-card-extra { display: none; }
+            .portal-phone .pp-progress { display: none; }
+            .portal-phone-header { padding: 10px 10px 8px; }
+            .portal-phone-switcher-row { padding: 6px 10px; }
+            .pp-tip { padding: 6px 9px; }
+            .pp-tip-text { font-size: 0.65rem; }
+            .ss-card { padding: 6px 8px; }
+            .ss-name { font-size: 0.65rem; }
+            .ss-tag { font-size: 0.52rem; }
         }
         @media (max-width: 380px) {
             .orbit-badge .ob-text { display: none; }
@@ -3636,45 +3838,65 @@
                     <span class="ob-text">ארגז כלים<br>מלא</span>
                 </div>
 
-                <!-- Phone mockup (hero) -->
+                <!-- Phone mockup (hero) — reflects the live portal design -->
                 <div class="portal-phone">
                     <div class="portal-phone-header">
+                        <span class="portal-phone-zoom">כיתה</span>
                         <span class="portal-phone-logo">AI Lab</span>
+                    </div>
+                    <div class="portal-phone-switcher-row">
                         <div class="portal-phone-pill">
                             <span class="active">בסיסי</span>
                             <span>מתקדם</span>
                         </div>
-                        <div class="portal-phone-avatar">ש</div>
                     </div>
                     <div class="portal-phone-body">
-                        <div class="portal-phone-title">&#x1F4DA; מפגשי הקורס</div>
+                        <div class="pp-tip">
+                            <div class="pp-tip-label">טיפ היום · AI ופרומפטים</div>
+                            <div class="pp-tip-text">פרומפט טוב מתחיל בתפקיד: "אתה מעצב מקצועי". התוצאות יהיו טובות פי שלוש.</div>
+                        </div>
+                        <div class="pp-progress">
+                            <div class="pp-progress-label">
+                                <span>ההתקדמות שלי</span>
+                                <span>3 / 8</span>
+                            </div>
+                            <div class="pp-progress-bar"><div class="pp-progress-fill"></div></div>
+                        </div>
+                        <div class="portal-phone-title">המפגשים שלי</div>
                         <div class="ss-card">
-                            <div class="ss-num">1</div>
+                            <div class="ss-num done">1</div>
                             <div class="ss-info">
                                 <div class="ss-name">ברוכים הבאים לעולם ה-AI</div>
-                                <div class="ss-tag">היכרות &middot; Claude</div>
+                                <div class="ss-tag">היכרות · ChatGPT</div>
                             </div>
                         </div>
                         <div class="ss-card">
-                            <div class="ss-num green">2</div>
+                            <div class="ss-num done">2</div>
                             <div class="ss-info">
                                 <div class="ss-name">אמנות הפרומפט</div>
-                                <div class="ss-tag">Cursor &middot; פרומפטינג</div>
+                                <div class="ss-tag">פרומפטינג · Cursor</div>
                             </div>
                         </div>
                         <div class="ss-card">
-                            <div class="ss-num orange">3</div>
+                            <div class="ss-num next">3</div>
                             <div class="ss-info">
                                 <div class="ss-name">חשיבה יזמית</div>
-                                <div class="ss-tag">סטארטאפים</div>
+                                <div class="ss-tag">סטארטאפים · עכשיו</div>
+                            </div>
+                        </div>
+                        <div class="ss-card ss-card-extra">
+                            <div class="ss-num">4</div>
+                            <div class="ss-info">
+                                <div class="ss-name">בחירת רעיון</div>
+                                <div class="ss-tag">קהל יעד · MVP</div>
                             </div>
                         </div>
                     </div>
                     <div class="portal-phone-bar">
-                        <div class="pb-icn active"><span class="em">&#x1F4DA;</span><span>מפגשים</span></div>
-                        <div class="pb-icn"><span class="em">&#x1F916;</span><span>כלים</span></div>
+                        <div class="pb-icn active"><span class="em">&#x1F3E0;</span><span>מפגשים</span></div>
+                        <div class="pb-icn"><span class="em">&#x1F4A1;</span><span>פרומפטים</span></div>
                         <div class="pb-ai"><span>AI</span><span>Lab</span></div>
-                        <div class="pb-icn"><span class="em">&#x1F680;</span><span>פרויקט</span></div>
+                        <div class="pb-icn"><span class="em">&#x1F4CB;</span><span>פרויקט</span></div>
                         <div class="pb-icn"><span class="em">&#x2022;&#x2022;&#x2022;</span><span>עוד</span></div>
                     </div>
                 </div>
@@ -3923,7 +4145,7 @@
                 <h2>המנחה</h2>
             </div>
             <div class="instructor-card reveal">
-                <div class="instructor-avatar"><img src="meir.jpg" alt="מאיר לביא"></div>
+                <div class="instructor-avatar"><img src="meir.jpg" alt="מאיר לביא" loading="lazy" decoding="async" width="150" height="150"></div>
                 <div class="instructor-info">
                     <h3>מאיר לביא</h3>
                     <div class="title">יזם · משקיע · מנחה AI</div>
@@ -4021,8 +4243,9 @@
     </a>
 
     <script>
-        // Force scroll to top then reveal page (hidden via opacity:0 in <head>)
-        // Mobile browsers restore scroll position AFTER load, need multiple attempts
+        // Force scroll to top then reveal page (hidden via opacity:0 in <head>).
+        // Reveal runs on DOMContentLoaded (not full load) so page appears fast —
+        // no waiting for images. Multiple scroll resets beat iOS/Chrome restoration.
         function forceScrollTop() {
             window.scrollTo(0, 0);
             document.documentElement.scrollTop = 0;
@@ -4031,17 +4254,14 @@
         function revealPage() {
             forceScrollTop();
             document.documentElement.style.opacity = '1';
-            // Extra scroll resets to beat mobile browser scroll restoration
-            setTimeout(forceScrollTop, 100);
-            setTimeout(forceScrollTop, 300);
-            setTimeout(forceScrollTop, 500);
+            setTimeout(forceScrollTop, 50);
+            setTimeout(forceScrollTop, 200);
+            setTimeout(forceScrollTop, 400);
         }
-        if (document.readyState === 'complete') {
-            revealPage();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', revealPage);
         } else {
-            window.addEventListener('load', function() {
-                setTimeout(revealPage, 50);
-            });
+            revealPage();
         }
 
         // Navbar scroll effect
@@ -4373,44 +4593,47 @@
             if (e.key === 'Escape') closeSyllabus();
         });
 
-        // ── SCROLL POPUP (only after 8s on page + 50% scroll) ──
-        (function() {
-            var triggered = false;
-            var pageReady = false;
-            setTimeout(function() { pageReady = true; }, 8000);
-            window.addEventListener('scroll', function() {
-                if (triggered || !pageReady) return;
-                var scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-                if (scrolled >= 0.5) {
-                    triggered = true;
-                    document.getElementById('scrollPopup').classList.add('popup-visible');
-                }
-            });
-        }());
-
-        var popupWasClosed = false;
-        function closePopup() {
-            document.getElementById('scrollPopup').classList.remove('popup-visible');
-            popupWasClosed = true;
-            startWebinarPopupWatch();
-        }
-
+        // ── Webinar popup (only on webinar button clicks — no auto triggers) ──
         function closeWebinarPopup() {
             document.getElementById('webinarPopup').classList.remove('popup-visible');
         }
-
         function openWebinarPopup() {
             var wp = document.getElementById('webinarPopup');
             if (wp) wp.classList.add('popup-visible');
         }
-
-        // Intercept all webinar button clicks → open popup instead of navigating
         document.addEventListener('click', function(e) {
             var a = e.target.closest('a[href*="webinar-general.html"], a[href*="webinar-us.html"], a[href*="webinar-amit.html"]');
             if (!a) return;
             e.preventDefault();
             openWebinarPopup();
         });
+
+        // ── Sticky bottom bar — shows after scrolling past hero. Hides WhatsApp float while visible. ──
+        // Enable 800ms after load so scroll-restoration races can't accidentally trigger it on refresh.
+        (function() {
+            var bar = document.getElementById('stickyBar');
+            if (!bar) return;
+            if (sessionStorage.getItem('stickyBarClosed') === '1') return;
+            var shown = false;
+            var armed = false;
+            setTimeout(function() { armed = true; }, 800);
+            function onScroll() {
+                if (shown || !armed) return;
+                if (window.scrollY > window.innerHeight * 0.6) {
+                    bar.classList.add('visible');
+                    document.body.classList.add('sticky-bar-active');
+                    shown = true;
+                    window.removeEventListener('scroll', onScroll);
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+        }());
+        function closeStickyBar() {
+            var bar = document.getElementById('stickyBar');
+            if (bar) bar.classList.remove('visible');
+            document.body.classList.remove('sticky-bar-active');
+            try { sessionStorage.setItem('stickyBarClosed', '1'); } catch(e) {}
+        }
 
         async function submitNextWebinarForm(e) {
             e.preventDefault();
@@ -4462,66 +4685,9 @@
             return false;
         }
 
-        function startWebinarPopupWatch() {
-            var registerSection = document.getElementById('register');
-            if (!registerSection) return;
-            var timer = null;
-            var watching = false;
-            function checkVisibility() {
-                var rect = registerSection.getBoundingClientRect();
-                var inView = rect.top < window.innerHeight && rect.bottom > 0;
-                if (inView && !watching) {
-                    watching = true;
-                    timer = setTimeout(function() {
-                        var wp = document.getElementById('webinarPopup');
-                        var sp = document.getElementById('scrollPopup');
-                        if (!wp.classList.contains('popup-visible') && !sp.classList.contains('popup-visible')) {
-                            wp.classList.add('popup-visible');
-                        }
-                    }, 15000);
-                } else if (!inView && watching) {
-                    watching = false;
-                    clearTimeout(timer);
-                }
-            }
-            window.addEventListener('scroll', checkVisibility);
-            checkVisibility();
-        }
-
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closePopup();
+            if (e.key === 'Escape') closeWebinarPopup();
         });
-
-        async function submitPopupForm(e) {
-            e.preventDefault();
-            var btn = document.getElementById('popupSubmitBtn');
-            btn.disabled = true;
-            btn.textContent = 'שולח...';
-            try {
-                var data = new FormData(e.target);
-                var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
-                if (res.ok) {
-                    gtag('event', 'generate_lead', { event_category: 'popup_form', event_label: 'form_submit' });
-                    gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
-                    document.getElementById('popupFormWrap').innerHTML = '<div style="text-align:center;padding:2rem;font-size:1.1rem;color:var(--accent);font-weight:700;">הפנייה נשלחה! נחזור אליכם בהקדם 🙌</div>';
-                } else {
-                    btn.disabled = false; btn.textContent = '📩 שלח פנייה';
-                }
-            } catch(err) { btn.disabled = false; btn.textContent = '📩 שלח פנייה'; }
-            return false;
-        }
-
-        function popupWhatsApp() {
-            var name = document.getElementById('popupName').value.trim();
-            var phone = document.getElementById('popupPhone').value.trim();
-            var email = document.getElementById('popupEmail').value.trim();
-            if (!name || !phone || !email) { alert('נא למלא את כל השדות'); return; }
-            var msg = `היי, אני מתעניין/ת בקורס יזמות ו-AI\n\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email}`;
-            gtag('event', 'whatsapp_click', { event_category: 'popup', event_label: 'whatsapp_popup' });
-            gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
-            window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
-            closePopup();
-        }
 
         // Form submit via AJAX
         async function submitForm(e) {
