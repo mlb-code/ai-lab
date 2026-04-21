@@ -124,6 +124,35 @@
       margin: 0 auto 28px;
     }
 
+    .hero-info-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    .hero-info-row .date-row { margin-bottom: 0; }
+
+    .amit-benefit {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, rgba(226,185,59,0.18), rgba(226,185,59,0.08));
+      border: 1.5px solid rgba(226,185,59,0.45);
+      color: #f0c850;
+      border-radius: 50px;
+      padding: 9px 20px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      box-shadow: 0 0 24px rgba(226,185,59,0.12);
+    }
+    .amit-benefit .gift { font-size: 1.1rem; }
+    .amit-benefit strong { color: #ffd76a; }
+    @media (max-width: 480px) {
+      .amit-benefit { font-size: 0.88rem; padding: 9px 16px; }
+    }
+
     .date-row {
       display: inline-flex;
       align-items: center;
@@ -169,6 +198,72 @@
       transition: transform .2s, box-shadow .2s;
     }
     .cta-scroll:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(108,60,225,.5); }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .cta-outline {
+      display: inline-block;
+      background: transparent;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 13px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.25);
+      transition: border-color .2s, background .2s, transform .2s;
+    }
+    .cta-outline:hover { border-color: var(--accent); background: rgba(0,212,170,.08); transform: translateY(-2px); }
+
+    /* ── INSTRUCTOR ── */
+    .instructor {
+      padding: 64px 22px;
+      background: linear-gradient(170deg, #0d0d1c 0%, var(--dark) 100%);
+    }
+    .instructor-inner { max-width: 780px; margin: 0 auto; text-align: center; }
+    .instructor h2 { font-size: clamp(1.6rem, 4vw, 2.1rem); font-weight: 900; margin-bottom: 30px; }
+    .instructor-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 34px 28px;
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      text-align: right;
+    }
+    .instructor-avatar {
+      flex-shrink: 0;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--primary-light);
+      box-shadow: 0 0 30px rgba(108,60,225,.3);
+    }
+    .instructor-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .instructor-info h3 { font-size: 1.5rem; font-weight: 900; margin-bottom: 4px; }
+    .instructor-info .title { color: var(--accent); font-weight: 700; margin-bottom: 12px; font-size: 0.95rem; }
+    .instructor-info p { color: var(--muted); font-size: 1rem; line-height: 1.7; }
+    .instructor-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .instructor-tags span {
+      background: rgba(108,60,225,.12);
+      border: 1px solid rgba(108,60,225,.3);
+      color: #b89ffa;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    @media (max-width: 640px) {
+      .instructor-card { flex-direction: column; text-align: center; padding: 30px 22px; }
+      .instructor-avatar { width: 110px; height: 110px; }
+      .instructor-tags { justify-content: center; }
+    }
 
     /* ── WHY ── */
     .why {
@@ -397,9 +492,15 @@
     וובינר מיוחד להורים, ילדים ובני נוער — נסביר איך לומדים יזמות ובינה מלאכותית בקורסים של AI Lab
   </p>
 
-  <div class="date-row">
-    <span class="dot">●</span>
-    יום שלישי, 14 באפריל 2026 &nbsp;|&nbsp; 20:30
+  <div class="hero-info-row">
+    <div class="amit-benefit">
+      <span class="gift">🎁</span>
+      <span>הטבה בשווי <strong>100 ₪</strong> לחברי עמותת עמיט</span>
+    </div>
+    <div class="date-row">
+      <span class="dot">●</span>
+      יום שלישי, 14 באפריל 2026 &nbsp;|&nbsp; 20:30
+    </div>
   </div>
 
   <div class="countdown" id="countdown">
@@ -409,7 +510,10 @@
     <div class="cu"><span class="n" id="cd-s">--</span><span class="l">שניות</span></div>
   </div>
 
-  <a href="#register" class="cta-scroll">הירשמו חינם ↓</a>
+  <div class="hero-ctas">
+    <a href="#register" class="cta-scroll">הירשמו חינם ↓</a>
+    <a href="https://ai-lab.co.il" target="_blank" rel="noopener" class="cta-outline">לאתר הקורס ←</a>
+  </div>
 </section>
 
 
@@ -489,6 +593,28 @@
   </div>
   <div class="site-cta">
     <a href="https://ai-lab.co.il" target="_blank" rel="noopener">לכל הפרויקטים והמידע על הקורס ← ai-lab.co.il</a>
+  </div>
+</section>
+
+
+<!-- INSTRUCTOR -->
+<section class="instructor">
+  <div class="instructor-inner">
+    <h2>המנחה</h2>
+    <div class="instructor-card">
+      <div class="instructor-avatar"><img src="meir.jpg" alt="מאיר לביא"></div>
+      <div class="instructor-info">
+        <h3>מאיר לביא</h3>
+        <div class="title">יזם · משקיע · מנחה AI</div>
+        <p>סמנכ"ל פיתוח עסקי לשעבר בחברות הייטק. בנה מוצרים, ניהל שותפויות, והשקיע בסטארטאפים. היום מלמד ילדים ומבוגרים לחשוב ולבנות עם AI.</p>
+        <div class="instructor-tags">
+          <span>🚀 יזם</span>
+          <span>📈 משקיע</span>
+          <span>🎓 האוניברסיטה העברית</span>
+          <span>🏢 הייטק</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
