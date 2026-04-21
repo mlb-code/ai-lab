@@ -36,15 +36,22 @@
             --primary-dark: #5228CC;
             --accent: #00D4AA;
             --accent-light: #34EABB;
-            --dark: #1a1a2e;
-            --dark-card: #25253e;
-            --dark-lighter: #32324e;
+            --dark: #0f0f1e;
+            --dark-card: #181830;
+            --dark-lighter: #22224a;
             --text: #f0eef5;
             --text-muted: #b8b0d0;
             --gold: #F5C842;
             --orange: #FF7849;
             --pink: #FF4D8D;
             --blue: #4DA3FF;
+            --border: rgba(255,255,255,0.08);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-pill: 9999px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+            --shadow-brand: 0 8px 24px rgba(108, 60, 225, 0.35);
             --sidebar-width: 240px;
         }
 
@@ -98,108 +105,222 @@
             right: 0;
             width: var(--sidebar-width);
             height: 100vh;
-            background: linear-gradient(180deg, rgba(18, 18, 38, 0.98) 0%, rgba(12, 12, 28, 0.99) 100%);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-left: 1px solid rgba(255, 255, 255, 0.06);
+            background: var(--dark-card);
+            border-left: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             align-items: stretch;
-            padding: 0;
+            padding: 1.3rem 0 0;
             z-index: 51;
             overflow-y: auto;
             overflow-x: hidden;
             direction: rtl;
+            gap: 1rem;
         }
 
         .sidebar-header {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 1.5rem 1.2rem 1.2rem;
-            gap: 0.9rem;
+            align-items: flex-start;
+            padding: 0 1.3rem 0.2rem;
+            gap: 0.6rem;
         }
 
         .sidebar-brand {
             color: var(--text);
             text-decoration: none;
-            font-weight: 800;
-            font-size: 1.45rem;
-            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            font-weight: 900;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            width: fit-content;
         }
 
         .sidebar-user-info {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            color: var(--text);
         }
 
         .sidebar-avatar {
-            width: 56px;
-            height: 56px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.35rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #fff;
-            box-shadow: 0 4px 18px rgba(108, 60, 225, 0.3), 0 0 0 3px rgba(108, 60, 225, 0.15);
+            box-shadow: 0 2px 8px rgba(108, 60, 225, 0.25);
             transition: box-shadow 0.3s, transform 0.3s;
+            flex-shrink: 0;
         }
 
         .sidebar-avatar:hover {
-            box-shadow: 0 4px 22px rgba(108, 60, 225, 0.4), 0 0 0 4px rgba(108, 60, 225, 0.25);
-            transform: scale(1.04);
+            transform: scale(1.05);
         }
 
         .sidebar-divider {
-            height: 1px;
-            margin: 0.4rem 1.2rem;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+            display: none;
         }
 
-        /* Zoom button */
+        /* Zoom button — preview style */
         .sidebar .zoom-live-btn {
-            margin: 0.5rem 0.9rem;
+            margin: 0 1rem;
             justify-content: center;
+            gap: 0.7rem;
+            padding: 0.8rem 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: var(--radius-md);
         }
+        .sidebar .zoom-live-btn .zoom-label { flex: 0 0 auto; text-align: center; }
 
         .zoom-live-btn {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.55rem 1.2rem;
-            background: linear-gradient(135deg, #2D8CFF, #0B5CFF);
-            color: #fff;
+            gap: 0.7rem;
+            padding: 0.7rem 0.9rem;
+            background: linear-gradient(135deg, #2D74F9, #1a5cd9);
+            color: #fff !important;
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 10px;
-            transition: all 0.25s;
-            white-space: nowrap;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(45, 116, 249, 0.35);
+            direction: rtl;
             font-family: 'Heebo', sans-serif;
-            -webkit-text-fill-color: #fff;
-            -webkit-background-clip: unset;
-            box-shadow: 0 2px 10px rgba(45, 140, 255, 0.2);
         }
 
         .zoom-live-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 18px rgba(45, 140, 255, 0.4);
-            background: linear-gradient(135deg, #3D9CFF, #1B6CFF) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(45, 116, 249, 0.5);
             color: #fff !important;
-            -webkit-text-fill-color: #fff !important;
-            -webkit-background-clip: unset !important;
         }
 
         .zoom-live-btn svg {
             flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+        }
+
+        .zoom-live-btn span.zoom-label {
+            flex: 1;
+            text-align: right;
+        }
+
+        /* Help button in mobile more-sheet footer (subtle, below the main grid) */
+        .ms-help-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.7rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            width: 100%;
+            margin-top: 0.9rem;
+            transition: background 0.2s, color 0.2s;
+            direction: rtl;
+        }
+        .ms-help-btn:active,
+        .ms-help-btn:hover {
+            background: rgba(108, 60, 225, 0.1);
+            color: var(--text);
+        }
+
+        /* Help button in sidebar footer (subtle, sits below the nav) */
+        .sidebar-help-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.85rem;
+            padding: 0.5rem 0.85rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 0.6rem;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+            text-align: right;
+            direction: rtl;
+        }
+        .sidebar-help-btn:hover {
+            background: rgba(108, 60, 225, 0.08);
+            color: var(--text);
+            border-color: rgba(108, 60, 225, 0.3);
+        }
+        .sidebar-help-btn.active {
+            background: rgba(108, 60, 225, 0.12);
+            color: var(--accent);
+            border-color: rgba(0, 212, 170, 0.3);
+        }
+        .sidebar-help-btn .nav-icon { font-size: 1rem; }
+
+        /* Sidebar nav group label (preview style) */
+        .sidebar-nav-group-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 700;
+            padding: 0.6rem 0.85rem 0.35rem;
+            opacity: 0.7;
+            margin-top: 0.3rem;
+        }
+        .sidebar-nav-group-label:first-child { margin-top: 0; }
+
+        /* Progress box in sidebar (preview style) */
+        .sidebar-progress-box {
+            margin: 0 1rem;
+            padding: 0.9rem 1rem;
+            background: linear-gradient(135deg, rgba(108,60,225,0.15), rgba(0,212,170,0.1));
+            border: 1px solid rgba(108,60,225,0.25);
+            border-radius: var(--radius-md);
+        }
+        .sidebar-progress-box .sp-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+            font-weight: 600;
+        }
+        .sidebar-progress-box .sp-num {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 0.45rem;
+        }
+        .sidebar-progress-box .sp-num .sp-total {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .sidebar-progress-box .sp-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.08);
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+        }
+        .sidebar-progress-box .sp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--primary-light));
+            border-radius: var(--radius-pill);
+            transition: width 0.4s cubic-bezier(.2,.8,.2,1);
         }
 
         /* ===== COURSE SWITCHER ===== */
@@ -357,15 +478,13 @@
         }
 
         .page-header {
-            margin-bottom: 2.2rem;
-            padding-bottom: 1.2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 1.3rem;
             text-align: right;
         }
 
         .page-header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 800;
             margin-bottom: 0.3rem;
             letter-spacing: -0.3px;
         }
@@ -373,6 +492,454 @@
         .page-header p {
             color: var(--text-muted);
             font-size: 0.9rem;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            gap: 0.4rem;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 1.3rem;
+        }
+        .breadcrumb span { color: var(--primary-light); }
+
+        /* ===== HERO BANNER (preview style) ===== */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--dark-card), var(--dark-lighter));
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 1.8rem;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -60px; left: -60px;
+            width: 260px; height: 260px;
+            background: radial-gradient(circle, rgba(108,60,225,0.25), transparent 70%);
+            pointer-events: none;
+        }
+        .hero-left { position: relative; z-index: 2; }
+        .hero-label {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+        .hero-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 0.9rem;
+        }
+        .hero-progress { margin-bottom: 1.1rem; }
+        .hero-progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
+        }
+        .hero-progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.08);
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+        }
+        .hero-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--primary-light));
+            border-radius: var(--radius-pill);
+            transition: width 0.4s cubic-bezier(.2,.8,.2,1);
+        }
+        .hero-cta-row {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+        }
+        .hero-cta {
+            background: linear-gradient(135deg, var(--accent), #00b894);
+            color: #000 !important;
+            padding: 0.7rem 1.4rem;
+            border-radius: var(--radius-pill);
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--shadow-sm);
+            border: none;
+            cursor: pointer;
+            font-family: 'Heebo', sans-serif;
+            text-decoration: none;
+        }
+        .hero-cta:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); color: #000 !important; }
+
+        /* Hero tip widget (right side of banner) */
+        .hero-tip {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(108,60,225,0.25);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.2rem;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+        }
+        .hero-tip-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hero-tip-title .pulse {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #25D366;
+            border-radius: 50%;
+            animation: pulseGreen 2s infinite;
+        }
+        @keyframes pulseGreen { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+        .hero-tip-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-right: 3px solid var(--accent);
+            border-radius: var(--radius-sm);
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.85rem;
+            flex: 1;
+        }
+        .hero-tip-cat { font-size: 0.72rem; color: var(--accent); font-weight: 700; letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+        .hero-tip-text { font-size: 0.88rem; color: var(--text); line-height: 1.5; font-weight: 500; }
+        .hero-community-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #fff !important;
+            padding: 0.6rem;
+            border-radius: var(--radius-pill);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+        .hero-community-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(37,211,102,0.4); color:#fff !important; }
+
+        /* ===== QUICK SHORTCUTS ===== */
+        .shortcuts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .shortcut {
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            font-family: 'Heebo', sans-serif;
+            border: 1px solid var(--border);
+            text-align: right;
+        }
+        .shortcut:hover { transform: translateY(-2px); border-color: var(--primary-light); color: inherit; }
+        .shortcut-icon {
+            width: 40px; height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--dark-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .shortcut-title { font-size: 0.95rem; font-weight: 700; }
+        .shortcut-sub { font-size: 0.78rem; color: var(--text-muted); }
+
+        /* ===== SECTION HEAD (above sessions grid) ===== */
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1.1rem;
+        }
+        .section-head h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+        .section-head .hint { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* ===== SESSIONS GRID — PREVIEW STYLE (compact 2-column) ===== */
+        .sessions-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1rem !important;
+            max-width: 100%;
+        }
+        .session-card {
+            background: var(--dark-card) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: var(--radius-md) !important;
+            padding: 1.1rem 1.2rem !important;
+            display: grid;
+            grid-template-columns: 44px 1fr auto !important;
+            gap: 1rem !important;
+            align-items: center !important;
+            transition: transform 0.25s cubic-bezier(.2,.8,.2,1), border-color 0.25s, box-shadow 0.25s !important;
+            cursor: pointer;
+            overflow: hidden !important;
+            position: relative !important;
+            flex-direction: initial !important;
+        }
+        /* Respect display:none from switchCourse (basic/advanced toggling) */
+        .session-card[style*="display: none"],
+        .session-card[style*="display:none"] { display: none !important; }
+        /* Decorative colored glow on the RIGHT side (behind the session number) */
+        .session-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--card-glow, radial-gradient(circle, rgba(108,60,225,0.25), transparent 70%));
+            transform: translateY(-50%);
+            opacity: 0.6;
+            filter: blur(14px);
+            pointer-events: none;
+            transition: opacity 0.35s, transform 0.5s;
+            z-index: 0;
+        }
+        /* Subtle tint overlay across the card */
+        .session-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-md);
+            background: var(--card-tint, transparent);
+            opacity: 0.18;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 0;
+        }
+        .session-card > * { position: relative; z-index: 1; }
+        .session-card:hover {
+            transform: translateY(-3px) !important;
+            border-color: var(--card-border, var(--primary-light)) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 0 1px var(--card-border, rgba(108,60,225,0.3)) !important;
+        }
+        .session-card:hover::before {
+            opacity: 0.95;
+            transform: translateY(-50%) scale(1.15);
+        }
+        .session-card:hover::after {
+            opacity: 0.32;
+        }
+        /* Hide the colorful image banner */
+        .session-card .session-card-image { display: none !important; }
+        /* Hide the preview text block + default body */
+        .session-card .session-card-preview { display: none !important; }
+        .session-card .session-card-body { display: none !important; }
+        /* Rearrange the header: number as compact gray box, title + tag inline */
+        .session-card .session-card-header {
+            display: contents !important;
+            padding: 0 !important;
+            background: none !important;
+        }
+        .session-card .session-number {
+            width: 44px !important;
+            height: 44px !important;
+            background: var(--dark-lighter);
+            border-radius: var(--radius-sm) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 1.1rem !important;
+            font-weight: 800 !important;
+            color: #fff !important;
+            position: static !important;
+            top: auto !important; left: auto !important; right: auto !important;
+            margin: 0 !important;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25) !important;
+            grid-column: 1 !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.45);
+        }
+        .session-card .session-card-header h3 {
+            grid-column: 2 !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            margin: 0 0 0.2rem !important;
+            line-height: 1.3 !important;
+            color: var(--text) !important;
+        }
+        .session-card .session-tag {
+            display: none !important;
+        }
+        /* Session-number info cell (middle column — title + topics) */
+        .session-card-meta {
+            grid-column: 2 !important;
+            font-size: 0.78rem !important;
+            color: var(--text-muted) !important;
+            line-height: 1.4 !important;
+        }
+        /* Completion checkmark — right side (LTR: far left visually in RTL) */
+        .session-card .session-complete-toggle {
+            position: static !important;
+            top: auto !important; left: auto !important;
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 50% !important;
+            background: transparent !important;
+            border: 2px solid var(--border) !important;
+            color: transparent !important;
+            font-size: 1rem !important;
+            cursor: pointer;
+            transition: all 0.2s !important;
+            grid-column: 3 !important;
+            flex-shrink: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            z-index: 2;
+        }
+        .session-card .session-complete-toggle:hover {
+            border-color: var(--accent) !important;
+            color: var(--accent) !important;
+        }
+        .session-card.completed {
+            opacity: 0.65;
+        }
+        .session-card.completed .session-card-header h3 {
+            text-decoration: line-through;
+            text-decoration-color: rgba(0,212,170,0.5);
+        }
+        .session-card.completed .session-number {
+            background: rgba(0,212,170,0.15) !important;
+            color: var(--accent) !important;
+        }
+        .session-card.completed .session-complete-toggle {
+            background: var(--accent) !important;
+            border-color: var(--accent) !important;
+            color: #000 !important;
+        }
+        .session-card.completed .session-complete-toggle:hover {
+            color: #000 !important;
+        }
+        /* "עכשיו" inline label on the current session (shown via JS) */
+        .session-card .session-now-label {
+            display: inline-block;
+            margin-right: 0.4rem;
+            color: var(--accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        @media (max-width: 768px) {
+            .sessions-grid { grid-template-columns: 1fr !important; }
+            .session-card { padding: 0.9rem 1rem !important; grid-template-columns: 40px 1fr auto !important; gap: 0.8rem !important; }
+            .session-card .session-number { width: 40px !important; height: 40px !important; font-size: 1rem !important; }
+            .session-card .session-card-header h3 { font-size: 0.95rem !important; }
+        }
+
+        /* ===== RECOMMENDED NEXT ===== */
+        .recommended {
+            background: linear-gradient(135deg, rgba(0,212,170,0.12), rgba(108,60,225,0.08));
+            border: 1.5px solid rgba(0,212,170,0.35);
+            border-radius: var(--radius-md);
+            padding: 1.3rem 1.5rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 60px 1fr auto;
+            gap: 1.2rem;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+        .recommended::before {
+            content: 'השיעור שלך עכשיו';
+            position: absolute;
+            top: -10px;
+            right: 1.3rem;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: var(--radius-pill);
+            letter-spacing: 0.05em;
+        }
+        .recommended-num {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), #00b894);
+            color: #000;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            font-weight: 900;
+        }
+        .recommended-info h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.25rem; }
+        .recommended-info p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+        .recommended-meta {
+            display: flex;
+            gap: 0.7rem;
+            margin-top: 0.5rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+        .recommended-enter {
+            background: linear-gradient(135deg, var(--accent), #00b894);
+            color: #000 !important;
+            padding: 0.75rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-weight: 700;
+            transition: transform 0.2s;
+            white-space: nowrap;
+            border: none;
+            cursor: pointer;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            text-decoration: none;
+        }
+        .recommended-enter:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); color: #000 !important; }
+
+        @media (max-width: 768px) {
+            .hero-banner { grid-template-columns: 1fr; gap: 1rem; padding: 1.2rem 1.3rem; }
+            .hero-title { font-size: 1.3rem; }
+            .shortcuts { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+            .shortcut { padding: 0.75rem 0.9rem; }
+            .shortcut-icon { width: 36px; height: 36px; font-size: 1.1rem; }
+            .shortcut-title { font-size: 0.88rem; }
+            .shortcut-sub { font-size: 0.72rem; }
+            .recommended { grid-template-columns: 52px 1fr; gap: 0.8rem; padding: 1rem 1.1rem; }
+            .recommended-num { width: 52px; height: 52px; font-size: 1.4rem; }
+            .recommended-info h3 { font-size: 1.05rem; }
+            .recommended-info p { font-size: 0.82rem; }
+            .recommended-enter { grid-column: 1 / -1; text-align: center; margin-top: 0.4rem; }
         }
 
         /* ===== SESSIONS HERO (daily tip + progress) ===== */
@@ -1910,11 +2477,43 @@
             }
             .mobile-header-logo {
                 font-weight: 900; font-size: 1.3rem;
-                background: linear-gradient(135deg, #6c3ce1, #4a90e2);
+                background: linear-gradient(135deg, var(--accent), var(--primary-light));
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 text-decoration: none;
-                letter-spacing: 0.3px;
+                letter-spacing: 0.5px;
+            }
+            /* Mobile topbar Zoom pill (preview style) */
+            .mobile-header-zoom {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                height: 38px;
+                padding: 0 1.1rem;
+                border-radius: var(--radius-pill);
+                background: linear-gradient(135deg, #2D74F9, #1a5cd9);
+                color: #fff !important;
+                text-decoration: none;
+                font-family: 'Heebo', sans-serif;
+                font-size: 0.9rem;
+                font-weight: 800;
+                box-shadow: 0 4px 12px rgba(45, 116, 249, 0.35);
+                transition: transform 0.2s;
+            }
+            .mobile-header-zoom:active { transform: scale(0.96); }
+            /* Mobile course switcher row (below header) */
+            .mobile-header-course-row {
+                position: fixed;
+                top: calc(57px + env(safe-area-inset-top));
+                left: 0; right: 0;
+                z-index: 49;
+                padding: 0.5rem 1rem;
+                background: rgba(10,10,20,0.9);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                justify-content: center;
             }
             .mobile-header-course {
                 display: flex;
@@ -1922,6 +2521,7 @@
                 border-radius: 18px;
                 padding: 3px;
                 gap: 2px;
+                border: 1px solid var(--border);
             }
             .mh-course-btn {
                 border: none;
@@ -1993,8 +2593,9 @@
             }
             .mpm-item:hover { background: rgba(239, 68, 68, 0.1); }
 
-            /* Top padding accounts for slim mobile header only */
+            /* Top padding accounts for slim mobile header (and course switcher row when shown) */
             .main-content { padding-top: calc(3.8rem + env(safe-area-inset-top)) !important; }
+            body.has-course-switcher .main-content { padding-top: calc(6.5rem + env(safe-area-inset-top)) !important; }
 
             /* ===== HAMBURGER in mobile header ===== */
             .mobile-header-menu {
@@ -2531,82 +3132,71 @@
             </div>
         </div>
 
-        <div class="sidebar-divider"></div>
-
-        <a href="#" class="zoom-live-btn" id="zoomBtn" onclick="joinZoom()" title="הצטרפו למפגש בזום">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M4 3C2.9 3 2 3.9 2 5V15C2 16.1 2.9 17 4 17H14C15.1 17 16 16.1 16 15V12L20 16V4L16 8V5C16 3.9 15.1 3 14 3H4ZM4 5H14V15H4V5Z"/>
-            </svg>
-            Zoom
+        <!-- Zoom button at top (preview style) -->
+        <a href="#" class="zoom-live-btn" id="zoomBtn" onclick="joinZoom(); return false;" title="הצטרפו למפגש בזום">
+            <span class="zoom-label">הכנס לכיתה</span>
         </a>
-
-        <div class="sidebar-divider"></div>
 
         <!-- Course Level Switcher -->
         <div class="course-switcher advanced-only" id="courseSwitcher" style="display:none;">
-            <div class="course-switcher-label">קורס</div>
             <div class="course-switcher-btns">
                 <button class="course-btn active" id="courseBtnBasic" onclick="switchCourse('basic')">בסיסי</button>
                 <button class="course-btn" id="courseBtnAdvanced" onclick="switchCourse('advanced')">מתקדם</button>
             </div>
         </div>
 
-        <div class="sidebar-divider advanced-only" style="display:none;"></div>
+        <!-- Progress box (preview style) -->
+        <div class="sidebar-progress-box" id="sidebarProgressBox">
+            <div class="sp-label">ההתקדמות שלי</div>
+            <div class="sp-num"><span id="sidebarProgressDone">0</span><span class="sp-total"> / <span id="sidebarProgressTotal">8</span> שיעורים</span></div>
+            <div class="sp-bar"><div class="sp-fill" id="sidebarProgressFill" style="width:0%"></div></div>
+        </div>
 
-        <div class="sidebar-nav-label">תפריט</div>
         <nav class="sidebar-nav">
-            <!-- Shared: מפגשים -->
+            <!-- Group 1: הלמידה שלי -->
+            <div class="sidebar-nav-group-label">📚 הלמידה שלי</div>
             <button class="active" data-section="sessions">
-                <span class="nav-icon">&#x1F4DA;</span><span>מפגשים</span>
+                <span class="nav-icon">&#x1F3AF;</span><span>מפגשים</span>
             </button>
-            <!-- Basic: כלי AI -->
-            <button data-section="ai-tools" data-nav-course="basic">
-                <span class="nav-icon">&#x1F916;</span><span>כלי AI</span>
-            </button>
-            <!-- Advanced: כלים לפיתוח -->
-            <button data-section="dev-tools" data-nav-course="advanced" style="display:none;">
-                <span class="nav-icon">&#x1F527;</span><span>כלים לפיתוח</span>
-            </button>
-            <!-- Basic: הפרויקט שלי -->
             <button data-section="project" data-nav-course="basic">
                 <span class="nav-icon">&#x1F680;</span><span>הפרויקט שלי</span>
             </button>
-            <!-- Advanced: פרומפטים מוכנים -->
-            <button data-section="prompts" data-nav-course="advanced" style="display:none;">
-                <span class="nav-icon">&#x1F3AF;</span><span>פרומפטים מוכנים</span>
+            <button data-section="checklist" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x2705;</span><span>צ'קליסט פרויקט</span>
             </button>
-            <!-- Basic: הדרכות -->
+
+            <!-- Group 2: כלים -->
+            <div class="sidebar-nav-group-label">🛠️ כלים</div>
+            <button data-section="ai-tools" data-nav-course="basic">
+                <span class="nav-icon">&#x1F916;</span><span>כלי AI</span>
+            </button>
+            <button data-section="dev-tools" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x26A1;</span><span>כלים לפיתוח</span>
+            </button>
+            <button data-section="prompts" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F4A1;</span><span>פרומפטים מוכנים</span>
+            </button>
             <button data-section="guides" data-nav-course="basic">
                 <span class="nav-icon">&#x1F4D6;</span><span>הדרכות</span>
             </button>
-            <!-- Advanced: צ'קליסט פרויקט -->
-            <button data-section="checklist" data-nav-course="advanced" style="display:none;">
-                <span class="nav-icon">&#x1F4CB;</span><span>צ'קליסט פרויקט</span>
+            <button data-section="guides-adv" data-nav-course="advanced" style="display:none;">
+                <span class="nav-icon">&#x1F4D6;</span><span>הדרכות</span>
             </button>
-            <!-- Basic: המלצות -->
             <button data-section="recommendations" data-nav-course="basic">
                 <span class="nav-icon">&#x2B50;</span><span>המלצות</span>
             </button>
-            <!-- Shared: קהילה -->
+
+            <!-- Group 3: קהילה -->
+            <div class="sidebar-nav-group-label">👥 קהילה</div>
             <button data-section="community">
-                <span class="nav-icon">&#x1F465;</span><span>קהילה</span>
+                <span class="nav-icon">&#x1F4AC;</span><span>WhatsApp קבוצה</span>
             </button>
-            <!-- Discord — coming soon -->
             <button class="nav-soon" disabled aria-disabled="true">
                 <span class="nav-icon">&#x1F3AE;</span><span>דיסקורד</span>
                 <span class="nav-soon-badge">בקרוב</span>
             </button>
-            <!-- Advanced: הדרכות -->
-            <button data-section="guides-adv" data-nav-course="advanced" style="display:none;">
-                <span class="nav-icon">&#x1F4D6;</span><span>הדרכות</span>
-            </button>
-            <!-- Shared: הורדות -->
             <button data-section="downloads">
-                <span class="nav-icon">&#x1F4BE;</span><span>הורדות</span>
-            </button>
-            <!-- Basic: עזרה -->
-            <button data-section="help" data-nav-course="basic">
-                <span class="nav-icon">&#x2753;</span><span>עזרה</span>
+                <span class="nav-icon">&#x1F4E5;</span><span>הורדות</span>
             </button>
             <!-- Admin only: מצגת וובינר -->
             <button id="adminPresentationBtn" onclick="window.open('/admin-7x9k2m/webinar-presentation.html','_blank')" style="display:none;">
@@ -2615,17 +3205,14 @@
         </nav>
 
         <div class="sidebar-footer">
-            <a href="/" style="color: var(--text-muted); font-size: 0.75rem; text-decoration: none; opacity: 0.7; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">לאתר הראשי</a>
+            <a href="/" style="color: var(--text-muted); font-size: 0.75rem; text-decoration: none; opacity: 0.7; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">← חזרה לאתר</a>
         </div>
     </aside>
 
     <!-- MOBILE HEADER (Instagram-style) -->
     <header class="mobile-header" id="mobileHeader">
+        <a href="#" class="mobile-header-zoom" onclick="joinZoom(); return false;" aria-label="כניסה לכיתה">כיתה</a>
         <a href="/" class="mobile-header-logo">AI Lab</a>
-        <div class="mobile-header-course advanced-only" style="display:none;">
-            <button class="mh-course-btn active" id="mobileCourseBtnBasic" onclick="switchCourse('basic')">בסיסי</button>
-            <button class="mh-course-btn" id="mobileCourseBtnAdvanced" onclick="switchCourse('advanced')">מתקדם</button>
-        </div>
         <button class="mobile-header-avatar" id="mobileAvatar" onclick="toggleMobileProfileMenu()" aria-label="תפריט פרופיל"></button>
         <div class="mobile-profile-menu" id="mobileProfileMenu">
             <div class="mpm-greeting" id="mobileGreeting"></div>
@@ -2634,6 +3221,13 @@
             </button>
         </div>
     </header>
+    <!-- Mobile course switcher row (below header) -->
+    <div class="mobile-header-course-row advanced-only" style="display:none;">
+        <div class="mobile-header-course">
+            <button class="mh-course-btn active" id="mobileCourseBtnBasic" onclick="switchCourse('basic')">בסיסי</button>
+            <button class="mh-course-btn" id="mobileCourseBtnAdvanced" onclick="switchCourse('advanced')">מתקדם</button>
+        </div>
+    </div>
 
     <!-- MOBILE BOTTOM NAV (Instagram-style: 5 slots, AI in center) -->
     <nav class="mobile-nav">
@@ -2700,9 +3294,6 @@
                 <span class="ms-emoji">&#x1F3AE;</span><span>דיסקורד</span>
                 <span style="position:absolute; top:6px; left:6px; font-size:0.55rem; font-weight:800; padding:1px 6px; background:rgba(245,200,66,0.22); color:#F5C842; border-radius:999px;">בקרוב</span>
             </button>
-            <button class="ms-item" onclick="selectMoreSection('help')" data-nav-course="basic" data-section="help">
-                <span class="ms-emoji">&#x2753;</span><span>עזרה</span>
-            </button>
         </div>
     </div>
 
@@ -2711,30 +3302,96 @@
 
         <!-- ==================== SESSIONS ==================== -->
         <div class="portal-section active" id="section-sessions">
-            <div class="page-header">
-                <h1>&#x1F4DA; מפגשי הקורס</h1>
-            </div>
+            <!-- LANDING (hero + shortcuts + recommended + all sessions grid) -->
+            <div class="sessions-landing" id="sessionsLanding">
+            <div class="breadcrumb">פורטל <span>›</span> <span>המפגשים שלי</span></div>
 
-            <!-- Hero row: Daily tip + Progress (new design) -->
-            <div class="sessions-hero">
-                <div class="tip-widget">
-                    <div class="tip-widget-title">
-                        <span class="tip-pulse"></span>
-                        <span>💡 טיפ היום</span>
+            <!-- Hero banner: session label + progress + daily tip on the side -->
+            <section class="hero-banner">
+                <div class="hero-left">
+                    <div class="hero-label" id="heroLabel">שיעור 1 · הקורס</div>
+                    <h1 class="hero-title" id="heroTitle">ברוכים הבאים לעולם ה-AI</h1>
+                    <div class="hero-progress">
+                        <div class="hero-progress-label">
+                            <span><span id="progressDone">0</span> מתוך <span id="progressTotal">8</span> הושלמו</span>
+                            <span id="heroPct">0%</span>
+                        </div>
+                        <div class="hero-progress-bar"><div class="hero-progress-fill" id="progressFill" style="width:0%"></div></div>
                     </div>
-                    <div class="tip-widget-card">
-                        <div class="tip-widget-cat" id="tipWidgetCat">AI ופרומפטים</div>
-                        <div class="tip-widget-text" id="tipWidgetText">טוען...</div>
+                    <div class="hero-cta-row">
+                        <a href="#" class="hero-cta" id="heroCta" onclick="scrollToCurrentSession(); return false;">&#x25B6;&#xFE0F; המשך לשיעור הנוכחי</a>
                     </div>
                 </div>
-                <div class="progress-widget" id="progressWidget">
-                    <div class="progress-widget-title">ההתקדמות שלי</div>
-                    <div class="progress-widget-num"><span id="progressDone">0</span><span class="progress-widget-total"> / <span id="progressTotal">8</span> שיעורים</span></div>
-                    <div class="progress-widget-bar"><div class="progress-widget-fill" id="progressFill" style="width:0%"></div></div>
-                    <div class="progress-widget-hint" id="progressHint">סמן שיעור כהושלם בעזרת ✓ שמופיע בכרטיס</div>
+
+                <div class="hero-tip">
+                    <div class="hero-tip-title"><span class="pulse"></span> &#x1F4A1; טיפ היום</div>
+                    <div class="hero-tip-card">
+                        <div class="hero-tip-cat" id="tipWidgetCat">AI ופרומפטים</div>
+                        <div class="hero-tip-text" id="tipWidgetText">טוען...</div>
+                    </div>
+                    <a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" class="hero-community-btn">
+                        <span>הצטרפו לקהילה</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </a>
                 </div>
+            </section>
+
+            <!-- Quick shortcuts -->
+            <div class="shortcuts">
+                <a href="#" class="shortcut" onclick="scrollToCurrentSession(); return false;">
+                    <div class="shortcut-icon">&#x1F3A4;</div>
+                    <div>
+                        <div class="shortcut-title">מצגת השיעור</div>
+                        <div class="shortcut-sub">רענון מהיר</div>
+                    </div>
+                </a>
+                <a href="#" class="shortcut" onclick="switchSection('prompts'); return false;" data-nav-course="advanced" style="display:none;">
+                    <div class="shortcut-icon">&#x1F4A1;</div>
+                    <div>
+                        <div class="shortcut-title">פרומפטים מוכנים</div>
+                        <div class="shortcut-sub">העתק-הדבק</div>
+                    </div>
+                </a>
+                <a href="#" class="shortcut" onclick="switchSection('ai-tools'); return false;" data-nav-course="basic">
+                    <div class="shortcut-icon">&#x1F916;</div>
+                    <div>
+                        <div class="shortcut-title">כלי AI</div>
+                        <div class="shortcut-sub">ChatGPT, Claude, ועוד</div>
+                    </div>
+                </a>
+                <a href="#" class="shortcut" onclick="toggleAiChat(); return false;">
+                    <div class="shortcut-icon">&#x1F4AC;</div>
+                    <div>
+                        <div class="shortcut-title">שאל את העוזר</div>
+                        <div class="shortcut-sub">מומחה לקורס</div>
+                    </div>
+                </a>
             </div>
 
+            <!-- Recommended next session -->
+            <div class="section-head">
+                <h2>המשך מכאן</h2>
+                <span class="hint">הבא בתור</span>
+            </div>
+            <div class="recommended" id="recommendedCard">
+                <div class="recommended-num" id="recNum">1</div>
+                <div class="recommended-info">
+                    <h3 id="recTitle">ברוכים הבאים לעולם ה-AI</h3>
+                    <p id="recDesc">הכרות ראשונית עם בינה מלאכותית. נכיר את הכלים ונתחיל לחלום.</p>
+                    <div class="recommended-meta" id="recMeta">
+                        <span>&#x23F1;&#xFE0F; ~45 דקות</span>
+                        <span>&#x1F4CA; 4 מושגים</span>
+                        <span>&#x1F3A4; מצגת זמינה</span>
+                    </div>
+                </div>
+                <button class="recommended-enter" onclick="scrollToCurrentSession()">התחל &larr;</button>
+            </div>
+
+            <!-- All sessions -->
+            <div class="section-head">
+                <h2>כל המפגשים</h2>
+                <span class="hint">לחצו על ✓ לסימון כהושלם</span>
+            </div>
             <div class="sessions-grid">
 
                 <!-- Session 1 -->
@@ -3534,6 +4191,8 @@
                 </div>
 
             </div>
+
+            </div><!-- /.sessions-landing -->
 
             <!-- Session Detail View (populated by JS) -->
             <div class="session-detail-view" id="sessionDetailView">
@@ -5031,6 +5690,8 @@
             for (var i = 0; i < advancedEls.length; i++) {
                 advancedEls[i].style.display = isAdvanced ? '' : 'none';
             }
+            // Toggle body class so the main-content padding-top accounts for the course switcher row on mobile
+            document.body.classList.toggle('has-course-switcher', isAdvanced);
 
             // Show admin-only elements
             if (currentUserLevel === 'admin') {
@@ -5195,7 +5856,7 @@
         });
 
         // ===== NAVIGATION =====
-        const allNavBtns = document.querySelectorAll('.mobile-nav button[data-section], .sidebar-nav button[data-section]');
+        const allNavBtns = document.querySelectorAll('.mobile-nav button[data-section], .sidebar-nav button[data-section], .sidebar-help-btn[data-section]');
         const allSections = document.querySelectorAll('.portal-section');
 
         function switchSection(sectionId) {
@@ -5267,23 +5928,24 @@
                     if (!header) return;
                     var d = dataArr[i] || { desc: '', topics: [], bg: '' };
 
-                    // Add gradient image banner before header
-                    var imgBanner = document.createElement('div');
-                    imgBanner.className = 'session-card-image';
-                    imgBanner.style.background = d.bg;
-                    imgBanner.innerHTML = '<span class="img-num">' + (i + 1) + '</span><div class="img-deco"></div>';
-                    header.parentNode.insertBefore(imgBanner, header);
-
-                    // Remove the old background from header (now it's a separate element)
-                    header.style.background = 'none';
-
-                    // Create preview text
-                    var preview = document.createElement('div');
-                    preview.className = 'session-card-preview';
-                    preview.innerHTML = '<p>' + d.desc + '</p>' +
-                        '<div class="preview-topics">' + d.topics.map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
-                        '<div class="preview-enter">\u05D4\u05D9\u05DB\u05E0\u05E1\u05D5 \u05DC\u05DE\u05E4\u05D2\u05E9 \u2190</div>';
-                    header.insertAdjacentElement('afterend', preview);
+                    // Compact cards: show only the session title (no topics/desc line in the grid view)
+                    // Apply session-specific gradient colors to the number + card glow
+                    if (d.bg) {
+                        var numEl = header.querySelector('.session-number');
+                        if (numEl) numEl.style.background = d.bg;
+                        // Extract an accent color from the gradient for the glow + tint
+                        var colorMatch = d.bg.match(/#[0-9a-fA-F]{6}/g);
+                        var accent = (colorMatch && colorMatch[colorMatch.length - 1]) || '#6C3CE1';
+                        // hex → rgb
+                        var r = parseInt(accent.slice(1,3), 16);
+                        var g = parseInt(accent.slice(3,5), 16);
+                        var b = parseInt(accent.slice(5,7), 16);
+                        card.style.setProperty('--card-glow',
+                            'radial-gradient(circle, rgba(' + r + ',' + g + ',' + b + ',0.35), transparent 70%)');
+                        card.style.setProperty('--card-tint',
+                            'linear-gradient(245deg, rgba(' + r + ',' + g + ',' + b + ',0.15) 0%, transparent 55%)');
+                        card.style.setProperty('--card-border', 'rgba(' + r + ',' + g + ',' + b + ',0.45)');
+                    }
 
                     // Complete toggle button (top-left corner of the card)
                     var toggleBtn = document.createElement('button');
@@ -5341,20 +6003,82 @@
                 });
             });
         }
+        function getSessionNum(card) {
+            var el = card.querySelector('.session-number');
+            return el ? parseInt(el.textContent.trim()) : 0;
+        }
+
         function updateProgressWidget() {
             var courseType = (typeof currentCourseView !== 'undefined') ? currentCourseView : 'basic';
             var cards = document.querySelectorAll('.session-card[data-course="' + courseType + '"]');
             var total = cards.length;
             var p = getProgress(courseType);
             var done = 0;
-            cards.forEach(function(c) { if (p[parseInt(c.dataset.sessionNum)]) done++; });
+            cards.forEach(function(c) { if (p[getSessionNum(c)]) done++; });
             var pct = total > 0 ? Math.round(done / total * 100) : 0;
+            // Hero banner progress
             var doneEl = document.getElementById('progressDone');
             var totalEl = document.getElementById('progressTotal');
             var fillEl = document.getElementById('progressFill');
+            var pctEl = document.getElementById('heroPct');
             if (doneEl) doneEl.textContent = done;
             if (totalEl) totalEl.textContent = total;
             if (fillEl) fillEl.style.width = pct + '%';
+            if (pctEl) pctEl.textContent = pct + '%';
+            // Sidebar progress box
+            var sbDone = document.getElementById('sidebarProgressDone');
+            var sbTotal = document.getElementById('sidebarProgressTotal');
+            var sbFill = document.getElementById('sidebarProgressFill');
+            if (sbDone) sbDone.textContent = done;
+            if (sbTotal) sbTotal.textContent = total;
+            if (sbFill) sbFill.style.width = pct + '%';
+            // Find next (first uncompleted) session and update hero + recommended
+            var nextCard = null;
+            for (var i = 0; i < cards.length; i++) {
+                if (!p[getSessionNum(cards[i])]) { nextCard = cards[i]; break; }
+            }
+            if (!nextCard && cards.length > 0) nextCard = cards[cards.length - 1];
+            if (nextCard) {
+                var num = getSessionNum(nextCard);
+                var titleEl = nextCard.querySelector('.session-card-header h3');
+                var tagEl = nextCard.querySelector('.session-tag');
+                var objEl = nextCard.querySelector('.objective');
+                var title = titleEl ? titleEl.textContent.trim() : '';
+                var tag = tagEl ? tagEl.textContent.trim() : '';
+                var obj = objEl ? objEl.textContent.replace(/^מטרה:\s*/, '').trim() : '';
+                // Hero banner
+                var heroLabel = document.getElementById('heroLabel');
+                var heroTitle = document.getElementById('heroTitle');
+                if (heroLabel) heroLabel.textContent = 'שיעור ' + num + (courseType === 'advanced' ? ' · הקורס המתקדם' : ' · הקורס הבסיסי');
+                if (heroTitle) heroTitle.textContent = title;
+                // Recommended card
+                var recNum = document.getElementById('recNum');
+                var recTitle = document.getElementById('recTitle');
+                var recDesc = document.getElementById('recDesc');
+                if (recNum) recNum.textContent = num;
+                if (recTitle) recTitle.textContent = title;
+                if (recDesc) recDesc.textContent = obj.slice(0, 140) + (obj.length > 140 ? '…' : '');
+            }
+        }
+
+        // Scroll to the current (next uncompleted) session card on the sessions page
+        function scrollToCurrentSession() {
+            // Make sure we're on the sessions section
+            if (typeof switchSection === 'function') switchSection('sessions');
+            var courseType = (typeof currentCourseView !== 'undefined') ? currentCourseView : 'basic';
+            var cards = document.querySelectorAll('.session-card[data-course="' + courseType + '"]');
+            var p = getProgress(courseType);
+            var target = null;
+            for (var i = 0; i < cards.length; i++) {
+                if (!p[getSessionNum(cards[i])]) { target = cards[i]; break; }
+            }
+            if (!target && cards.length > 0) target = cards[0];
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                target.style.transition = 'box-shadow 0.4s';
+                target.style.boxShadow = '0 0 0 3px rgba(0,212,170,0.5)';
+                setTimeout(function() { target.style.boxShadow = ''; }, 1600);
+            }
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -5461,7 +6185,9 @@
             var bodyHTML = body.innerHTML;
             bodyHTML = bodyHTML.replace(/<div class="session-actions">[\s\S]*?<\/div>\s*$/, '');
             content.innerHTML = presBtn + bodyHTML;
-            // Show detail, hide grid
+            // Show detail, hide landing (hero + shortcuts + recommended + grid)
+            var landing = document.getElementById('sessionsLanding');
+            if (landing) landing.style.display = 'none';
             grid.style.display = 'none';
             detail.classList.add('active');
             // Push state so browser back button returns to grid
@@ -5473,6 +6199,8 @@
             currentSessionContext = null;
             const grid = document.querySelector('.sessions-grid');
             const detail = document.getElementById('sessionDetailView');
+            var landing = document.getElementById('sessionsLanding');
+            if (landing) landing.style.display = '';
             if (grid) grid.style.display = '';
             if (detail) detail.classList.remove('active');
             // Remove hash without triggering popstate
@@ -5487,6 +6215,8 @@
             const detail = document.getElementById('sessionDetailView');
             if (detail && detail.classList.contains('active')) {
                 const grid = document.querySelector('.sessions-grid');
+                var landing = document.getElementById('sessionsLanding');
+                if (landing) landing.style.display = '';
                 if (grid) grid.style.display = '';
                 detail.classList.remove('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
