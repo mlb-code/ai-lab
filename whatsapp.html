@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>הורים, ילדים ובינה מלאכותית — קבוצת וואטסאפ של AI Lab</title>
+<meta name="description" content="הורים, ילדים ובינה מלאכותית — קבוצת וואטסאפ חינמית של AI Lab. טיפ יומי על AI, הזמנות לוובינרים חינמיים, ועדכונים מעולם היזמות והבינה המלאכותית.">
+<meta name="robots" content="noindex,nofollow">
+
+<meta property="og:title" content="הורים, ילדים ובינה מלאכותית — קבוצת וואטסאפ של AI Lab">
+<meta property="og:description" content="קבוצת וואטסאפ חינמית — טיפ יומי על AI, הזמנות לוובינרים חינמיים, ועדכונים מעולם היזמות.">
+<meta property="og:image" content="https://ai-lab.co.il/og-image.jpg">
+<meta property="og:locale" content="he_IL">
+<meta property="og:type" content="website">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1494500642118868');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1494500642118868&ev=PageView&noscript=1"/></noscript>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-37WXJMRB9C"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-37WXJMRB9C');gtag('config','AW-18061574299');
+</script>
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --primary:#6C3CE1;
+    --primary-light:#8B5CF6;
+    --accent:#00D4AA;
+    --whatsapp:#25D366;
+    --whatsapp-dark:#1DA851;
+    --dark:#0f0f1e;
+    --dark-card:#181830;
+    --border:rgba(255,255,255,0.08);
+    --text:#f0eef5;
+    --text-muted:#b8b0d0;
+    --gold:#F5C842;
+  }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Heebo', sans-serif;
+    background:var(--dark);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position:relative;
+    padding:48px 20px 56px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .hero::before {
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 500px 350px at 50% 10%, rgba(37,211,102,0.2), transparent 65%),
+      radial-gradient(ellipse 400px 350px at 20% 80%, rgba(108,60,225,0.25), transparent 65%),
+      radial-gradient(ellipse 400px 300px at 80% 60%, rgba(0,212,170,0.15), transparent 65%);
+    pointer-events:none;
+  }
+  .hero::after {
+    content:"";
+    position:absolute; inset:0;
+    background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+    background-size:24px 24px;
+    pointer-events:none;
+    opacity:0.6;
+  }
+  .hero > * { position:relative; z-index:2; }
+
+  .brand {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-weight:800;
+    font-size:1.15rem;
+    margin-bottom:24px;
+    letter-spacing:0.5px;
+  }
+  .brand .logo {
+    background:linear-gradient(135deg, var(--accent), var(--primary-light));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+
+  .hero-badge {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(37,211,102,0.14);
+    border:1px solid rgba(37,211,102,0.35);
+    color:#5eeba3;
+    padding:7px 16px;
+    border-radius:999px;
+    font-size:0.85rem;
+    font-weight:700;
+    margin-bottom:22px;
+  }
+  .hero-badge .dot {
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--whatsapp);
+    box-shadow:0 0 10px var(--whatsapp);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:.55; transform:scale(1.35); }
+  }
+
+  h1 {
+    font-size:clamp(1.9rem, 6.5vw, 2.8rem);
+    font-weight:900;
+    line-height:1.15;
+    margin-bottom:16px;
+    letter-spacing:-0.5px;
+    text-wrap:balance;
+  }
+  h1 .hl {
+    background:linear-gradient(135deg, var(--gold), var(--accent) 60%, var(--whatsapp));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .hero-sub {
+    font-size:clamp(1rem, 3.8vw, 1.2rem);
+    color:var(--text-muted);
+    max-width:540px;
+    margin:0 auto 28px;
+    text-wrap:balance;
+  }
+  .hero-sub strong { color:var(--text); font-weight:700; }
+
+  .btn-whatsapp {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
+    color:#fff;
+    padding:18px 36px;
+    border-radius:999px;
+    font-family:'Heebo', sans-serif;
+    font-size:1.15rem;
+    font-weight:800;
+    text-decoration:none;
+    box-shadow:0 10px 32px rgba(37,211,102,0.45);
+    transition:transform 0.2s, box-shadow 0.3s;
+    min-width:260px;
+    cursor:pointer;
+    border:none;
+  }
+  .btn-whatsapp:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(37,211,102,0.6); }
+  .btn-whatsapp:active { transform:translateY(0); }
+  .btn-whatsapp svg { width:24px; height:24px; fill:#fff; flex-shrink:0; }
+
+  .hero-proof {
+    margin-top:22px;
+    color:var(--text-muted);
+    font-size:0.9rem;
+  }
+  .hero-proof strong { color:var(--text); }
+
+  /* ===== Benefits ===== */
+  section { padding:56px 20px; position:relative; }
+  .container { max-width:720px; margin:0 auto; }
+  .section-eyebrow {
+    display:inline-block;
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.82rem;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  h2 {
+    font-size:clamp(1.6rem, 5.5vw, 2.2rem);
+    font-weight:900;
+    line-height:1.2;
+    margin-bottom:28px;
+    text-align:center;
+    text-wrap:balance;
+  }
+  h2 .hl {
+    background:linear-gradient(135deg, var(--accent), var(--primary-light));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .section-title { text-align:center; margin-bottom:28px; }
+
+  .benefits {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .benefit {
+    background:var(--dark-card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px 16px;
+    text-align:right;
+    transition:border-color 0.25s, transform 0.25s;
+  }
+  .benefit:hover { border-color:rgba(37,211,102,0.4); transform:translateY(-3px); }
+  .benefit-icon {
+    width:42px; height:42px;
+    border-radius:10px;
+    background:linear-gradient(135deg, rgba(37,211,102,0.18), rgba(0,212,170,0.1));
+    border:1px solid rgba(37,211,102,0.2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.35rem;
+    margin-bottom:10px;
+  }
+  .benefit h3 {
+    font-size:0.98rem;
+    font-weight:800;
+    margin-bottom:4px;
+  }
+  .benefit p {
+    color:var(--text-muted);
+    font-size:0.85rem;
+    line-height:1.5;
+  }
+
+  /* ===== Proof / Projects ===== */
+  .proof-section {
+    background:linear-gradient(180deg, transparent, rgba(108,60,225,0.06), transparent);
+  }
+  .projects-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .project {
+    aspect-ratio:4/3;
+    border-radius:12px;
+    background-size:cover;
+    background-position:top center;
+    border:1px solid var(--border);
+    position:relative;
+    overflow:hidden;
+  }
+  .project::after {
+    content:attr(data-label);
+    position:absolute;
+    inset:auto 0 0 0;
+    background:linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    color:#fff;
+    font-size:0.75rem;
+    font-weight:700;
+    padding:16px 8px 8px;
+    text-align:center;
+  }
+  .proof-caption {
+    text-align:center;
+    color:var(--text-muted);
+    font-size:0.92rem;
+    margin-top:6px;
+  }
+  .proof-caption a { color:var(--accent); text-decoration:none; font-weight:600; }
+
+  /* ===== Testimonial ===== */
+  .testimonial {
+    background:linear-gradient(135deg, rgba(108,60,225,0.12), rgba(0,212,170,0.06));
+    border:1px solid rgba(108,60,225,0.3);
+    border-radius:18px;
+    padding:28px 22px;
+    text-align:center;
+    position:relative;
+  }
+  .testimonial .quote {
+    font-size:1.1rem;
+    font-weight:500;
+    line-height:1.6;
+    margin-bottom:14px;
+    color:var(--text);
+  }
+  .testimonial .author {
+    color:var(--text-muted);
+    font-size:0.88rem;
+  }
+  .testimonial .author strong { color:var(--text); }
+
+  /* ===== Final CTA ===== */
+  .cta-final {
+    background:linear-gradient(135deg, rgba(37,211,102,0.16), rgba(0,212,170,0.08));
+    border:1.5px solid rgba(37,211,102,0.35);
+    border-radius:22px;
+    padding:36px 22px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-final::before {
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(37,211,102,0.25), transparent 50%),
+      radial-gradient(circle at 80% 90%, rgba(0,212,170,0.18), transparent 50%);
+    pointer-events:none;
+  }
+  .cta-final > * { position:relative; z-index:1; }
+  .cta-final h2 { margin-bottom:10px; }
+  .cta-final p { color:var(--text-muted); font-size:1rem; margin-bottom:22px; text-wrap:balance; }
+  .cta-final .micro {
+    display:block;
+    margin-top:14px;
+    color:var(--text-muted);
+    font-size:0.82rem;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    border-top:1px solid var(--border);
+    padding:26px 20px;
+    text-align:center;
+    color:var(--text-muted);
+    font-size:0.82rem;
+  }
+  footer a { color:var(--accent); text-decoration:none; }
+
+  /* ===== Sticky CTA mobile ===== */
+  .sticky-cta {
+    position:fixed;
+    bottom:16px; left:16px; right:16px;
+    z-index:50;
+    display:none;
+  }
+  .sticky-cta .btn-whatsapp {
+    width:100%;
+    padding:16px 24px;
+    font-size:1.05rem;
+    box-shadow:0 10px 28px rgba(0,0,0,0.4), 0 6px 24px rgba(37,211,102,0.4);
+  }
+  @media (max-width:760px) {
+    .sticky-cta.visible { display:block; }
+    body { padding-bottom:80px; }
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width:560px) {
+    .benefits { grid-template-columns:1fr; }
+    .projects-grid { grid-template-columns:1fr 1fr; }
+    .projects-grid .project:nth-child(3) { display:none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="brand"><span class="logo">AI Lab</span>&middot;<span>Innovation Hub</span></div>
+    <div class="hero-badge"><span class="dot"></span>קבוצת וואטסאפ חינמית · הצטרפות חופשית</div>
+    <h1>הורים, ילדים<br><span class="hl">ובינה מלאכותית</span></h1>
+    <p class="hero-sub">
+      <strong>תשארו מחוברים לעולם של הילדים שלכם.</strong> קבוצת וואטסאפ עם תוכן יומי על AI, יזמות ופיתוח — בדיוק מה שילדים ובני נוער בונים בכיתה היום.
+    </p>
+    <a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" class="btn-whatsapp" onclick="trackJoin('hero')">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 2C6.479 2 2 6.479 2 12c0 1.94.555 3.794 1.594 5.4L2 22l4.734-1.567A9.96 9.96 0 0 0 12 22c5.522 0 10-4.478 10-10S17.521 2 12.004 2zm0 18.26c-1.739 0-3.38-.508-4.768-1.384l-.342-.204-3.542 1.173 1.195-3.442-.223-.353A8.23 8.23 0 0 1 3.77 12c0-4.537 3.693-8.23 8.234-8.23 2.2 0 4.266.856 5.818 2.41a8.176 8.176 0 0 1 2.41 5.82c0 4.541-3.693 8.234-8.228 8.234z"/></svg>
+      הצטרפו לקבוצה בחינם
+    </a>
+    <div class="hero-proof">💬 <strong>מעל 200 הורים</strong> כבר בפנים · ללא ספאם · יציאה בלחיצה</div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section>
+    <div class="container">
+      <div class="section-title">
+        <span class="section-eyebrow">מה תקבלו בקבוצה</span>
+        <h2>תוכן יומי ששווה להישאר <span class="hl">מחוברים אליו</span></h2>
+      </div>
+      <div class="benefits">
+        <div class="benefit">
+          <div class="benefit-icon">💡</div>
+          <h3>טיפ יומי על AI</h3>
+          <p>טיפ קצר ופרקטי על בינה מלאכותית — שתוכלו לעשות עם הילדים.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">🎓</div>
+          <h3>וובינרים חינמיים</h3>
+          <p>הזמנות אישיות לוובינרים ולסדנאות חינמיות לפני כולם.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">🚀</div>
+          <h3>חדשות מעולם ה-AI</h3>
+          <p>רק מה שחשוב. בעברית, בקצרה, בלי באזז מיותר.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">🧒</div>
+          <h3>תוכן מותאם לילדים</h3>
+          <p>כלים, משחקים ופרויקטים שמתאימים בדיוק לגיל של הילד שלכם.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">💻</div>
+          <h3>אתרים שילדים בנו</h3>
+          <p>דוגמאות אמיתיות מתלמידים שלנו — להראות לילדים מה אפשרי.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">🔥</div>
+          <h3>דילים והטבות</h3>
+          <p>הנחות ומחירים מיוחדים לחברי הקבוצה בלבד, לפני כולם.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="proof-section">
+    <div class="container">
+      <div class="section-title">
+        <span class="section-eyebrow">דוגמאות אמיתיות</span>
+        <h2>אלה אתרים שילדים בנו <span class="hl">עם AI Lab</span></h2>
+      </div>
+      <div class="projects-grid">
+        <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" class="project" style="background-image:url('project-previews/gamebuddy.jpg')" data-label="GameBuddy · גיימינג"></a>
+        <a href="https://ai-lab.co.il/horse-fashion/" target="_blank" class="project" style="background-image:url('project-previews/horse-fashion.jpg')" data-label="Horse Fashion · שיר, 13"></a>
+        <a href="https://ai-lab.co.il/drivelog/" target="_blank" class="project" style="background-image:url('project-previews/drivelog.jpg')" data-label="DriveLog · גבריאל, 16"></a>
+      </div>
+      <p class="proof-caption">
+        עוד פרויקטים של תלמידים שלנו ב־<a href="https://ai-lab.co.il" target="_blank">ai-lab.co.il</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section>
+    <div class="container">
+      <div class="testimonial">
+        <p class="quote">"הקבוצה הזאת היא הדרך הכי פשוטה שמצאתי להישאר מעודכנת במה שהילד שלי עושה. עכשיו אנחנו מדברים על AI בארוחת ערב."</p>
+        <p class="author">— <strong>רונית, אמא של אלון (12)</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section>
+    <div class="container">
+      <div class="cta-final">
+        <span class="section-eyebrow">ההצטרפות היא בחינם</span>
+        <h2>הצטרפו עכשיו <span class="hl">בלחיצה אחת</span></h2>
+        <p>חינם לגמרי. תוכלו לעזוב מתי שתרצו. בלי ספאם — רק תוכן ששווה את השתיקה של הקבוצה.</p>
+        <a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" class="btn-whatsapp" onclick="trackJoin('final')">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 2C6.479 2 2 6.479 2 12c0 1.94.555 3.794 1.594 5.4L2 22l4.734-1.567A9.96 9.96 0 0 0 12 22c5.522 0 10-4.478 10-10S17.521 2 12.004 2zm0 18.26c-1.739 0-3.38-.508-4.768-1.384l-.342-.204-3.542 1.173 1.195-3.442-.223-.353A8.23 8.23 0 0 1 3.77 12c0-4.537 3.693-8.23 8.234-8.23 2.2 0 4.266.856 5.818 2.41a8.176 8.176 0 0 1 2.41 5.82c0 4.541-3.693 8.234-8.228 8.234z"/></svg>
+          כניסה לקבוצה בוואטסאפ
+        </a>
+        <span class="micro">לחיצה פותחת את וואטסאפ אצלכם — תוכלו להצטרף ישירות.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    AI Lab · Innovation Hub &middot; <a href="/">לאתר הראשי</a> &middot; <a href="/privacy.html">פרטיות</a>
+  </footer>
+
+  <!-- Sticky mobile CTA -->
+  <div class="sticky-cta" id="stickyCta">
+    <a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" class="btn-whatsapp" onclick="trackJoin('sticky')">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 2C6.479 2 2 6.479 2 12c0 1.94.555 3.794 1.594 5.4L2 22l4.734-1.567A9.96 9.96 0 0 0 12 22c5.522 0 10-4.478 10-10S17.521 2 12.004 2zm0 18.26c-1.739 0-3.38-.508-4.768-1.384l-.342-.204-3.542 1.173 1.195-3.442-.223-.353A8.23 8.23 0 0 1 3.77 12c0-4.537 3.693-8.23 8.234-8.23 2.2 0 4.266.856 5.818 2.41a8.176 8.176 0 0 1 2.41 5.82c0 4.541-3.693 8.234-8.228 8.234z"/></svg>
+      הצטרפו לקבוצה בוואטסאפ
+    </a>
+  </div>
+
+  <script>
+    function trackJoin(source) {
+      try {
+        gtag('event', 'whatsapp_community_join', { event_category: 'community', event_label: source });
+        gtag('event', 'conversion', { 'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD' });
+        if (window.fbq) fbq('track', 'Lead', { content_name: 'whatsapp_community', source: source });
+      } catch(e) {}
+    }
+    // Sticky CTA shows after scrolling past hero
+    const sticky = document.getElementById('stickyCta');
+    window.addEventListener('scroll', () => {
+      sticky.classList.toggle('visible', window.scrollY > 300);
+    }, { passive: true });
+  </script>
+</body>
+</html>
