@@ -4191,8 +4191,8 @@
                     <input type="email" id="email" name="email" placeholder="your@email.com" required>
                 </div>
                 <div class="form-buttons">
-                    <button type="submit" class="btn-primary">&#x1F4E9; שלח פנייה</button>
-                    <button type="button" class="btn-whatsapp" onclick="sendWhatsApp()">&#x1F4AC; שלח בוואטסאפ</button>
+                    <button type="submit" class="btn-primary">שלח פנייה</button>
+                    <button type="button" class="btn-whatsapp" onclick="sendWhatsApp()">שלח בוואטסאפ</button>
                 </div>
             </form>
         </div>
@@ -4713,12 +4713,12 @@
                     form.innerHTML = '<div style="text-align:center;padding:2rem;font-size:1.2rem;color:var(--accent);font-weight:700;">הפנייה נשלחה בהצלחה! נחזור אליכם בהקדם.</div>';
                 } else {
                     btn.disabled = false;
-                    btn.textContent = '📩 שלח פנייה';
+                    btn.textContent = 'שלח פנייה';
                     alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
                 }
             } catch(err) {
                 btn.disabled = false;
-                btn.textContent = '📩 שלח פנייה';
+                btn.textContent = 'שלח פנייה';
                 alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
             }
             return false;
