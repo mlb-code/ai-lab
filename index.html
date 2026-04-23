@@ -3223,7 +3223,7 @@
             <li><a href="/mission.html">המשימה שלנו</a></li>
         </ul>
         <div class="nav-cta-group">
-            <a href="#register" class="nav-cta" style="background:linear-gradient(135deg,var(--accent),#00b894);">הרשמה</a>
+            <a href="#" onclick="event.preventDefault();openRegisterPopup();" class="nav-cta" style="background:linear-gradient(135deg,var(--accent),#00b894);">הרשמה</a>
             <a href="/webinar-general.html" class="nav-cta" style="background:linear-gradient(135deg,var(--accent),#00b894);">וובינר חינמי</a>
             <a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" class="nav-cta" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));" onclick="gtag('event','whatsapp_community_click',{event_category:'community',event_label:'nav_join'})">הצטרפו לקהילה</a>
             <a href="/portal/" class="nav-cta" style="background:transparent;border:1.5px solid rgba(255,255,255,0.28);">אזור אישי</a>
@@ -3241,13 +3241,45 @@
             <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
             <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
             <li><a href="/mission.html"><span class="menu-icon">&#x2728;</span> המשימה שלנו</a></li>
-            <li class="mobile-cta mobile-cta-green"><a href="#register">הרשמה</a></li>
+            <li class="mobile-cta mobile-cta-green"><a href="#" onclick="event.preventDefault();closeMobileMenu&&closeMobileMenu();openRegisterPopup();">הרשמה</a></li>
             <li class="mobile-cta mobile-cta-green"><a href="/webinar-general.html">וובינר חינמי</a></li>
             <li class="mobile-cta"><a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));" onclick="gtag('event','whatsapp_community_click',{event_category:'community',event_label:'mobile_nav_join'})">הצטרפו לקהילה</a></li>
             <li class="mobile-cta"><a href="/portal/" style="background:transparent;border:1.5px solid rgba(255,255,255,0.28);">אזור אישי</a></li>
         </ul>
     </div>
     <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- REGISTER POPUP -->
+    <div id="registerPopup" class="scroll-popup-overlay" onclick="if(event.target===this)closeRegisterPopup()">
+        <div class="scroll-popup-box" style="max-width:480px;">
+            <button class="scroll-popup-close" onclick="closeRegisterPopup()" aria-label="סגור">&times;</button>
+            <div class="scroll-popup-header">
+                <div class="scroll-popup-icon">🚀</div>
+                <h3>שריינו מקום בקורס</h3>
+                <p>השאירו פרטים ונחזור אליכם בהקדם</p>
+            </div>
+            <form id="contactFormPopup" onsubmit="return submitFormPopup(event)">
+                <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
+                <input type="hidden" name="subject" value="פנייה חדשה מאתר הקורס AI Lab">
+                <div class="form-group">
+                    <label for="namePopup">שם מלא</label>
+                    <input type="text" id="namePopup" name="name" placeholder="הכניסו את השם שלכם" required>
+                </div>
+                <div class="form-group">
+                    <label for="phonePopup">מספר טלפון</label>
+                    <input type="tel" id="phonePopup" name="phone" placeholder="050-1234567" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailPopup">אימייל</label>
+                    <input type="email" id="emailPopup" name="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-primary">שלח פנייה</button>
+                    <button type="button" class="btn-whatsapp" onclick="sendWhatsAppPopup()">שלח בוואטסאפ</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- SCROLL POPUP -->
     <!-- WEBINAR POPUP -->
@@ -3309,7 +3341,7 @@
                 <br>מתאים גם למבוגרים. ללא ניסיון קודם.
             </p>
             <div class="hero-buttons">
-                <a href="#register" class="btn-primary">הרשמו עכשיו &#x1F680;</a>
+                <a href="#" onclick="event.preventDefault();openRegisterPopup();" class="btn-primary">הרשמו עכשיו &#x1F680;</a>
                 <a href="/webinar-general.html" class="btn-secondary">🎓 הירשם לוובינר בחינם</a>
             </div>
             <div class="hero-stats">
@@ -4600,6 +4632,53 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeSyllabus();
         });
+
+        // ── Register popup (opens from nav/hero register buttons) ──
+        function openRegisterPopup() {
+            document.getElementById('registerPopup').classList.add('popup-visible');
+            gtag('event', 'register_popup_open', { event_category: 'engagement' });
+        }
+        function closeRegisterPopup() {
+            document.getElementById('registerPopup').classList.remove('popup-visible');
+        }
+        async function submitFormPopup(e) {
+            e.preventDefault();
+            var form = document.getElementById('contactFormPopup');
+            var btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'שולח...';
+            try {
+                var data = new FormData(form);
+                var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+                if (res.ok) {
+                    gtag('event', 'generate_lead', { event_category: 'contact_form', event_label: 'form_submit_popup' });
+                    gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
+                    form.innerHTML = '<div style="text-align:center;padding:2rem;font-size:1.2rem;color:var(--accent);font-weight:700;">הפנייה נשלחה בהצלחה! נחזור אליכם בהקדם.</div>';
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = 'שלח פנייה';
+                    alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
+                }
+            } catch(err) {
+                btn.disabled = false;
+                btn.textContent = 'שלח פנייה';
+                alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
+            }
+            return false;
+        }
+        function sendWhatsAppPopup() {
+            const name = document.getElementById('namePopup').value.trim();
+            const phone = document.getElementById('phonePopup').value.trim();
+            const email = document.getElementById('emailPopup').value.trim();
+            if (!name || !phone || !email) {
+                alert('נא למלא את כל השדות');
+                return;
+            }
+            const msg = `היי, אני מתעניין/ת בקורס יזמות ו-AI\n\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email}`;
+            gtag('event', 'whatsapp_click', { event_category: 'contact', event_label: 'whatsapp_popup' });
+            gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
+            window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
+        }
 
         // ── Webinar popup (only on webinar button clicks — no auto triggers) ──
         function closeWebinarPopup() {
