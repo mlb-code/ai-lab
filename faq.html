@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שאלות נפוצות על הקורס | AI Lab</title>
+<meta name="description" content="כל השאלות הנפוצות על קורס AI ויזמות של AI Lab — גילאים, מחיר, מה צריך להביא, מדיניות ביטול, והאם מתאים למתחילים מוחלטים.">
+<link rel="canonical" href="https://ai-lab.co.il/faq.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="שאלות נפוצות על הקורס | AI Lab">
+<meta property="og:description" content="התשובות לשאלות הנפוצות על קורס AI ויזמות לילדים, נוער ומבוגרים.">
+<meta property="og:url" content="https://ai-lab.co.il/faq.html">
+<meta property="og:image" content="https://ai-lab.co.il/og-image.jpg">
+<meta property="og:locale" content="he_IL">
+<meta property="og:site_name" content="AI Lab">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2V4B01L78V"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2V4B01L78V');
+</script>
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --primary: #6C3CE1;
+    --primary-light: #8B5CF6;
+    --accent: #00D4AA;
+    --dark: #0f0f1e;
+    --dark-card: #181830;
+    --border: rgba(255,255,255,0.08);
+    --text: #f0eef5;
+    --text-muted: #b8b0d0;
+  }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .back-link:hover { text-decoration: underline; }
+  header.page-head {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+  .faq-item {
+    background: var(--dark-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .faq-item:hover { border-color: rgba(108,60,225,0.4); }
+  .faq-item[open] { border-color: var(--primary); }
+  .faq-q {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.1rem 1.3rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q::after {
+    content: '+';
+    color: var(--accent);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1;
+    transition: transform 0.2s;
+  }
+  .faq-item[open] .faq-q::after { content: '−'; }
+  .faq-a {
+    padding: 0 1.3rem 1.2rem;
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    line-height: 1.75;
+  }
+  .faq-a a { color: var(--accent); text-decoration: none; }
+  .faq-a a:hover { text-decoration: underline; }
+  .cta-box {
+    margin-top: 2.5rem;
+    padding: 1.8rem;
+    background: linear-gradient(135deg, rgba(108,60,225,0.12), rgba(0,212,170,0.08));
+    border: 1px solid rgba(108,60,225,0.25);
+    border-radius: 18px;
+    text-align: center;
+  }
+  .cta-box h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .cta-box p {
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+  }
+  .cta-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    justify-content: center;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.4rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: transform 0.15s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+  }
+  .btn-accent {
+    background: linear-gradient(135deg, var(--accent), #00b894);
+    color: #fff;
+  }
+  footer.page-foot {
+    margin-top: 3rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  footer.page-foot a { color: var(--accent); text-decoration: none; }
+</style>
+
+<!-- Schema.org: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "he-IL",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "צריך ניסיון בתכנות כדי להצטרף לקורס?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "בכלל לא. הקורס מיועד למתחילים מוחלטים. ה-AI עושה את התכנות בשבילכם — אתם לומדים לכוון אותו ולחשוב כמו יזמים."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "מה הגיל המתאים לקורס AI של AI Lab?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "הקורס פתוח לנוער בגילאי 10–17 ולמבוגרים 60+. התוכנית זהה: 8 מפגשים מעשיים בזום. הקבוצות מופרדות לפי גיל — קבוצה לנוער וקבוצה למבוגרים, עם דוגמאות ושיח מותאמים."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "מה צריך להביא לקורס?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "מחשב נייד בלבד (Windows / Mac / Chromebook) וחיבור לאינטרנט. כל הכלים — כולל גישה ל-ChatGPT, Claude ו-Cursor — מסופקים על ידינו."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "כמה עולה הקורס?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "המחיר המלא מופיע באזור 'מחיר' בדף הבית של האתר. יש גם מחזורי אוברי במהלך השנה עם הטבות למקדימים ולאחים. הוובינר החינמי שלנו פתוח לכולם ללא תשלום."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "איפה הקורס מתקיים?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "כל המפגשים מתקיימים אונליין בזום. אפשר להשתתף מכל מקום בארץ ובעולם — יש לנו תלמידים גם בישראל וגם בקהילה הישראלית בארה״ב."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "מה אורך כל מפגש ומתי הם מתקיימים?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "כל מפגש אורך שעה וחצי ומתקיים בשעות הערב כדי להתאים לאחרי בית הספר/העבודה. הקורס כולל 8 מפגשים, בתדירות של פעם בשבוע."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "מה אם הקורס לא מתאים לי — יש מדיניות ביטול?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "בהחלט. אנחנו מציעים מדיניות ביטול נוחה: אם עד סוף המפגש השני מחליטים שהקורס לא מתאים — החזר כספי מלא, בלי שאלות."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "עם מה יוצאים מהקורס?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "פרויקט אמיתי שרץ באינטרנט (אתר, אפליקציה או כלי), ניסיון מעשי בעבודה עם AI, כישורי יזמות והצגה, ותעודת סיום. אפשר לראות דוגמאות של פרויקטים שתלמידים בנו בדף הבית."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "האם זה באמת מתאים למבוגרים?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "כן. יש לנו קבוצה ייעודית למבוגרים 60+ עם תוכנית מותאמת, שיח וקצב מותאמים, ודוגמאות רלוונטיות. אין צורך ברקע טכנולוגי או ניסיון בתכנות."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "איך נרשמים לקורס?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ההרשמה נעשית דרך האתר. ממלאים טופס קצר, ואנחנו חוזרים עם פרטים על המחזור הקרוב, המועדים, ודרכי התשלום. אפשר גם להשתתף בוובינר החינמי כדי להכיר את הקורס לפני."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "מה ההבדל בין AI Lab לקורסי תכנות רגילים לילדים?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "בקורסי תכנות רגילים לומדים לכתוב קוד. ב-AI Lab לומדים לבנות מוצרים אמיתיים עם בינה מלאכותית — בלי לכתוב קוד. הדגש הוא על חשיבה יזמית: איך מגדירים בעיה, איך מזהים צורך, ואיך בונים פתרון עם AI כשותף."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "האם אתם מוציאים חשבונית?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "כן. AI Lab פועל כעוסק מורשה ומוציא חשבונית מס כדין על כל תשלום."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- Schema.org: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "דף הבית", "item": "https://ai-lab.co.il/" },
+    { "@type": "ListItem", "position": 2, "name": "שאלות נפוצות", "item": "https://ai-lab.co.il/faq.html" }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="container">
+  <a href="/" class="back-link">← חזרה לדף הבית</a>
+
+  <header class="page-head">
+    <h1>שאלות נפוצות</h1>
+    <p class="subtitle">כל מה שכדאי לדעת לפני שנרשמים לקורס AI ויזמות של AI Lab.</p>
+  </header>
+
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary class="faq-q">צריך ניסיון בתכנות כדי להצטרף לקורס?</summary>
+      <div class="faq-a">בכלל לא. הקורס מיועד למתחילים מוחלטים. ה-AI עושה את התכנות בשבילכם — אתם לומדים לכוון אותו ולחשוב כמו יזמים.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">מה הגיל המתאים לקורס?</summary>
+      <div class="faq-a">הקורס פתוח לנוער בגילאי 10–17 ולמבוגרים 60+. התוכנית זהה: 8 מפגשים מעשיים בזום. הקבוצות מופרדות לפי גיל — קבוצה לנוער וקבוצה למבוגרים, עם דוגמאות ושיח מותאמים.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">מה צריך להביא לקורס?</summary>
+      <div class="faq-a">מחשב נייד בלבד (Windows / Mac / Chromebook) וחיבור לאינטרנט. כל הכלים — כולל גישה ל-ChatGPT, Claude ו-Cursor — מסופקים על ידינו.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">כמה עולה הקורס?</summary>
+      <div class="faq-a">המחיר המלא מופיע באזור 'מחיר' ב<a href="/#pricing">דף הבית</a>. יש גם מחזורי אוברי במהלך השנה עם הטבות למקדימים ולאחים. <a href="/webinar-general.html">הוובינר החינמי</a> שלנו פתוח לכולם ללא תשלום.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">איפה הקורס מתקיים?</summary>
+      <div class="faq-a">כל המפגשים מתקיימים אונליין בזום. אפשר להשתתף מכל מקום בארץ ובעולם — יש לנו תלמידים גם בישראל וגם בקהילה הישראלית בארה״ב.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">מה אורך כל מפגש ומתי הם מתקיימים?</summary>
+      <div class="faq-a">כל מפגש אורך שעה וחצי ומתקיים בשעות הערב כדי להתאים לאחרי בית הספר או העבודה. הקורס כולל 8 מפגשים, בתדירות של פעם בשבוע.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">מה אם הקורס לא מתאים לי — יש מדיניות ביטול?</summary>
+      <div class="faq-a">בהחלט. אנחנו מציעים מדיניות ביטול נוחה: אם עד סוף המפגש השני מחליטים שהקורס לא מתאים — החזר כספי מלא, בלי שאלות.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">עם מה יוצאים מהקורס?</summary>
+      <div class="faq-a">פרויקט אמיתי שרץ באינטרנט (אתר, אפליקציה או כלי), ניסיון מעשי בעבודה עם AI, כישורי יזמות והצגה, ותעודת סיום. אפשר לראות <a href="/#projects">דוגמאות של פרויקטים</a> שתלמידים בנו.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">האם זה באמת מתאים למבוגרים?</summary>
+      <div class="faq-a">כן. יש לנו קבוצה ייעודית למבוגרים 60+ עם תוכנית מותאמת, שיח וקצב מותאמים, ודוגמאות רלוונטיות. אין צורך ברקע טכנולוגי או ניסיון בתכנות.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">איך נרשמים לקורס?</summary>
+      <div class="faq-a">ההרשמה נעשית דרך האתר. ממלאים טופס קצר, ואנחנו חוזרים עם פרטים על המחזור הקרוב, המועדים, ודרכי התשלום. אפשר גם להשתתף ב<a href="/webinar-general.html">וובינר החינמי</a> כדי להכיר את הקורס לפני.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">מה ההבדל בין AI Lab לקורסי תכנות רגילים לילדים?</summary>
+      <div class="faq-a">בקורסי תכנות רגילים לומדים לכתוב קוד. ב-AI Lab לומדים לבנות מוצרים אמיתיים עם בינה מלאכותית — בלי לכתוב קוד. הדגש הוא על חשיבה יזמית: איך מגדירים בעיה, איך מזהים צורך, ואיך בונים פתרון עם AI כשותף.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">האם אתם מוציאים חשבונית?</summary>
+      <div class="faq-a">כן. AI Lab פועל כעוסק מורשה ומוציא חשבונית מס כדין על כל תשלום.</div>
+    </details>
+  </div>
+
+  <div class="cta-box">
+    <h3>יש לכם שאלה שלא מופיעה כאן?</h3>
+    <p>דברו איתנו ישירות בקהילת הוואטסאפ, או הירשמו לוובינר החינמי כדי להכיר את הקורס.</p>
+    <div class="cta-btns">
+      <a href="/webinar-general.html" class="btn btn-accent">וובינר חינמי</a>
+      <a href="/community.html" class="btn btn-primary">קהילת וואטסאפ</a>
+    </div>
+  </div>
+
+  <footer class="page-foot">
+    <p><a href="/">AI Lab</a> · <a href="/mission.html">המשימה שלנו</a> · <a href="/blog/">בלוג</a></p>
+  </footer>
+</div>
+</body>
+</html>

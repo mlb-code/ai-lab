@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
 
+# Internal/admin/tools — not for indexing
+Disallow: /admin-7x9k2m/
+Disallow: /mockups/
+Disallow: /img-edit/
+Disallow: /project-previews/
+Disallow: /node_modules/
+
+# Draft / preview / internal pages
+Disallow: /index-v2.html
+Disallow: /portal-preview.html
+Disallow: /hero-demo.html
+Disallow: /email-preview.html
+Disallow: /email-preview-1hour.html
+Disallow: /webinar-us-banner.html
+Disallow: /rsvp.html
+
 Sitemap: https://ai-lab.co.il/sitemap.xml

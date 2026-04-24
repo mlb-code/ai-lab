@@ -787,7 +787,11 @@
 
         /* ========== PROBLEM SECTION ========== */
         .problem {
-            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-card) 100%);
+            /* Start darker, breathe lighter in middle, return to --dark bottom so #instructor's --dark-card pops */
+            background:
+                radial-gradient(ellipse at 50% 40%, rgba(108,60,225,0.06), transparent 60%),
+                linear-gradient(180deg, var(--dark) 0%, var(--dark-lighter, #22224a) 45%, var(--dark) 100%);
+            position: relative;
         }
 
         .problem-grid {
@@ -1216,6 +1220,292 @@
             background: var(--dark);
         }
 
+        /* ========== TESTIMONIALS (GotChat-style 2-row marquee) ========== */
+        .testimonials-section {
+            padding: 5rem 0 5.5rem;
+            background: var(--dark);
+            overflow: hidden;
+            position: relative;
+        }
+        .testimonials-section .tt-head {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 0 1rem;
+        }
+        .tt-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            padding: 6px 18px;
+            border-radius: 999px;
+            margin-bottom: 1.1rem;
+            text-transform: uppercase;
+        }
+        .testimonials-section .tt-head h2 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+            color: var(--text);
+        }
+        .tt-highlight {
+            background: linear-gradient(135deg, var(--accent), #34EABB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .testimonials-section .tt-head p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 540px;
+            margin: 0 auto;
+        }
+        .tt-marquee {
+            position: relative;
+            overflow: hidden;
+            padding: 0.8rem 0;
+            direction: ltr; /* Anchor track to LEFT so translateX(-50%) reveals duplicates from the right — same as GotChat */
+            -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+                    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+        }
+        .tt-marquee + .tt-marquee { margin-top: 0.4rem; }
+        .tt-track {
+            display: flex;
+            direction: ltr; /* force LTR flex layout so translateX(-X) reveals content on the right */
+            gap: 1.2rem;
+            width: max-content;
+            will-change: transform;
+        }
+        .tt-card { direction: rtl; /* each card's Hebrew text stays RTL */ }
+        /* GotChat-style carousel: two rows scroll in OPPOSITE directions.
+           Works because JS doubles the track content (20 cards per row), so
+           translateX(-50%) = middle of track, always has cards on both sides. */
+        .tt-track-a { animation: tt-scroll-left  80s linear infinite; }
+        .tt-track-b { animation: tt-scroll-right 65s linear infinite; }
+        .tt-marquee:hover .tt-track { animation-play-state: paused; }
+        @keyframes tt-scroll-left {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes tt-scroll-right {
+            0%   { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .tt-track { animation: none !important; }
+            .tt-marquee { overflow-x: auto; }
+        }
+        .tt-card {
+            flex-shrink: 0;
+            width: 340px;
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.4rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            transition: border-color 0.2s, transform 0.2s;
+            margin: 0;
+        }
+        .tt-card:hover {
+            border-color: rgba(108,60,225,0.3);
+            transform: translateY(-2px);
+        }
+        .tt-card-featured {
+            border-color: rgba(245,200,66,0.4);
+            box-shadow: 0 0 0 1px rgba(245,200,66,0.15), 0 8px 24px rgba(245,200,66,0.08);
+        }
+        .tt-stars {
+            color: #F5C842;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+        .tt-quote {
+            color: var(--text-muted);
+            font-size: 0.93rem;
+            line-height: 1.7;
+            font-style: italic;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .tt-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0;
+            padding-top: 0.4rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .tt-avatar {
+            flex-shrink: 0;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #0f0f1e;
+            letter-spacing: 0.5px;
+        }
+        .tt-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .tt-name {
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--text);
+        }
+        .tt-role {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+        @media (max-width: 640px) {
+            .testimonials-section { padding: 2.5rem 0 3rem; }
+            .testimonials-section .tt-head { margin-bottom: 1.6rem; }
+            .testimonials-section .tt-head h2 { font-size: 1.45rem; }
+            .testimonials-section .tt-head p { font-size: 0.85rem; }
+            .tt-marquee { padding: 0.5rem 0; }
+            .tt-marquee + .tt-marquee { margin-top: 0.3rem; }
+            .tt-card {
+                width: 240px;
+                padding: 0.95rem 0.85rem;
+                gap: 0.65rem;
+                border-radius: 13px;
+            }
+            .tt-stars { font-size: 0.82rem; letter-spacing: 1.5px; }
+            .tt-quote { font-size: 0.82rem; line-height: 1.55; }
+            .tt-author { gap: 0.55rem; padding-top: 0.3rem; }
+            .tt-avatar { width: 34px; height: 34px; font-size: 0.75rem; }
+            .tt-name { font-size: 0.85rem; }
+            .tt-role { font-size: 0.72rem; }
+            .tt-track-a { animation-duration: 55s; }
+            .tt-track-b { animation-duration: 45s; }
+        }
+
+        /* "More tools" CTA under skills-grid */
+        .more-tools-cta {
+            display: flex;
+            justify-content: center;
+            margin-top: 2.2rem;
+        }
+        .more-tools-btn {
+            font-size: 1rem !important;
+            padding: 0.85rem 2.2rem !important;
+        }
+
+        /* More tools popup */
+        .more-tools-popup .scroll-popup-box {
+            max-width: 620px;
+        }
+        .more-tools-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem 0.8rem;
+            margin: 0.6rem 0 1.4rem;
+            max-height: 280px;
+            overflow-y: auto;
+            padding: 0.6rem;
+            background: rgba(0,0,0,0.18);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        .more-tools-list::-webkit-scrollbar { width: 6px; }
+        .more-tools-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+        .mt-item {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.5rem 0.7rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            font-size: 0.88rem;
+            color: var(--text);
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .mt-item:hover {
+            background: rgba(108,60,225,0.08);
+            border-color: rgba(108,60,225,0.3);
+        }
+        .mt-item .mt-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .mt-item .mt-name {
+            font-weight: 600;
+        }
+        .mt-divider {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin: 0.8rem 0 0.9rem;
+            position: relative;
+        }
+        .mt-divider::before, .mt-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15));
+        }
+        .mt-divider::before { right: 0; }
+        .mt-divider::after  { left: 0; background: linear-gradient(90deg, rgba(255,255,255,0.15), transparent); }
+        @media (max-width: 520px) {
+            .more-tools-list { grid-template-columns: 1fr; max-height: 220px; }
+        }
+
+        /* Sub-section divider inside #about — bridges "why" → "how" */
+        .section-sub-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 4.5rem auto 1.5rem;
+            max-width: 680px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+            scroll-margin-top: 80px; /* offset for sticky nav when anchored */
+        }
+        .section-sub-divider .sub-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+        }
+        .section-sub-divider .sub-divider-text {
+            flex-shrink: 0;
+            padding: 0 0.6rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 2.2rem;
+        }
+        .section-subtitle h3 {
+            font-size: clamp(1.3rem, 3vw, 1.9rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .section-subtitle p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 580px;
+            margin: 0 auto;
+        }
+        @media (max-width: 640px) {
+            .section-sub-divider { margin: 2.8rem auto 1rem; font-size: 0.85rem; }
+            .section-subtitle { margin-bottom: 1.4rem; }
+        }
+
         .skill-scroll-chip {
             flex-shrink: 0;
             display: flex;
@@ -1602,7 +1892,18 @@
 
         /* ========== PRICING ========== */
         .pricing-section {
-            background: linear-gradient(180deg, var(--dark-card) 0%, var(--dark) 100%);
+            background:
+                radial-gradient(ellipse at 50% 10%, rgba(108,60,225,0.10), transparent 55%),
+                linear-gradient(180deg, var(--dark-card) 0%, var(--dark-lighter, #22224a) 50%, var(--dark-card) 100%);
+            position: relative;
+        }
+        .pricing-section::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: -1px;
+            height: 40px;
+            background: linear-gradient(180deg, transparent 0%, var(--dark) 100%);
+            pointer-events: none;
         }
 
         .pricing-grid {
@@ -1676,6 +1977,48 @@
             width: auto;
             display: inline-block;
             text-align: center;
+        }
+
+        /* Two-button track actions on course cards */
+        .pricing-card .track-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            width: 100%;
+        }
+        .pricing-card .track-btn {
+            /* Match existing .pricing-btn sizing (site standard for card buttons) */
+            width: 100%;
+            font-size: 0.95rem;
+            padding: 0.7rem 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            font-family: 'Heebo', sans-serif;
+            font-weight: 600;
+            border: none;
+            text-decoration: none;
+            line-height: 1;
+            transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s, color 0.2s;
+        }
+        .pricing-card .track-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(108,60,225,0.25);
+        }
+        .pricing-card .track-btn.btn-secondary {
+            background: rgba(255,255,255,0.04);
+            color: var(--text);
+            border: 1px solid rgba(255,255,255,0.14);
+            padding: 0.65rem 1.4rem; /* -1px to offset border */
+        }
+        .pricing-card .track-btn.btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .pricing-card::before {
@@ -2233,7 +2576,7 @@
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 0;
-                direction: ltr;
+                direction: rtl; /* first card on the RIGHT (natural Hebrew reading order) */
                 padding: 0 1.2rem;
             }
             .problem-grid::-webkit-scrollbar { display: none; }
@@ -2247,11 +2590,11 @@
                 opacity: 1 !important;
                 transform: none !important;
                 padding: 1rem 1rem 1.2rem;
-                margin-left: 0.7rem;
+                margin-inline-end: 0.7rem; /* RTL-aware: space after each card (left in RTL flex) */
                 overflow: hidden;
                 box-sizing: border-box;
             }
-            .problem-card:first-child { margin-left: 0; }
+            .problem-card:last-child { margin-inline-end: 0; }
             .problem-card:hover { transform: none !important; }
             .problem-card .problem-icon { font-size: 1.6rem; margin-bottom: 0.4rem; }
             .problem-card h3 { font-size: 0.95rem; margin-bottom: 0.3rem; }
@@ -3118,78 +3461,8 @@
         }
     ]
     </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "צריך ניסיון בתכנות?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "בכלל לא! הקורס מיועד למתחילים מוחלטים. ה-AI עושה את התכנות בשבילכם — אתם לומדים לכוון אותו ולחשוב כמו יזמים."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "מה צריך להביא?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "מחשב נייד (Windows / Mac / Chromebook) ורצון ליצור. הכל השאר — כולל גישה ל-AI — מסופק על ידינו."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "מה הגילאים?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "הקורס פתוח לנוער (גילאי 10–17) ולמבוגרים (60+). התוכנית זהה — 8 מפגשים מעשיים בזום."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "זה באמת מתאים למבוגרים?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "בהחלט! הקורס מותאם למתחילים מוחלטים. אין צורך ברקע טכנולוגי או ניסיון בתכנות."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "ילדים ומבוגרים לומדים ביחד?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "הקבוצות מופרדות לפי גיל — קבוצה לנוער וקבוצה למבוגרים. כל קבוצה לומדת באותה תוכנית אבל עם דוגמאות ושיח מותאם לגיל."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "איפה הקורס מתקיים?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "כל המפגשים מתקיימים בזום — אפשר להשתתף מכל מקום בארץ!"
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "מה אם לא אוהבים את הקורס?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "אנחנו מציעים מדיניות ביטול נוחה: אם עד סוף המפגש השני מחליטים שזה לא מתאים — החזר מלא, ללא שאלות."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "עם מה יוצאים מהקורס?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "פרויקט אמיתי שרץ באינטרנט, ניסיון מעשי בעבודה עם AI, כישורי יזמות והצגה, ותעודת סיום."
-                }
-            }
-        ]
-    }
-    </script>
+    <!-- FAQ moved to dedicated page /faq.html (linked from nav) for better UX + separate SEO target -->
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -3219,7 +3492,7 @@
             <li><a href="#about">על הקורס</a></li>
             <li><a href="#program">תוכנית</a></li>
             <li><a href="#tools">כלי AI</a></li>
-            <li><a href="#pricing">מחיר</a></li>
+            <li><a href="/faq.html">שאלות נפוצות</a></li>
             <li><a href="/mission.html">המשימה שלנו</a></li>
         </ul>
         <div class="nav-cta-group">
@@ -3239,7 +3512,7 @@
             <li><a href="#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>
             <li><a href="#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>
             <li><a href="#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>
-            <li><a href="#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>
+            <li><a href="/faq.html"><span class="menu-icon">&#x2753;</span> שאלות נפוצות</a></li>
             <li><a href="/mission.html"><span class="menu-icon">&#x2728;</span> המשימה שלנו</a></li>
             <li class="mobile-cta mobile-cta-green"><a href="#" onclick="event.preventDefault();closeMobileMenu&&closeMobileMenu();openRegisterPopup();">הרשמה</a></li>
             <li class="mobile-cta mobile-cta-green"><a href="/webinar-general.html">וובינר חינמי</a></li>
@@ -3276,6 +3549,109 @@
                 <div class="form-buttons">
                     <button type="submit" class="btn-primary">שלח פנייה</button>
                     <button type="button" class="btn-whatsapp" onclick="sendWhatsAppPopup()">שלח בוואטסאפ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- LEAD POPUP (from track cards — syllabus request / more details) -->
+    <div id="leadPopup" class="scroll-popup-overlay" onclick="if(event.target===this)closeLeadPopup()">
+        <div class="scroll-popup-box" style="max-width:480px;">
+            <button class="scroll-popup-close" onclick="closeLeadPopup()" aria-label="סגור">&times;</button>
+            <div class="scroll-popup-header">
+                <div class="scroll-popup-icon">&#x1F4AC;</div>
+                <h3>השאירו פרטים ונחזור אליכם</h3>
+                <p id="leadTrackLabel" style="color:var(--text-muted);font-size:0.92rem;">נחזור אליכם תוך 24 שעות עם כל הפרטים</p>
+            </div>
+            <form id="leadForm" onsubmit="return submitLeadForm(event)">
+                <div class="form-group">
+                    <label for="leadName">שם מלא</label>
+                    <input type="text" id="leadName" name="name" placeholder="הכניסו את השם שלכם" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="leadEmail">אימייל</label>
+                    <input type="email" id="leadEmail" name="email" placeholder="your@email.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="leadPhone">מספר טלפון</label>
+                    <input type="tel" id="leadPhone" name="phone" placeholder="050-1234567" required autocomplete="tel" inputmode="tel">
+                </div>
+                <!-- Hidden tracking fields -->
+                <input type="hidden" name="track" id="leadTrack" value="">
+                <input type="hidden" name="source" id="leadSource" value="">
+                <input type="hidden" name="campaign" id="leadCampaign" value="">
+                <input type="hidden" name="medium" id="leadMedium" value="">
+                <input type="hidden" name="content" id="leadContent" value="">
+                <input type="hidden" name="term" id="leadTerm" value="">
+                <input type="hidden" name="fbclid" id="leadFbclid" value="">
+                <input type="hidden" name="gclid" id="leadGclid" value="">
+                <input type="hidden" name="referrer" id="leadReferrer" value="">
+                <input type="hidden" name="landing_page" id="leadLandingPage" value="">
+                <input type="hidden" name="submitted_at" id="leadSubmittedAt" value="">
+                <div class="form-buttons">
+                    <button type="submit" class="btn-primary" id="leadSubmitBtn">שלחו לי פרטים</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MORE TOOLS POPUP (lead form + tools list) -->
+    <div id="moreToolsPopup" class="scroll-popup-overlay more-tools-popup" onclick="if(event.target===this)closeMoreToolsPopup()">
+        <div class="scroll-popup-box">
+            <button class="scroll-popup-close" onclick="closeMoreToolsPopup()" aria-label="סגור">&times;</button>
+            <div class="scroll-popup-header">
+                <div class="scroll-popup-icon">&#x2728;</div>
+                <h3>עוד כלים שתרכשו בקורס</h3>
+                <p style="color:var(--text-muted);font-size:0.92rem;">מבחר כלים מעולם ה-AI — ננסה, נכיר, ונבחר את הנכון לכל פרויקט</p>
+            </div>
+
+            <div class="more-tools-list">
+                <div class="mt-item"><span class="mt-icon">&#x1F4AC;</span><span class="mt-name">ChatGPT</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F916;</span><span class="mt-name">Claude</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F48E;</span><span class="mt-name">Gemini</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x26A1;</span><span class="mt-name">Grok</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F3AF;</span><span class="mt-name">Cursor</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F495;</span><span class="mt-name">Lovable</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F3A8;</span><span class="mt-name">Midjourney</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F5BC;&#xFE0F;</span><span class="mt-name">DALL-E / Flux</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F3AC;</span><span class="mt-name">Runway / Sora</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F3B5;</span><span class="mt-name">Suno</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F3A4;</span><span class="mt-name">ElevenLabs</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F9E0;</span><span class="mt-name">NotebookLM</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F50D;</span><span class="mt-name">Perplexity</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F517;</span><span class="mt-name">n8n / Zapier</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F4DD;</span><span class="mt-name">הנדסת פרומפטים</span></div>
+                <div class="mt-item"><span class="mt-icon">&#x1F527;</span><span class="mt-name">פתרון בעיות ו-Debugging</span></div>
+            </div>
+
+            <div class="mt-divider">רוצים לשמוע עוד? השאירו פרטים</div>
+
+            <form id="moreToolsForm" onsubmit="return submitMoreToolsForm(event)">
+                <div class="form-group">
+                    <label for="mtName">שם מלא</label>
+                    <input type="text" id="mtName" name="name" placeholder="הכניסו את השם שלכם" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="mtEmail">אימייל</label>
+                    <input type="email" id="mtEmail" name="email" placeholder="your@email.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="mtPhone">מספר טלפון</label>
+                    <input type="tel" id="mtPhone" name="phone" placeholder="050-1234567" required autocomplete="tel" inputmode="tel">
+                </div>
+                <input type="hidden" name="track"         id="mtTrack"        value="עוד כלים שתרכשו">
+                <input type="hidden" name="source"        id="mtSource"       value="">
+                <input type="hidden" name="campaign"      id="mtCampaign"     value="">
+                <input type="hidden" name="medium"        id="mtMedium"       value="">
+                <input type="hidden" name="content"       id="mtContent"      value="">
+                <input type="hidden" name="term"          id="mtTerm"         value="">
+                <input type="hidden" name="fbclid"        id="mtFbclid"       value="">
+                <input type="hidden" name="gclid"         id="mtGclid"        value="">
+                <input type="hidden" name="referrer"      id="mtReferrer"     value="">
+                <input type="hidden" name="landing_page"  id="mtLandingPage"  value="">
+                <input type="hidden" name="submitted_at"  id="mtSubmittedAt"  value="">
+                <div class="form-buttons">
+                    <button type="submit" class="btn-primary" id="mtSubmitBtn">שלחו לי פרטים</button>
                 </div>
             </form>
         </div>
@@ -3346,7 +3722,7 @@
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <div class="number">+50</div>
+                    <div class="number">+100</div>
                     <div class="label">פרויקטים שנבנו</div>
                 </div>
                 <div class="hero-stat">
@@ -3946,28 +4322,29 @@
     </section>
 
     <!-- PRICING -->
-    <section class="pricing-section" id="pricing">
+    <section class="pricing-section" id="program">
         <div class="container">
             <div class="section-title reveal">
-                <h2>&#x1F4B0; כמה זה עולה?</h2>
+                <h2>&#x1F393; תוכנית הקורסים</h2>
                 <p>מפגשים חיים בזום, קבוצות קטנות, יחס אישי.</p>
             </div>
             <div class="pricing-grid" id="pricingGrid">
                 <div class="pricing-card reveal">
                     <h3>ילדים ונוער &mdash; בסיסי</h3>
-                    <div class="price">&#x20AA;890</div>
-                    <div class="price-note">8 מפגשים חיים בזום</div>
+                    <div class="price-note">8 מפגשים חיים בזום &bull; גילאי 10&ndash;17</div>
                     <ul class="pricing-features">
                         <li><span class="check">&#x2714;</span> אזור אישי + חומרי לימוד</li>
                         <li><span class="check">&#x2714;</span> כל כלי ה-AI + Claude Code</li>
                         <li><span class="check">&#x2714;</span> אתר אישי שנשאר באוויר</li>
                         <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
                     </ul>
-                    <a onclick="gtag('event','whatsapp_click',{event_category:'contact',event_label:'direct_link'});gtag('event','conversion',{'send_to':'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'})" href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%91%D7%A1%D7%99%D7%A1%D7%99" class="btn-primary pricing-btn" target="_blank">שריינו מקום</a>
+                    <div class="track-actions">
+                        <button type="button" onclick="openSyllabus('youth-basic')" class="btn-secondary track-btn">&#x1F4CB; לסילבוס</button>
+                        <button type="button" onclick="openLeadPopup('youth-basic')" class="btn-primary track-btn">לפרטים נוספים</button>
+                    </div>
                 </div>
                 <div class="pricing-card reveal">
                     <h3>ילדים ונוער &mdash; מתקדם</h3>
-                    <div class="price">&#x20AA;1,250</div>
                     <div class="price-note">8 מפגשים &bull; לבוגרי הבסיסי</div>
                     <ul class="pricing-features">
                         <li><span class="check">&#x2714;</span> העמקה והתקדמות בפרויקט</li>
@@ -3975,68 +4352,27 @@
                         <li><span class="check">&#x2714;</span> תעודת סיום מתקדם</li>
                         <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
                     </ul>
-                    <a onclick="gtag('event','whatsapp_click',{event_category:'contact',event_label:'direct_link'});gtag('event','conversion',{'send_to':'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'})" href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9E%D7%AA%D7%A7%D7%93%D7%9D" class="btn-primary pricing-btn" target="_blank">שריינו מקום</a>
+                    <div class="track-actions">
+                        <button type="button" onclick="openSyllabus('youth-advanced')" class="btn-secondary track-btn">&#x1F4CB; לסילבוס</button>
+                        <button type="button" onclick="openLeadPopup('youth-advanced')" class="btn-primary track-btn">לפרטים נוספים</button>
+                    </div>
                 </div>
                 <div class="pricing-card reveal">
                     <h3>מבוגרים &mdash; בסיסי</h3>
-                    <div class="price">&#x20AA;1,450</div>
-                    <div class="price-note">8 מפגשים חיים בזום</div>
+                    <div class="price-note">8 מפגשים חיים בזום &bull; גילאי 60+</div>
                     <ul class="pricing-features">
                         <li><span class="check">&#x2714;</span> תוכנית מותאמת לגיל 40+</li>
                         <li><span class="check">&#x2714;</span> ללא ניסיון קודם בטכנולוגיה</li>
                         <li><span class="check">&#x2714;</span> אתר אישי שנשאר באוויר</li>
                         <li><span class="check">&#x2714;</span> עד 5 תלמידים בכיתה</li>
                     </ul>
-                    <a onclick="gtag('event','whatsapp_click',{event_category:'contact',event_label:'direct_link'});gtag('event','conversion',{'send_to':'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'})" href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%9E%D7%91%D7%95%D7%92%D7%A8%D7%99%D7%9D" class="btn-primary pricing-btn" target="_blank">שריינו מקום</a>
+                    <div class="track-actions">
+                        <button type="button" onclick="openSyllabus('adults-basic')" class="btn-secondary track-btn">&#x1F4CB; לסילבוס</button>
+                        <button type="button" onclick="openLeadPopup('adults-basic')" class="btn-primary track-btn">לפרטים נוספים</button>
+                    </div>
                 </div>
             </div>
             <div class="problem-dots" id="pricingDots"></div>
-        </div>
-    </section>
-
-    <!-- PROGRAM -->
-    <section class="timeline-section" id="program">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>תוכנית הקורסים</h2>
-                <p>בחרו את המסלול שמתאים לכם. לחצו על קורס לפרטים מלאים.</p>
-            </div>
-            <div class="courses-grid" id="coursesGrid">
-                <div class="course-track-card reveal" onclick="openSyllabus('youth-basic')">
-                    <div class="course-track-badge">8 מפגשים</div>
-                    <div class="course-track-icon">&#x1F680;</div>
-                    <h3>ילדים ונוער &mdash; בסיסי</h3>
-                    <p>בניית פרויקט ראשון מאפס עם כלי AI. מרעיון לאתר אמיתי תוך 8 מפגשים.</p>
-                    <div class="course-track-meta">
-                        <span>גילאי 10&ndash;17</span>
-                        <span>ללא ניסיון קודם</span>
-                    </div>
-                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
-                </div>
-                <div class="course-track-card reveal" onclick="openSyllabus('youth-advanced')">
-                    <div class="course-track-badge">8 מפגשים</div>
-                    <div class="course-track-icon">&#x1F31F;</div>
-                    <h3>ילדים ונוער &mdash; מתקדם</h3>
-                    <p>המשך למידה לבוגרי הקורס הבסיסי. העמקה בפיתוח, כלים מתקדמים והתקדמות בפרויקט.</p>
-                    <div class="course-track-meta">
-                        <span>גילאי 10&ndash;17</span>
-                        <span>דרישה: קורס בסיסי</span>
-                    </div>
-                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
-                </div>
-                <div class="course-track-card reveal" onclick="openSyllabus('adults-basic')">
-                    <div class="course-track-badge">8 מפגשים</div>
-                    <div class="course-track-icon">&#x1F4BB;</div>
-                    <h3>מבוגרים &mdash; בסיסי</h3>
-                    <p>גם בלי רקע טכנולוגי &mdash; תלמדו לבנות אתר ולעבוד עם AI. בקצב שלכם.</p>
-                    <div class="course-track-meta">
-                        <span>גילאי 60+</span>
-                        <span>ללא ניסיון קודם</span>
-                    </div>
-                    <span class="course-track-cta">&#x1F4CB; לסילבוס המלא</span>
-                </div>
-            </div>
-            <div class="problem-dots" id="coursesDots"></div>
         </div>
 
         <!-- SYLLABUS POPUP -->
@@ -4073,46 +4409,15 @@
                 </div>
             </div>
             <div class="problem-dots" id="problemDots"></div>
-        </div>
-    </section>
 
-    <!-- WHAT YOU'LL BUILD -->
-    <section class="build-section" id="build" style="display:none;">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>מה תבנו בקורס?</h2>
-                <p>לא תיאוריה. לא מצגות. בונים דברים אמיתיים.</p>
+            <!-- Sub-section: tools + skills. Same section, continued narrative -->
+            <div class="section-sub-divider reveal" id="tools" aria-hidden="false">
+                <span class="sub-divider-line"></span>
+                <span class="sub-divider-text">ואיך נעשה את זה?</span>
+                <span class="sub-divider-line"></span>
             </div>
-            <div class="build-grid">
-                <div class="build-item reveal">
-                    <div class="build-icon">&#x1F310;</div>
-                    <h3>אתר אינטרנט אמיתי</h3>
-                    <p>דף נחיתה מקצועי לסטארטאפ שלכם &mdash; עם עיצוב, תפריטים ואנימציות. באוויר!</p>
-                </div>
-                <div class="build-item reveal">
-                    <div class="build-icon">&#x1F4CB;</div>
-                    <h3>תוכנית עסקית</h3>
-                    <p>אפיון מוצר, קהל יעד, מודל עסקי ואסטרטגיית שיווק &mdash; כמו יזם אמיתי</p>
-                </div>
-                <div class="build-item reveal">
-                    <div class="build-icon">&#x1F4E3;</div>
-                    <h3>תוכן שיווקי עם AI</h3>
-                    <p>פוסטים, סלוגנים ותוכן לרשתות חברתיות &mdash; שנוצרו עם בינה מלאכותית</p>
-                </div>
-                <div class="build-item reveal">
-                    <div class="build-icon">&#x1F3AC;</div>
-                    <h3>Pitch מנצח</h3>
-                    <p>מצגת ליום ההשקה &mdash; 3 דקות מול קהל, כמו Shark Tank!</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TOOLS + SKILLS combined -->
-    <section class="skills-section" id="tools">
-        <div class="container">
-            <div class="section-title reveal">
-                <h2>&#x1F6E0;&#xFE0F; כלים וכישורים שתרכשו</h2>
+            <div class="section-subtitle reveal">
+                <h3>&#x1F6E0;&#xFE0F; הכלים והכישורים שתרכשו</h3>
                 <p>נכיר ונתנסה בכלי ה-AI המובילים — ונצא עם כישורים אמיתיים לחיים</p>
             </div>
             <div class="skills-grid" id="skillsGrid">
@@ -4129,35 +4434,9 @@
                     </div>
                 </div>
                 <div class="skill-card">
-                    <div class="skill-card-icon">
-                        <svg width="22" height="22" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="#10a37f"/><path d="M18 7C13.5 7 10.5 9.8 10.5 13.5c0 1.2.3 2.3.9 3.2C9.8 17.6 9 19.2 9 21c0 3.3 2.7 6 6 6 .7 0 1.4-.1 2-.4.8.9 2 1.4 3 1.4s2.2-.5 3-1.4c.6.3 1.3.4 2 .4 3.3 0 6-2.7 6-6 0-1.8-.8-3.4-2.1-4.3.6-.9.9-2 .9-3.2C29.8 9.8 26.5 7 22 7c-1.5 0-2.9.4-4 1.1C16.9 7.4 15.5 7 18 7z" fill="white" opacity=".9"/><path d="M22.5 15.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM13.5 15.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="#10a37f"/></svg>
-                    </div>
-                    <h4>ChatGPT</h4>
-                    <p>מודל שפה של OpenAI</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">
-                        <svg width="22" height="22" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="white"/><defs><linearGradient id="gGem2" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4285F4"/><stop offset="50%" stop-color="#9B72CB"/><stop offset="100%" stop-color="#D96570"/></linearGradient></defs><path d="M18 4 L20.5 15.5 L32 18 L20.5 20.5 L18 32 L15.5 20.5 L4 18 L15.5 15.5 Z" fill="url(#gGem2)"/></svg>
-                    </div>
-                    <h4>Gemini</h4>
-                    <p>מודל שפה של Google</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">
-                        <svg width="22" height="22" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="#000"/><path d="M9 9 L27 27 M27 9 L9 27" stroke="white" stroke-width="3.5" stroke-linecap="round"/></svg>
-                    </div>
-                    <h4>Grok</h4>
-                    <p>מודל שפה של xAI</p>
-                </div>
-                <div class="skill-card">
                     <div class="skill-card-icon">&#x1F4A1;</div>
                     <h4>חשיבה יזמית</h4>
                     <p>מרעיון לסטארטאפ אמיתי</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F4DD;</div>
-                    <h4>הנדסת פרומפטים</h4>
-                    <p>איך לדבר עם AI ולקבל תוצאות מדויקות</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-card-icon">&#x1F4CA;</div>
@@ -4169,11 +4448,267 @@
                     <h4>הצגה בפני קהל</h4>
                     <p>פיץ' של 3 דקות כמו Shark Tank</p>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-card-icon">&#x1F527;</div>
-                    <h4>פתרון בעיות</h4>
-                    <p>דיבאגינג, חשיבה ביקורתית ויצירתיות</p>
-                </div>
+            </div>
+
+            <!-- More tools CTA -->
+            <div class="more-tools-cta reveal">
+                <button type="button" class="btn-primary more-tools-btn" onclick="openMoreToolsPopup()">
+                    <span>&#x2728; עוד כלים שתרכשו</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS — GotChat-style 2-row marquee -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="tt-head reveal">
+                <span class="tt-badge">המלצות</span>
+                <h2>מה אומרים עלינו <span class="tt-highlight">הורים ותלמידים</span></h2>
+            </div>
+        </div>
+
+        <!-- Row 1 -->
+        <div class="tt-marquee" aria-hidden="false">
+            <div class="tt-track tt-track-a">
+                <figure class="tt-card">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"תמיד אהבתי סוסים ולא חשבתי שיש דרך לחבר את זה לאינטרנט. ב-8 מפגשים בניתי אתר שלם על אופנת סוסים — עיצוב, תמונות, הכל. מאיר ליווה אותי עד שהאתר עלה לאוויר."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#0EA47E);">ש</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">שיר</div>
+                            <div class="tt-role">תלמידה · בת 13</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="tt-card">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"חשבתי שקורסים כאלה הם הרבה הבטחות ומעט מעשה. טעיתי. כבר מהמפגש הראשון ראיתי שלומדים ברצינות, עם ליווי אישי — והילדה יצאה עם כלים שילוו אותה לחיים."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#34EABB,#00B894);">י</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">יעל</div>
+                            <div class="tt-role">הורה</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="tt-card tt-card-featured">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"אני אוהב לגו יותר מהכל בעולם. עם AI Lab בניתי אתר של לגו עם גלריה של היצירות שלי ומשחק קטן. החברים שלי בכיתה לא מאמינים שבניתי את זה לבד."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#00B894);">נ</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">נדב</div>
+                            <div class="tt-role">תלמיד · בן 10</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="tt-card">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"זה לא עוד קורס של זום שמתחיל ונגמר אחרי חודש. ראיתי את הבן שלי לומד לחשוב, להציג, ולפתור בעיות בעצמו. זה המשקיע הכי טוב שהשקעתי בו."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#34EABB);">ש</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">שרון</div>
+                            <div class="tt-role">הורה</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="tt-card">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"אני חובב ספרים ומתקשה לעקוב אחרי מה קראתי. בניתי אפליקציה שעוקבת אחרי הספרים שלי, כותבת סיכומים קצרים ומחברת אותי לקוראים אחרים. כבר השתמשתי בה על 40 ספרים."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00B894,#00856A);">ת</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">תום</div>
+                            <div class="tt-role">תלמיד · בן 12</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <!-- Duplicated half for seamless loop (aria-hidden) -->
+                <figure class="tt-card" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"תמיד אהבתי סוסים ולא חשבתי שיש דרך לחבר את זה לאינטרנט. ב-8 מפגשים בניתי אתר שלם על אופנת סוסים — עיצוב, תמונות, הכל. מאיר ליווה אותי עד שהאתר עלה לאוויר."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#0EA47E);">ש</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">שיר</div>
+                            <div class="tt-role">תלמידה · בת 13</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure class="tt-card" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"חשבתי שקורסים כאלה הם הרבה הבטחות ומעט מעשה. טעיתי. כבר מהמפגש הראשון ראיתי שלומדים ברצינות, עם ליווי אישי — והילדה יצאה עם כלים שילוו אותה לחיים."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#34EABB,#00B894);">י</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">יעל</div>
+                            <div class="tt-role">הורה</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure class="tt-card tt-card-featured" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"אני אוהב לגו יותר מהכל בעולם. עם AI Lab בניתי אתר של לגו עם גלריה של היצירות שלי ומשחק קטן. החברים שלי בכיתה לא מאמינים שבניתי את זה לבד."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#00B894);">נ</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">נדב</div>
+                            <div class="tt-role">תלמיד · בן 10</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure class="tt-card" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"זה לא עוד קורס של זום שמתחיל ונגמר אחרי חודש. ראיתי את הבן שלי לומד לחשוב, להציג, ולפתור בעיות בעצמו. זה המשקיע הכי טוב שהשקעתי בו."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#34EABB);">ש</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">שרון</div>
+                            <div class="tt-role">הורה</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure class="tt-card" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"אני חובב ספרים ומתקשה לעקוב אחרי מה קראתי. בניתי אפליקציה שעוקבת אחרי הספרים שלי, כותבת סיכומים קצרים ומחברת אותי לקוראים אחרים. כבר השתמשתי בה על 40 ספרים."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00B894,#00856A);">ת</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">תום</div>
+                            <div class="tt-role">תלמיד · בן 12</div>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <!-- Row 2 (reverse direction) -->
+        <div class="tt-marquee">
+            <div class="tt-track tt-track-b">
+                <figure class="tt-card tt-card-featured">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"שיחקתי טניס ולא מצאתי שותפים ברמה שלי. אז בניתי כלי שמצליב בין שחקנים לפי רמה ואזור. החברים מהקבוצה שלי כבר משתמשים בו כדי לתאם אימונים."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#0EA47E);">ד</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">דניאל</div>
+                            <div class="tt-role">תלמיד · בן 13</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="tt-card">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"הילד שלי היה שעות מול מסכים ולא ידעתי איך להפוך את זה למשהו בונה. בקורס הוא התחיל ליצור במקום רק לצרוך. השינוי בגישה שלו למסך הוא השינוי הכי משמעותי."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#34EABB,#00D4AA);">ע</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">עינת</div>
+                            <div class="tt-role">הורה</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="tt-card">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"רציתי לעקוב אחרי מה שאני לומד בשיעורי נהיגה — מה תרגלתי, מה השתפר, על מה לעבוד. בניתי אפליקציה שעוזרת לי לנהל את זה. המורה שלי שאל על זה ונתתי לו קישור."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#00B894);">ג</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">גבריאל</div>
+                            <div class="tt-role">תלמיד · בן 16</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="tt-card">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"הצלחתי להעביר לבת שלי חוויה שלא הייתי יכולה לתת לה בעצמי. יצאה עם כלים מעשיים — וגם עם ביטחון עצמי שהיא יכולה ליצור דברים בעצמה. שווה כל שקל."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00B894,#00D4AA);">ר</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">רונית</div>
+                            <div class="tt-role">הורה</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="tt-card">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"בניתי אתר עם המתכונים של סבתא שלי — עם תמונות, סרטונים וטיימר לכל מתכון. עכשיו לכל המשפחה יש ספר מתכונים באינטרנט. סבתא הכי גאה."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00B894,#00856A);">מ</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">מאי</div>
+                            <div class="tt-role">תלמידה · בת 11</div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <!-- Duplicated half for seamless loop (aria-hidden) -->
+                <figure class="tt-card tt-card-featured" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"שיחקתי טניס ולא מצאתי שותפים ברמה שלי. אז בניתי כלי שמצליב בין שחקנים לפי רמה ואזור. החברים מהקבוצה שלי כבר משתמשים בו כדי לתאם אימונים."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#0EA47E);">ד</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">דניאל</div>
+                            <div class="tt-role">תלמיד · בן 13</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure class="tt-card" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"הילד שלי היה שעות מול מסכים ולא ידעתי איך להפוך את זה למשהו בונה. בקורס הוא התחיל ליצור במקום רק לצרוך. השינוי בגישה שלו למסך הוא השינוי הכי משמעותי."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#34EABB,#00D4AA);">ע</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">עינת</div>
+                            <div class="tt-role">הורה</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure class="tt-card" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"רציתי לעקוב אחרי מה שאני לומד בשיעורי נהיגה — מה תרגלתי, מה השתפר, על מה לעבוד. בניתי אפליקציה שעוזרת לי לנהל את זה. המורה שלי שאל על זה ונתתי לו קישור."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00D4AA,#00B894);">ג</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">גבריאל</div>
+                            <div class="tt-role">תלמיד · בן 16</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure class="tt-card" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"הצלחתי להעביר לבת שלי חוויה שלא הייתי יכולה לתת לה בעצמי. יצאה עם כלים מעשיים — וגם עם ביטחון עצמי שהיא יכולה ליצור דברים בעצמה. שווה כל שקל."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00B894,#00D4AA);">ר</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">רונית</div>
+                            <div class="tt-role">הורה</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure class="tt-card" aria-hidden="true">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"בניתי אתר עם המתכונים של סבתא שלי — עם תמונות, סרטונים וטיימר לכל מתכון. עכשיו לכל המשפחה יש ספר מתכונים באינטרנט. סבתא הכי גאה."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00B894,#00856A);">מ</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">מאי</div>
+                            <div class="tt-role">תלמידה · בת 11</div>
+                        </div>
+                    </figcaption>
+                </figure>
             </div>
         </div>
     </section>
@@ -4252,6 +4787,8 @@
             <div class="footer-section">
                 <h4>מידע</h4>
                 <a href="/blog/">עולם ה-AI</a>
+                <a href="/faq.html">שאלות נפוצות</a>
+                <a href="/mission.html">המשימה שלנו</a>
                 <a href="/privacy.html">מדיניות פרטיות</a>
                 <a href="/terms.html">תנאי שימוש</a>
                 <a href="/accessibility.html">הצהרת נגישות</a>
@@ -4641,6 +5178,141 @@
         function closeRegisterPopup() {
             document.getElementById('registerPopup').classList.remove('popup-visible');
         }
+        // ══════════════ LEAD POPUP (from course track cards) ══════════════
+        // Google Apps Script endpoint — replace with YOUR deployed Web App URL
+        // See google-apps-script-lead.gs for setup instructions.
+        var LEAD_ENDPOINT = 'https://script.google.com/macros/s/REPLACE_WITH_YOUR_APPS_SCRIPT_URL/exec';
+
+        var TRACK_LABELS = {
+            'youth-basic':    'ילדים ונוער — בסיסי',
+            'youth-advanced': 'ילדים ונוער — מתקדם',
+            'adults-basic':   'מבוגרים — בסיסי'
+        };
+
+        // Capture UTM + click IDs on page load, persist in sessionStorage so they survive cross-page nav
+        (function captureAttribution() {
+            try {
+                var p = new URLSearchParams(window.location.search);
+                var keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
+                var existing = JSON.parse(sessionStorage.getItem('ailab_attr') || '{}');
+                keys.forEach(function(k) {
+                    var v = p.get(k);
+                    if (v) existing[k] = v;
+                });
+                // first-touch referrer (only if not already captured)
+                if (!existing.referrer && document.referrer && !document.referrer.includes(location.hostname)) {
+                    existing.referrer = document.referrer;
+                }
+                if (!existing.landing_page) existing.landing_page = location.pathname + location.search;
+                sessionStorage.setItem('ailab_attr', JSON.stringify(existing));
+            } catch(e) {}
+        })();
+
+        function getAttr(key) {
+            try { return (JSON.parse(sessionStorage.getItem('ailab_attr') || '{}')[key]) || ''; } catch(e) { return ''; }
+        }
+
+        function openLeadPopup(trackId) {
+            var label = TRACK_LABELS[trackId] || '';
+            document.getElementById('leadTrack').value = label;
+            document.getElementById('leadTrackLabel').textContent =
+                label ? 'מסלול: ' + label + ' · נחזור אליכם תוך 24 שעות' : 'נחזור אליכם תוך 24 שעות עם כל הפרטים';
+
+            // Fill hidden attribution fields
+            document.getElementById('leadSource').value       = getAttr('utm_source');
+            document.getElementById('leadMedium').value       = getAttr('utm_medium');
+            document.getElementById('leadCampaign').value     = getAttr('utm_campaign');
+            document.getElementById('leadContent').value      = getAttr('utm_content');
+            document.getElementById('leadTerm').value         = getAttr('utm_term');
+            document.getElementById('leadFbclid').value       = getAttr('fbclid');
+            document.getElementById('leadGclid').value        = getAttr('gclid');
+            document.getElementById('leadReferrer').value     = getAttr('referrer');
+            document.getElementById('leadLandingPage').value  = getAttr('landing_page');
+
+            document.getElementById('leadPopup').classList.add('popup-visible');
+            try {
+                gtag('event', 'lead_popup_open', { event_category: 'engagement', event_label: label });
+                if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: label || 'lead_form' });
+            } catch(e) {}
+        }
+        function closeLeadPopup() {
+            document.getElementById('leadPopup').classList.remove('popup-visible');
+        }
+
+        async function submitLeadForm(e) {
+            e.preventDefault();
+            var form = document.getElementById('leadForm');
+            var btn = document.getElementById('leadSubmitBtn');
+            btn.disabled = true;
+            btn.textContent = 'שולח...';
+
+            // Timestamp in ISO (Apps Script converts to local time)
+            document.getElementById('leadSubmittedAt').value = new Date().toISOString();
+
+            try {
+                var data = new FormData(form);
+                // Google Apps Script requires no-cors for cross-origin doPost
+                await fetch(LEAD_ENDPOINT, { method: 'POST', mode: 'no-cors', body: data });
+                try {
+                    gtag('event', 'generate_lead', { event_category: 'contact_form', event_label: form.track.value || 'lead_form' });
+                    gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
+                    if (window.fbq) fbq('track', 'Lead', { content_name: form.track.value || 'lead_form' });
+                } catch(ev) {}
+                // Redirect to thank-you page (dedicated conversion URL)
+                var url = '/thanks.html?track=' + encodeURIComponent(form.track.value || '');
+                window.location.href = url;
+            } catch(err) {
+                btn.disabled = false;
+                btn.textContent = 'שלחו לי פרטים';
+                alert('שגיאה בשליחה. נסו שוב או צרו קשר בוואטסאפ: 054-6500795');
+            }
+            return false;
+        }
+        // ── More Tools popup (reuses same endpoint + attribution) ──
+        function openMoreToolsPopup() {
+            document.getElementById('mtSource').value       = getAttr('utm_source');
+            document.getElementById('mtMedium').value       = getAttr('utm_medium');
+            document.getElementById('mtCampaign').value     = getAttr('utm_campaign');
+            document.getElementById('mtContent').value      = getAttr('utm_content');
+            document.getElementById('mtTerm').value         = getAttr('utm_term');
+            document.getElementById('mtFbclid').value       = getAttr('fbclid');
+            document.getElementById('mtGclid').value        = getAttr('gclid');
+            document.getElementById('mtReferrer').value     = getAttr('referrer');
+            document.getElementById('mtLandingPage').value  = getAttr('landing_page');
+            document.getElementById('moreToolsPopup').classList.add('popup-visible');
+            try {
+                gtag('event', 'lead_popup_open', { event_category: 'engagement', event_label: 'more_tools' });
+                if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: 'more_tools' });
+            } catch(e) {}
+        }
+        function closeMoreToolsPopup() {
+            document.getElementById('moreToolsPopup').classList.remove('popup-visible');
+        }
+        async function submitMoreToolsForm(e) {
+            e.preventDefault();
+            var form = document.getElementById('moreToolsForm');
+            var btn = document.getElementById('mtSubmitBtn');
+            btn.disabled = true;
+            btn.textContent = 'שולח...';
+            document.getElementById('mtSubmittedAt').value = new Date().toISOString();
+            try {
+                var data = new FormData(form);
+                await fetch(LEAD_ENDPOINT, { method: 'POST', mode: 'no-cors', body: data });
+                try {
+                    gtag('event', 'generate_lead', { event_category: 'contact_form', event_label: 'more_tools' });
+                    gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
+                    if (window.fbq) fbq('track', 'Lead', { content_name: 'more_tools' });
+                } catch(ev) {}
+                window.location.href = '/thanks.html?track=' + encodeURIComponent('עוד כלים שתרכשו');
+            } catch(err) {
+                btn.disabled = false;
+                btn.textContent = 'שלחו לי פרטים';
+                alert('שגיאה בשליחה. נסו שוב או צרו קשר בוואטסאפ: 054-6500795');
+            }
+            return false;
+        }
+        // ══════════════ END LEAD POPUP ══════════════
+
         async function submitFormPopup(e) {
             e.preventDefault();
             var form = document.getElementById('contactFormPopup');
@@ -4679,6 +5351,47 @@
             gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
             window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
         }
+
+        // ── Testimonials marquee: keep cloning until track is wide enough to ALWAYS fill viewport ──
+        // Animation shifts by -50% of the track. We need the remaining 50% to still cover
+        // the viewport + buffer at every animation frame. Rule: track width ≥ 2 × (viewport + 1 set).
+        (function setupTestimonialsMarquee() {
+            function setup() {
+                document.querySelectorAll('.tt-track').forEach(function(track) {
+                    if (track.dataset.marqueeReady === '1') return;
+                    if (!track.children.length) return;
+
+                    // Snapshot the ORIGINAL content (what's in HTML before we started cloning).
+                    var originalHTML = track.innerHTML;
+                    var oneCopyWidth = track.scrollWidth; // width of one copy of all HTML cards
+
+                    // Keep appending full copies until track has enough content for any viewport.
+                    // Target: at least 4× viewport width (generous safety margin, no edge empties).
+                    var viewport = Math.max(
+                        window.innerWidth || 0,
+                        document.documentElement.clientWidth || 0,
+                        1400
+                    );
+                    var target = viewport * 4;
+                    var safety = 0;
+                    while (track.scrollWidth < target && safety < 20) {
+                        var holder = document.createElement('div');
+                        holder.innerHTML = originalHTML;
+                        Array.from(holder.children).forEach(function(card) {
+                            card.setAttribute('aria-hidden', 'true');
+                            track.appendChild(card);
+                        });
+                        safety++;
+                    }
+                    track.dataset.marqueeReady = '1';
+                });
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setup);
+            } else {
+                setup();
+            }
+        })();
 
         // ── Webinar popup (only on webinar button clicks — no auto triggers) ──
         function closeWebinarPopup() {
