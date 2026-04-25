@@ -1290,6 +1290,15 @@
       options.classList.remove('open');
       trigger.setAttribute('aria-expanded', 'false');
     }
+    function getScrollParent(el) {
+      let p = el.parentElement;
+      while (p && p !== document.body) {
+        const oy = getComputedStyle(p).overflowY;
+        if (oy === 'auto' || oy === 'scroll') return p;
+        p = p.parentElement;
+      }
+      return null;
+    }
     function open() {
       // close any other open custom-select first
       document.querySelectorAll('.cs-options.open').forEach(o => {
@@ -1298,12 +1307,15 @@
           o.parentElement.querySelector('.cs-trigger').setAttribute('aria-expanded', 'false');
         }
       });
-      // Decide direction: open upward if not enough space below
+      // Decide direction: prefer down, but flip up if not enough room
       const rect = trigger.getBoundingClientRect();
       const ddHeight = Math.min(240, items.length * 42 + 12);
-      const spaceBelow = window.innerHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      if (spaceBelow < ddHeight + 20 && spaceAbove > spaceBelow) {
+      const scrollParent = getScrollParent(trigger);
+      const bottomBound = scrollParent ? scrollParent.getBoundingClientRect().bottom : window.innerHeight;
+      const topBound    = scrollParent ? scrollParent.getBoundingClientRect().top    : 0;
+      const spaceBelow = bottomBound - rect.bottom;
+      const spaceAbove = rect.top - topBound;
+      if (spaceBelow < ddHeight + 16 && spaceAbove > spaceBelow) {
         options.classList.add('up');
       } else {
         options.classList.remove('up');
