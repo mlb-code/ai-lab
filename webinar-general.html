@@ -425,6 +425,71 @@
     .fg input::placeholder { color: rgba(255,255,255,.2); }
     .fg input:focus { outline:none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(108,60,225,.15); }
 
+    /* Custom select (replaces native — fixes Chrome modal dropdown bug) */
+    .custom-select { position: relative; width: 100%; }
+    .cs-trigger {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.97rem;
+      font-family: 'Heebo', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      direction: rtl;
+      text-align: right;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .cs-trigger:focus { outline:none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(108,60,225,.15); }
+    .cs-trigger[aria-expanded="true"] { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(108,60,225,.15); }
+    .custom-select.error .cs-trigger { border-color: #ff5577; box-shadow: 0 0 0 3px rgba(255,85,119,.15); }
+    .cs-value { color: rgba(255,255,255,.4); }
+    .custom-select.has-value .cs-value { color: var(--text); }
+    .cs-arrow { transition: transform .25s; flex-shrink: 0; }
+    .cs-trigger[aria-expanded="true"] .cs-arrow { transform: rotate(180deg); }
+
+    .cs-options {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      left: 0;
+      background: #1a1a2e;
+      border: 1px solid rgba(108,60,225,.35);
+      border-radius: 10px;
+      list-style: none;
+      margin: 0;
+      padding: 6px;
+      max-height: 240px;
+      overflow-y: auto;
+      z-index: 50;
+      display: none;
+      box-shadow: 0 12px 30px rgba(0,0,0,.55);
+    }
+    .cs-options.open { display: block; animation: csFadeIn .18s ease; }
+    @keyframes csFadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    .cs-options li {
+      padding: 10px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: .95rem;
+      color: var(--text);
+      transition: background .15s, color .15s;
+    }
+    .cs-options li:hover, .cs-options li.highlighted { background: rgba(108,60,225,.20); }
+    .cs-options li.selected { background: rgba(0,212,170,.15); color: var(--accent); font-weight: 700; }
+    .cs-error-msg {
+      display: none;
+      color: #ff5577;
+      font-size: .8rem;
+      margin-top: 6px;
+    }
+    .custom-select.error + .cs-error-msg,
+    .custom-select.error ~ .cs-error-msg { display: block; }
+
     .btn-reg {
       width: 100%;
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
@@ -991,18 +1056,24 @@
         <input type="tel" id="fp" name="phone" placeholder="050-0000000" required autocomplete="tel" pattern="[0-9\-+\s]{9,}">
       </div>
       <div class="fg">
-        <label for="fsrc">איך שמעת עלינו?</label>
-        <select id="fsrc" name="source" required>
-          <option value="" disabled selected>בחרו...</option>
-          <option value="פייסבוק">פייסבוק</option>
-          <option value="אינסטגרם">אינסטגרם</option>
-          <option value="טיקטוק">טיקטוק</option>
-          <option value="לינקדין">לינקדין</option>
-          <option value="קבוצת וואטסאפ">קבוצת וואטסאפ</option>
-          <option value="חבר / המלצה">חבר / המלצה</option>
-          <option value="גוגל">גוגל</option>
-          <option value="אחר">אחר</option>
-        </select>
+        <label for="fsrc-trigger">איך שמעת עלינו?</label>
+        <div class="custom-select" data-required="true">
+          <button type="button" id="fsrc-trigger" class="cs-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span class="cs-value">בחרו...</span>
+            <svg class="cs-arrow" width="12" height="8" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="#9090b0" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          </button>
+          <ul class="cs-options" role="listbox">
+            <li data-value="פייסבוק" role="option">פייסבוק</li>
+            <li data-value="אינסטגרם" role="option">אינסטגרם</li>
+            <li data-value="טיקטוק" role="option">טיקטוק</li>
+            <li data-value="לינקדין" role="option">לינקדין</li>
+            <li data-value="קבוצת וואטסאפ" role="option">קבוצת וואטסאפ</li>
+            <li data-value="חבר / המלצה" role="option">חבר / המלצה</li>
+            <li data-value="גוגל" role="option">גוגל</li>
+            <li data-value="אחר" role="option">אחר</li>
+          </ul>
+          <input type="hidden" name="source">
+        </div>
       </div>
       <button type="submit" class="btn-reg" id="submitBtn">אני רוצה להצטרף לוובינר 🚀</button>
       <p class="fnote">לא שולחים ספאם. פרטים לא מועברים לגורם שלישי.</p>
@@ -1091,18 +1162,24 @@
         <input type="tel" id="mfp" name="phone" placeholder="050-0000000" required autocomplete="tel" pattern="[0-9\-+\s]{9,}">
       </div>
       <div class="fg">
-        <label for="mfsrc">איך שמעת עלינו?</label>
-        <select id="mfsrc" name="source" required>
-          <option value="" disabled selected>בחרו...</option>
-          <option value="פייסבוק">פייסבוק</option>
-          <option value="אינסטגרם">אינסטגרם</option>
-          <option value="טיקטוק">טיקטוק</option>
-          <option value="לינקדין">לינקדין</option>
-          <option value="קבוצת וואטסאפ">קבוצת וואטסאפ</option>
-          <option value="חבר / המלצה">חבר / המלצה</option>
-          <option value="גוגל">גוגל</option>
-          <option value="אחר">אחר</option>
-        </select>
+        <label for="mfsrc-trigger">איך שמעת עלינו?</label>
+        <div class="custom-select" data-required="true">
+          <button type="button" id="mfsrc-trigger" class="cs-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span class="cs-value">בחרו...</span>
+            <svg class="cs-arrow" width="12" height="8" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="#9090b0" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          </button>
+          <ul class="cs-options" role="listbox">
+            <li data-value="פייסבוק" role="option">פייסבוק</li>
+            <li data-value="אינסטגרם" role="option">אינסטגרם</li>
+            <li data-value="טיקטוק" role="option">טיקטוק</li>
+            <li data-value="לינקדין" role="option">לינקדין</li>
+            <li data-value="קבוצת וואטסאפ" role="option">קבוצת וואטסאפ</li>
+            <li data-value="חבר / המלצה" role="option">חבר / המלצה</li>
+            <li data-value="גוגל" role="option">גוגל</li>
+            <li data-value="אחר" role="option">אחר</li>
+          </ul>
+          <input type="hidden" name="source">
+        </div>
       </div>
       <button type="submit" class="btn-reg">אני רוצה להצטרף לוובינר 🚀</button>
       <p class="fnote">לא שולחים ספאם. פרטים לא מועברים לגורם שלישי.</p>
@@ -1195,10 +1272,82 @@
   }
   tick(); setInterval(tick, 1000);
 
+  // ── Custom select component ──
+  document.querySelectorAll('.custom-select').forEach(cs => {
+    const trigger  = cs.querySelector('.cs-trigger');
+    const options  = cs.querySelector('.cs-options');
+    const valueEl  = cs.querySelector('.cs-value');
+    const hidden   = cs.querySelector('input[type="hidden"]');
+    const items    = options.querySelectorAll('li');
+
+    function close() {
+      options.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+    function open() {
+      // close any other open custom-select first
+      document.querySelectorAll('.cs-options.open').forEach(o => {
+        if (o !== options) {
+          o.classList.remove('open');
+          o.parentElement.querySelector('.cs-trigger').setAttribute('aria-expanded', 'false');
+        }
+      });
+      options.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+
+    trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      if (options.classList.contains('open')) close(); else open();
+    });
+
+    items.forEach(li => {
+      li.addEventListener('click', () => {
+        const val = li.dataset.value;
+        hidden.value = val;
+        valueEl.textContent = li.textContent;
+        cs.classList.add('has-value');
+        cs.classList.remove('error');
+        items.forEach(x => x.classList.remove('selected'));
+        li.classList.add('selected');
+        close();
+      });
+    });
+
+    trigger.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { close(); return; }
+      if (['Enter', ' ', 'ArrowDown', 'ArrowUp'].includes(e.key)) {
+        e.preventDefault();
+        if (!options.classList.contains('open')) open();
+      }
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.custom-select')) {
+      document.querySelectorAll('.cs-options.open').forEach(o => {
+        o.classList.remove('open');
+        o.parentElement.querySelector('.cs-trigger').setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
   // Bind submit handler to all reg-forms (inline + modal)
   function bindRegForm(form) {
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
+
+      // Custom-select validation
+      const cs = form.querySelector('.custom-select[data-required="true"]');
+      if (cs) {
+        const csInput = cs.querySelector('input[type="hidden"]');
+        if (!csInput.value) {
+          cs.classList.add('error');
+          cs.querySelector('.cs-trigger').focus();
+          return;
+        }
+        cs.classList.remove('error');
+      }
+
       const btn = form.querySelector('button[type="submit"]');
       const originalText = btn.textContent;
       btn.disabled = true;
