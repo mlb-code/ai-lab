@@ -469,8 +469,14 @@
       display: none;
       box-shadow: 0 12px 30px rgba(0,0,0,.55);
     }
+    .cs-options.up {
+      top: auto;
+      bottom: calc(100% + 6px);
+    }
     .cs-options.open { display: block; animation: csFadeIn .18s ease; }
-    @keyframes csFadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    .cs-options.up.open { animation: csFadeInUp .18s ease; }
+    @keyframes csFadeIn   { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes csFadeInUp { from { opacity: 0; transform: translateY(4px);  } to { opacity: 1; transform: translateY(0); } }
     .cs-options li {
       padding: 10px 14px;
       border-radius: 6px;
@@ -1292,6 +1298,16 @@
           o.parentElement.querySelector('.cs-trigger').setAttribute('aria-expanded', 'false');
         }
       });
+      // Decide direction: open upward if not enough space below
+      const rect = trigger.getBoundingClientRect();
+      const ddHeight = Math.min(240, items.length * 42 + 12);
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      if (spaceBelow < ddHeight + 20 && spaceAbove > spaceBelow) {
+        options.classList.add('up');
+      } else {
+        options.classList.remove('up');
+      }
       options.classList.add('open');
       trigger.setAttribute('aria-expanded', 'true');
     }
