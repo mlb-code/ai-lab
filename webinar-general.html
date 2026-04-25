@@ -21,7 +21,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>וובינר חינמי — AI ויזמות לילדים | AI Lab</title>
-  <meta name="description" content="וובינר חינמי להורים: איך ילדים ובני נוער יכולים לבנות פרויקטים אמיתיים עם AI. יום רביעי 15.4.2026 — הרשמה חינם.">
+  <meta name="description" content="וובינר חינמי להורים: איך ילדים ובני נוער יכולים לבנות פרויקטים אמיתיים עם AI. יום שלישי 28.4.2026 — הרשמה חינם.">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-37WXJMRB9C"></script>
   <script>
@@ -72,102 +72,237 @@
     .bar-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
     .bar-logo em { font-style:normal; color: var(--accent); }
 
-    /* ── HERO ── */
+    /* ── HERO — Cosmic + Neural ("הכוכבים מסתדרים") ── */
     .hero {
-      padding: 56px 22px 48px;
+      padding: clamp(40px, 6vw, 80px) clamp(16px, 5vw, 32px) clamp(48px, 5vw, 64px);
       text-align: center;
-      background: linear-gradient(170deg, #1a1a2e 0%, var(--dark) 60%, #150d28 100%);
+      background: radial-gradient(ellipse at top, #1a0d3e 0%, #0a0717 45%, #03020b 100%);
       position: relative;
       overflow: hidden;
+      min-height: clamp(680px, 96svh, 1040px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
+    .hero-inner {
+      margin: auto 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    /* Nebula glow (slow pulse) */
     .hero::before {
       content:'';
-      position:absolute; inset:0;
-      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(108,60,225,0.15) 0%, transparent 70%);
+      position:absolute; inset:0; z-index:0;
+      background:
+        radial-gradient(ellipse 60% 50% at 25% 30%, rgba(108,60,225,.40), transparent 70%),
+        radial-gradient(ellipse 50% 40% at 75% 65%, rgba(0,212,170,.28), transparent 70%),
+        radial-gradient(ellipse 40% 30% at 50% 90%, rgba(255,179,71,.15), transparent 70%);
       pointer-events:none;
+      animation: nebulaPulse 14s ease-in-out infinite;
     }
-    .hero > * { position: relative; }
+    @keyframes nebulaPulse {
+      0%, 100% { opacity: .85; transform: scale(1); }
+      50%      { opacity: 1;   transform: scale(1.05); }
+    }
+    /* Cosmic + Neural canvas */
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero > *:not(.hero-canvas) { position: relative; z-index: 2; }
+
+    @keyframes fadeUpHero {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
     .tags {
       display: flex;
       justify-content: center;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 22px;
+      margin-bottom: clamp(18px, 3.5vw, 24px);
+      animation: fadeUpHero .55s ease both;
     }
     .tag {
-      padding: 5px 14px;
+      padding: 6px 14px;
       border-radius: 20px;
-      font-size: 0.8rem;
+      font-size: clamp(.72rem, 2vw, .82rem);
       font-weight: 700;
+      transition: transform .2s, border-color .2s;
     }
-    .tag-green { background: rgba(0,212,170,.12); border: 1px solid rgba(0,212,170,.3); color: var(--accent); }
-    .tag-purple { background: rgba(108,60,225,.12); border: 1px solid rgba(108,60,225,.3); color: #b89ffa; }
+    .tag:hover { transform: translateY(-2px); }
+    .tag-green { background: rgba(0,212,170,.14); border: 1px solid rgba(0,212,170,.35); color: var(--accent); }
+    .tag-purple { background: rgba(108,60,225,.14); border: 1px solid rgba(108,60,225,.35); color: #b89ffa; }
 
     .hero h1 {
-      font-size: clamp(2rem, 7vw, 3rem);
+      font-size: clamp(1.95rem, 6.5vw, 5rem);
       font-weight: 900;
-      line-height: 1.2;
-      margin-bottom: 14px;
+      line-height: 1.12;
+      margin-bottom: clamp(12px, 2vw, 20px);
+      letter-spacing: -.8px;
+      word-spacing: -.5px;
+      animation: fadeUpHero .65s .08s ease both;
+      padding: 0 4px;
     }
-    .hero h1 .g {
-      background: linear-gradient(135deg, var(--accent), var(--primary-light));
+    .hero h1 .g,
+    .hero h1 .g2 {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      background-size: 280% 280%;
+      animation: gradientShift 6s ease infinite;
+      display: inline-block;
+    }
+    .hero h1 .g {
+      background-image: linear-gradient(135deg, var(--accent) 0%, var(--primary-light) 50%, var(--accent) 100%);
+    }
+    .hero h1 .g2 {
+      background-image: linear-gradient(135deg, #ffb347 0%, var(--accent) 50%, var(--primary-light) 100%);
+      animation-delay: -2s;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
     }
     .hero-lead {
-      font-size: 1.05rem;
+      font-size: clamp(1.08rem, 1.9vw, 1.4rem);
       color: var(--muted);
-      max-width: 480px;
-      margin: 0 auto 28px;
+      max-width: 600px;
+      margin: 0 auto clamp(22px, 4vw, 36px);
+      line-height: 1.6;
+      animation: fadeUpHero .75s .15s ease both;
     }
 
     .date-row {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 10px;
       background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(0,212,170,.28);
       border-radius: 50px;
-      padding: 9px 20px;
-      font-size: 0.95rem;
+      padding: clamp(8px, 1.5vw, 13px) clamp(16px, 3vw, 26px);
+      font-size: clamp(.86rem, 1.3vw, 1.05rem);
       font-weight: 700;
-      margin-bottom: 30px;
+      margin-bottom: clamp(22px, 4vw, 36px);
+      animation: fadeUpHero .85s .22s ease both;
     }
-    .date-row .dot { color: var(--accent); font-size: 1.1rem; }
+    .date-row .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-block;
+      box-shadow: 0 0 12px var(--accent);
+      animation: livePulse 1.8s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes livePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,170,.55); }
+      50%      { box-shadow: 0 0 0 9px rgba(0,212,170,0); }
+    }
 
     /* Countdown */
     .countdown {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 34px;
+      gap: clamp(8px, 1.4vw, 16px);
+      margin-bottom: clamp(28px, 4.5vw, 44px);
+      animation: fadeUpHero .95s .3s ease both;
+      flex-wrap: nowrap;
     }
     .cu {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      min-width: 70px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.015));
+      border: 1px solid rgba(0,212,170,.22);
+      border-radius: clamp(14px, 1.2vw, 20px);
+      padding: clamp(14px, 2.2vw, 26px) clamp(12px, 2.4vw, 30px);
+      min-width: clamp(74px, 18vw, 120px);
       text-align: center;
+      backdrop-filter: blur(4px);
+      transition: transform .25s, border-color .25s, box-shadow .25s;
     }
-    .cu .n { display:block; font-size: 2rem; font-weight: 900; color: var(--accent); line-height:1; font-variant-numeric: tabular-nums; }
-    .cu .l { font-size: 0.68rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+    .cu:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,212,170,.5);
+      box-shadow: 0 8px 24px rgba(0,212,170,.18);
+    }
+    .cu .n {
+      display:block;
+      font-size: clamp(2rem, 5.5vw, 3.4rem);
+      font-weight: 900;
+      color: var(--accent);
+      line-height:1;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 22px rgba(0,212,170,.4);
+    }
+    .cu .l {
+      font-size: clamp(.7rem, 1.4vw, .92rem);
+      color: var(--muted);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
 
     .cta-scroll {
       display: inline-block;
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: #fff;
       font-weight: 800;
-      font-size: 1.05rem;
-      padding: 15px 38px;
+      font-size: clamp(.98rem, 1.4vw, 1.2rem);
+      padding: clamp(14px, 1.5vw, 20px) clamp(30px, 3.5vw, 52px);
       border-radius: 50px;
       text-decoration: none;
       box-shadow: 0 4px 22px rgba(108,60,225,.35);
       transition: transform .2s, box-shadow .2s;
+      animation: fadeUpHero 1.05s .38s ease both, ctaPulse 2.6s 1.6s ease-in-out infinite;
     }
-    .cta-scroll:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(108,60,225,.5); }
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 4px 22px rgba(108,60,225,.35); }
+      50%      { box-shadow: 0 10px 38px rgba(108,60,225,.65), 0 0 0 7px rgba(108,60,225,.16); }
+    }
+    .cta-scroll:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(108,60,225,.55); }
+
+    /* Scroll indicator — last flex item at bottom of hero */
+    .scroll-indicator {
+      flex-shrink: 0;
+      margin-top: clamp(28px, 4vw, 50px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: clamp(.82rem, 1.1vw, .95rem);
+      font-weight: 600;
+      letter-spacing: .3px;
+      cursor: pointer;
+      animation: fadeOnly 1s .5s ease both;
+      transition: color .25s;
+    }
+    @keyframes fadeOnly { from { opacity: 0 } to { opacity: 1 } }
+    .scroll-indicator:hover { color: var(--accent); }
+    .scroll-indicator .si-arrow {
+      width: 26px; height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: bounceDown 1.7s ease-in-out infinite;
+    }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0);  opacity: .55; }
+      50%      { transform: translateY(7px); opacity: 1;   }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .hero::before, .hero h1 .g, .hero h1 .g2, .date-row .dot, .cta-scroll, .scroll-indicator .si-arrow,
+      .tags, .hero h1, .hero-lead, .date-row, .countdown, .scroll-indicator { animation: none !important; }
+      .hero-canvas { display: none; }
+    }
 
     /* ── WHY ── */
     .why {
@@ -339,6 +474,63 @@
     .cbtn-g { background:#4285F4; color:#fff; }
     .cbtn-i { background:rgba(255,255,255,.08); color:var(--text); border:1px solid var(--border); }
 
+    /* WhatsApp community button */
+    .wa-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 14px 22px;
+      border-radius: 50px;
+      text-decoration: none;
+      margin-top: 18px;
+      box-shadow: 0 8px 26px rgba(37,211,102,.32);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(37,211,102,.5); }
+    .wa-btn svg { flex-shrink: 0; }
+
+    /* Success — small social row */
+    .success-socials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .success-socials .ss-label {
+      font-size: .78rem;
+      color: var(--muted);
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    .success-socials .ss-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      color: rgba(255,255,255,.55);
+      text-decoration: none;
+      transition: background .2s, color .2s, transform .2s, border-color .2s;
+    }
+    .success-socials .ss-link:hover {
+      background: rgba(0,212,170,.14);
+      border-color: rgba(0,212,170,.4);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
     /* ── FOOTER ── */
     .footer {
       text-align:center;
@@ -459,21 +651,45 @@
     }
     .site-cta {
       text-align: center;
-      margin-top: 36px;
+      margin-top: 44px;
       padding: 0 22px;
     }
     .site-cta a {
-      display: inline-block;
-      border: 2px solid var(--primary-light);
-      color: var(--primary-light);
-      font-weight: 800;
-      font-size: 1rem;
-      padding: 12px 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      color: #fff;
+      font-weight: 700;
+      font-size: .92rem;
+      padding: 10px 20px 10px 14px;
       border-radius: 50px;
       text-decoration: none;
-      transition: background .2s, color .2s;
+      background: linear-gradient(135deg, rgba(108,60,225,.18), rgba(0,212,170,.10));
+      border: 1px solid rgba(108,60,225,.45);
+      box-shadow: 0 4px 18px rgba(108,60,225,.18), inset 0 1px 0 rgba(255,255,255,.06);
+      transition: transform .25s, box-shadow .25s, border-color .25s, background .25s;
+      letter-spacing: .2px;
+      white-space: nowrap;
     }
-    .site-cta a:hover { background: var(--primary-light); color: #fff; }
+    .site-cta a .arrow {
+      display: inline-flex;
+      width: 26px; height: 26px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      transition: transform .3s cubic-bezier(.2,.9,.3,1.1);
+      flex-shrink: 0;
+    }
+    .site-cta a:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,212,170,.55);
+      background: linear-gradient(135deg, rgba(108,60,225,.28), rgba(0,212,170,.18));
+      box-shadow: 0 14px 36px rgba(108,60,225,.30), 0 0 0 4px rgba(108,60,225,.12);
+    }
+    .site-cta a:hover .arrow { transform: translateX(-4px); }
     @media(max-width:900px) {
       .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     }
@@ -485,11 +701,92 @@
 
     /* ── MOBILE ── */
     @media(max-width:480px){
-      .hero { padding:44px 18px 38px; }
       .fcard { padding:24px 18px; }
-      .cu { min-width:58px; padding:11px 12px; }
-      .cu .n { font-size:1.7rem; }
       .form-section { padding:44px 18px 60px; }
+    }
+
+    /* ── MODAL ── */
+    body.no-scroll { overflow: hidden; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5,5,15,.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open {
+      display: flex;
+      animation: modalFadeIn .25s ease both;
+    }
+    @keyframes modalFadeIn { from { opacity: 0 } to { opacity: 1 } }
+
+    .modal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px 28px;
+      width: 100%;
+      max-width: 460px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 24px 80px rgba(0,0,0,.7);
+      direction: rtl;
+    }
+    .modal-overlay.open .modal-card {
+      animation: modalCardIn .35s cubic-bezier(.2,.9,.3,1.1) both;
+    }
+    @keyframes modalCardIn {
+      from { opacity: 0; transform: translateY(22px) scale(.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px; left: 16px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1.5rem;
+      font-weight: 400;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding: 0;
+      transition: background .2s, transform .25s, color .2s;
+      font-family: inherit;
+    }
+    .modal-close:hover {
+      background: rgba(255,255,255,.12);
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+
+    .modal-card h2 {
+      font-size: clamp(1.35rem, 4vw, 1.6rem);
+      font-weight: 900;
+      margin: 0 0 8px;
+      text-align: center;
+    }
+    .modal-card .modal-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: .92rem;
+      margin-bottom: 24px;
+    }
+
+    @media(max-width:480px){
+      .modal-card { padding: 32px 20px 22px; border-radius: 16px; }
     }
   </style>
 
@@ -500,8 +797,8 @@
   "@type": "Event",
   "name": "וובינר חינמי — AI ויזמות לילדים",
   "description": "וובינר חינמי להורים: איך ילדים ובני נוער בונים פרויקטים אמיתיים עם בינה מלאכותית.",
-  "startDate": "2026-04-15T20:30:00+03:00",
-  "endDate": "2026-04-15T22:00:00+03:00",
+  "startDate": "2026-04-28T20:30:00+03:00",
+  "endDate": "2026-04-28T22:00:00+03:00",
   "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
   "eventStatus": "https://schema.org/EventScheduled",
   "location": {
@@ -541,23 +838,27 @@
 
 <!-- HERO -->
 <section class="hero">
+  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero-inner">
   <div class="tags">
     <span class="tag tag-green">🆓 חינם לחלוטין</span>
     <span class="tag tag-purple">💻 זום — אונליין</span>
-    <span class="tag tag-purple">👨‍👩‍👧 וובינר להורים וילדים</span>
+    <span class="tag tag-purple">👨‍👩‍👧 להורים וילדים בגילאי 9-17</span>
   </div>
 
   <h1>
-    הילד שלכם יכול לבנות<br>
-    <span class="g">עסק אמיתי עם AI</span>
+    הילדים של היום<br>
+    <span class="g">ישנו את המחר</span><br>
+    <span class="g2">באמצעות AI</span>
   </h1>
   <p class="hero-lead">
-    וובינר מיוחד להורים, ילדים ובני נוער — נסביר איך לומדים יזמות ובינה מלאכותית בקורסים של AI Lab
+    וובינר מיוחד להורים, ילדים ובני נוער<br>
+    נסביר איך לומדים יזמות ובינה מלאכותית בקורסים של <span style="white-space:nowrap">AI&nbsp;Lab</span>
   </p>
 
   <div class="date-row">
-    <span class="dot">●</span>
-    יום רביעי, 15 באפריל 2026 &nbsp;|&nbsp; 19:00
+    <span class="dot" aria-hidden="true"></span>
+    יום שלישי, 28 באפריל 2026 &nbsp;|&nbsp; 20:30
   </div>
 
   <div class="countdown" id="countdown">
@@ -567,38 +868,46 @@
     <div class="cu"><span class="n" id="cd-s">--</span><span class="l">שניות</span></div>
   </div>
 
-  <a href="#register" class="cta-scroll">הירשמו חינם ↓</a>
+  <a href="#register" class="cta-scroll" id="openRegBtn">הירשמו חינם</a>
+  </div><!-- /.hero-inner -->
+
+  <a href="#why" class="scroll-indicator" aria-label="גלול לפרטים נוספים">
+    <span class="si-label">פרטים נוספים</span>
+    <span class="si-arrow" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </span>
+  </a>
 </section>
 
 
 <!-- WHY -->
-<section class="why">
+<section class="why" id="why">
   <div class="why-inner">
-    <div class="section-label">בוובינר נסביר</div>
-    <h2>מה ילדכם ילמד בקורס?</h2>
+    <div class="section-label">מה יהיה בוובינר</div>
+    <h2>3 דברים שתיקחו איתכם הביתה</h2>
     <p class="why-intro">
-      ב-AI Lab אנחנו מלמדים ילדים ובני נוער לחשוב כיזמים ולבנות פרויקטים אמיתיים עם כלי AI — לא לצפות בסרטונים, לבנות.
+      וובינר חי וקצר עם הדגמה בלייב, תובנות פרקטיות ומבט לעתיד שמחכה לילדים שלנו בעידן ה-AI.
     </p>
     <div class="points">
       <div class="point">
-        <div class="point-icon">🤖</div>
+        <div class="point-icon">💻</div>
         <div>
-          <h3>AI מעשי — לא רק תיאוריה</h3>
-          <p>ילדים עובדים עם ChatGPT, Claude ועוד — בונים אתרים, אפליקציות, סרטונים ומוצרים דיגיטליים אמיתיים</p>
+          <h3>הדגמה בלייב — אפליקציה תוך דקות</h3>
+          <p>תראו במו עיניכם איך בונים אפליקציה אמיתית בכמה דקות בודדות, מאפס, בעזרת כלי AI</p>
         </div>
       </div>
       <div class="point">
-        <div class="point-icon">🚀</div>
+        <div class="point-icon">🎓</div>
         <div>
-          <h3>חשיבה יזמית מגיל צעיר</h3>
-          <p>הילדים לומדים לזהות בעיות, לחשוב על פתרונות ולהפוך רעיון לפרויקט — כישורים שיישרתו אותם כל החיים</p>
+          <h3>AI והלימודים של הילדים</h3>
+          <p>איך הבינה המלאכותית משנה את הדרך שבה הילדים לומדים, חוקרים ומכינים עבודות בבית הספר</p>
         </div>
       </div>
       <div class="point">
-        <div class="point-icon">🏆</div>
+        <div class="point-icon">🔮</div>
         <div>
-          <h3>תוצאות שאפשר לראות</h3>
-          <p>בסוף הקורס לכל ילד יש פרויקט אמיתי שהוא בנה — אתר, אפליקציה, או עסק קטן שהוא גאה בו</p>
+          <h3>העתיד של הילדים שלנו</h3>
+          <p>מבט לכמה שנים קדימה — איזה עולם מחכה לילדים, ואילו כישורים הם צריכים כדי להצליח בו</p>
         </div>
       </div>
     </div>
@@ -614,42 +923,6 @@
 
   <div class="proj-grid" id="projGrid">
 
-    <a href="https://ai-lab.co.il/build-pc/" target="_blank" rel="noopener" class="proj-card">
-      <div class="proj-preview"><iframe src="https://ai-lab.co.il/build-pc/" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="proj-info">
-        <div class="proj-name">🖥️ BUILD PC — השווה, חסוך, שדרג</div>
-        <div class="proj-student">רואי, בן 13</div>
-        <span class="proj-btn">🚀 לצפייה באתר</span>
-      </div>
-    </a>
-
-    <a href="https://ai-lab.co.il/spot/" target="_blank" rel="noopener" class="proj-card">
-      <div class="proj-preview"><iframe src="https://ai-lab.co.il/spot/" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="proj-info">
-        <div class="proj-name">🐕 SPOT — כל כלב ביומו</div>
-        <div class="proj-student">מתן, בן 10</div>
-        <span class="proj-btn">🚀 לצפייה באתר</span>
-      </div>
-    </a>
-
-    <a href="https://ai-lab.co.il/free-movie-trailers/" target="_blank" rel="noopener" class="proj-card">
-      <div class="proj-preview"><iframe src="https://ai-lab.co.il/free-movie-trailers/" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="proj-info">
-        <div class="proj-name">🎬 Free Movie Trailers</div>
-        <div class="proj-student">תאיי, בן 12</div>
-        <span class="proj-btn">🚀 לצפייה באתר</span>
-      </div>
-    </a>
-
-    <a href="https://ai-lab.co.il/trendsaver/" target="_blank" rel="noopener" class="proj-card">
-      <div class="proj-preview"><iframe src="https://ai-lab.co.il/trendsaver/" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="proj-info">
-        <div class="proj-name">📈 TrendSaver — קנה חכם</div>
-        <div class="proj-student">ארבל, בן 12</div>
-        <span class="proj-btn">🚀 לצפייה באתר</span>
-      </div>
-    </a>
-
     <a href="https://ai-lab.co.il/nadavlego/" target="_blank" rel="noopener" class="proj-card">
       <div class="proj-preview"><iframe src="https://ai-lab.co.il/nadavlego/" loading="lazy" tabindex="-1"></iframe></div>
       <div class="proj-info">
@@ -659,11 +932,11 @@
       </div>
     </a>
 
-    <a href="https://ai-lab.co.il/hairmatch/" target="_blank" rel="noopener" class="proj-card">
-      <div class="proj-preview"><iframe src="https://ai-lab.co.il/hairmatch/" loading="lazy" tabindex="-1"></iframe></div>
+    <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/gamebuddy/" loading="lazy" tabindex="-1"></iframe></div>
       <div class="proj-info">
-        <div class="proj-name">✨ HairMatch — טיפוח חכם</div>
-        <div class="proj-student">נועם, בת 13.5</div>
+        <div class="proj-name">🎮 GameBuddy — שחקנים ביחד</div>
+        <div class="proj-student">אבינועם וגבריאל, בני 13.5</div>
         <span class="proj-btn">🚀 לצפייה באתר</span>
       </div>
     </a>
@@ -677,11 +950,11 @@
       </div>
     </a>
 
-<a href="https://ai-lab.co.il/gamebuddy/" target="_blank" rel="noopener" class="proj-card">
-      <div class="proj-preview"><iframe src="https://ai-lab.co.il/gamebuddy/" loading="lazy" tabindex="-1"></iframe></div>
+    <a href="https://ai-lab.co.il/drivelog/" target="_blank" rel="noopener" class="proj-card">
+      <div class="proj-preview"><iframe src="https://ai-lab.co.il/drivelog/" loading="lazy" tabindex="-1"></iframe></div>
       <div class="proj-info">
-        <div class="proj-name">🎮 GameBuddy — שחקנים ביחד</div>
-        <div class="proj-student">אבינועם וגבריאל, בני 13.5</div>
+        <div class="proj-name">🚗 DriveLog — ניהול שיעורי נהיגה</div>
+        <div class="proj-student">גבריאל, בן 16</div>
         <span class="proj-btn">🚀 לצפייה באתר</span>
       </div>
     </a>
@@ -689,7 +962,12 @@
   </div>
 
   <div class="site-cta">
-    <a href="https://ai-lab.co.il" target="_blank" rel="noopener">לכל הפרויקטים והמידע על הקורס ← ai-lab.co.il</a>
+    <a href="https://ai-lab.co.il" target="_blank" rel="noopener">
+      <span>לכל הפרויקטים ומידע נוסף</span>
+      <span class="arrow" aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </span>
+    </a>
   </div>
 </section>
 
@@ -701,7 +979,7 @@
 
   <div class="fcard">
 
-    <form id="regForm">
+    <form id="regForm" class="reg-form" data-source-label="hero-section">
       <div class="fg">
         <label for="fn">שם מלא</label>
         <input type="text" id="fn" name="name" placeholder="ישראל ישראלי" required autocomplete="name">
@@ -711,8 +989,8 @@
         <input type="email" id="fe" name="email" placeholder="name@email.com" required autocomplete="email">
       </div>
       <div class="fg">
-        <label for="fp">טלפון <span class="opt">(אופציונלי)</span></label>
-        <input type="tel" id="fp" name="phone" placeholder="050-0000000" autocomplete="tel">
+        <label for="fp">טלפון</label>
+        <input type="tel" id="fp" name="phone" placeholder="050-0000000" required autocomplete="tel" pattern="[0-9\-+\s]{9,}">
       </div>
       <div class="fg">
         <label for="fsrc">איך שמעת עלינו? <span class="opt">(חובה)</span></label>
@@ -722,6 +1000,7 @@
           <option value="אינסטגרם">אינסטגרם</option>
           <option value="טיקטוק">טיקטוק</option>
           <option value="לינקדין">לינקדין</option>
+          <option value="קבוצת וואטסאפ">קבוצת וואטסאפ</option>
           <option value="חבר / המלצה">חבר / המלצה</option>
           <option value="גוגל">גוגל</option>
           <option value="אחר">אחר</option>
@@ -733,17 +1012,35 @@
 
     <div class="success" id="successCard">
       <div class="sicon">🎉</div>
-      <h3>אתם רשומים!</h3>
-      <p class="ssub">מחכים לכם ביום רביעי 15 באפריל בשעה 19:00.<br>הוסיפו ליומן כדי לא לשכוח 👇</p>
+      <h3>תודה על ההרשמה!</h3>
+      <p class="ssub">כל הפרטים נשלחו למייל שלך 📬 — תבדקו את תיבת הדואר.<br>מחכים לכם ביום שלישי 28.4 בשעה 20:30 🚀</p>
 
       <div class="zbox">
         <div class="zlabel">לינק לכניסה לזום</div>
-        <a id="zlink" href="#" target="_blank" rel="noopener">🎥 הצטרפו לוובינר →</a>
+        <a class="zlink" href="#" target="_blank" rel="noopener">🎥 הצטרפו לוובינר →</a>
       </div>
 
       <div class="calbtns">
-        <a id="gcalBtn" href="#" class="cbtn cbtn-g" target="_blank" rel="noopener">📅 Google Calendar</a>
+        <a class="gcalBtn cbtn cbtn-g" href="#" target="_blank" rel="noopener">📅 Google Calendar</a>
         <button class="cbtn cbtn-i" onclick="dlICS()">📅 Outlook / Apple</button>
+      </div>
+
+      <a class="wa-btn" href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" onclick="gtag('event','whatsapp_community_join',{event_category:'community',event_label:'webinar_thankyou'})">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        הצטרפו לקבוצת הוואטסאפ לעדכונים
+      </a>
+
+      <div class="success-socials">
+        <span class="ss-label">עקבו אחרינו</span>
+        <a href="https://www.instagram.com/ai.lab.il" target="_blank" rel="noopener" class="ss-link" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@ai.labisrael" target="_blank" rel="noopener" class="ss-link" aria-label="TikTok">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.46V13.2a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-.81-.07 4.86 4.86 0 01-.38-4.56z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/share/18CXmH7Zum/" target="_blank" rel="noopener" class="ss-link" aria-label="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
       </div>
     </div>
 
@@ -775,6 +1072,81 @@
 </footer>
 
 
+<!-- REGISTRATION MODAL -->
+<div class="modal-overlay" id="regModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-card">
+    <button class="modal-close" id="modalCloseBtn" aria-label="סגור" type="button">×</button>
+    <h2 id="modalTitle">שמרו לכם מקום</h2>
+    <p class="modal-sub">הרשמה חינמית — לינק לזום יישלח ישר למסך</p>
+
+    <form id="regFormModal" class="reg-form" data-source-label="hero-modal">
+      <div class="fg">
+        <label for="mfn">שם מלא</label>
+        <input type="text" id="mfn" name="name" placeholder="ישראל ישראלי" required autocomplete="name">
+      </div>
+      <div class="fg">
+        <label for="mfe">כתובת מייל</label>
+        <input type="email" id="mfe" name="email" placeholder="name@email.com" required autocomplete="email">
+      </div>
+      <div class="fg">
+        <label for="mfp">טלפון</label>
+        <input type="tel" id="mfp" name="phone" placeholder="050-0000000" required autocomplete="tel" pattern="[0-9\-+\s]{9,}">
+      </div>
+      <div class="fg">
+        <label for="mfsrc">איך שמעת עלינו? <span class="opt">(חובה)</span></label>
+        <select id="mfsrc" name="source" required>
+          <option value="" disabled selected>בחרו...</option>
+          <option value="פייסבוק">פייסבוק</option>
+          <option value="אינסטגרם">אינסטגרם</option>
+          <option value="טיקטוק">טיקטוק</option>
+          <option value="לינקדין">לינקדין</option>
+          <option value="קבוצת וואטסאפ">קבוצת וואטסאפ</option>
+          <option value="חבר / המלצה">חבר / המלצה</option>
+          <option value="גוגל">גוגל</option>
+          <option value="אחר">אחר</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-reg">אני רוצה להצטרף לוובינר 🚀</button>
+      <p class="fnote">לא שולחים ספאם. פרטים לא מועברים לגורם שלישי.</p>
+    </form>
+
+    <div class="success" id="successModalCard">
+      <div class="sicon">🎉</div>
+      <h3>תודה על ההרשמה!</h3>
+      <p class="ssub">כל הפרטים נשלחו למייל שלך 📬 — תבדקו את תיבת הדואר.<br>מחכים לכם ביום שלישי 28.4 בשעה 20:30 🚀</p>
+
+      <div class="zbox">
+        <div class="zlabel">לינק לכניסה לזום</div>
+        <a class="zlink" href="#" target="_blank" rel="noopener">🎥 הצטרפו לוובינר →</a>
+      </div>
+
+      <div class="calbtns">
+        <a class="gcalBtn cbtn cbtn-g" href="#" target="_blank" rel="noopener">📅 Google Calendar</a>
+        <button class="cbtn cbtn-i" onclick="dlICS()">📅 Outlook / Apple</button>
+      </div>
+
+      <a class="wa-btn" href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" onclick="gtag('event','whatsapp_community_join',{event_category:'community',event_label:'webinar_thankyou'})">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        הצטרפו לקבוצת הוואטסאפ לעדכונים
+      </a>
+
+      <div class="success-socials">
+        <span class="ss-label">עקבו אחרינו</span>
+        <a href="https://www.instagram.com/ai.lab.il" target="_blank" rel="noopener" class="ss-link" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@ai.labisrael" target="_blank" rel="noopener" class="ss-link" aria-label="TikTok">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.46V13.2a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-.81-.07 4.86 4.86 0 01-.38-4.56z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/share/18CXmH7Zum/" target="_blank" rel="noopener" class="ss-link" aria-label="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
   // ══════════════════════════════════════════
   //  ⚙️  הגדרות — עדכנו כאן
@@ -788,30 +1160,31 @@
     EJS_SERVICE: 'service_0n55sp2',
     EJS_TPL:     'template_10ybisr',
 
-    ZOOM:     'https://us06web.zoom.us/j/88285914918?pwd=YCKLQhCqpHOwsmppGiMvl21BN7Xjdk.1',
-    UTC_H:    16,   // 19:00 ישראל = 16:00 UTC (UTC+3 בקיץ)
-    UTC_M:    0,
+    ZOOM:     'https://us06web.zoom.us/j/81274026746?pwd=bUvfnNxiqY9XgBmlI7mUvjjZHEBuDZ.1',
+    UTC_H:    17,   // 20:30 ישראל = 17:30 UTC (UTC+3 בקיץ)
+    UTC_M:    30,
     DUR_H:    1,    // משך שעה
   };
 
   emailjs.init({ publicKey: C.EJS_KEY });
 
-  // Update zoom link in success card
-  document.getElementById('zlink').href = C.ZOOM;
+  function p(n){ return String(n).padStart(2,'0'); }
 
   // Google Calendar link
-  function p(n){ return String(n).padStart(2,'0'); }
   const gcal =
     'https://calendar.google.com/calendar/render?action=TEMPLATE' +
     '&text=' + encodeURIComponent('וובינר AI ויזמות לילדים — AI Lab') +
-    '&dates=20260415T' + p(C.UTC_H)+p(C.UTC_M)+'00Z/20260415T'+p(C.UTC_H+C.DUR_H)+p(C.UTC_M)+'00Z' +
+    '&dates=20260428T' + p(C.UTC_H)+p(C.UTC_M)+'00Z/20260428T'+p(C.UTC_H+C.DUR_H)+p(C.UTC_M)+'00Z' +
     '&details=' + encodeURIComponent('לינק לכניסה:\n' + C.ZOOM) +
     '&location=' + encodeURIComponent('Zoom Online');
-  document.getElementById('gcalBtn').href = gcal;
+
+  // Set zoom + gcal links on ALL success cards
+  document.querySelectorAll('.zlink').forEach(el => el.href = C.ZOOM);
+  document.querySelectorAll('.gcalBtn').forEach(el => el.href = gcal);
 
   // Countdown
   function tick() {
-    const diff = new Date(Date.UTC(2026,3,15,C.UTC_H,C.UTC_M)) - Date.now();
+    const diff = new Date(Date.UTC(2026,3,28,C.UTC_H,C.UTC_M)) - Date.now();
     if (diff <= 0) {
       document.getElementById('countdown').innerHTML =
         '<p style="color:var(--accent);font-weight:800;font-size:1.05rem">🎉 הוובינר מתחיל עכשיו!</p>';
@@ -824,65 +1197,92 @@
   }
   tick(); setInterval(tick, 1000);
 
-  // Form submit → Web3Forms
-  document.getElementById('regForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'שולח...';
+  // Bind submit handler to all reg-forms (inline + modal)
+  function bindRegForm(form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'שולח...';
 
-    const data = {
-      access_key: C.W3F_KEY,
-      subject:    'הרשמה חדשה לוובינר (כללי) — ' + document.getElementById('fn').value,
-      from_name:  'AI Lab Webinar',
-      name:       document.getElementById('fn').value,
-      email:      document.getElementById('fe').value,
-      phone:      document.getElementById('fp').value || '—',
-      source:     document.getElementById('fsrc').value || '—',
-    };
+      const fd = new FormData(form);
+      const get = k => fd.get(k);
 
-    try {
-      // 1. Web3Forms — התראה למייר
-      await fetch('https://api.web3forms.com/submit', {
+      const data = {
+        access_key: C.W3F_KEY,
+        subject:    'הרשמה חדשה לוובינר (כללי) — ' + get('name'),
+        from_name:  'AI Lab Webinar',
+        name:       get('name'),
+        email:      get('email'),
+        phone:      get('phone') || '—',
+        source:     get('source') || '—',
+      };
+
+      try {
+        await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+      } catch(err) { console.warn('Web3Forms error:', err); }
+
+      fetch('https://script.google.com/macros/s/AKfycbxromgbzt6XWQND23sWxrMoJHQzKbSilDVwC_QtRe_tsA8fQRGwZsYuCbiBqwBHXbUwEQ/exec', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name:    get('name'),
+          email:   get('email'),
+          phone:   get('phone') || '—',
+          source:  get('source') || '—',
+          webinar: 'כללי',
+        }),
+      }).catch(err => console.warn('Sheets error:', err));
+
+      // Hide form, show success in same container
+      form.style.display = 'none';
+      const successEl = form.parentElement.querySelector('.success');
+      if (successEl) successEl.style.display = 'block';
+
+      gtag('event', 'webinar_registration', {
+        event_category: 'webinar',
+        event_label:    form.dataset.sourceLabel || 'general',
+        source:         get('source') || 'unknown',
       });
-    } catch(e) { console.warn('Web3Forms error:', e); }
 
-    // 2. Google Sheets — שורה חדשה בגיליון
-    fetch('https://script.google.com/macros/s/AKfycbxromgbzt6XWQND23sWxrMoJHQzKbSilDVwC_QtRe_tsA8fQRGwZsYuCbiBqwBHXbUwEQ/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name:    document.getElementById('fn').value,
-        email:   document.getElementById('fe').value,
-        phone:   document.getElementById('fp').value || '—',
-        source:  document.getElementById('fsrc').value || '—',
-        webinar: 'כללי',
-      }),
-    }).catch(err => console.warn('Sheets error:', err));
-
-    // הצג success מיד
-    document.getElementById('regForm').style.display = 'none';
-    document.getElementById('successCard').style.display = 'block';
-
-    // GA event
-    gtag('event', 'webinar_registration', {
-      event_category: 'webinar',
-      event_label: 'general',
-      source: document.getElementById('fsrc').value || 'unknown',
+      emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
+        to_name:    get('name'),
+        to_email:   get('email'),
+        zoom_link:  C.ZOOM,
+        gcal_link:  gcal,
+        event_date: 'יום שלישי, 28 באפריל 2026',
+        event_time: '20:30',
+      }).catch(err => console.error('EmailJS error:', err));
     });
+  }
+  document.querySelectorAll('.reg-form').forEach(bindRegForm);
 
-    // 2. EmailJS — מייל אישור לנרשם (ברקע, לא חוסם)
-    emailjs.send(C.EJS_SERVICE, C.EJS_TPL, {
-      to_name:    document.getElementById('fn').value,
-      to_email:   document.getElementById('fe').value,
-      zoom_link:  C.ZOOM,
-      gcal_link:  gcal,
-      event_date: 'יום רביעי, 15 באפריל 2026',
-      event_time: '19:00',
-    }).catch(err => console.error('EmailJS error:', err));
+  // ── Registration Modal — open/close ──
+  const regModal       = document.getElementById('regModal');
+  const openRegBtn     = document.getElementById('openRegBtn');
+  const modalCloseBtn  = document.getElementById('modalCloseBtn');
+
+  function openModal() {
+    regModal.classList.add('open');
+    regModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('no-scroll');
+    setTimeout(() => regModal.querySelector('input[name="name"]')?.focus(), 350);
+  }
+  function closeModal() {
+    regModal.classList.remove('open');
+    regModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('no-scroll');
+  }
+  openRegBtn?.addEventListener('click', e => { e.preventDefault(); openModal(); });
+  modalCloseBtn?.addEventListener('click', closeModal);
+  regModal?.addEventListener('click', e => { if (e.target === regModal) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && regModal.classList.contains('open')) closeModal();
   });
 
   // ── iframe preview scaling ──
@@ -907,7 +1307,7 @@
     const ics = [
       'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//AI Lab//HE',
       'BEGIN:VEVENT',
-      'DTSTART:20260415T'+s, 'DTEND:20260415T'+e,
+      'DTSTART:20260428T'+s, 'DTEND:20260428T'+e,
       'SUMMARY:וובינר AI ויזמות לילדים — AI Lab',
       'DESCRIPTION:לינק לכניסה לזום:\\n'+C.ZOOM,
       'LOCATION:'+C.ZOOM,
@@ -920,6 +1320,197 @@
     a.download = 'webinar-ai-lab.ics';
     a.click();
   }
+
+  // ── Hero Cosmic + Neural background ("Fate") ──
+  (function() {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const ctx = canvas.getContext('2d');
+    let W, H, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let stars = [];      // active "constellation" stars (drift + connect)
+    let bgStars = [];    // background twinklers
+    const ACTIVE_COUNT = 42;
+    const BG_COUNT     = 95;
+    const LINK_DIST    = 170;
+
+    const PALETTE = [
+      'rgba(0,212,170,1)',    // accent green
+      'rgba(139,92,246,1)',   // purple
+      'rgba(255,255,255,1)',  // white
+      'rgba(255,179,71,1)',   // gold
+    ];
+
+    function resize() {
+      const r = canvas.parentElement.getBoundingClientRect();
+      W = r.width; H = r.height;
+      canvas.width  = W * dpr;
+      canvas.height = H * dpr;
+      canvas.style.width  = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function init() {
+      stars = [];
+      bgStars = [];
+      for (let i = 0; i < ACTIVE_COUNT; i++) {
+        stars.push({
+          x: Math.random()*W, y: Math.random()*H,
+          vx: (Math.random()-.5)*.18, vy: (Math.random()-.5)*.18,
+          baseR: Math.random()*1.6 + 1.1,
+          color: PALETTE[Math.floor(Math.random()*PALETTE.length)],
+          pulse: Math.random()*Math.PI*2,
+          pulseSpeed: .015 + Math.random()*.02,
+        });
+      }
+      for (let i = 0; i < BG_COUNT; i++) {
+        bgStars.push({
+          x: Math.random()*W, y: Math.random()*H,
+          r: Math.random()*.9 + .25,
+          pulse: Math.random()*Math.PI*2,
+          pulseSpeed: .01 + Math.random()*.02,
+        });
+      }
+    }
+
+    // "Fate event" — every ~6.5s pick nearby stars and light a constellation
+    let constellation = null;
+    function startConstellation() {
+      if (constellation || stars.length === 0) return;
+      const seed = stars[Math.floor(Math.random()*stars.length)];
+      const sorted = stars
+        .map(s => ({ s, d: Math.hypot(s.x - seed.x, s.y - seed.y) }))
+        .sort((a,b) => a.d - b.d)
+        .slice(0, 5 + Math.floor(Math.random()*2))
+        .map(o => o.s);
+      constellation = { nodes: sorted, startTime: performance.now() };
+    }
+    setInterval(startConstellation, 6500);
+    setTimeout(startConstellation, 1800);
+
+    function drawConstellation(now) {
+      if (!constellation) return;
+      const elapsed = now - constellation.startTime;
+      const drawDur = 2200, holdDur = 1200, fadeDur = 1500;
+      const total = drawDur + holdDur + fadeDur;
+
+      let progress, alpha = 1;
+      if (elapsed < drawDur) {
+        progress = elapsed / drawDur;
+      } else if (elapsed < drawDur + holdDur) {
+        progress = 1;
+      } else if (elapsed < total) {
+        progress = 1;
+        alpha = 1 - (elapsed - drawDur - holdDur) / fadeDur;
+      } else {
+        constellation = null;
+        return;
+      }
+
+      const nodes = constellation.nodes;
+      const segments = nodes.length - 1;
+      const segProgress = progress * segments;
+
+      ctx.lineWidth = 1.4;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(255,255,255,.6)';
+      for (let i = 0; i < segments; i++) {
+        const segAlpha = Math.max(0, Math.min(1, segProgress - i)) * alpha;
+        if (segAlpha <= 0) continue;
+        const a = nodes[i], b = nodes[i+1];
+        const tx = a.x + (b.x - a.x) * Math.min(1, segProgress - i);
+        const ty = a.y + (b.y - a.y) * Math.min(1, segProgress - i);
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(tx, ty);
+        ctx.strokeStyle = `rgba(255,255,255,${segAlpha * .85})`;
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+
+      const lit = Math.min(nodes.length, Math.floor(segProgress) + 1);
+      for (let i = 0; i < lit; i++) {
+        const n = nodes[i];
+        const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, 14);
+        grad.addColorStop(0, `rgba(255,255,255,${.9 * alpha})`);
+        grad.addColorStop(1, `rgba(255,255,255,0)`);
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 14, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+
+    function tick(now) {
+      ctx.clearRect(0, 0, W, H);
+
+      bgStars.forEach(s => {
+        s.pulse += s.pulseSpeed;
+        const g = (Math.sin(s.pulse) + 1) / 2;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(255,255,255,${.25 + g*.55})`;
+        ctx.fill();
+      });
+
+      stars.forEach(s => {
+        s.x += s.vx; s.y += s.vy;
+        if (s.x < 0 || s.x > W) s.vx *= -1;
+        if (s.y < 0 || s.y > H) s.vy *= -1;
+        s.pulse += s.pulseSpeed;
+        s.glow = (Math.sin(s.pulse) + 1) / 2;
+        s.r = s.baseR + s.glow * .7;
+
+        const halo = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 5);
+        halo.addColorStop(0, s.color.replace('1)', `${.35 * s.glow})`));
+        halo.addColorStop(1, s.color.replace('1)', '0)'));
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r * 5, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        ctx.fillStyle = s.color.replace('1)', `${.7 + s.glow * .3})`);
+        ctx.fill();
+      });
+
+      ctx.lineWidth = .8;
+      for (let i = 0; i < stars.length; i++) {
+        for (let j = i + 1; j < stars.length; j++) {
+          const dx = stars[i].x - stars[j].x;
+          const dy = stars[i].y - stars[j].y;
+          const d  = Math.hypot(dx, dy);
+          if (d < LINK_DIST) {
+            const opacity = (1 - d / LINK_DIST) * .35 *
+                            ((stars[i].glow + stars[j].glow) / 2 + .3);
+            const grad = ctx.createLinearGradient(stars[i].x, stars[i].y, stars[j].x, stars[j].y);
+            grad.addColorStop(0, `rgba(0,212,170,${opacity})`);
+            grad.addColorStop(1, `rgba(139,92,246,${opacity})`);
+            ctx.strokeStyle = grad;
+            ctx.beginPath();
+            ctx.moveTo(stars[i].x, stars[i].y);
+            ctx.lineTo(stars[j].x, stars[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      drawConstellation(now);
+
+      requestAnimationFrame(tick);
+    }
+
+    let resizeTO;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTO);
+      resizeTO = setTimeout(() => { resize(); init(); }, 150);
+    });
+    resize(); init();
+    requestAnimationFrame(tick);
+  })();
 </script>
 </body>
 </html>
