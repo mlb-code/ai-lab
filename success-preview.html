@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>תצוגה מקדימה — כרטיס תודה אחרי הרשמה</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; padding:24px; background:#22222e; min-height:100vh; font-family:Arial,sans-serif; }
+  .label { color:#aaa; text-align:center; font-size:13px; margin-bottom:14px; }
+  iframe {
+    border: 1px solid #333;
+    border-radius: 14px;
+    background: #0f0f1e;
+    box-shadow: 0 24px 80px rgba(0,0,0,.5);
+    display: block;
+    margin: 0 auto;
+  }
+  .row { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+  .col { display: flex; flex-direction: column; align-items: center; }
+  .col h3 { color: #fff; font-size: 14px; margin: 0 0 10px; }
+  iframe.mobile  { width: 400px;  height: 940px; }
+  iframe.desktop { width: 1100px; height: 940px; }
+</style>
+</head>
+<body>
+
+<div class="label">📧 תצוגה מקדימה — כרטיס "תודה" שמופיע אחרי הרשמה (גם בפופ-אפ וגם בטופס בתחתית)</div>
+
+<div class="row">
+  <div class="col">
+    <h3>📱 מובייל (400px)</h3>
+    <iframe class="mobile" src="webinar-general.html?preview=success"></iframe>
+  </div>
+  <div class="col">
+    <h3>💻 דסקטופ (1100px)</h3>
+    <iframe class="desktop" src="webinar-general.html?preview=success"></iframe>
+  </div>
+</div>
+
+</body>
+</html>
