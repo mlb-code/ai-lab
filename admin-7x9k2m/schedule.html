@@ -197,6 +197,12 @@
     box-shadow: 0 4px 15px rgba(26, 74, 58, 0.3);
   }
 
+  .card.partner {
+    background: linear-gradient(135deg, #5a4a1a, #4a3a15);
+    border: 1px solid #8a7a2a;
+    box-shadow: 0 4px 15px rgba(90, 74, 26, 0.3);
+  }
+
   .card .student-name {
     font-weight: 700;
     font-size: 0.95rem;
@@ -229,6 +235,12 @@
     background: rgba(111, 207, 151, 0.2);
     color: #6fcf97;
     border: 1px solid rgba(111, 207, 151, 0.3);
+  }
+
+  .course-tag.tag-partner {
+    background: rgba(226, 185, 59, 0.2);
+    color: #E2B93B;
+    border: 1px solid rgba(226, 185, 59, 0.3);
   }
 
   .badge-row {
@@ -342,6 +354,7 @@
   .legend-dot.basic { background: linear-gradient(135deg, #1e3a5f, #2a5a8a); }
   .legend-dot.advanced { background: linear-gradient(135deg, #4a1a5e, #6a2a8a); }
   .legend-dot.combined { background: linear-gradient(135deg, #1a4a3a, #2a6a5a); }
+  .legend-dot.partner { background: linear-gradient(135deg, #5a4a1a, #8a7a2a); }
 
   /* Stats */
   .stats {
@@ -497,7 +510,7 @@
 <!-- Stats -->
 <div class="stats">
   <div class="stat-box">
-    <div class="stat-num">17</div>
+    <div class="stat-num">19</div>
     <div class="stat-label">תלמידים</div>
   </div>
   <div class="stat-box">
@@ -555,7 +568,8 @@
   <!-- שלישי -->
   <div class="slot">
     <div class="card basic"><div class="student-name">מאי</div><span class="course-tag tag-basic">בסיסי</span></div>
-    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+    <div class="card partner"><div class="student-name">ליעד נוה</div><span class="course-tag tag-partner">שת״פ</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
   </div>
   <!-- רביעי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
   <!-- חמישי -->
@@ -579,7 +593,8 @@
   <!-- שלישי -->
   <div class="slot">
     <div class="card basic"><div class="student-name">שלו</div><span class="course-tag tag-basic">בסיסי</span></div>
-    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
+    <div class="card partner"><div class="student-name">עמית נוה</div><span class="course-tag tag-partner">שת״פ</span></div>
+    <div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div>
   </div>
   <!-- רביעי --><div class="slot"><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div><div class="empty-seat">פנוי</div></div>
   <!-- חמישי -->
@@ -814,9 +829,14 @@
     <span class="course-tag tag-combined">משולב</span>
     <span>קורס משולב</span>
   </div>
+  <div class="legend-item">
+    <div class="legend-dot partner"></div>
+    <span class="course-tag tag-partner">שת״פ</span>
+    <span>שיתוף פעולה (ללא תשלום)</span>
+  </div>
 </div>
 
-<div class="update-note">עדכון אחרון: 16 באפריל 2026</div>
+<div class="update-note">עדכון אחרון: 27 באפריל 2026</div>
 
 </div><!-- end mainContent -->
 
