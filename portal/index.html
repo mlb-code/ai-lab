@@ -3112,10 +3112,22 @@
     <div class="login-gate" id="loginGate">
         <div class="login-card">
             <div class="login-logo">AI Lab</div>
-            <div class="login-title">כניסה לאזור האישי</div>
-            <div class="login-subtitle">הכניסו את מספר הטלפון שנרשמתם איתו</div>
-            <input type="tel" class="login-input" id="phoneInput" placeholder="050-000-0000" maxlength="13" autocomplete="tel">
-            <button class="login-btn" id="loginBtn" onclick="handleLogin()">כניסה</button>
+
+            <div id="phoneStep">
+                <div class="login-title">כניסה לאזור האישי</div>
+                <div class="login-subtitle">הכניסו את מספר הטלפון שנרשמתם איתו</div>
+                <input type="tel" class="login-input" id="phoneInput" placeholder="050-000-0000" maxlength="13" autocomplete="tel">
+                <button class="login-btn" id="loginBtn" onclick="handleLogin()">כניסה</button>
+            </div>
+
+            <div id="passwordStep" style="display:none;">
+                <div class="login-title">🔒 אימות נוסף</div>
+                <div class="login-subtitle">הזינו סיסמה</div>
+                <input type="password" class="login-input" id="passwordInput" placeholder="סיסמה" autocomplete="current-password">
+                <button class="login-btn" id="passwordBtn" onclick="handlePasswordSubmit()">כניסה</button>
+                <a href="#" class="login-back" onclick="resetLogin(); return false;">← חזרה</a>
+            </div>
+
             <div class="login-error" id="loginError"></div>
             <a href="/" class="login-back">← חזרה לאתר הראשי</a>
         </div>
@@ -5593,7 +5605,7 @@
         // ===== AUTH — GOOGLE SHEETS =====
         const SHEET_ID = '1ibz8t0sKCanzfG1zU0ISlUlf5pz5KX-dL1Ch5jHjeRA';
         const API_KEY = 'AIzaSyDKcJmFB60aKI3eBgglpX4TvBS6QNlD-IM';
-        const SHEET_RANGE = 'Sheet1!A:E';
+        const SHEET_RANGE = 'Sheet1!A:F';
         const RECHECK_HOURS = 24; // re-verify every 24 hours
 
         function normalizePhone(phone) {
@@ -5624,9 +5636,8 @@
                             return { valid: false, reason: 'expired' };
                         }
                         var userLevel = row[4] || 'basic';
-                        // Admin override for specific name
-                        if ((row[1] || '').indexOf('מאיר') !== -1) userLevel = 'admin';
-                        return { valid: true, name: row[1] || '', group: row[3] || '', level: userLevel };
+                        var requiredPassword = (row[5] || '').trim();
+                        return { valid: true, name: row[1] || '', group: row[3] || '', level: userLevel, password: requiredPassword };
                     }
                 }
                 return { valid: false, reason: 'not_found' };
@@ -5635,6 +5646,8 @@
                 return { valid: false, reason: 'error' };
             }
         }
+
+        var pendingAuth = null;
 
         async function handleLogin() {
             var phone = document.getElementById('phoneInput').value.trim();
@@ -5645,23 +5658,62 @@
             btn.textContent = 'בודק...';
             err.textContent = '';
             var result = await checkPhone(phone);
-            if (result.valid) {
-                localStorage.setItem('youth_auth', JSON.stringify({
-                    phone: normalizePhone(phone),
-                    name: result.name,
-                    group: result.group,
-                    level: result.level,
-                    loginTime: Date.now()
-                }));
-                showPortal(result.name, result.level);
-            } else {
+            if (!result.valid) {
                 btn.disabled = false;
                 btn.textContent = 'כניסה';
                 if (result.reason === 'not_found') err.textContent = 'מספר הטלפון לא נמצא במערכת';
                 else if (result.reason === 'expired') err.textContent = 'ההרשאה שלך פגה. פנו למורה';
                 else if (result.reason === 'invalid') err.textContent = 'מספר טלפון לא תקין';
                 else err.textContent = 'שגיאה בבדיקה. נסו שוב';
+                return;
             }
+            if (result.password) {
+                pendingAuth = { phone: normalizePhone(phone), result: result };
+                document.getElementById('phoneStep').style.display = 'none';
+                document.getElementById('passwordStep').style.display = '';
+                err.textContent = '';
+                setTimeout(function() {
+                    var pw = document.getElementById('passwordInput');
+                    if (pw) pw.focus();
+                }, 50);
+                return;
+            }
+            completeLogin(normalizePhone(phone), result);
+        }
+
+        function handlePasswordSubmit() {
+            var entered = document.getElementById('passwordInput').value;
+            var err = document.getElementById('loginError');
+            if (!entered) { err.textContent = 'הזינו סיסמה'; return; }
+            if (!pendingAuth || entered !== pendingAuth.result.password) {
+                err.textContent = 'סיסמה שגויה';
+                document.getElementById('passwordInput').value = '';
+                return;
+            }
+            completeLogin(pendingAuth.phone, pendingAuth.result);
+            pendingAuth = null;
+        }
+
+        function completeLogin(phone, result) {
+            localStorage.setItem('youth_auth', JSON.stringify({
+                phone: phone,
+                name: result.name,
+                group: result.group,
+                level: result.level,
+                loginTime: Date.now()
+            }));
+            showPortal(result.name, result.level);
+        }
+
+        function resetLogin() {
+            document.getElementById('phoneStep').style.display = '';
+            document.getElementById('passwordStep').style.display = 'none';
+            document.getElementById('phoneInput').value = '';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('loginError').textContent = '';
+            document.getElementById('loginBtn').disabled = false;
+            document.getElementById('loginBtn').textContent = 'כניסה';
+            pendingAuth = null;
         }
 
         var currentUserLevel = 'basic';
@@ -5774,10 +5826,7 @@
             document.getElementById('loginGate').classList.remove('hidden');
             document.getElementById('greetingArea').innerHTML = '';
             document.getElementById('logoutBtn').style.display = 'none';
-            document.getElementById('phoneInput').value = '';
-            document.getElementById('loginError').textContent = '';
-            document.getElementById('loginBtn').textContent = 'כניסה';
-            document.getElementById('loginBtn').disabled = false;
+            resetLogin();
         }
 
         // Check auth on page load
@@ -5794,7 +5843,7 @@
                     }
                     // Re-verify in background
                     checkPhone(data.phone).then(function(result) {
-                        if (result.valid) {
+                        if (result.valid && !result.password) {
                             localStorage.setItem('youth_auth', JSON.stringify({
                                 phone: data.phone,
                                 name: result.name,
@@ -5816,6 +5865,9 @@
             // Allow Enter key on phone input
             document.getElementById('phoneInput').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') handleLogin();
+            });
+            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handlePasswordSubmit();
             });
         })();
 
