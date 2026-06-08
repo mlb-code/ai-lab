@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הרשמה לקורס קיץ לילדים ובני נוער — AI Lab</title>
+<meta name="description" content="הרשמה לקורס קיץ לילדים ובני נוער ב-AI Lab. השאירו פרטים ונחזור אליכם לתיאום.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#00D4AA; --teal-dark:#00B894; --teal-light:#34EABB;
+    --bg:#0a0a14; --bg2:#1a1a2e; --card:#15152a;
+    --purple:#6c3ce1; --text:#ffffff; --muted:#a7a7c0;
+    --border:rgba(255,255,255,.10); --err:#FF4D8D;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;text-align:center;padding:54px 20px 40px;
+    background:
+      radial-gradient(900px 400px at 50% -10%, rgba(0,212,170,.18), transparent 60%),
+      radial-gradient(700px 380px at 80% 10%, rgba(108,60,225,.16), transparent 60%),
+      var(--bg);
+    border-bottom:1px solid var(--border);
+  }
+  .brand{
+    display:flex;justify-content:center;align-items:center;gap:9px;margin-bottom:22px;
+    font-weight:800;letter-spacing:.5px;font-size:24px;
+  }
+  .brand .dot{
+    width:11px;height:11px;border-radius:50%;
+    background:var(--teal);box-shadow:0 0 14px var(--teal);
+  }
+  .brand b{
+    background:linear-gradient(90deg,var(--teal),var(--teal-light));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .pill{
+    display:inline-block;font-size:13px;font-weight:600;color:var(--teal-light);
+    background:rgba(0,212,170,.10);border:1px solid rgba(0,212,170,.30);
+    padding:6px 16px;border-radius:999px;margin-bottom:18px;
+  }
+  h1{font-size:clamp(28px,7vw,42px);font-weight:900;line-height:1.15;margin-bottom:14px}
+  h1 .g{
+    background:linear-gradient(90deg,var(--teal),var(--teal-light));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .sub{font-size:clamp(15px,4vw,18px);color:var(--muted);max-width:520px;margin:0 auto}
+
+  .feats{
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px;
+  }
+  .feat{
+    display:flex;align-items:center;gap:7px;font-size:14px;color:#d4d4e8;
+    background:var(--card);border:1px solid var(--border);
+    padding:9px 15px;border-radius:12px;
+  }
+  .feat .ic{color:var(--teal)}
+
+  /* ====== FORM ====== */
+  .formsec{padding:38px 0 60px}
+  .card{
+    background:linear-gradient(180deg,var(--card),#11112099);
+    border:1px solid var(--border);border-radius:22px;
+    padding:30px 26px;box-shadow:0 30px 80px -40px rgba(0,0,0,.8);
+  }
+  .card h2{font-size:23px;font-weight:800;margin-bottom:6px}
+  .card .lead{color:var(--muted);font-size:14.5px;margin-bottom:26px}
+
+  .field{margin-bottom:22px}
+  .field > label.q{display:block;font-weight:700;font-size:15.5px;margin-bottom:10px}
+  .field .req{color:var(--teal);margin-inline-start:3px}
+  .hint{font-size:12.5px;color:var(--muted);font-weight:400;margin-top:3px}
+
+  input[type=text],input[type=tel],input[type=number]{
+    width:100%;background:#0d0d1c;border:1px solid var(--border);
+    color:var(--text);font-family:inherit;font-size:16px;
+    padding:13px 15px;border-radius:13px;transition:border-color .15s,box-shadow .15s;
+  }
+  input::placeholder{color:#5c5c78}
+  input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,212,170,.15)}
+
+  .opts{display:grid;gap:10px}
+  .opts.cols2{grid-template-columns:1fr 1fr}
+  .opt{
+    display:flex;align-items:center;gap:11px;cursor:pointer;
+    background:#0d0d1c;border:1px solid var(--border);
+    padding:13px 15px;border-radius:13px;transition:.15s;font-size:15px;
+  }
+  .opt:hover{border-color:rgba(0,212,170,.4)}
+  .opt input{accent-color:var(--teal);width:19px;height:19px;flex-shrink:0}
+  .opt.checked{border-color:var(--teal);background:rgba(0,212,170,.08)}
+  .opt .t{font-weight:600}
+  .opt .d{display:block;font-size:12.5px;color:var(--muted);font-weight:400}
+
+  .submit{
+    width:100%;border:none;cursor:pointer;font-family:inherit;
+    font-size:18px;font-weight:800;color:#04241c;
+    background:linear-gradient(90deg,var(--teal),var(--teal-light));
+    padding:16px;border-radius:14px;margin-top:8px;
+    transition:transform .12s,box-shadow .2s;
+    box-shadow:0 14px 40px -14px rgba(0,212,170,.6);
+  }
+  .submit:hover{transform:translateY(-2px)}
+  .submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .note{text-align:center;font-size:12.5px;color:var(--muted);margin-top:16px}
+
+  .errbox{
+    display:none;background:rgba(255,77,141,.12);border:1px solid rgba(255,77,141,.4);
+    color:#ffd0e0;padding:12px 15px;border-radius:12px;font-size:14px;margin-bottom:18px;
+  }
+
+  /* ====== THANK YOU ====== */
+  .thanks{display:none;text-align:center;padding:50px 10px}
+  .thanks .check{
+    width:78px;height:78px;border-radius:50%;margin:0 auto 22px;
+    display:flex;align-items:center;justify-content:center;font-size:40px;
+    background:rgba(0,212,170,.12);border:2px solid var(--teal);color:var(--teal);
+  }
+  .thanks h2{font-size:26px;font-weight:800;margin-bottom:10px}
+  .thanks p{color:var(--muted);font-size:16px;max-width:420px;margin:0 auto}
+
+  .footer{text-align:center;padding:26px 20px;color:#6a6a85;font-size:13px;border-top:1px solid var(--border)}
+  .footer a{color:var(--teal-light);text-decoration:none}
+
+  /* overlay */
+  .overlay{
+    display:none;position:fixed;inset:0;z-index:50;
+    background:rgba(5,5,12,.75);backdrop-filter:blur(3px);
+    align-items:center;justify-content:center;
+  }
+  .overlay.show{display:flex}
+  .spin{
+    width:46px;height:46px;border-radius:50%;
+    border:4px solid rgba(255,255,255,.15);border-top-color:var(--teal);
+    animation:sp .8s linear infinite;
+  }
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  @media(max-width:480px){
+    .opts.cols2{grid-template-columns:1fr}
+    .card{padding:24px 18px}
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="brand" dir="ltr">AI&nbsp;<b>Lab</b></div>
+    <div class="pill">☀️ קורס קיץ · נותרו מקומות אחרונים</div>
+    <h1>קיץ של <span class="g">יזמות ובינה מלאכותית</span><br>לילדים ובני נוער</h1>
+    <p class="sub">קורס קיץ חווייתי שבו הילדים לומדים לחשוב כיזמים ולהשתמש בכלי בינה מלאכותית — בונים רעיון לפרויקט אמיתי, בקבוצות קטנות ובקצב אישי.</p>
+    <div class="feats">
+      <span class="feat"><span class="ic">🤖</span> בינה מלאכותית</span>
+      <span class="feat"><span class="ic">💡</span> יזמות</span>
+      <span class="feat"><span class="ic">👥</span> קבוצות קטנות</span>
+      <span class="feat"><span class="ic">🕒</span> שעות גמישות</span>
+    </div>
+  </header>
+
+  <main class="formsec">
+    <div class="wrap">
+      <div class="card" id="cardForm">
+        <h2>השארת פרטים להרשמה</h2>
+        <p class="lead">מלאו את הפרטים ונחזור אליכם לתיאום אישי. התשלום מתבצע בשלב נפרד לאחר השיחה.</p>
+
+        <div class="errbox" id="errBox"></div>
+
+        <form id="regForm" novalidate>
+
+          <!-- שם הילד -->
+          <div class="field">
+            <label class="q" for="child_name">שם מלא של הילד <span class="req">*</span></label>
+            <input type="text" id="child_name" name="child_name" placeholder="לדוגמה: דניאל כהן" autocomplete="off" required>
+          </div>
+
+          <!-- גיל -->
+          <div class="field">
+            <label class="q" for="child_age">גיל הילד <span class="req">*</span></label>
+            <input type="number" id="child_age" name="child_age" min="4" max="18" inputmode="numeric" placeholder="לדוגמה: 9" required>
+          </div>
+
+          <!-- קרוא וכתוב -->
+          <div class="field">
+            <label class="q">האם הילד יודע קרוא וכתוב? <span class="req">*</span></label>
+            <div class="opts cols2" data-group="literacy">
+              <label class="opt"><input type="radio" name="literacy" value="כן" required><span class="t">כן</span></label>
+              <label class="opt"><input type="radio" name="literacy" value="לא"><span class="t">לא</span></label>
+            </div>
+          </div>
+
+          <!-- שעות מועדפות -->
+          <div class="field">
+            <label class="q">שעות הלימוד המועדפות <span class="req">*</span></label>
+            <div class="hint" style="margin-top:-4px;margin-bottom:10px">ניתן לבחור יותר מאפשרות אחת</div>
+            <div class="opts" data-group="time_slot">
+              <label class="opt"><input type="checkbox" name="time_slot" value="בוקר 10:00–12:00">
+                <span><span class="t">בוקר</span><span class="d">בין 10:00 ל-12:00</span></span></label>
+              <label class="opt"><input type="checkbox" name="time_slot" value="צהריים 13:00–16:00">
+                <span><span class="t">צהריים</span><span class="d">בין 13:00 ל-16:00</span></span></label>
+              <label class="opt"><input type="checkbox" name="time_slot" value="אחר הצהריים 17:00–19:00">
+                <span><span class="t">אחר הצהריים</span><span class="d">בין 17:00 ל-19:00</span></span></label>
+            </div>
+          </div>
+
+          <!-- טלפון הילד -->
+          <div class="field">
+            <label class="q" for="child_phone">טלפון של הילד <span class="req">*</span></label>
+            <input type="tel" id="child_phone" name="child_phone" inputmode="tel" placeholder="050-0000000" required>
+            <div class="hint">הטלפון של הילד (לתיאום ישיר במידת הצורך).</div>
+          </div>
+
+          <!-- שם הורה -->
+          <div class="field">
+            <label class="q" for="parent_name">שם ההורה <span class="req">*</span></label>
+            <input type="text" id="parent_name" name="parent_name" placeholder="שם ההורה הממלא את הטופס" autocomplete="off" required>
+          </div>
+
+          <!-- טלפון הורה -->
+          <div class="field">
+            <label class="q" for="parent_phone">טלפון ההורה <span class="req">*</span></label>
+            <input type="tel" id="parent_phone" name="parent_phone" inputmode="tel" placeholder="050-0000000" required>
+            <div class="hint">לכאן נחזור אליכם לתיאום.</div>
+          </div>
+
+          <!-- עיר -->
+          <div class="field">
+            <label class="q" for="city">עיר / אזור מגורים <span class="req">*</span></label>
+            <input type="text" id="city" name="city" placeholder="לדוגמה: פתח תקווה" autocomplete="off" required>
+          </div>
+
+          <button type="submit" class="submit" id="submitBtn">לשליחת הפרטים →</button>
+          <p class="note">🔒 הפרטים נשמרים אצלנו בלבד ולא מועברים לאף גורם שלישי.</p>
+        </form>
+      </div>
+
+      <!-- תודה -->
+      <div class="thanks" id="thanks">
+        <div class="check">✓</div>
+        <h2>קיבלנו את הפרטים! 🎉</h2>
+        <p>תודה שנרשמתם. ניצור איתכם קשר בהקדם לתיאום אישי ולשליחת קישור התשלום.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    © AI Lab · <a href="https://ai-lab.co.il" target="_blank" rel="noopener">ai-lab.co.il</a>
+  </footer>
+
+  <div class="overlay" id="overlay"><div class="spin"></div></div>
+
+<script>
+  /* ====== חיבור ל-Google Sheet ======
+     החליפו את הכתובת שלמטה בכתובת ה-Web App שתקבלו מ-Apps Script
+     (קובץ ההוראות: README.md בתיקייה הזו). */
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLlYimO0jpiAdg9bYVarvJ_Lz4sWZ8BlQN1Q3P3m1FyO-zGVsqmE0GcS4y8JrUarjU/exec';
+
+  const form = document.getElementById('regForm');
+  const errBox = document.getElementById('errBox');
+  const overlay = document.getElementById('overlay');
+  const btn = document.getElementById('submitBtn');
+
+  // הדגשת אופציה נבחרת (radio)
+  document.querySelectorAll('.opts').forEach(group=>{
+    group.addEventListener('change',()=>{
+      group.querySelectorAll('.opt').forEach(o=>{
+        const input=o.querySelector('input');
+        o.classList.toggle('checked', input.checked);
+      });
+    });
+  });
+
+  function showErr(msg){
+    errBox.textContent = msg;
+    errBox.style.display='block';
+    errBox.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+
+  function validPhone(v){
+    const digits=(v||'').replace(/\D/g,'');
+    return digits.length>=9 && digits.length<=11;
+  }
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    errBox.style.display='none';
+
+    const data={
+      child_name:  form.child_name.value.trim(),
+      child_age:   form.child_age.value.trim(),
+      literacy:    (form.querySelector('input[name=literacy]:checked')||{}).value || '',
+      time_slot:   (form.querySelector('input[name=time_slot]:checked')||{}).value || '',
+      child_phone: form.child_phone.value.trim(),
+      parent_name: form.parent_name.value.trim(),
+      parent_phone:form.parent_phone.value.trim(),
+      city:        form.city.value.trim(),
+    };
+
+    // ולידציה ידידותית
+    if(!data.child_name)  return showErr('נא למלא את שם הילד.');
+    if(!data.child_age)   return showErr('נא למלא את גיל הילד.');
+    if(!data.literacy)    return showErr('נא לבחור אם הילד יודע קרוא וכתוב.');
+    if(!data.time_slot)   return showErr('נא לבחור שעות לימוד מועדפות.');
+    if(!validPhone(data.child_phone))  return showErr('נא למלא מספר טלפון תקין של הילד.');
+    if(!data.parent_name) return showErr('נא למלא את שם ההורה.');
+    if(!validPhone(data.parent_phone)) return showErr('נא למלא מספר טלפון תקין של ההורה.');
+    if(!data.city)        return showErr('נא למלא עיר / אזור מגורים.');
+
+    if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('__APPS_SCRIPT_URL__')===0){
+      return showErr('הטופס עדיין לא חובר לשרת. (יש להזין את כתובת ה-Web App בקובץ index.html)');
+    }
+
+    overlay.classList.add('show');
+    btn.disabled=true;
+
+    try{
+      const res = await fetch(APPS_SCRIPT_URL,{
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify(data),
+      });
+      const json = await res.json();
+      if(!json.success) throw new Error(json.error || 'שגיאה לא ידועה');
+
+      overlay.classList.remove('show');
+      document.getElementById('cardForm').style.display='none';
+      document.getElementById('thanks').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }catch(err){
+      overlay.classList.remove('show');
+      btn.disabled=false;
+      showErr('שגיאה בשליחה: ' + (err.message||err) + '. נסו שוב, או צרו קשר.');
+    }
+  });
+</script>
+</body>
+</html>
