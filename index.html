@@ -2870,11 +2870,7 @@
 
             /* -- WhatsApp float smaller -- */
             .whatsapp-float {
-                width: 50px;
-                height: 50px;
-                font-size: 1.4rem;
-                bottom: 1.2rem;
-                left: 1.2rem;
+                display: none !important; /* hidden on mobile — hero already has a prominent WhatsApp CTA */
             }
 
             /* -- Ensure minimum font size on mobile -- */
@@ -3560,6 +3556,35 @@
         </div>
     </div>
 
+    <!-- EXIT-INTENT POPUP -->
+    <div id="exitPopup" class="scroll-popup-overlay" onclick="if(event.target===this)closeExitPopup()">
+        <div class="scroll-popup-box" style="max-width:460px;">
+            <button class="scroll-popup-close" onclick="closeExitPopup()" aria-label="סגור">&times;</button>
+            <div class="scroll-popup-header">
+                <div class="scroll-popup-icon">👋</div>
+                <h3>רגע לפני שאתם הולכים</h3>
+                <p>רוצים לדעת בדיוק מה כולל הקורס וכמה זה עולה? השאירו טלפון ונשלח לכם את כל הפרטים על המחזור הקרוב — תוכן, מועדים ומחיר.</p>
+                <p style="margin-top:8px;font-size:0.9rem;"><span style="color:#F5C842;">⭐ 4.9</span> · 39 ביקורות בגוגל</p>
+            </div>
+            <form id="exitForm" onsubmit="return submitExitForm(event)">
+                <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
+                <input type="hidden" name="subject" value="פנייה חדשה (פופאפ יציאה) מאתר AI Lab">
+                <div class="form-group">
+                    <label for="nameExit">שם מלא</label>
+                    <input type="text" id="nameExit" name="name" placeholder="הכניסו את השם שלכם" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneExit">מספר טלפון</label>
+                    <input type="tel" id="phoneExit" name="phone" placeholder="050-1234567" required inputmode="tel">
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-primary">שלחו לי את כל הפרטים</button>
+                    <button type="button" class="btn-whatsapp" onclick="sendWhatsAppExit()">💬 שלח בוואטסאפ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- LEAD POPUP (from track cards — syllabus request / more details) -->
     <div id="leadPopup" class="scroll-popup-overlay" onclick="if(event.target===this)closeLeadPopup()">
         <div class="scroll-popup-box" style="max-width:480px;">
@@ -3725,11 +3750,10 @@
             <div class="hero-buttons">
                 <a onclick="gtag('event','whatsapp_click',{event_category:'contact',event_label:'hero_whatsapp'});gtag('event','conversion',{'send_to':'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'})" href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI" target="_blank" rel="noopener" class="btn-primary" style="background:#25D366;box-shadow:0 4px 20px rgba(37,211,102,0.45);">💬 דברו איתנו בוואטסאפ</a>
                 <a href="javascript:void(0)" onclick="openRegisterPopup()" class="btn-primary">הרשמו עכשיו &#x1F680;</a>
-                <a href="javascript:void(0)" onclick="openRegisterPopup()" class="btn-secondary">🎓 הירשם לוובינר בחינם</a>
             </div>
             <div class="hero-trust" style="display:flex;gap:1.4rem;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:1.3rem;font-size:0.95rem;color:var(--text-muted);">
                 <span>⭐ <strong style="color:#F5C842;">4.9</strong> · 39 ביקורות בגוגל</span>
-                <span style="color:var(--accent);font-weight:600;">⚡ מקומות מוגבלים למחזור הקרוב</span>
+                <span style="color:var(--accent);font-weight:600;">⚡ מקומות מוגבלים לקייטנת הקיץ</span>
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
@@ -5344,6 +5368,70 @@
             gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
             window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
         }
+
+        // ════════════ EXIT-INTENT POPUP ════════════
+        function openExitPopup() {
+            if (localStorage.getItem('exitPopupShown')) return;
+            var ep = document.getElementById('exitPopup');
+            if (!ep) return;
+            var rp = document.getElementById('registerPopup');
+            if (rp && rp.classList.contains('popup-visible')) return; // don't stack on an open popup
+            ep.classList.add('popup-visible');
+            localStorage.setItem('exitPopupShown', '1');
+            gtag('event', 'exit_popup_open', { event_category: 'engagement' });
+        }
+        function closeExitPopup() {
+            document.getElementById('exitPopup').classList.remove('popup-visible');
+        }
+        async function submitExitForm(e) {
+            e.preventDefault();
+            var form = document.getElementById('exitForm');
+            var btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true; btn.textContent = 'שולח...';
+            try {
+                var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) });
+                if (res.ok) {
+                    gtag('event', 'generate_lead', { event_category: 'contact_form', event_label: 'exit_popup' });
+                    gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
+                    form.innerHTML = '<div style="text-align:center;padding:2rem;font-size:1.2rem;color:var(--accent);font-weight:700;">קיבלנו! נשלח לכם את כל הפרטים בהקדם.</div>';
+                } else {
+                    btn.disabled = false; btn.textContent = 'שלחו לי את כל הפרטים';
+                    alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
+                }
+            } catch(err) {
+                btn.disabled = false; btn.textContent = 'שלחו לי את כל הפרטים';
+                alert('שגיאה בשליחה. נסו שוב או שלחו בוואטסאפ.');
+            }
+            return false;
+        }
+        function sendWhatsAppExit() {
+            var name = document.getElementById('nameExit').value.trim();
+            var phone = document.getElementById('phoneExit').value.trim();
+            if (!name || !phone) { alert('נא למלא שם וטלפון'); return; }
+            var msg = 'היי, אני מתעניין/ת בקורס הבינה המלאכותית ורוצה לקבל את כל הפרטים והמחיר\n\nשם: ' + name + '\nטלפון: ' + phone;
+            gtag('event', 'whatsapp_click', { event_category: 'contact', event_label: 'exit_popup' });
+            gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
+            window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
+        }
+        (function() {
+            if (localStorage.getItem('exitPopupShown')) return;
+            var armed = false;
+            setTimeout(function() { armed = true; }, 4000); // arm after 4s so it never fires instantly
+            // Desktop: mouse leaves the viewport from the top edge
+            document.addEventListener('mouseout', function(e) {
+                if (armed && e.clientY <= 0 && !e.relatedTarget) openExitPopup();
+            });
+            // Mobile: catch the Back gesture once
+            if (window.matchMedia('(max-width: 768px)').matches) {
+                history.pushState(null, '', location.href);
+                window.addEventListener('popstate', function() {
+                    if (armed && !localStorage.getItem('exitPopupShown')) {
+                        history.pushState(null, '', location.href);
+                        openExitPopup();
+                    }
+                });
+            }
+        })();
 
         // ── Testimonials marquee: keep cloning until track is wide enough to ALWAYS fill viewport ──
         // Animation shifts by -50% of the track. We need the remaining 50% to still cover
