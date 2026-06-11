@@ -2516,9 +2516,11 @@
 
             /* -- Hero: full-height on mobile for strong first impression -- */
             .hero {
+                height: auto;            /* let the hero grow with its content instead of clipping */
                 min-height: 100vh;
                 min-height: 100svh;  /* modern small-viewport unit for iOS */
-                padding: 5rem 1.2rem 4rem !important;
+                align-items: flex-start; /* content starts below the nav, grows downward (no overlap) */
+                padding: 5.5rem 1.2rem 4rem !important;
             }
 
             .hero h1 {
@@ -3746,7 +3748,7 @@
                 <span class="gradient-text">לילדים ונוער</span>
             </h1>
             <p class="hero-slogan">יזמות ובינה מלאכותית — הופכים רעיונות&nbsp;למציאות&nbsp;✨</p>
-            <p style="margin:0 auto 1.4rem;max-width:580px;font-size:0.98rem;line-height:1.6;color:var(--text-muted);"><span style="color:#F5C842;font-weight:800;">★ 5.0</span> בביקורות גוגל · <strong style="color:var(--text);">הקורס המעשי</strong> לבינה מלאכותית לילדים ונוער</p>
+            <p style="margin:0 auto 1.4rem;max-width:580px;font-size:0.98rem;line-height:1.6;color:var(--text-muted);"><span style="color:#F5C842;font-weight:800;">★ 5.0</span> — דירוג מושלם בגוגל · <strong style="color:var(--text);">הקורס המעשי</strong> לבינה מלאכותית לילדים ונוער</p>
             <p>
                 קורס מעשי שבו ילדים ובני נוער לומדים לבנות אתרים ומוצרים דיגיטליים
                 <br>עם ChatGPT, Claude Code וכלי AI מובילים.
