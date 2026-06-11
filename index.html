@@ -558,7 +558,7 @@
             align-items: center;
             gap: 8px;
             color: var(--text-muted);
-            font-size: 0.88rem;
+            font-size: 1.02rem;
             font-weight: 600;
             text-decoration: none;
             z-index: 20;
@@ -569,11 +569,11 @@
         @media (max-width: 768px) {
             .hero-scroll-indicator {
                 bottom: calc(0.6rem + env(safe-area-inset-bottom, 0));
-                font-size: 0.62rem;
-                gap: 3px;
+                font-size: 0.85rem;
+                gap: 5px;
                 min-height: auto !important; /* override the global 44px mobile rule */
             }
-            .hero-scroll-indicator svg { width: 16px; height: 16px; }
+            .hero-scroll-indicator svg { width: 18px; height: 18px; }
         }
         @keyframes scrollBounce {
             0%, 100% { transform: translate(-50%, 0); }
@@ -648,7 +648,7 @@
         }
 
         .hero p {
-            font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+            font-size: clamp(0.98rem, 2vw, 1.15rem);
             color: var(--text-muted);
             margin-bottom: 2.5rem;
             max-width: 640px;
@@ -2523,7 +2523,7 @@
             }
 
             .hero p {
-                font-size: 1rem;
+                font-size: 0.92rem;
                 margin-bottom: 1.5rem;
             }
 
@@ -3800,7 +3800,7 @@
             </div>
         </div>
         <a href="#projects" class="hero-scroll-indicator" aria-label="פרויקטים של תלמידים">
-            <span>מה תלמידים בנו?</span>
+            <span>פרויקטים אמיתיים של תלמידים</span>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
@@ -4572,6 +4572,17 @@
                         <div class="tt-avatar" style="background:linear-gradient(135deg,#34EABB,#00D4AA);">א</div>
                         <div class="tt-meta">
                             <div class="tt-name">ארבל מזור</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure class="tt-card tt-card-featured">
+                    <div class="tt-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                    <blockquote class="tt-quote">"רשמנו את הבן שלנו (בן 9) די בספונטניות, ובאמת הופתענו לטובה. הוא סיים כל יום מלא התלהבות. הקבוצה הקטנה אפשרה לכל ילד תשומת לב ולעבוד בקצב שלו. בסוף הקורס הוא הראה לנו אתר ואפליקציה שבנה — ובתור הורים זה היה רגע מרגש. ממליץ מאוד להורים שמחפשים פעילות קיץ עם ערך אמיתי, ולא עוד קייטנה רגילה."</blockquote>
+                    <figcaption class="tt-author">
+                        <div class="tt-avatar" style="background:linear-gradient(135deg,#00B894,#00D4AA);">J</div>
+                        <div class="tt-meta">
+                            <div class="tt-name">Jonathan Avraham</div>
+                            <div class="tt-role">הורה</div>
                         </div>
                     </figcaption>
                 </figure>
