@@ -4696,7 +4696,10 @@
                 background: rgba(13,13,20,0.97);
                 backdrop-filter: blur(12px);
                 border-top: 1px solid rgba(255,255,255,0.1);
+                transform: translateY(115%); /* hidden until scrolled past hero */
+                transition: transform 0.3s ease;
             }
+            .mobile-cta-bar.visible { transform: translateY(0); }
             .mobile-cta-bar a {
                 flex: 1;
                 display: flex; align-items: center; justify-content: center; gap: 7px;
@@ -5438,6 +5441,19 @@
                     shown = true;
                     window.removeEventListener('scroll', onScroll);
                 }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+        }());
+        // ── Mobile bottom CTA bar — appears only after scrolling past the hero ──
+        (function() {
+            var bar = document.querySelector('.mobile-cta-bar');
+            if (!bar) return;
+            var armed = false;
+            setTimeout(function() { armed = true; }, 800);
+            function onScroll() {
+                if (!armed) return;
+                if (window.scrollY > window.innerHeight * 0.6) bar.classList.add('visible');
+                else bar.classList.remove('visible');
             }
             window.addEventListener('scroll', onScroll, { passive: true });
         }());
