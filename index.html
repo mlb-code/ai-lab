@@ -568,11 +568,12 @@
         .hero-scroll-indicator:hover { color: var(--accent); }
         @media (max-width: 768px) {
             .hero-scroll-indicator {
-                bottom: calc(1.3rem + env(safe-area-inset-bottom, 0));
-                font-size: 0.8rem;
-                gap: 6px;
+                bottom: calc(0.6rem + env(safe-area-inset-bottom, 0));
+                font-size: 0.62rem;
+                gap: 3px;
                 min-height: auto !important; /* override the global 44px mobile rule */
             }
+            .hero-scroll-indicator svg { width: 16px; height: 16px; }
         }
         @keyframes scrollBounce {
             0%, 100% { transform: translate(-50%, 0); }
