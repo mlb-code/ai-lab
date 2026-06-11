@@ -3505,7 +3505,7 @@
         </ul>
         <div class="nav-cta-group">
             <a href="javascript:void(0)" onclick="openRegisterPopup()" class="nav-cta" style="background:linear-gradient(135deg,var(--accent),#00b894);">הרשמה</a>
-            <a href="/webinar/" class="nav-cta" style="background:linear-gradient(135deg,var(--accent),#00b894);">וובינר חינמי</a>
+            <a href="javascript:void(0)" onclick="openRegisterPopup()" class="nav-cta" style="background:linear-gradient(135deg,var(--accent),#00b894);">וובינר חינמי</a>
             <a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" class="nav-cta" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));" onclick="gtag('event','whatsapp_community_click',{event_category:'community',event_label:'nav_join'})">הצטרפו לקהילה</a>
             <a href="/portal/" class="nav-cta" style="background:transparent;border:1.5px solid rgba(255,255,255,0.28);">אזור אישי</a>
         </div>
@@ -3523,7 +3523,7 @@
             <li><a href="/faq.html"><span class="menu-icon">&#x2753;</span> שאלות נפוצות</a></li>
             <li><a href="/mission.html"><span class="menu-icon">&#x2728;</span> המשימה שלנו</a></li>
             <li class="mobile-cta mobile-cta-green"><a href="javascript:void(0)" onclick="openRegisterPopup()">הרשמה</a></li>
-            <li class="mobile-cta mobile-cta-green"><a href="/webinar/">וובינר חינמי</a></li>
+            <li class="mobile-cta mobile-cta-green"><a href="javascript:void(0)" onclick="openRegisterPopup()">וובינר חינמי</a></li>
             <li class="mobile-cta"><a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));" onclick="gtag('event','whatsapp_community_click',{event_category:'community',event_label:'mobile_nav_join'})">הצטרפו לקהילה</a></li>
             <li class="mobile-cta"><a href="/portal/" style="background:transparent;border:1.5px solid rgba(255,255,255,0.28);">אזור אישי</a></li>
         </ul>
@@ -3537,7 +3537,8 @@
             <div class="scroll-popup-header">
                 <div class="scroll-popup-icon">🚀</div>
                 <h3>שריינו מקום בקורס</h3>
-                <p>השאירו פרטים ונחזור אליכם בהקדם</p>
+                <p>השאירו שם וטלפון — נחזור אליכם בהקדם</p>
+                <p style="margin-top:8px;font-size:0.9rem;"><span style="color:#F5C842;">⭐ 4.9</span> · 39 ביקורות בגוגל</p>
             </div>
             <form id="contactFormPopup" onsubmit="return submitFormPopup(event)">
                 <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
@@ -3548,15 +3549,11 @@
                 </div>
                 <div class="form-group">
                     <label for="phonePopup">מספר טלפון</label>
-                    <input type="tel" id="phonePopup" name="phone" placeholder="050-1234567" required>
-                </div>
-                <div class="form-group">
-                    <label for="emailPopup">אימייל</label>
-                    <input type="email" id="emailPopup" name="email" placeholder="your@email.com" required>
+                    <input type="tel" id="phonePopup" name="phone" placeholder="050-1234567" required inputmode="tel">
                 </div>
                 <div class="form-buttons">
-                    <button type="submit" class="btn-primary">שלח פנייה</button>
-                    <button type="button" class="btn-whatsapp" onclick="sendWhatsAppPopup()">שלח בוואטסאפ</button>
+                    <button type="submit" class="btn-primary">שלחו לי פרטים</button>
+                    <button type="button" class="btn-whatsapp" onclick="sendWhatsAppPopup()">💬 שלח בוואטסאפ</button>
                 </div>
             </form>
         </div>
@@ -3725,8 +3722,13 @@
                 <br>מתאים גם למבוגרים. ללא ניסיון קודם.
             </p>
             <div class="hero-buttons">
+                <a onclick="gtag('event','whatsapp_click',{event_category:'contact',event_label:'hero_whatsapp'});gtag('event','conversion',{'send_to':'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'})" href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%95%D7%A8%D7%A1%20%D7%99%D7%96%D7%9E%D7%95%D7%AA%20%D7%95-AI" target="_blank" rel="noopener" class="btn-primary" style="background:#25D366;box-shadow:0 4px 20px rgba(37,211,102,0.45);">💬 דברו איתנו בוואטסאפ</a>
                 <a href="javascript:void(0)" onclick="openRegisterPopup()" class="btn-primary">הרשמו עכשיו &#x1F680;</a>
-                <a href="/webinar/" class="btn-secondary">🎓 הירשם לוובינר בחינם</a>
+                <a href="javascript:void(0)" onclick="openRegisterPopup()" class="btn-secondary">🎓 הירשם לוובינר בחינם</a>
+            </div>
+            <div class="hero-trust" style="display:flex;gap:1.4rem;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:1.3rem;font-size:0.95rem;color:var(--text-muted);">
+                <span>⭐ <strong style="color:#F5C842;">4.9</strong> · 39 ביקורות בגוגל</span>
+                <span style="color:var(--accent);font-weight:600;">⚡ מקומות מוגבלים למחזור הקרוב</span>
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
@@ -5332,12 +5334,11 @@
         function sendWhatsAppPopup() {
             const name = document.getElementById('namePopup').value.trim();
             const phone = document.getElementById('phonePopup').value.trim();
-            const email = document.getElementById('emailPopup').value.trim();
-            if (!name || !phone || !email) {
-                alert('נא למלא את כל השדות');
+            if (!name || !phone) {
+                alert('נא למלא שם וטלפון');
                 return;
             }
-            const msg = `היי, אני מתעניין/ת בקורס יזמות ו-AI\n\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email}`;
+            const msg = `היי, אני מתעניין/ת בקורס הבינה המלאכותית\n\nשם: ${name}\nטלפון: ${phone}`;
             gtag('event', 'whatsapp_click', { event_category: 'contact', event_label: 'whatsapp_popup' });
             gtag('event', 'conversion', {'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD'});
             window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
