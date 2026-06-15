@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion Studios – למד סטופ מושן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800;900&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sun: #FFD166;
+    --orange: #FF8C42;
+    --deep: #2A0A0A;
+    --navy: #3D1010;
+    --sky: #FF6B6B;
+    --sky-light: #FFB3B3;
+    --lavender: #FFCDD2;
+    --white: #FDFCFF;
+    --card-bg: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--deep);
+    color: var(--white);
+    direction: rtl;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    backdrop-filter: blur(20px);
+    background: rgba(42,10,10,0.7);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, var(--sun), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+  }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--sun); }
+  .btn-nav {
+    background: linear-gradient(135deg, var(--orange), #FF6B35);
+    color: white !important;
+    padding: .5rem 1.4rem;
+    border-radius: 30px;
+    font-weight: 600 !important;
+    transition: opacity .2s, transform .2s !important;
+    box-shadow: 0 4px 20px rgba(255,140,66,0.4);
+  }
+  .btn-nav:hover { opacity: .9; transform: translateY(-1px); }
+
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(220,60,60,0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 80% 80%, rgba(255,209,102,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 60% at 20% 70%, rgba(255,150,150,0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #2A0A0A 0%, #1a0505 100%);
+  }
+
+  .dots {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: dotfade 8s ease-in-out infinite alternate;
+  }
+  @keyframes dotfade { from { opacity: 0.4 } to { opacity: 0.9 } }
+
+  .float { position: absolute; border-radius: 50%; filter: blur(1px); animation: float 6s ease-in-out infinite; }
+  .f1 { width: 80px; height: 80px; background: rgba(255,209,102,0.2); top: 15%; left: 10%; animation-delay: 0s; }
+  .f2 { width: 50px; height: 50px; background: rgba(220,60,60,0.25); top: 60%; left: 85%; animation-delay: 2s; }
+  .f3 { width: 120px; height: 120px; background: rgba(255,150,150,0.12); top: 40%; left: 5%; animation-delay: 4s; }
+  .f4 { width: 40px; height: 40px; background: rgba(255,140,66,0.25); top: 20%; left: 80%; animation-delay: 1s; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(220,60,60,0.15);
+    border: 1px solid rgba(220,60,60,0.3);
+    color: #FF9999;
+    font-size: .85rem; font-weight: 600;
+    padding: .4rem 1.2rem;
+    border-radius: 30px;
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+    animation: fadeInDown .6s ease both;
+  }
+  .badge-dot { width: 8px; height: 8px; background: #FF9999; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; transform: scale(1); } 50% { opacity:.5; transform: scale(1.5); } }
+
+  .hero h1 {
+    font-family: 'Rubik', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    position: relative; z-index: 1;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp .7s .1s ease both;
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--sun) 0%, var(--orange) 50%, #FF6B9D 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 1.2rem; color: rgba(255,255,255,0.65);
+    max-width: 600px;
+    position: relative; z-index: 1;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp .7s .2s ease both;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 1;
+    animation: fadeInUp .7s .3s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--sun), var(--orange));
+    color: var(--deep);
+    font-family: 'Heebo', sans-serif;
+    font-size: 1.05rem; font-weight: 700;
+    padding: .85rem 2.2rem;
+    border-radius: 50px;
+    border: none; cursor: pointer;
+    box-shadow: 0 8px 30px rgba(255,209,102,0.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,209,102,0.5); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    font-family: 'Heebo', sans-serif;
+    font-size: 1.05rem; font-weight: 600;
+    padding: .85rem 2.2rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: .5rem;
+    color: rgba(255,255,255,0.3); font-size: .8rem;
+    animation: bounce 2s infinite;
+    z-index: 1;
+  }
+  .scroll-arrow { width: 24px; height: 24px; border-left: 2px solid rgba(255,255,255,0.3); border-bottom: 2px solid rgba(255,255,255,0.3); transform: rotate(-45deg); }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+  @keyframes fadeInDown { from { opacity:0; transform:translateY(-20px) } to { opacity:1; transform:translateY(0) } }
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(30px) } to { opacity:1; transform:translateY(0) } }
+
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    background: rgba(255,209,102,0.12);
+    border: 1px solid rgba(255,209,102,0.25);
+    color: var(--sun);
+    font-size: .8rem; font-weight: 700;
+    padding: .3rem 1rem; border-radius: 20px;
+    margin-bottom: 1rem; letter-spacing: .5px;
+  }
+  .section-title {
+    font-family: 'Rubik', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800; line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub { color: rgba(255,255,255,0.55); font-size: 1.05rem; max-width: 500px; }
+
+  .problem-section { background: linear-gradient(180deg, var(--deep) 0%, #1f0808 100%); }
+  .ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+  .ps-card { padding: 2rem; border-radius: 20px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .ps-card.problem { background: rgba(255,107,61,0.08); border-color: rgba(255,107,61,0.2); }
+  .ps-card.solution { background: rgba(220,60,60,0.08); border-color: rgba(220,60,60,0.2); }
+  .ps-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .ps-card h3 { font-family: 'Rubik', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: .75rem; }
+  .ps-card p { color: rgba(255,255,255,0.65); line-height: 1.8; }
+
+  .steps-section { background: #1f0808; }
+  .steps-list { margin-top: 3.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .step-card {
+    display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+    padding: 1.75rem 2rem; transition: transform .25s, border-color .25s, background .25s; cursor: default;
+  }
+  .step-card:hover { transform: translateX(-6px); border-color: rgba(255,100,100,0.35); background: rgba(255,100,100,0.05); }
+  .step-num {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--sun), var(--orange));
+    color: var(--deep); font-family: 'Rubik', sans-serif;
+    font-size: 1.4rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    box-shadow: 0 4px 20px rgba(255,209,102,0.3);
+  }
+  .step-content h3 { font-family: 'Rubik', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: .4rem; }
+  .step-content p { color: rgba(255,255,255,0.6); font-size: .95rem; }
+  .step-tag {
+    display: inline-block; background: rgba(220,60,60,0.15); color: #FF9999;
+    font-size: .75rem; font-weight: 600; padding: .2rem .7rem; border-radius: 10px; margin-bottom: .5rem;
+  }
+
+  .apps-section { background: linear-gradient(180deg, #1f0808 0%, var(--deep) 100%); }
+  .apps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .app-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+    padding: 1.75rem; transition: transform .25s, border-color .25s; position: relative; overflow: hidden;
+  }
+  .app-card::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--app-accent)); }
+  .app-card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.2); }
+  .app-emoji { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+  .app-card h3 { font-family:'Rubik',sans-serif; font-weight:700; font-size:1.1rem; margin-bottom:.4rem; }
+  .app-card p { color: rgba(255,255,255,0.55); font-size:.9rem; line-height:1.6; }
+  .app-badge { margin-top: .8rem; display: inline-block; font-size: .75rem; font-weight: 600; padding: .25rem .75rem; border-radius: 10px; background: rgba(255,209,102,0.15); color: var(--sun); }
+  .app-badge.rec { background: rgba(255,209,102,0.2); color: var(--sun); }
+
+  .audience-section { background: var(--deep); }
+  .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+  .audience-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 1.75rem 1.5rem; text-align: center; transition: transform .25s, border-color .25s; }
+  .audience-card:hover { transform: translateY(-6px); border-color: rgba(255,150,150,0.4); }
+  .audience-emoji { font-size: 2.8rem; display: block; margin-bottom: .75rem; }
+  .audience-card h3 { font-family:'Rubik',sans-serif; font-weight:700; font-size:1rem; }
+
+  .contact-section { background: linear-gradient(135deg, #1f0808 0%, #2a0a0a 100%); position: relative; overflow: hidden; }
+  .contact-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(220,60,60,0.08) 0%, transparent 70%); pointer-events: none; }
+  .contact-box { max-width: 650px; margin: 3rem auto 0; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 24px; padding: 3rem; text-align: center; position: relative; z-index:1; }
+  .contact-box h3 { font-family:'Rubik',sans-serif; font-size:1.6rem; font-weight:800; margin-bottom:.5rem; }
+  .contact-box > p { color:rgba(255,255,255,.55); margin-bottom:1.5rem; }
+  .contact-form { display:flex; flex-direction:column; gap:1rem; text-align:right; }
+  .form-group { display:flex; flex-direction:column; gap:.4rem; }
+  .form-group label { font-size:.85rem; font-weight:600; color:rgba(255,255,255,.7); }
+  .form-group input, .form-group textarea, .form-group select {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: white;
+    font-family: 'Heebo', sans-serif; font-size: .95rem; padding: .75rem 1rem;
+    border-radius: 12px; outline: none; transition: border-color .2s, background .2s; direction: rtl;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: rgba(220,60,60,0.5); background: rgba(220,60,60,0.05); }
+  .form-group textarea { resize:vertical; min-height:120px; }
+  .form-group select option { background:#3d1010; color:white; }
+  .btn-submit {
+    background: linear-gradient(135deg, #E53935, #B71C1C); color: white;
+    font-family:'Heebo',sans-serif; font-size:1rem; font-weight:700;
+    padding: .9rem 2.5rem; border-radius: 50px; border: none; cursor: pointer;
+    margin-top: .5rem; box-shadow: 0 6px 25px rgba(220,60,60,0.35); transition: transform .2s, box-shadow .2s;
+  }
+  .btn-submit:hover { transform:translateY(-2px); box-shadow:0 10px 35px rgba(220,60,60,0.5); }
+  .success-msg { display: none; background: rgba(220,60,60,0.15); border: 1px solid rgba(220,60,60,0.3); color: #FF9999; padding: 1rem 1.5rem; border-radius: 12px; font-weight: 600; margin-top: 1rem; }
+
+  footer { background: #150303; padding: 3rem 2.5rem 2rem; border-top: 1px solid var(--border); color: rgba(255,255,255,0.3); font-size: .9rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .ps-grid { grid-template-columns:1fr; }
+    .contact-box { padding:2rem 1.5rem; }
+    footer > div > div:first-child { grid-template-columns: 1fr 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Motion Studios ✦</div>
+  <div class="nav-links">
+    <a href="#steps">שלבים</a>
+    <a href="#apps">אפליקציות</a>
+    <a href="#contact" class="btn-nav">צור קשר</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="dots"></div>
+  <div class="float f1"></div>
+  <div class="float f2"></div>
+  <div class="float f3"></div>
+  <div class="float f4"></div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    ✨ ללמוד סטופ מושן בקלות
+  </div>
+
+  <h1>
+    צור<br>
+    <span class="gradient-text">אנימציות מדהימות</span><br>
+    בכמה שלבים
+  </h1>
+
+  <p>Motion Studios מלמד אותך ליצור סרטוני סטופ מושן מאפס — בין אם אתה יוצר תוכן, מפתח משחקים, או פשוט רוצה להתנסות ביצירתיות</p>
+
+  <div class="hero-ctas">
+    <button class="btn-primary" onclick="document.getElementById('steps').scrollIntoView({behavior:'smooth'})">🎬 התחל עכשיו — בחינם</button>
+    <button class="btn-secondary" onclick="document.getElementById('apps').scrollIntoView({behavior:'smooth'})">🛠️ ראה את הכלים</button>
+  </div>
+
+  <div class="scroll-hint">
+    <span>גלול למטה</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<section class="problem-section">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:.5rem;">
+      <span class="section-tag">הבעיה והפתרון</span>
+    </div>
+    <h2 class="section-title" style="text-align:center;">למה Motion Studios קיים?</h2>
+    <div class="ps-grid">
+      <div class="ps-card problem">
+        <div class="ps-icon">😰</div>
+        <h3 style="color:#FF8C7A;">הבעיה</h3>
+        <p>אנשים רוצים לעשות אנימציות — ילדים, יוצרי תוכן, מפתחי משחקים — אבל לא יודעים מאיפה להתחיל. יוטיוב ו-Google מציפים בחומר מבולגן, וקשה למצוא מדריך פשוט ומרוכז בעברית.</p>
+      </div>
+      <div class="ps-card solution">
+        <div class="ps-icon">🚀</div>
+        <h3 style="color:#FF9999;">הפתרון שלנו</h3>
+        <p>Motion Studios נותן לך מסלול ברור: מהתקנת האפליקציה ועד לסרטון מוגמר — הכל בשלבים פשוטים, בעברית, עם רשימת כלים מומלצים ותמיכה אישית.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps-section" id="steps">
+  <div class="container">
+    <span class="section-tag">📋 המדריך שלב אחרי שלב</span>
+    <h2 class="section-title">איך מתחילים?</h2>
+    <p class="section-sub">מתחילים ממגוון אפס, גומרים עם סרטון שאתם גאים בו</p>
+    <div class="steps-list">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <span class="step-tag">📱 התקנה</span>
+          <h3>הורד והתקן אפליקציה</h3>
+          <p>בוחרים את האפליקציה המתאימה לגיל ולמכשיר שלך — אנחנו ממליצים ומסבירים כל אחת. ההתקנה לוקחת דקה.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <span class="step-tag">💡 רעיון</span>
+          <h3>בחר את הסיפור שלך</h3>
+          <p>כל אנימציה מתחילה ברעיון. מה רוצים להנפיש? דמות, חפץ, סצנה? אנחנו עוזרים לך לתכנן לפני שמצלמים.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <span class="step-tag">📸 צילום</span>
+          <h3>צלם תמונה אחרי תמונה</h3>
+          <p>הסוד של סטופ מושן: מזיזים קצת, מצלמים. שוב ושוב. אנחנו מסבירים כמה תמונות לשנייה, זווית מצלמה ותאורה.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <span class="step-tag">✂️ עריכה</span>
+          <h3>ערוך ויצר את הסרטון</h3>
+          <p>מחברים את התמונות לסרטון באפליקציה, מוסיפים מוזיקה ואפקטים — ויש לך אנימציה גמורה!</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <span class="step-tag">🎉 שיתוף</span>
+          <h3>שתף עם העולם</h3>
+          <p>פרסם את הסרטון שלך ברשתות, שלח לחברים, או תשתף איתנו — נשמח לראות מה יצרת!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="apps-section" id="apps">
+  <div class="container">
+    <span class="section-tag">🛠️ ארגז הכלים</span>
+    <h2 class="section-title">אפליקציות מומלצות</h2>
+    <p class="section-sub">כל אפליקציה מותאמת — לגיל שלך, למכשיר שלך, לרמה שלך</p>
+    <div class="apps-grid">
+      <div class="app-card" style="--app-accent:#FFD166;">
+        <span class="app-emoji">🎞️</span>
+        <h3>Stop Motion Studio</h3>
+        <p>האפליקציה המושלמת למתחילים. ממשק פשוט, תוצאות מרהיבות. לאייפון ולאנדרואיד.</p>
+        <span class="app-badge rec">⭐ הכי מומלצת</span>
+      </div>
+      <div class="app-card" style="--app-accent:#FF9999;">
+        <span class="app-emoji">🧸</span>
+        <h3>Lego Movie Maker</h3>
+        <p>מיוחד לילדים — מגיע עם תבניות לגו ומוזיקה. כיף ופשוט מאוד.</p>
+        <span class="app-badge" style="background:rgba(220,60,60,0.15);color:#FF9999;">לילדים</span>
+      </div>
+      <div class="app-card" style="--app-accent:#C7B8EA;">
+        <span class="app-emoji">🖥️</span>
+        <h3>Dragonframe</h3>
+        <p>הכלי המקצועי לאנימציה מתקדמת. למי שרוצה לקחת את זה לרמה הבאה.</p>
+        <span class="app-badge" style="background:rgba(199,184,234,0.15);color:#C7B8EA;">מתקדמים</span>
+      </div>
+      <div class="app-card" style="--app-accent:#FF8C42;">
+        <span class="app-emoji">📱</span>
+        <h3>Life Lapse</h3>
+        <p>אידיאלי ליוצרי תוכן — כולל עריכה מובנית, טיימלאפס ואפקטים מגניבים.</p>
+        <span class="app-badge" style="background:rgba(255,140,66,0.15);color:#FF8C42;">יוצרי תוכן</span>
+      </div>
+      <div class="app-card" style="--app-accent:#FF9999;">
+        <span class="app-emoji">🎮</span>
+        <h3>Claquette</h3>
+        <p>לאנשים שאוהבים לשלוט בהכל — ממשק מלא למק ולחלונות.</p>
+        <span class="app-badge" style="background:rgba(220,60,60,0.15);color:#FF9999;">למחשב</span>
+      </div>
+      <div class="app-card" style="--app-accent:#FFD166;">
+        <span class="app-emoji">❓</span>
+        <h3>לא בטוח מה לבחור?</h3>
+        <p>שלח לנו הודעה — נעזור לך לבחור את האפליקציה הנכונה לפי הגיל, המכשיר והמטרה שלך.</p>
+        <span class="app-badge rec" style="cursor:pointer;" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">📩 שאל אותנו</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="audience-section">
+  <div class="container" style="text-align:center;">
+    <span class="section-tag">👥 קהל היעד</span>
+    <h2 class="section-title">מתאים לכולם</h2>
+    <p class="section-sub" style="margin:0 auto 0;">Motion Studios נבנה כך שיתאים לכל גיל ורמה</p>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <span class="audience-emoji">🧒</span>
+        <h3>ילדים</h3>
+        <p style="font-size:.85rem;color:rgba(255,255,255,.5);margin-top:.4rem;">מגיל 6 ומעלה</p>
+      </div>
+      <div class="audience-card">
+        <span class="audience-emoji">🎮</span>
+        <h3>מפתחי משחקים</h3>
+        <p style="font-size:.85rem;color:rgba(255,255,255,.5);margin-top:.4rem;">אנימציות לדמויות</p>
+      </div>
+      <div class="audience-card">
+        <span class="audience-emoji">📹</span>
+        <h3>יוצרי תוכן</h3>
+        <p style="font-size:.85rem;color:rgba(255,255,255,.5);margin-top:.4rem;">לרשתות חברתיות</p>
+      </div>
+      <div class="audience-card">
+        <span class="audience-emoji">🎨</span>
+        <h3>אמנים</h3>
+        <p style="font-size:.85rem;color:rgba(255,255,255,.5);margin-top:.4rem;">להחיות יצירות</p>
+      </div>
+      <div class="audience-card">
+        <span class="audience-emoji">🧑‍🏫</span>
+        <h3>מורים</h3>
+        <p style="font-size:.85rem;color:rgba(255,255,255,.5);margin-top:.4rem;">פרויקטים בכיתה</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="container" style="text-align:center;">
+    <span class="section-tag">📬 צור קשר</span>
+    <h2 class="section-title">יש שאלה? צריך עזרה?</h2>
+    <p class="section-sub" style="margin:0 auto;">שלח לנו הודעה ונחזור אליך בהקדם — אנחנו כאן כדי לעזור</p>
+
+    <div class="contact-box">
+      <h3>דברו איתנו 💬</h3>
+      <p>ספר לנו מה תקוע ונמצא פתרון יחד</p>
+
+      <div style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; margin-bottom:2rem;">
+        <a href="https://wa.me/972542909626" target="_blank" style="display:inline-flex; align-items:center; gap:.6rem; background:linear-gradient(135deg,#25D366,#128C7E); color:white; font-family:'Heebo',sans-serif; font-weight:700; font-size:1rem; padding:.8rem 1.8rem; border-radius:50px; text-decoration:none; box-shadow:0 6px 25px rgba(37,211,102,0.35); transition:transform .2s, box-shadow .2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 35px rgba(37,211,102,0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 25px rgba(37,211,102,0.35)'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          וואטסאפ — 054-290-9626
+        </a>
+        <a href="mailto:barnhart.shachar@gmail.com" style="display:inline-flex; align-items:center; gap:.6rem; background:linear-gradient(135deg,#EA4335,#C5221F); color:white; font-family:'Heebo',sans-serif; font-weight:700; font-size:1rem; padding:.8rem 1.8rem; border-radius:50px; text-decoration:none; box-shadow:0 6px 25px rgba(234,67,53,0.35); transition:transform .2s, box-shadow .2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 35px rgba(234,67,53,0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 25px rgba(234,67,53,0.35)'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          barnhart.shachar@gmail.com
+        </a>
+      </div>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>שם מלא</label>
+          <input type="text" placeholder="הכנס את שמך" required>
+        </div>
+        <div class="form-group">
+          <label>כתובת מייל</label>
+          <input type="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>סוג הפנייה</label>
+          <select>
+            <option>בעיה טכנית</option>
+            <option>שאלה על אפליקציה</option>
+            <option>עזרה בסרטון</option>
+            <option>אחר</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ההודעה שלך</label>
+          <textarea placeholder="ספר לנו במה נוכל לעזור..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit">📤 שלח הודעה</button>
+        <div class="success-msg" id="success">✅ ההודעה נשלחה בהצלחה! נחזור אליך בקרוב.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div style="max-width:1100px; margin:0 auto;">
+    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap:3rem; text-align:right; padding-bottom:3rem; border-bottom:1px solid rgba(255,255,255,0.1);">
+      <div>
+        <div style="font-family:'Rubik',sans-serif; font-size:1.6rem; font-weight:900; background:linear-gradient(135deg,#FFD166,#FF8C42); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:.75rem;">Motion Studios ✦</div>
+        <p style="color:rgba(255,255,255,0.45); font-size:.9rem; line-height:1.8; max-width:220px;">פלטפורמה ללימוד סטופ מושן בעברית — לילדים, יוצרים ומפתחים.</p>
+        <p style="margin-top:1.2rem; color:rgba(255,255,255,0.3); font-size:.82rem;">עשוי עם <span style="color:#FF6B6B;">❤️</span> לכל מי שרוצה ליצור</p>
+      </div>
+      <div>
+        <h4 style="font-family:'Rubik',sans-serif; font-weight:700; font-size:.85rem; color:rgba(255,255,255,0.4); letter-spacing:.8px; text-transform:uppercase; margin-bottom:1rem;">ניווט</h4>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:.65rem;">
+          <li><a href="#" style="color:rgba(255,255,255,0.65); text-decoration:none; font-size:.92rem;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">🏠 דף הבית</a></li>
+          <li><a href="#steps" style="color:rgba(255,255,255,0.65); text-decoration:none; font-size:.92rem;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">📋 שלבים</a></li>
+          <li><a href="#apps" style="color:rgba(255,255,255,0.65); text-decoration:none; font-size:.92rem;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">🛠️ אפליקציות</a></li>
+          <li><a href="#contact" style="color:rgba(255,255,255,0.65); text-decoration:none; font-size:.92rem;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">📬 צור קשר</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-family:'Rubik',sans-serif; font-weight:700; font-size:.85rem; color:rgba(255,255,255,0.4); letter-spacing:.8px; text-transform:uppercase; margin-bottom:1rem;">קהל יעד</h4>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:.65rem;">
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">🧒 ילדים</li>
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">🎮 מפתחי משחקים</li>
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">📹 יוצרי תוכן</li>
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">🎨 אמנים</li>
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">🧑‍🏫 מורים</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-family:'Rubik',sans-serif; font-weight:700; font-size:.85rem; color:rgba(255,255,255,0.4); letter-spacing:.8px; text-transform:uppercase; margin-bottom:1rem;">אפליקציות</h4>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:.65rem;">
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">🎞️ Stop Motion Studio</li>
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">🧸 Lego Movie Maker</li>
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">🖥️ Dragonframe</li>
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">📱 Life Lapse</li>
+          <li style="color:rgba(255,255,255,0.65); font-size:.92rem;">🎬 Claquette</li>
+        </ul>
+      </div>
+    </div>
+    <div style="padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+      <p style="color:rgba(255,255,255,0.25); font-size:.82rem;">© 2025 Motion Studios — כל הזכויות שמורות</p>
+      <p style="color:rgba(255,255,255,0.25); font-size:.82rem;">פלטפורמה ללימוד סטופ מושן בעברית</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = '⏳ שולח...';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('success').style.display = 'block';
+    btn.textContent = '✅ נשלח!';
+    e.target.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
+  }, 1200);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.step-card, .app-card, .audience-card, .ps-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity .5s ease, transform .5s ease, border-color .25s, background .25s';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
