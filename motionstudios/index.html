@@ -70,6 +70,30 @@
   }
   .btn-nav:hover { opacity: .9; transform: translateY(-1px); }
 
+  .hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; gap: 5px;
+    width: 46px; height: 46px;
+    background: rgba(255,209,102,0.08);
+    border: 1px solid rgba(255,209,102,0.25);
+    border-radius: 12px; cursor: pointer; padding: 0; z-index: 110;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2.5px; margin: 0 auto;
+    background: var(--sun); border-radius: 3px;
+    transition: transform .3s ease, opacity .2s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+  .nav-overlay {
+    position: fixed; inset: 0;
+    background: rgba(20,3,3,0.55); backdrop-filter: blur(2px);
+    opacity: 0; visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease; z-index: 104;
+  }
+  .nav-overlay.open { opacity: 1; visibility: visible; }
+
   .hero {
     min-height: 100vh;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -283,11 +307,36 @@
   footer { background: #150303; padding: 3rem 2.5rem 2rem; border-top: 1px solid var(--border); color: rgba(255,255,255,0.3); font-size: .9rem; }
 
   @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { gap: 1rem; }
+    nav { padding: .9rem 1.2rem; }
+    .hamburger { display: flex; }
+    .nav-links {
+      position: fixed; top: 0; right: 0;
+      height: 100vh; height: 100dvh;
+      width: min(78vw, 320px);
+      flex-direction: column; align-items: stretch; gap: .4rem;
+      padding: 5.5rem 1.6rem 1.6rem;
+      background: rgba(42,10,10,0.98);
+      backdrop-filter: blur(24px);
+      border-left: 1px solid var(--border);
+      box-shadow: -12px 0 50px rgba(0,0,0,0.5);
+      transform: translateX(110%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      z-index: 105;
+    }
+    .nav-links.open { transform: translateX(0); }
+    .nav-links a { font-size: 1.12rem; padding: .9rem .3rem; border-bottom: 1px solid var(--border); }
+    .nav-links .btn-nav { margin-top: 1rem; text-align: center; padding: .9rem; border-bottom: none; }
     .ps-grid { grid-template-columns:1fr; }
     .contact-box { padding:2rem 1.5rem; }
     footer > div > div:first-child { grid-template-columns: 1fr 1fr !important; }
+  }
+
+  @media (max-width: 480px) {
+    nav { padding: .8rem 1rem; }
+    .logo { font-size: 1.5rem; }
+    .hero { padding: 7rem 1.2rem 3rem; }
+    .nav-links { width: min(86vw, 320px); }
+    footer > div > div:first-child { grid-template-columns: 1fr !important; }
   }
 </style>
 </head>
@@ -295,12 +344,16 @@
 
 <nav>
   <div class="logo">Motion Studios ✦</div>
-  <div class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="פתח תפריט" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
     <a href="#steps">שלבים</a>
     <a href="#apps">אפליקציות</a>
     <a href="#contact" class="btn-nav">צור קשר</a>
   </div>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <section class="hero">
   <div class="hero-bg"></div>
@@ -609,6 +662,22 @@ document.querySelectorAll('.step-card, .app-card, .audience-card, .ps-card').for
   el.style.transition = 'opacity .5s ease, transform .5s ease, border-color .25s, background .25s';
   observer.observe(el);
 });
+
+// Hamburger mobile menu
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('navLinks');
+const navOverlay = document.getElementById('navOverlay');
+function setMenu(open) {
+  navLinks.classList.toggle('open', open);
+  navOverlay.classList.toggle('open', open);
+  hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+hamburger.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
+navOverlay.addEventListener('click', () => setMenu(false));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+window.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 </script>
 </body>
 </html>
