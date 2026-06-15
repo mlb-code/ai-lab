@@ -133,6 +133,43 @@
   }
   .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(34,197,94,0.45); }
 
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 46px; height: 46px;
+    background: rgba(74,222,128,0.08);
+    border: 1px solid rgba(74,222,128,0.22);
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 0;
+    z-index: 110;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px; height: 2.5px;
+    margin: 0 auto;
+    background: var(--green-light);
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5,46,22,0.5);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 104;
+  }
+  .nav-overlay.open { opacity: 1; visibility: visible; }
+
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
@@ -637,8 +674,29 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
-    .nav-links { display: none; }
+    nav { padding: 14px 20px; }
+    .hamburger { display: flex; }
+    .nav-links {
+      position: fixed;
+      top: 0; right: 0;
+      height: 100vh;
+      height: 100dvh;
+      width: min(78vw, 320px);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+      padding: 92px 26px 28px;
+      background: rgba(5,46,22,0.98);
+      backdrop-filter: blur(24px);
+      border-left: 1px solid rgba(74,222,128,0.15);
+      box-shadow: -12px 0 50px rgba(0,0,0,0.45);
+      transform: translateX(110%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      z-index: 105;
+    }
+    .nav-links.open { transform: translateX(0); }
+    .nav-links a { font-size: 1.12rem; padding: 14px 4px; width: 100%; border-bottom: 1px solid rgba(74,222,128,0.08); }
+    .nav-links .btn-nav { margin-top: 16px; text-align: center; padding: 14px; border-bottom: none; }
     .hero { padding: 110px 24px 60px; flex-direction: column; }
     .hero-visual { position: relative; left: auto; top: auto; transform: none; width: 100%; margin-top: 40px; }
     .section-inner { padding: 70px 24px; }
@@ -654,6 +712,23 @@
     .cta-group { flex-direction: column; align-items: center; }
     footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
   }
+
+  @media (max-width: 480px) {
+    nav { padding: 12px 16px; }
+    .logo { font-size: 1.4rem; }
+    .logo span { font-size: 0.82rem; }
+    .hero { padding: 96px 18px 50px; }
+    .hero p { font-size: 1.05rem; }
+    .hero-cta { flex-direction: column; }
+    .hero-cta .btn-primary, .hero-cta .btn-outline { width: 100%; text-align: center; }
+    .section-inner { padding: 56px 18px; }
+    .steps { grid-template-columns: 1fr; }
+    .pricing-grid { max-width: 100%; }
+    .compare-cell { font-size: 0.7rem; padding: 12px 7px; }
+    .cta-box { padding: 40px 20px; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .nav-links { width: min(86vw, 320px); }
+  }
 </style>
 </head>
 <body>
@@ -666,13 +741,17 @@
     FCBuddy
     <span>שחקנים ישראלים, משחק אמיתי</span>
   </div>
-  <div class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="פתח תפריט" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
     <a href="#features">יכולות</a>
     <a href="#how">איך זה עובד</a>
     <a href="#pricing">מחיר</a>
     <a class="btn-nav" href="#cta">הצטרף עכשיו</a>
   </div>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -956,6 +1035,22 @@
     el.style.opacity = '0';
     observer.observe(el);
   });
+
+  // Hamburger mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  const navOverlay = document.getElementById('navOverlay');
+  function setMenu(open) {
+    navLinks.classList.toggle('open', open);
+    navOverlay.classList.toggle('open', open);
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hamburger.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
+  navOverlay.addEventListener('click', () => setMenu(false));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 </script>
 </body>
 </html>
