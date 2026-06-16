@@ -452,14 +452,48 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      .game-cards-row, .features-grid, .steps, .stats-row, .pricing-grid { grid-template-columns: 1fr; }
-      .ps-grid { grid-template-columns: 1fr; }
-      .steps::before { display: none; }
-      .footer-top { flex-direction: column; }
+      /* nav */
       nav { padding: 1rem 5vw; }
       .nav-links { display: none; }
       .nav-actions { display: none !important; }
       .hamburger { display: flex; }
+
+      /* hero — compact so it sits comfortably in view */
+      .hero { min-height: auto; padding: 5.5rem 5vw 2.5rem; }
+      .float-emoji { display: none; }
+      .hero-badge { margin-bottom: .9rem; }
+      h1 { margin-bottom: .85rem; }
+      .hero-sub { margin-bottom: 1.4rem; }
+      .hero-cards { margin-top: 1.6rem; }
+      .hero-cards .game-cards-row { grid-template-columns: repeat(3,1fr); gap: .5rem; }
+      .hero-cards .game-card { padding: .55rem; }
+      .hero-cards .game-card-img { font-size: 1.2rem; margin-bottom: .35rem; }
+      .hero-cards .game-card-title { font-size: .68rem; }
+      .hero-cards .game-card-meta { font-size: .56rem; }
+      .mock-search { margin-bottom: 1rem; padding: .7rem 1rem; }
+
+      /* card sections → horizontal swipe (right/left) instead of tall stacking */
+      .features-grid, .ps-grid, .steps, .pricing-grid {
+        display: flex; grid-template-columns: none;
+        overflow-x: auto; gap: 1rem;
+        padding-bottom: 1rem;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .features-grid::-webkit-scrollbar,
+      .ps-grid::-webkit-scrollbar,
+      .steps::-webkit-scrollbar,
+      .pricing-grid::-webkit-scrollbar { display: none; }
+      .features-grid > *, .ps-grid > *, .steps > *, .pricing-grid > * {
+        flex: 0 0 80%; max-width: 330px; scroll-snap-align: center;
+      }
+      .steps::before { display: none; }
+
+      /* stats stay compact */
+      .stats-row { grid-template-columns: repeat(2,1fr); }
+
+      .footer-top { flex-direction: column; }
     }
     @media (max-width: 560px) {
       .hero-ctas { flex-direction: column; align-items: center; }
