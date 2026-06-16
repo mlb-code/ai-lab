@@ -204,12 +204,16 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 48px;
     padding: 120px 48px 80px;
     position: relative;
     overflow: hidden;
   }
   .hero-content {
-    max-width: 680px;
+    max-width: 620px;
+    flex: 1 1 0;
+    min-width: 0;
     animation: fadeUp 0.9s ease both;
   }
   .badge {
@@ -300,11 +304,9 @@
 
   /* ── HERO VISUAL / TV MOCKUP ── */
   .hero-visual {
-    position: absolute;
-    left: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 500px;
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(320px, 38vw, 500px);
     animation: fadeUp 1.1s ease 0.2s both;
   }
   .tv-mockup {
