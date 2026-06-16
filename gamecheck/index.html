@@ -76,6 +76,53 @@
     }
     .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
 
+    /* ─── HAMBURGER + MOBILE MENU ─── */
+    .hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      width: 46px; height: 46px;
+      background: var(--white-dim);
+      border: 1px solid var(--white-border);
+      border-radius: 12px; cursor: pointer; padding: 0; z-index: 110;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2.5px; margin: 0 auto;
+      background: var(--sky); border-radius: 3px;
+      transition: transform .3s ease, opacity .2s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+    .nav-overlay {
+      position: fixed; inset: 0; z-index: 104;
+      background: rgba(6,15,30,0.6); backdrop-filter: blur(2px);
+      opacity: 0; visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease;
+    }
+    .nav-overlay.open { opacity: 1; visibility: visible; }
+    .mobile-menu {
+      position: fixed; top: 0; right: 0; z-index: 105;
+      height: 100vh; height: 100dvh;
+      width: min(80vw, 320px);
+      display: flex; flex-direction: column; align-items: stretch; gap: .5rem;
+      padding: 5.5rem 1.6rem 1.6rem;
+      background: rgba(10,22,40,0.98); backdrop-filter: blur(24px);
+      border-left: 1px solid var(--white-border);
+      box-shadow: -12px 0 50px rgba(0,0,0,0.5);
+      transform: translateX(110%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      color: var(--sky-light); text-decoration: none;
+      font-size: 1.12rem; font-weight: 500; padding: .9rem .3rem;
+      border-bottom: 1px solid var(--white-border);
+    }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu .nav-register,
+    .mobile-menu .nav-cta { width: 100%; text-align: center; padding: .9rem; font-size: 1rem; }
+    .mobile-menu .nav-register { margin-top: 1rem; }
+
     /* ─── HERO ─── */
     .hero {
       min-height: 100vh;
@@ -409,10 +456,15 @@
       .ps-grid { grid-template-columns: 1fr; }
       .steps::before { display: none; }
       .footer-top { flex-direction: column; }
+      nav { padding: 1rem 5vw; }
       .nav-links { display: none; }
+      .nav-actions { display: none !important; }
+      .hamburger { display: flex; }
     }
     @media (max-width: 560px) {
       .hero-ctas { flex-direction: column; align-items: center; }
+      .logo { font-size: 1.35rem; }
+      .mobile-menu { width: min(86vw, 320px); }
     }
 
     /* ─── MODAL ─── */
@@ -633,11 +685,22 @@
     <li><a href="#pricing">מחירים</a></li>
 
   </ul>
-  <div style="display:flex;gap:.6rem;align-items:center;">
+  <div class="nav-actions" style="display:flex;gap:.6rem;align-items:center;">
     <button class="nav-register">הירשם</button>
     <button class="nav-cta" id="navLoginBtn">התחבר</button>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="פתח תפריט" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features">תכונות</a>
+  <a href="#how">איך זה עובד</a>
+  <a href="#pricing">מחירים</a>
+  <button class="nav-register" onclick="openModal('registerModal')">הירשם</button>
+  <button class="nav-cta" onclick="openModal('loginModal')">התחבר</button>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -911,6 +974,12 @@
     </div>
   </div>
   <div class="footer-bottom">© 2025 GameCheck — כל הזכויות שמורות | עשוי בישראל 🇮🇱</div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=gamecheck" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
 </footer>
 <!-- REGISTER MODAL -->
 <div class="modal-overlay" id="registerModal">
@@ -1164,6 +1233,24 @@
     document.getElementById('demoSearchView').style.display = 'block';
     document.getElementById('demoDetailView').classList.remove('active');
   }
+
+  // ── Hamburger mobile menu ──
+  (function(){
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navOverlay = document.getElementById('navOverlay');
+    function setMenu(open) {
+      mobileMenu.classList.toggle('open', open);
+      navOverlay.classList.toggle('open', open);
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    hamburger.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+    navOverlay.addEventListener('click', () => setMenu(false));
+    mobileMenu.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => setMenu(false)));
+    window.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  })();
 </script>
 
 </body>
