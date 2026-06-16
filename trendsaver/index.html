@@ -21,6 +21,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>TrendSaver – חזה. חסוך. קנה חכם.</title>
+<!-- ailab-seo -->
+<meta name="description" content="TrendSaver — חזו, חסכו וקנו חכם.">
+<meta name="author" content="AI Lab — קורס AI לילדים ונוער">
+<link rel="canonical" href="https://ai-lab.co.il/trendsaver">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI Lab">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="TrendSaver">
+<meta property="og:description" content="TrendSaver — חזו, חסכו וקנו חכם.">
+<meta property="og:url" content="https://ai-lab.co.il/trendsaver">
+<meta property="og:image" content="https://ai-lab.co.il/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TrendSaver">
+<meta name="twitter:description" content="TrendSaver — חזו, חסכו וקנו חכם.">
+<meta name="twitter:image" content="https://ai-lab.co.il/og-image.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "TrendSaver",
+  "description": "TrendSaver — חזו, חסכו וקנו חכם.",
+  "url": "https://ai-lab.co.il/trendsaver",
+  "inLanguage": "he",
+  "isPartOf": { "@type": "WebSite", "name": "AI Lab", "url": "https://ai-lab.co.il" },
+  "publisher": { "@type": "Organization", "name": "AI Lab", "url": "https://ai-lab.co.il", "logo": "https://ai-lab.co.il/ailab-logo.jpg" },
+  "creator": { "@type": "Organization", "name": "AI Lab — קורס AI לילדים ונוער", "url": "https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=trendsaver" }
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -35,6 +64,33 @@ nav ul{list-style:none;display:flex;gap:2rem}
 nav ul a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s}
 nav ul a:hover{color:var(--white)}
 .nav-cta{background:var(--silver-l);color:#0f0f0e;border:none;border-radius:6px;padding:.48rem 1.1rem;font-size:.85rem;font-weight:700;cursor:pointer;font-family:Heebo,sans-serif;transition:opacity .2s;flex-shrink:0}
+.nav-right{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.nav-auth{background:transparent;color:var(--silver-l);border:1px solid var(--border2);border-radius:6px;padding:.46rem 1rem;font-size:.82rem;font-weight:600;cursor:pointer;font-family:Heebo,sans-serif;transition:all .2s;flex-shrink:0}
+.nav-auth:hover{background:var(--surface);border-color:var(--silver-d);color:var(--white)}
+.nav-auth.primary{background:var(--silver-l);color:#0f0f0e;border-color:var(--silver-l);font-weight:700}
+.nav-auth.primary:hover{background:var(--white);color:#0f0f0e;transform:translateY(-1px)}
+.nav-user{display:flex;align-items:center;gap:.55rem;color:var(--silver-l);font-size:.82rem;font-weight:600;padding:.3rem .7rem;border:1px solid var(--border2);border-radius:999px}
+.nav-user .avatar{width:24px;height:24px;border-radius:50%;background:var(--silver-l);color:#0f0f0e;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800}
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);z-index:500;display:none;align-items:center;justify-content:center;padding:1.2rem;animation:fade .2s ease}
+.auth-overlay.open{display:flex}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.auth-modal{background:var(--surface);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:420px;padding:2rem 1.8rem;position:relative;box-shadow:0 30px 100px rgba(0,0,0,.7);animation:rise .25s cubic-bezier(.34,1.56,.64,1)}
+@keyframes rise{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.auth-close{position:absolute;top:.9rem;left:.9rem;background:transparent;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.auth-close:hover{background:var(--surface2);color:var(--white)}
+.auth-h{font-size:1.5rem;font-weight:800;letter-spacing:-.8px;margin-bottom:.4rem}
+.auth-sub{color:var(--muted);font-size:.85rem;margin-bottom:1.5rem;line-height:1.6}
+.auth-field{margin-bottom:.9rem}
+.auth-field label{display:block;font-size:.75rem;font-weight:600;color:var(--silver-d);margin-bottom:.35rem;letter-spacing:.3px}
+.auth-field input{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:.7rem .9rem;color:var(--white);font-family:Heebo,sans-serif;font-size:.9rem;outline:none;transition:border-color .15s}
+.auth-field input:focus{border-color:var(--silver-d)}
+.auth-submit{width:100%;background:var(--silver-l);color:#0f0f0e;border:none;border-radius:8px;padding:.85rem;font-size:.95rem;font-weight:800;cursor:pointer;font-family:Heebo,sans-serif;margin-top:.5rem;transition:transform .15s,opacity .15s}
+.auth-submit:hover{transform:translateY(-1px);opacity:.95}
+.auth-submit:disabled{opacity:.5;cursor:not-allowed}
+.auth-switch{text-align:center;margin-top:1.2rem;font-size:.82rem;color:var(--muted)}
+.auth-switch button{background:none;border:none;color:var(--silver-l);font-weight:700;cursor:pointer;font-family:Heebo,sans-serif;font-size:.82rem;text-decoration:underline}
+.auth-err{background:rgba(191,106,106,.12);border:1px solid rgba(191,106,106,.35);color:#e89a9a;font-size:.8rem;padding:.6rem .8rem;border-radius:7px;margin-bottom:.9rem;display:none}
+.auth-err.show{display:block}
 .view{display:none}.view.active{display:block}
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 5vw 5rem;position:relative;overflow:hidden}
 .vline{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(200,200,195,.06) 30%,rgba(200,200,195,.06) 70%,transparent);pointer-events:none}
@@ -490,6 +546,11 @@ button{cursor:pointer}
   .logo{font-size:.95rem;letter-spacing:2px}
   .nav-cta{font-size:.75rem;padding:.38rem .75rem;gap:.3rem}
   .nav-cta svg{width:12px;height:12px}
+  .nav-right{gap:.35rem}
+  .nav-auth{font-size:.72rem;padding:.35rem .7rem}
+  .nav-cta span,.nav-cta{display:inline-flex}
+  .auth-modal{padding:1.6rem 1.3rem}
+  .auth-h{font-size:1.25rem}
 
   /* HERO */
   .hero{padding:6.5rem 5vw 3rem;min-height:calc(100svh - 0px)}
@@ -824,8 +885,46 @@ nav.scrolled{background:rgba(15,15,14,.98);border-color:rgba(220,220,215,.15)}
     <li><a href="#" onclick="goHome();setTimeout(()=>document.getElementById('chart').scrollIntoView({behavior:'smooth'}),50);return false">תחזית</a></li>
     <li><a href="#" onclick="goHome();setTimeout(()=>document.getElementById('how').scrollIntoView({behavior:'smooth'}),50);return false">איך זה עובד</a></li>
   </ul>
-  <a href="https://wa.me/972553183348?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%90%D7%A8%D7%91%D7%9C%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%93%D7%A2%D7%AA%20%D7%99%D7%95%D7%AA%D7%A8%20%D7%A2%D7%9C%20%D7%94-TRENDSAVER" target="_blank" rel="noopener noreferrer" class="nav-cta" style="display:inline-flex;align-items:center;gap:.45rem;text-decoration:none">צרו קשר <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.849L0 24l6.335-1.505A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6a9.565 9.565 0 01-4.914-1.355l-.352-.209-3.763.894.944-3.659-.229-.373A9.556 9.556 0 012.4 12C2.4 6.698 6.698 2.4 12 2.4S21.6 6.698 21.6 12 17.302 21.6 12 21.6z"/></svg></a>
+  <div class="nav-right">
+    <button class="nav-auth" id="navLoginBtn" onclick="openAuth('login')">התחברות</button>
+    <button class="nav-auth primary" id="navSignupBtn" onclick="openAuth('signup')">הרשמה</button>
+    <div class="nav-user" id="navUser" style="display:none">
+      <span class="avatar" id="navAvatar">?</span>
+      <span id="navUserName"></span>
+      <button onclick="logout()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:0;line-height:1" title="התנתק">×</button>
+    </div>
+    <a href="https://wa.me/972553183348?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%90%D7%A8%D7%91%D7%9C%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%93%D7%A2%D7%AA%20%D7%99%D7%95%D7%AA%D7%A8%20%D7%A2%D7%9C%20%D7%94-TRENDSAVER" target="_blank" rel="noopener noreferrer" class="nav-cta" style="display:inline-flex;align-items:center;gap:.45rem;text-decoration:none">צרו קשר <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.849L0 24l6.335-1.505A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6a9.565 9.565 0 01-4.914-1.355l-.352-.209-3.763.894.944-3.659-.229-.373A9.556 9.556 0 012.4 12C2.4 6.698 6.698 2.4 12 2.4S21.6 6.698 21.6 12 17.302 21.6 12 21.6z"/></svg></a>
+  </div>
 </nav>
+
+<!-- Auth Modal -->
+<div class="auth-overlay" id="authOverlay" onclick="if(event.target===this)closeAuth()">
+  <div class="auth-modal">
+    <button class="auth-close" onclick="closeAuth()" aria-label="סגור">×</button>
+    <h2 class="auth-h" id="authTitle">התחברות</h2>
+    <p class="auth-sub" id="authSub">ברוך הבא חזרה ל-TrendSaver</p>
+    <div class="auth-err" id="authErr"></div>
+    <form id="authForm" onsubmit="return submitAuth(event)">
+      <div class="auth-field" id="nameField" style="display:none">
+        <label for="authName">שם מלא</label>
+        <input type="text" id="authName" autocomplete="name" placeholder="ישראל ישראלי">
+      </div>
+      <div class="auth-field">
+        <label for="authEmail">אימייל</label>
+        <input type="email" id="authEmail" autocomplete="email" placeholder="you@example.com" required>
+      </div>
+      <div class="auth-field">
+        <label for="authPass">סיסמה</label>
+        <input type="password" id="authPass" autocomplete="current-password" placeholder="••••••••" minlength="6" required>
+      </div>
+      <button type="submit" class="auth-submit" id="authSubmit">התחבר</button>
+    </form>
+    <div class="auth-switch">
+      <span id="authSwitchText">אין לך חשבון?</span>
+      <button type="button" onclick="toggleAuthMode()" id="authSwitchBtn">הירשם עכשיו</button>
+    </div>
+  </div>
+</div>
 
 <div id="homeView" class="view active">
   <section class="hero">
@@ -971,7 +1070,13 @@ nav.scrolled{background:rgba(15,15,14,.98);border-color:rgba(220,220,215,.15)}
     <div class="flogo">TrendSaver</div>
     <p>חוזים מחירים · חוסכים כסף · בנוי לאפליסטים 🍎</p>
     <p>עוצב ופותח על ידי <span style="color:var(--silver-l);font-weight:600">ארבל מזור</span> · © 2026 · כל הזכויות שמורות</p>
-  </footer>
+  <!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=trendsaver" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
 </div>
 
 <div id="productView" class="view">
@@ -2051,6 +2156,95 @@ window.addEventListener("DOMContentLoaded",()=>{
     if(lastDate) console.log("TrendSaver: prices current as of",lastDate);
   }
 });
+
+/* ── Auth (localStorage demo) ── */
+let authMode="login";
+function openAuth(mode){
+  authMode=mode==="signup"?"signup":"login";
+  applyAuthMode();
+  document.getElementById("authOverlay").classList.add("open");
+  setTimeout(()=>document.getElementById(authMode==="signup"?"authName":"authEmail").focus(),100);
+}
+function closeAuth(){
+  document.getElementById("authOverlay").classList.remove("open");
+  document.getElementById("authForm").reset();
+  document.getElementById("authErr").classList.remove("show");
+}
+function toggleAuthMode(){
+  authMode=authMode==="login"?"signup":"login";
+  applyAuthMode();
+}
+function applyAuthMode(){
+  const isSignup=authMode==="signup";
+  document.getElementById("authTitle").textContent=isSignup?"הרשמה":"התחברות";
+  document.getElementById("authSub").textContent=isSignup?"צרו חשבון חדש ב-TrendSaver":"ברוכים השבים ל-TrendSaver";
+  document.getElementById("nameField").style.display=isSignup?"block":"none";
+  document.getElementById("authSubmit").textContent=isSignup?"הירשם":"התחבר";
+  document.getElementById("authSwitchText").textContent=isSignup?"כבר רשום?":"אין לך חשבון?";
+  document.getElementById("authSwitchBtn").textContent=isSignup?"התחבר":"הירשם עכשיו";
+  document.getElementById("authPass").autocomplete=isSignup?"new-password":"current-password";
+  document.getElementById("authErr").classList.remove("show");
+}
+function authError(msg){
+  const el=document.getElementById("authErr");
+  el.textContent=msg;
+  el.classList.add("show");
+}
+function hashPass(s){
+  let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0}
+  return String(h);
+}
+function getUsers(){
+  try{return JSON.parse(localStorage.getItem("ts_users")||"{}")}catch(e){return{}}
+}
+function saveUsers(u){localStorage.setItem("ts_users",JSON.stringify(u))}
+function submitAuth(e){
+  e.preventDefault();
+  const email=document.getElementById("authEmail").value.trim().toLowerCase();
+  const pass=document.getElementById("authPass").value;
+  const users=getUsers();
+  if(authMode==="signup"){
+    const name=document.getElementById("authName").value.trim();
+    if(!name){authError("נא הזן שם מלא");return false}
+    if(users[email]){authError("כבר קיים חשבון עם האימייל הזה");return false}
+    users[email]={name,pass:hashPass(pass),created:Date.now()};
+    saveUsers(users);
+    setSession({email,name});
+  }else{
+    const u=users[email];
+    if(!u||u.pass!==hashPass(pass)){authError("אימייל או סיסמה שגויים");return false}
+    setSession({email,name:u.name});
+  }
+  closeAuth();
+  return false;
+}
+function setSession(user){
+  localStorage.setItem("ts_session",JSON.stringify(user));
+  renderAuthState();
+}
+function logout(){
+  localStorage.removeItem("ts_session");
+  renderAuthState();
+}
+function renderAuthState(){
+  let s=null;try{s=JSON.parse(localStorage.getItem("ts_session")||"null")}catch(e){}
+  const login=document.getElementById("navLoginBtn");
+  const signup=document.getElementById("navSignupBtn");
+  const user=document.getElementById("navUser");
+  if(s&&s.email){
+    login.style.display="none";
+    signup.style.display="none";
+    user.style.display="flex";
+    document.getElementById("navUserName").textContent=s.name||s.email.split("@")[0];
+    document.getElementById("navAvatar").textContent=(s.name||s.email)[0].toUpperCase();
+  }else{
+    login.style.display="";
+    signup.style.display="";
+    user.style.display="none";
+  }
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAuth()});
+renderAuthState();
 
 </script>
 
