@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SetUp — שאלון בניית המחשב</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c14;--card:rgba(255,255,255,0.04);--card2:rgba(13,18,32,0.98);--border:rgba(255,255,255,0.08);--accent:#00d4ff;--accent2:#7c3aed;--accent3:#f59e0b;--text:#f0f4ff;--muted:#8896b0;--green:#22c55e;--red:#f87171}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;direction:rtl;text-align:right;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+.bg-grid{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.bg-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:0.14;animation:drift 20s ease-in-out infinite alternate}
+.orb1{width:500px;height:500px;background:#00d4ff;top:-150px;right:-100px}
+.orb2{width:400px;height:400px;background:#7c3aed;bottom:-100px;left:-100px;animation-delay:-8s}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(30px,50px)}}
+nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3rem;background:rgba(8,12,20,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Rajdhani',sans-serif;font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-user{display:flex;align-items:center;gap:0.6rem;color:var(--muted);font-size:0.9rem}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:700;color:#fff;flex-shrink:0}
+.nav-exit{background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.5rem 1rem;border-radius:100px;font-family:'Heebo',sans-serif;font-size:0.85rem;cursor:pointer;transition:all 0.2s}
+.nav-exit:hover{border-color:var(--red);color:var(--red)}
+main{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 1.5rem}
+.progress-header{width:100%;max-width:680px;margin-bottom:2rem}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem}
+.progress-label{font-size:0.85rem;color:var(--muted)}
+.progress-count{font-size:0.85rem;font-weight:700;color:var(--accent)}
+.progress-bar-track{height:5px;background:var(--border);border-radius:100px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1)}
+.q-card{width:100%;max-width:680px;background:var(--card2);border:1px solid var(--border);border-radius:24px;padding:2.5rem;backdrop-filter:blur(20px);box-shadow:0 0 60px rgba(0,212,255,0.08),0 30px 60px rgba(0,0,0,0.4);position:relative;overflow:hidden;animation:cardIn 0.4s cubic-bezier(0.4,0,0.2,1) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.win-bar{display:flex;gap:0.5rem;margin-bottom:2rem}
+.win-dot{width:13px;height:13px;border-radius:50%}
+.wd-r{background:#ff5f57}.wd-y{background:#febc2e}.wd-g{background:#28c840}
+.q-category{font-size:0.78rem;font-weight:700;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem}
+.q-text{font-size:1.3rem;font-weight:700;line-height:1.4;margin-bottom:0.4rem}
+.q-sub{font-size:0.88rem;color:var(--muted);margin-bottom:2rem}
+.options-grid{display:grid;gap:0.75rem;margin-bottom:2rem}
+.options-grid.cols-2{grid-template-columns:1fr 1fr}
+.options-grid.cols-4{grid-template-columns:repeat(4,1fr)}
+.opt-btn{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;color:var(--text);font-family:'Heebo',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:0.6rem;text-align:right;width:100%}
+.opt-btn .opt-icon{font-size:1.3rem;flex-shrink:0}
+.opt-btn .opt-label{flex:1}
+.opt-btn .opt-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+.opt-btn:hover{border-color:rgba(0,212,255,0.4);background:rgba(0,212,255,0.06);transform:translateY(-2px)}
+.opt-btn.selected{border-color:var(--accent);background:rgba(0,212,255,0.1)}
+.opt-btn.selected .opt-check{background:var(--accent);border-color:var(--accent)}
+.opt-btn.selected .opt-check::after{content:'✓';font-size:0.7rem;color:#fff;font-weight:900}
+.range-wrap{margin-bottom:2rem}
+.range-labels{display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.82rem;color:var(--muted)}
+.range-value{text-align:center;font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:1rem}
+input[type=range]{width:100%;-webkit-appearance:none;height:6px;border-radius:100px;background:linear-gradient(to right,var(--accent) var(--val,40%),var(--border) var(--val,40%));outline:none;cursor:pointer;direction:ltr}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 12px rgba(0,212,255,0.5);cursor:pointer}
+.q-footer{display:flex;align-items:center;justify-content:space-between;margin-top:0.5rem}
+.btn-back{background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.75rem 1.8rem;border-radius:100px;font-family:'Heebo',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.2s}
+.btn-back:hover{border-color:var(--accent);color:var(--accent)}
+.btn-back:disabled{opacity:0.3;cursor:not-allowed}
+.btn-next{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:0.75rem 2.2rem;border-radius:100px;font-family:'Heebo',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 20px rgba(0,212,255,0.25)}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,255,0.4)}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none}
+.skip-link{font-size:0.82rem;color:var(--muted);cursor:pointer;text-decoration:underline;transition:color 0.2s}
+.skip-link:hover{color:var(--accent)}
+.results-screen{width:100%;max-width:900px;animation:cardIn 0.5s ease both}
+.results-title{text-align:center;margin-bottom:2.5rem}
+.results-title h2{font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--text) 40%,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+.results-title p{color:var(--muted)}
+.setups-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.setup-card{background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:1.8rem;transition:all 0.3s;position:relative;overflow:hidden}
+.setup-card:hover{transform:translateY(-5px);border-color:rgba(0,212,255,0.35);box-shadow:0 0 40px rgba(0,212,255,0.1)}
+.setup-card.featured{border-color:rgba(0,212,255,0.4);background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(124,58,237,0.06))}
+.setup-badge{position:absolute;top:1rem;left:1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:0.7rem;font-weight:700;padding:0.25rem 0.7rem;border-radius:100px}
+.setup-tier{font-size:0.78rem;color:var(--muted);margin-bottom:0.4rem;letter-spacing:0.05em;text-transform:uppercase}
+.setup-name{font-size:1.15rem;font-weight:900;margin-bottom:0.4rem}
+.setup-price{font-size:1.5rem;font-weight:900;color:var(--accent);margin-bottom:1rem}
+.setup-parts{list-style:none;margin-bottom:1.2rem}
+.setup-parts li{font-size:0.82rem;color:var(--muted);padding:0.3rem 0;border-bottom:1px solid var(--border);display:flex;gap:0.4rem}
+.setup-parts li strong{color:var(--text);flex-shrink:0}
+.setup-parts li::before{content:'▸';color:var(--accent);flex-shrink:0}
+.setup-score{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--muted)}
+.score-bar{flex:1;height:4px;background:var(--border);border-radius:100px;overflow:hidden}
+.score-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px}
+.steps-dots{display:flex;justify-content:center;gap:0.4rem;margin-bottom:1.5rem}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all 0.3s}
+.step-dot.done{background:var(--accent)}
+.step-dot.current{background:var(--accent);width:24px;border-radius:100px}
+@keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media(max-width:700px){
+  nav{padding:1rem 1.2rem}
+  .q-card{padding:1.8rem 1.4rem}
+  .options-grid.cols-4{grid-template-columns:1fr 1fr}
+  .setups-grid{grid-template-columns:1fr}
+  main{padding:1.5rem 1rem}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div></div>
+
+<nav>
+  <div class="nav-logo" onclick="goBack()">SetUp</div>
+  <div class="nav-right">
+    <div class="nav-user">
+      <div class="avatar" id="userAvatar">L</div>
+      <span id="userName">Liam</span>
+    </div>
+    <button class="nav-exit" onclick="if(confirm('לצאת מהשאלון?'))goBack()">← יציאה</button>
+  </div>
+</nav>
+
+<main>
+  <div class="progress-header" id="progressHeader">
+    <div class="progress-meta">
+      <span class="progress-label" id="categoryLabel">קטגוריה: שימוש</span>
+      <span class="progress-count" id="progressCount">שאלה 1 מתוך 6</span>
+    </div>
+    <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill" style="width:16%"></div></div>
+  </div>
+  <div class="steps-dots" id="stepsDots"></div>
+  <div class="q-card" id="qCard">
+    <div class="win-bar"><div class="win-dot wd-r"></div><div class="win-dot wd-y"></div><div class="win-dot wd-g"></div></div>
+    <div class="q-category" id="qCategory"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-sub" id="qSub"></div>
+    <div id="qOptions"></div>
+    <div class="q-footer">
+      <button class="btn-back" id="btnBack" onclick="prevQ()" disabled>→ הקודם</button>
+      <span class="skip-link" onclick="skipQ()">דלג</span>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>הבא ←</button>
+    </div>
+  </div>
+  <div class="results-screen" id="resultsScreen" style="display:none">
+    <div class="results-title">
+      <div style="font-size:2.5rem;margin-bottom:0.5rem">🎯</div>
+      <h2>ה-Setup המושלם עבורך</h2>
+      <p>על בסיס התשובות שלך, בנינו 3 אפשרויות מותאמות אישית</p>
+    </div>
+    <div class="setups-grid" id="setupsGrid"></div>
+    <div style="text-align:center;margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn-back" onclick="resetQ()">← שאלון חדש</button>
+      <button class="btn-next" onclick="goToPanel()">הצג את הפאנל שלי ←</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const urlParams=new URLSearchParams(window.location.search);
+const currentUser=urlParams.get('user')||'Liam';
+document.getElementById('userName').textContent=currentUser;
+document.getElementById('userAvatar').textContent=currentUser.charAt(0).toUpperCase();
+
+function goBack(){window.location.href=`setup-landing.html`;}
+function goToPanel(){window.location.href=`setup-panel.html?user=${encodeURIComponent(currentUser)}`;}
+
+const questions=[
+  {id:1,category:'שימוש',text:'מה המטרה העיקרית שלך במחשב?',sub:'ניתן לבחור אפשרות אחת',type:'options',cols:'cols-4',
+   options:[{icon:'🎮',label:'גיימינג',value:'gaming'},{icon:'💻',label:'תכנות',value:'coding'},{icon:'🎨',label:'עריכת וידאו',value:'video'},{icon:'📊',label:'משרד',value:'office'}]},
+  {id:2,category:'תקציב',text:'מה התקציב שלך?',sub:'גרור לבחירת הסכום המקסימלי',type:'range',min:1000,max:15000,step:500,default:4000,format:v=>`₪${Number(v).toLocaleString()}`},
+  {id:3,category:'ביצועים',text:'באיזה רזולוציה אתה משחק / עובד?',sub:'משפיע על בחירת כרטיס המסך',type:'options',cols:'cols-2',
+   options:[{icon:'🖥️',label:'1080p (Full HD)',value:'1080p'},{icon:'🖥️',label:'1440p (2K)',value:'1440p'},{icon:'🖥️',label:'4K (Ultra HD)',value:'4k'},{icon:'❓',label:'לא יודע',value:'unknown'}]},
+  {id:4,category:'עדיפויות',text:'מה הכי חשוב לך?',sub:'ניתן לבחור אפשרות אחת',type:'options',cols:'cols-2',
+   options:[{icon:'⚡',label:'ביצועים מקסימליים',value:'performance'},{icon:'🤫',label:'שקט ורוגע',value:'quiet'},{icon:'💰',label:'מחיר-תועלת',value:'value'},{icon:'✨',label:'עיצוב ואסתטיקה',value:'looks'}]},
+  {id:5,category:'ניסיון',text:'מה רמת הידע שלך בחומרת מחשבים?',sub:'נשתמש בזה כדי להסביר את ההמלצות',type:'options',cols:'cols-2',
+   options:[{icon:'🔰',label:'מתחיל — לא יודע כלום',value:'beginner'},{icon:'📚',label:'בינוני — מכיר את הבסיס',value:'mid'},{icon:'🛠️',label:'מתקדם — בניתי מחשבים',value:'advanced'},{icon:'🎓',label:'מומחה — עובד בתחום',value:'expert'}]},
+  {id:6,category:'אחסון',text:'כמה אחסון אתה צריך?',sub:'כולל משחקים, עבודה וקבצים אישיים',type:'options',cols:'cols-2',
+   options:[{icon:'💾',label:'512GB — בסיסי',value:'512'},{icon:'💽',label:'1TB — טוב לרוב',value:'1tb'},{icon:'🗄️',label:'2TB — למשתמשים רבים',value:'2tb'},{icon:'📦',label:'4TB+ — כבד מאוד',value:'4tb'}]},
+];
+
+let current=0,answers={};
+
+function buildDots(){
+  document.getElementById('stepsDots').innerHTML=questions.map((_,i)=>`<div class="step-dot" id="dot-${i}"></div>`).join('');
+  updateDots();
+}
+
+function updateDots(){
+  questions.forEach((_,i)=>{
+    const d=document.getElementById(`dot-${i}`);
+    if(!d)return;
+    d.className=`step-dot ${i<current?'done':i===current?'current':''}`;
+  });
+}
+
+function renderQ(){
+  const q=questions[current];
+  document.getElementById('qCategory').textContent=q.category;
+  document.getElementById('qText').textContent=q.text;
+  document.getElementById('qSub').textContent=q.sub;
+  document.getElementById('categoryLabel').textContent=`קטגוריה: ${q.category}`;
+  document.getElementById('progressCount').textContent=`שאלה ${current+1} מתוך ${questions.length}`;
+  document.getElementById('progressFill').style.width=`${((current+1)/questions.length)*100}%`;
+  document.getElementById('btnBack').disabled=current===0;
+  document.getElementById('btnNext').disabled=answers[q.id]===undefined;
+  const card=document.getElementById('qCard');
+  card.style.animation='none';card.offsetHeight;card.style.animation='cardIn 0.35s cubic-bezier(0.4,0,0.2,1) both';
+  const container=document.getElementById('qOptions');
+  container.innerHTML='';
+  if(q.type==='options'){
+    const grid=document.createElement('div');
+    grid.className=`options-grid ${q.cols}`;
+    q.options.forEach(opt=>{
+      const btn=document.createElement('button');
+      btn.className=`opt-btn ${answers[q.id]===opt.value?'selected':''}`;
+      btn.innerHTML=`<span class="opt-icon">${opt.icon}</span><span class="opt-label">${opt.label}</span><span class="opt-check"></span>`;
+      btn.onclick=()=>{answers[q.id]=opt.value;grid.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');document.getElementById('btnNext').disabled=false;};
+      grid.appendChild(btn);
+    });
+    container.appendChild(grid);
+  } else if(q.type==='range'){
+    const saved=answers[q.id]??q.default;
+    const wrap=document.createElement('div');
+    wrap.className='range-wrap';
+    wrap.innerHTML=`<div class="range-value" id="rangeVal">${q.format(saved)}</div><div class="range-labels"><span>${q.format(q.min)}</span><span>${q.format(q.max)}</span></div><input type="range" id="rangeInput" min="${q.min}" max="${q.max}" step="${q.step}" value="${saved}">`;
+    container.appendChild(wrap);
+    answers[q.id]=saved;
+    document.getElementById('btnNext').disabled=false;
+    const inp=document.getElementById('rangeInput');
+    const updateSlider=()=>{const pct=((inp.value-q.min)/(q.max-q.min))*100;inp.style.setProperty('--val',pct+'%');document.getElementById('rangeVal').textContent=q.format(inp.value);answers[q.id]=inp.value;};
+    inp.addEventListener('input',updateSlider);
+    updateSlider();
+  }
+  updateDots();
+}
+
+function nextQ(){if(current<questions.length-1){current++;renderQ();}else showResults();}
+function prevQ(){if(current>0){current--;renderQ();}}
+function skipQ(){if(current<questions.length-1){current++;renderQ();}else showResults();}
+
+function showResults(){
+  document.getElementById('progressHeader').style.display='none';
+  document.getElementById('stepsDots').style.display='none';
+  document.getElementById('qCard').style.display='none';
+  document.getElementById('resultsScreen').style.display='block';
+  const budget=parseInt(answers[2]??4000);
+  const use=answers[1]??'gaming';
+  const useLabel={gaming:'גיימינג',coding:'תכנות',video:'עריכת וידאו',office:'משרד'}[use]||use;
+  const setups=[
+    {tier:'חסכוני',score:72,featured:false,
+     name:use==='gaming'?'Gaming Starter':use==='coding'?'Dev Basic':use==='video'?'Creator Lite':'Office Pro',
+     price:Math.round(budget*0.65),
+     parts:[{label:'מעבד',value:use==='gaming'?'Intel Core i5-13400F':'Intel Core i5-12400'},{label:'כרטיס מסך',value:use==='gaming'?'RTX 4060 8GB':'Intel UHD Graphics'},{label:'זיכרון RAM',value:'16GB DDR4 3200MHz'},{label:'אחסון',value:'512GB NVMe SSD'},{label:'מארז',value:'Corsair 4000D'},{label:'ספק כוח',value:'550W 80+ Gold'}]},
+    {tier:'מומלץ',score:94,featured:true,
+     name:use==='gaming'?'Gaming Beast':use==='coding'?'Dev Pro':use==='video'?'Creator Studio':'Office Elite',
+     price:Math.round(budget),
+     parts:[{label:'מעבד',value:use==='gaming'?'Intel Core i7-13700KF':'AMD Ryzen 7 7700X'},{label:'כרטיס מסך',value:use==='gaming'?'RTX 4070 Ti 12GB':'RTX 4060 8GB'},{label:'זיכרון RAM',value:'32GB DDR5 5600MHz'},{label:'אחסון',value:'1TB NVMe Gen4 SSD'},{label:'מארז',value:'Lian Li PC-O11'},{label:'ספק כוח',value:'750W 80+ Gold'}]},
+    {tier:'פרמיום',score:99,featured:false,
+     name:use==='gaming'?'Ultra Gaming Rig':use==='coding'?'Workstation Pro':use==='video'?'Content King':'Power Office',
+     price:Math.round(budget*1.4),
+     parts:[{label:'מעבד',value:'Intel Core i9-13900K'},{label:'כרטיס מסך',value:'RTX 4080 16GB'},{label:'זיכרון RAM',value:'64GB DDR5 6000MHz'},{label:'אחסון',value:'2TB NVMe Gen4 SSD'},{label:'מארז',value:'Fractal Torrent'},{label:'ספק כוח',value:'1000W 80+ Platinum'}]},
+  ];
+  window._currentSetups=setups;window._currentUse=useLabel;
+  document.getElementById('setupsGrid').innerHTML=setups.map((s,idx)=>`
+    <div class="setup-card ${s.featured?'featured':''}">
+      ${s.featured?'<div class="setup-badge">🏆 מומלץ</div>':''}
+      <div class="setup-tier">${s.tier}</div>
+      <div class="setup-name">${s.name}</div>
+      <div class="setup-price">₪${s.price.toLocaleString()}</div>
+      <ul class="setup-parts">${s.parts.map(p=>`<li><strong>${p.label}:</strong> ${p.value}</li>`).join('')}</ul>
+      <div class="setup-score"><span>${s.score}%</span><div class="score-bar"><div class="score-fill" style="width:${s.score}%"></div></div><span>התאמה</span></div>
+      <button onclick="saveSetup(${idx})" style="width:100%;margin-top:1rem;background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff;border:none;padding:0.65rem;border-radius:10px;font-family:'Heebo',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">💾 שמור Setup זה</button>
+    </div>`).join('');
+}
+
+function saveSetup(idx){
+  const s=window._currentSetups[idx];
+  const key=`setups_${currentUser}`;
+  const existing=JSON.parse(localStorage.getItem(key)||'[]');
+  existing.push({id:Date.now(),name:s.name,tier:s.tier,price:s.price,score:s.score,use:window._currentUse,parts:s.parts,savedAt:new Date().toLocaleDateString('he-IL')});
+  localStorage.setItem(key,JSON.stringify(existing));
+  showToast(`✅ "${s.name}" נשמר בפאנל שלך!`);
+}
+
+function showToast(msg){
+  const t=document.createElement('div');
+  t.textContent=msg;
+  t.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff;padding:0.9rem 2rem;border-radius:100px;font-family:Heebo,sans-serif;font-weight:700;font-size:0.95rem;z-index:9999;box-shadow:0 8px 30px rgba(0,212,255,0.35);animation:fadeUp 0.3s ease both;white-space:nowrap';
+  document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity 0.4s';setTimeout(()=>t.remove(),400);},2500);
+}
+
+function resetQ(){
+  current=0;answers={};
+  document.getElementById('progressHeader').style.display='block';
+  document.getElementById('stepsDots').style.display='flex';
+  document.getElementById('qCard').style.display='block';
+  document.getElementById('resultsScreen').style.display='none';
+  renderQ();
+}
+
+buildDots();renderQ();
+</script>
+</body>
+</html>

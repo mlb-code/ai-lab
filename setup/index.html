@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SetUp — המחשב המושלם עבורך</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c14;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--accent:#00d4ff;--accent2:#7c3aed;--accent3:#f59e0b;--text:#f0f4ff;--muted:#8896b0;--glow:0 0 40px rgba(0,212,255,0.15)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;direction:rtl;text-align:right;overflow-x:hidden;line-height:1.6}
+.bg-grid{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.bg-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:0.18;animation:drift 20s ease-in-out infinite alternate}
+.orb1{width:600px;height:600px;background:#00d4ff;top:-200px;right:-100px}
+.orb2{width:500px;height:500px;background:#7c3aed;bottom:0;left:-150px;animation-delay:-7s}
+.orb3{width:300px;height:300px;background:#f59e0b;top:50%;left:40%;animation-delay:-14s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(40px,60px) scale(1.1)}}
+nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3rem;background:rgba(8,12,20,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Rajdhani',sans-serif;font-size:1.9rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.12em;text-transform:uppercase}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;transition:color 0.2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-actions{display:flex;align-items:center;gap:0.75rem}
+.nav-cta{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:0.6rem 1.6rem;border-radius:100px;font-family:'Heebo',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,255,0.35)}
+.nav-login{background:transparent;color:var(--text);border:1px solid var(--border);padding:0.6rem 1.4rem;border-radius:100px;font-family:'Heebo',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s}
+.nav-login:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,0.07)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;top:63px;z-index:99;background:rgba(8,12,20,0.98);backdrop-filter:blur(20px);flex-direction:column;padding:1.5rem;gap:0;border-top:1px solid var(--border)}
+.mobile-menu.open{display:flex;animation:slideDown 0.25s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.mobile-menu a{color:var(--text);text-decoration:none;font-size:1.1rem;font-weight:500;padding:1rem 0;border-bottom:1px solid var(--border);display:block;transition:color 0.2s}
+.mobile-menu a:hover{color:var(--accent)}
+.mobile-menu-btns{display:flex;gap:0.75rem;margin-top:1.5rem}
+.mobile-menu-btns button{flex:1;padding:0.85rem;border-radius:100px}
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.25);padding:0.4rem 1.2rem;border-radius:100px;font-size:0.85rem;color:var(--accent);margin-bottom:2rem;animation:fadeUp 0.8s ease both}
+.hero-badge::before{content:'⚡'}
+.hero h1{font-size:clamp(2.8rem,8vw,7rem);font-weight:900;line-height:1.05;margin-bottom:1.5rem;animation:fadeUp 0.8s ease 0.1s both}
+.hero h1 .line1{display:block;background:linear-gradient(135deg,#fff 30%,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 .line2{display:block;font-family:'Rajdhani',sans-serif;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.1em;font-size:1.1em}
+.hero p{font-size:1.2rem;color:var(--muted);max-width:600px;margin:0 auto 2.5rem;animation:fadeUp 0.8s ease 0.2s both}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both}
+.hero-visual{margin-top:4rem;animation:fadeUp 0.8s ease 0.4s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:1rem 2.5rem;border-radius:100px;font-family:'Heebo',sans-serif;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 30px rgba(0,212,255,0.25)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,212,255,0.4)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);padding:1rem 2.5rem;border-radius:100px;font-family:'Heebo',sans-serif;font-size:1.05rem;font-weight:500;cursor:pointer;transition:all 0.3s}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,0.05)}
+.pc-mockup{width:min(700px,90vw);background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;backdrop-filter:blur(10px);box-shadow:var(--glow),0 40px 80px rgba(0,0,0,0.5);position:relative;overflow:hidden}
+.pc-mockup::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,255,0.05),transparent,rgba(124,58,237,0.05))}
+.mockup-bar{display:flex;gap:0.5rem;margin-bottom:1.5rem}
+.mockup-dot{width:12px;height:12px;border-radius:50%}
+.d1{background:#ff5f57}.d2{background:#febc2e}.d3{background:#28c840}
+.mockup-question{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1rem}
+.mockup-q-label{color:var(--accent);font-size:0.8rem;font-weight:700;margin-bottom:0.4rem;letter-spacing:0.05em}
+.mockup-options{display:flex;gap:0.7rem;flex-wrap:wrap;margin-top:1rem}
+.mockup-opt{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:100px;padding:0.5rem 1.2rem;font-size:0.85rem;cursor:pointer;transition:all 0.2s}
+.mockup-opt:hover,.mockup-opt.active{border-color:var(--accent);background:rgba(0,212,255,0.1);color:var(--accent)}
+.mockup-opt.active{font-weight:700}
+.mockup-progress{display:flex;gap:0.3rem;margin-top:1.5rem}
+.prog-step{height:4px;border-radius:100px;background:var(--border);flex:1;transition:background 0.3s}
+.prog-step.done{background:var(--accent)}
+.prog-step.active{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+section{position:relative;z-index:1}
+.container{max-width:1200px;margin:0 auto;padding:0 2rem}
+.section-title{text-align:center;margin-bottom:1rem}
+.section-title h2{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;background:linear-gradient(135deg,var(--text) 50%,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.section-title p{color:var(--muted);font-size:1.05rem;margin-top:0.75rem}
+.label-tag{display:inline-block;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);color:var(--accent);font-size:0.8rem;font-weight:700;padding:0.3rem 0.9rem;border-radius:100px;letter-spacing:0.05em;margin-bottom:1rem}
+.problem{padding:8rem 0}
+.problem-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.problem-text h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-bottom:1rem;line-height:1.2}
+.problem-text p{color:var(--muted);font-size:1rem;line-height:1.8}
+.problem-visual{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;backdrop-filter:blur(10px)}
+.search-result{display:flex;gap:1rem;align-items:flex-start;padding:1rem;border-radius:12px;margin-bottom:1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border)}
+.sr-img{width:60px;height:60px;border-radius:10px;background:linear-gradient(135deg,#1a2035,#2a3555);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.sr-info h4{font-size:0.9rem;margin-bottom:0.25rem}
+.sr-info p{font-size:0.8rem;color:var(--muted)}
+.sr-price{font-size:1rem;font-weight:700;color:var(--accent3);margin-top:0.3rem}
+.sr-warning{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:0.8rem 1rem;font-size:0.85rem;color:#f87171;display:flex;gap:0.5rem;align-items:center}
+.features{padding:8rem 0}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.feature-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;backdrop-filter:blur(10px);transition:all 0.3s;position:relative;overflow:hidden}
+.feature-card:hover{transform:translateY(-6px);border-color:rgba(0,212,255,0.3);box-shadow:var(--glow)}
+.feature-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.5rem}
+.fi-blue{background:rgba(0,212,255,0.15)}.fi-purple{background:rgba(124,58,237,0.15)}.fi-amber{background:rgba(245,158,11,0.15)}
+.feature-num{position:absolute;top:1.5rem;left:1.5rem;font-size:3.5rem;font-weight:900;color:rgba(255,255,255,0.04);line-height:1}
+.feature-card h3{font-size:1.2rem;font-weight:700;margin-bottom:0.75rem}
+.feature-card p{color:var(--muted);font-size:0.95rem;line-height:1.7}
+.audience{padding:8rem 0}
+.audience-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:4rem}
+.audience-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem 1.5rem;text-align:center;transition:all 0.3s}
+.audience-card:hover{transform:translateY(-4px);border-color:rgba(0,212,255,0.3)}
+.audience-icon{font-size:2.5rem;margin-bottom:1rem}
+.audience-card h3{font-size:1.05rem;font-weight:700;margin-bottom:0.5rem}
+.audience-card p{color:var(--muted);font-size:0.85rem;line-height:1.6}
+.how{padding:8rem 0}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:4rem;position:relative}
+.steps::before{content:'';position:absolute;top:32px;right:calc(12.5% + 32px);left:calc(12.5% + 32px);height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent)}
+.step{text-align:center;padding:0 1rem;position:relative}
+.step-num{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.2rem;margin:0 auto 1.5rem;box-shadow:0 0 30px rgba(0,212,255,0.3);position:relative;z-index:1}
+.step h3{font-size:1rem;font-weight:700;margin-bottom:0.5rem}
+.step p{color:var(--muted);font-size:0.85rem;line-height:1.6}
+.subscription{padding:8rem 0}
+.sub-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;max-width:800px;margin:4rem auto 0}
+.sub-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.5rem;position:relative;overflow:hidden;transition:all 0.3s}
+.sub-card.featured{border-color:rgba(0,212,255,0.4);background:linear-gradient(135deg,rgba(0,212,255,0.07),rgba(124,58,237,0.07))}
+.sub-card:hover{transform:translateY(-5px);box-shadow:var(--glow)}
+.sub-badge{position:absolute;top:1.5rem;left:1.5rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:0.75rem;font-weight:700;padding:0.3rem 0.8rem;border-radius:100px}
+.sub-card h3{font-size:1.3rem;font-weight:700;margin-bottom:0.75rem}
+.sub-price{font-size:2.5rem;font-weight:900;color:var(--accent);margin-bottom:1.5rem}
+.sub-price span{font-size:1rem;color:var(--muted);font-weight:400}
+.sub-features{list-style:none;margin-bottom:2rem}
+.sub-features li{padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;color:var(--muted);display:flex;gap:0.5rem;align-items:center}
+.sub-features li::before{content:'✓';color:var(--accent);font-weight:900}
+.newsletter{padding:8rem 0}
+.newsletter-box{background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(124,58,237,0.08));border:1px solid rgba(0,212,255,0.2);border-radius:28px;padding:4rem;text-align:center;max-width:700px;margin:0 auto;position:relative;overflow:hidden}
+.newsletter-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(0,212,255,0.06) 0%,transparent 60%)}
+.newsletter-box h2{font-size:2.2rem;font-weight:900;margin-bottom:1rem}
+.newsletter-box p{color:var(--muted);margin-bottom:2rem}
+.email-form{display:flex;gap:1rem;max-width:500px;margin:0 auto}
+.email-input{flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:100px;padding:0.9rem 1.5rem;color:var(--text);font-family:'Heebo',sans-serif;font-size:1rem;outline:none;transition:border-color 0.2s;text-align:right;direction:rtl}
+.email-input:focus{border-color:var(--accent)}
+.email-input::placeholder{color:var(--muted)}
+footer{border-top:1px solid var(--border);padding:4rem 0 2rem;position:relative;z-index:1}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-logo{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.12em;text-transform:uppercase;display:block;margin-bottom:0.4rem}
+.footer-brand p{color:var(--muted);font-size:0.9rem;line-height:1.7;margin-top:0.5rem;max-width:240px}
+.footer-social{display:flex;gap:0.6rem;margin-top:1.2rem}
+.social-btn{width:36px;height:36px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.9rem;cursor:pointer;transition:all 0.2s;text-decoration:none}
+.social-btn:hover{border-color:var(--accent);background:rgba(0,212,255,0.08)}
+.footer-col h4{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:1rem;letter-spacing:0.06em;text-transform:uppercase}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.55rem}
+.footer-col ul li a{color:var(--muted);text-decoration:none;font-size:0.88rem;transition:color 0.2s;display:flex;align-items:center;gap:0.4rem}
+.footer-col ul li a:hover{color:var(--accent)}
+.footer-col ul li a::before{content:'›';color:var(--accent);font-weight:900}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid var(--border)}
+.footer-copy{color:var(--muted);font-size:0.82rem}
+.footer-legal{display:flex;gap:1.5rem}
+.footer-legal a{color:var(--muted);font-size:0.82rem;text-decoration:none;transition:color 0.2s}
+.footer-legal a:hover{color:var(--accent)}
+.reveal{opacity:0;transform:translateY(40px);transition:all 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links,.nav-actions{display:none}
+  .hamburger{display:flex}
+  .problem-inner{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr}
+  .audience-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr;gap:2rem}
+  .steps::before{display:none}
+  .sub-cards{grid-template-columns:1fr}
+  .email-form{flex-direction:column}
+  .footer-top{grid-template-columns:1fr 1fr;gap:2rem}
+  .footer-brand{grid-column:1/-1}
+}
+@media(max-width:550px){
+  nav{padding:0.85rem 1rem}
+  .hero{padding:6rem 1rem 3rem}
+  .hero h1{font-size:2.3rem}
+  .hero p{font-size:0.95rem}
+  .pc-mockup{padding:1.2rem}
+  .mockup-options{gap:0.4rem}
+  .mockup-opt{padding:0.4rem 0.8rem;font-size:0.78rem}
+  .newsletter-box{padding:2rem 1.2rem}
+  .newsletter-box h2{font-size:1.5rem}
+  .section-title h2{font-size:1.8rem}
+  .footer-top{grid-template-columns:1fr}
+  .audience-grid{grid-template-columns:1fr}
+  .hero-btns{flex-direction:column;align-items:stretch}
+  .hero-btns button{width:100%}
+  .container{padding:0 1rem}
+  .problem,.features,.audience,.how,.subscription,.newsletter{padding:5rem 0}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+
+<nav>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#features">יכולות</a></li>
+    <li><a href="#how">איך זה עובד</a></li>
+    <li><a href="#audience">קהל יעד</a></li>
+    <li><a href="#subscription">מנויים</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-login" onclick="openModal('login')">התחברות</button>
+    <button class="nav-cta" onclick="openModal('register')">הרשמה</button>
+  </div>
+  <div class="nav-logo">SetUp</div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features" onclick="closeMenu()">יכולות</a>
+  <a href="#how" onclick="closeMenu()">איך זה עובד</a>
+  <a href="#audience" onclick="closeMenu()">קהל יעד</a>
+  <a href="#subscription" onclick="closeMenu()">מנויים</a>
+  <a href="#newsletter" onclick="closeMenu()">גישה מוקדמת</a>
+  <div class="mobile-menu-btns">
+    <button class="nav-login" onclick="closeMenu();openModal('login')">התחברות</button>
+    <button class="nav-cta" onclick="closeMenu();openModal('register')">הרשמה</button>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-badge">הפלטפורמה החכמה לבניית מחשבים</div>
+  <h1><span class="line1">המחשב המושלם</span><span class="line2">SetUp</span></h1>
+  <p>עוצב במיוחד עבורך — לפי התקציב, הצרכים והשימוש שלך. אין יותר בלבול. אין יותר טעויות יקרות.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">🎯 בנה את ה-Setup שלך</button>
+    <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">גלה עוד</button>
+  </div>
+  <div class="hero-visual">
+    <div class="pc-mockup">
+      <div class="mockup-bar"><div class="mockup-dot d1"></div><div class="mockup-dot d2"></div><div class="mockup-dot d3"></div></div>
+      <div class="mockup-question">
+        <div class="mockup-q-label">שאלה 3 מתוך 18</div>
+        <strong>מה המטרה העיקרית שלך במחשב?</strong>
+        <div class="mockup-options">
+          <div class="mockup-opt active">🎮 גיימינג</div>
+          <div class="mockup-opt">💻 תכנות</div>
+          <div class="mockup-opt">🎨 עריכת וידאו</div>
+          <div class="mockup-opt">📊 משרד</div>
+        </div>
+      </div>
+      <div class="mockup-progress">
+        <div class="prog-step done"></div><div class="prog-step done"></div><div class="prog-step active"></div>
+        <div class="prog-step"></div><div class="prog-step"></div><div class="prog-step"></div><div class="prog-step"></div><div class="prog-step"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="problem-inner reveal">
+      <div class="problem-text">
+        <div class="label-tag">הבעיה</div>
+        <h2>חיפשת "מחשב גיימינג" בגוגל?<br>ראית תוצאות שלא מתאימות לך?</h2>
+        <p>אנשים מחפשים מחשב, מוצאים מחשבים יקרים שלא מתאימים לצרכים שלהם, ובסוף קונים מהמלצה של חבר — או בונים לבד בלי ידע.<br><br>SetUp פותרת בדיוק את הבעיה הזאת: שאלות חכמות, המלצות מדויקות.</p>
+      </div>
+      <div class="problem-visual">
+        <div class="search-result"><div class="sr-img">🖥️</div><div class="sr-info"><h4>MSI Gaming Desktop i9 RTX 4090</h4><p>32GB RAM · 2TB SSD · מתאים לפרופסיונלים</p><div class="sr-price">₪18,990</div></div></div>
+        <div class="search-result"><div class="sr-img">💻</div><div class="sr-info"><h4>ASUS ROG Strix G16 Gaming</h4><p>Intel i7 · RTX 4070 · 16GB</p><div class="sr-price">₪12,500</div></div></div>
+        <div class="sr-warning">⚠️ מחשבים אלו לא בהכרח מתאימים לצרכים שלך — SetUp יעזור לך למצוא את הנכון.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-title reveal"><div class="label-tag">יכולות</div><h2>הכל במקום אחד</h2><p>שלוש יכולות מרכזיות שיחסכו לך שעות של בלבול</p></div>
+    <div class="features-grid">
+      <div class="feature-card reveal"><div class="feature-num">01</div><div class="feature-icon fi-blue">🎯</div><h3>שאלון חכם לבניית Setup</h3><p>15–18 שאלות על הצרכים, התקציב והשימוש שלך. המערכת מנתחת ובונה עבורך הצעות ל-Setup מוכן — מותאם אישית לחלוטין.</p></div>
+      <div class="feature-card reveal"><div class="feature-num">02</div><div class="feature-icon fi-purple">🔍</div><h3>חיפוש ומידע על רכיבי חומרה</h3><p>מאגר מקיף של מעבדים, כרטיסי מסך, זיכרונות ועוד. קבל מפרט מלא, השוואות ומידע עדכני על כל רכיב.</p></div>
+      <div class="feature-card reveal"><div class="feature-num">03</div><div class="feature-icon fi-amber">🔔</div><h3>התראות על מבצעים</h3><p>הירשם לקבלת עדכונים על מבצעים של רכיבים שמעניינים אותך, או על Setup מוכנים — לפי הפרופיל האישי שלך.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="audience" id="audience">
+  <div class="container">
+    <div class="section-title reveal"><div class="label-tag">קהל יעד</div><h2>SetUp מתאים לך</h2><p>לא משנה מה אתה עושה עם המחשב</p></div>
+    <div class="audience-grid">
+      <div class="audience-card reveal"><div class="audience-icon">🎮</div><h3>גיימרים</h3><p>FPS גבוה, רזולוציה 4K, זמן תגובה נמוך — SetUp יבנה לך את הריג המושלם לפי התקציב שלך.</p></div>
+      <div class="audience-card reveal"><div class="audience-icon">💻</div><h3>מתכנתים</h3><p>זיכרון RAM מספיק, מעבד חזק לקומפילציה, מסכים מרובים — כל מה שצריך לפיתוח.</p></div>
+      <div class="audience-card reveal"><div class="audience-icon">📊</div><h3>עובדי משרד</h3><p>מחשב יעיל ומהיר בתקציב נוח. SetUp ימצא את ה-value for money הטוב ביותר עבורך.</p></div>
+      <div class="audience-card reveal"><div class="audience-icon">🎨</div><h3>יוצרי תוכן</h3><p>עריכת וידאו, גרפיקה, סטרימינג — כרטיסי מסך ומעבדים שיעמדו בעומס היצירתי שלך.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-title reveal"><div class="label-tag">איך זה עובד</div><h2>ארבעה צעדים פשוטים</h2><p>מהרשמה ועד ה-Setup המושלם שלך</p></div>
+    <div class="steps">
+      <div class="step reveal"><div class="step-num">1</div><h3>ענה על שאלות</h3><p>15–18 שאלות על הצרכים, התקציב והשימוש שלך</p></div>
+      <div class="step reveal"><div class="step-num">2</div><h3>קבל הצעות</h3><p>המערכת מנתחת ובונה Setup מותאם אישית</p></div>
+      <div class="step reveal"><div class="step-num">3</div><h3>השווה ובדוק</h3><p>חקור את הרכיבים, קרא מפרטים ועשה החלטה</p></div>
+      <div class="step reveal"><div class="step-num">4</div><h3>קנה בחכמה</h3><p>קבל התראות על מבצעים לפני שאתה קונה</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="subscription" id="subscription">
+  <div class="container">
+    <div class="section-title reveal"><div class="label-tag">מנויים</div><h2>בחר את התוכנית שלך</h2><p>גישה בסיסית בחינם, יתרונות פרימיום למנויים</p></div>
+    <div class="sub-cards">
+      <div class="sub-card reveal">
+        <h3>חינמי</h3><div class="sub-price">₪0 <span>/ לתמיד</span></div>
+        <ul class="sub-features"><li>שאלון בניית Setup</li><li>עד 3 הצעות Setup</li><li>חיפוש רכיבי חומרה</li><li>מידע בסיסי על מוצרים</li></ul>
+        <button class="btn-secondary" style="width:100%;border-radius:12px;padding:0.9rem" onclick="openModal('register')">התחל בחינם</button>
+      </div>
+      <div class="sub-card featured reveal">
+        <div class="sub-badge">🔥 פופולרי</div>
+        <h3>פרימיום</h3><div class="sub-price">₪29 <span>/ לחודש</span></div>
+        <ul class="sub-features"><li>כל היתרונות של החינמי</li><li>הצעות Setup ללא הגבלה</li><li>התראות מבצעים בזמן אמת</li><li>השוואת מחירים מרובה</li><li>תמיכה אישית בבחירה</li></ul>
+        <button class="btn-primary" style="width:100%;border-radius:12px;padding:0.9rem" onclick="openModal('register')">הירשם עכשיו</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter" id="newsletter">
+  <div class="container">
+    <div class="newsletter-box reveal">
+      <div class="label-tag">גישה מוקדמת</div>
+      <h2>הצטרף לרשימת ההמתנה</h2>
+      <p>SetUp בשלבי פיתוח. הירשם עכשיו וקבל גישה ראשונה + הטבות בלעדיות לחברי הקהילה הראשונים.</p>
+      <div class="email-form">
+        <input type="email" class="email-input" placeholder="הכנס את האימייל שלך..." id="emailInput">
+        <button class="btn-primary" onclick="handleSignup()">אני רוצה גישה!</button>
+      </div>
+      <p id="signupMsg" style="margin-top:1rem;color:var(--accent);display:none;font-weight:700">✅ נרשמת בהצלחה! נעדכן אותך בקרוב.</p>
+      <p style="color:var(--muted);font-size:0.8rem;margin-top:1rem">🔒 ללא ספאם. מתנתקים בלחיצה אחת.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">SetUp</span>
+        <p>הפלטפורמה החכמה לבניית מחשבים מותאמים אישית — לפי התקציב, הצרכים והשימוש שלך.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="#" title="TikTok">🎵</a>
+          <a class="social-btn" href="#" title="Discord">💬</a>
+          <a class="social-btn" href="#" title="Instagram">📸</a>
+          <a class="social-btn" href="#" title="YouTube">▶️</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>פלטפורמה</h4><ul><li><a href="#features">שאלון Setup</a></li><li><a href="#features">חיפוש חומרה</a></li><li><a href="#features">השוואת מחירים</a></li><li><a href="#subscription">מנויים ותכניות</a></li><li><a href="#newsletter">גישה מוקדמת</a></li></ul></div>
+      <div class="footer-col"><h4>קהל יעד</h4><ul><li><a href="#audience">גיימרים</a></li><li><a href="#audience">מתכנתים</a></li><li><a href="#audience">יוצרי תוכן</a></li><li><a href="#audience">עובדי משרד</a></li></ul></div>
+      <div class="footer-col"><h4>חברה</h4><ul><li><a href="#">אודות SetUp</a></li><li><a href="#">פרסום ושותפויות</a></li><li><a href="#">צור קשר</a></li><li><a href="#">מדיניות פרטיות</a></li><li><a href="#">תנאי שימוש</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 SetUp. כל הזכויות שמורות.</div>
+      <div class="footer-legal"><a href="#">פרטיות</a><a href="#">תנאי שימוש</a><a href="#">קוקיז</a></div>
+    </div>
+  </div>
+</footer>
+
+<div id="authModal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);align-items:center;justify-content:center">
+  <div style="background:#0d1220;border:1px solid rgba(0,212,255,0.2);border-radius:24px;padding:2.5rem;width:min(420px,92vw);position:relative;box-shadow:0 0 60px rgba(0,212,255,0.12)">
+    <button onclick="closeModal()" style="position:absolute;top:1.1rem;left:1.1rem;background:rgba(255,255,255,0.07);border:none;color:#8896b0;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#8896b0'">✕</button>
+    <div style="text-align:center;margin-bottom:1.8rem"><div style="font-family:'Rajdhani',sans-serif;font-size:1.9rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent">SetUp</div></div>
+    <div style="display:flex;background:rgba(255,255,255,0.05);border-radius:100px;padding:4px;margin-bottom:2rem;gap:4px">
+      <button id="tabLogin" onclick="setTab('login')" style="flex:1;padding:0.6rem;border-radius:100px;border:none;font-family:'Heebo',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.25s;background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff">התחברות</button>
+      <button id="tabRegister" onclick="setTab('register')" style="flex:1;padding:0.6rem;border-radius:100px;border:none;font-family:'Heebo',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;transition:all 0.25s;background:transparent;color:#8896b0">הרשמה</button>
+    </div>
+    <div id="formLogin" style="display:flex;flex-direction:column;gap:1rem">
+      <div><label style="font-size:0.82rem;color:#8896b0;display:block;margin-bottom:0.4rem">אימייל</label><input type="email" placeholder="your@email.com" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.8rem 1rem;color:#f0f4ff;font-family:'Heebo',sans-serif;font-size:0.95rem;outline:none;text-align:right;direction:rtl;transition:border-color 0.2s" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></div>
+      <div><label style="font-size:0.82rem;color:#8896b0;display:block;margin-bottom:0.4rem">סיסמה</label><input type="password" placeholder="••••••••" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.8rem 1rem;color:#f0f4ff;font-family:'Heebo',sans-serif;font-size:0.95rem;outline:none;text-align:right;direction:rtl;transition:border-color 0.2s" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></div>
+      <div style="text-align:left"><a href="#" style="font-size:0.82rem;color:#00d4ff;text-decoration:none">שכחתי סיסמה</a></div>
+      <button onclick="goToDashboard('login')" style="width:100%;background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff;border:none;padding:0.9rem;border-radius:12px;font-family:'Heebo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">כניסה לחשבון</button>
+      <p style="text-align:center;color:#8896b0;font-size:0.85rem">אין לך חשבון? <a href="#" onclick="setTab('register');return false" style="color:#00d4ff;text-decoration:none;font-weight:700">הירשם עכשיו</a></p>
+    </div>
+    <div id="formRegister" style="display:none;flex-direction:column;gap:1rem">
+      <div><label style="font-size:0.82rem;color:#8896b0;display:block;margin-bottom:0.4rem">שם מלא</label><input id="regName" type="text" placeholder="ישראל ישראלי" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.8rem 1rem;color:#f0f4ff;font-family:'Heebo',sans-serif;font-size:0.95rem;outline:none;text-align:right;direction:rtl;transition:border-color 0.2s" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></div>
+      <div><label style="font-size:0.82rem;color:#8896b0;display:block;margin-bottom:0.4rem">אימייל</label><input type="email" placeholder="your@email.com" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.8rem 1rem;color:#f0f4ff;font-family:'Heebo',sans-serif;font-size:0.95rem;outline:none;text-align:right;direction:rtl;transition:border-color 0.2s" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></div>
+      <div><label style="font-size:0.82rem;color:#8896b0;display:block;margin-bottom:0.4rem">סיסמה</label><input type="password" placeholder="לפחות 8 תווים" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.8rem 1rem;color:#f0f4ff;font-family:'Heebo',sans-serif;font-size:0.95rem;outline:none;text-align:right;direction:rtl;transition:border-color 0.2s" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></div>
+      <button onclick="goToDashboard('register')" style="width:100%;background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff;border:none;padding:0.9rem;border-radius:12px;font-family:'Heebo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">יצירת חשבון חינמי</button>
+      <p style="text-align:center;color:#8896b0;font-size:0.85rem">כבר יש לך חשבון? <a href="#" onclick="setTab('login');return false" style="color:#00d4ff;text-decoration:none;font-weight:700">התחבר</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleMenu(){const h=document.getElementById('hamburger'),m=document.getElementById('mobileMenu');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function closeMenu(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileMenu').classList.remove('open');document.body.style.overflow='';}
+const obs=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target);}});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.querySelectorAll('.mockup-opt').forEach(opt=>{opt.addEventListener('click',function(){document.querySelectorAll('.mockup-opt').forEach(o=>o.classList.remove('active'));this.classList.add('active');});});
+let hs=2;setInterval(()=>{const s=document.querySelectorAll('.prog-step');s.forEach((p,i)=>{p.className='prog-step';if(i<hs)p.classList.add('done');else if(i===hs)p.classList.add('active');});hs=(hs+1)%s.length;},1800);
+function handleSignup(){const el=document.getElementById('emailInput');if(!el.value||!el.value.includes('@')){el.style.borderColor='#f87171';return;}el.style.borderColor='var(--accent)';document.getElementById('signupMsg').style.display='block';el.value='';}
+function openModal(t){document.getElementById('authModal').style.display='flex';setTab(t);}
+function closeModal(){document.getElementById('authModal').style.display='none';}
+function setTab(t){
+  const il=t==='login';
+  const tl=document.getElementById('tabLogin'),tr=document.getElementById('tabRegister');
+  const fl=document.getElementById('formLogin'),fr=document.getElementById('formRegister');
+  tl.style.cssText=`flex:1;padding:0.6rem;border-radius:100px;border:none;font-family:'Heebo',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.25s;background:${il?'linear-gradient(135deg,#00d4ff,#7c3aed)':'transparent'};color:${il?'#fff':'#8896b0'};font-weight:${il?'700':'500'}`;
+  tr.style.cssText=`flex:1;padding:0.6rem;border-radius:100px;border:none;font-family:'Heebo',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.25s;background:${!il?'linear-gradient(135deg,#00d4ff,#7c3aed)':'transparent'};color:${!il?'#fff':'#8896b0'};font-weight:${!il?'700':'500'}`;
+  fl.style.display=il?'flex':'none';fr.style.display=!il?'flex':'none';
+}
+document.getElementById('authModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+function goToDashboard(t){let n='Liam';if(t==='register'){const ni=document.getElementById('regName');if(ni&&ni.value.trim())n=ni.value.trim().split(' ')[0];}window.location.href=`setup-dashboard.html?user=${encodeURIComponent(n)}`;}
+</script>
+</body>
+</html>
