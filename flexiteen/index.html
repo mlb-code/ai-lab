@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlexiTeen — עבודה בתנאים שלך</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1A56FF;
+    --blue-light: #4B7FFF;
+    --blue-dark: #0A2EA4;
+    --orange: #FF6B1A;
+    --orange-light: #FF8C45;
+    --purple: #8B5CF6;
+    --purple-light: #A78BFA;
+    --white: #FFFFFF;
+    --off-white: #F8F9FF;
+    --text-dark: #0D1240;
+    --text-mid: #3A4080;
+    --text-light: #8892C8;
+    --card-bg: rgba(255,255,255,0.07);
+    --border: rgba(255,255,255,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #060B2E;
+    color: var(--white);
+    overflow-x: hidden;
+    direction: rtl;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.35;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 5%;
+    background: rgba(6,11,46,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .nav-logo {
+    font-size: 1.5rem; font-weight: 900;
+    background: linear-gradient(135deg, var(--blue-light), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--text-light); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-actions { display: flex; gap: 0.6rem; align-items: center; }
+
+  .nav-login {
+    background: transparent;
+    color: var(--white); border: 1px solid rgba(255,255,255,0.22);
+    padding: 0.55rem 1.3rem; border-radius: 50px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .nav-login:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.45);
+    transform: translateY(-1px);
+  }
+
+  .nav-register {
+    background: linear-gradient(135deg, var(--orange), var(--orange-light));
+    color: white; border: none; padding: 0.55rem 1.3rem;
+    border-radius: 50px; font-family: 'Heebo', sans-serif;
+    font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 18px rgba(255,107,26,0.4);
+  }
+  .nav-register:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(255,107,26,0.55); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 8rem 5% 4rem;
+  }
+
+  /* Gradient mesh blobs */
+  .blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); pointer-events: none;
+  }
+  .blob-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(26,86,255,0.4) 0%, transparent 70%);
+    top: -100px; right: -150px;
+    animation: float1 8s ease-in-out infinite;
+  }
+  .blob-2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,107,26,0.3) 0%, transparent 70%);
+    bottom: -50px; left: -100px;
+    animation: float2 10s ease-in-out infinite;
+  }
+  .blob-3 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(139,92,246,0.25) 0%, transparent 70%);
+    top: 40%; left: 30%;
+    animation: float3 12s ease-in-out infinite;
+  }
+
+  @keyframes float1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,40px)} }
+  @keyframes float2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-30px)} }
+  @keyframes float3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-20px,20px)} }
+
+  /* Grid lines */
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(75,127,255,0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(75,127,255,0.12) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 55%, transparent 90%);
+  }
+
+  .hero-content {
+    max-width: 780px;
+    text-align: center;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(40px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,107,26,0.15);
+    border: 1px solid rgba(255,107,26,0.35);
+    color: var(--orange-light);
+    padding: 0.4rem 1rem; border-radius: 50px;
+    font-size: 0.82rem; font-weight: 600;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.9s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .hero-badge::before { content: '⚡'; }
+
+  h1 {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 900; line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.9s 0.15s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  h1 .grad {
+    background: linear-gradient(135deg, var(--blue-light) 0%, var(--purple-light) 50%, var(--orange) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--text-light); line-height: 1.7;
+    max-width: 560px; margin: 0 auto 2.5rem;
+    font-weight: 400;
+    animation: fadeUp 0.9s 0.25s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.9s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    color: white; border: none; padding: 0.9rem 2.2rem;
+    border-radius: 50px; font-family: 'Heebo', sans-serif;
+    font-size: 1.05rem; font-weight: 700; cursor: pointer;
+    box-shadow: 0 0 30px rgba(26,86,255,0.45);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 35px rgba(26,86,255,0.6); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white); border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.9rem 2.2rem; border-radius: 50px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 1.05rem; font-weight: 600; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+
+  /* ── HERO STATS ── */
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem;
+    margin-top: 4rem; flex-wrap: wrap;
+    animation: fadeUp 0.9s 0.45s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 2.2rem; font-weight: 900;
+    background: linear-gradient(135deg, var(--blue-light), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 0.82rem; color: var(--text-light); margin-top: 0.2rem; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 7rem 5%; position: relative; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900; line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  .section-sub { color: var(--text-light); font-size: 1.05rem; line-height: 1.7; max-width: 560px; }
+
+  /* ── PROBLEM SECTION ── */
+  .problem { background: linear-gradient(180deg, #060B2E 0%, #0A0F3A 100%); }
+
+  .problem-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  .problem-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .problem-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.22); }
+  .problem-card::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle, rgba(255,107,26,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .prob-icon {
+    font-size: 2.2rem; margin-bottom: 1rem; display: block;
+  }
+  .prob-title {
+    font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;
+  }
+  .prob-desc { color: var(--text-light); font-size: 0.95rem; line-height: 1.65; }
+
+  /* ── HOW IT WORKS ── */
+  .how { background: #0A0F3A; }
+
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 3.5rem;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 3.5rem; right: 15%; left: 15%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--purple), var(--orange));
+    z-index: 0;
+  }
+
+  .step {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 2rem;
+    text-align: center; position: relative; z-index: 1;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .step:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,86,255,0.2); }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%; margin: 0 auto 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; font-weight: 900;
+  }
+  .step:nth-child(1) .step-num { background: linear-gradient(135deg, var(--blue), var(--blue-light)); }
+  .step:nth-child(2) .step-num { background: linear-gradient(135deg, var(--purple), var(--purple-light)); }
+  .step:nth-child(3) .step-num { background: linear-gradient(135deg, var(--orange), var(--orange-light)); }
+
+  .step-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .step-desc { color: var(--text-light); font-size: 0.9rem; line-height: 1.65; }
+
+  /* ── FEATURES ── */
+  .features { background: #060B2E; }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+
+  .feat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 1.8rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .feat-card:hover { transform: translateY(-4px); }
+
+  .feat-card.highlight {
+    background: linear-gradient(135deg, rgba(26,86,255,0.15), rgba(139,92,246,0.15));
+    border-color: rgba(75,127,255,0.35);
+  }
+  .feat-card.highlight::before {
+    content: '⭐ פופולרי';
+    position: absolute; top: 1rem; left: 1rem;
+    background: linear-gradient(135deg, var(--orange), var(--orange-light));
+    color: white; font-size: 0.72rem; font-weight: 700;
+    padding: 0.25rem 0.7rem; border-radius: 50px;
+  }
+
+  .feat-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .feat-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .feat-desc { color: var(--text-light); font-size: 0.9rem; line-height: 1.6; }
+
+  /* ── TESTIMONIAL / QUOTE SECTION ── */
+  .quote-section {
+    background: linear-gradient(135deg, rgba(26,86,255,0.12), rgba(139,92,246,0.1));
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .quote-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem; margin-top: 3rem;
+  }
+
+  .quote-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 2rem;
+    position: relative;
+  }
+  .quote-card::before {
+    content: '"';
+    position: absolute; top: 1rem; left: 1.5rem;
+    font-size: 5rem; line-height: 1;
+    color: var(--orange); opacity: 0.25;
+    font-family: serif;
+  }
+
+  .quote-text { font-size: 1rem; line-height: 1.7; color: #C8CEFF; margin-bottom: 1.2rem; }
+  .quote-author { display: flex; align-items: center; gap: 0.8rem; }
+  .quote-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem;
+  }
+  .quote-name { font-weight: 700; font-size: 0.9rem; }
+  .quote-role { font-size: 0.8rem; color: var(--text-light); }
+
+  /* ── PRICING / MVP ── */
+  .mvp { background: #060B2E; }
+  .mvp-box {
+    background: linear-gradient(135deg, rgba(26,86,255,0.1), rgba(139,92,246,0.1));
+    border: 1px solid rgba(75,127,255,0.3);
+    border-radius: 28px;
+    padding: 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+    margin-top: 3rem;
+  }
+  .mvp-box::before {
+    content: '';
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(26,86,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .mvp-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--purple), var(--purple-light));
+    color: white; font-size: 0.78rem; font-weight: 700;
+    padding: 0.3rem 0.9rem; border-radius: 50px;
+    margin-bottom: 1.2rem; letter-spacing: 1px;
+  }
+
+  .mvp-title { font-size: 2.2rem; font-weight: 900; margin-bottom: 0.8rem; }
+  .mvp-sub { color: var(--text-light); font-size: 1rem; line-height: 1.7; max-width: 500px; margin: 0 auto 2.5rem; }
+
+  .mvp-features {
+    display: flex; flex-wrap: wrap; gap: 0.8rem;
+    justify-content: center; margin-bottom: 2.5rem;
+  }
+  .mvp-chip {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 0.45rem 1rem; border-radius: 50px;
+    font-size: 0.88rem; color: #C8CEFF;
+  }
+  .mvp-chip::before { content: '✓ '; color: var(--orange); font-weight: 700; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #030720;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 4rem 5% 0;
+  }
+
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-brand { display: flex; flex-direction: column; gap: 0.8rem; }
+
+  .footer-logo {
+    font-size: 1.8rem; font-weight: 900;
+    background: linear-gradient(135deg, var(--blue-light), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .footer-sub {
+    color: var(--text-light); font-size: 0.88rem;
+    line-height: 1.6; max-width: 220px;
+  }
+
+  .footer-social { display: flex; gap: 0.6rem; margin-top: 0.4rem; }
+  .social-btn {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .social-btn:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+
+  .footer-sitemap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .footer-col { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .footer-col-title {
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--white); margin-bottom: 0.4rem;
+  }
+
+  .footer-col a {
+    color: var(--text-light); text-decoration: none;
+    font-size: 0.85rem; line-height: 1.5;
+    transition: color 0.2s, padding-right 0.2s;
+    display: block;
+  }
+  .footer-col a:hover { color: var(--white); padding-right: 4px; }
+
+  .footer-bottom-bar {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 0;
+    flex-wrap: wrap; gap: 0.8rem;
+  }
+
+  .footer-bottom { color: var(--text-light); font-size: 0.8rem; }
+
+  .footer-bottom-links {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.8rem; color: var(--text-light);
+  }
+  .footer-bottom-links a {
+    color: var(--text-light); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-bottom-links a:hover { color: var(--white); }
+
+  @media (max-width: 900px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-sub { max-width: 100%; }
+    .footer-sitemap { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  }
+
+  @media (max-width: 500px) {
+    footer { padding: 3rem 4% 0; }
+    .footer-sitemap { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .footer-bottom-bar { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── CAROUSEL (mobile horizontal scroll) ── */
+  .carousel-wrap {
+    position: relative;
+  }
+  .carousel-track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 1rem;
+    margin: 0 -4%;         /* bleed to edge */
+    padding-right: 4%;
+    padding-left: 4%;
+  }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track > * {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+  /* Dots indicator */
+  .carousel-dots {
+    display: flex; justify-content: center; gap: 6px;
+    margin-top: 0.8rem;
+  }
+  .carousel-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: background 0.2s, width 0.2s;
+    cursor: pointer;
+  }
+  .carousel-dot.active {
+    background: var(--orange);
+    width: 18px; border-radius: 3px;
+  }
+
+  /* ── HAMBURGER BUTTON ── */
+  .hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; gap: 5px;
+    background: none; border: none; cursor: pointer;
+    padding: 6px; border-radius: 8px;
+    transition: background 0.2s;
+    z-index: 110;
+  }
+  .hamburger:hover { background: rgba(255,255,255,0.08); }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--white); border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MOBILE MENU DRAWER ── */
+  .mobile-menu {
+    position: fixed; top: 0; right: 0; left: 0; bottom: 0;
+    z-index: 105;
+    background: rgba(6,11,46,0.98);
+    backdrop-filter: blur(24px);
+    display: flex;
+    flex-direction: column;
+    padding: 5rem 2rem 2rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1), transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    visibility: hidden;
+  }
+  .mobile-menu.open {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+  .mobile-menu-links {
+    display: flex; flex-direction: column; gap: 0.3rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 2rem;
+  }
+  .mobile-menu-links a {
+    color: var(--white); text-decoration: none;
+    font-size: 1.5rem; font-weight: 700; padding: 0.7rem 0;
+    border-radius: 12px;
+    transition: color 0.2s, padding-right 0.2s;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .mobile-menu-links a:hover { color: var(--orange-light); padding-right: 0.5rem; }
+  .mobile-menu-links a .m-icon { font-size: 1.2rem; opacity: 0.6; }
+  .mobile-menu-actions {
+    display: flex; flex-direction: column; gap: 0.8rem;
+  }
+  .mobile-menu-actions .nav-login,
+  .mobile-menu-actions .nav-register {
+    width: 100%; font-size: 1rem; padding: 0.9rem 1.5rem;
+    border-radius: 14px; text-align: center;
+  }
+  .mobile-menu-actions .nav-register { box-shadow: none; }
+  .mobile-menu-footer {
+    margin-top: auto; padding-top: 2rem;
+    color: var(--text-light); font-size: 0.82rem; text-align: center;
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — כל סוגי המכשירים
+     ═══════════════════════════════════════
+
+     Breakpoints:
+     XL  > 1280px  — wide desktop
+     LG  1025–1280 — desktop
+     MD  769–1024  — tablet landscape / small laptop
+     SM  481–768   — tablet portrait / large mobile
+     XS  ≤ 480     — mobile
+     XXS ≤ 360     — small mobile (iPhone SE etc.)
+  ══════════════════════════════════════ */
+
+  /* ── XL: Wide desktop (>1280px) ── */
+  @media (min-width: 1281px) {
+    .section-inner { max-width: 1200px; }
+    h1 { font-size: 5.5rem; }
+    section { padding: 8rem 5%; }
+  }
+
+  /* ── MD: Tablet landscape / small laptop (769–1024px) ── */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    nav { padding: 1rem 3.5%; }
+    .nav-logo { font-size: 1.3rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.82rem; }
+    .nav-cta, .nav-login, .nav-register { font-size: 0.82rem; padding: 0.5rem 1.1rem; }
+
+    section { padding: 5rem 4%; }
+    .section-inner { max-width: 900px; }
+
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+    .hero-sub { font-size: 1rem; }
+    .hero-stats { gap: 2rem; }
+
+    .problem-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .steps { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .steps::before { right: 18%; left: 18%; }
+    .features-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .quote-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .mvp-box { padding: 3rem 2.5rem; }
+
+    .footer-inner { grid-template-columns: 220px 1fr; gap: 2.5rem; }
+    .footer-sitemap { grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  }
+
+  /* ── SM: Tablet portrait / large mobile (481–768px) ── */
+  @media (max-width: 768px) and (min-width: 481px) {
+    nav { padding: 1rem 4%; justify-content: space-between; }
+    .nav-links { display: none; }
+    .nav-actions { display: none; }
+    .hamburger { display: flex; order: -1; }
+
+    .hero {
+      min-height: 100svh; height: 100svh;
+      padding: 0 5%; overflow: hidden;
+    }
+    .hero-badge { font-size: 0.78rem; margin-bottom: 1.1rem; }
+    h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); margin-bottom: 1.1rem; }
+    .hero-sub { font-size: 1rem; max-width: 480px; margin-bottom: 1.8rem; }
+    .hero-btns { gap: 0.8rem; }
+    .btn-primary, .btn-secondary { padding: 0.8rem 1.8rem; font-size: 1rem; }
+    .hero-stats { gap: 2rem; margin-top: 2.5rem; }
+    .stat-num { font-size: 2rem; }
+
+    section { padding: 4rem 4%; }
+    .section-title { font-size: clamp(1.6rem, 5vw, 2.2rem); }
+    .section-sub { font-size: 0.95rem; }
+
+    /* CAROUSEL — problem */
+    .problem-grid { display: flex !important; flex-wrap: nowrap; }
+    .problem-grid { gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      padding-bottom: 1rem; margin: 1.5rem -4% 0; padding-right: 4%; padding-left: 4%; }
+    .problem-grid::-webkit-scrollbar { display: none; }
+    .problem-card { scroll-snap-align: start; flex-shrink: 0; width: 78vw; max-width: 320px; padding: 1.5rem; }
+
+    /* CAROUSEL — steps */
+    .steps { display: flex !important; flex-wrap: nowrap; }
+    .steps { gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      padding-bottom: 1rem; margin: 1.5rem -4% 0; padding-right: 4%; padding-left: 4%; }
+    .steps::-webkit-scrollbar { display: none; }
+    .steps::before { display: none; }
+    .step { scroll-snap-align: start; flex-shrink: 0; width: 72vw; max-width: 300px;
+      padding: 1.5rem; text-align: center; display: block; }
+    .step-num { margin: 0 auto 1rem; }
+
+    /* CAROUSEL — features */
+    .features-grid { display: flex !important; flex-wrap: nowrap; }
+    .features-grid { gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      padding-bottom: 1rem; margin: 1.5rem -4% 0; padding-right: 4%; padding-left: 4%; }
+    .features-grid::-webkit-scrollbar { display: none; }
+    .feat-card { scroll-snap-align: start; flex-shrink: 0; width: 72vw; max-width: 280px; padding: 1.4rem; }
+
+    /* CAROUSEL — quotes */
+    .quote-grid { display: flex !important; flex-wrap: nowrap; }
+    .quote-grid { gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      padding-bottom: 1rem; margin: 1.5rem -4% 0; padding-right: 4%; padding-left: 4%; }
+    .quote-grid::-webkit-scrollbar { display: none; }
+    .quote-card { scroll-snap-align: start; flex-shrink: 0; width: 82vw; max-width: 340px; padding: 1.5rem; }
+
+    .mvp-box { padding: 2.5rem 2rem; }
+    .mvp-title { font-size: 1.7rem; }
+    .mvp-features { gap: 0.6rem; }
+
+    .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-sub { max-width: 100%; }
+    .footer-sitemap { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .footer-bottom-bar { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+
+    .blob-1 { width: 350px; height: 350px; }
+    .blob-2 { width: 280px; height: 280px; }
+    .blob-3 { width: 200px; height: 200px; }
+  }
+
+  /* ── XS: Mobile (≤480px) ── */
+  @media (max-width: 480px) {
+    nav { padding: 0.9rem 4%; justify-content: space-between; }
+    .nav-links { display: none; }
+    .nav-actions { display: none; }
+    .hamburger { display: flex; order: -1; }
+    .nav-logo { font-size: 1.3rem; }
+
+    .hero {
+      min-height: 100svh; height: 100svh;
+      padding: 0 4%; overflow: hidden;
+    }
+    .hero-badge { font-size: 0.72rem; padding: 0.35rem 0.8rem; margin-bottom: 0.9rem; }
+    h1 { font-size: clamp(1.9rem, 8.5vw, 2.8rem); line-height: 1.1; margin-bottom: 0.9rem; letter-spacing: -0.5px; }
+    .hero-sub { font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.4rem; }
+    .hero-btns { flex-direction: column; align-items: stretch; gap: 0.65rem; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 0.85rem 1rem; font-size: 0.95rem; }
+    .hero-stats { gap: 1rem; margin-top: 1.8rem; flex-wrap: nowrap; justify-content: space-around; }
+    .stat-num { font-size: 1.6rem; }
+    .stat-label { font-size: 0.72rem; }
+
+    section { padding: 3.5rem 4%; }
+    .section-tag { font-size: 0.7rem; }
+    .section-title { font-size: clamp(1.4rem, 7vw, 2rem); }
+    .section-sub { font-size: 0.9rem; }
+
+    /* CAROUSEL — problem */
+    .problem-grid { display: flex !important; flex-wrap: nowrap;
+      gap: 0.85rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      padding-bottom: 1rem; margin: 1.5rem -4% 0; padding-right: 4%; padding-left: 4%; }
+    .problem-grid::-webkit-scrollbar { display: none; }
+    .problem-card { scroll-snap-align: start; flex-shrink: 0;
+      width: 80vw; max-width: 300px; padding: 1.3rem; border-radius: 16px; }
+    .prob-icon { font-size: 1.7rem; margin-bottom: 0.7rem; }
+    .prob-title { font-size: 1rem; }
+    .prob-desc { font-size: 0.88rem; }
+
+    /* CAROUSEL — steps */
+    .steps { display: flex !important; flex-wrap: nowrap;
+      gap: 0.85rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      padding-bottom: 1rem; margin: 1.5rem -4% 0; padding-right: 4%; padding-left: 4%; }
+    .steps::-webkit-scrollbar { display: none; }
+    .steps::before { display: none; }
+    .step { scroll-snap-align: start; flex-shrink: 0;
+      width: 75vw; max-width: 280px; padding: 1.3rem; border-radius: 16px;
+      text-align: center; display: block; }
+    .step-num { margin: 0 auto 0.8rem; width: 44px; height: 44px; font-size: 1.1rem; }
+    .step-title { font-size: 1rem; margin-bottom: 0.3rem; }
+    .step-desc { font-size: 0.85rem; }
+
+    /* CAROUSEL — features */
+    .features-grid { display: flex !important; flex-wrap: nowrap;
+      gap: 0.85rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      padding-bottom: 1rem; margin: 1.5rem -4% 0; padding-right: 4%; padding-left: 4%; }
+    .features-grid::-webkit-scrollbar { display: none; }
+    .feat-card { scroll-snap-align: start; flex-shrink: 0;
+      width: 72vw; max-width: 270px; padding: 1.3rem; border-radius: 16px; }
+    .feat-icon { font-size: 1.7rem; margin-bottom: 0.7rem; }
+    .feat-title { font-size: 1rem; }
+    .feat-desc { font-size: 0.88rem; }
+    .feat-card.highlight::before { font-size: 0.65rem; top: 0.8rem; left: 0.8rem; }
+
+    /* CAROUSEL — quotes */
+    .quote-grid { display: flex !important; flex-wrap: nowrap;
+      gap: 0.85rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      padding-bottom: 1rem; margin: 1.5rem -4% 0; padding-right: 4%; padding-left: 4%; }
+    .quote-grid::-webkit-scrollbar { display: none; }
+    .quote-card { scroll-snap-align: start; flex-shrink: 0;
+      width: 84vw; max-width: 320px; padding: 1.3rem; border-radius: 16px; }
+    .quote-card::before { font-size: 3.5rem; top: 0.8rem; left: 1rem; }
+    .quote-text { font-size: 0.9rem; margin-bottom: 1rem; }
+
+    .mvp-box { padding: 1.8rem 1.1rem; border-radius: 20px; }
+    .mvp-title { font-size: 1.35rem; }
+    .mvp-sub { font-size: 0.88rem; margin-bottom: 1.8rem; }
+    .mvp-features { gap: 0.5rem; }
+    .mvp-chip { font-size: 0.78rem; padding: 0.3rem 0.7rem; }
+    .mvp-box > div:last-of-type { flex-direction: column; align-items: stretch; }
+    .mvp-box .btn-primary, .mvp-box .btn-secondary { width: 100%; text-align: center; }
+
+    footer { padding: 2.5rem 4% 0; }
+    .footer-inner { grid-template-columns: 1fr; gap: 1.8rem; padding-bottom: 2rem; }
+    .footer-logo { font-size: 1.5rem; }
+    .footer-sub { max-width: 100%; font-size: 0.85rem; }
+    .footer-sitemap { grid-template-columns: 1fr 1fr; gap: 1.2rem 1rem; }
+    .footer-col-title { font-size: 0.72rem; }
+    .footer-col a { font-size: 0.82rem; }
+    .footer-bottom-bar { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .footer-bottom-links { flex-wrap: wrap; gap: 0.4rem; }
+
+    .blob-1 { width: 220px; height: 220px; top: -60px; right: -80px; }
+    .blob-2 { width: 180px; height: 180px; }
+    .blob-3 { width: 140px; height: 140px; }
+    .grid-bg { background-size: 40px 40px; }
+
+    .mobile-menu-links a { font-size: 1.3rem; padding: 0.6rem 0; }
+    .mobile-menu { padding: 4.5rem 1.5rem 1.5rem; }
+  }
+
+  /* ── XXS: Very small mobile (≤360px — iPhone SE, Galaxy A etc.) ── */
+  @media (max-width: 360px) {
+    nav { padding: 0.85rem 3.5%; }
+    .nav-logo { font-size: 1.2rem; }
+
+    h1 { font-size: 1.75rem; }
+    .hero-sub { font-size: 0.85rem; }
+    .hero-stats { gap: 0.6rem; }
+    .stat-num { font-size: 1.4rem; }
+    .stat-label { font-size: 0.65rem; }
+    .btn-primary, .btn-secondary { font-size: 0.9rem; padding: 0.8rem 0.8rem; }
+
+    section { padding: 3rem 3.5%; }
+    .section-title { font-size: 1.3rem; }
+
+    .problem-card, .step, .feat-card, .quote-card { padding: 1.1rem; }
+    .mvp-box { padding: 1.5rem 0.9rem; }
+    .mvp-title { font-size: 1.2rem; }
+
+    .footer-sitemap { grid-template-columns: 1fr 1fr; gap: 1rem 0.7rem; }
+    .footer-col a { font-size: 0.78rem; }
+
+    .mobile-menu-links a { font-size: 1.15rem; }
+  }
+
+  /* ── Landscape mobile fix ── */
+  @media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+    .hero {
+      height: auto;
+      min-height: auto;
+      padding: 5rem 5% 2.5rem;
+    }
+    h1 { font-size: 2rem; margin-bottom: 0.7rem; }
+    .hero-sub { font-size: 0.88rem; margin-bottom: 1rem; }
+    .hero-stats { margin-top: 1.2rem; gap: 1.5rem; }
+    .stat-num { font-size: 1.5rem; }
+    .hero-btns { flex-direction: row; }
+    .btn-primary, .btn-secondary { width: auto; }
+    .mobile-menu { padding: 3.5rem 2rem 1.5rem; overflow-y: auto; }
+    .mobile-menu-links a { font-size: 1.1rem; padding: 0.4rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-actions">
+    <button class="nav-login" onclick="window.location.href='flexiteen-dashboard.html'">התחברות</button>
+    <button class="nav-register">הרשמה</button>
+  </div>
+  <div class="nav-links">
+    <a href="#problem">הבעיה</a>
+    <a href="#how">איך זה עובד</a>
+    <a href="#features">יכולות</a>
+    <a href="#mvp">מה כולל?</a>
+  </div>
+  <div class="nav-logo">FlexiTeen</div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="פתח תפריט">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <button onclick="closeMenu()" aria-label="סגור תפריט" style="
+    position:absolute; top:1.2rem; left:1.2rem;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
+    color:#fff; width:40px; height:40px; border-radius:50%;
+    font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:background 0.2s;
+  " onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">✕</button>
+  <div class="mobile-menu-links">
+    <a href="#problem" onclick="closeMenu()"><span class="m-icon">❓</span> הבעיה</a>
+    <a href="#how" onclick="closeMenu()"><span class="m-icon">⚙️</span> איך זה עובד</a>
+    <a href="#features" onclick="closeMenu()"><span class="m-icon">✨</span> יכולות</a>
+    <a href="#mvp" onclick="closeMenu()"><span class="m-icon">🚀</span> מה כולל?</a>
+  </div>
+  <div class="mobile-menu-actions">
+    <button class="nav-login" onclick="closeMenu(); window.location.href='flexiteen-dashboard.html'">התחברות</button>
+    <button class="nav-register" onclick="closeMenu(); document.getElementById('signup-modal').style.display='flex'; document.body.style.overflow='hidden'">הרשמה</button>
+  </div>
+  <div class="mobile-menu-footer">FlexiTeen © 2026 · עבודה גמישה לבני נוער</div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="hero-content">
+    <div class="hero-badge">לבני נוער 15–17.5 · עבודה גמישה</div>
+    <h1>
+      תעבוד בזמן <span class="grad">שלך.</span><br>
+      תצליח בזמן <span class="grad">שלך.</span>
+    </h1>
+    <p class="hero-sub">
+      FlexiTeen מתאים לך עבודות גמישות בדיוק לפי לוח הבגרויות שלך —
+      כי ציונים וכסף יכולים לחיות ביחד.
+    </p>
+    <div class="hero-btns">
+      <a href="#mvp" class="btn-primary">רוצה להצטרף</a>
+      <a href="#how" class="btn-secondary">איך זה עובד?</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">התחייבויות קבועות</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">גמישות בלוח הזמנים</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">סוגי עבודה זמינים</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="section-inner">
+    <span class="section-tag reveal">הבעיה</span>
+    <h2 class="section-title reveal">בני נוער תקועים בין שני קשיים</h2>
+    <p class="section-sub reveal">המצב הנוכחי לא הוגן: רוצים לעבוד, אבל לא יכולים להתחייב למשמרות קבועות. הבגרויות לא מחכות.</p>
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <span class="prob-icon">😴</span>
+        <div class="prob-title">לומדים עד שעות הלילה</div>
+        <div class="prob-desc">עובדים ואז לומדים — עד 2 בלילה לפני הבגרות. תשישות, ירידה בציונים, ולחץ שלא נגמר.</div>
+      </div>
+      <div class="problem-card reveal">
+        <span class="prob-icon">💸</span>
+        <div class="prob-title">מוותרים על עבודה</div>
+        <div class="prob-desc">מוותרים על הכנסה ומרגישים לא נוח לבקש כסף מההורים — תלות כלכלית בגיל 16 זה לא כיף.</div>
+      </div>
+      <div class="problem-card reveal">
+        <span class="prob-icon">📋</span>
+        <div class="prob-title">מעסיקים דורשים קיבעון</div>
+        <div class="prob-desc">רוב המעסיקים רוצים מישהו זמין כל שבת, כל יום ו' — לא מישהו עם בגרות בחשבון שלישי.</div>
+      </div>
+      <div class="problem-card reveal">
+        <span class="prob-icon">📉</span>
+        <div class="prob-title">הציונים סובלים</div>
+        <div class="prob-desc">הפתרון הנוכחי? לסחוב את שניהם עד שמשהו נשבר — בדרך כלל הציונים. זה לא מקובל.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-inner">
+    <span class="section-tag reveal">איך זה עובד</span>
+    <h2 class="section-title reveal">3 צעדים פשוטים</h2>
+    <p class="section-sub reveal">תוך דקות אתה מוכן לקבל הצעות עבודה שמתאימות בדיוק לזמן הפנוי שלך.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-title">מעדכנים ימי מבחנים</div>
+        <div class="step-desc">מוסיפים את לוח הבגרויות לאפליקציה — תאריכים, מקצועות, וכמה ימי מנוחה אתם צריכים לפניהם.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <div class="step-title">מקבלים הצעות מותאמות</div>
+        <div class="step-desc">האלגוריתם מציא לכם עבודות גמישות רק בימים שאתם פנויים — אין הפתעות, אין לחץ.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <div class="step-title">עובדים ומרוויחים</div>
+        <div class="step-desc">בוחרים מה מתאים, עובדים כשנוח לכם, ונשארים עם אנרגיה ללמוד. כסף + ציונים = ניצחון.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <span class="section-tag reveal">יכולות</span>
+    <h2 class="section-title reveal">כל מה שצריך, במקום אחד</h2>
+    <p class="section-sub reveal">FlexiTeen מאגד את כל הכלים שבני נוער עובדים צריכים.</p>
+    <div class="features-grid">
+      <div class="feat-card highlight reveal">
+        <div class="feat-icon">📅</div>
+        <div class="feat-title">עדכון ימי מבחנים</div>
+        <div class="feat-desc">הזינו את לוח הבגרויות ותתחילו לקבל הצעות רק בזמנים שאתם פנויים. הלוח שלך, הכללים שלך.</div>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🗓️</div>
+        <div class="feat-title">יומן חכם</div>
+        <div class="feat-desc">לוח שנה אינטגרטיבי שמראה בבת אחת מבחנים, משמרות מתוכננות, וזמן פנוי — הכל נקי ומאורגן.</div>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🏢</div>
+        <div class="feat-title">פרופיל מעסיק</div>
+        <div class="feat-desc">מעסיקים מגדירים דרישות סף — גיל, ניסיון, זמינות — ורואים רק מועמדים שמתאימים. חיסכון בזמן לשני הצדדים.</div>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🔔</div>
+        <div class="feat-title">התראות חכמות</div>
+        <div class="feat-desc">מקבלים עדכון כשמופיעה הזדמנות מתאימה — לא מפספסים עבודה בגלל שלא בדקתם את האפליקציה.</div>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">מעקב הכנסות</div>
+        <div class="feat-desc">תראו כמה הרווחתם החודש, כמה שעות עבדתם, ותכננו קדימה עם תובנות פיננסיות בסיסיות.</div>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">⭐</div>
+        <div class="feat-title">מערכת דירוגים</div>
+        <div class="feat-desc">מעסיקים ועובדים מדרגים זה את זה — בונים אמון ומוניטין שיוכלו לעזור גם בעתיד.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTES -->
+<section class="quote-section">
+  <div class="section-inner">
+    <span class="section-tag reveal">בני נוער מדברים</span>
+    <h2 class="section-title reveal">מה הם אמרו לנו</h2>
+    <div class="quote-grid">
+      <div class="quote-card reveal">
+        <p class="quote-text">הייתי עייפה כל הזמן. עבדתי כל שישי אבל היו לי בגרויות ביום ראשון. עם FlexiTeen יכולתי סוף סוף לתכנן נכון.</p>
+        <div class="quote-author">
+          <div class="quote-avatar">נ</div>
+          <div>
+            <div class="quote-name">נועה, 16</div>
+            <div class="quote-role">תלמידת כיתה י', ראשל"צ</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal">
+        <p class="quote-text">ביקשתי מההורים כסף כיס ותמיד הרגשתי רע עם זה. עכשיו אני מרוויח לבד — בימים שאני לא לומד לבגרות.</p>
+        <div class="quote-author">
+          <div class="quote-avatar">ד</div>
+          <div>
+            <div class="quote-name">דן, 17</div>
+            <div class="quote-role">תלמיד כיתה י"א, תל אביב</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MVP -->
+<section class="mvp" id="mvp">
+  <div class="section-inner">
+    <span class="section-tag reveal">הגרסה הראשונה</span>
+    <h2 class="section-title reveal">מה כולל?</h2>
+    <div class="mvp-box reveal">
+      <div class="mvp-badge">🚀 COMING SOON</div>
+      <h3 class="mvp-title">FlexiTeen Beta — בחינם לחלוטין</h3>
+      <p class="mvp-sub">הגרסה הראשונה שלנו תכלול הכל מה שצריך כדי להתחיל לעבוד חכם. ללא דמי שימוש, ללא התחייבות.</p>
+      <div class="mvp-features">
+        <span class="mvp-chip">עדכון ימי מבחנים</span>
+        <span class="mvp-chip">יומן גמיש</span>
+        <span class="mvp-chip">הצעות עבודה מותאמות</span>
+        <span class="mvp-chip">פרופיל אישי</span>
+        <span class="mvp-chip">פרופיל מעסיק</span>
+        <span class="mvp-chip">התאמה לפי גיל ודרישות סף</span>
+      </div>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="mailto:hello@flexiteen.co.il" class="btn-primary">שלחו לי עדכון</a>
+        <a href="#" class="btn-secondary">שתפו עם חברים</a>
+      </div>
+      <p style="color:var(--text-light);font-size:0.82rem;margin-top:1.5rem;">📲 פרסמו בקבוצות וואטסאפ של חברים, בית ספר, ומשפחה</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <!-- Brand col -->
+    <div class="footer-brand">
+      <div class="footer-logo">FlexiTeen</div>
+      <p class="footer-sub">עבודה גמישה לבני נוער שיש להם ציונים לשמור.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="WhatsApp" class="social-btn">💬</a>
+        <a href="#" aria-label="Instagram" class="social-btn">📸</a>
+        <a href="#" aria-label="TikTok" class="social-btn">🎵</a>
+      </div>
+    </div>
+
+    <!-- Sitemap cols -->
+    <div class="footer-sitemap">
+
+      <div class="footer-col">
+        <div class="footer-col-title">האתר</div>
+        <a href="#problem">הבעיה שאנחנו פותרים</a>
+        <a href="#how">איך זה עובד</a>
+        <a href="#features">יכולות האפליקציה</a>
+        <a href="#mvp">גרסת ה-MVP</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">לתלמידים</div>
+        <a href="#" onclick="document.querySelector('.nav-register').click();return false;">הרשמה חינמית</a>
+        <a href="flexiteen-dashboard.html">אזור אישי</a>
+        <a href="#features">עדכון לוח מבחנים</a>
+        <a href="#features">מציאת עבודה גמישה</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">למעסיקים</div>
+        <a href="#">פרסום משרה</a>
+        <a href="#">פרופיל מעסיק</a>
+        <a href="#">חיפוש עובדים</a>
+        <a href="#">פרסום ושטחי מדיה</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">חברה</div>
+        <a href="#">אודות FlexiTeen</a>
+        <a href="#">צור קשר</a>
+        <a href="#">מדיניות פרטיות</a>
+        <a href="#">תנאי שימוש</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom-bar">
+    <p class="footer-bottom">© 2026 FlexiTeen. כל הזכויות שמורות.</p>
+    <div class="footer-bottom-links">
+      <a href="#">פרטיות</a>
+      <span>·</span>
+      <a href="#">תנאי שימוש</a>
+      <span>·</span>
+      <a href="mailto:hello@flexiteen.co.il">hello@flexiteen.co.il</a>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=flexiteen" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<!-- SIGNUP MODAL -->
+<div id="signup-modal" style="
+  display:none; position:fixed; inset:0; z-index:9000;
+  align-items:center; justify-content:center;
+  background:rgba(3,7,32,0.75); backdrop-filter:blur(8px);
+">
+  <div id="signup-box" style="
+    background: linear-gradient(145deg, #0D1450, #0A0F3A);
+    border: 1px solid rgba(75,127,255,0.3);
+    border-radius: 28px;
+    padding: 2.8rem 2.5rem;
+    width: 100%; max-width: 440px;
+    margin: 1rem;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(26,86,255,0.12);
+    animation: popIn 0.35s cubic-bezier(0.16,1,0.3,1) both;
+  ">
+    <!-- Close -->
+    <button onclick="closeModal()" style="
+      position:absolute; top:1.2rem; left:1.2rem;
+      background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+      color:#fff; width:32px; height:32px; border-radius:50%;
+      font-size:1rem; cursor:pointer; line-height:1;
+      transition: background 0.2s;
+    " onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">✕</button>
+
+    <!-- Header -->
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div style="
+        display:inline-flex; align-items:center; gap:0.4rem;
+        background:rgba(255,107,26,0.15); border:1px solid rgba(255,107,26,0.3);
+        color:#FF8C45; font-size:0.78rem; font-weight:700;
+        padding:0.3rem 0.9rem; border-radius:50px; margin-bottom:1rem;
+      ">⚡ הצטרפו בחינם</div>
+      <h2 style="font-size:1.7rem; font-weight:900; margin-bottom:0.4rem;">יצירת חשבון</h2>
+      <p style="color:#8892C8; font-size:0.9rem;">מלאו את הפרטים והתחילו להרוויח בתנאים שלכם</p>
+    </div>
+
+    <!-- Who are you -->
+    <div style="margin-bottom:1.4rem;">
+      <label style="display:block; font-size:0.82rem; font-weight:700; color:#C8CEFF; margin-bottom:0.6rem;">אני...</label>
+      <div style="display:flex; gap:0.6rem;">
+        <button class="role-btn active-role" onclick="selectRole(this)" data-role="teen" style="
+          flex:1; padding:0.6rem; border-radius:12px; cursor:pointer;
+          font-family:'Heebo',sans-serif; font-size:0.88rem; font-weight:700;
+          border:1px solid rgba(75,127,255,0.5); background:rgba(26,86,255,0.18); color:#fff;
+          transition:all 0.2s;
+        ">🎒 תלמיד/ה</button>
+        <button class="role-btn" onclick="selectRole(this)" data-role="employer" style="
+          flex:1; padding:0.6rem; border-radius:12px; cursor:pointer;
+          font-family:'Heebo',sans-serif; font-size:0.88rem; font-weight:700;
+          border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.05); color:#8892C8;
+          transition:all 0.2s;
+        ">🏢 מעסיק</button>
+      </div>
+    </div>
+
+    <!-- Fields -->
+    <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.4rem;">
+      <div style="display:flex; gap:0.8rem;">
+        <div style="flex:1;">
+          <label style="display:block; font-size:0.8rem; font-weight:600; color:#8892C8; margin-bottom:0.4rem;">שם פרטי</label>
+          <input type="text" placeholder="ישראל" style="
+            width:100%; padding:0.7rem 1rem; border-radius:12px;
+            background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+            color:#fff; font-family:'Heebo',sans-serif; font-size:0.95rem;
+            outline:none; transition:border-color 0.2s; direction:rtl;
+          " onfocus="this.style.borderColor='rgba(75,127,255,0.6)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+        </div>
+        <div style="flex:1;">
+          <label style="display:block; font-size:0.8rem; font-weight:600; color:#8892C8; margin-bottom:0.4rem;">שם משפחה</label>
+          <input type="text" placeholder="ישראלי" style="
+            width:100%; padding:0.7rem 1rem; border-radius:12px;
+            background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+            color:#fff; font-family:'Heebo',sans-serif; font-size:0.95rem;
+            outline:none; transition:border-color 0.2s; direction:rtl;
+          " onfocus="this.style.borderColor='rgba(75,127,255,0.6)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+        </div>
+      </div>
+
+      <div>
+        <label style="display:block; font-size:0.8rem; font-weight:600; color:#8892C8; margin-bottom:0.4rem;">אימייל</label>
+        <input type="email" placeholder="israel@example.com" style="
+          width:100%; padding:0.7rem 1rem; border-radius:12px;
+          background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+          color:#fff; font-family:'Heebo',sans-serif; font-size:0.95rem;
+          outline:none; transition:border-color 0.2s; direction:ltr; text-align:right;
+        " onfocus="this.style.borderColor='rgba(75,127,255,0.6)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+      </div>
+
+      <div>
+        <label style="display:block; font-size:0.8rem; font-weight:600; color:#8892C8; margin-bottom:0.4rem;">סיסמה</label>
+        <input type="password" placeholder="לפחות 8 תווים" style="
+          width:100%; padding:0.7rem 1rem; border-radius:12px;
+          background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+          color:#fff; font-family:'Heebo',sans-serif; font-size:0.95rem;
+          outline:none; transition:border-color 0.2s; direction:ltr; text-align:right;
+        " onfocus="this.style.borderColor='rgba(75,127,255,0.6)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1.6rem; cursor:pointer;" onclick="toggleCheck()">
+      <div id="checkbox" style="
+        width:20px; height:20px; border-radius:6px; flex-shrink:0;
+        border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05);
+        display:flex; align-items:center; justify-content:center;
+        transition:all 0.2s;
+      "></div>
+      <span style="font-size:0.82rem; color:#8892C8; line-height:1.4;">
+        קראתי ואני מסכים/ה ל<span style="color:#4B7FFF; cursor:pointer;">תנאי השימוש</span> ול<span style="color:#4B7FFF; cursor:pointer;">מדיניות הפרטיות</span>
+      </span>
+    </div>
+
+    <!-- Submit -->
+    <button onclick="handleSignup()" style="
+      width:100%; padding:0.9rem;
+      background: linear-gradient(135deg, #1A56FF, #4B7FFF);
+      color:white; border:none; border-radius:50px;
+      font-family:'Heebo',sans-serif; font-size:1rem; font-weight:700;
+      cursor:pointer; box-shadow:0 0 28px rgba(26,86,255,0.45);
+      transition:transform 0.2s, box-shadow 0.2s;
+    " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 35px rgba(26,86,255,0.6)'"
+       onmouseout="this.style.transform='';this.style.boxShadow='0 0 28px rgba(26,86,255,0.45)'">
+      יצירת חשבון
+    </button>
+
+    <p style="text-align:center; margin-top:1.2rem; font-size:0.85rem; color:#8892C8;">
+      כבר יש לך חשבון? <span onclick="closeModal()" style="color:#4B7FFF; cursor:pointer; font-weight:600;">התחברות</span>
+    </p>
+  </div>
+</div>
+
+<style>
+@keyframes popIn {
+  from { opacity:0; transform:scale(0.92) translateY(20px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+</style>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── CAROUSEL DOTS ──
+  function initCarouselDots() {
+    const tracks = [
+      { el: document.querySelector('.problem-grid'),   count: 4 },
+      { el: document.querySelector('.steps'),          count: 3 },
+      { el: document.querySelector('.features-grid'),  count: 6 },
+      { el: document.querySelector('.quote-grid'),     count: 2 },
+    ];
+
+    tracks.forEach(({ el, count }) => {
+      if (!el) return;
+      // Only show dots on mobile
+      if (window.innerWidth > 768) return;
+
+      // Create dots container after the track
+      const dotsEl = document.createElement('div');
+      dotsEl.className = 'carousel-dots';
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => {
+          const cards = el.children;
+          if (cards[i]) cards[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        });
+        dotsEl.appendChild(dot);
+      }
+      el.parentNode.insertBefore(dotsEl, el.nextSibling);
+
+      // Update active dot on scroll
+      el.addEventListener('scroll', () => {
+        const scrollLeft = el.scrollLeft;
+        const cardWidth = el.firstElementChild ? el.firstElementChild.offsetWidth + 12 : 1;
+        const idx = Math.round(scrollLeft / cardWidth);
+        dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === idx);
+        });
+      }, { passive: true });
+    });
+  }
+
+  // Init on load, and only if mobile
+  if (window.innerWidth <= 768) initCarouselDots();
+
+  // ── HAMBURGER MENU ──
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const btn  = document.getElementById('hamburger');
+    const open = menu.classList.contains('open');
+    if (open) {
+      closeMenu();
+    } else {
+      menu.classList.add('open');
+      btn.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close menu on ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { closeMenu(); closeModal(); }
+  });
+
+  // ── SIGNUP MODAL ──
+  const modal = document.getElementById('signup-modal');
+
+  // Attach to ALL .nav-register buttons (desktop + mobile)
+  document.querySelectorAll('.nav-register').forEach(btn => {
+    btn.addEventListener('click', () => {
+      closeMenu();
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Role selector
+  function selectRole(btn) {
+    document.querySelectorAll('.role-btn').forEach(b => {
+      b.style.borderColor = 'rgba(255,255,255,0.12)';
+      b.style.background  = 'rgba(255,255,255,0.05)';
+      b.style.color       = '#8892C8';
+    });
+    btn.style.borderColor = 'rgba(75,127,255,0.5)';
+    btn.style.background  = 'rgba(26,86,255,0.18)';
+    btn.style.color       = '#fff';
+  }
+
+  // Checkbox
+  let checked = false;
+  function toggleCheck() {
+    checked = !checked;
+    const cb = document.getElementById('checkbox');
+    cb.style.background  = checked ? '#1A56FF' : 'rgba(255,255,255,0.05)';
+    cb.style.borderColor = checked ? '#1A56FF' : 'rgba(255,255,255,0.2)';
+    cb.innerHTML = checked ? '<span style="color:white;font-size:0.7rem;">✓</span>' : '';
+  }
+
+  // Submit
+  function handleSignup() {
+    const box = document.getElementById('signup-box');
+    box.innerHTML = `
+      <div style="text-align:center; padding:2rem 0;">
+        <div style="font-size:3.5rem; margin-bottom:1rem;">🎉</div>
+        <h2 style="font-size:1.6rem; font-weight:900; margin-bottom:0.6rem;">ברוכים הבאים!</h2>
+        <p style="color:#8892C8; font-size:0.95rem; line-height:1.6; margin-bottom:2rem;">החשבון שלך נוצר בהצלחה.<br>תיכף תתחילו למצוא עבודה בתנאים שלכם 💪</p>
+        <button onclick="closeModal()" style="
+          padding:0.8rem 2.5rem; border-radius:50px;
+          background:linear-gradient(135deg,#FF6B1A,#FF8C45);
+          color:white; border:none; font-family:'Heebo',sans-serif;
+          font-size:1rem; font-weight:700; cursor:pointer;
+          box-shadow:0 0 25px rgba(255,107,26,0.45);
+        ">יאללה, נתחיל!</button>
+      </div>
+    `;
+  }
+</script>
+</body>
+</html>
