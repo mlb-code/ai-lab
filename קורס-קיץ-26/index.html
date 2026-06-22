@@ -202,6 +202,47 @@
   .inst-tags{display:flex;flex-wrap:wrap;gap:8px}
   .inst-tags span{font-size:13px;color:#d4d4e8;background:#0d0d1c;border:1px solid var(--border);padding:6px 12px;border-radius:999px}
 
+  /* syllabus + price */
+  .plan{background:linear-gradient(180deg,#0c141d,#0a1018)}
+  .plan-grid{display:grid;grid-template-columns:1.15fr .9fr;gap:24px;align-items:start;max-width:940px;margin:0 auto}
+  .syl{background:linear-gradient(180deg,var(--card),#11202c);border:1px solid var(--border);border-radius:20px;padding:26px 24px}
+  .syl h3{font-size:18px;font-weight:800;margin-bottom:16px}
+  .syl-list{display:grid;gap:9px}
+  .syl-row{display:flex;gap:12px;align-items:center;font-size:14.5px}
+  .syl-row .n{flex-shrink:0;width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#04241c;background:linear-gradient(135deg,var(--teal),var(--teal-light))}
+  .price-card{background:linear-gradient(180deg,#15293a,#101e2a);border:1px solid rgba(0,212,170,.32);border-radius:20px;padding:28px 24px;text-align:center;box-shadow:0 30px 80px -42px rgba(0,212,170,.5)}
+  .price-card .ptitle{font-size:19px;font-weight:800}
+  .price-card .psub{color:var(--muted);font-size:13.5px;margin-top:4px;margin-bottom:18px}
+  .price-card .amount{font-size:48px;font-weight:900;line-height:1}
+  .price-card .amount .cur{font-size:24px;color:var(--teal-light);font-weight:800;margin-inline-end:4px}
+  .price-card ul{list-style:none;text-align:right;margin:20px 0 22px}
+  .price-card li{display:flex;gap:10px;align-items:center;font-size:14px;padding:9px 0;border-bottom:1px solid var(--border)}
+  .price-card li:last-child{border-bottom:none}
+  .price-card li .ck{color:var(--teal);font-weight:900;flex-shrink:0}
+  .price-card .btn{width:100%}
+
+  /* register modal (popup) */
+  .modal-overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(5,9,14,.8);backdrop-filter:blur(6px)}
+  .modal-overlay.open{display:flex}
+  .modal-box{position:relative;width:100%;max-width:440px;background:linear-gradient(180deg,var(--card),#11202c);border:1px solid var(--border);border-radius:22px;padding:34px 28px 30px;box-shadow:0 40px 110px -30px rgba(0,0,0,.85);animation:popIn .25s ease}
+  @keyframes popIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+  .modal-close{position:absolute;top:14px;left:16px;background:rgba(255,255,255,.06);border:none;color:var(--muted);width:34px;height:34px;border-radius:10px;font-size:22px;line-height:1;cursor:pointer;transition:.15s}
+  .modal-close:hover{color:#fff;background:rgba(255,255,255,.13)}
+  .modal-head{text-align:center;margin-bottom:22px}
+  .modal-head .ic{font-size:36px;line-height:1}
+  .modal-head h3{font-size:22px;font-weight:800;margin:10px 0 6px}
+  .modal-head p{color:var(--muted);font-size:14.5px}
+  .modal-head .rate{margin-top:10px;font-size:13.5px;color:var(--muted)}
+  .modal-head .rate b{color:#F5C842;letter-spacing:1px}
+  .mfield{margin-bottom:16px;text-align:right}
+  .mfield label{display:block;font-size:14px;font-weight:600;margin-bottom:7px}
+  .mfield input{width:100%;background:#0d1722;border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:16px;padding:13px 15px;border-radius:12px;transition:border-color .15s,box-shadow .15s}
+  .mfield input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,212,170,.15)}
+  .modal-actions{display:grid;gap:10px;margin-top:6px}
+  .modal-actions .btn{width:100%;font-size:16.5px;padding:14px}
+  .modal-note{text-align:center;font-size:12px;color:var(--muted);margin-top:14px}
+  .modal-ok{text-align:center;padding:26px 10px;color:var(--teal-light);font-weight:800;font-size:18px;line-height:1.5}
+
   /* footer */
   .footer{text-align:center;padding:34px 22px;color:#6a6a85;font-size:14px;border-top:1px solid var(--border)}
   .footer a{color:var(--teal-light);text-decoration:none}
@@ -258,6 +299,7 @@
     .cards>*,.steps>*,.obj>*{flex:0 0 84%;scroll-snap-align:start}
     .inst-card{flex-direction:column;text-align:center;padding:28px 20px}
     .inst-tags{justify-content:center}
+    .plan-grid{grid-template-columns:1fr}
     .topbar .cta-sm{display:none}
     .topbar .wrap{justify-content:center}
     section{padding:48px 0}
@@ -281,7 +323,7 @@
   <!-- ===== TOP BAR ===== -->
   <div class="topbar">
     <div class="wrap">
-      <a href="/register-kids/" class="cta-sm">להרשמה</a>
+      <a href="javascript:void(0)" onclick="openRegisterPopup();return false;" class="cta-sm">להרשמה</a>
       <a href="https://ai-lab.co.il" class="logo" dir="ltr" style="text-decoration:none"><span>AI&nbsp;Lab</span><span class="b-dot">.</span></a>
     </div>
   </div>
@@ -305,7 +347,7 @@
       <p class="sub">הילדים שלכם מבלים מול המסך? הקיץ הזה הם ילמדו איך להשתלט עליו.</p>
       <p class="sub2">בקורס הקיץ של Ai&nbsp;Lab הילדים ובני הנוער לומדים להשתמש בכלי הפיתוח הכי מתקדמים בעולם (Claude&nbsp;Code) כדי לבנות אתרים ואפליקציות משלהם — גם בלי ידע מוקדם בתכנות.</p>
       <div class="cta-row">
-        <a href="/register-kids/" class="btn btn-primary">להרשמה לקורס</a>
+        <a href="javascript:void(0)" onclick="openRegisterPopup();return false;" class="btn btn-primary">להרשמה לקורס</a>
         <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%A7%D7%95%D7%A8%D7%A1%20%D7%94%D7%A7%D7%99%D7%A5%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D" target="_blank" rel="noopener" class="btn btn-wa"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.821 11.821 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.821 9.821 0 001.51 5.26l-.999 3.648 3.738-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>שאלה בוואטסאפ</a>
       </div>
       <a class="stars-link" href="https://share.google/ckBqGOSb4wWxyHCfX" target="_blank" rel="noopener">
@@ -455,6 +497,43 @@
     </div>
   </section>
 
+  <!-- ===== SYLLABUS + PRICE ===== -->
+  <section class="plan">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>תוכנית הקורס <span class="g">והמחיר</span></h2>
+        <p>8 מפגשים חיים בזום — מהרעיון ועד פרויקט אמיתי.</p>
+      </div>
+      <div class="plan-grid">
+        <div class="syl">
+          <h3>📋 מה לומדים ב-8 המפגשים</h3>
+          <div class="syl-list">
+            <div class="syl-row"><span class="n">1</span><span>ברוכים הבאים לעולם ה-AI</span></div>
+            <div class="syl-row"><span class="n">2</span><span>אמנות הפרומפט — לדבר עם AI נכון</span></div>
+            <div class="syl-row"><span class="n">3</span><span>חשיבה יזמית — מוצאים בעיות</span></div>
+            <div class="syl-row"><span class="n">4</span><span>מרעיון למוצר</span></div>
+            <div class="syl-row"><span class="n">5</span><span>בונים אתר — חלק 1</span></div>
+            <div class="syl-row"><span class="n">6</span><span>בונים אתר — חלק 2</span></div>
+            <div class="syl-row"><span class="n">7</span><span>מודל עסקי ושיווק</span></div>
+            <div class="syl-row"><span class="n">8</span><span>יום הפיץ' — מציגים את הפרויקט 🏆</span></div>
+          </div>
+        </div>
+        <div class="price-card">
+          <div class="ptitle">ילדים ונוער — מתחילים</div>
+          <div class="psub">8 מפגשים חיים בזום · גילאי 9–17</div>
+          <div class="amount"><span class="cur">₪</span>990</div>
+          <ul>
+            <li><span class="ck">✓</span> אזור אישי + חומרי לימוד</li>
+            <li><span class="ck">✓</span> כל כלי ה-AI + Claude Code</li>
+            <li><span class="ck">✓</span> אתר אישי שנשאר באוויר</li>
+            <li><span class="ck">✓</span> עד 5 תלמידים בכיתה</li>
+          </ul>
+          <a href="javascript:void(0)" onclick="openRegisterPopup();return false;" class="btn btn-primary">הרשמו עכשיו 🚀</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== INSTRUCTOR ===== -->
   <section class="inst">
     <div class="wrap">
@@ -486,7 +565,7 @@
       <h2>בואו לתת להם יתרון<br>משמעותי לחיים</h2>
       <p>השאירו פרטים ונחזור אליכם לתיאום אישי. אפשר גם פשוט לשלוח לנו הודעה בוואטסאפ עם כל שאלה.</p>
       <div class="cta-row">
-        <a href="/register-kids/" class="btn btn-primary">להרשמה לקורס</a>
+        <a href="javascript:void(0)" onclick="openRegisterPopup();return false;" class="btn btn-primary">להרשמה לקורס</a>
         <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%A7%D7%95%D7%A8%D7%A1%20%D7%94%D7%A7%D7%99%D7%A5%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D" target="_blank" rel="noopener" class="btn btn-wa"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.821 11.821 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.821 9.821 0 001.51 5.26l-.999 3.648 3.738-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>דברו איתנו בוואטסאפ</a>
       </div>
     </div>
@@ -501,18 +580,86 @@
 
   <!-- ===== STICKY MOBILE BAR ===== -->
   <div class="stickybar">
-    <a href="/register-kids/" class="s-reg" data-track="reg">להרשמה</a>
+    <a href="javascript:void(0)" onclick="openRegisterPopup();return false;" class="s-reg" data-track="reg">להרשמה</a>
     <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%A7%D7%95%D7%A8%D7%A1%20%D7%94%D7%A7%D7%99%D7%A5%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D" target="_blank" rel="noopener" class="s-wa" data-track="wa"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.821 11.821 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.821 9.821 0 001.51 5.26l-.999 3.648 3.738-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>וואטסאפ</a>
+  </div>
+
+  <!-- ===== REGISTER POPUP ===== -->
+  <div class="modal-overlay" id="regModal" onclick="if(event.target===this)closeRegisterPopup()">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeRegisterPopup()" aria-label="סגור">&times;</button>
+      <div class="modal-head">
+        <div class="ic">🚀</div>
+        <h3>שריינו מקום בקורס הקיץ</h3>
+        <p>השאירו שם וטלפון — נחזור אליכם בהקדם לתיאום אישי</p>
+        <div class="rate"><b>★★★★★</b> 5.0 בביקורות גוגל</div>
+      </div>
+      <form id="regForm" onsubmit="return submitRegister(event)">
+        <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
+        <input type="hidden" name="subject" value="הרשמה חדשה — קורס קיץ Ai Lab (ילדים/נוער)">
+        <input type="hidden" name="from_name" value="דף קורס קיץ 26">
+        <div class="mfield">
+          <label for="regName">שם מלא</label>
+          <input type="text" id="regName" name="name" placeholder="השם שלכם" required autocomplete="name">
+        </div>
+        <div class="mfield">
+          <label for="regPhone">מספר טלפון</label>
+          <input type="tel" id="regPhone" name="phone" placeholder="050-1234567" required inputmode="tel" autocomplete="tel">
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary" id="regSubmit">שלחו לי פרטים</button>
+          <button type="button" class="btn btn-wa" onclick="sendWhatsAppRegister()"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.821 11.821 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.821 9.821 0 001.51 5.26l-.999 3.648 3.738-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>שליחה בוואטסאפ</button>
+        </div>
+        <p class="modal-note">🔒 הפרטים נשלחים ישירות אלינו בלבד.</p>
+      </form>
+    </div>
   </div>
 
   <!-- ===== Conversion tracking (Meta Pixel events) ===== -->
   <script>
-    // לחיצה על כל כפתור הרשמה -> אירוע Lead
-    document.querySelectorAll('a[href="/register-kids/"]').forEach(function(a){
-      a.addEventListener('click', function(){
-        if(window.fbq) fbq('track', 'Lead', {content_name:'summer-kids', source:'landing'});
-      });
-    });
+    // ===== פופ-אפ הרשמה (Web3Forms -> מייל) =====
+    function openRegisterPopup(){
+      document.getElementById('regModal').classList.add('open');
+      document.body.style.overflow='hidden';
+      if(window.fbq) fbq('track','InitiateCheckout',{content_name:'summer-kids'});
+    }
+    function closeRegisterPopup(){
+      document.getElementById('regModal').classList.remove('open');
+      document.body.style.overflow='';
+    }
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeRegisterPopup(); });
+    window.openRegisterPopup = openRegisterPopup;
+    window.closeRegisterPopup = closeRegisterPopup;
+
+    async function submitRegister(e){
+      e.preventDefault();
+      var form=document.getElementById('regForm');
+      var btn=document.getElementById('regSubmit');
+      btn.disabled=true; btn.textContent='שולח...';
+      try{
+        var res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(form)});
+        if(res.ok){
+          if(window.fbq){ fbq('track','Lead',{content_name:'summer-kids'}); fbq('track','CompleteRegistration',{content_name:'summer-kids'}); }
+          form.innerHTML='<div class="modal-ok">✓ הפנייה נשלחה!<br>נחזור אליכם בהקדם 🎉</div>';
+        } else { throw new Error('bad response'); }
+      }catch(err){
+        btn.disabled=false; btn.textContent='שלחו לי פרטים';
+        alert('שגיאה בשליחה. נסו שוב, או שלחו לנו בוואטסאפ.');
+      }
+      return false;
+    }
+    window.submitRegister = submitRegister;
+
+    function sendWhatsAppRegister(){
+      var name=document.getElementById('regName').value.trim();
+      var phone=document.getElementById('regPhone').value.trim();
+      if(!name||!phone){ alert('נא למלא שם וטלפון'); return; }
+      if(window.fbq) fbq('track','Contact',{content_name:'summer-kids', method:'whatsapp'});
+      var msg='היי, אני מעוניין/ת בקורס הקיץ לילדים ונוער\n\nשם: '+name+'\nטלפון: '+phone;
+      window.open('https://wa.me/972546500795?text='+encodeURIComponent(msg),'_blank');
+    }
+    window.sendWhatsAppRegister = sendWhatsAppRegister;
+
     // לחיצה על כל כפתור וואטסאפ -> אירוע Contact
     document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
       a.addEventListener('click', function(){
