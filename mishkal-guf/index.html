@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>משקל גוף — תוכנית אימונים אישית לקליסטניקס</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rubik:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060810;
+    --surface: #0d1120;
+    --surface2: #131828;
+    --accent1: #4f8eff;
+    --accent2: #a259ff;
+    --accent3: #00e5b0;
+    --text: #f0f4ff;
+    --text-muted: #7a88aa;
+    --border: rgba(79,142,255,0.15);
+    --glow1: rgba(79,142,255,0.25);
+    --glow2: rgba(162,89,255,0.2);
+    --nav-height: 70px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    direction: rtl;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ══════════════════════════════
+     NAV
+  ══════════════════════════════ */
+  nav {
+    position: fixed;
+    top: 0; right: 0; left: 0;
+    z-index: 200;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    background: rgba(6,8,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* RTL: לוגו משמאל, המבורגר מימין */
+  .logo {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+    order: 2; /* שמאל ב-RTL */
+  }
+
+  .nav-center {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    order: 1;
+  }
+  .nav-center a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-center a:hover { color: var(--text); }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    order: 0; /* ימין ב-RTL */
+  }
+
+  .nav-cta {
+    background: linear-gradient(135deg, #00e94d, #00ff88);
+    color: #000 !important;
+    padding: 0.55rem 1.3rem;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { opacity: 0.85; transform: scale(1.04); }
+
+  /* המבורגר */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: none;
+    border: none;
+    order: 0;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile menu drawer */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: var(--nav-height);
+    right: 0; left: 0;
+    bottom: 0;
+    background: rgba(6,8,16,0.98);
+    backdrop-filter: blur(20px);
+    z-index: 199;
+    padding: 1.5rem 5%;
+    flex-direction: column;
+    gap: 0;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
+    pointer-events: none;
+    overflow-y: auto;
+  }
+  .mobile-menu.open {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+  .mobile-menu a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: 700;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+    text-align: center;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--accent1); }
+  .mobile-menu .mob-cta {
+    margin-top: auto;
+    background: linear-gradient(135deg, #00e94d, #00ff88);
+    color: #000 !important;
+    text-align: center;
+    padding: 1.1rem;
+    border-radius: 100px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    border-bottom: none !important;
+    position: sticky;
+    bottom: 1.5rem;
+  }
+
+  /* ══════════════════════════════
+     HERO
+  ══════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    position: relative;
+    padding: calc(var(--nav-height) + 4rem) 5% 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg { position: absolute; inset: 0; z-index: -1; }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    animation: drift 8s ease-in-out infinite alternate;
+  }
+  .blob1 { width: 600px; height: 600px; background: var(--accent1); top: -200px; right: -150px; }
+  .blob2 { width: 500px; height: 500px; background: var(--accent2); bottom: -100px; left: -100px; animation-delay: -3s; }
+  .blob3 { width: 300px; height: 300px; background: var(--accent3); top: 50%; left: 40%; animation-delay: -1.5s; }
+
+  @keyframes drift {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(30px,20px) scale(1.05); }
+  }
+
+  .hero-content {
+    max-width: 820px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(79,142,255,0.1);
+    border: 1px solid rgba(79,142,255,0.3);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    color: var(--accent1);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  h1 {
+    font-family: 'Rubik', sans-serif;
+    font-size: clamp(2.4rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  h1 .gradient-text {
+    background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 50%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-muted);
+    max-width: 540px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: #fff;
+    border: none;
+    padding: 0.95rem 2.2rem;
+    border-radius: 100px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 40px var(--glow1);
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 50px var(--glow1); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.95rem 2.2rem;
+    border-radius: 100px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--accent1); background: rgba(79,142,255,0.07); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-number {
+    font-family: 'Rubik', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent1), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+  }
+  .stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+  /* ══════════════════════════════
+     SECTIONS
+  ══════════════════════════════ */
+  .section {
+    padding: 6rem 5%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent1);
+    margin-bottom: 0.8rem;
+    text-align: center;
+  }
+  .section-title {
+    font-family: 'Rubik', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+  .section-sub {
+    color: var(--text-muted);
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto 3.5rem;
+    line-height: 1.7;
+    font-size: 1rem;
+  }
+
+  /* PROBLEM */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .problem-card:hover { transform: translateY(-4px); border-color: rgba(79,142,255,0.4); }
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, var(--glow1), transparent 70%);
+  }
+  .problem-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .problem-card h3 { font-family: 'Rubik', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .problem-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+
+  /* HOW IT WORKS */
+  .how-bg { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .step { text-align: center; position: relative; }
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin: 0 auto 1.2rem;
+    box-shadow: 0 0 30px var(--glow1);
+  }
+  .step h3 { font-family: 'Rubik', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .step p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
+  .step:not(:last-child)::after {
+    content: '←';
+    position: absolute;
+    top: 24px; left: -0.8rem;
+    color: var(--border);
+    font-size: 1.1rem;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 2.2rem;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card:hover { transform: translateY(-5px); border-color: rgba(79,142,255,0.4); box-shadow: 0 16px 50px rgba(0,0,0,0.35); }
+  .feature-card.featured {
+    background: linear-gradient(145deg, rgba(79,142,255,0.1), rgba(162,89,255,0.08));
+    border-color: rgba(79,142,255,0.35);
+    grid-column: span 3;
+  }
+  .feature-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+  .feature-icon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+  .feature-card h3 { font-family: 'Rubik', sans-serif; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.6rem; }
+  .feature-card p { color: var(--text-muted); line-height: 1.65; font-size: 0.92rem; }
+
+  /* TESTIMONIALS */
+  .testimonial-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .testimonials {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .testimonial-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: transform 0.3s;
+  }
+  .testimonial-card:hover { transform: translateY(-4px); }
+  .stars { color: #fbbf24; font-size: 1rem; margin-bottom: 1rem; letter-spacing: 2px; }
+  .testimonial-text { color: var(--text); line-height: 1.7; font-size: 0.92rem; margin-bottom: 1.4rem; }
+  .testimonial-author { display: flex; align-items: center; gap: 0.8rem; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; font-family: 'Rubik', sans-serif; }
+  .av1 { background: linear-gradient(135deg, #4f8eff, #a259ff); }
+  .av2 { background: linear-gradient(135deg, #00e5b0, #4f8eff); }
+  .av3 { background: linear-gradient(135deg, #a259ff, #ff6b6b); }
+  .author-info strong { font-size: 0.92rem; font-weight: 700; display: block; }
+  .author-info span { font-size: 0.78rem; color: var(--text-muted); }
+
+  /* PRICING */
+  .pricing-grid {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .pricing-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    padding: 2.8rem 2.3rem;
+    flex: 1;
+    min-width: 270px;
+    max-width: 360px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s;
+  }
+  .pricing-card:hover { transform: translateY(-6px); }
+  .pricing-card.popular {
+    border-color: var(--accent1);
+    background: linear-gradient(145deg, rgba(79,142,255,0.08), rgba(162,89,255,0.06));
+    box-shadow: 0 0 60px var(--glow1);
+  }
+  .popular-badge {
+    position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: #fff;
+    font-size: 0.76rem;
+    font-weight: 800;
+    padding: 0.28rem 1.1rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .pricing-name { font-family: 'Rubik', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .pricing-desc { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.8rem; }
+  .price-amount { font-family: 'Rubik', sans-serif; font-size: 3.2rem; font-weight: 900; line-height: 1; background: linear-gradient(135deg, var(--accent1), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .price-period { color: var(--text-muted); font-size: 0.88rem; margin-top: 0.3rem; }
+  .price-save { display: inline-block; background: rgba(0,229,176,0.1); color: var(--accent3); border: 1px solid rgba(0,229,176,0.3); border-radius: 100px; font-size: 0.76rem; font-weight: 700; padding: 0.2rem 0.7rem; margin-top: 0.5rem; }
+  .pricing-price { margin-bottom: 2rem; }
+  .pricing-features { list-style: none; margin-bottom: 2.2rem; text-align: right; }
+  .pricing-features li { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.88rem; color: var(--text-muted); }
+  .pricing-features li .check { color: var(--accent3); flex-shrink: 0; }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center;
+    padding: 7rem 5%;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(79,142,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-section h2 { font-family: 'Rubik', sans-serif; font-size: clamp(2rem,5vw,3.5rem); font-weight: 900; letter-spacing: -1.5px; margin-bottom: 1.2rem; line-height: 1.12; }
+  .cta-section p { color: var(--text-muted); font-size: 1.05rem; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+  /* ══════════════════════════════
+     FOOTER
+  ══════════════════════════════ */
+  footer {
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 0;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding: 4rem 5% 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-brand .footer-logo {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    margin-bottom: 0.9rem;
+  }
+
+  .footer-brand p {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 240px;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 0.7rem;
+  }
+
+  .social-btn {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .social-btn:hover {
+    border-color: var(--accent1);
+    background: rgba(79,142,255,0.1);
+    transform: translateY(-2px);
+  }
+
+  .footer-col h4 {
+    font-family: 'Rubik', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .footer-col ul li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .footer-col ul li a:hover { color: var(--accent1); }
+
+  .footer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(0,229,176,0.08);
+    border: 1px solid rgba(0,229,176,0.2);
+    color: var(--accent3);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.15rem 0.55rem;
+    border-radius: 100px;
+    margin-right: 0.4rem;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding: 1.4rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-bottom p { font-size: 0.82rem; color: var(--text-muted); }
+
+  .footer-bottom-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .footer-bottom-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.2s;
+  }
+  .footer-bottom-links a:hover { color: var(--accent1); }
+
+  /* Mobile accordion for footer */
+  .footer-col-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: auto;
+    transition: transform 0.3s;
+    padding: 0;
+  }
+  .footer-col-toggle.open { transform: rotate(180deg); }
+
+  @media (max-width: 900px) {
+    .footer-main { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .footer-brand { grid-column: span 2; }
+  }
+
+  @media (max-width: 640px) {
+    .footer-main {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: 2.5rem 5% 0;
+    }
+    .footer-brand { grid-column: span 1; margin-bottom: 2rem; }
+    .footer-brand p { max-width: 100%; }
+
+    .footer-col {
+      border-top: 1px solid var(--border);
+      padding: 0;
+    }
+
+    .footer-col h4 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0;
+      padding: 1.1rem 0;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .footer-col-toggle { display: inline-block; }
+
+    .footer-col ul {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s;
+      padding-bottom: 0;
+    }
+
+    .footer-col.expanded ul {
+      max-height: 300px;
+      padding-bottom: 1.2rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.4rem 5%;
+    }
+    .footer-bottom-links { justify-content: center; flex-wrap: wrap; gap: 1rem; }
+  }
+
+  /* ══════════════════════════════
+     POPUP / MODAL
+  ══════════════════════════════ */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .popup-overlay.open { display: flex; }
+
+  .popup {
+    background: var(--surface);
+    border: 1px solid rgba(79,142,255,0.3);
+    border-radius: 28px;
+    padding: 2.8rem 2.5rem;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 0 80px rgba(79,142,255,0.2);
+    animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: var(--text);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .popup-close:hover { background: rgba(255,255,255,0.15); }
+
+  .popup h3 {
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .popup-sub { color: var(--text-muted); font-size: 0.93rem; margin-bottom: 2rem; line-height: 1.6; }
+
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; }
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    color: var(--text);
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    direction: rtl;
+  }
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--accent1);
+  }
+  .form-group select option { background: var(--surface2); }
+
+  .popup-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: #fff;
+    border: none;
+    padding: 1rem;
+    border-radius: 100px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    margin-top: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px var(--glow1);
+  }
+  .popup-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 40px var(--glow1); }
+
+  /* ══════════════════════════════
+     ANIMATIONS
+  ══════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ══════════════════════════════
+     RESPONSIVE — Tablet (≤900px)
+  ══════════════════════════════ */
+  @media (max-width: 900px) {
+    .problem-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .step:not(:last-child)::after { display: none; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .feature-card.featured { grid-column: span 2; }
+    .testimonials { grid-template-columns: repeat(2, 1fr); }
+    .testimonials .testimonial-card:last-child { grid-column: span 2; }
+  }
+
+  /* ══════════════════════════════
+     RESPONSIVE — Mobile (≤640px)
+  ══════════════════════════════ */
+  @media (max-width: 640px) {
+    :root { --nav-height: 62px; }
+
+    /* NAV */
+    .nav-center { display: none; }
+    .nav-actions .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .logo { font-size: 1.3rem; }
+
+    /* HERO */
+    .hero { padding: calc(var(--nav-height) + 2.5rem) 5% 3rem; min-height: 100svh; }
+    h1 { letter-spacing: -1px; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; max-width: 320px; text-align: center; }
+    .hero-stats { gap: 1.5rem; margin-top: 2.5rem; padding-top: 2rem; }
+    .stat-number { font-size: 1.8rem; }
+
+    /* SECTIONS */
+    .section { padding: 4rem 5%; }
+    .section-title { letter-spacing: -0.5px; }
+
+    /* GRIDS → hidden on mobile (sliders shown instead) */
+    .features-grid,
+    .testimonials,
+    .steps,
+    .pricing-grid { display: none; }
+    .feature-card.featured { grid-column: span 1; }
+
+    /* POPUP */
+    .popup { padding: 2rem 1.5rem; }
+    .popup h3 { font-size: 1.35rem; }
+  }
+
+  /* ══════════════════════════════
+     MOBILE SLIDERS (all sections)
+  ══════════════════════════════ */
+  .mob-slider-wrapper { display: none; }
+
+  @media (max-width: 640px) {
+    .problem-grid { display: none; }
+    .mob-slider-wrapper { display: block; position: relative; }
+
+    .mob-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 1rem;
+      padding: 0.5rem 5% 1.5rem;
+      margin: 0 -5%;
+      scrollbar-width: none;
+    }
+    .mob-slider::-webkit-scrollbar { display: none; }
+
+    /* All slide items */
+    .mob-slider > * {
+      flex: 0 0 82%;
+      scroll-snap-align: center;
+      min-width: 82%;
+    }
+
+    /* Steps slide item styling */
+    .mob-slider .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    /* Pricing full width */
+    .mob-slider .pricing-card {
+      flex: 0 0 88%;
+      min-width: 88%;
+      max-width: unset;
+    }
+
+    /* Dots */
+    .mob-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .mob-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      padding: 0;
+    }
+    .mob-dot.active {
+      background: var(--accent1);
+      transform: scale(1.3);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <!-- לוגו — שמאל ב-RTL -->
+  <div class="logo">משקל גוף</div>
+
+  <!-- לינקים — מרכז -->
+  <ul class="nav-center">
+    <li><a href="#how">איך זה עובד</a></li>
+    <li><a href="#features">יכולות</a></li>
+    <li><a href="#pricing">מחירים</a></li>
+  </ul>
+
+  <!-- כפתורים + המבורגר — ימין ב-RTL -->
+  <div class="nav-actions">
+    <a href="#" class="nav-cta open-popup">התחל עכשיו</a>
+    <button class="hamburger" id="hamburger" aria-label="תפריט">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#how" class="mob-link">איך זה עובד</a>
+  <a href="#features" class="mob-link">יכולות</a>
+  <a href="#pricing" class="mob-link">מחירים</a>
+  <a href="#" class="mob-cta open-popup">התחל עכשיו ←</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span>🏋️</span> תוכנית אישית לקליסטניקס</div>
+    <h1>
+      הפסק לדשדש.
+      <span class="gradient-text">התקדם בכוחות עצמך.</span>
+    </h1>
+    <p class="hero-sub">אלגוריתם חכם שמנתח את הרמה שלך ובונה מסלול התקדמות מדויק — בלי ניחושים, בלי בזבוז זמן.</p>
+    <div class="hero-ctas">
+      <a href="#" class="btn-primary open-popup">שלח שאלון ובנה תוכנית</a>
+      <a href="#how" class="btn-secondary">איך זה עובד ←</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-number">4</span><div class="stat-label">רמות התקדמות</div></div>
+      <div class="stat"><span class="stat-number">50+</span><div class="stat-label">תרגילים בספרייה</div></div>
+      <div class="stat"><span class="stat-number">100%</span><div class="stat-label">מותאם אישית</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section reveal">
+  <p class="section-label">הבעיה</p>
+  <h2 class="section-title">מכיר את ההרגשה?</h2>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <span class="problem-icon">🔄</span>
+      <h3>חוזר על אותם תרגילים</h3>
+      <p>חודשים ואפילו שנים על אותו שגרת אימון בלי שינוי אמיתי בגוף או בביצועים.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">🎯</span>
+      <h3>לא יודע מה לאמן</h3>
+      <p>יוטיוב מלא בסרטונים — אבל אף אחד לא מסביר לך ספציפית מה אתה צריך עכשיו.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">💸</span>
+      <h3>מאמן אישי יקר מדי</h3>
+      <p>מאמני קליסטניקס מקצועיים עולים הון. ורוב האנשים לא יכולים להרשות לעצמם.</p>
+    </div>
+  </div>
+
+  <!-- Mobile slider (shown only on mobile via CSS) -->
+  <div class="problem-slider-wrapper">
+    <div class="problem-slider" id="problemSlider">
+      <div class="problem-card">
+        <span class="problem-icon">🔄</span>
+        <h3>חוזר על אותם תרגילים</h3>
+        <p>חודשים ואפילו שנים על אותו שגרת אימון בלי שינוי אמיתי בגוף או בביצועים.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🎯</span>
+        <h3>לא יודע מה לאמן</h3>
+        <p>יוטיוב מלא בסרטונים — אבל אף אחד לא מסביר לך ספציפית מה אתה צריך עכשיו.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">💸</span>
+        <h3>מאמן אישי יקר מדי</h3>
+        <p>מאמני קליסטניקס מקצועיים עולים הון. ורוב האנשים לא יכולים להרשות לעצמם.</p>
+      </div>
+    </div>
+    <div class="slider-dots" id="sliderDots">
+      <button class="slider-dot active" data-index="0"></button>
+      <button class="slider-dot" data-index="1"></button>
+      <button class="slider-dot" data-index="2"></button>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-bg reveal" id="how">
+  <p class="section-label">איך זה עובד</p>
+  <h2 class="section-title">מהשאלון לתוכנית —<br>בדקות ספורות</h2>
+  <p class="section-sub">ארבעה צעדים פשוטים שמניחים תשתית להתקדמות מהירה ועקבית.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>ממלא שאלון רמה</h3>
+      <p>מספר שאלות על הרמה הנוכחית שלך, היכולות והמטרות שלך.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>מקבל תוכנית אישית</h3>
+      <p>האלגוריתם בונה עבורך מסלול מדויק לפי הרמה שלך.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>מתאמן לפי הדרכה</h3>
+      <p>תרגילים עם תמונות, כמויות, ורמת קושי ברורה לכל שלב.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>מתקדם ומתעדכן</h3>
+      <p>כשאתה מוכן, המסלול מתעדכן אוטומטית לרמה הבאה.</p>
+    </div>
+  </div>
+  <div class="mob-slider-wrapper">
+    <div class="mob-slider" id="stepsSlider">
+      <div class="step"><div class="step-num">1</div><h3>ממלא שאלון רמה</h3><p>מספר שאלות על הרמה הנוכחית שלך, היכולות והמטרות שלך.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>מקבל תוכנית אישית</h3><p>האלגוריתם בונה עבורך מסלול מדויק לפי הרמה שלך.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>מתאמן לפי הדרכה</h3><p>תרגילים עם תמונות, כמויות, ורמת קושי ברורה לכל שלב.</p></div>
+      <div class="step"><div class="step-num">4</div><h3>מתקדם ומתעדכן</h3><p>כשאתה מוכן, המסלול מתעדכן אוטומטית לרמה הבאה.</p></div>
+    </div>
+    <div class="mob-dots" id="stepsDots">
+      <button class="mob-dot active" data-index="0"></button>
+      <button class="mob-dot" data-index="1"></button>
+      <button class="mob-dot" data-index="2"></button>
+      <button class="mob-dot" data-index="3"></button>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section reveal" id="features">
+  <p class="section-label">יכולות</p>
+  <h2 class="section-title">הכל במקום אחד</h2>
+  <p class="section-sub">כל הכלים שאתה צריך כדי להתקדם מהר — ובצורה הנכונה.</p>
+  <div class="features-grid">
+    <div class="feature-card featured">
+      <span class="feature-tag">⭐ פיצ'ר ראשי</span>
+      <span class="feature-icon">🗺️</span>
+      <h3>מסלול התקדמות אישי ומותאם</h3>
+      <p>לא תוכנית גנרית — מסלול שנבנה עבורך בלבד. כל תרגיל, כל שבוע, כל שלב מחושב בהתאם ליכולות הנוכחיות שלך ולמטרה שאתה רוצה להגיע אליה. תמיד תדע בדיוק מה לעשות הבא.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📋</span>
+      <h3>שאלון חכם</h3>
+      <p>שאלות ממוקדות שמגלות בדיוק איפה אתה עומד — בלי ניחושים, בלי הכללות.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">👤</span>
+      <h3>אזור אישי</h3>
+      <p>דאשבורד אישי שמציג את ההתקדמות שלך, האימונים הבאים וההישגים שצברת.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📸</span>
+      <h3>ספריית תרגילים</h3>
+      <p>תמונות ברורות לכל תרגיל עם הסבר, טיפים לביצוע, ורמת קושי מסומנת.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📈</span>
+      <h3>מעקב התקדמות</h3>
+      <p>ראה איך אתה מתפתח לאורך זמן ודע בדיוק מתי אתה מוכן לשלב הבא.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔥</span>
+      <h3>ספירת קלוריות</h3>
+      <p>עקוב אחר צריכת הקלוריות היומית שלך ותוודא שהתזונה תומכת בהתקדמות האימון — בלי דיאטות מסובכות.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🥗</span>
+      <h3>מעקב תזונה</h3>
+      <p>רשום ארוחות בקלות, קבל המלצות מאקרו לפי המטרה שלך ותראה איך האוכל משפיע על הביצועים.</p>
+    </div>
+  </div>
+  <div class="mob-slider-wrapper">
+    <div class="mob-slider" id="featuresSlider">
+      <div class="feature-card featured"><span class="feature-tag">⭐ פיצ'ר ראשי</span><span class="feature-icon">🗺️</span><h3>מסלול התקדמות אישי ומותאם</h3><p>לא תוכנית גנרית — מסלול שנבנה עבורך בלבד. תמיד תדע בדיוק מה לעשות הבא.</p></div>
+      <div class="feature-card"><span class="feature-icon">📋</span><h3>שאלון חכם</h3><p>שאלות ממוקדות שמגלות בדיוק איפה אתה עומד — בלי ניחושים, בלי הכללות.</p></div>
+      <div class="feature-card"><span class="feature-icon">👤</span><h3>אזור אישי</h3><p>דאשבורד אישי שמציג את ההתקדמות שלך, האימונים הבאים וההישגים שצברת.</p></div>
+      <div class="feature-card"><span class="feature-icon">📸</span><h3>ספריית תרגילים</h3><p>תמונות ברורות לכל תרגיל עם הסבר, טיפים לביצוע, ורמת קושי מסומנת.</p></div>
+      <div class="feature-card"><span class="feature-icon">📈</span><h3>מעקב התקדמות</h3><p>ראה איך אתה מתפתח לאורך זמן ודע בדיוק מתי אתה מוכן לשלב הבא.</p></div>
+      <div class="feature-card"><span class="feature-icon">🔥</span><h3>ספירת קלוריות</h3><p>עקוב אחר צריכת הקלוריות היומית שלך ותוודא שהתזונה תומכת בהתקדמות האימון.</p></div>
+      <div class="feature-card"><span class="feature-icon">🥗</span><h3>מעקב תזונה</h3><p>רשום ארוחות בקלות, קבל המלצות מאקרו לפי המטרה שלך.</p></div>
+    </div>
+    <div class="mob-dots" id="featuresDots">
+      <button class="mob-dot active" data-index="0"></button>
+      <button class="mob-dot" data-index="1"></button>
+      <button class="mob-dot" data-index="2"></button>
+      <button class="mob-dot" data-index="3"></button>
+      <button class="mob-dot" data-index="4"></button>
+      <button class="mob-dot" data-index="5"></button>
+      <button class="mob-dot" data-index="6"></button>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonial-section reveal">
+  <p class="section-label">מה אומרים</p>
+  <h2 class="section-title">תוצאות אמיתיות</h2>
+  <p class="section-sub">מתאמנים שעברו מדישדוש להתקדמות עקבית.</p>
+  <div class="testimonials">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"שנה שלמה ניסיתי לעשות muscle-up ולא הצלחתי. אחרי שלושה חודשים עם המסלול של משקל גוף — עשיתי את הראשון שלי."</p>
+      <div class="testimonial-author">
+        <div class="avatar av1">ד</div>
+        <div class="author-info"><strong>דניאל כ.</strong><span>מתאמן קליסטניקס, תל אביב</span></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"סוף סוף מישהו שואל אותי מה הרמה שלי ונותן לי תוכנית בהתאם. לא עוד קטעי יוטיוב אקראיים."</p>
+      <div class="testimonial-author">
+        <div class="avatar av2">נ</div>
+        <div class="author-info"><strong>נועם ל.</strong><span>מתחיל מתקדם, חיפה</span></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"המסלול האישי שינה לי את האימון לגמרי. עכשיו אני יודעת בדיוק מה לאמן ומתי להתקדם לשלב הבא."</p>
+      <div class="testimonial-author">
+        <div class="avatar av3">מ</div>
+        <div class="author-info"><strong>מיכל ר.</strong><span>מתאמנת קליסטניקס, ירושלים</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="mob-slider-wrapper">
+    <div class="mob-slider" id="testimonialsSlider">
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p class="testimonial-text">"שנה שלמה ניסיתי לעשות muscle-up ולא הצלחתי. אחרי שלושה חודשים עם המסלול של משקל גוף — עשיתי את הראשון שלי."</p><div class="testimonial-author"><div class="avatar av1">ד</div><div class="author-info"><strong>דניאל כ.</strong><span>מתאמן קליסטניקס, תל אביב</span></div></div></div>
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p class="testimonial-text">"סוף סוף מישהו שואל אותי מה הרמה שלי ונותן לי תוכנית בהתאם. לא עוד קטעי יוטיוב אקראיים."</p><div class="testimonial-author"><div class="avatar av2">נ</div><div class="author-info"><strong>נועם ל.</strong><span>מתחיל מתקדם, חיפה</span></div></div></div>
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p class="testimonial-text">"המסלול האישי שינה לי את האימון לגמרי. עכשיו אני יודעת בדיוק מה לאמן ומתי להתקדם לשלב הבא."</p><div class="testimonial-author"><div class="avatar av3">מ</div><div class="author-info"><strong>מיכל ר.</strong><span>מתאמנת קליסטניקס, ירושלים</span></div></div></div>
+    </div>
+    <div class="mob-dots" id="testimonialsDots">
+      <button class="mob-dot active" data-index="0"></button>
+      <button class="mob-dot" data-index="1"></button>
+      <button class="mob-dot" data-index="2"></button>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section reveal" id="pricing">
+  <p class="section-label">מחירים</p>
+  <h2 class="section-title">השקעה קטנה.<br>תוצאות גדולות.</h2>
+  <p class="section-sub">בחר את התוכנית שמתאימה לך ותתחיל להתקדם עוד היום.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-name">מנוי חודשי</div>
+      <div class="pricing-desc">גמישות מלאה, בטל בכל עת</div>
+      <div class="pricing-price">
+        <div class="price-amount">₪59</div>
+        <div class="price-period">לחודש</div>
+      </div>
+      <ul class="pricing-features">
+        <li><span class="check">✓</span>שאלון רמה מותאם אישית</li>
+        <li><span class="check">✓</span>מסלול התקדמות אישי</li>
+        <li><span class="check">✓</span>ספריית תרגילים מלאה עם תמונות</li>
+        <li><span class="check">✓</span>אזור אישי ומעקב התקדמות</li>
+        <li><span class="check">✓</span>עדכון מסלול אוטומטי</li>
+      </ul>
+      <a href="#" class="btn-secondary open-popup" style="width:100%;text-align:center;display:block;padding:0.9rem;">התחל עכשיו</a>
+    </div>
+    <div class="pricing-card popular">
+      <div class="popular-badge">⚡ הכי משתלם</div>
+      <div class="pricing-name">מנוי שנתי</div>
+      <div class="pricing-desc">חסוך חודשיים בשנה</div>
+      <div class="pricing-price">
+        <div class="price-amount">₪39</div>
+        <div class="price-period">לחודש — מחויב שנתית</div>
+        <div class="price-save">חסכון של ₪240 בשנה</div>
+      </div>
+      <ul class="pricing-features">
+        <li><span class="check">✓</span>הכל מהחבילה החודשית</li>
+        <li><span class="check">✓</span>גישה לכל העדכונים העתידיים</li>
+        <li><span class="check">✓</span>תמיכה מועדפת</li>
+        <li><span class="check">✓</span>אתגרים ומטרות עונתיות</li>
+        <li><span class="check">✓</span>עדיפות לפיצ'רים חדשים</li>
+      </ul>
+      <a href="#" class="btn-primary open-popup" style="width:100%;text-align:center;display:block;padding:0.9rem;">בחר מנוי שנתי</a>
+    </div>
+  </div>
+  <div class="mob-slider-wrapper">
+    <div class="mob-slider" id="pricingSlider">
+      <div class="pricing-card">
+        <div class="pricing-name">מנוי חודשי</div>
+        <div class="pricing-desc">גמישות מלאה, בטל בכל עת</div>
+        <div class="pricing-price"><div class="price-amount">₪59</div><div class="price-period">לחודש</div></div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span>שאלון רמה מותאם אישית</li>
+          <li><span class="check">✓</span>מסלול התקדמות אישי</li>
+          <li><span class="check">✓</span>ספריית תרגילים מלאה עם תמונות</li>
+          <li><span class="check">✓</span>אזור אישי ומעקב התקדמות</li>
+          <li><span class="check">✓</span>עדכון מסלול אוטומטי</li>
+        </ul>
+        <a href="#" class="btn-secondary open-popup" style="width:100%;text-align:center;display:block;padding:0.9rem;">התחל עכשיו</a>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">⚡ הכי משתלם</div>
+        <div class="pricing-name">מנוי שנתי</div>
+        <div class="pricing-desc">חסוך חודשיים בשנה</div>
+        <div class="pricing-price"><div class="price-amount">₪39</div><div class="price-period">לחודש — מחויב שנתית</div><div class="price-save">חסכון של ₪240 בשנה</div></div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span>הכל מהחבילה החודשית</li>
+          <li><span class="check">✓</span>גישה לכל העדכונים העתידיים</li>
+          <li><span class="check">✓</span>תמיכה מועדפת</li>
+          <li><span class="check">✓</span>אתגרים ומטרות עונתיות</li>
+          <li><span class="check">✓</span>עדיפות לפיצ'רים חדשים</li>
+        </ul>
+        <a href="#" class="btn-primary open-popup" style="width:100%;text-align:center;display:block;padding:0.9rem;">בחר מנוי שנתי</a>
+      </div>
+    </div>
+    <div class="mob-dots" id="pricingDots">
+      <button class="mob-dot active" data-index="0"></button>
+      <button class="mob-dot" data-index="1"></button>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section reveal">
+  <h2>מוכן להפסיק<br><span style="background:linear-gradient(135deg,var(--accent1),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent">לנחש ולהתחיל להתקדם?</span></h2>
+  <p>מלא שאלון קצר וקבל את מסלול האימון האישי שלך — עוד היום.</p>
+  <a href="#" class="btn-primary open-popup" style="font-size:1.05rem;padding:1rem 2.8rem">שלח שאלון עכשיו — חינם</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+
+    <!-- Brand -->
+    <div class="footer-brand">
+      <span class="footer-logo">משקל גוף</span>
+      <p>פלטפורמת הקליסטניקס הראשונה בישראל שבונה לך מסלול התקדמות אישי ומדויק — בלי ניחושים.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="#" title="אינסטגרם">📸</a>
+        <a class="social-btn" href="#" title="פייסבוק">💬</a>
+        <a class="social-btn" href="#" title="טיקטוק">🎵</a>
+        <a class="social-btn" href="#" title="יוטיוב">▶️</a>
+      </div>
+    </div>
+
+    <!-- Col 1: ניווט -->
+    <div class="footer-col">
+      <h4>ניווט <button class="footer-col-toggle" aria-label="הרחב">▼</button></h4>
+      <ul>
+        <li><a href="#">🏠 דף הבית</a></li>
+        <li><a href="#how">⚙️ איך זה עובד</a></li>
+        <li><a href="#features">✨ יכולות</a></li>
+        <li><a href="#pricing">💳 מחירים</a></li>
+        <li><a href="#">📖 בלוג</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 2: יכולות -->
+    <div class="footer-col">
+      <h4>יכולות <button class="footer-col-toggle" aria-label="הרחב">▼</button></h4>
+      <ul>
+        <li><a href="#">🗺️ מסלול אישי</a></li>
+        <li><a href="#">📋 שאלון רמה</a></li>
+        <li><a href="#">👤 אזור אישי</a></li>
+        <li><a href="#">📸 ספריית תרגילים</a></li>
+        <li><a href="#">🔥 ספירת קלוריות</a></li>
+        <li><a href="#">🥗 מעקב תזונה <span class="footer-badge">חדש</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Col 3: תמיכה -->
+    <div class="footer-col">
+      <h4>תמיכה <button class="footer-col-toggle" aria-label="הרחב">▼</button></h4>
+      <ul>
+        <li><a href="#">❓ שאלות נפוצות</a></li>
+        <li><a href="#">📬 צור קשר</a></li>
+        <li><a href="#">🔒 מדיניות פרטיות</a></li>
+        <li><a href="#">📄 תנאי שימוש</a></li>
+        <li><a href="#">💰 מדיניות ביטול</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <p>© 2025 משקל גוף · כל הזכויות שמורות</p>
+    <ul class="footer-bottom-links">
+      <li><a href="#">פרטיות</a></li>
+      <li><a href="#">תנאי שימוש</a></li>
+      <li><a href="#">נגישות</a></li>
+      <li><a href="#">עוגיות</a></li>
+    </ul>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=mishkal-guf" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<!-- ════ POPUP ════ -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup" id="popup">
+    <button class="popup-close" id="popupClose">✕</button>
+    <h3>🏋️ בואו נתחיל</h3>
+    <p class="popup-sub">מלא כמה פרטים קצרים ונבנה עבורך את מסלול האימון האישי שלך.</p>
+
+    <div class="form-group">
+      <label>שם מלא</label>
+      <input type="text" placeholder="ישראל ישראלי">
+    </div>
+    <div class="form-group">
+      <label>אימייל</label>
+      <input type="email" placeholder="israel@email.com">
+    </div>
+    <div class="form-group">
+      <label>רמת קליסטניקס נוכחית</label>
+      <select>
+        <option value="" disabled selected>בחר רמה...</option>
+        <option>מתחיל — עדיין לא עושה שלד</option>
+        <option>בינוני — עושה שלד ומקבילים</option>
+        <option>מתקדם — muscle-up ומעלה</option>
+        <option>מאסטר — פריסטייל ועמידות על ידיים</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>כמה פעמים בשבוע אתה מתאמן?</label>
+      <select>
+        <option value="" disabled selected>בחר...</option>
+        <option>1–2 פעמים</option>
+        <option>3–4 פעמים</option>
+        <option>5+ פעמים</option>
+      </select>
+    </div>
+    <button class="popup-submit">בנה לי תוכנית אישית 🚀</button>
+  </div>
+</div>
+
+<script>
+  // Universal mobile slider init
+  function initSlider(sliderId, dotsId) {
+    const slider = document.getElementById(sliderId);
+    const dotsEl = document.getElementById(dotsId);
+    if (!slider || !dotsEl) return;
+    const dots = dotsEl.querySelectorAll('.mob-dot');
+    slider.addEventListener('scroll', () => {
+      const index = Math.round(slider.scrollLeft / slider.offsetWidth);
+      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    }, { passive: true });
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const i = +dot.dataset.index;
+        slider.scrollTo({ left: slider.offsetWidth * i, behavior: 'smooth' });
+      });
+    });
+  }
+
+  // Problem slider (uses old IDs)
+  (function() {
+    const slider = document.getElementById('problemSlider');
+    const dotsEl = document.getElementById('sliderDots');
+    if (!slider || !dotsEl) return;
+    const dots = dotsEl.querySelectorAll('.slider-dot');
+    slider.addEventListener('scroll', () => {
+      const index = Math.round(slider.scrollLeft / slider.offsetWidth);
+      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    }, { passive: true });
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const i = +dot.dataset.index;
+        slider.scrollTo({ left: slider.offsetWidth * i, behavior: 'smooth' });
+      });
+    });
+  })();
+
+  initSlider('stepsSlider', 'stepsDots');
+  initSlider('featuresSlider', 'featuresDots');
+  initSlider('testimonialsSlider', 'testimonialsDots');
+  initSlider('pricingSlider', 'pricingDots');
+
+  // Footer accordion (mobile)
+  document.querySelectorAll('.footer-col h4').forEach(h4 => {
+    h4.addEventListener('click', () => {
+      const col = h4.closest('.footer-col');
+      const isOpen = col.classList.contains('expanded');
+      document.querySelectorAll('.footer-col').forEach(c => {
+        c.classList.remove('expanded');
+        const btn = c.querySelector('.footer-col-toggle');
+        if (btn) btn.classList.remove('open');
+      });
+      if (!isOpen) {
+        col.classList.add('expanded');
+        const btn = col.querySelector('.footer-col-toggle');
+        if (btn) btn.classList.add('open');
+      }
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => revealObs.observe(r));
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  // Close on link click
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Popup
+  const overlay = document.getElementById('popupOverlay');
+  const popupClose = document.getElementById('popupClose');
+
+  document.querySelectorAll('.open-popup').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closePopup() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  popupClose.addEventListener('click', closePopup);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
+
+  // Form submit
+  document.querySelector('.popup-submit').addEventListener('click', () => {
+    const inputs = document.querySelectorAll('.popup input, .popup select');
+    let valid = true;
+    inputs.forEach(i => { if (!i.value) { i.style.borderColor = '#ff6b6b'; valid = false; } else { i.style.borderColor = ''; } });
+    if (valid) {
+      document.querySelector('.popup-submit').textContent = '✅ נשלח בהצלחה! נחזור אליך בקרוב';
+      document.querySelector('.popup-submit').style.background = 'linear-gradient(135deg,#00e94d,#00ff88)';
+      document.querySelector('.popup-submit').style.color = '#000';
+      setTimeout(closePopup, 2000);
+    }
+  });
+</script>
+</body>
+</html>
