@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מכביבאס – יחד לאצטדיון</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&family=Rubik:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #004d00;
+    --green-mid: #006600;
+    --green-bright: #00aa00;
+    --green-neon: #00ff44;
+    --white: #ffffff;
+    --dark: #001a00;
+    --nav-h: 68px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+    direction: rtl;
+  }
+
+  /* ── BG ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+  .bg-mesh {
+    position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,170,0,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 90%, rgba(0,255,68,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 50% at 50% 50%, rgba(0,80,0,0.5) 0%, transparent 100%),
+      #001a00;
+    animation: meshPulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes meshPulse {
+    from { filter: hue-rotate(0deg) brightness(1); }
+    to   { filter: hue-rotate(8deg) brightness(1.08); }
+  }
+
+  /* ══════════════════════════════
+     NAVBAR
+  ══════════════════════════════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 200;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    /* RTL: hamburger RIGHT, logo LEFT */
+    flex-direction: row;        /* default LTR flex direction */
+    padding: 0 1.5rem;
+    background: rgba(255,255,255,1);
+    border-bottom: 1px solid rgba(0,150,50,0.2);
+    transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+    gap: 1rem;
+  }
+  nav.scrolled {
+    background: rgba(0,10,0,0.2);
+    border-bottom-color: rgba(0,255,68,0.1);
+    backdrop-filter: blur(24px);
+  }
+
+  /* Hamburger on the RIGHT in RTL = order trick */
+  .nav-hamburger {
+    order: -1;          /* visually first = rightmost in RTL */
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .nav-hamburger:hover { background: rgba(0,200,50,0.1); }
+  .nav-hamburger span {
+    display: block;
+    width: 24px; height: 2.5px;
+    background: var(--green-mid);
+    border-radius: 2px;
+    transition: all 0.3s;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+  /* Logo on the LEFT in RTL = margin-auto pushes right */
+  .nav-logo {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    background: linear-gradient(135deg, var(--green-mid), var(--green-deep));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    margin-right: auto;  /* pushes logo to the LEFT in RTL layout */
+  }
+  nav.scrolled .nav-logo {
+    background: linear-gradient(135deg, var(--green-neon), var(--white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Desktop nav links */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(0,80,0,0.85);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { background: rgba(0,150,50,0.1); color: var(--green-mid); }
+  nav.scrolled .nav-links a { color: rgba(255,255,255,0.8); }
+  nav.scrolled .nav-links a:hover { background: rgba(0,255,68,0.12); color: var(--green-neon); }
+
+  .nav-cta {
+    background: var(--green-neon);
+    color: var(--dark) !important;
+    font-weight: 800;
+    font-size: 0.88rem;
+    padding: 0.55rem 1.3rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 0 18px rgba(0,255,68,0.4);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-cta:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 32px rgba(0,255,68,0.7);
+  }
+
+  /* Mobile drawer */
+  .nav-drawer {
+    display: none;
+    position: fixed;
+    top: var(--nav-h); right: 0; left: 0;
+    background: rgba(0,15,0,0.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,255,68,0.15);
+    z-index: 199;
+    padding: 1.5rem;
+    transform: translateY(-110%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  .nav-drawer.open { transform: translateY(0); }
+  .nav-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+  .nav-drawer ul a {
+    display: block;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    transition: all 0.2s;
+    text-align: right;
+  }
+  .nav-drawer ul a:hover { background: rgba(0,255,68,0.1); color: var(--green-neon); }
+  .nav-drawer .drawer-cta {
+    margin-top: 1rem;
+    display: block;
+    background: linear-gradient(135deg, var(--green-neon), var(--green-bright));
+    color: var(--dark);
+    font-weight: 900;
+    font-size: 1.05rem;
+    padding: 0.9rem;
+    border-radius: 50px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 0 25px rgba(0,255,68,0.4);
+  }
+
+  /* ══════════════════════════════
+     HERO
+  ══════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: calc(var(--nav-h) + 3rem) 1.5rem 4rem;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,255,68,0.1);
+    border: 1px solid rgba(0,255,68,0.3);
+    border-radius: 50px;
+    padding: 0.4rem 1.2rem;
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+    color: var(--green-neon);
+    margin-bottom: 1.5rem;
+    animation: fadeDown 0.8s ease both;
+  }
+  .hero-badge::before { content: '⚽'; font-size: 1rem; }
+  .hero-title {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 14vw, 8rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.3rem;
+    animation: fadeDown 0.9s ease 0.1s both;
+  }
+  .hero-title span {
+    background: linear-gradient(135deg, var(--green-neon) 0%, #ffffff 50%, var(--green-bright) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(0,255,68,0.5));
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: rgba(255,255,255,0.7);
+    max-width: 560px;
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+    animation: fadeDown 1s ease 0.2s both;
+  }
+  .hero-sub strong { color: var(--green-neon); }
+  .hero-buttons {
+    display: flex;
+    gap: 0.85rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeDown 1s ease 0.3s both;
+    width: 100%;
+  }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--green-neon), var(--green-bright));
+    color: var(--dark);
+    font-weight: 900;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 0 40px rgba(0,255,68,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 0 60px rgba(0,255,68,0.8), inset 0 1px 0 rgba(255,255,255,0.3);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: var(--white);
+    font-weight: 700;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s;
+    display: inline-block;
+    text-align: center;
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(0,255,68,0.4);
+    transform: translateY(-2px);
+  }
+
+  /* Hero mock card */
+  .hero-visual {
+    margin-top: 4rem;
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    animation: fadeUp 1.2s ease 0.4s both;
+  }
+  .stadium-card {
+    background: linear-gradient(135deg, rgba(0,100,0,0.3), rgba(0,40,0,0.6));
+    border: 1px solid rgba(0,255,68,0.2);
+    border-radius: 20px;
+    padding: clamp(1.2rem, 4vw, 2.5rem);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+  .stadium-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(0,255,68,0.08), transparent 60%);
+    animation: rotateGlow 6s linear infinite;
+  }
+  @keyframes rotateGlow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  .pickup-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem;
+    background: rgba(0,255,68,0.06);
+    border: 1px solid rgba(0,255,68,0.15);
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    position: relative; z-index: 1;
+    transition: all 0.3s;
+  }
+  .pickup-row:hover { background: rgba(0,255,68,0.12); border-color: rgba(0,255,68,0.4); }
+  .pickup-icon {
+    width: 38px; height: 38px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--green-neon), var(--green-bright));
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    box-shadow: 0 0 12px rgba(0,255,68,0.4);
+  }
+  .pickup-info { flex: 1; text-align: right; min-width: 0; }
+  .pickup-name { font-weight: 700; font-size: clamp(0.8rem, 2.5vw, 0.95rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pickup-time { color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 2px; }
+  .pickup-seats {
+    background: rgba(0,255,68,0.15); color: var(--green-neon);
+    font-size: 0.7rem; font-weight: 700;
+    padding: 0.25rem 0.6rem; border-radius: 50px;
+    border: 1px solid rgba(0,255,68,0.3);
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* ══════════════════════════════
+     SECTIONS
+  ══════════════════════════════ */
+  .section {
+    padding: clamp(3.5rem, 8vw, 7rem) clamp(1rem, 4vw, 2rem);
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .section-label {
+    color: var(--green-neon);
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.8rem; opacity: 0.8;
+  }
+  .section-title {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+  .section-title .highlight {
+    color: var(--green-neon);
+    text-shadow: 0 0 30px rgba(0,255,68,0.4);
+  }
+
+  /* ── PROBLEMS ── */
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+    gap: 1rem; margin-top: 2.5rem;
+  }
+  .problem-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 1.5rem;
+    text-align: center; transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .problem-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,50,50,0.05), transparent);
+    pointer-events: none;
+  }
+  .problem-card:hover { border-color: rgba(255,100,100,0.3); transform: translateY(-4px); }
+  .problem-emoji { font-size: 2.2rem; margin-bottom: 0.8rem; display: block; }
+  .problem-text { color: rgba(255,255,255,0.7); line-height: 1.5; font-size: 0.9rem; }
+
+  /* ── STEPS ── */
+  .steps-container {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: 1.5rem;
+  }
+  .step {
+    position: relative; padding: 1.8rem;
+    background: linear-gradient(135deg, rgba(0,100,0,0.15), rgba(0,50,0,0.3));
+    border: 1px solid rgba(0,255,68,0.15);
+    border-radius: 18px; transition: all 0.3s; overflow: hidden;
+  }
+  .step::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, rgba(0,255,68,0.15), transparent 70%);
+  }
+  .step:hover {
+    border-color: rgba(0,255,68,0.4); transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(0,255,68,0.1);
+  }
+  .step-number { font-family: 'Rubik', sans-serif; font-size: 2.8rem; font-weight: 900; color: rgba(255,255,255,0.9); line-height: 1; margin-bottom: 0.4rem; }
+  .step-icon { font-size: 1.6rem; margin-bottom: 0.7rem; display: block; }
+  .step-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .step-desc { color: rgba(255,255,255,0.6); font-size: 0.88rem; line-height: 1.6; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(to left, transparent, rgba(0,255,68,0.3), transparent);
+  }
+
+  /* ── FEATURES ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    gap: 1.25rem; margin-top: 3rem;
+  }
+  .feature-card {
+    background: rgba(0,255,68,0.04);
+    border: 1px solid rgba(0,255,68,0.12);
+    border-radius: 18px; padding: 1.8rem; transition: all 0.3s;
+  }
+  .feature-card:hover {
+    background: rgba(0,255,68,0.08);
+    border-color: rgba(0,255,68,0.35);
+    box-shadow: 0 0 30px rgba(0,255,68,0.1);
+  }
+  .feature-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, rgba(0,255,68,0.2), rgba(0,200,50,0.1));
+    border: 1px solid rgba(0,255,68,0.3);
+    border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 1rem;
+  }
+  .feature-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; }
+  .feature-desc { color: rgba(255,255,255,0.6); font-size: 0.88rem; line-height: 1.6; }
+
+  /* ── COMMUNITY ── */
+  .community-wrap { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem); position: relative; z-index: 1; }
+  .community-banner {
+    background: linear-gradient(135deg, rgba(0,150,0,0.25), rgba(0,80,0,0.4));
+    border: 1px solid rgba(0,255,68,0.25);
+    border-radius: 24px;
+    padding: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3rem);
+    text-align: center; position: relative; overflow: hidden; margin: 2rem 0;
+  }
+  .community-banner::before {
+    content: ''; position: absolute; top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,255,68,0.15), transparent 70%);
+    pointer-events: none;
+  }
+  .community-title {
+    font-family: 'Rubik', sans-serif; font-weight: 900;
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    margin-bottom: 1rem; position: relative; z-index: 1;
+  }
+  .community-desc {
+    color: rgba(255,255,255,0.7); font-size: clamp(0.9rem, 2vw, 1.05rem);
+    max-width: 500px; margin: 0 auto 2rem; line-height: 1.7;
+    position: relative; z-index: 1;
+  }
+  .stats-row {
+    display: flex; justify-content: center;
+    gap: clamp(1.5rem, 5vw, 3rem); flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Rubik', sans-serif; font-weight: 900;
+    font-size: clamp(2rem, 6vw, 4rem);
+    background: linear-gradient(135deg, var(--green-neon), var(--white));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1; filter: drop-shadow(0 0 20px rgba(0,255,68,0.4));
+  }
+  .stat-label { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 0.3rem; }
+
+  /* ── RESULTS ── */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    gap: 1rem;
+  }
+  .result-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px; padding: 1.3rem;
+    position: relative; overflow: hidden; transition: all 0.3s;
+  }
+  .result-card::before {
+    content: ''; position: absolute; top: 0; right: 0; left: 0; height: 3px;
+  }
+  .result-win::before  { background: linear-gradient(to left, var(--green-neon), var(--green-bright)); }
+  .result-draw::before { background: linear-gradient(to left, #f0c040, #c89000); }
+  .result-loss::before { background: linear-gradient(to left, #ff4444, #cc0000); }
+  .result-card.championship {
+    border-color: rgba(0,255,68,0.35);
+    background: rgba(0,255,68,0.05);
+    box-shadow: 0 0 30px rgba(0,255,68,0.1);
+  }
+  .result-card:hover { transform: translateY(-4px); border-color: rgba(0,255,68,0.25); }
+  .result-badge {
+    display: inline-block; font-size: 0.7rem; font-weight: 700;
+    padding: 0.2rem 0.7rem; border-radius: 50px;
+    margin-bottom: 0.7rem; letter-spacing: 0.05em;
+  }
+  .result-badge.win     { background: rgba(0,255,68,0.15); color: var(--green-neon); border: 1px solid rgba(0,255,68,0.3); }
+  .result-badge.draw    { background: rgba(240,192,64,0.15); color: #f0c040; border: 1px solid rgba(240,192,64,0.3); }
+  .result-badge.loss    { background: rgba(255,68,68,0.15); color: #ff6666; border: 1px solid rgba(255,68,68,0.3); }
+  .result-badge.champion{ background: rgba(0,255,68,0.2); color: var(--green-neon); border: 1px solid rgba(0,255,68,0.5); font-size: 0.78rem; }
+  .result-meta { color: rgba(255,255,255,0.4); font-size: 0.72rem; margin-bottom: 0.9rem; }
+  .result-matchup {
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 0.5rem; margin-bottom: 0.9rem;
+  }
+  .result-team { display: flex; align-items: center; gap: 0.35rem; flex: 1; min-width: 0; }
+  .result-team.away { justify-content: flex-end; flex-direction: row-reverse; }
+  .result-team.home { justify-content: flex-start; }
+  .team-name { font-weight: 700; font-size: clamp(0.78rem, 2vw, 0.88rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .team-logo { font-size: 1.1rem; flex-shrink: 0; }
+  .result-score {
+    display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0;
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 0.35rem 0.65rem;
+  }
+  .score-num { font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 1.3rem; line-height: 1; color: rgba(255,255,255,0.5); }
+  .score-num.highlight-score { color: var(--green-neon); }
+  .score-sep { color: rgba(255,255,255,0.3); font-size: 0.9rem; font-weight: 700; }
+  .result-venue { color: rgba(255,255,255,0.35); font-size: 0.7rem; }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center;
+    padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 4vw, 2rem);
+    position: relative; z-index: 1;
+  }
+  .cta-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(600px, 90vw); height: 400px;
+    background: radial-gradient(ellipse, rgba(0,255,68,0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .cta-title {
+    font-family: 'Rubik', sans-serif; font-weight: 900;
+    font-size: clamp(2rem, 7vw, 5rem);
+    line-height: 1.1; margin-bottom: 1.2rem; position: relative; z-index: 1;
+  }
+  .cta-title .glow-text { color: var(--green-neon); text-shadow: 0 0 40px rgba(0,255,68,0.6); }
+  .cta-sub { color: rgba(255,255,255,0.6); font-size: clamp(0.95rem, 2vw, 1.1rem); margin-bottom: 2.5rem; position: relative; z-index: 1; }
+  .cta-buttons { position: relative; z-index: 1; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .cta-badges { margin-top: 2.5rem; position: relative; z-index: 1; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+  .cta-badge-item { display: flex; align-items: center; gap: 0.4rem; color: rgba(255,255,255,0.5); font-size: 0.82rem; }
+  .cta-badge-item span { color: var(--green-neon); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(0,255,68,0.1);
+    padding: 2.5rem clamp(1rem, 4vw, 2rem);
+    text-align: center; color: rgba(255,255,255,0.3);
+    font-size: 0.82rem; position: relative; z-index: 1;
+  }
+  footer span { color: var(--green-neon); opacity: 0.7; }
+  footer .footer-logo { font-weight: 700; font-size: 1rem; color: rgba(0,255,68,0.7); }
+
+  /* ── FLOATERS ── */
+  .floater {
+    position: fixed; font-size: 1.5rem; pointer-events: none; z-index: 0;
+    opacity: 0.1; animation: floatBall linear infinite;
+  }
+  @keyframes floatBall {
+    0%   { transform: translateY(110vh) rotate(0deg); }
+    100% { transform: translateY(-10vh) rotate(720deg); }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ══════════════════════════════
+     POPUP / MODAL
+  ══════════════════════════════ */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,10,0,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 500;
+    align-items: center; justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: linear-gradient(160deg, rgba(0,60,0,0.95), rgba(0,20,0,0.98));
+    border: 1px solid rgba(0,255,68,0.3);
+    border-radius: 24px;
+    padding: clamp(2rem, 5vw, 3rem);
+    max-width: 460px; width: 100%;
+    position: relative;
+    box-shadow: 0 0 80px rgba(0,255,68,0.15), 0 30px 60px rgba(0,0,0,0.5);
+    animation: modalPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.88) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-close {
+    position: absolute; top: 1rem; left: 1rem;
+    background: rgba(255,255,255,0.08);
+    border: none; border-radius: 50%;
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: rgba(255,255,255,0.6);
+    font-size: 1.1rem; transition: all 0.2s;
+  }
+  .modal-close:hover { background: rgba(255,68,68,0.2); color: #ff6666; }
+  .modal-icon { font-size: 3rem; text-align: center; margin-bottom: 1rem; }
+  .modal h2 {
+    font-family: 'Rubik', sans-serif; font-weight: 900;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    text-align: center; margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--green-neon), var(--white));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .modal-sub { text-align: center; color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.6; }
+  .modal-form { display: flex; flex-direction: column; gap: 0.85rem; }
+  .modal-input {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(0,255,68,0.2);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    color: var(--white);
+    font-family: 'Heebo', sans-serif;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.2s;
+    text-align: right;
+    direction: rtl;
+  }
+  .modal-input::placeholder { color: rgba(255,255,255,0.3); }
+  .modal-input:focus { outline: none; border-color: rgba(0,255,68,0.5); background: rgba(0,255,68,0.05); }
+  .modal-select {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(0,255,68,0.2);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    color: var(--white);
+    font-family: 'Heebo', sans-serif;
+    font-size: 1rem;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    text-align: right;
+    direction: rtl;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .modal-select option { background: #001a00; }
+  .modal-select:focus { outline: none; border-color: rgba(0,255,68,0.5); }
+  .modal-submit {
+    background: linear-gradient(135deg, var(--green-neon), var(--green-bright));
+    color: var(--dark); font-weight: 900; font-size: 1.05rem;
+    padding: 1rem; border-radius: 50px; border: none; cursor: pointer;
+    width: 100%; transition: all 0.3s;
+    box-shadow: 0 0 30px rgba(0,255,68,0.4);
+    font-family: 'Heebo', sans-serif;
+    margin-top: 0.25rem;
+  }
+  .modal-submit:hover { transform: scale(1.02); box-shadow: 0 0 45px rgba(0,255,68,0.65); }
+  .modal-divider { text-align: center; color: rgba(255,255,255,0.3); font-size: 0.82rem; position: relative; margin: 0.25rem 0; }
+  .modal-divider::before, .modal-divider::after {
+    content: ''; position: absolute; top: 50%;
+    width: 40%; height: 1px; background: rgba(255,255,255,0.1);
+  }
+  .modal-divider::before { right: 0; }
+  .modal-divider::after  { left: 0; }
+  .modal-wa {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    background: rgba(37,211,102,0.15); border: 1px solid rgba(37,211,102,0.3);
+    color: #25d366; font-weight: 700; font-size: 0.95rem;
+    padding: 0.85rem; border-radius: 50px; text-decoration: none;
+    transition: all 0.3s;
+  }
+  .modal-wa:hover { background: rgba(37,211,102,0.25); transform: translateY(-2px); }
+  .modal-success { display: none; text-align: center; padding: 1rem 0; }
+  .modal-success.show { display: block; }
+  .modal-success-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .modal-success h3 { font-family: 'Rubik', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--green-neon); margin-bottom: 0.5rem; }
+  .modal-success p { color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+
+  /* ══════════════════════════════
+     MOBILE SLIDER (steps & features)
+  ══════════════════════════════ */
+  .slider-wrap {
+    position: relative;
+  }
+
+  /* Desktop: keep existing grid layout */
+  .steps-container,
+  .features-grid {
+    /* unchanged on desktop */
+  }
+
+  /* Mobile slider styles — activated via .is-slider class added by JS */
+  @media (max-width: 768px) {
+    .slider-wrap {
+      margin: 0 -1rem; /* bleed to edges */
+    }
+    .slider-track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 0;
+      padding: 0.5rem 1rem 1rem;
+    }
+    .slider-track::-webkit-scrollbar { display: none; }
+
+    /* Override grid on mobile */
+    .slider-track.steps-container,
+    .slider-track.features-grid {
+      display: flex;
+      grid-template-columns: unset;
+    }
+
+    .slider-track .step,
+    .slider-track .feature-card {
+      flex: 0 0 82vw;
+      max-width: 320px;
+      scroll-snap-align: start;
+      margin-left: 0;
+    }
+    /* Gap between cards via margin */
+    .slider-track .step + .step,
+    .slider-track .feature-card + .feature-card {
+      margin-right: 0.85rem;
+    }
+    /* Last card gets right padding so it snaps clean */
+    .slider-track .step:last-child,
+    .slider-track .feature-card:last-child {
+      margin-left: 1rem;
+    }
+
+    /* Dot indicators */
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 1.1rem;
+    }
+    .slider-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(0,255,68,0.25);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s;
+    }
+    .slider-dot.active {
+      width: 22px;
+      border-radius: 4px;
+      background: var(--green-neon);
+      box-shadow: 0 0 8px rgba(0,255,68,0.6);
+    }
+
+    /* Swipe hint arrow */
+    .slider-hint {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(0,255,68,0.5);
+      font-size: 0.78rem;
+      margin-top: 0.3rem;
+      justify-content: center;
+      animation: hintPulse 2s ease-in-out 1s 3;
+    }
+    @keyframes hintPulse {
+      0%,100% { opacity: 0.5; transform: translateX(0); }
+      50%      { opacity: 1;   transform: translateX(-4px); }
+    }
+  }
+
+  @media (min-width: 769px) {
+    .slider-dots,
+    .slider-hint { display: none !important; }
+  }
+
+  /* ══════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════ */
+  @media (max-width: 768px) {
+    .nav-hamburger { display: flex; }
+    .nav-links { display: none; }
+    .nav-cta.desktop-only { display: none; }
+    .nav-drawer { display: block; }
+    nav { padding: 0 1.2rem; }
+
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .hero-buttons .btn-primary,
+    .hero-buttons .btn-secondary { width: 100%; max-width: 320px; }
+
+    .pickup-seats { display: none; }
+
+    .stats-row { gap: 1.5rem; }
+
+    .cta-buttons { flex-direction: column; align-items: center; }
+    .cta-buttons .btn-primary,
+    .cta-buttons .btn-secondary { width: 100%; max-width: 320px; }
+
+    .community-banner { padding: 2rem 1.25rem; }
+  }
+
+  @media (max-width: 480px) {
+    .problems-grid { grid-template-columns: 1fr 1fr; }
+    .result-matchup { gap: 0.3rem; }
+    .score-num { font-size: 1.1rem; }
+    .result-score { padding: 0.3rem 0.5rem; }
+  }
+
+  @media (max-width: 360px) {
+    .problems-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+
+<!-- Floating balls -->
+<div class="floater" style="left:5%;  animation-duration:18s; animation-delay:0s;">⚽</div>
+<div class="floater" style="left:20%; animation-duration:22s; animation-delay:5s;">⚽</div>
+<div class="floater" style="left:75%; animation-duration:16s; animation-delay:2s;">⚽</div>
+<div class="floater" style="left:90%; animation-duration:20s; animation-delay:8s;">⚽</div>
+<div class="floater" style="left:50%; animation-duration:25s; animation-delay:12s;">⚽</div>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar">
+  <!-- Hamburger: order:-1 = appears on RIGHT in RTL -->
+  <button class="nav-hamburger" id="hamburger" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Nav links (desktop) -->
+  <ul class="nav-links">
+    <li><a href="#how">איך זה עובד</a></li>
+    <li><a href="#results">תוצאות</a></li>
+    <li><a href="#join">קהילה</a></li>
+  </ul>
+
+  <!-- CTA (desktop) -->
+  <a href="#" class="nav-cta desktop-only" onclick="openModal(event)">הירשמו עכשיו</a>
+
+  <!-- Logo: margin-right:auto = pushed to LEFT in RTL -->
+  <div class="nav-logo">מכביבאס 🟢</div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-drawer" id="navDrawer">
+  <ul>
+    <li><a href="#how"     onclick="closeDrawer()">איך זה עובד</a></li>
+    <li><a href="#results" onclick="closeDrawer()">תוצאות</a></li>
+    <li><a href="#join"    onclick="closeDrawer()">קהילה</a></li>
+  </ul>
+  <a href="#" class="drawer-cta" onclick="closeDrawer(); openModal(event)">הירשמו עכשיו 🟢</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-badge">האפליקציה הרשמית של אוהדי מכבי חיפה</div>
+  <h1 class="hero-title"><span>מכביבאס</span></h1>
+  <p class="hero-sub">מגיעים מאותו אזור? <strong>נסעו יחד לאצטדיון!</strong><br>חברו בין אוהדים, חסכו בדרך, תהנו יחד.</p>
+  <div class="hero-buttons">
+    <a href="#" class="btn-primary" onclick="openModal(event)">🚌 מצא טרמפ לאצטדיון</a>
+    <a href="#how" class="btn-secondary">איך זה עובד?</a>
+  </div>
+
+  <!-- Mock UI card -->
+  <div class="hero-visual">
+    <div class="stadium-card">
+      <div style="text-align:right; margin-bottom:1.2rem; position:relative; z-index:1;">
+        <div style="color:rgba(255,255,255,0.4); font-size:0.72rem; margin-bottom:0.3rem;">🏟️ מכבי חיפה vs הפועל תל אביב · שישי 20:00</div>
+        <div style="font-weight:700; font-size:1rem;">נקודות איסוף קרובות אלייך</div>
+      </div>
+      <div class="pickup-row">
+        <div class="pickup-seats">2 מקומות</div>
+        <div class="pickup-info">
+          <div class="pickup-name">צומת קריות — אחת עשרה</div>
+          <div class="pickup-time">יוצא 18:30 · 4 אוהדים</div>
+        </div>
+        <div class="pickup-icon">🚗</div>
+      </div>
+      <div class="pickup-row">
+        <div class="pickup-seats">1 מקום</div>
+        <div class="pickup-info">
+          <div class="pickup-name">מרכז נשר — קניון</div>
+          <div class="pickup-time">יוצא 18:45 · 3 אוהדים</div>
+        </div>
+        <div class="pickup-icon">🚐</div>
+      </div>
+      <div class="pickup-row">
+        <div class="pickup-seats">3 מקומות</div>
+        <div class="pickup-info">
+          <div class="pickup-name">חיפה מרכז — תחנה מרכזית</div>
+          <div class="pickup-time">יוצא 19:00 · 2 אוהדים</div>
+        </div>
+        <div class="pickup-icon">🚌</div>
+      </div>
+      <div style="text-align:center; margin-top:1.2rem; position:relative; z-index:1;">
+        <div style="display:inline-flex; align-items:center; gap:0.5rem; background:rgba(0,255,68,0.1); border:1px solid rgba(0,255,68,0.25); border-radius:50px; padding:0.45rem 1.1rem; font-size:0.82rem; color:var(--green-neon);">
+          ✅ 127 אוהדים יוצאים השבת
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PROBLEM ══ -->
+<section class="section reveal">
+  <div class="section-label">הבעיה</div>
+  <h2 class="section-title">להגיע לאצטדיון<br>זה <span class="highlight">כאב ראש</span></h2>
+  <p style="color:rgba(255,255,255,0.6); max-width:550px; line-height:1.7;">אוהד ירוק שגר בצפון, בדרום, או בשפלה — לפעמים הדרך לאצטדיון שווה את המשחק, ולא בצורה הטובה.</p>
+  <div class="problems-grid">
+    <div class="problem-card"><span class="problem-emoji">🚗</span><strong style="display:block;margin-bottom:0.5rem;">נסיעה ברכב לבד</strong><div class="problem-text">דלק, חניה, פקקים בדרך — ביחד זה פשוט יקר מדי.</div></div>
+    <div class="problem-card"><span class="problem-emoji">🚌</span><strong style="display:block;margin-bottom:0.5rem;">תחבורה ציבורית</strong><div class="problem-text">אוטובוסים ורכבות לא תמיד מגיעים בזמן, ואחרי המשחק? שוממות.</div></div>
+    <div class="problem-card"><span class="problem-emoji">💸</span><strong style="display:block;margin-bottom:0.5rem;">מונית / אובר</strong><div class="problem-text">נסיעה בודדת יכולה לעלות כמו הכרטיס עצמו. לא הגיוני.</div></div>
+    <div class="problem-card"><span class="problem-emoji">😔</span><strong style="display:block;margin-bottom:0.5rem;">מחמיצים משחקים</strong><div class="problem-text">בסוף אוהדים רחוקים פשוט מוותרים. זה לא צדק לאוהד ירוק.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="section reveal" id="how">
+  <div class="section-label">הפתרון</div>
+  <h2 class="section-title">פשוט, <span class="highlight">ירוק</span>, ויחד</h2>
+  <p style="color:rgba(255,255,255,0.6); max-width:550px; line-height:1.7;">מכביבאס מחברת אוהדים מאותו אזור שרוצים להגיע יחד לאצטדיון.</p>
+  <div class="slider-wrap" id="stepsWrap">
+    <div class="steps-container slider-track" id="stepsTrack">
+      <div class="step"><div class="step-number">01</div><span class="step-icon">📍</span><div class="step-title">בחר את האזור שלך</div><div class="step-desc">ציין מאיפה אתה יוצא — עיר, שכונה, או צומת מרכזית קרובה אלייך.</div></div>
+      <div class="step"><div class="step-number">02</div><span class="step-icon">🔍</span><div class="step-title">מצא נקודות איסוף</div><div class="step-desc">ראה אוהדים אחרים שדיווחו על נקודות איסוף קרובות אלייך לפני כל משחק.</div></div>
+      <div class="step"><div class="step-number">03</div><span class="step-icon">✅</span><div class="step-title">סגרו הסעה ביחד</div><div class="step-desc">צרו קשר, שלמו ביחד על הדלק, ותהנו מהאנרגיה הירוקה כבר מתחילת הדרך.</div></div>
+    </div>
+    <div class="slider-dots" id="stepsDots"></div>
+    <div class="slider-hint">← החלק לצפייה בשלבים</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ FEATURES ══ -->
+<section class="section reveal">
+  <div class="section-label">יכולות</div>
+  <h2 class="section-title">כל מה שצריך<br>כדי להגיע <span class="highlight">הביתה</span></h2>
+  <div class="slider-wrap" id="featuresWrap">
+    <div class="features-grid slider-track" id="featuresTrack">
+      <div class="feature-card"><div class="feature-icon">🗺️</div><div class="feature-title">מפת נקודות איסוף</div><div class="feature-desc">ראה בזמן אמת אוהדים אחרים שמחפשים טרמפ מהאזור שלך.</div></div>
+      <div class="feature-card"><div class="feature-icon">📅</div><div class="feature-title">לוח משחקים</div><div class="feature-desc">כל המשחקים של מכבי חיפה — ליגה, גביע, ואירופה — במקום אחד.</div></div>
+      <div class="feature-card"><div class="feature-icon">💬</div><div class="feature-title">ווצאפ קבוצות אזוריות</div><div class="feature-desc">חיבור ישיר לקבוצות ווצאפ של אוהדים לפי אזור לתיאום מהיר.</div></div>
+      <div class="feature-card"><div class="feature-icon">⭐</div><div class="feature-title">דירוג נהגים</div><div class="feature-desc">נסע עם נהגים מהימנים שאוהדים אחרים כבר דירגו ואישרו.</div></div>
+      <div class="feature-card"><div class="feature-icon">🟢</div><div class="feature-title">חינמי לגמרי</div><div class="feature-desc">נבנה מאהבה לקבוצה. תרומה חופשית למי שרוצה לתמוך בפרויקט.</div></div>
+      <div class="feature-card"><div class="feature-icon">🔔</div><div class="feature-title">התראות משחק</div><div class="feature-desc">קבל עדכון כשיש הסעות זמינות מהאזור שלך לפני כל משחק.</div></div>
+    </div>
+    <div class="slider-dots" id="featuresDots"></div>
+    <div class="slider-hint">← החלק לצפייה ביכולות</div>
+  </div>
+</section>
+
+<!-- ══ COMMUNITY ══ -->
+<div class="community-wrap">
+  <div class="community-banner reveal" id="join">
+    <h2 class="community-title">קהילת האוהדים<br><span style="color:var(--green-neon);">הירוקים</span> המאוחדים</h2>
+    <p class="community-desc">מכביבאס הוא לא רק אפליקציה — זו קהילה של אוהדים שמגיעים יחד, חוגגים יחד, וחוזרים הביתה יחד. 💚</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">אוהדים רשומים</div></div>
+      <div class="stat"><div class="stat-num">30+</div><div class="stat-label">ערים ואזורים</div></div>
+      <div class="stat"><div class="stat-num">200+</div><div class="stat-label">הסעות שנוצרו</div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ CTA ══ -->
+<section class="cta-section reveal">
+  <div class="cta-glow"></div>
+  <h2 class="cta-title">מוכן להגיע<br><span class="glow-text">עם הירוקים?</span></h2>
+  <p class="cta-sub">הצטרף אלינו ותהנה מכל משחק בדרך הטובה ביותר — ביחד.</p>
+  <div class="cta-buttons">
+    <a href="#" class="btn-primary" onclick="openModal(event)">🚌 התחל עכשיו</a>
+    <a href="mailto:maccabibus@gmail.com" class="btn-secondary">✉️ צור קשר</a>
+  </div>
+  <div class="cta-badges">
+    <div class="cta-badge-item"><span>✓</span> חינמי לחלוטין</div>
+    <div class="cta-badge-item"><span>✓</span> ללא רישום מסורבל</div>
+    <div class="cta-badge-item"><span>✓</span> בנוי על ידי אוהד</div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div style="margin-bottom:0.5rem;">
+    <span class="footer-logo">מכביבאס</span> — יחד לאצטדיון, יחד חוזרים
+  </div>
+  <div>בנוי מאהבה טהורה ל<span>מכבי חיפה</span> 💚 · כל הזכויות שמורות 2026</div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=maccabibus" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<!-- ══ POPUP MODAL ══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" onclick="closeModal()" aria-label="סגור">✕</button>
+    <div id="modalContent">
+      <div class="modal-icon">🟢</div>
+      <h2 id="modalTitle">הירשם למכביבאס</h2>
+      <p class="modal-sub">מלא פרטים ונחבר אותך לאוהדים מהאזור שלך לפני כל משחק!</p>
+      <div class="modal-form" id="modalForm">
+        <input class="modal-input" type="text"  id="userName" placeholder="שם מלא" required />
+        <input class="modal-input" type="tel"   id="userPhone" placeholder="מספר טלפון" required />
+        <select class="modal-select" id="userArea">
+          <option value="" disabled selected>בחר אזור מגורים</option>
+          <option>חיפה</option>
+          <option>קריות</option>
+          <option>נשר / קרית ביאליק</option>
+          <option>עכו / נהריה</option>
+          <option>טבריה / כנרת</option>
+          <option>חדרה / זכרון</option>
+          <option>תל אביב / גוש דן</option>
+          <option>ירושלים</option>
+          <option>דרום</option>
+          <option>אחר</option>
+        </select>
+        <button class="modal-submit" onclick="submitForm()">הצטרף עכשיו 🚌</button>
+        <div class="modal-divider">או הצטרף ישירות</div>
+        <a href="https://wa.me" target="_blank" class="modal-wa">
+          <span>💬</span> קבוצת ווצאפ של אוהדים
+        </a>
+      </div>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <div class="modal-success-icon">🎉</div>
+      <h3>ברוך הבא, ירוק!</h3>
+      <p>פרטיך נקלטו. נשלח אליך הודעה לפני המשחק הבא עם כל נקודות האיסוף מהאזור שלך.</p>
+      <br>
+      <p style="color:var(--green-neon); font-weight:700;">יחד לאצטדיון! 💚</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Scroll reveal ── */
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => revealObs.observe(el));
+
+  /* ── Navbar scroll ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ── Hamburger ── */
+  const hamburger = document.getElementById('hamburger');
+  const navDrawer = document.getElementById('navDrawer');
+  hamburger.addEventListener('click', () => {
+    const open = hamburger.classList.toggle('open');
+    navDrawer.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  function closeDrawer() {
+    hamburger.classList.remove('open');
+    navDrawer.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close drawer on outside click
+  document.addEventListener('click', e => {
+    if (!navbar.contains(e.target) && !navDrawer.contains(e.target)) closeDrawer();
+  });
+
+
+  /* ── Mobile Sliders ── */
+  function initSlider(trackId, dotsId) {
+    const track = document.getElementById(trackId);
+    const dotsEl = document.getElementById(dotsId);
+    if (!track || !dotsEl) return;
+
+    const isMobile = () => window.innerWidth <= 768;
+
+    function buildDots() {
+      if (!isMobile()) return;
+      const cards = track.children;
+      dotsEl.innerHTML = '';
+      Array.from(cards).forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'כרטיס ' + (i + 1));
+        dot.addEventListener('click', () => scrollToCard(i));
+        dotsEl.appendChild(dot);
+      });
+    }
+
+    function scrollToCard(index) {
+      const cards = track.children;
+      if (!cards[index]) return;
+      const card = cards[index];
+      // RTL: scroll so card right edge aligns with track right edge
+      const trackRect = track.getBoundingClientRect();
+      const cardRect  = card.getBoundingClientRect();
+      // scrollLeft in RTL is negative in some browsers; use scrollTo with left
+      const offset = card.offsetLeft - track.offsetLeft;
+      track.scrollTo({ left: offset, behavior: 'smooth' });
+    }
+
+    function updateDots() {
+      if (!isMobile()) return;
+      const cards = Array.from(track.children);
+      const trackRect = track.getBoundingClientRect();
+      let activeIdx = 0;
+      let minDist = Infinity;
+      cards.forEach((card, i) => {
+        const rect = card.getBoundingClientRect();
+        const dist = Math.abs(rect.right - trackRect.right);
+        if (dist < minDist) { minDist = dist; activeIdx = i; }
+      });
+      Array.from(dotsEl.children).forEach((dot, i) => {
+        dot.classList.toggle('active', i === activeIdx);
+      });
+    }
+
+    track.addEventListener('scroll', updateDots, { passive: true });
+    buildDots();
+    window.addEventListener('resize', buildDots);
+  }
+
+  initSlider('stepsTrack',    'stepsDots');
+  initSlider('featuresTrack', 'featuresDots');
+
+  /* ── Modal ── */
+  const overlay = document.getElementById('modalOverlay');
+  function openModal(e) {
+    if (e) e.preventDefault();
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Reset to form view
+    document.getElementById('modalContent').style.display = '';
+    document.getElementById('modalSuccess').classList.remove('show');
+  }
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function handleOverlayClick(e) {
+    if (e.target === overlay) closeModal();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function submitForm() {
+    const name  = document.getElementById('userName').value.trim();
+    const phone = document.getElementById('userPhone').value.trim();
+    const area  = document.getElementById('userArea').value;
+    if (!name || !phone || !area) {
+      alert('נא למלא את כל השדות');
+      return;
+    }
+    // Simulate submission
+    document.getElementById('modalContent').style.display = 'none';
+    document.getElementById('modalSuccess').classList.add('show');
+    setTimeout(closeModal, 4000);
+  }
+</script>
+</body>
+</html>
