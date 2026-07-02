@@ -1778,6 +1778,27 @@
         @media(max-width:900px) { .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
         @media(max-width:480px) { .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 14px; } .proj-info { padding: 10px 11px 12px; } .proj-name { font-size: 0.78rem; } }
 
+        /* ── Mobile-only "show more" for projects (desktop unaffected) ── */
+        .proj-more-wrap { display: none; }
+        .proj-more-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(0,212,170,.1);
+            border: 1px solid rgba(0,212,170,.32);
+            color: var(--accent);
+            font-family: inherit; font-size: 0.92rem; font-weight: 700;
+            padding: 12px 28px; border-radius: 50px; cursor: pointer;
+            transition: background .2s, transform .2s;
+        }
+        .proj-more-btn:hover { background: rgba(0,212,170,.18); transform: translateY(-1px); }
+        @media (max-width: 768px) {
+            .proj-grid:not(.show-all) .proj-card:not(.proj-featured) { display: none !important; }
+            .proj-featured.o1 { order: -4; }
+            .proj-featured.o2 { order: -3; }
+            .proj-featured.o3 { order: -2; }
+            .proj-featured.o4 { order: -1; }
+            .proj-more-wrap { display: block; text-align: center; margin-top: 22px; padding: 0 14px; }
+        }
+
         .student-project {
             display: inline-block;
             background: rgba(108, 60, 225, 0.15);
@@ -3826,7 +3847,7 @@
             </div>
         </div>
         <div class="proj-grid">
-            <a href="https://ai-lab.co.il/nadavlego/" target="_blank" rel="noopener" class="proj-card">
+            <a href="https://ai-lab.co.il/nadavlego/" target="_blank" rel="noopener" class="proj-card proj-featured o1">
                 <div class="proj-preview"><img src="/project-previews/nadavlego.jpg" alt="חגיגת לגו" loading="lazy" decoding="async" width="1280" height="720"></div>
                 <div class="proj-info">
                     <div class="proj-name">🧱 חגיגת לגו</div>
@@ -3834,7 +3855,7 @@
                     <span class="proj-btn">🚀 לצפייה באתר</span>
                 </div>
             </a>
-            <a href="https://ai-lab.co.il/drivelog/" target="_blank" rel="noopener" class="proj-card">
+            <a href="https://ai-lab.co.il/drivelog/" target="_blank" rel="noopener" class="proj-card proj-featured o2">
                 <div class="proj-preview"><img src="/project-previews/drivelog.jpg" alt="DriveLog" loading="lazy" decoding="async" width="1280" height="720"></div>
                 <div class="proj-info">
                     <div class="proj-name">🚗 DriveLog — ניהול שיעורי נהיגה</div>
@@ -3882,7 +3903,7 @@
                     <span class="proj-btn">🚀 לצפייה באתר</span>
                 </div>
             </a>
-            <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" rel="noopener" class="proj-card">
+            <a href="https://ai-lab.co.il/gamebuddy/" target="_blank" rel="noopener" class="proj-card proj-featured o4">
                 <div class="proj-preview"><img src="/project-previews/gamebuddy.jpg" alt="GameBuddy" loading="lazy" decoding="async" width="1280" height="720"></div>
                 <div class="proj-info">
                     <div class="proj-name">🎮 GameBuddy — שחקנים ביחד</div>
@@ -3906,7 +3927,7 @@
                     <span class="proj-btn">🚀 לצפייה באתר</span>
                 </div>
             </a>
-            <a href="https://ai-lab.co.il/englishkids/" target="_blank" rel="noopener" class="proj-card hide-mobile">
+            <a href="https://ai-lab.co.il/englishkids/" target="_blank" rel="noopener" class="proj-card">
                 <div class="proj-preview"><img src="/project-previews/englishkids.jpg" alt="EnglishKids" loading="lazy" decoding="async" width="1280" height="720"></div>
                 <div class="proj-info">
                     <div class="proj-name">🎓 EnglishKids — אנגלית לילדים</div>
@@ -4002,7 +4023,7 @@
                     <span class="proj-btn">🚀 לצפייה באתר</span>
                 </div>
             </a>
-            <a href="https://ai-lab.co.il/naturematch/" target="_blank" rel="noopener" class="proj-card">
+            <a href="https://ai-lab.co.il/naturematch/" target="_blank" rel="noopener" class="proj-card proj-featured o3">
                 <div class="proj-preview"><img src="/project-previews/naturematch.jpg" alt="NatureMatch" loading="lazy" decoding="async" width="1280" height="720"></div>
                 <div class="proj-info">
                     <div class="proj-name">🥾 NatureMatch — התאמת מסלולי טבע</div>
@@ -4011,6 +4032,16 @@
                 </div>
             </a>
         </div>
+        <div class="proj-more-wrap">
+            <button class="proj-more-btn" type="button" onclick="toggleProjects(this)">✨ הצג עוד פרויקטים של תלמידים ↓</button>
+        </div>
+        <script>
+            function toggleProjects(btn){
+                var grid = document.querySelector('.proj-grid');
+                var open = grid.classList.toggle('show-all');
+                btn.textContent = open ? 'הצג פחות ↑' : '✨ הצג עוד פרויקטים של תלמידים ↓';
+            }
+        </script>
         <div style="text-align:center;margin-top:36px;">
             <a href="javascript:void(0)" onclick="openRegisterPopup()" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-weight:700;font-size:1rem;padding:13px 32px;border-radius:50px;text-decoration:none;box-shadow:0 4px 20px rgba(108,60,225,0.4);">🚀 רוצה שגם הילד שלך יבנה? שריינו מקום</a>
         </div>
