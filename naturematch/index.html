@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NatureMatch — המסלול שנבנה בשבילכם</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=Secular+One&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest-deep:#1C2519;
+    --forest:#2E6F40;
+    --spring:#57B45E;
+    --lime:#8FD694;
+    --sage:#4A7C59;
+    --sage-light:#6B9B7A;
+    --orange:#E2711D;
+    --sand:#F4A261;
+    --cream:#F8F6F0;
+    --cream-deep:#EFEADD;
+    --cream-card:#FBFAF5;
+    --line:#E3DED0;
+    --white:#ffffff;
+
+    --shadow-sm:0 2px 10px rgba(28,37,25,.06);
+    --shadow-md:0 14px 40px rgba(28,37,25,.10);
+    --shadow-lg:0 30px 70px rgba(28,37,25,.18);
+    --r:22px;
+    --r-sm:14px;
+
+    --display:'Secular One','Heebo',sans-serif;
+    --body:'Heebo','Segoe UI',Arial,sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{
+    font-family:var(--body);
+    background:var(--cream);
+    color:var(--forest-deep);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+  ::selection{background:var(--sand);color:var(--forest-deep)}
+
+  .wrap{width:min(1160px,92vw);margin-inline:auto}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:.55rem;
+    font-family:var(--body);font-weight:700;font-size:1.05rem;
+    padding:.95rem 1.8rem;border-radius:100px;border:none;cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    line-height:1;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--orange),var(--sand));
+    color:#fff;box-shadow:0 12px 26px rgba(226,113,29,.35);
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(226,113,29,.45)}
+  .btn-ghost{background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+  .btn-ghost:hover{background:rgba(255,255,255,.24)}
+  .btn-dark{background:var(--forest);color:#fff;box-shadow:var(--shadow-sm)}
+  .btn-dark:hover{transform:translateY(-3px);background:var(--sage)}
+  .btn-outline{background:transparent;color:var(--forest);border:1.5px solid var(--forest)}
+  .btn-outline:hover{transform:translateY(-3px);background:var(--forest);color:#fff}
+  .btn:focus-visible{outline:3px solid var(--sand);outline-offset:3px}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-weight:700;font-size:.85rem;letter-spacing:.02em;
+    text-transform:uppercase;
+  }
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--orange)}
+
+  /* ---------- nav ---------- */
+  body > nav{
+    position:sticky;top:0;z-index:60;
+    background:rgba(248,246,240,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-in{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+  .logo{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-size:1.5rem;color:var(--forest);white-space:nowrap}
+  .logo .mark{width:38px;height:38px;flex:none}
+  .nav-links{display:flex;align-items:center;gap:2rem;font-weight:500}
+  .nav-links a{transition:color .15s}
+  .nav-links a:hover{color:var(--orange)}
+  .nav-cta{display:flex;align-items:center;gap:1rem}
+  .nav-cta .btn{padding:.7rem 1.4rem;font-size:.98rem}
+
+  /* hamburger button — hidden on desktop, shown on mobile */
+  .hamburger{
+    display:none;flex-direction:column;justify-content:center;gap:5px;
+    width:46px;height:46px;padding:0;border:none;border-radius:12px;cursor:pointer;
+    background:transparent;flex:none;-webkit-tap-highlight-color:transparent;
+  }
+  .hamburger:hover{background:rgba(46,111,64,.08)}
+  .hamburger:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
+  .hamburger span{display:block;width:24px;height:2.5px;border-radius:3px;background:var(--forest);margin-inline:auto;transition:transform .3s ease, opacity .2s ease}
+  .hamburger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0}
+  .hamburger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+
+  /* full-screen mobile menu */
+  .mobile-menu{
+    position:fixed;inset:0;z-index:45;direction:rtl;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    background:var(--cream);
+    display:flex;flex-direction:column;
+    padding:5.5rem 9vw 3rem;
+    opacity:0;visibility:hidden;transition:opacity .3s ease, visibility .3s;
+  }
+  .mobile-menu.open{opacity:1;visibility:visible}
+  .mobile-menu .topo{opacity:.5}
+  .mobile-menu .mm-inner{position:relative;z-index:2;display:flex;flex-direction:column;width:100%;max-width:520px;margin:auto}
+  .mobile-menu a.m-link{
+    font-family:var(--display);font-weight:400;font-size:clamp(1.7rem,7vw,2.1rem);
+    color:var(--forest-deep);padding:1.05rem .2rem;border-bottom:1px solid var(--line);
+    transition:color .15s, padding-inline-start .2s;
+  }
+  .mobile-menu a.m-link:hover,.mobile-menu a.m-link:focus-visible{color:var(--orange);padding-inline-start:.6rem}
+  .mobile-menu .btn{justify-content:center;margin-top:1.8rem;width:100%;padding:1.15rem;font-size:1.18rem}
+  .menu-backdrop{
+    position:fixed;inset:0;z-index:44;background:rgba(28,37,25,.4);
+    opacity:0;visibility:hidden;transition:opacity .25s ease, visibility .25s;
+  }
+  .menu-backdrop.open{opacity:1;visibility:visible}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;padding:5.5rem 0 6rem;
+    background:
+      radial-gradient(1100px 620px at 12% -10%, rgba(122,190,135,.55), transparent 60%),
+      linear-gradient(160deg,#245536 0%, #2f7a45 46%, #276039 100%);
+    color:#fff;
+  }
+  .topo{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.5}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;z-index:2}
+  .hero h1{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(2.6rem,5.2vw,4.2rem);line-height:1.05;
+    letter-spacing:-.01em;margin:1.1rem 0 1.2rem;
+  }
+  .hero h1 .hl{
+    background:linear-gradient(120deg,var(--sand),#ffd9a8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.sub{font-size:clamp(1.05rem,1.7vw,1.28rem);color:rgba(255,255,255,.88);max-width:34ch;font-weight:400}
+  .hero-actions{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+  .hero-trust{display:flex;gap:1.6rem;margin-top:2.4rem;flex-wrap:wrap;font-size:.92rem;color:rgba(255,255,255,.78)}
+  .hero-trust span{display:flex;align-items:center;gap:.45rem}
+  .hero-trust svg{flex:none}
+
+  /* floating match card */
+  .match-card{
+    position:relative;background:var(--cream-card);color:var(--forest-deep);
+    border-radius:26px;padding:1.6rem;box-shadow:var(--shadow-lg);
+    transform:rotate(-1.5deg);
+  }
+  .match-card .topo-mini{position:absolute;inset:0;border-radius:26px;overflow:hidden;opacity:.5}
+  .mc-inner{position:relative;z-index:2}
+  .mc-top{display:flex;align-items:center;gap:1rem}
+  .mc-ring{width:78px;height:78px;flex:none}
+  .mc-title{font-family:var(--display);font-size:1.35rem;line-height:1.15}
+  .mc-tag{display:inline-block;font-size:.78rem;font-weight:700;color:var(--forest);background:#e7f0e8;padding:.2rem .6rem;border-radius:100px;margin-top:.3rem}
+  .mc-meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.1rem}
+  .chip{font-size:.82rem;font-weight:500;background:#fff;border:1px solid var(--line);padding:.35rem .7rem;border-radius:100px;display:inline-flex;gap:.35rem;align-items:center}
+  .mc-alt{margin-top:1.1rem;padding-top:1rem;border-top:1px dashed var(--line);font-size:.86rem;color:#5c6b58}
+  .mc-alt b{color:var(--forest-deep)}
+  .float{animation:float 5s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:rotate(-1.5deg) translateY(0)}50%{transform:rotate(-1.5deg) translateY(-12px)}}
+
+  /* ---------- section shells ---------- */
+  section{position:relative}
+  .pad{padding:5.5rem 0}
+  .sec-head{max-width:640px;margin-bottom:3rem}
+  .sec-head.center{margin-inline:auto;text-align:center}
+  h2{font-family:var(--display);font-weight:400;font-size:clamp(2rem,3.6vw,2.9rem);line-height:1.12;letter-spacing:-.01em;color:var(--forest-deep)}
+  h2 .g{color:var(--forest)}
+  .sec-head p{margin-top:1rem;font-size:1.12rem;color:#4c5a48}
+
+  /* ---------- problem ---------- */
+  .problem{background:var(--cream-deep)}
+  .prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center}
+  .prob-list{display:grid;gap:1rem}
+  .prob-item{display:flex;gap:1rem;background:var(--cream-card);border:1px solid var(--line);border-radius:var(--r-sm);padding:1.1rem 1.3rem;box-shadow:var(--shadow-sm)}
+  .prob-item .x{width:34px;height:34px;flex:none;border-radius:10px;background:#fbe4d6;color:var(--orange);display:grid;place-items:center;font-weight:900}
+  .prob-item h4{font-size:1.06rem;margin-bottom:.15rem}
+  .prob-item p{font-size:.95rem;color:#5c6b58;line-height:1.5}
+  .prob-quote{background:linear-gradient(150deg,var(--forest),var(--sage));color:#fff;border-radius:var(--r);padding:2.4rem;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+  .prob-quote .topo{opacity:.35}
+  .prob-quote .qmark{font-family:var(--display);font-size:4rem;line-height:.6;color:var(--sand);opacity:.6;position:relative;z-index:2}
+  .prob-quote p{position:relative;z-index:2;font-size:1.35rem;font-weight:500;line-height:1.5;margin-top:.6rem}
+  .prob-quote small{position:relative;z-index:2;display:block;margin-top:1.2rem;color:rgba(255,255,255,.75);font-size:.95rem}
+
+  /* ---------- quiz (signature) ---------- */
+  .quiz-sec{background:var(--forest-deep);color:#fff;overflow:hidden}
+  .quiz-sec .topo{opacity:.28}
+  .quiz-shell{position:relative;z-index:2;display:grid;grid-template-columns:.85fr 1.15fr;gap:3rem;align-items:start}
+  .quiz-intro h2{color:#fff}
+  .quiz-intro h2 .g{color:var(--sand)}
+  .quiz-intro p{color:rgba(255,255,255,.8);margin-top:1rem;font-size:1.08rem}
+  .quiz-steps-note{margin-top:1.8rem;display:grid;gap:.7rem}
+  .quiz-steps-note div{display:flex;align-items:center;gap:.7rem;color:rgba(255,255,255,.85);font-size:.98rem}
+  .quiz-steps-note .n{width:26px;height:26px;flex:none;border-radius:50%;background:rgba(244,162,97,.2);color:var(--sand);display:grid;place-items:center;font-weight:800;font-size:.85rem}
+
+  .quiz-card{background:var(--cream);color:var(--forest-deep);border-radius:26px;box-shadow:var(--shadow-lg);padding:2rem;min-height:430px;display:flex;flex-direction:column}
+  .qc-progress{display:flex;align-items:center;gap:.9rem;margin-bottom:1.6rem}
+  .qc-bar{flex:1;height:9px;border-radius:100px;background:var(--line);overflow:hidden}
+  .qc-bar span{display:block;height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,var(--orange),var(--sand));transition:width .4s cubic-bezier(.2,.7,.2,1)}
+  .qc-count{font-weight:800;font-size:.9rem;color:var(--forest);white-space:nowrap}
+
+  .q-title{font-family:var(--display);font-size:1.55rem;line-height:1.2;margin-bottom:.3rem}
+  .q-hint{color:#6b7865;font-size:.95rem;margin-bottom:1.4rem}
+  .opts{display:grid;gap:.7rem}
+  .opts.two{grid-template-columns:1fr 1fr}
+  .opt{
+    display:flex;align-items:center;gap:.8rem;text-align:start;
+    background:var(--cream-card);border:2px solid var(--line);border-radius:var(--r-sm);
+    padding:1rem 1.1rem;cursor:pointer;font-weight:500;font-size:1.02rem;font-family:var(--body);
+    transition:all .15s ease;width:100%;color:var(--forest-deep);
+  }
+  .opt .emo{font-size:1.4rem;line-height:1}
+  .opt:hover{border-color:var(--sage-light);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+  .opt.sel{border-color:var(--forest);background:#eaf1ea}
+  .opt:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
+
+  .db-grid{display:grid;gap:.7rem}
+  .db{display:flex;align-items:center;gap:.8rem;background:var(--cream-card);border:2px solid var(--line);border-radius:var(--r-sm);padding:.9rem 1.1rem;cursor:pointer;font-weight:500;transition:all .15s}
+  .db:hover{border-color:var(--sage-light)}
+  .db.sel{border-color:var(--orange);background:#fdefe3}
+  .db .box{width:24px;height:24px;flex:none;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;transition:all .15s;font-size:.9rem}
+  .db.sel .box{background:var(--orange);border-color:var(--orange);color:#fff}
+  .db:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
+
+  .qc-foot{margin-top:auto;padding-top:1.4rem;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+  .link-back{background:none;border:none;color:#6b7865;font-family:var(--body);font-weight:600;cursor:pointer;font-size:.95rem;padding:.5rem}
+  .link-back:hover{color:var(--forest)}
+  .link-back:disabled{opacity:.35;cursor:default}
+
+  /* results */
+  .result{display:flex;flex-direction:column;height:100%}
+  .res-head{text-align:center;margin-bottom:1.2rem}
+  .res-head .tada{font-size:2rem}
+  .res-head h3{font-family:var(--display);font-size:1.5rem;margin-top:.2rem}
+  .res-top{background:var(--cream-card);border:2px solid var(--forest);border-radius:var(--r);padding:1.3rem;display:flex;gap:1.2rem;align-items:center;box-shadow:var(--shadow-sm)}
+  .res-top h4{font-family:var(--display);font-size:1.4rem;line-height:1.1}
+  .res-top .rt-tag{display:inline-block;font-size:.78rem;font-weight:700;color:var(--forest);background:#e7f0e8;padding:.2rem .6rem;border-radius:100px;margin:.35rem 0}
+  .res-top .rt-meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.3rem}
+  .res-alts{margin-top:1.1rem}
+  .res-alts .lbl{font-size:.9rem;color:#6b7865;font-weight:700;margin-bottom:.5rem}
+  .alt{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--cream-card);border:1px solid var(--line);border-radius:var(--r-sm);padding:.75rem 1rem;margin-bottom:.55rem}
+  .alt-name{font-weight:700}
+  .alt-name small{display:block;font-weight:500;color:#6b7865;font-size:.82rem}
+  .alt-pct{font-family:var(--display);color:var(--sage);font-size:1.15rem}
+  .res-restart{margin-top:1.2rem;text-align:center}
+
+  /* ---------- features ---------- */
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+  .feat{background:var(--cream-card);border:1px solid var(--line);border-radius:var(--r);padding:1.9rem 1.6rem;box-shadow:var(--shadow-sm);transition:transform .2s ease, box-shadow .2s ease;position:relative;overflow:hidden}
+  .feat:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+  .feat .num{position:absolute;inset-inline-start:1.3rem;top:1.1rem;font-family:var(--display);font-size:3.4rem;color:var(--line);line-height:1;z-index:0}
+  .feat .ic{position:relative;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:1.7rem;background:linear-gradient(135deg,#e7f0e8,#d6e6d9);margin-bottom:1.1rem;z-index:1}
+  .feat.o .ic{background:linear-gradient(135deg,#fde9d9,#fad3b4)}
+  .feat h3{position:relative;z-index:1;font-size:1.25rem;margin-bottom:.5rem;font-family:var(--display);font-weight:400}
+  .feat p{position:relative;z-index:1;color:#5c6b58;font-size:.98rem;line-height:1.55}
+  .feat span.why{position:relative;z-index:1;display:inline-block;margin-top:.9rem;font-size:.85rem;font-weight:700;color:var(--orange)}
+
+  /* ---------- how / steps ---------- */
+  .how{background:linear-gradient(160deg,#245536,#2E6F40);color:#fff;overflow:hidden}
+  .how .topo{opacity:.3}
+  .how-in{position:relative;z-index:2}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.5rem}
+  .step{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:1.7rem;backdrop-filter:blur(4px)}
+  .step .sn{font-family:var(--display);font-size:1.6rem;color:var(--sand)}
+  .step h4{font-size:1.2rem;margin:.5rem 0 .4rem;font-family:var(--display);font-weight:400}
+  .step p{color:rgba(255,255,255,.82);font-size:.97rem}
+
+  /* ---------- final cta ---------- */
+  .cta-final{padding:5rem 0}
+  .cta-box{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--orange),var(--sand));border-radius:32px;padding:4rem 2rem;text-align:center;color:#fff;box-shadow:var(--shadow-lg)}
+  .cta-box .topo{opacity:.35}
+  .cta-box .in{position:relative;z-index:2}
+  .cta-box h2{color:#fff;font-size:clamp(2rem,4vw,3rem)}
+  .cta-box p{color:rgba(255,255,255,.92);font-size:1.15rem;max-width:44ch;margin:1rem auto 2rem}
+  .cta-box .btn-primary{background:#fff;color:var(--orange);box-shadow:0 14px 30px rgba(0,0,0,.2)}
+  .cta-box .btn-primary:hover{background:var(--forest-deep);color:#fff}
+
+  /* ---------- footer ---------- */
+  footer{position:relative;overflow:hidden;background:var(--forest-deep);color:rgba(255,255,255,.72);padding:4rem 0 1.8rem}
+  footer .topo{opacity:.4;color:rgba(255,255,255,.05)}
+  .foot-in{position:relative;z-index:2}
+  .foot-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:2.5rem}
+  .foot-brand{max-width:34ch}
+  .foot-logo{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-size:1.5rem;color:#fff}
+  .foot-brand p{font-size:.92rem;line-height:1.6;margin-top:.9rem;color:rgba(255,255,255,.62)}
+  .mvp-badge{display:inline-block;font-size:.75rem;font-weight:700;background:rgba(244,162,97,.18);color:var(--sand);padding:.3rem .8rem;border-radius:100px;margin-top:1rem}
+  .foot-social{display:flex;gap:.6rem;margin-top:1.3rem}
+  .foot-social a{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);color:#fff;transition:background .18s ease, transform .18s ease}
+  .foot-social a:hover{background:var(--spring);transform:translateY(-3px)}
+  .foot-col h4{color:#fff;font-size:.95rem;font-weight:700;margin-bottom:1.1rem;letter-spacing:.01em}
+  .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+  .foot-col a,.foot-col button.foot-link{
+    background:none;border:none;padding:0;cursor:pointer;text-align:start;font:inherit;
+    color:rgba(255,255,255,.66);font-size:.92rem;transition:color .15s ease, padding-inline-start .18s ease;
+  }
+  .foot-col a:hover,.foot-col button.foot-link:hover{color:var(--sand);padding-inline-start:.35rem}
+  .foot-bottom{position:relative;z-index:2;border-top:1px solid rgba(255,255,255,.12);margin-top:3rem;padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.85rem;color:rgba(255,255,255,.5)}
+  .foot-bottom .fb-links{display:flex;gap:1.4rem;flex-wrap:wrap}
+  .foot-bottom a{color:rgba(255,255,255,.5);transition:color .15s}
+  .foot-bottom a:hover{color:var(--sand)}
+  @media(max-width:900px){
+    .foot-top{grid-template-columns:1fr 1fr 1fr;gap:2rem}
+    .foot-brand{grid-column:1 / -1;max-width:none}
+  }
+  @media(max-width:560px){
+    footer{padding:3rem 0 1.6rem}
+    .foot-top{grid-template-columns:1fr 1fr;gap:1.7rem 2rem}
+    .foot-bottom{flex-direction:column;text-align:center;gap:.8rem}
+  }
+  @media(max-width:390px){
+    .foot-top{grid-template-columns:1fr}
+  }
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* swipe hint for mobile carousels */
+  .swipe-hint{display:none;align-items:center;justify-content:center;gap:.45rem;margin-top:1.1rem;color:#6b7865;font-size:.9rem;font-weight:600}
+  .swipe-hint.light{color:rgba(255,255,255,.85)}
+  .swipe-hint svg{animation:swipe 1.5s ease-in-out infinite}
+  @keyframes swipe{0%,100%{transform:translateX(0)}50%{transform:translateX(-6px)}}
+
+  /* ---------- liveliness ---------- */
+  /* soft drifting gradient orbs */
+  .orb{position:absolute;border-radius:50%;filter:blur(64px);pointer-events:none;z-index:1}
+  .hero .orb-1{width:340px;height:340px;background:radial-gradient(circle,rgba(143,214,148,.65),transparent 70%);top:-90px;inset-inline-start:-70px;opacity:.55;animation:drift1 15s ease-in-out infinite}
+  .hero .orb-2{width:300px;height:300px;background:radial-gradient(circle,rgba(244,162,97,.5),transparent 70%);bottom:-110px;inset-inline-end:8%;opacity:.5;animation:drift2 17s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(34px,22px)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-26px,-20px)}}
+
+  /* floating leaves */
+  .leaves{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+  .leaf{position:absolute;color:rgba(255,255,255,.28);animation:leafFloat linear infinite}
+  .leaf svg{display:block;transform-origin:center}
+  @keyframes leafFloat{
+    0%{transform:translateY(-10%) translateX(0) rotate(0deg)}
+    50%{transform:translateY(45vh) translateX(26px) rotate(160deg)}
+    100%{transform:translateY(105vh) translateX(-14px) rotate(340deg)}
+  }
+
+  /* shine sweep on the main CTAs */
+  .btn-primary,.btn-dark{position:relative;overflow:hidden}
+  .btn-primary::after,.btn-dark::after{
+    content:"";position:absolute;top:0;inset-inline-start:-130%;width:55%;height:100%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);
+    transform:skewX(-20deg);transition:inset-inline-start .6s ease;pointer-events:none;
+  }
+  .btn-primary:hover::after,.btn-dark:hover::after{inset-inline-start:140%}
+
+  /* feature card accents on hover */
+  .feat::before{content:"";position:absolute;top:0;inset-inline:0;height:4px;transform:scaleX(0);transform-origin:right;transition:transform .35s ease;background:linear-gradient(90deg,var(--forest),var(--spring));z-index:2}
+  .feat.o::before{background:linear-gradient(90deg,var(--orange),var(--sand))}
+  .feat:hover::before{transform:scaleX(1)}
+  .feat .ic{transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+  .feat:hover .ic{transform:scale(1.09) rotate(-5deg)}
+
+  /* step cards subtle hover */
+  .step{transition:transform .2s ease, background .2s ease}
+  .step:hover{transform:translateY(-5px);background:rgba(255,255,255,.13)}
+
+  /* animated match ring (results) */
+  .ring-prog{transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)}
+  .match-card .mc-ring .ring-prog{transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)}
+
+  /* gentle bob on the hero card tag */
+  .mc-tag{animation:tagGlow 3s ease-in-out infinite}
+  @keyframes tagGlow{0%,100%{background:#e7f0e8}50%{background:#d6ecd9}}
+
+  /* ---------- newsletter modal ---------- */
+  .modal-backdrop{
+    position:fixed;inset:0;z-index:190;background:rgba(28,37,25,.55);
+    opacity:0;visibility:hidden;transition:opacity .25s ease, visibility .25s;
+    -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  }
+  .modal-backdrop.open{opacity:1;visibility:visible}
+  .modal{
+    position:fixed;z-index:200;top:50%;left:50%;transform:translate(-50%,-46%) scale(.97);
+    width:min(440px,92vw);background:var(--cream-card);border-radius:26px;
+    box-shadow:var(--shadow-lg);overflow:hidden;
+    opacity:0;visibility:hidden;transition:opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+  .modal .topo{opacity:.5}
+  .modal-close{
+    position:absolute;top:.9rem;inset-inline-start:.9rem;z-index:3;
+    width:38px;height:38px;border:none;border-radius:50%;cursor:pointer;
+    background:rgba(28,37,25,.06);color:var(--forest-deep);font-size:1.4rem;line-height:1;
+    display:grid;place-items:center;transition:background .15s;
+  }
+  .modal-close:hover{background:rgba(28,37,25,.14)}
+  .modal-close:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
+  .modal-in{position:relative;z-index:2;padding:2.4rem 2rem 2rem;text-align:center}
+  .nl-icon{width:60px;height:60px;margin:0 auto 1rem;border-radius:18px;display:grid;place-items:center;font-size:1.9rem;background:linear-gradient(135deg,#fde9d9,#fad3b4)}
+  .modal-in h3{font-family:var(--display);font-weight:400;font-size:1.55rem;line-height:1.15}
+  .modal-in p.nl-lead{color:#5c6b58;font-size:1rem;margin-top:.5rem;line-height:1.55}
+  .nl-form{display:flex;gap:.6rem;margin-top:1.4rem}
+  .nl-form input{
+    flex:1;min-width:0;font-family:var(--body);font-size:1rem;
+    padding:.9rem 1rem;border-radius:100px;border:2px solid var(--line);
+    background:#fff;color:var(--forest-deep);
+  }
+  .nl-form input::placeholder{color:#9aa595}
+  .nl-form input:focus-visible{outline:none;border-color:var(--forest)}
+  .nl-form input.err{border-color:#c0492b}
+  .nl-form .btn{padding:.9rem 1.3rem;white-space:nowrap}
+  .nl-note{font-size:.82rem;color:#8a9583;margin-top:.9rem}
+  .nl-success{display:none;flex-direction:column;align-items:center;gap:.5rem;padding:.6rem 0 .2rem}
+  .nl-success .ok{width:56px;height:56px;border-radius:50%;background:#e7f0e8;color:var(--forest);display:grid;place-items:center;font-size:1.7rem}
+  .nl-success h4{font-family:var(--display);font-weight:400;font-size:1.35rem}
+  .nl-success p{color:#5c6b58;font-size:.96rem}
+  .modal.done .nl-form,.modal.done .nl-note,.modal.done p.nl-lead{display:none}
+  .modal.done .nl-success{display:flex}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:1024px){
+    .feat-grid{grid-template-columns:repeat(2,1fr)}
+  }
+
+  /* tablet & below → hamburger nav */
+  @media(max-width:900px){
+    .nav-links,.nav-cta{display:none}
+    .hamburger{display:flex}
+    .nav-in{justify-content:space-between;gap:.5rem}
+
+    .hero-grid,.prob-grid,.quiz-shell{grid-template-columns:1fr}
+    .hero-visual{max-width:440px;margin-inline:auto}
+    .feat-grid{grid-template-columns:1fr 1fr}
+    .steps{grid-template-columns:1fr}
+    .quiz-intro{text-align:center}
+    .quiz-steps-note{max-width:440px;margin-inline:auto}
+    .quiz-steps-note div{justify-content:center}
+    .sec-head{margin-inline:auto}
+  }
+
+  /* phones → single column, sliders, tighter type */
+  @media(max-width:680px){
+    .pad{padding:4.2rem 0}
+    .sec-head{margin-bottom:2.2rem}
+    .sec-head p{font-size:1.02rem}
+
+    /* sections 4 & 5 → edge-to-edge horizontal RTL sliders */
+    .feat-grid,.steps{
+      display:flex;grid-template-columns:none;gap:1rem;
+      overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+      padding-bottom:1.2rem;margin-inline:-4vw;padding-inline:4vw;scrollbar-width:none;
+    }
+    .feat-grid::-webkit-scrollbar,.steps::-webkit-scrollbar{display:none}
+    .feat-grid>.feat,.steps>.step{flex:0 0 80%;scroll-snap-align:center}
+    .feat:hover,.step:hover{transform:none}
+    .swipe-hint{display:flex}
+
+    .hero-trust{gap:.9rem 1.2rem;font-size:.85rem}
+    .quiz-card{padding:1.5rem}
+    .prob-quote{padding:1.9rem}
+    .prob-quote p{font-size:1.15rem}
+  }
+
+  /* small phones */
+  @media(max-width:560px){
+    .hero{padding:3rem 0 3.4rem}
+    .hero h1{font-size:clamp(2.1rem,9vw,2.8rem)}
+    .hero p.sub{font-size:1.05rem;max-width:none}
+    .hero-actions{gap:.7rem}
+    .hero-actions .btn{flex:1 1 auto;justify-content:center}
+    .logo{font-size:1.3rem}
+    .logo .mark{width:34px;height:34px}
+    .btn{font-size:1rem}
+    .opts.two{grid-template-columns:1fr}
+    .res-top{flex-direction:column;text-align:center}
+    .res-top .rt-meta{justify-content:center}
+    .cta-box{padding:2.8rem 1.4rem}
+    .cta-box h2{font-size:1.9rem}
+    .match-card{padding:1.3rem;transform:none}
+    .float{animation:none}
+    .mc-title{font-size:1.18rem}
+    .feat{padding:1.7rem 1.4rem}
+    .q-title{font-size:1.4rem}
+  }
+
+  /* very small phones */
+  @media(max-width:390px){
+    .wrap{width:92vw}
+    .hero h1{font-size:2rem}
+    .hero-actions{flex-direction:column;align-items:stretch}
+    .hero-actions .btn{width:100%}
+    .quiz-card{padding:1.1rem;min-height:auto}
+    .q-title{font-size:1.28rem}
+    .opt{padding:.85rem 1rem;font-size:.96rem}
+    .mc-meta .chip{font-size:.74rem;padding:.3rem .55rem}
+    .mobile-menu{padding-inline:6vw}
+    .mobile-menu a.m-link{font-size:1.6rem}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto}
+    .reveal{opacity:1;transform:none}
+    .leaves,.orb{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- reusable topographic contour lines -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="topo-lines" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+    <g fill="none" stroke="currentColor" stroke-width="1.4">
+      <path d="M-40 250 C 120 180, 260 320, 400 250 S 680 180, 860 250"/>
+      <path d="M-40 300 C 120 230, 260 370, 400 300 S 680 230, 860 300"/>
+      <path d="M-40 200 C 120 130, 260 270, 400 200 S 680 130, 860 200"/>
+      <path d="M-40 350 C 140 290, 280 410, 400 350 S 700 290, 860 350"/>
+      <path d="M-40 150 C 140 90, 280 210, 400 150 S 700 90, 860 150"/>
+      <ellipse cx="400" cy="250" rx="120" ry="70"/>
+      <ellipse cx="400" cy="250" rx="180" ry="110"/>
+      <ellipse cx="400" cy="250" rx="240" ry="150"/>
+      <ellipse cx="400" cy="250" rx="60" ry="34"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap nav-in">
+    <button class="hamburger" id="hamburger" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="logo" href="#top" aria-label="NatureMatch">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect width="40" height="40" rx="12" fill="#2E6F40"/>
+        <path d="M8 27 L16 14 L22 23 L26 17 L32 27 Z" fill="#F4A261"/>
+        <circle cx="28" cy="12" r="3.4" fill="#E2711D"/>
+      </svg>
+      <span>NatureMatch</span>
+    </a>
+    <div class="nav-links">
+      <a href="#problem">הבעיה</a>
+      <a href="#quiz">השאלון</a>
+      <a href="#features">איך זה עובד</a>
+    </div>
+    <div class="nav-cta">
+      <button type="button" class="btn btn-outline nl-open">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        ניוזלטר
+      </button>
+      <a href="#quiz" class="btn btn-dark">מצאו לי מסלול</a>
+    </div>
+  </div>
+
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <svg class="topo" style="color:rgba(255,255,255,.28)" aria-hidden="true"><use href="#topo-lines"/></svg>
+  <span class="orb orb-1" aria-hidden="true"></span>
+  <span class="orb orb-2" aria-hidden="true"></span>
+  <div class="leaves" aria-hidden="true">
+    <span class="leaf" style="inset-inline-start:12%;animation-duration:16s;animation-delay:0s"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.2 3.8 21.6c-.3.8.4 1.5 1.2 1.2C10.2 20.7 16.4 18.6 18.4 9.6c.1-.5-.9-.9-1.4-1.6zM5.5 20.5C7 15 10.5 12.5 14 11c-2.5 2-5 4-8.5 9.5z"/></svg></span>
+    <span class="leaf" style="inset-inline-start:34%;animation-duration:21s;animation-delay:4s"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.2 3.8 21.6c-.3.8.4 1.5 1.2 1.2C10.2 20.7 16.4 18.6 18.4 9.6c.1-.5-.9-.9-1.4-1.6z"/></svg></span>
+    <span class="leaf" style="inset-inline-start:62%;animation-duration:18s;animation-delay:2s"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.2 3.8 21.6c-.3.8.4 1.5 1.2 1.2C10.2 20.7 16.4 18.6 18.4 9.6c.1-.5-.9-.9-1.4-1.6z"/></svg></span>
+    <span class="leaf" style="inset-inline-start:82%;animation-duration:24s;animation-delay:6s"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.2 3.8 21.6c-.3.8.4 1.5 1.2 1.2C10.2 20.7 16.4 18.6 18.4 9.6c.1-.5-.9-.9-1.4-1.6z"/></svg></span>
+  </div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow" style="color:var(--sand)"><span class="dot"></span> התאמת מסלולים חכמה</span>
+      <h1>המסלול המושלם בשבילכם <span class="hl">כבר קיים.</span><br>בואו נמצא אותו יחד.</h1>
+      <p class="sub">עונים על 7 שאלות קצרות ומקבלים מסלול אחד שמתאים בול לכם ולקבוצה — לפי רמת הקושי, הנוף והמרחק. בלי לטבוע בעשרות המלצות סותרות.</p>
+      <div class="hero-actions">
+        <a href="#quiz" class="btn btn-primary">התחילו את השאלון
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </a>
+        <a href="#problem" class="btn btn-ghost">איך זה עובד?</a>
+      </div>
+      <div class="hero-trust">
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sand)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> מתאים לכל הגילאים</span>
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sand)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> מיועד לקבוצות ומשפחות</span>
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sand)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> תוצאה תוך דקה</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="match-card float">
+        <svg class="topo-mini" style="color:rgba(46,111,64,.16)" aria-hidden="true"><use href="#topo-lines"/></svg>
+        <div class="mc-inner">
+          <div class="mc-top">
+            <svg class="mc-ring" viewBox="0 0 100 100" aria-hidden="true">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#e3ded0" stroke-width="10"/>
+              <circle class="ring-prog" cx="50" cy="50" r="42" fill="none" stroke="url(#gRing)" stroke-width="10" stroke-linecap="round"
+                stroke-dasharray="264" stroke-dashoffset="264" data-off="26" transform="rotate(-90 50 50)"/>
+              <text class="ring-num" x="50" y="49" text-anchor="middle" font-family="Secular One" font-size="24" fill="#2E6F40" data-pct="90">0%</text>
+              <text x="50" y="66" text-anchor="middle" font-family="Heebo" font-size="9" fill="#6b7865">התאמה</text>
+              <defs><linearGradient id="gRing" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2E6F40"/><stop offset="1" stop-color="#57B45E"/></linearGradient></defs>
+            </svg>
+            <div>
+              <div class="mc-title">נחל עמוד — הקטע התחתון</div>
+              <span class="mc-tag"># עם_מים · # משפחתי</span>
+            </div>
+          </div>
+          <div class="mc-meta">
+            <span class="chip">💧 יש מים</span>
+            <span class="chip">🥾 קושי בינוני</span>
+            <span class="chip">📍 גליל עליון</span>
+            <span class="chip">⏱️ 3 שעות</span>
+          </div>
+          <div class="mc-alt">אולי תאהבו גם את <b>חורשת טל</b> · <b>נחל כזיב</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROBLEM -->
+<section class="problem pad" id="problem">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow" style="color:var(--orange)"><span class="dot"></span> נשמע מוכר?</span>
+      <h2>יוצאים לטייל — ומגלים באמצע <span class="g">שזה לא בשבילכם.</span></h2>
+      <p>אוהבים את הטבע, אבל אין דרך פשוטה לדעת מראש אם המסלול יתאים לכם, לילדים או לחברים בקבוצה. אז מתחילים ללכת, ובאמצע כבר מבינים שטעיתם.</p>
+    </div>
+
+    <div class="prob-grid">
+      <div class="prob-list reveal">
+        <div class="prob-item">
+          <div class="x">!</div>
+          <div><h4>קושי לא מתאים</h4><p>המסלול תלול או ארוך מדי, ומתברר רק כשכבר עייפתם באמצע ההר.</p></div>
+        </div>
+        <div class="prob-item">
+          <div class="x">!</div>
+          <div><h4>הנוף לא מה שאהבתם</h4><p>יצאתם למים ונחלים, וקיבלתם מדבר. או להפך — הכול עניין של התאמה.</p></div>
+        </div>
+        <div class="prob-item">
+          <div class="x">!</div>
+          <div><h4>טובעים במידע</h4><p>אתרי הטבע הגדולים וקבוצות הפייסבוק מלאים בהמלצות סותרות. איך בוחרים אחת?</p></div>
+        </div>
+        <div class="prob-item">
+          <div class="x">!</div>
+          <div><h4>קשה לתאם לקבוצה</h4><p>מה שכיף למיטיבי לכת מסוכן לילדים קטנים. מסלול אחד צריך להתאים לכולם.</p></div>
+        </div>
+      </div>
+
+      <div class="prob-quote reveal">
+        <svg class="topo" style="color:rgba(255,255,255,.25)" aria-hidden="true"><use href="#topo-lines"/></svg>
+        <div class="qmark">”</div>
+        <p>חיפשתי בשלושה אתרים וארבע קבוצות פייסבוק, קיבלתי חמישים המלצות — ובסוף פשוט חזרנו הביתה בלי לטייל.</p>
+        <small>— בדיוק הרגע שבו NatureMatch נכנס לתמונה</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ (signature) -->
+<section class="quiz-sec pad" id="quiz">
+  <svg class="topo" style="color:rgba(107,155,122,.35)" aria-hidden="true"><use href="#topo-lines"/></svg>
+  <div class="wrap quiz-shell">
+    <div class="quiz-intro reveal">
+      <span class="eyebrow" style="color:var(--sand)"><span class="dot"></span> נסו עכשיו</span>
+      <h2>7 שאלות. <span class="g">מסלול אחד מנצח.</span></h2>
+      <p>זו הדגמה חיה של המנוע שלנו. ענו על השאלון, וקבלו ציון התאמה אמיתי מול מאגר מסלולים לדוגמה — בדיוק כמו באפליקציה.</p>
+      <div class="quiz-steps-note">
+        <div><span class="n">1</span> מי יוצא לדרך — לבד, זוג, משפחה או חברים</div>
+        <div><span class="n">2</span> רמת הקושי שמתאימה לכם</div>
+        <div><span class="n">3</span> אורך המסלול המועדף</div>
+        <div><span class="n">4</span> אם חשובים לכם מים בדרך</div>
+        <div><span class="n">5</span> האזור בארץ שנוח לכם</div>
+        <div><span class="n">6</span> סוג האווירה שאתם אוהבים</div>
+        <div><span class="n">7</span> מה חובה שיהיה בטיול</div>
+      </div>
+    </div>
+
+    <!-- quiz card -->
+    <div class="quiz-card" id="quizCard" aria-live="polite">
+      <div class="qc-progress" id="progressWrap">
+        <div class="qc-bar"><span id="progressBar"></span></div>
+        <div class="qc-count" id="progressCount">1 / 7</div>
+      </div>
+      <div id="quizBody"></div>
+      <div class="qc-foot" id="quizFoot">
+        <button class="link-back" id="backBtn">→ חזרה</button>
+        <span style="font-size:.85rem;color:#6b7865" id="footHint">בחרו כדי להמשיך</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="pad" id="features">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow" style="color:var(--orange)"><span class="dot"></span> מה מפעיל את ההתאמה</span>
+      <h2>מנוע פשוט. <span class="g">תחושה של חוכמה.</span></h2>
+      <p>כל יכולת נבנתה כדי שתקבלו החלטה אחת ברורה — במקום להתמודד עם חמישים אפשרויות.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat reveal">
+        <div class="num">01</div>
+        <div class="ic">🏷️</div>
+        <h3>שאלון מבוסס תגיות</h3>
+        <p>לכל מסלול צמודות תגיות (#משפחות, #עם_מים, #קליל). התשובות שלכם מסננות ומשאירות רק את מה שבאמת מתאים.</p>
+        <span class="why">סינון חכם, בלי רעש מיותר</span>
+      </div>
+      <div class="feat o reveal">
+        <div class="num">02</div>
+        <div class="ic">📊</div>
+        <h3>ציון התאמה באחוזים</h3>
+        <p>כל תשובה שלכם מוסיפה משקל לציון. ככל שהמסלול עונה על יותר מהדרישות, כך הציון עולה — למשל "92% התאמה" באותיות גדולות. לא ניחוש, מדד ברור.</p>
+        <span class="why">רואים בדיוק כמה זה מתאים</span>
+      </div>
+      <div class="feat reveal">
+        <div class="num">03</div>
+        <div class="ic">👨‍👩‍👧</div>
+        <h3>פרופיל קבוצתי מהיר</h3>
+        <p>בוחרים בלחיצה מי יוצא: לבד, זוג, משפחה עם ילדים או מיטיבי לכת — והמערכת מתאימה את עצמה מיד.</p>
+        <span class="why">מסלול אחד שמתאים לכולם</span>
+      </div>
+      <div class="feat o reveal">
+        <div class="num">04</div>
+        <div class="ic">✅</div>
+        <h3>מה קריטי לכם ביותר?</h3>
+        <p>סימנתם "חובה נגיש לעגלות" או "ידידותי לכלבים"? זה מסנן קודם כול את מה שלא עומד בתנאי — ואז מתאים את השאר.</p>
+        <span class="why">התנאי שאי אפשר לוותר עליו</span>
+      </div>
+      <div class="feat reveal">
+        <div class="num">05</div>
+        <div class="ic">🏆</div>
+        <h3>תוצאה אחת מנצחת + 2 חלופות</h3>
+        <p>במקום 50 תוצאות — מסלול מרכזי אחד שקיבל את הציון הגבוה, ומתחתיו שתי אופציות גיבוי. נקי וברור.</p>
+        <span class="why">בוחרים במקום להתלבט</span>
+      </div>
+      <div class="feat o reveal">
+        <div class="num">06</div>
+        <div class="ic">🧒</div>
+        <h3>בטיחות מובנית</h3>
+        <p>בחרתם "משפחה עם ילדים"? מסלולים עם סולמות או קטעים מסוכנים נפסלים אוטומטית. בלי הפתעות בשטח.</p>
+        <span class="why">שקט נפשי מהרגע הראשון</span>
+      </div>
+    </div>
+    <p class="swipe-hint" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> החליקו לגלול בין הכרטיסים</p>
+  </div>
+</section>
+
+<!-- HOW / 3 steps -->
+<section class="how pad">
+  <svg class="topo" style="color:rgba(255,255,255,.3)" aria-hidden="true"><use href="#topo-lines"/></svg>
+  <div class="wrap how-in">
+    <div class="sec-head reveal" style="max-width:560px">
+      <span class="eyebrow" style="color:var(--sand)"><span class="dot"></span> שלושה צעדים</span>
+      <h2 style="color:#fff">מהשאלון לשטח — בדקה.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="sn">01</div><h4>עונים על 7 שאלות</h4><p>קבוצה, קושי, אורך, מים, אזור ואווירה. קצר, קליל ובשפה שלכם.</p></div>
+      <div class="step reveal"><div class="sn">02</div><h4>מקבלים ציון התאמה</h4><p>המנוע מצליב את התשובות מול תגיות המסלולים ומחשב אחוז התאמה לכל אחד.</p></div>
+      <div class="step reveal"><div class="sn">03</div><h4>יוצאים לדרך</h4><p>מסלול מנצח אחד + שתי חלופות. אורזים את התיק ויוצאים בביטחון.</p></div>
+    </div>
+    <p class="swipe-hint light" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> החליקו לגלול בין השלבים</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-final">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <svg class="topo" style="color:rgba(255,255,255,.3)" aria-hidden="true"><use href="#topo-lines"/></svg>
+      <div class="in">
+        <h2>מוכנים למצוא את המסלול שלכם?</h2>
+        <p>נסו את השאלון עכשיו — וגלו את המסלול שנבנה בול בשבילכם ובשביל הקבוצה.</p>
+        <a href="#quiz" class="btn btn-primary">מצאו לי מסלול
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <svg class="topo" aria-hidden="true"><use href="#topo-lines"/></svg>
+  <div class="wrap foot-in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="foot-logo">
+          <svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect width="40" height="40" rx="12" fill="#4A7C59"/>
+            <path d="M8 27 L16 14 L22 23 L26 17 L32 27 Z" fill="#F4A261"/>
+            <circle cx="28" cy="12" r="3.4" fill="#E2711D"/>
+          </svg>
+          NatureMatch
+        </div>
+        <p>ההתאמה החכמה בין המטייל לבין המסלול. עונים על כמה שאלות, ומקבלים את הטיול שנבנה בול בשבילכם ובשביל הקבוצה.</p>
+        <span class="mvp-badge">גרסת MVP</span>
+        <div class="foot-social">
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.5.2.9.5 1.3.9.4.4.6.8.9 1.3.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.5-.5.9-.9 1.3-.4.4-.8.6-1.3.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4a3.6 3.6 0 0 1-1.3-.9 3.6 3.6 0 0 1-.9-1.3c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.3-.5.5-.9.9-1.3.4-.4.8-.6 1.3-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.8-11.2a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.8 3.7-3.8 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.5 0-9.9 4.4-9.9 9.9 0 1.7.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 9.9-4.4 9.9-9.9S17.54 2 12.04 2zm0 18c-1.5 0-3-.4-4.3-1.2l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 1 1 20 12a8 8 0 0 1-7.96 8zm4.5-6c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.1-.3.2-.5.1-.7-.3-1.4-.6-2-1.3-.5-.5-.9-1.1-1-1.3-.1-.2 0-.4.1-.5l.4-.4c.1-.2.2-.3.2-.5s0-.4-.1-.5c-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.4-.3z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.7-1.7C19.4 5.2 12 5.2 12 5.2s-7.4 0-8.9.4A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.7 1.7c1.5.4 8.9.4 8.9.4s7.4 0 8.9-.4a2.5 2.5 0 0 0 1.7-1.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+        </div>
+      </div>
+
+      <nav class="foot-col" aria-label="ניווט">
+        <h4>ניווט</h4>
+        <ul>
+          <li><a href="#top">בית</a></li>
+          <li><a href="#problem">הבעיה</a></li>
+          <li><a href="#quiz">השאלון</a></li>
+          <li><a href="#features">איך זה עובד</a></li>
+        </ul>
+      </nav>
+
+      <nav class="foot-col" aria-label="המוצר">
+        <h4>המוצר</h4>
+        <ul>
+          <li><a href="#quiz">מציאת מסלול</a></li>
+          <li><a href="#features">יכולות המערכת</a></li>
+          <li><a href="#features">פרופיל קבוצתי</a></li>
+          <li><button type="button" class="foot-link nl-open">ניוזלטר</button></li>
+        </ul>
+      </nav>
+
+      <nav class="foot-col" aria-label="משאבים">
+        <h4>מידע ומשאבים</h4>
+        <ul>
+          <li><a href="#">שאלות נפוצות</a></li>
+          <li><a href="#">טיפים לטיולים</a></li>
+          <li><a href="#">בטיחות בשטח</a></li>
+          <li><a href="#">מדריך למתחילים</a></li>
+        </ul>
+      </nav>
+
+      <nav class="foot-col" aria-label="החברה">
+        <h4>החברה</h4>
+        <ul>
+          <li><a href="#">אודות</a></li>
+          <li><a href="#">צור קשר</a></li>
+          <li><a href="#">בלוג</a></li>
+          <li><a href="#">שיתופי פעולה</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 NatureMatch · נבנה מתוך אהבה לטבע 🌿</span>
+      <span class="fb-links">
+        <a href="#">תנאי שימוש</a>
+        <a href="#">מדיניות פרטיות</a>
+        <a href="#">נגישות</a>
+      </span>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=naturematch" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<!-- MOBILE MENU (body-level so position:fixed covers full viewport) -->
+<div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <svg class="topo" style="color:rgba(46,111,64,.10)" aria-hidden="true"><use href="#topo-lines"/></svg>
+  <div class="mm-inner">
+    <a class="m-link" href="#problem">הבעיה</a>
+    <a class="m-link" href="#quiz">השאלון</a>
+    <a class="m-link" href="#features">איך זה עובד</a>
+    <a class="btn btn-primary" href="#quiz">מצאו לי מסלול</a>
+    <button type="button" class="btn btn-outline nl-open" style="margin-top:.8rem">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      הרשמה לניוזלטר
+    </button>
+  </div>
+</div>
+
+<!-- NEWSLETTER MODAL -->
+<div class="modal-backdrop" id="nlBackdrop"></div>
+<div class="modal" id="nlModal" role="dialog" aria-modal="true" aria-labelledby="nlTitle">
+  <svg class="topo" style="color:rgba(46,111,64,.10)" aria-hidden="true"><use href="#topo-lines"/></svg>
+  <button class="modal-close" id="nlClose" aria-label="סגירת החלון">&times;</button>
+  <div class="modal-in">
+    <div class="nl-icon">✉️</div>
+    <h3 id="nlTitle">מסלולים חדשים, ישר למייל</h3>
+    <p class="nl-lead">הצטרפו לניוזלטר של NatureMatch והיו הראשונים לגלות מסלולים חדשים, טיפים והמלצות מותאמות לפי הטעם שלכם.</p>
+    <div class="nl-form">
+      <input type="email" id="nlEmail" inputmode="email" autocomplete="email" placeholder="כתובת המייל שלכם" aria-label="כתובת מייל">
+      <button type="button" class="btn btn-primary" id="nlSubmit">הרשמה</button>
+    </div>
+    <p class="nl-note">בלי ספאם — רק מה שבאמת שווה. אפשר לבטל בכל רגע.</p>
+    <div class="nl-success">
+      <div class="ok">✓</div>
+      <h4>נרשמתם בהצלחה!</h4>
+      <p>המסלולים הבאים כבר בדרך אליכם. נתראה בשטח 🌿</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- temporary trail database ---------------- */
+const trails = [
+  { name:"נחל עמוד — קטע תחתון", region:"north", diff:2, len:"med", water:true, danger:false, stroller:false, dogs:true, free:true, groups:["family","friends","couple"], vibe:"scenic", tags:"# עם_מים · # משפחתי" },
+  { name:"חורשת טל", region:"north", diff:1, len:"short", water:true, danger:false, stroller:true, dogs:false, free:false, groups:["family","couple","solo"], vibe:"calm", tags:"# קליל · # מים · # עגלות" },
+  { name:"נחל כזיב — עין תמיר", region:"north", diff:2, len:"long", water:true, danger:false, stroller:false, dogs:true, free:true, groups:["friends","couple"], vibe:"scenic", tags:"# מים · # ארוך" },
+  { name:"הר ארבל — מצוק", region:"north", diff:3, len:"med", water:false, danger:true, stroller:false, dogs:false, free:false, groups:["friends"], vibe:"adventure", tags:"# מיטיבי_לכת · # נוף" },
+  { name:"פארק הירקון", region:"center", diff:1, len:"short", water:true, danger:false, stroller:true, dogs:true, free:true, groups:["family","solo","couple"], vibe:"easygoing", tags:"# עירוני · # עגלות · # כלבים" },
+  { name:"יער בן שמן", region:"center", diff:1, len:"med", water:false, danger:false, stroller:true, dogs:true, free:true, groups:["family","friends","solo"], vibe:"calm", tags:"# קליל · # כלבים" },
+  { name:"עין פרת (ואדי קלט)", region:"jerusalem", diff:2, len:"med", water:true, danger:false, stroller:false, dogs:true, free:false, groups:["family","couple","friends"], vibe:"scenic", tags:"# מים · # מעיינות" },
+  { name:"נחל דרגות — עין גדי", region:"south", diff:2, len:"med", water:true, danger:false, stroller:false, dogs:false, free:false, groups:["couple","friends"], vibe:"adventure", tags:"# מים · # מדבר" },
+  { name:"עין עבדת", region:"south", diff:2, len:"short", water:true, danger:false, stroller:false, dogs:false, free:false, groups:["family","couple","friends"], vibe:"scenic", tags:"# מים · # מדבר" },
+  { name:"מכתש רמון — הר ארדון", region:"south", diff:3, len:"long", water:false, danger:false, stroller:false, dogs:true, free:true, groups:["friends"], vibe:"adventure", tags:"# מיטיבי_לכת · # מדבר" },
+  { name:"תל דן", region:"north", diff:1, len:"short", water:true, danger:false, stroller:true, dogs:false, free:false, groups:["family","couple","solo"], vibe:"easygoing", tags:"# מים · # עגלות · # קליל" },
+  { name:"נחל שניר (חצבני)", region:"north", diff:1, len:"short", water:true, danger:false, stroller:false, dogs:true, free:false, groups:["family","friends","couple"], vibe:"easygoing", tags:"# מים · # קליל" }
+];
+
+/* ---------------- questions ---------------- */
+const questions = [
+  { key:"group", title:"מי יוצא לדרך?", hint:"נתאים את הבטיחות ואורך המסלול לפי ההרכב.", two:true,
+    opts:[
+      {v:"solo", emo:"🚶", label:"לבד"},
+      {v:"couple", emo:"❤️", label:"זוג"},
+      {v:"family", emo:"👨‍👩‍👧", label:"משפחה עם ילדים"},
+      {v:"friends", emo:"🥾", label:"חברים (מיטיבי לכת)"}
+    ]},
+  { key:"diff", title:"איזו רמת קושי?", hint:"עד כמה מאתגר בא לכם היום.", two:true,
+    opts:[
+      {v:1, emo:"🌱", label:"קל ונינוח"},
+      {v:2, emo:"⛰️", label:"בינוני"},
+      {v:3, emo:"🔥", label:"מאתגר"}
+    ]},
+  { key:"len", title:"אורך המסלול?", hint:"כמה זמן בא לכם להיות בשטח.", two:true,
+    opts:[
+      {v:"short", emo:"⏱️", label:"קצר (עד שעתיים)"},
+      {v:"med", emo:"🕒", label:"בינוני (2–4 שעות)"},
+      {v:"long", emo:"🌄", label:"ארוך (חצי יום+)"}
+    ]},
+  { key:"water", title:"מחפשים מים בדרך?", hint:"נחל, מעיין או בריכה טבעית.", two:true,
+    opts:[
+      {v:true, emo:"💧", label:"כן, חובה מים"},
+      {v:false, emo:"🏜️", label:"לא משנה לי"}
+    ]},
+  { key:"region", title:"איזה אזור בארץ?", hint:"נעדיף מסלולים קרובים אליכם.", two:true,
+    opts:[
+      {v:"north", emo:"🌲", label:"צפון"},
+      {v:"center", emo:"🏙️", label:"מרכז"},
+      {v:"jerusalem", emo:"🏞️", label:"ירושלים והשפלה"},
+      {v:"south", emo:"🐪", label:"דרום"}
+    ]},
+  { key:"vibe", title:"איזו אווירה מתאימה לכם?", hint:"התחושה שאתם הכי מחפשים בטיול.", two:true,
+    opts:[
+      {v:"calm", emo:"🍃", label:"שקט ורוגע"},
+      {v:"scenic", emo:"📸", label:"נופים מרהיבים"},
+      {v:"adventure", emo:"🧗", label:"הרפתקה ואתגר"},
+      {v:"easygoing", emo:"☕", label:"קליל וכיפי"}
+    ]}
+];
+
+const dealbreakers = [
+  {v:"stroller", emo:"👶", label:"חובה נגיש לעגלות"},
+  {v:"dogs", emo:"🐕", label:"חובה ידידותי לכלבים"},
+  {v:"free", emo:"🆓", label:"חובה בחינם (ללא תשלום כניסה)"}
+];
+
+/* ---------------- state ---------------- */
+let step = 0;
+const answers = {};
+const dbSel = new Set();
+const TOTAL = questions.length + 1; // 6 questions + dealbreaker step = 7 steps
+
+const body = document.getElementById('quizBody');
+const bar = document.getElementById('progressBar');
+const count = document.getElementById('progressCount');
+const backBtn = document.getElementById('backBtn');
+const footHint = document.getElementById('footHint');
+const foot = document.getElementById('quizFoot');
+const progWrap = document.getElementById('progressWrap');
+
+function updateProgress(){
+  const shown = Math.min(step+1, TOTAL);
+  bar.style.width = ((step)/(TOTAL))*100 + "%";
+  if(step < TOTAL){ count.textContent = shown + " / " + TOTAL; }
+}
+
+function render(){
+  updateProgress();
+  backBtn.disabled = step === 0;
+  if(step < questions.length){ renderQuestion(questions[step]); }
+  else if(step === questions.length){ renderDealbreakers(); }
+  else { renderResults(); }
+}
+
+function renderQuestion(q){
+  progWrap.style.display='flex'; foot.style.display='flex';
+  footHint.textContent = "בחרו כדי להמשיך";
+  let html = '<div class="q-title">'+q.title+'</div><div class="q-hint">'+q.hint+'</div>';
+  html += '<div class="opts '+(q.two?'two':'')+'">';
+  q.opts.forEach(function(o,i){
+    const sel = answers[q.key] === o.v ? 'sel' : '';
+    html += '<button class="opt '+sel+'" data-v=\''+JSON.stringify(o.v)+'\' data-i="'+i+'">'
+      + '<span class="emo">'+o.emo+'</span><span>'+o.label+'</span></button>';
+  });
+  html += '</div>';
+  body.innerHTML = html;
+
+  body.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      const val = JSON.parse(btn.getAttribute('data-v'));
+      answers[q.key] = val;
+      body.querySelectorAll('.opt').forEach(function(b){b.classList.remove('sel');});
+      btn.classList.add('sel');
+      setTimeout(function(){ step++; render(); }, 240);
+    });
+  });
+}
+
+function renderDealbreakers(){
+  progWrap.style.display='flex'; foot.style.display='flex';
+  footHint.textContent = "אפשר לדלג — לא חובה לסמן";
+  let html = '<div class="q-title">מה חובה שיהיה?</div><div class="q-hint">התנאים שאי אפשר בלעדיהם. נסנן קודם כול לפיהם.</div><div class="db-grid">';
+  dealbreakers.forEach(function(d){
+    const on = dbSel.has(d.v);
+    html += '<div class="db '+(on?'sel':'')+'" data-v="'+d.v+'" role="checkbox" tabindex="0" aria-checked="'+on+'">'
+      + '<div class="box">'+(on?'✓':'')+'</div><span class="emo">'+d.emo+'</span><span>'+d.label+'</span></div>';
+  });
+  html += '</div><div style="margin-top:1.5rem"><button class="btn btn-primary" id="seeResults" style="width:100%;justify-content:center">הראו לי את המסלול המנצח 🏆</button></div>';
+  body.innerHTML = html;
+
+  body.querySelectorAll('.db').forEach(function(el){
+    function toggle(){
+      const v = el.getAttribute('data-v');
+      if(dbSel.has(v)){dbSel.delete(v);} else {dbSel.add(v);}
+      renderDealbreakers();
+    }
+    el.addEventListener('click',toggle);
+    el.addEventListener('keydown',function(e){ if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle();}});
+  });
+  document.getElementById('seeResults').addEventListener('click',function(){ step++; render(); });
+}
+
+/* ---------------- scoring ----------------
+   7 steps = 6 scored questions + dealbreaker filter.
+   Weights sum to 100. Every dimension keeps a non-zero floor so the best
+   match tends to land high (a "sharp" fit reaches the 90s / 100).      */
+function scoreTrail(t){
+  for(const db of dbSel){ if(!t[db]) return null; }          // hard filters (dealbreakers)
+  if(answers.group === 'family' && t.danger) return null;     // safety filter
+
+  let s = 0;
+  // group — 15
+  s += (t.groups.indexOf(answers.group) !== -1) ? 15 : 6;
+  // difficulty — 20
+  const dd = Math.abs(t.diff - answers.diff);
+  s += dd===0 ? 20 : dd===1 ? 13 : 5;
+  // length — 15
+  const order = {short:0, med:1, long:2};
+  const ld = Math.abs(order[t.len]-order[answers.len]);
+  s += ld===0 ? 15 : ld===1 ? 10 : 4;
+  // water — 15
+  if(answers.water === true){ s += t.water ? 15 : 5; }
+  else { s += 15; }
+  // region — 15
+  s += (t.region === answers.region) ? 15 : 6;
+  // vibe — 20 (the new sharp question)
+  s += (t.vibe === answers.vibe) ? 20 : 10;
+  return s; // 0–100
+}
+
+function ring(pct, size){
+  const r=42, c=2*Math.PI*r, off=c*(1-pct/100);
+  const id = "g"+Math.random().toString(36).slice(2,7);
+  return '<svg class="res-ring" viewBox="0 0 100 100" style="width:'+size+'px;height:'+size+'px" aria-hidden="true">'
+    + '<circle cx="50" cy="50" r="'+r+'" fill="none" stroke="#e3ded0" stroke-width="10"/>'
+    + '<circle class="ring-prog" cx="50" cy="50" r="'+r+'" fill="none" stroke="url(#'+id+')" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+c.toFixed(1)+'" data-off="'+off.toFixed(1)+'" transform="rotate(-90 50 50)"/>'
+    + '<text class="ring-num" x="50" y="49" text-anchor="middle" font-family="Secular One" font-size="24" fill="#2E6F40" data-pct="'+pct+'">0%</text>'
+    + '<text x="50" y="66" text-anchor="middle" font-family="Heebo" font-size="9" fill="#6b7865">התאמה</text>'
+    + '<defs><linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2E6F40"/><stop offset="1" stop-color="#57B45E"/></linearGradient></defs></svg>';
+}
+
+/* animate rings (draw + count up) inside a container */
+function playRings(root){
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.querySelectorAll('.ring-prog').forEach(function(circle){
+    const target = circle.getAttribute('data-off');
+    if(reduce){ circle.style.strokeDashoffset = target; return; }
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ circle.style.strokeDashoffset = target; }); });
+  });
+  root.querySelectorAll('.ring-num').forEach(function(txt){
+    const target = parseInt(txt.getAttribute('data-pct'),10) || 0;
+    if(reduce){ txt.textContent = target + '%'; return; }
+    const dur = 1000, start = performance.now();
+    function tick(now){
+      const p = Math.min(1,(now-start)/dur);
+      const eased = 1 - Math.pow(1-p, 3);
+      txt.textContent = Math.round(target*eased) + '%';
+      if(p < 1) requestAnimationFrame(tick); else txt.textContent = target + '%';
+    }
+    requestAnimationFrame(tick);
+  });
+}
+
+function diffLabel(d){ return ['','🌱 קל','⛰️ בינוני','🔥 מאתגר'][d]; }
+function diffPlain(d){ return ['','קל','בינוני','מאתגר'][d]; }
+function regionLabel(r){ return {north:"צפון", center:"מרכז", jerusalem:"ירושלים והשפלה", south:"דרום"}[r]; }
+
+function renderResults(){
+  progWrap.style.display='none'; foot.style.display='none';
+  bar.style.width = "100%";
+
+  const scored = trails.map(function(t){ return {t:t, s:scoreTrail(t)}; })
+    .filter(function(x){ return x.s !== null; })
+    .sort(function(a,b){ return b.s - a.s; });
+
+  if(scored.length === 0){
+    body.innerHTML = '<div class="result"><div class="res-head"><div class="tada">🤔</div>'
+      + '<h3>לא נמצאה התאמה מדויקת</h3></div>'
+      + '<p style="text-align:center;color:#6b7865">התנאים הקריטיים שסימנתם מצמצמים מאוד את האפשרויות במאגר הדוגמה. נסו להסיר תנאי אחד.</p>'
+      + '<div class="res-restart"><button class="btn btn-dark" id="restart">התחילו מחדש</button></div></div>';
+    document.getElementById('restart').addEventListener('click',restart);
+    return;
+  }
+
+  const top = scored[0];
+  const alts = scored.slice(1,3);
+
+  let html = '<div class="result">'
+    + '<div class="res-head"><div class="tada">🎉</div><h3>מצאנו לכם את המסלול המנצח!</h3></div>'
+    + '<div class="res-top">'
+    + ring(top.s, 92)
+    + '<div><h4>'+top.t.name+'</h4>'
+    + '<span class="rt-tag">'+top.t.tags+'</span>'
+    + '<div class="rt-meta">'
+    + (top.t.water?'<span class="chip">💧 מים</span>':'')
+    + '<span class="chip">'+diffLabel(top.t.diff)+'</span>'
+    + '<span class="chip">📍 '+regionLabel(top.t.region)+'</span>'
+    + '</div></div></div>';
+
+  if(alts.length){
+    html += '<div class="res-alts"><div class="lbl">אולי תאהבו גם את…</div>';
+    alts.forEach(function(a){
+      html += '<div class="alt"><div class="alt-name">'+a.t.name+'<small>'+regionLabel(a.t.region)+' · '+diffPlain(a.t.diff)+'</small></div>'
+        + '<div class="alt-pct">'+a.s+'%</div></div>';
+    });
+    html += '</div>';
+  }
+
+  html += '<div class="res-restart"><button class="btn btn-dark" id="restart">🔄 שאלון חדש</button></div></div>';
+  body.innerHTML = html;
+  document.getElementById('restart').addEventListener('click',restart);
+  playRings(body);
+}
+
+function restart(){
+  step=0; for(const k in answers){ delete answers[k]; } dbSel.clear(); render();
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+backBtn.addEventListener('click',function(){ if(step>0){ step--; render(); }});
+render();
+
+/* ---------------- mobile menu ---------------- */
+(function(){
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  const backdrop = document.getElementById('menuBackdrop');
+  if(!btn || !menu) return;
+  function setOpen(open){
+    btn.classList.toggle('open', open);
+    menu.classList.toggle('open', open);
+    if(backdrop) backdrop.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'סגירת תפריט' : 'פתיחת תפריט');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  btn.addEventListener('click', function(){ setOpen(!menu.classList.contains('open')); });
+  if(backdrop) backdrop.addEventListener('click', function(){ setOpen(false); });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setOpen(false); }); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') setOpen(false); });
+  window.addEventListener('resize', function(){ if(window.innerWidth > 900) setOpen(false); });
+})();
+
+/* ---------------- newsletter modal ---------------- */
+(function(){
+  const modal = document.getElementById('nlModal');
+  const backdrop = document.getElementById('nlBackdrop');
+  const closeBtn = document.getElementById('nlClose');
+  const email = document.getElementById('nlEmail');
+  const submit = document.getElementById('nlSubmit');
+  const openers = document.querySelectorAll('.nl-open');
+  if(!modal) return;
+
+  const mMenu = document.getElementById('mobileMenu');
+  const mBurger = document.getElementById('hamburger');
+  const mBack = document.getElementById('menuBackdrop');
+  function closeMobileMenu(){
+    if(mMenu) mMenu.classList.remove('open');
+    if(mBurger){ mBurger.classList.remove('open'); mBurger.setAttribute('aria-expanded','false'); mBurger.setAttribute('aria-label','פתיחת תפריט'); }
+    if(mBack) mBack.classList.remove('open');
+  }
+
+  function openModal(){
+    closeMobileMenu();
+    modal.classList.add('open');
+    if(backdrop) backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ if(email) email.focus(); }, 80);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    if(backdrop) backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  openers.forEach(function(b){ b.addEventListener('click', openModal); });
+  if(closeBtn) closeBtn.addEventListener('click', closeModal);
+  if(backdrop) backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+  function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function doSubmit(){
+    const v = (email.value || '').trim();
+    if(!isEmail(v)){ email.classList.add('err'); email.focus(); return; }
+    email.classList.remove('err');
+    modal.classList.add('done');
+  }
+  if(submit) submit.addEventListener('click', doSubmit);
+  if(email){
+    email.addEventListener('keydown', function(e){ if(e.key === 'Enter') doSubmit(); });
+    email.addEventListener('input', function(){ email.classList.remove('err'); });
+  }
+})();
+
+/* ---------------- scroll reveal ---------------- */
+const io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+},{threshold:.14});
+document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+/* animate the hero match-card ring on load */
+window.addEventListener('load', function(){
+  const card = document.querySelector('.match-card');
+  if(card) setTimeout(function(){ playRings(card); }, 400);
+});
+</script>
+</body>
+</html>
