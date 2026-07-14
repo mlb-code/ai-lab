@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>כדור אישי — האימון שמתאים בול לך</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#063D1E;
+    --green:#0B7A3B;
+    --green-bright:#19B34E;
+    --black:#111111;
+    --white:#FFFFFF;
+    --off:#F5F4EF;
+    --line: rgba(255,255,255,0.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Heebo',sans-serif;
+    background:var(--off);
+    color:var(--black);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Rubik',sans-serif;
+    font-weight:900;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:'Rubik',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.14em;
+    color:var(--green-bright);
+    text-transform:uppercase;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:20px;height:2px;
+    background:var(--green-bright);
+    display:inline-block;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(17,17,17,0.35);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:74px;
+  }
+  .logo{
+    font-family:'Rubik',sans-serif;
+    font-weight:800;
+    font-size:20px;
+    color:var(--white);
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--green-bright);
+    box-shadow:0 0 0 4px rgba(25,179,78,0.2);
+  }
+  .nav-cta{
+    background:var(--green-bright);
+    color:var(--black);
+    font-family:'Rubik',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    padding:11px 22px;
+    border-radius:100px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(25,179,78,.35);}
+
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:32px;
+    font-family:'Rubik',sans-serif;
+    font-size:14px;
+    font-weight:500;
+  }
+  .nav-links a{
+    color:rgba(255,255,255,0.75);
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{color:var(--white);}
+
+  /* Hamburger button */
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:42px;height:42px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:10px;
+    cursor:pointer;
+    flex:none;
+    padding:0;
+  }
+  .hamburger span{
+    display:block;
+    width:18px;height:2px;
+    background:var(--white);
+    border-radius:2px;
+    transition:transform .25s ease, opacity .2s ease;
+  }
+  .hamburger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.is-open span:nth-child(2){opacity:0;}
+  .hamburger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* Full-screen mobile menu */
+  .mobile-menu{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:linear-gradient(160deg, var(--black) 0%, var(--green-deep) 100%);
+    display:flex;
+    flex-direction:column;
+    transform:translateY(-100%);
+    opacity:0;
+    transition:transform .32s ease, opacity .28s ease;
+    pointer-events:none;
+  }
+  .mobile-menu.is-open{
+    transform:translateY(0);
+    opacity:1;
+    pointer-events:auto;
+  }
+  .mobile-menu-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:74px;
+    flex:none;
+  }
+  .mobile-menu-top .logo{color:var(--white);}
+  .mobile-menu-links{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:8px;
+    padding:0 28px;
+  }
+  .mobile-link{
+    font-family:'Rubik',sans-serif;
+    font-weight:800;
+    font-size:32px;
+    color:var(--white);
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  .mobile-menu-cta{
+    margin:24px 28px 40px;
+    text-align:center;
+    justify-content:center;
+  }
+
+  @media (max-width: 860px){
+    .nav-links{display:none;}
+    .nav-cta-desktop{display:none;}
+    .hamburger{display:flex;}
+    nav.wrap .logo{order:2;}
+    nav.wrap .hamburger{order:1;}
+  }
+  body.menu-open{overflow:hidden;}
+  .mobile-menu-top .logo{order:2;}
+  .mobile-menu-top .hamburger{order:1;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    color:var(--white);
+    padding:110px 0 140px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:-12px;
+    background-image:url("data:image/jpeg;base64,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X69ay22hi/XrWW20MX696032hi/XvWW20MX696022hi/XrWm+0MX69U5S32hi/nvWm20MX69a022hi/XvWm20MX49V5U32hi/XrWW20MX69ay22hi/XrWm+0MX696022hi/XrWm20MX69a032hi/XrWW+0MX696022hi/XrWm20MX69a032hi/XuvKm+0MX696y22hi/XrWW20MX696032hi/XvWm20MX696022hi/XrWm20MX69ay32hi/nvWm+0MX69a022hi/XrWm+0MX696032hi/nvWW20MX696022hi/XunKm+0MX896022hhbds2KjVs0WRfeUZ+os9dpxqysGj1FZWCuTGySr6jT6khpxyxNALGLFL1JS0S0eoOej1Bl6nRKk//EACYQAAICAgEDBAMBAQAAAAAAAAABESExQVFhcfCBkaHRELHB8eH/2gAIAQEAAT8Qm4NdCZm8CxLbL50NtVNi5UIS4yxptswqfUkuCadixLH1DbmvYUtWKhNVI1TJgoZMlwTThkPNl8jbmFktqydDbSpvJcWycQeo26awepcnuJ2O2S4JiCbVsmHE2J+w25TWCeop7/hX2O42G7E3BEw4n1O4bcOCeopXUXkitZyJvk0TYm6SNxRMSyHJnCwOdE2Jyy6U2JX1Iq0ZbQuxhNijbMksmROZzJDb/hGeSlodtoSWjFhVViu4LoT6ClzmSG3+xJWhRxBEp9xLcFRBEqFUMiobF3SLDsiX1IU04gbhmilfQlQuOSnURY6UPEC9ZMWZF/si6G7wMqVFVwVREEPgWDQknkS2mTePxCRqKIXBFih4GafUmzeuB1F0qcnDsJiLsjTwhts7voXIer6OD3H0N32PogX9n0f6gf6gW/1CSJm7vo/2n0Jf2Pohu3uCRu9Q4vcBu+x9CQv7Pos/s+ijB46F0+rISw7V1fR/uPoUk/K+hIx7z6EvPuPohx7j6G37H0SNIpcO4Qn3+r6MP730N6/s+ij+gf6z6Et6u4K79z6JX/Z9Dhce6+hUfviFR8oU7O4Xp/I+ht+59H+g+ii/cfQkbPV9C2e8Fkzer6HQXuPokj4mFcfM+juncElz8gf74f6AM0Pb0ncicRtVbyg9PGbslPCKycBLakVUkZrJEXsdkm9RTgRT1YM6CGF++eYsN7R6shRhT2ETet8FHhEJrAijDPBC4RCVwhFo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");
+    background-size:cover;
+    background-position:center;
+    filter:blur(2px) brightness(0.85) saturate(1.15);
+    transform:scale(1.04);
+    z-index:0;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 85% 15%, rgba(25,179,78,0.28), transparent 45%),
+      linear-gradient(150deg, rgba(6,6,6,0.90) 0%, rgba(6,61,30,0.85) 55%, rgba(11,122,59,0.78) 100%);
+    z-index:1;
+  }
+  .hero-grid{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    z-index:2;
+  }
+  .hero h1{
+    font-size:clamp(34px, 5.2vw, 62px);
+    line-height:1.08;
+    color:var(--green-bright);
+    text-shadow:0 0 24px rgba(25,179,78,0.55), 0 0 60px rgba(25,179,78,0.3);
+  }
+  .hero h1 span{color:var(--green-bright);}
+  .hero p.lead{
+    font-size:18px;
+    color:rgba(255,255,255,0.78);
+    max-width:560px;
+    margin:22px auto 0;
+  }
+  .hero-actions{
+    margin-top:36px;
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--green-bright);
+    color:var(--black);
+    font-family:'Rubik',sans-serif;
+    font-weight:800;
+    font-size:16px;
+    padding:16px 30px;
+    border-radius:100px;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(25,179,78,.4);}
+  .btn-ghost{
+    border:1.5px solid rgba(255,255,255,0.35);
+    color:var(--white);
+    font-family:'Rubik',sans-serif;
+    font-weight:700;
+    font-size:16px;
+    padding:15px 26px;
+    border-radius:100px;
+    transition:background .18s ease, border-color .18s ease;
+  }
+  .btn-ghost:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.6);}
+
+  .tag-row{
+    display:flex;gap:8px;flex-wrap:wrap;
+    margin-top:18px;
+  }
+  .tag{
+    font-family:'Rubik',sans-serif;
+    font-size:12px;font-weight:700;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.18);
+    color:var(--white);
+    padding:6px 12px;border-radius:100px;
+  }
+
+  /* ---------- PROBLEM ---------- */
+  .section{padding:100px 0;}
+  .problem{background:var(--off);scroll-margin-top:72px;}
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-head h2{
+    font-size:clamp(28px,3.6vw,42px);
+    margin-top:14px;
+    color:var(--black);
+  }
+  .section-head p{
+    margin-top:16px;
+    font-size:17px;
+    color:#444;
+  }
+  .chaos-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+  }
+  .chaos-card{
+    background:var(--white);
+    border:1px solid #E7E5DD;
+    border-radius:16px;
+    padding:22px 18px;
+    text-align:center;
+  }
+  .chaos-card .n{
+    font-family:'Rubik',sans-serif;
+    font-weight:900;
+    font-size:28px;
+    color:var(--green);
+  }
+  .chaos-card p{font-size:14px;color:#555;margin-top:8px;}
+
+  /* ---------- HOW IT WORKS / SIGNATURE ---------- */
+  .how{
+    background:var(--black);
+    color:var(--white);
+    position:relative;
+    scroll-margin-top:72px;
+  }
+  .how .section-head p{color:rgba(255,255,255,0.65);}
+  .how .section-head h2{color:var(--white);}
+  .flow{
+    display:grid;
+    grid-template-columns:repeat(4,1fr) 1.3fr;
+    gap:0;
+    align-items:stretch;
+    position:relative;
+    margin-top:10px;
+  }
+  .flow-input{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:14px;
+    padding:24px 16px;
+    text-align:center;
+    margin:0 6px;
+    position:relative;
+    z-index:2;
+  }
+  .flow-input .ic{font-size:28px;display:block;margin-bottom:10px;}
+  .flow-input h4{
+    font-family:'Rubik',sans-serif;
+    font-size:15px;font-weight:700;
+  }
+  .flow-input p{font-size:12.5px;color:rgba(255,255,255,0.55);margin-top:6px;}
+  .flow-arrow{
+    display:flex;align-items:center;justify-content:center;
+    color:var(--green-bright);
+    font-size:20px;
+  }
+  .flow-result{
+    background:linear-gradient(150deg, var(--green-deep), var(--green));
+    border-radius:16px;
+    padding:26px 22px;
+    display:flex;flex-direction:column;justify-content:center;
+    margin:0 6px;
+    position:relative;z-index:2;
+  }
+  .flow-result .eyebrow{color:rgba(255,255,255,0.85);}
+  .flow-result .eyebrow::before{background:rgba(255,255,255,0.85);}
+  .flow-result h3{font-family:'Rubik',sans-serif;font-size:19px;margin-top:8px;}
+  .flow-result p{font-size:13.5px;color:rgba(255,255,255,0.85);margin-top:6px;}
+
+  @media (max-width: 880px){
+    .flow{grid-template-columns:1fr;gap:14px;}
+    .flow-arrow{transform:rotate(90deg);height:20px;}
+    .flow-input,.flow-result{margin:0;}
+  }
+
+  /* ---------- QUIZ DEMO ---------- */
+  .quiz{background:var(--off);scroll-margin-top:74px;}
+  .quiz-layout{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:40px;
+    align-items:start;
+  }
+  .quiz-list{
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .quiz-list-item{
+    display:flex;align-items:center;gap:14px;
+    background:var(--white);
+    border:1px solid #E7E5DD;
+    border-radius:14px;
+    padding:14px 16px;
+    font-size:14px;
+    color:#555;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .quiz-list-item .num{
+    font-family:'Rubik',sans-serif;
+    font-weight:800;
+    font-size:13px;
+    width:26px;height:26px;flex:none;
+    border-radius:50%;
+    background:var(--off);
+    color:var(--green);
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid #E7E5DD;
+  }
+  .quiz-list-item.active{
+    border-color:var(--green);
+    background:rgba(11,122,59,0.06);
+  }
+  .quiz-list-item.active .num{
+    background:var(--green);
+    color:var(--white);
+    border-color:var(--green);
+  }
+  .quiz-list-item.done .num{
+    background:var(--black);
+    color:var(--white);
+    border-color:var(--black);
+  }
+
+  .quiz-card{
+    background:var(--black);
+    border-radius:24px;
+    padding:34px;
+    color:var(--white);
+    position:relative;
+    overflow:hidden;
+    min-height:430px;
+    display:flex;
+    flex-direction:column;
+  }
+  .quiz-card::before{
+    content:"";
+    position:absolute;top:-60px;left:-60px;
+    width:220px;height:220px;
+    background:radial-gradient(circle, rgba(25,179,78,0.25), transparent 70%);
+  }
+  .quiz-top{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'Rubik',sans-serif;
+    font-size:13px;
+    color:rgba(255,255,255,0.6);
+    position:relative;z-index:2;
+  }
+  .quiz-progress-track{
+    position:relative;
+    height:6px;
+    background:rgba(255,255,255,0.12);
+    border-radius:100px;
+    margin:14px 0 30px;
+    overflow:hidden;
+  }
+  .quiz-progress-fill{
+    position:absolute;top:0;right:0;height:100%;
+    background:var(--green-bright);
+    border-radius:100px;
+    width:10%;
+    transition:width .35s ease;
+  }
+  .quiz-question{
+    font-family:'Rubik',sans-serif;
+    font-weight:800;
+    font-size:24px;
+    position:relative;z-index:2;
+    min-height:64px;
+  }
+  .quiz-options{
+    margin-top:24px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    position:relative;z-index:2;
+  }
+  .quiz-option{
+    background:rgba(255,255,255,0.06);
+    border:1.5px solid rgba(255,255,255,0.16);
+    color:var(--white);
+    border-radius:14px;
+    padding:16px 14px;
+    font-family:'Heebo',sans-serif;
+    font-size:14.5px;
+    font-weight:500;
+    text-align:center;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .quiz-option .em{display:block;font-size:20px;margin-bottom:6px;}
+  .quiz-option:hover{
+    border-color:var(--green-bright);
+    background:rgba(25,179,78,0.12);
+    transform:translateY(-2px);
+  }
+  .quiz-option.selected{
+    background:var(--green-bright);
+    border-color:var(--green-bright);
+    color:var(--black);
+    font-weight:700;
+  }
+
+  .quiz-numeric-fields{
+    margin-top:24px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    position:relative;z-index:2;
+  }
+  .quiz-field{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .quiz-field label{
+    font-family:'Rubik',sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+    color:rgba(255,255,255,0.6);
+  }
+  .quiz-field input{
+    background:rgba(255,255,255,0.07);
+    border:1.5px solid rgba(255,255,255,0.18);
+    border-radius:12px;
+    padding:14px;
+    color:var(--white);
+    font-family:'Heebo',sans-serif;
+    font-size:17px;
+    text-align:center;
+    width:100%;
+  }
+  .quiz-field input:focus{
+    outline:none;
+    border-color:var(--green-bright);
+    background:rgba(25,179,78,0.1);
+  }
+  .quiz-field input::placeholder{color:rgba(255,255,255,0.35);}
+
+  .quiz-continue{
+    margin-top:22px;
+    width:100%;
+    background:var(--green-bright);
+    color:var(--black);
+    border:none;
+    font-family:'Rubik',sans-serif;
+    font-weight:800;
+    font-size:15px;
+    padding:15px;
+    border-radius:100px;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+    position:relative;z-index:2;
+  }
+  .quiz-continue:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(25,179,78,.35);}
+  .quiz-continue:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
+
+  @media (max-width: 480px){
+    .quiz-numeric-fields{grid-template-columns:1fr;}
+  }
+
+  .quiz-footer{
+    margin-top:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:relative;z-index:2;
+    padding-top:20px;
+  }
+  .quiz-back{
+    font-family:'Rubik',sans-serif;
+    font-size:13px;font-weight:700;
+    color:rgba(255,255,255,0.55);
+    cursor:pointer;
+    background:none;border:none;
+  }
+  .quiz-back:hover{color:var(--white);}
+  .quiz-back:disabled{opacity:0;pointer-events:none;}
+  .quiz-restart{
+    font-family:'Rubik',sans-serif;
+    font-size:13px;font-weight:700;
+    color:var(--green-bright);
+    cursor:pointer;background:none;border:none;
+    display:none;
+  }
+
+  .quiz-result{
+    position:relative;z-index:2;
+    display:none;
+    flex-direction:column;
+    gap:16px;
+  }
+  .quiz-result .badge{
+    font-size:13px;font-weight:700;
+    font-family:'Rubik',sans-serif;
+    color:var(--green-bright);
+  }
+  .quiz-result h3{
+    font-family:'Rubik',sans-serif;
+    font-size:23px;
+  }
+  .quiz-result p{color:rgba(255,255,255,0.75);font-size:14.5px;}
+  .quiz-result .tag-row{margin-top:4px;}
+
+  .result-video{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    width:100%;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:16px;
+    padding:14px;
+    text-decoration:none;
+    font-family:inherit;
+    text-align:right;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .result-video:hover{
+    border-color:var(--green-bright);
+    background:rgba(25,179,78,0.1);
+  }
+  .result-video .thumb{
+    flex:none;
+    width:76px;height:76px;
+    border-radius:12px;
+    background:linear-gradient(135deg, var(--green-bright), var(--green-deep));
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .result-video .thumb::after{
+    content:"";
+    width:0;height:0;
+    border-style:solid;
+    border-width:9px 0 9px 15px;
+    border-color:transparent transparent transparent var(--white);
+    margin-right:-3px;
+  }
+  .result-video .info{flex:1;min-width:0;}
+  .result-video .info .label{
+    font-family:'Rubik',sans-serif;
+    font-size:11.5px;font-weight:700;
+    color:var(--green-bright);
+    letter-spacing:0.06em;
+  }
+  .result-video .info .title{
+    font-family:'Rubik',sans-serif;
+    font-size:15.5px;font-weight:700;
+    color:var(--white);
+    margin-top:3px;
+  }
+  .result-video .info .sub{
+    font-size:12.5px;
+    color:rgba(255,255,255,0.55);
+    margin-top:3px;
+  }
+  .result-video .arrow{
+    flex:none;
+    color:rgba(255,255,255,0.5);
+    font-size:20px;
+  }
+
+  .result-exercises{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:16px;
+    padding:18px 18px;
+  }
+  .result-exercises .ex-title{
+    font-family:'Rubik',sans-serif;
+    font-size:13px;font-weight:700;
+    color:rgba(255,255,255,0.55);
+    letter-spacing:0.04em;
+    margin-bottom:10px;
+  }
+  .ex-item{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding:9px 0;
+    border-top:1px solid rgba(255,255,255,0.08);
+    font-size:14px;
+    color:rgba(255,255,255,0.88);
+  }
+  .ex-item:first-of-type{border-top:none;}
+  .ex-item .letter{
+    flex:none;
+    width:24px;height:24px;
+    border-radius:50%;
+    background:var(--green-bright);
+    color:var(--black);
+    font-family:'Rubik',sans-serif;
+    font-weight:800;
+    font-size:12px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .ex-item .food-icon{
+    flex:none;
+    width:24px;height:24px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.14);
+    font-size:13px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  @media (max-width: 880px){
+    .quiz-layout{grid-template-columns:1fr;}
+    .quiz-options{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width: 480px){
+    .quiz-options{grid-template-columns:1fr;}
+  }
+
+  /* ---------- FEATURES ---------- */
+  .features{background:var(--off);scroll-margin-top:72px;}
+  .feat-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  .feat-card{
+    background:var(--white);
+    border:1px solid #E7E5DD;
+    border-radius:20px;
+    padding:34px 28px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .feat-card:hover{transform:translateY(-6px);box-shadow:0 18px 34px rgba(11,122,59,0.14);}
+  .feat-card .step{
+    font-family:'Rubik',sans-serif;
+    font-weight:900;
+    font-size:13px;
+    color:var(--green);
+    letter-spacing:0.08em;
+  }
+  .feat-card h3{
+    font-size:21px;margin-top:12px;
+    color:var(--black);
+  }
+  .feat-card p{font-size:15px;color:#555;margin-top:10px;}
+  .feat-card .glow{
+    position:absolute;width:140px;height:140px;
+    background:radial-gradient(circle, rgba(11,122,59,0.14), transparent 70%);
+    top:-40px;left:-40px;
+  }
+
+  /* ---------- FUTURE / MODEL ---------- */
+  .future{
+    background:linear-gradient(120deg, var(--green-deep), var(--black));
+    color:var(--white);
+    border-radius:28px;
+    padding:52px 44px;
+    margin:0 auto;
+    max-width:1180px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:36px;
+    align-items:center;
+  }
+  .future h3{font-size:26px;}
+  .future p{color:rgba(255,255,255,0.72);margin-top:14px;font-size:15px;}
+  .future ul{margin-top:18px;display:flex;flex-direction:column;gap:10px;}
+  .future li{
+    font-size:14.5px;color:rgba(255,255,255,0.85);
+    display:flex;gap:10px;align-items:flex-start;
+  }
+  .future li::before{content:"✓";color:var(--green-bright);font-weight:900;}
+
+  /* ---------- CTA / FOOTER ---------- */
+  .cta-final{
+    text-align:center;
+    padding:110px 0 70px;
+  }
+  .cta-final h2{font-size:clamp(30px,4.6vw,48px);}
+  .cta-final p{font-size:17px;color:#555;margin:18px auto 34px;max-width:480px;}
+  footer{
+    background:
+      radial-gradient(140% 200% at 50% -60%, rgba(255,255,255,0.22), transparent 55%),
+      linear-gradient(135deg, var(--green-bright) 0%, var(--green) 60%, var(--green-deep) 100%);
+    color:rgba(255,255,255,0.9);
+    padding:44px 0;
+    font-size:14px;
+  }
+  footer .logo{color:var(--white);}
+  footer .logo .dot{
+    background:var(--white);
+    box-shadow:0 0 0 4px rgba(255,255,255,0.25);
+  }
+  footer .wrap{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+  }
+  .share-icons{display:flex;gap:14px;}
+  .share-icons span{
+    width:38px;height:38px;border-radius:50%;
+    background:rgba(255,255,255,0.2);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+  }
+
+  @media (max-width: 880px){
+    .chaos-grid{grid-template-columns:repeat(2,1fr);}
+    .feat-grid{grid-template-columns:1fr;}
+    .future{grid-template-columns:1fr;padding:36px 26px;}
+  }
+
+  @media (max-width: 600px){
+    .wrap{padding:0 18px;}
+    .hero{padding:64px 0 80px;}
+    .section{padding:64px 0;}
+    .cta-final{padding:72px 0 50px;}
+    .chaos-grid{grid-template-columns:1fr 1fr;gap:12px;}
+    .chaos-card{padding:16px 12px;}
+    .quiz-card{padding:22px 18px;min-height:auto;}
+    .quiz-options{gap:10px;}
+    .mobile-link{font-size:26px;}
+    .result-video{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="dot"></span>כדור אישי</div>
+
+    <div class="nav-links">
+      <a href="#problem">הבעיה</a>
+      <a href="#how">איך זה עובד</a>
+      <a href="#quiz">השאלון</a>
+      <a href="#fitness">תוכנית גופנית</a>
+      <a href="#features">יכולות</a>
+    </div>
+
+    <a href="#quiz" class="nav-cta nav-cta-desktop">בואו נתחיל</a>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="פתח תפריט" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-top wrap">
+    <div class="logo"><span class="dot"></span>כדור אישי</div>
+    <button class="hamburger is-open" id="mobileMenuClose" aria-label="סגור תפריט">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu-links">
+    <a href="#problem" class="mobile-link">הבעיה</a>
+    <a href="#how" class="mobile-link">איך זה עובד</a>
+    <a href="#quiz" class="mobile-link">השאלון</a>
+    <a href="#fitness" class="mobile-link">תוכנית גופנית</a>
+    <a href="#features" class="mobile-link">יכולות</a>
+  </div>
+  <a href="#quiz" class="btn-primary mobile-menu-cta">קבלו תוכנית אישית ⚡</a>
+</div>
+
+<script>
+(function(){
+  var openBtn = document.getElementById("hamburgerBtn");
+  var closeBtn = document.getElementById("mobileMenuClose");
+  var menu = document.getElementById("mobileMenu");
+
+  function openMenu(){
+    menu.classList.add("is-open");
+    openBtn.classList.add("is-open");
+    openBtn.setAttribute("aria-expanded","true");
+    document.body.classList.add("menu-open");
+  }
+  function closeMenu(){
+    menu.classList.remove("is-open");
+    openBtn.classList.remove("is-open");
+    openBtn.setAttribute("aria-expanded","false");
+    document.body.classList.remove("menu-open");
+  }
+
+  openBtn.addEventListener("click", openMenu);
+  closeBtn.addEventListener("click", closeMenu);
+  Array.prototype.forEach.call(menu.querySelectorAll("a"), function(link){
+    link.addEventListener("click", closeMenu);
+  });
+})();
+</script>
+
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">MVP · אימון אישי לשחקנים צעירים</span>
+      <h1>האימון שמתאים <span>בול</span> לך,<br>לא סתם עוד סרטון</h1>
+      <p class="lead">כדור אישי בונה לך תוכנית אימון כדורגל לפי הגיל, העמדה, הרמה והציוד שיש לך בבית — בלי לבזבז שעות בחיפושים ביוטיוב.</p>
+      <div class="hero-actions">
+        <a href="#quiz" class="btn-primary">קבלו תוכנית אישית ⚡</a>
+        <a href="#how" class="btn-ghost">איך זה עובד</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section problem" id="problem">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">הבעיה</span>
+      <h2>יותר מדי סרטונים, אף אחד לא בול בשבילך</h2>
+      <p>שחקנים צעירים שרוצים להשתפר מתמודדים היום עם ים של תוכן — בלי דרך לדעת מה באמת מתאים להם.</p>
+    </div>
+    <div class="chaos-grid">
+      <div class="chaos-card"><div class="n">אלפי</div><p>סרטוני אימון ביוטיוב וברשתות, בלי סינון</p></div>
+      <div class="chaos-card"><div class="n">0</div><p>התאמה לגיל, לעמדה או לרמת המשחק</p></div>
+      <div class="chaos-card"><div class="n">?</div><p>שאלות למאמן או לחברים, בלי תשובה אחידה</p></div>
+      <div class="chaos-card"><div class="n">כללי</div><p>אפליקציות אימון גנריות שלא מכירות אותך</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section how" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">איך זה עובד</span>
+      <h2>ארבעה פרטים עליך, תוכנית אחת בשבילך</h2>
+      <p>המערכת שלנו לוקחת את מי שאתה כשחקן — ומתרגמת את זה לתוכנית אימון אחת, ברורה ומדויקת.</p>
+    </div>
+    <div class="flow">
+      <div class="flow-input">
+        <span class="ic">🎂</span>
+        <h4>גיל</h4>
+        <p>שלב התפתחות מתאים</p>
+      </div>
+      <div class="flow-input">
+        <span class="ic">🧭</span>
+        <h4>עמדה</h4>
+        <p>חלוץ, קשר, הגנה, שוער</p>
+      </div>
+      <div class="flow-input">
+        <span class="ic">📈</span>
+        <h4>רמה</h4>
+        <p>מתחיל, מתקדם, תחרותי</p>
+      </div>
+      <div class="flow-input">
+        <span class="ic">⚽</span>
+        <h4>ציוד בבית</h4>
+        <p>כדור, קונוסים, חצר, קיר</p>
+      </div>
+      <div class="flow-arrow" aria-hidden="true">➜</div>
+      <div class="flow-result">
+        <span class="eyebrow">התוצאה</span>
+        <h3>תוכנית אימון אישית</h3>
+        <p>מדויקת בול לגיל, לעמדה, לרמה ולציוד שיש לך — מוכנה להתחיל עכשיו.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section quiz" id="quiz">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">בפנים השאלון</span>
+      <h2>10 שאלות קצרות, ותוכנית מדויקת בסוף</h2>
+      <p>ככה בדיוק נראה השאלון שבונה לכם את התוכנית — נסו בעצמכם, זה לוקח פחות משתי דקות.</p>
+    </div>
+    <div class="quiz-layout">
+      <div class="quiz-list" id="quizList"></div>
+
+      <div class="quiz-card">
+        <div class="quiz-top">
+          <span id="quizStepLabel">שאלה 1 מתוך 10</span>
+          <span id="quizPercent">10%</span>
+        </div>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="quizProgressFill"></div>
+        </div>
+
+        <div id="quizBody">
+          <div class="quiz-question" id="quizQuestion"></div>
+          <div class="quiz-options" id="quizOptions"></div>
+        </div>
+
+        <div class="quiz-result" id="quizResult">
+          <span class="badge">התוכנית מוכנה ⚡</span>
+          <h3 id="quizResultTitle">תוכנית אישית בהתאמה מלאה</h3>
+          <p id="quizResultText"></p>
+          <div class="tag-row" id="quizResultTags"></div>
+          <a class="result-video" id="resultVideo" href="#" target="_blank" rel="noopener">
+            <div class="thumb"></div>
+            <div class="info">
+              <div class="label">סרטון מומלץ בשבילך</div>
+              <div class="title" id="resultVideoTitle"></div>
+              <div class="sub" id="resultVideoSub"></div>
+            </div>
+            <div class="arrow">↗</div>
+          </a>
+          <div class="result-exercises">
+            <div class="ex-title">תרגילים לתוכנית שלך</div>
+            <div id="resultExercises"></div>
+          </div>
+          <div class="result-exercises">
+            <div class="ex-title">תזונה נכונה לעמדה שלך</div>
+            <div id="resultNutrition"></div>
+          </div>
+        </div>
+
+        <div class="quiz-footer">
+          <button class="quiz-back" id="quizBack">שאלה קודמת ›</button>
+          <button class="quiz-restart" id="quizRestart">להתחיל שוב מהתחלה ↻</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section quiz" id="fitness">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">יכולת נוספת</span>
+      <h2>תוכנית אימונים גופנית, לפי הגוף והמטרות שלך</h2>
+      <p>עוד שאלון קצר — הפעם על גובה, משקל, גיל ומטרה — ובסוף מחכה לך תוכנית כוח וסיבולת מותאמת אישית.</p>
+    </div>
+    <div class="quiz-layout">
+      <div class="quiz-list" id="fitList"></div>
+
+      <div class="quiz-card">
+        <div class="quiz-top">
+          <span id="fitStepLabel">שלב 1 מתוך 3</span>
+          <span id="fitPercent">33%</span>
+        </div>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="fitProgressFill"></div>
+        </div>
+
+        <div id="fitBody">
+          <div class="quiz-question" id="fitQuestion"></div>
+          <div class="quiz-options" id="fitOptions"></div>
+          <div class="quiz-numeric-fields" id="fitNumericFields" style="display:none;"></div>
+          <button class="quiz-continue" id="fitContinue" style="display:none;">המשך ›</button>
+        </div>
+
+        <div class="quiz-result" id="fitResult">
+          <span class="badge">התוכנית מוכנה ⚡</span>
+          <h3 id="fitResultTitle">תוכנית אימונים גופנית אישית</h3>
+          <p id="fitResultText"></p>
+          <div class="tag-row" id="fitResultTags"></div>
+          <div class="result-exercises">
+            <div class="ex-title">תרגילים לתוכנית שלך</div>
+            <div id="fitExercises"></div>
+          </div>
+        </div>
+
+        <div class="quiz-footer">
+          <button class="quiz-back" id="fitBack">שלב קודם ›</button>
+          <button class="quiz-restart" id="fitRestart">להתחיל שוב מהתחלה ↻</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section features" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">יכולות עיקריות</span>
+      <h2>שלושה צעדים מהספה למגרש</h2>
+      <p>תהליך קצר וברור — בלי הרשמות מסובכות ובלי ניחושים.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="glow"></div>
+        <div class="step">שאלון אישי</div>
+        <h3>כמה שאלות, לא יותר</h3>
+        <p>עונים על שאלות קצרות על הגיל, העמדה, הרמה והציוד הזמין — לוקח פחות משתי דקות.</p>
+      </div>
+      <div class="feat-card">
+        <div class="glow"></div>
+        <div class="step">המלצה מותאמת</div>
+        <h3>האימון הנכון, לא כל אימון</h3>
+        <p>המערכת בוחרת עבורכם את האימון המדויק ביותר מתוך מאגר האימונים, לפי מה שסיפרתם עליכם.</p>
+      </div>
+      <div class="feat-card">
+        <div class="glow"></div>
+        <div class="step">הצגת התוכנית</div>
+        <h3>תוכנית ברורה, שלב אחר שלב</h3>
+        <p>מקבלים תוכנית אימון מוצגת בצורה פשוטה וברורה, מוכנה להתחיל מיד בחצר או בסלון.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="future">
+    <div>
+      <span class="eyebrow">מבט קדימה</span>
+      <h3>היום בחינם, מחר גם מתקדם</h3>
+      <p>הגרסה הראשונה נותנת המלצות בסיסיות לכולם, בחינם. בהמשך נוסיף שכבה מתקדמת יותר.</p>
+    </div>
+    <ul>
+      <li>מנוי בתשלום עם תוכניות אימון מתקדמות</li>
+      <li>מעקב התקדמות אישי לאורך זמן</li>
+      <li>שיתופי פעולה עם מאמנים ואקדמיות כדורגל</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cta-final" id="start">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center;">בואו נתחיל</span>
+    <h2>מוכנים לתוכנית שלכם?</h2>
+    <p>שתי דקות של שאלות, ותוכנית אימון אישית מחכה לכם.</p>
+    <a href="#quiz" class="btn-primary" style="background:var(--green);color:var(--white);">בואו נתחיל את השאלון ⚽</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo" style="color:var(--white);"><span class="dot"></span>כדור אישי</div>
+    <div class="share-icons">
+      <span title="טיקטוק">🎵</span>
+      <span title="וואטסאפ">💬</span>
+      <span title="שיתוף">📤</span>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=kadur-ishi" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<script>
+(function(){
+  var questions = [
+    { q:"בן כמה אתה?", options:[
+      {em:"🧒",t:"8-10"},{em:"🧑",t:"11-13"},{em:"🧑‍🦱",t:"14-16"},{em:"🧔",t:"17+"}
+    ]},
+    { q:"באיזו עמדה אתה משחק?", options:[
+      {em:"🧤",t:"שוער"},{em:"🛡️",t:"הגנה"},{em:"🎯",t:"קשר"},{em:"⚡",t:"התקפה"}
+    ]},
+    { q:"כמה שנים אתה משחק?", options:[
+      {em:"🌱",t:"פחות משנה"},{em:"📗",t:"1-3 שנים"},{em:"📘",t:"4-6 שנים"},{em:"🏆",t:"7+ שנים"}
+    ]},
+    { q:"כמה פעמים בשבוע אתה מתאמן בקבוצה?", options:[
+      {em:"1️⃣",t:"פעם אחת"},{em:"2️⃣",t:"פעמיים"},{em:"3️⃣",t:"3 פעמים"},{em:"🔥",t:"כל יום"}
+    ]},
+    { q:"כמה זמן יש לך היום?", options:[
+      {em:"⏱️",t:"10 דקות"},{em:"⏰",t:"20 דקות"},{em:"🕐",t:"30 דקות"},{em:"🕐",t:"60 דקות"}
+    ]},
+    { q:"יש לך שער להתאמן מולו?", options:[
+      {em:"🥅",t:"כן, שער אמיתי"},{em:"🧱",t:"יש לי משהו מאולתר"},{em:"🚫",t:"אין לי שער"}
+    ]},
+    { q:"יש לך קונוסים?", options:[
+      {em:"🔶",t:"כן, יש לי קונוסים"},{em:"👟",t:"יש לי משהו להחליף (נעליים/בקבוקים)"},{em:"🚫",t:"אין לי כלום"}
+    ]},
+    { q:"יש לך חבר להתאמן איתו?", options:[
+      {em:"👬",t:"כן, תמיד"},{em:"🤝",t:"לפעמים"},{em:"🧍",t:"אני מעדיף לבד"}
+    ]},
+    { q:"מה אתה הכי רוצה לשפר?", dynamic:true },
+    { q:"איפה אתה מתאמן בעיקר?", options:[
+      {em:"🌳",t:"בחצר או בגינה"},{em:"🅿️",t:"בחניה"},{em:"🏟️",t:"במגרש קרוב לבית"},{em:"🛋️",t:"בסלון או בחדר"}
+    ]}
+  ];
+
+  var outfieldFocusOptions = [
+    {em:"⚽",t:"שליטה בכדור"},{em:"🎯",t:"מסירות ומשחק קבוצתי"},{em:"🥅",t:"בעיטות ודיוק לשער"},{em:"🚀",t:"מהירות וכוח"}
+  ];
+  var goalkeeperFocusOptions = [
+    {em:"🦶",t:"שוערות רגליים"},{em:"🤸",t:"זינוקים"},{em:"🏃",t:"יציאה על שחקן"},{em:"📍",t:"מיקום בשער"},{em:"🥅",t:"פנדלים"}
+  ];
+
+  var current = 0;
+  var answers = new Array(questions.length).fill(null);
+  var locked = false;
+
+  var listEl = document.getElementById("quizList");
+  var stepLabel = document.getElementById("quizStepLabel");
+  var percentEl = document.getElementById("quizPercent");
+  var fillEl = document.getElementById("quizProgressFill");
+  var questionEl = document.getElementById("quizQuestion");
+  var optionsEl = document.getElementById("quizOptions");
+  var bodyEl = document.getElementById("quizBody");
+  var resultEl = document.getElementById("quizResult");
+  var resultText = document.getElementById("quizResultText");
+  var resultTags = document.getElementById("quizResultTags");
+  var resultVideo = document.getElementById("resultVideo");
+  var resultVideoTitle = document.getElementById("resultVideoTitle");
+  var resultVideoSub = document.getElementById("resultVideoSub");
+  var resultExercises = document.getElementById("resultExercises");
+  var resultNutrition = document.getElementById("resultNutrition");
+  var backBtn = document.getElementById("quizBack");
+  var restartBtn = document.getElementById("quizRestart");
+
+  var hebrewLetters = ["א","ב","ג","ד"];
+
+  var focusPlans = {
+    "שליטה בכדור": {
+      title: "שליטה בכדור לשחקנים צעירים",
+      query: "תרגילי שליטה בכדור לשחקני כדורגל צעירים",
+      exercises: function(ctx){
+        return [
+          "מגע כפול בכדור עם כל רגל לסירוגין, דקה רצופה בלי הפסקה",
+          ctx.hasCones ? "סלאלום בין קונוסים: כניסה איטית ויציאה מהירה" : "סלאלום בין נעליים או בקבוקים במקום קונוסים",
+          "ג׳אגלינג: לספור כמה נגיעות ברצף בלי שהכדור נופל לרצפה",
+          "עצירת כדור ופנייה חדה של 180 מעלות בנגיעה אחת"
+        ];
+      }
+    },
+    "מסירות ומשחק קבוצתי": {
+      title: "דיוק במסירות ומשחק קבוצתי",
+      query: "תרגילי מסירות לשחקני כדורגל צעירים",
+      exercises: function(ctx){
+        return [
+          ctx.hasPartner ? "מסירות הלוך-חזור עם חבר, מרחק שהולך וגדל" : "מסירות מדויקות אל קיר, קבלה ומסירה חוזרת",
+          "מסירה בנגיעה אחת בלבד, בלי לעצור את הכדור לפני",
+          "מסירה ותנועה: מוסרים ומיד רצים למקום פנוי",
+          "דיוק למטרה מסומנת — לנסות לפגוע בה 10 פעמים ברצף"
+        ];
+      }
+    },
+    "בעיטות ודיוק לשער": {
+      title: "בעיטות ודיוק לשער",
+      query: "תרגילי בעיטות לשער לשחקני כדורגל צעירים",
+      exercises: function(ctx){
+        return [
+          ctx.hasGoal ? "בעיטות לפינות השער מכמה זוויות שונות" : "בעיטות למטרה מסומנת על קיר או שער מאולתר",
+          "בעיטה מיד אחרי נגיעה אחת, בלי לעצור את הכדור",
+          "10 בעיטות ברגל החזקה ו-10 ברגל החלשה, לשיפור איזון",
+          "בעיטות מרחק הולך וגדל, לשיפור כוח ודיוק יחד"
+        ];
+      }
+    },
+    "מהירות וכוח": {
+      title: "מהירות, זריזות וכוח",
+      query: "תרגילי מהירות וזריזות לכדורגל צעירים",
+      exercises: function(ctx){
+        return [
+          ctx.hasCones ? "ריצות זריזות בין קונוסים בצורת אות T" : "ריצות זריזות בין סימונים על הרצפה",
+          "ספרינטים קצרים של 10 מטר עם מנוחה מלאה בין חזרות",
+          "קפיצות סקוואט וקפיצות חופשיות לחיזוק הרגליים",
+          "ריצה עם כדור במהירות מרבית לאורך קו ישר"
+        ];
+      }
+    },
+    "שוערות רגליים": {
+      title: "שוערות רגליים לשוערים צעירים",
+      query: "תרגילי שוערות רגליים לשוערים צעירים בכדורגל",
+      exercises: function(ctx){
+        return [
+          "בעיטת חילוץ מהידיים לרגל, לדיוק ולמרחק",
+          ctx.hasCones ? "מסירה מדויקת ברגל בין קונוסים" : "מסירה מדויקת ברגל בין סימונים על הרצפה",
+          "קבלת כדור וסיבוב מהיר לפתיחת משחק מהיר",
+          "בעיטת דרך-שער (Goal kick) ארוכה לדיוק ולמרחק"
+        ];
+      }
+    },
+    "זינוקים": {
+      title: "טכניקת זינוקים לשוערים צעירים",
+      query: "תרגילי זינוקים לשוערים צעירים בכדורגל",
+      exercises: function(ctx){
+        return [
+          "זינוק צידי נמוך לתפיסת כדור מתגלגל לצדדים",
+          ctx.hasPartner ? "זינוקים לפי כדורים שחבר מגלגל לצדדים" : "זינוקים לפי כדור שאתה מגלגל או זורק לצד",
+          "נפילה רכה ובטוחה על השטח בלי להיפגע",
+          "חזרה מהירה לעמידה מוכנה אחרי כל זינוק"
+        ];
+      }
+    },
+    "יציאה על שחקן": {
+      title: "יציאות נכונות על שחקן",
+      query: "תרגילי יציאה על שחקן לשוערים צעירים",
+      exercises: function(ctx){
+        return [
+          "תרגול תזמון יציאה מול כדור שמתקרב אליך",
+          ctx.hasPartner ? "1 על 1 מול חבר שמגיע לכיוון השער" : "יציאה לעבר כדור מונח, לתרגול זווית וזמן היציאה",
+          "הקטנת זווית הבעיטה בעמידה נכונה מול התוקף",
+          "החלטה מהירה: לצאת קדימה או להישאר על הקו"
+        ];
+      }
+    },
+    "מיקום בשער": {
+      title: "מיקום נכון בשער",
+      query: "תרגילי מיקום לשוערים צעירים בכדורגל",
+      exercises: function(ctx){
+        return [
+          "עמידה במרכז המשולש הדמיוני מול הכדור",
+          "תזוזה צידית קצרה בהתאם למיקום הכדור במגרש",
+          ctx.hasGoal ? "כיסוי הקורות והעמידה הנכונה ביחס לשער" : "סימון גבולות שער דמיוני ותרגול מיקום בתוכו",
+          "תגובה מהירה לבעיטות ממרחקים ומזוויות שונות"
+        ];
+      }
+    },
+    "פנדלים": {
+      title: "הדיפת פנדלים",
+      query: "תרגילי הדיפת פנדלים לשוערים צעירים",
+      exercises: function(ctx){
+        return [
+          "קריאת כיוון הבעיטה לפי זווית הגוף והרגל של הבועט",
+          ctx.hasPartner ? "תרגול פנדלים אמיתיים מול חבר, לסירוגין" : "תרגול תזוזה וזינוק גם בלי בועט אמיתי מולך",
+          "זינוק מהיר לפינה מיד עם רגע הבעיטה",
+          "שמירה על ריכוז ורוגע בזמן ההמתנה לפני כל בעיטה"
+        ];
+      }
+    }
+  };
+
+  var nutritionPlans = {
+    "שוער": [
+      {icon:"🍌", text:"פחמימה קלה לפני האימון (בננה או לחם מלא) לאנרגיה ולריכוז מהיר"},
+      {icon:"🥚", text:"חלבון קל אחרי האימון (ביצה, יוגורט) לבניית שרירים ולהתאוששות"},
+      {icon:"💧", text:"שתייה מרובה של מים לאורך היום, גם בימים בלי אימון"},
+      {icon:"🍽️", text:"ארוחה מסודרת מספיק זמן לפני משחק, לא ממש רגע לפני"}
+    ],
+    "הגנה": [
+      {icon:"🍚", text:"פחמימות מורכבות (אורז, פסטה מלאה) לאנרגיה שמחזיקה לאורך זמן"},
+      {icon:"🍗", text:"חלבון בארוחה העיקרית (עוף, קטניות, ביצים) לחיזוק השרירים"},
+      {icon:"🥦", text:"ירקות צבעוניים בכל ארוחה, בשביל ויטמינים ומינרלים"},
+      {icon:"😴", text:"שינה מספקת — היא חלק בלתי נפרד מההתאוששות והצמיחה"}
+    ],
+    "קשר": [
+      {icon:"🥣", text:"פחמימות לפני אימון ארוך (שיבולת שועל, פירות) כדלק לאורך הריצה"},
+      {icon:"💧", text:"שתייה סדירה גם באמצע האימון, לא רק לפני ואחרי"},
+      {icon:"🍎", text:"חטיף קל שעה-שעתיים לפני אימון, במקום ארוחה כבדה"},
+      {icon:"🥪", text:"ארוחת התאוששות עם פחמימה וחלבון תוך שעה מסיום האימון"}
+    ],
+    "התקפה": [
+      {icon:"🍞", text:"ארוחה קלה ועשירה בפחמימה כשעתיים לפני משחק או אימון"},
+      {icon:"🍳", text:"חלבון איכותי אחרי האימון לבניית מסת שריר ולהתאוששות"},
+      {icon:"🚫", text:"הימנעות ממאכלים כבדים או ממותקים מדי סמוך לאימון"},
+      {icon:"💧", text:"מים לאורך כל האימון או המשחק, בעיקר בימים חמים"}
+    ]
+  };
+
+  questions.forEach(function(item, i){
+    var row = document.createElement("div");
+    row.className = "quiz-list-item";
+    row.innerHTML = '<span class="num">'+(i+1)+'</span><span>'+item.q+'</span>';
+    row.addEventListener("click", function(){
+      if(answers[i] !== null || i === current){
+        locked = false;
+        current = i;
+        render();
+      }
+    });
+    listEl.appendChild(row);
+  });
+
+  function render(){
+    bodyEl.style.display = "block";
+    resultEl.style.display = "none";
+    restartBtn.style.display = "none";
+    backBtn.style.display = "inline-block";
+    backBtn.disabled = current === 0;
+
+    stepLabel.textContent = "שאלה " + (current+1) + " מתוך " + questions.length;
+    var pct = Math.round(((current+1)/questions.length)*100);
+    percentEl.textContent = pct + "%";
+    fillEl.style.width = pct + "%";
+
+    var q = questions[current];
+    questionEl.textContent = q.q;
+    optionsEl.innerHTML = "";
+    var opts = q.options;
+    if(q.dynamic){
+      opts = (answers[1] === "שוער") ? goalkeeperFocusOptions : outfieldFocusOptions;
+    }
+    opts.forEach(function(opt){
+      var btn = document.createElement("div");
+      btn.className = "quiz-option" + (answers[current] === opt.t ? " selected" : "");
+      btn.innerHTML = '<span class="em">'+opt.em+'</span>'+opt.t;
+      btn.addEventListener("click", function(){
+        if(locked) return;
+        locked = true;
+        answers[current] = opt.t;
+        if(current < questions.length - 1){
+          setTimeout(function(){
+            current++;
+            locked = false;
+            render();
+          }, 220);
+        } else {
+          setTimeout(function(){
+            locked = false;
+            showResult();
+          }, 220);
+        }
+        render();
+      });
+      optionsEl.appendChild(btn);
+    });
+
+    Array.prototype.forEach.call(listEl.children, function(row, i){
+      row.classList.remove("active","done");
+      if(i === current) row.classList.add("active");
+      else if(answers[i] !== null) row.classList.add("done");
+    });
+  }
+
+  function showResult(){
+    bodyEl.style.display = "none";
+    resultEl.style.display = "flex";
+    backBtn.style.display = "none";
+    restartBtn.style.display = "inline-block";
+    stepLabel.textContent = "השאלון הושלם";
+    percentEl.textContent = "100%";
+    fillEl.style.width = "100%";
+
+    var age = answers[0] || "";
+    var position = answers[1] || "";
+    var time = answers[4] || "";
+    var focus = answers[8] || "";
+    resultText.textContent = "בהתאם לתשובות שלך, בנינו לך אימון של " + time + " שמתמקד ב" + focus + " — מותאם בדיוק לעמדת " + position + " ולגיל " + age + ".";
+    resultTags.innerHTML = "";
+    [age, position, time, focus].forEach(function(val){
+      if(!val) return;
+      var tag = document.createElement("span");
+      tag.className = "tag";
+      tag.style.background = "rgba(255,255,255,0.1)";
+      tag.style.borderColor = "rgba(255,255,255,0.18)";
+      tag.textContent = val;
+      resultTags.appendChild(tag);
+    });
+
+    var ctx = {
+      hasGoal: answers[5] && answers[5] !== "אין לי שער",
+      hasCones: answers[6] && answers[6] !== "אין לי כלום",
+      hasPartner: answers[7] === "כן, תמיד" || answers[7] === "לפעמים"
+    };
+    var plan = focusPlans[focus] || focusPlans["שליטה בכדור"];
+    var exercisesList = plan.exercises(ctx);
+    var nutritionTips = nutritionPlans[position] || nutritionPlans["קשר"];
+
+    var videoQuery = plan.query + (position ? " עמדת " + position : "");
+    resultVideo.href = "https://www.youtube.com/results?search_query=" + encodeURIComponent(videoQuery);
+    resultVideoTitle.textContent = plan.title;
+    resultVideoSub.textContent = "סרטון מודרך לפי העמדה, הרמה והזמן שסימנת";
+
+    resultExercises.innerHTML = "";
+    exercisesList.forEach(function(text, i){
+      var item = document.createElement("div");
+      item.className = "ex-item";
+      item.innerHTML = '<span class="letter">'+(hebrewLetters[i] || (i+1))+'</span><span>'+text+'</span>';
+      resultExercises.appendChild(item);
+    });
+
+    resultNutrition.innerHTML = "";
+    nutritionTips.forEach(function(tip){
+      var item = document.createElement("div");
+      item.className = "ex-item";
+      item.innerHTML = '<span class="food-icon">'+tip.icon+'</span><span>'+tip.text+'</span>';
+      resultNutrition.appendChild(item);
+    });
+
+    Array.prototype.forEach.call(listEl.children, function(row){
+      row.classList.remove("active");
+      row.classList.add("done");
+    });
+  }
+
+  backBtn.addEventListener("click", function(){
+    if(current > 0){
+      locked = false;
+      current--;
+      render();
+    }
+  });
+
+  restartBtn.addEventListener("click", function(){
+    locked = false;
+    current = 0;
+    answers = new Array(questions.length).fill(null);
+    render();
+  });
+
+  render();
+})();
+</script>
+
+<script>
+(function(){
+  var steps = [
+    {
+      type:"select",
+      q:"בן כמה אתה?",
+      options:[
+        {em:"🧒",t:"8-10"},{em:"🧑",t:"11-13"},{em:"🧑‍🦱",t:"14-16"},{em:"🧔",t:"17+"}
+      ]
+    },
+    {
+      type:"numeric",
+      q:"מה הגובה והמשקל שלך?",
+      fields:[
+        {id:"height", label:"גובה (ס״מ)", placeholder:"לדוגמה: 150", min:80, max:210},
+        {id:"weight", label:"משקל (ק״ג)", placeholder:"לדוגמה: 40", min:15, max:120}
+      ]
+    },
+    {
+      type:"select",
+      q:"מה המטרה העיקרית שלך?",
+      options:[
+        {em:"💪",t:"להתחזק ולהיות חזק יותר"},
+        {em:"🏃",t:"לשפר סיבולת וריצה"},
+        {em:"🤸",t:"לשפר קפיצה וזריזות"},
+        {em:"🛡️",t:"להתאושש ולהימנע מפציעות"}
+      ]
+    }
+  ];
+
+  var fitCurrent = 0;
+  var fitAnswers = [null, {height:"", weight:""}, null];
+  var fitLocked = false;
+
+  var fitListEl = document.getElementById("fitList");
+  var fitStepLabel = document.getElementById("fitStepLabel");
+  var fitPercentEl = document.getElementById("fitPercent");
+  var fitFillEl = document.getElementById("fitProgressFill");
+  var fitQuestionEl = document.getElementById("fitQuestion");
+  var fitOptionsEl = document.getElementById("fitOptions");
+  var fitNumericEl = document.getElementById("fitNumericFields");
+  var fitContinueBtn = document.getElementById("fitContinue");
+  var fitBodyEl = document.getElementById("fitBody");
+  var fitResultEl = document.getElementById("fitResult");
+  var fitResultText = document.getElementById("fitResultText");
+  var fitResultTags = document.getElementById("fitResultTags");
+  var fitExercisesEl = document.getElementById("fitExercises");
+  var fitBackBtn = document.getElementById("fitBack");
+  var fitRestartBtn = document.getElementById("fitRestart");
+
+  var fitHebrewLetters = ["א","ב","ג","ד"];
+
+  var goalPlans = {
+    "להתחזק ולהיות חזק יותר": {
+      exercises:[
+        "סקוואט משקל גוף — 3 סטים של 12 חזרות, בקצב שקט",
+        "שכיבות סמיכה מותאמות (על קיר או על הברכיים אם צריך) — 3 סטים",
+        "פלאנק להחזקת הליבה — 3 פעמים, כמה שיותר זמן בטכניקה נכונה",
+        "עליות מדרגה או קפיצות קלות לחיזוק הרגליים"
+      ]
+    },
+    "לשפר סיבולת וריצה": {
+      exercises:[
+        "ריצות אינטרוולים: דקה ריצה קלה ודקה הליכה, 8 סבבים",
+        "קפיצות חבל או קפיצות במקום — 3 סטים של דקה",
+        "ריצת עלייה קצרה אם יש שיפוע בסביבה, חזרה בהליכה רגועה",
+        "כמה נשימות עמוקות ומתיחות קלות בסיום האימון"
+      ]
+    },
+    "לשפר קפיצה וזריזות": {
+      exercises:[
+        "קפיצות סקוואט (Squat Jumps) — 3 סטים של 10 חזרות",
+        "ריצות זריזות קצרות עם שינויי כיוון",
+        "קפיצות חד-רגליות לשיווי משקל ולכוח ברגליים",
+        "תרגילי סולם זריזות, או קווים מצוירים על הרצפה במקום סולם"
+      ]
+    },
+    "להתאושש ולהימנע מפציעות": {
+      exercises:[
+        "מתיחות דינמיות לפני האימון — כ-5 דקות",
+        "תרגילי יציבות לקרסול, עמידה על רגל אחת",
+        "חיזוק עדין של שרירי הליבה (פלאנק קצר בטכניקה נכונה)",
+        "מתיחות סטטיות ונשימות עמוקות בסיום כל אימון"
+      ]
+    }
+  };
+
+  var ageStageNote = {
+    "8-10": "בגיל הזה הכי חשוב תנועה נכונה וכיף — בלי עומס כבד, בקצב שמתאים לך.",
+    "11-13": "זה שלב טוב לבנות הרגלי אימון קבועים עם משקל גוף בלבד.",
+    "14-16": "אפשר להתחיל להעלות בהדרגה את העומס והחזרות, תוך שמירה על טכניקה.",
+    "17+": "יש כאן מקום להתקדם לתוכנית מובנית יותר, בקצב שמתאים לך."
+  };
+
+  steps.forEach(function(item, i){
+    var row = document.createElement("div");
+    row.className = "quiz-list-item";
+    row.innerHTML = '<span class="num">'+(i+1)+'</span><span>'+item.q+'</span>';
+    row.addEventListener("click", function(){
+      if(fitAnswers[i] !== null && fitAnswers[i] !== "" || i === fitCurrent){
+        fitLocked = false;
+        fitCurrent = i;
+        fitRender();
+      }
+    });
+    fitListEl.appendChild(row);
+  });
+
+  function fitIsAnswered(i){
+    var a = fitAnswers[i];
+    if(steps[i].type === "numeric"){
+      return a && a.height && a.weight;
+    }
+    return a !== null;
+  }
+
+  function fitRender(){
+    fitBodyEl.style.display = "block";
+    fitResultEl.style.display = "none";
+    fitRestartBtn.style.display = "none";
+    fitBackBtn.style.display = "inline-block";
+    fitBackBtn.disabled = fitCurrent === 0;
+
+    fitStepLabel.textContent = "שלב " + (fitCurrent+1) + " מתוך " + steps.length;
+    var pct = Math.round(((fitCurrent+1)/steps.length)*100);
+    fitPercentEl.textContent = pct + "%";
+    fitFillEl.style.width = pct + "%";
+
+    var step = steps[fitCurrent];
+    fitQuestionEl.textContent = step.q;
+    fitOptionsEl.innerHTML = "";
+    fitNumericEl.innerHTML = "";
+
+    if(step.type === "select"){
+      fitOptionsEl.style.display = "grid";
+      fitNumericEl.style.display = "none";
+      fitContinueBtn.style.display = "none";
+      step.options.forEach(function(opt){
+        var btn = document.createElement("div");
+        btn.className = "quiz-option" + (fitAnswers[fitCurrent] === opt.t ? " selected" : "");
+        btn.innerHTML = '<span class="em">'+opt.em+'</span>'+opt.t;
+        btn.addEventListener("click", function(){
+          if(fitLocked) return;
+          fitLocked = true;
+          fitAnswers[fitCurrent] = opt.t;
+          if(fitCurrent < steps.length - 1){
+            setTimeout(function(){
+              fitCurrent++;
+              fitLocked = false;
+              fitRender();
+            }, 220);
+          } else {
+            setTimeout(function(){
+              fitLocked = false;
+              fitShowResult();
+            }, 220);
+          }
+          fitRender();
+        });
+        fitOptionsEl.appendChild(btn);
+      });
+    } else {
+      fitOptionsEl.style.display = "none";
+      fitNumericEl.style.display = "grid";
+      fitContinueBtn.style.display = "block";
+      var current = fitAnswers[fitCurrent] || {height:"", weight:""};
+
+      step.fields.forEach(function(f){
+        var wrap = document.createElement("div");
+        wrap.className = "quiz-field";
+        var label = document.createElement("label");
+        label.textContent = f.label;
+        var input = document.createElement("input");
+        input.type = "number";
+        input.min = f.min;
+        input.max = f.max;
+        input.placeholder = f.placeholder;
+        input.value = current[f.id] || "";
+        input.addEventListener("input", function(){
+          current[f.id] = input.value;
+          fitAnswers[fitCurrent] = current;
+          fitContinueBtn.disabled = !(current.height && current.weight);
+        });
+        wrap.appendChild(label);
+        wrap.appendChild(input);
+        fitNumericEl.appendChild(wrap);
+      });
+
+      fitContinueBtn.disabled = !(current.height && current.weight);
+      fitContinueBtn.onclick = function(){
+        if(!(current.height && current.weight)) return;
+        if(fitCurrent < steps.length - 1){
+          fitCurrent++;
+          fitRender();
+        } else {
+          fitShowResult();
+        }
+      };
+    }
+
+    Array.prototype.forEach.call(fitListEl.children, function(row, i){
+      row.classList.remove("active","done");
+      if(i === fitCurrent) row.classList.add("active");
+      else if(fitIsAnswered(i)) row.classList.add("done");
+    });
+  }
+
+  function fitShowResult(){
+    fitBodyEl.style.display = "none";
+    fitResultEl.style.display = "flex";
+    fitBackBtn.style.display = "none";
+    fitRestartBtn.style.display = "inline-block";
+    fitStepLabel.textContent = "השאלון הושלם";
+    fitPercentEl.textContent = "100%";
+    fitFillEl.style.width = "100%";
+
+    var age = fitAnswers[0] || "";
+    var hw = fitAnswers[1] || {height:"",weight:""};
+    var goal = fitAnswers[2] || "";
+    var note = ageStageNote[age] || "";
+
+    fitResultText.textContent = "בהתאם לגיל, לגובה ולמשקל שהזנת, בנינו לך תוכנית שמתמקדת ב" + goal.replace(/^ל/, "") + ". " + note;
+
+    fitResultTags.innerHTML = "";
+    var tagVals = [age, hw.height ? hw.height + " ס״מ" : "", hw.weight ? hw.weight + " ק״ג" : "", goal];
+    tagVals.forEach(function(val){
+      if(!val) return;
+      var tag = document.createElement("span");
+      tag.className = "tag";
+      tag.style.background = "rgba(255,255,255,0.1)";
+      tag.style.borderColor = "rgba(255,255,255,0.18)";
+      tag.textContent = val;
+      fitResultTags.appendChild(tag);
+    });
+
+    var plan = goalPlans[goal] || goalPlans["להתחזק ולהיות חזק יותר"];
+    fitExercisesEl.innerHTML = "";
+    plan.exercises.forEach(function(text, i){
+      var item = document.createElement("div");
+      item.className = "ex-item";
+      item.innerHTML = '<span class="letter">'+(fitHebrewLetters[i] || (i+1))+'</span><span>'+text+'</span>';
+      fitExercisesEl.appendChild(item);
+    });
+
+    Array.prototype.forEach.call(fitListEl.children, function(row){
+      row.classList.remove("active");
+      row.classList.add("done");
+    });
+  }
+
+  fitBackBtn.addEventListener("click", function(){
+    if(fitCurrent > 0){
+      fitLocked = false;
+      fitCurrent--;
+      fitRender();
+    }
+  });
+
+  fitRestartBtn.addEventListener("click", function(){
+    fitLocked = false;
+    fitCurrent = 0;
+    fitAnswers = [null, {height:"", weight:""}, null];
+    fitRender();
+  });
+
+  fitRender();
+})();
+</script>
+</body>
+</html>
