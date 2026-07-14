@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הצעת מחיר — מועצה אזורית שומרון | AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080c1a;
+    --bg2:#0f1830;
+    --card:#141e3d;
+    --card2:#1a264c;
+    --line:rgba(255,255,255,.09);
+    --ink:#eef2ff;
+    --muted:#a9b4d6;
+    --brand:#5b8cff;
+    --brand2:#8a6bff;
+    --accent:#38e1c3;
+    --gold:#ffd066;
+    --radius:24px;
+    --step:clamp(15px, 1.02vw + 8px, 30px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Heebo',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    font-size:var(--step);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ===== animated background orbs ===== */
+  .orbs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+  .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:float 18s ease-in-out infinite}
+  .orb.a{width:46vw;height:46vw;background:radial-gradient(circle,#3a5cff,transparent 65%);top:-12vw;inset-inline-end:-8vw}
+  .orb.b{width:40vw;height:40vw;background:radial-gradient(circle,#8a6bff,transparent 65%);bottom:-10vw;inset-inline-start:-8vw;animation-delay:-6s}
+  .orb.c{width:32vw;height:32vw;background:radial-gradient(circle,#38e1c3,transparent 65%);top:38%;inset-inline-start:30%;opacity:.28;animation-delay:-11s}
+  @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(3vw,4vw) scale(1.08)}66%{transform:translate(-3vw,-2vw) scale(.95)}}
+
+  .wrap{width:min(1200px, 92vw);margin-inline:auto}
+
+  /* ===== reveal on scroll ===== */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.orb{animation:none}}
+
+  /* ===== centered section head ===== */
+  .head{text-align:center;max-width:64ch;margin-inline:auto}
+  .eyebrow{
+    display:inline-block;color:var(--accent);font-weight:700;
+    letter-spacing:.14em;font-size:.76em;text-transform:uppercase;margin-bottom:.7em;
+  }
+  h2{font-size:clamp(1.6em,3.1vw,2.6em);font-weight:900;line-height:1.15;margin-bottom:.35em}
+  .head .sub{color:var(--muted);font-size:1.05em}
+  .rule{width:70px;height:4px;border-radius:99px;margin:1em auto 0;
+    background:linear-gradient(90deg,var(--brand),var(--brand2),var(--accent))}
+
+  section{padding:clamp(38px,5vw,84px) 0}
+
+  /* ===== HERO ===== */
+  header.hero{padding:clamp(46px,8vw,120px) 0 clamp(30px,4vw,60px);text-align:center;position:relative}
+  .badge{
+    display:inline-flex;align-items:center;gap:.55em;
+    background:rgba(56,225,195,.1);border:1px solid rgba(56,225,195,.4);
+    color:var(--accent);padding:.55em 1.3em;border-radius:999px;
+    font-weight:600;font-size:.74em;letter-spacing:.03em;
+    animation:pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(56,225,195,.25)}50%{box-shadow:0 0 0 12px rgba(56,225,195,0)}}
+  h1{font-size:clamp(2em,5.2vw,4em);font-weight:900;line-height:1.1;margin:.55em auto .4em;max-width:16ch;letter-spacing:-.015em}
+  h1 .grad{background:linear-gradient(90deg,var(--brand),var(--brand2) 55%,var(--accent));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--muted);font-size:1.15em;max-width:56ch;margin:0 auto;font-weight:400}
+  .who{margin-top:2em;display:flex;flex-wrap:wrap;gap:.7em 1em;justify-content:center;color:var(--muted);font-size:.88em}
+  .who span{display:inline-flex;align-items:center;gap:.45em;background:rgba(255,255,255,.04);
+    border:1px solid var(--line);padding:.5em 1.1em;border-radius:999px}
+  .dot{width:.55em;height:.55em;border-radius:50%;background:var(--accent);flex:none;box-shadow:0 0 10px var(--accent)}
+  .scroll-hint{margin-top:2.4em;color:var(--muted);font-size:.8em;animation:bob 2s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+  /* ===== PILLARS ===== */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,26px);margin-top:2.6em}
+  .pillar{
+    background:linear-gradient(180deg,var(--card),var(--bg2));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(22px,2.4vw,38px);text-align:center;position:relative;overflow:hidden;
+    transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
+  }
+  .pillar::after{content:"";position:absolute;inset:0;border-radius:var(--radius);
+    background:linear-gradient(180deg,rgba(91,140,255,.12),transparent 45%);opacity:0;transition:opacity .3s}
+  .pillar:hover{transform:translateY(-8px);border-color:rgba(91,140,255,.5);box-shadow:0 24px 50px -22px rgba(91,140,255,.5)}
+  .pillar:hover::after{opacity:1}
+  .pillar .ico{font-size:2.4em;margin-bottom:.25em;display:inline-block}
+  .pillar h3{font-size:1.22em;font-weight:800;margin-bottom:.35em}
+  .pillar p{color:var(--muted);font-size:.95em}
+  .tag-soon{display:inline-block;margin-top:1em;font-size:.72em;font-weight:700;color:var(--gold);
+    background:rgba(255,208,102,.12);border:1px solid rgba(255,208,102,.3);border-radius:999px;padding:.35em .95em}
+
+  /* ===== OFFERS ===== */
+  .offers{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,30px);margin-top:2.6em;align-items:stretch}
+  .offer{position:relative;display:flex;flex-direction:column;text-align:start;
+    background:linear-gradient(180deg,var(--card2),var(--bg2));
+    border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,2.8vw,42px);overflow:hidden;
+    transition:transform .3s ease}
+  .offer:hover{transform:translateY(-6px)}
+  .offer.featured{border:1px solid rgba(91,140,255,.6);box-shadow:0 24px 70px -24px rgba(91,140,255,.55)}
+  .offer .kicker{color:var(--accent);font-weight:700;font-size:.82em;letter-spacing:.04em}
+  .offer h3{font-size:1.6em;font-weight:900;margin:.25em 0 .1em}
+  .offer .meta{color:var(--muted);font-size:.9em;margin-bottom:1.2em}
+  .offer ul{list-style:none;display:flex;flex-direction:column;gap:.75em;margin:.4em 0 1.5em}
+  .offer li{position:relative;padding-inline-start:1.8em;color:#dbe2fb;font-size:.97em}
+  .offer li::before{content:"✓";position:absolute;inset-inline-start:0;top:-.05em;font-weight:900;
+    color:var(--accent);background:rgba(56,225,195,.12);width:1.35em;height:1.35em;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:.78em}
+  .offer li b{color:#fff;font-weight:700}
+  .part{display:flex;align-items:center;gap:.6em;margin:.3em 0 .2em;font-weight:800;font-size:1.02em;color:#fff}
+  .part span{flex:none;font-size:.7em;font-weight:800;color:var(--accent);background:rgba(56,225,195,.12);
+    border:1px solid rgba(56,225,195,.3);border-radius:999px;padding:.25em .8em}
+  .part.sec{margin-top:1.2em;padding-top:1.2em;border-top:1px solid var(--line)}
+  .price-box{margin-top:auto;background:rgba(255,255,255,.04);border:1px dashed var(--line);border-radius:16px;
+    padding:1.1em 1.2em;display:flex;align-items:baseline;justify-content:space-between;gap:.6em;flex-wrap:wrap}
+  .price-box .lbl{color:var(--muted);font-size:.85em}
+  .price-fill{color:var(--gold);font-weight:900;font-size:1.55em;border-bottom:2px dashed rgba(255,208,102,.5);min-width:3.6em;text-align:center}
+  .price-note{width:100%;color:var(--muted);font-size:.78em;margin-top:.5em}
+
+  /* ===== SYLLABUS ===== */
+  .syllabus{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:clamp(12px,1.4vw,20px);margin-top:2.4em}
+  .lesson{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:18px;
+    padding:clamp(18px,1.9vw,28px);text-align:center;transition:transform .3s,border-color .3s}
+  .lesson:hover{transform:translateY(-5px);border-color:rgba(91,140,255,.45)}
+  .lesson .num{display:inline-flex;align-items:center;justify-content:center;width:2.2em;height:2.2em;border-radius:14px;
+    font-weight:900;font-size:1em;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;margin-bottom:.6em;
+    box-shadow:0 10px 24px -10px var(--brand)}
+  .lesson h4{font-size:1.08em;font-weight:800;margin-bottom:.35em}
+  .lesson p{color:var(--muted);font-size:.9em}
+
+  /* ===== MARKETING ===== */
+  .marketing{margin-top:2.4em;background:linear-gradient(135deg,rgba(138,107,255,.16),rgba(56,225,195,.08));
+    border:1px solid var(--line);border-radius:var(--radius);padding:clamp(26px,3.2vw,52px);text-align:center}
+  .mk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:1.3em;margin-top:1.8em;text-align:start}
+  .mk-item{display:flex;gap:.8em;align-items:flex-start}
+  .mk-item .mi{font-size:1.5em;line-height:1;flex:none}
+  .mk-item b{display:block;font-weight:700;margin-bottom:.15em}
+  .mk-item span{color:var(--muted);font-size:.9em}
+  .open-pill{display:inline-block;margin-top:1.9em;font-size:.82em;font-weight:600;color:var(--accent);
+    background:rgba(56,225,195,.1);border:1px solid rgba(56,225,195,.3);border-radius:999px;padding:.55em 1.3em}
+
+  /* ===== TEAM ===== */
+  .team{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px);margin-top:2.6em}
+  .member{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(24px,2.6vw,38px);text-align:center;transition:transform .3s,border-color .3s;position:relative}
+  .member:hover{transform:translateY(-7px);border-color:rgba(138,107,255,.5)}
+  .avatar{width:clamp(96px,9vw,140px);height:clamp(96px,9vw,140px);border-radius:50%;margin:0 auto 1em;
+    padding:4px;background:linear-gradient(135deg,var(--brand),var(--brand2),var(--accent))}
+  .avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:center top;display:block;background:var(--card2)}
+  .avatar.empty{display:flex;align-items:center;justify-content:center}
+  .avatar.empty .ph{width:100%;height:100%;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;
+    font-size:2.4em;color:var(--muted)}
+  .member h3{font-size:1.28em;font-weight:900;margin-bottom:.15em}
+  .member .role{color:var(--accent);font-weight:700;font-size:.9em;margin-bottom:.7em}
+  .member p{color:var(--muted);font-size:.9em}
+  .member .tags{display:flex;flex-wrap:wrap;gap:.4em;justify-content:center;margin-top:1em}
+  .member .tags span{font-size:.72em;color:#cdd6f5;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:999px;padding:.3em .8em}
+  .soon-flag{position:absolute;top:1.1em;inset-inline-end:1.1em;font-size:.66em;font-weight:700;color:var(--gold);
+    background:rgba(255,208,102,.12);border:1px solid rgba(255,208,102,.3);border-radius:999px;padding:.3em .8em}
+
+  /* ===== ARMS ===== */
+  .arms{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.4vw,20px);margin-top:2.6em}
+  .arm{display:block;background:linear-gradient(180deg,var(--card2),var(--bg2));border:1px solid var(--line);border-radius:20px;
+    padding:clamp(20px,2.2vw,30px);text-align:center;transition:transform .3s,border-color .3s,box-shadow .3s}
+  .arm:hover{transform:translateY(-6px);border-color:rgba(91,140,255,.5);box-shadow:0 20px 44px -22px rgba(91,140,255,.5)}
+  .arm .logo{font-weight:900;font-size:1.15em;margin-bottom:.15em}
+  .arm .logo b{color:var(--brand)}
+  .arm .tagline{color:var(--muted);font-size:.85em;min-height:2.6em}
+  .arm .go{display:inline-block;margin-top:.9em;font-size:.78em;font-weight:700;color:var(--accent)}
+
+  /* ===== SERVICES (automations) ===== */
+  .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:clamp(14px,1.7vw,24px);margin-top:2.6em}
+  .service{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:20px;
+    padding:clamp(22px,2.4vw,34px);transition:transform .3s,border-color .3s;text-align:center}
+  .service:hover{transform:translateY(-6px);border-color:rgba(56,225,195,.45)}
+  .service .ico{font-size:2em;margin-bottom:.3em}
+  .service h4{font-size:1.12em;font-weight:800;margin-bottom:.3em}
+  .service p{color:var(--muted);font-size:.9em}
+
+  /* ===== NOTES ===== */
+  .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:clamp(12px,1.6vw,22px);margin-top:2.4em}
+  .note{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,2vw,28px);display:flex;gap:.8em;transition:border-color .3s}
+  .note:hover{border-color:rgba(91,140,255,.4)}
+  .note .ni{font-size:1.5em;flex:none}
+  .note b{font-weight:800}
+  .note p{color:var(--muted);font-size:.9em;margin-top:.2em}
+
+  /* ===== CTA ===== */
+  .cta{margin:clamp(46px,6vw,90px) 0;background:linear-gradient(135deg,var(--brand),var(--brand2));border-radius:var(--radius);
+    padding:clamp(34px,4.5vw,72px);text-align:center;position:relative;overflow:hidden}
+  .cta::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% 120%,rgba(255,255,255,.28),transparent 60%);pointer-events:none}
+  .cta h2{color:#fff}
+  .cta p{color:rgba(255,255,255,.92);max-width:55ch;margin:.4em auto 0}
+  .contact{display:flex;flex-wrap:wrap;gap:.8em 1.1em;justify-content:center;margin-top:2em;position:relative}
+  .contact a{display:inline-flex;align-items:center;gap:.5em;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.38);
+    color:#fff;font-weight:700;padding:.75em 1.5em;border-radius:999px;font-size:.95em;transition:background .2s,transform .2s}
+  .contact a:hover{background:rgba(255,255,255,.3);transform:translateY(-3px)}
+
+  footer{padding:2.6em 0 3.6em;text-align:center;color:var(--muted);font-size:.82em}
+  footer .logo{font-weight:900;color:var(--ink);font-size:1.4em;letter-spacing:.02em}
+  footer .logo span{color:var(--brand)}
+
+  @media(max-width:900px){.pillars{grid-template-columns:1fr}.offers{grid-template-columns:1fr}.team{grid-template-columns:1fr}.arms{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.arms{grid-template-columns:1fr}}
+  .arm .logo{font-size:1.05em}
+  @media(min-width:901px){.arm{padding:clamp(16px,1.5vw,24px) clamp(12px,1vw,18px)}.arm .logo{font-size:.98em}.arm .tagline{font-size:.8em}.arm .go{font-size:.72em}}
+  @media(min-width:1900px){.wrap{width:min(1520px,86vw)}}
+</style>
+</head>
+<body>
+
+<div class="orbs"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">● הצעת מחיר · הרצאה · סדנא</span>
+    <h1>בינה מלאכותית שעובדת בשביל <span class="grad">בעלי העסקים</span></h1>
+    <p class="lead">
+      הצעה מותאמת ל<b style="color:#fff;font-weight:700">מועצה אזורית שומרון</b> — איך בעל עסק בונה לעצמו אתר,
+      אפליקציה וכלים דיגיטליים בעזרת בינה מלאכותית, בלי לדעת לתכנת ובלי לשלם על כל דבר קטן.
+    </p>
+    <div class="who">
+      <span><i class="dot"></i> מותאם לבעלי עסקים</span>
+      <span><i class="dot"></i> מבוסס על תוכני AI Lab</span>
+      <span><i class="dot"></i> בזום · מכל מקום</span>
+    </div>
+    <div class="scroll-hint">גללו למטה ↓</div>
+  </div>
+</header>
+
+<!-- ===== PILLARS ===== -->
+<section>
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">מה נלמד יחד</span>
+      <h2>שלושה עולמות — כלי עבודה אמיתיים</h2>
+      <p class="sub">כל מה שאנחנו מלמדים נבנה כך שבעל עסק יוצא עם יכולת לעשות בעצמו, לא רק "לשמוע על".</p>
+      <div class="rule"></div>
+    </div>
+    <div class="pillars reveal">
+      <div class="pillar">
+        <div class="ico">🌐</div>
+        <h3>בניית אתרים ואפליקציות</h3>
+        <p>לבנות דף נחיתה, אתר עסקי או כלי דיגיטלי פשוט בעזרת בינה מלאכותית — ולפרסם אותו חי לאוויר.</p>
+      </div>
+      <div class="pillar">
+        <div class="ico">🤖</div>
+        <h3>AI לבעלי עסקים</h3>
+        <p>לחסוך שעות בשבוע: כתיבת תוכן, מענה ללקוחות, מסמכים, תמחור, סיכומים ואוטומציות יומיומיות.</p>
+      </div>
+      <div class="pillar">
+        <div class="ico">🎬</div>
+        <h3>יצירת סרטונים</h3>
+        <p>יצירת סרטוני שיווק ותוכן לעסק בעזרת כלי בינה מלאכותית — בהנחיית מומחה ייעודי.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OFFERS ===== -->
+<section id="offers">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">מה מציעים</span>
+      <h2>שתי דרכים להתחיל</h2>
+      <p class="sub">אפשר לפתוח בהרצאה חד-פעמית שנותנת טעימה וכיוון — או לצאת לדרך בסדנת עומק שבסופה כל משתתף בונה בעצמו.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="offers">
+      <div class="offer reveal">
+        <span class="kicker">אופציה 1 · פתיחה</span>
+        <h3>חשיפה ל-AI</h3>
+        <p class="meta">2 הרצאות · <b style="color:#dbe2fb">120 דק' כל הרצאה</b> · בזום · לקבוצה</p>
+        <div class="part"><span>הרצאה 1 · 120 דק'</span></div>
+        <ul>
+          <li>מפת הדרכים של הבינה המלאכותית לעסק — <b>מי נגד מי</b> (ChatGPT, Claude, Gemini)</li>
+          <li>הדגמות חיות: <b>כתיבת תוכן ויצירת תמונות בקלות</b></li>
+          <li>הדגמה לבניית אתר/מערכת פשוטה</li>
+          <li>שאלות ותשובות</li>
+        </ul>
+        <div class="part sec"><span>הרצאה 2 · 120 דק'</span> מרעיון עד סרטון</div>
+        <ul>
+          <li>הכרות עם הכלים ליצירת תוכן</li>
+          <li>יצירת תסריט לסרטון</li>
+          <li>יצירת פרומפטים</li>
+          <li>עריכת סרטונים</li>
+        </ul>
+        <div class="price-box">
+          <span class="lbl">מחיר להרצאה</span>
+          <span class="price-fill">4,000 ₪ <small style="font-size:.6em;font-weight:600;color:var(--muted)">+ מע"מ</small></span>
+          <span class="price-note">לשתי ההרצאות בזום. מפגש פרונטלי — בתוספת תשלום.</span>
+        </div>
+      </div>
+      <div class="offer featured reveal">
+        <span class="kicker">אופציה 2 · עומק ויישום</span>
+        <h3>סדנת עבודה</h3>
+        <p class="meta">2 חלקים · <b style="color:#dbe2fb">5 מפגשים כל חלק</b> · בזום · קבוצה קטנה + תרגול</p>
+        <div class="part"><span>חלק 1 · 5 מפגשים</span> בניית אתרים וכלים דיגיטליים</div>
+        <ul>
+          <li>מסע מלא: <b>מרעיון לאתר/כלי חי באוויר</b> — צעד אחרי צעד</li>
+          <li>הכלים שעובדים בשבילכם: איך "מדברים" עם ה-AI כדי שיבנה בשבילכם</li>
+          <li>חיבור טופס, איסוף לידים וניהול מידע — <b>בלי מתכנת</b></li>
+          <li>כל משתתף מסיים עם <b>פרויקט משלו</b> שרלוונטי לעסק</li>
+          <li>ליווי ושאלות לאורך הדרך</li>
+        </ul>
+        <div class="part sec"><span>חלק 2 · 5 מפגשים</span> יצירת תוכן שיווקי</div>
+        <ul>
+          <li>יצירת תוכן לרשתות חברתיות</li>
+          <li>בניית אסטרטגיה ויצירת <b>HOOK</b></li>
+          <li>יצירת <b>Workflow</b></li>
+          <li>יצירת תמונות וסרטונים</li>
+          <li>עריכת סרטונים ב-<b>Premiere Pro</b></li>
+        </ul>
+        <div class="price-box">
+          <span class="lbl">מחיר לסדנא המלאה</span>
+          <span class="price-fill">18,000 ₪ <small style="font-size:.6em;font-weight:600;color:var(--muted)">+ מע"מ</small></span>
+          <span class="price-note">לסדנא המלאה בזום (2 חלקים · 10 מפגשים). מפגש פרונטלי — בתוספת תשלום.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEAM ===== -->
+<section>
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">מי מאחורי זה</span>
+      <h2>הצוות שמלווה אתכם</h2>
+      <p class="sub">שילוב של יזמות, מומחיות AI ומומחיות תוכן וידאו — כל אחד בתחומו.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="team reveal">
+      <div class="member">
+        <div class="avatar"><img src="meir.jpg" alt="מאיר לביא"></div>
+        <h3>מאיר לביא</h3>
+        <div class="role">יזם בינה מלאכותית</div>
+        <p>סמנכ"ל פיתוח עסקי לשעבר בהייטק. בנה מוצרים, ניהל שותפויות והשקיע בסטארטאפים. היום מנחה עסקים ואנשי מקצוע לעבוד עם AI — רק כלים שיוצאים איתם מהשיעור הראשון לעבודה.</p>
+        <div class="tags"><span>יזם</span><span>מייסד AI Lab</span><span>הייטק</span><span>מנחה</span></div>
+      </div>
+      <div class="member">
+        <div class="avatar"><img src="gil.jpg" alt="גיל עדה"></div>
+        <h3>גיל עדה</h3>
+        <div class="role">מומחה AI</div>
+        <p>מומחה לבינה מלאכותית עם ניסיון מעשי רחב בכלי AI. מתרגם טכנולוגיות חדשות לשפה ולצרכים של אנשי השטח, ומלווה משתתפים צעד-צעד עד לתוצאה.</p>
+        <div class="tags"><span>מומחה AI</span><span>אוניברסיטת רייכמן</span><span>יישום מעשי</span><span>מנחה</span></div>
+      </div>
+      <div class="member">
+        <div class="avatar"><img src="tomer.jpg" alt="תומר כליף"></div>
+        <h3>תומר כליף</h3>
+        <div class="role">מומחה ליצירת סרטונים</div>
+        <p>מומחה ליצירת סרטוני שיווק ותוכן לעסקים בעזרת כלי בינה מלאכותית — מהרעיון ועד סרטון מוכן שמושך לקוחות. מעצב סאונד ועורך וידאו ב-Premiere Pro.</p>
+        <div class="tags"><span>וידאו</span><span>עריכה · Premiere Pro</span><span>עיצוב סאונד</span><span>AI ווידאו</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ARMS ===== -->
+<section>
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">המשפחה של AI Lab</span>
+      <h2>כל הזרועות שלנו</h2>
+      <p class="sub">AI Lab פועל במספר זירות — מקורס יזמות כללי ועד תוכניות ייעודיות לתחומים שלמים.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="arms reveal">
+      <a class="arm" href="https://ai-lab.co.il" target="_blank" rel="noopener">
+        <div class="logo">AI<b> Lab</b></div>
+        <div class="tagline">הבית הראשי — קורסים והדרכות בינה מלאכותית לכולם.</div>
+        <span class="go">ai-lab.co.il ↗</span>
+      </a>
+      <a class="arm" href="https://starter.ai-lab.co.il" target="_blank" rel="noopener">
+        <div class="logo">AI Lab <b>Starter</b></div>
+        <div class="tagline">מסלול הכניסה — מרעיון לאתר/אפליקציה חיים באוויר.</div>
+        <span class="go">starter.ai-lab.co.il ↗</span>
+      </a>
+      <a class="arm" href="https://urban.ai-lab.co.il" target="_blank" rel="noopener">
+        <div class="logo">AI Lab <b>אורבן</b></div>
+        <div class="tagline">AI לצוותי התחדשות עירונית, רשויות ומארגני דיירים.</div>
+        <span class="go">urban.ai-lab.co.il ↗</span>
+      </a>
+      <a class="arm" href="https://www.instagram.com/motion.lab.vids?utm_source=qr" target="_blank" rel="noopener">
+        <div class="logo"><b>Motion</b> AI Lab</div>
+        <div class="tagline">יצירת סרטוני שיווק ותוכן לעסקים בעזרת בינה מלאכותית.</div>
+        <span class="go">אינסטגרם ↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<div class="wrap">
+  <div class="cta reveal">
+    <h2>נשמח להתאים את ההצעה בדיוק אליכם</h2>
+    <p>אפשר לשלב הרצאת פתיחה + סדנת המשך, לבחור מספר מפגשים, ולהוסיף את נושא התוכן, השיווק והסרטונים. מוזמנים לחזור אליי לתיאום ולסגירת פרטים.</p>
+    <div class="contact">
+      <a href="https://wa.me/972546500795?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%9E%D7%90%D7%99%D7%A8%2C%20%D7%A4%D7%A0%D7%99%D7%99%D7%94%20%D7%9E%D7%9E%D7%95%D7%A2%D7%A6%D7%94%20%D7%90%D7%96%D7%95%D7%A8%D7%99%D7%AA%20%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F%20%D7%91%D7%A0%D7%95%D7%92%D7%A2%20%D7%9C%D7%94%D7%A6%D7%A2%D7%AA%20%D7%94%D7%9E%D7%97%D7%99%D7%A8%20%D7%A9%D7%9C%20AI%20Lab%20%28%D7%94%D7%A8%D7%A6%D7%90%D7%94/%D7%A1%D7%93%D7%A0%D7%90%29.%20%D7%A0%D7%A9%D7%9E%D7%97%20%D7%9C%D7%AA%D7%90%D7%9D%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%F0%9F%99%82" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" width="1.15em" height="1.15em" fill="#25D366" aria-hidden="true" style="flex:none"><path d="M16.003 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.257.59 4.463 1.712 6.41L3.2 28.8l6.57-1.72a12.74 12.74 0 006.23 1.62h.006c7.06 0 12.8-5.74 12.8-12.8s-5.74-12.8-12.8-12.8zm0 23.02h-.005a10.6 10.6 0 01-5.4-1.48l-.387-.23-4.005 1.05 1.07-3.905-.252-.4a10.56 10.56 0 01-1.62-5.65c0-5.86 4.77-10.62 10.63-10.62 2.84 0 5.5 1.106 7.51 3.116a10.55 10.55 0 013.11 7.52c0 5.86-4.77 10.62-10.63 10.62zm5.83-7.95c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.58-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.73-.99-2.37-.26-.62-.52-.54-.72-.55l-.61-.01c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.66 0 1.57 1.14 3.08 1.3 3.29.16.21 2.25 3.43 5.44 4.81.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.89-.77 2.16-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37z"/></svg> וואטסאפ · 054-650-0795</a>
+      <a href="mailto:meir@ai-lab.co.il">✉️ meir@ai-lab.co.il</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">AI<span> Lab</span></div>
+    <p style="margin-top:.6em">מאיר לביא · הדרכות, אוטומציות והטמעת בינה מלאכותית לעסקים · הצעה זו תקפה ל-30 יום</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
