@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMARTROOM — גלו את פרופיל האופי של החדר שלכם</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#FF4FA0;
+    --purple:#7C3AED;
+    --blue:#33C7F0;
+    --ink:#2A1B3D;
+    --white:#FFFFFF;
+    --cream:#FFF7FB;
+    --line: rgba(42,27,61,0.10);
+    --grad: linear-gradient(135deg, var(--pink), var(--purple));
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Nunito', sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3, .logo-text{
+    font-family:'Baloo 2', sans-serif;
+    margin:0;
+  }
+  a{ text-decoration:none; color:inherit; }
+  img,svg{ display:block; max-width:100%; }
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+  .blob{
+    position:absolute;
+    border-radius:50%;
+    z-index:0;
+    opacity:0.5;
+    pointer-events:none;
+  }
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px;
+    max-width:1120px; margin:0 auto;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; }
+  .logo-mark{
+    width:38px; height:38px; border-radius:12px;
+    background:var(--grad);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 14px rgba(124,58,237,0.35);
+    flex-shrink:0;
+  }
+  .logo-text{ font-size:19px; font-weight:700; color:var(--ink); letter-spacing:.01em; }
+  .logo-accent{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ font-weight:700; font-size:15px; color:var(--ink); opacity:0.75; transition:opacity .2s; }
+  .nav-links a:hover{ opacity:1; }
+
+  /* ---------- hamburger ---------- */
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:42px; height:42px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:12px;
+    cursor:pointer;
+    padding:0;
+    z-index:210;
+    position:relative;
+  }
+  .hamburger span{
+    display:block; width:20px; height:2.5px; border-radius:2px;
+    background:var(--ink);
+    transition:transform .3s ease, opacity .3s ease;
+  }
+  .hamburger.active span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
+  .hamburger.active span:nth-child(2){ opacity:0; }
+  .hamburger.active span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
+
+  /* ---------- mobile full-screen menu ---------- */
+  .mobile-menu{
+    position:fixed; inset:0;
+    background:var(--white);
+    z-index:200;
+    opacity:0; visibility:hidden;
+    transform:translateY(-8px);
+    transition:opacity .3s ease, visibility .3s ease, transform .3s ease;
+    display:flex; flex-direction:column;
+  }
+  .mobile-menu.open{ opacity:1; visibility:visible; transform:translateY(0); }
+  .mobile-menu-top{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px;
+    border-bottom:1px solid var(--line);
+    position:relative; z-index:1;
+  }
+  .mobile-menu-close{
+    width:42px; height:42px; border-radius:12px;
+    border:1px solid var(--line); background:var(--white);
+    display:flex; align-items:center; justify-content:center;
+    font-size:19px; color:var(--ink); cursor:pointer;
+    position:relative; z-index:1;
+  }
+  .mobile-menu-links{
+    flex:1;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:8px;
+    padding:20px;
+    position:relative; z-index:1;
+  }
+  .mobile-menu-links a{
+    font-family:'Baloo 2', sans-serif;
+    font-size:26px; font-weight:700; color:var(--ink);
+    padding:16px 0;
+    width:100%;
+    text-align:center;
+  }
+  .mobile-menu-links a.btn{
+    margin-top:18px;
+    font-size:18px;
+    width:auto;
+    padding:15px 44px;
+  }
+  .mobile-menu-blob{ width:260px; height:260px; background:var(--pink); opacity:0.12; top:-100px; left:-90px; }
+  .mobile-menu-blob-2{ width:220px; height:220px; background:var(--blue); opacity:0.14; bottom:-90px; right:-80px; }
+  body.no-scroll{ overflow:hidden; }
+  @media (min-width:941px){ .mobile-menu{ display:none !important; } }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Baloo 2', sans-serif; font-weight:700; font-size:16px;
+    padding:13px 26px;
+    border-radius:100px;
+    border:none;
+    cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-primary{
+    background:var(--grad); color:var(--white);
+    box-shadow:0 8px 22px rgba(255,79,160,0.35);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 26px rgba(124,58,237,0.4); }
+  .btn-primary:disabled{ opacity:0.45; cursor:not-allowed; transform:none; box-shadow:none; }
+  .btn-ghost{
+    background:var(--white); color:var(--ink);
+    border:2px solid var(--line);
+    padding:11px 24px;
+  }
+  .btn-ghost:hover{ border-color:var(--purple); color:var(--purple); }
+  .btn-small{ font-size:14px; padding:9px 18px; }
+
+  /* ---------- hero ---------- */
+  .hero{ position:relative; padding:76px 0 40px; overflow:hidden; }
+  .hero .blob-1{ width:420px; height:420px; background:var(--pink); top:-160px; left:-140px; }
+  .hero .blob-2{ width:340px; height:340px; background:var(--blue); bottom:-140px; right:-100px; opacity:0.35;}
+  .hero-inner{
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-weight:800; font-size:13px; letter-spacing:.02em;
+    color:var(--purple);
+    background:rgba(124,58,237,0.09);
+    padding:7px 16px; border-radius:100px;
+    margin-bottom:20px;
+  }
+  .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--pink); }
+  .hero h1{ font-size:43px; line-height:1.18; font-weight:700; color:var(--ink); max-width:560px; }
+  .hero h1 .hl{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero p.sub{ font-size:18px; line-height:1.65; color:rgba(42,27,61,0.72); max-width:480px; margin:22px 0 30px; }
+  .hero-ctas{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .hero-note{ margin-top:22px; font-size:14px; color:rgba(42,27,61,0.55); font-weight:700; }
+
+  /* ---------- hero result preview (signature) ---------- */
+  .preview-card{
+    position:relative;
+    border-radius:28px;
+    padding:30px 28px 26px;
+    background:var(--cream);
+    border:6px solid var(--white);
+    outline:1px solid var(--line);
+    box-shadow:0 30px 60px -20px rgba(124,58,237,0.35);
+    min-height:400px;
+  }
+  .preview-tag{
+    position:absolute; top:-14px; right:24px;
+    font-family:'Baloo 2', sans-serif; font-weight:700; font-size:12.5px;
+    padding:6px 16px; border-radius:100px; color:var(--white);
+    background:var(--grad);
+  }
+  .preview-type{ font-size:12.5px; font-weight:800; color:var(--purple); letter-spacing:.02em; }
+  .preview-name{ font-size:24px; font-weight:700; margin:6px 0 14px; transition:opacity .3s; }
+  .swatch-row{ display:flex; gap:10px; margin-bottom:20px; }
+  .swatch{ flex:1; height:64px; border-radius:14px; position:relative; overflow:hidden; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06); }
+  .swatch span{
+    position:absolute; bottom:6px; right:8px; left:8px;
+    font-size:10.5px; font-weight:800; color:rgba(255,255,255,0.95);
+    text-shadow:0 1px 3px rgba(0,0,0,0.35);
+  }
+  .preview-furniture-label{ font-size:12px; font-weight:800; color:rgba(42,27,61,0.55); margin-bottom:8px; }
+  .preview-furniture{ display:flex; flex-direction:column; gap:8px; }
+  .furniture-chip{
+    display:flex; align-items:center; gap:10px;
+    background:var(--white); border-radius:12px; padding:10px 14px;
+    font-size:14px; font-weight:700; border:1px solid var(--line);
+  }
+  .furniture-chip .dotcol{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+  .preview-dots{ display:flex; gap:6px; justify-content:center; margin-top:20px; }
+  .preview-dots span{ width:7px; height:7px; border-radius:50%; background:var(--line); transition:background .3s; }
+  .preview-dots span.active{ background:var(--purple); }
+
+  /* ---------- sections ---------- */
+  section{ padding:96px 0; position:relative; }
+  .section-head{ text-align:center; max-width:620px; margin:0 auto 56px; }
+  .section-head h2{ font-size:32px; font-weight:700; line-height:1.3; }
+  .section-head p{ margin-top:14px; font-size:16.5px; color:rgba(42,27,61,0.65); line-height:1.6; }
+
+  .problems{ background:var(--cream); }
+  .problem-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .problem-card{ background:var(--white); border-radius:20px; padding:32px 26px; border:1px solid var(--line); }
+  .problem-card .icon{ width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:18px; }
+  .icon.i1{ background:rgba(255,79,160,0.14); }
+  .icon.i2{ background:rgba(51,199,240,0.16); }
+  .icon.i3{ background:rgba(124,58,237,0.13); }
+  .problem-card h3{ font-size:18.5px; font-weight:700; margin-bottom:10px; }
+  .problem-card p{ font-size:15px; line-height:1.6; color:rgba(42,27,61,0.68); margin:0; }
+
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .step{ position:relative; padding-top:8px; }
+  .step .num{ font-family:'Baloo 2', sans-serif; font-weight:800; font-size:46px; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; opacity:0.9; line-height:1; }
+  .step h3{ font-size:19px; font-weight:700; margin:14px 0 10px; }
+  .step p{ font-size:15px; line-height:1.65; color:rgba(42,27,61,0.68); margin:0; }
+  .step-line{ position:absolute; top:34px; right:calc(100% + 6px); width:40px; height:2px; background:repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px); }
+  @media (max-width:860px){ .step-line{ display:none; } }
+
+  /* ---------- quiz ---------- */
+  .quiz-section{ background:var(--cream); }
+  .quiz-card{
+    max-width:640px; margin:0 auto;
+    background:var(--white);
+    border-radius:28px;
+    padding:44px 40px;
+    border:1px solid var(--line);
+    box-shadow:0 20px 50px -25px rgba(124,58,237,0.3);
+    position:relative;
+    min-height:380px;
+  }
+  .quiz-progress-wrap{ height:8px; background:var(--line); border-radius:100px; overflow:hidden; margin-bottom:26px; }
+  .quiz-progress-bar{ height:100%; background:var(--grad); width:0%; transition:width .4s ease; border-radius:100px; }
+  .quiz-step-label{ font-size:13px; font-weight:800; color:var(--purple); margin-bottom:10px; }
+  .quiz-question{ font-size:22px; font-weight:700; margin-bottom:26px; line-height:1.4; }
+  .quiz-options{ display:flex; flex-direction:column; gap:12px; }
+  .quiz-option{
+    display:flex; align-items:center; gap:12px;
+    text-align:right;
+    background:var(--cream);
+    border:2px solid transparent;
+    border-radius:16px;
+    padding:16px 18px;
+    font-family:'Nunito', sans-serif; font-size:15.5px; font-weight:700; color:var(--ink);
+    cursor:pointer;
+    transition:border-color .15s, background .15s, transform .12s;
+  }
+  .quiz-option:hover{ border-color:var(--purple); background:var(--white); transform:translateX(-2px); }
+  .quiz-option .letter{
+    width:30px; height:30px; border-radius:50%; flex-shrink:0;
+    background:var(--white); border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; color:var(--purple);
+  }
+  .quiz-intro, .quiz-result{ text-align:center; }
+  .quiz-intro h3{ font-size:24px; font-weight:700; margin-bottom:14px; }
+  .quiz-intro p{ font-size:15.5px; color:rgba(42,27,61,0.65); max-width:420px; margin:0 auto 26px; line-height:1.6; }
+  .hidden{ display:none !important; }
+
+  .result-badge{ font-size:13px; font-weight:800; color:var(--purple); background:rgba(124,58,237,0.09); display:inline-block; padding:6px 16px; border-radius:100px; margin-bottom:14px; }
+  .result-name{ font-size:28px; font-weight:700; margin-bottom:12px; }
+  .result-desc{ font-size:15.5px; color:rgba(42,27,61,0.68); max-width:460px; margin:0 auto 28px; line-height:1.65; }
+  .result-block-label{ font-size:13px; font-weight:800; color:rgba(42,27,61,0.55); margin-bottom:12px; text-align:right; }
+  .result-swatches{ display:flex; gap:10px; margin-bottom:30px; }
+  .result-swatch{ flex:1; height:78px; border-radius:14px; position:relative; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06); }
+  .result-swatch span{ position:absolute; bottom:8px; right:8px; left:8px; font-size:11px; font-weight:800; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.4); }
+  .result-furniture{ display:flex; flex-direction:column; gap:10px; text-align:right; margin-bottom:28px; }
+  .result-furniture-item{ display:flex; align-items:center; gap:12px; background:var(--cream); border-radius:14px; padding:14px 16px; font-size:15px; font-weight:700; }
+  .result-furniture-item .dotcol{ width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .result-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .restart-link{ font-size:14px; font-weight:800; color:rgba(42,27,61,0.5); }
+  .restart-link:hover{ color:var(--purple); }
+
+  /* parents */
+  .parents{ background:var(--ink); color:var(--white); border-radius:32px; max-width:1120px; margin:0 auto; padding:64px; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+  .parents h2{ color:var(--white); font-size:30px; margin-bottom:18px; }
+  .parents p{ color:rgba(255,255,255,0.72); font-size:16px; line-height:1.75; }
+  .parents .quote-mark{ font-size:60px; font-family:'Baloo 2',sans-serif; color:var(--pink); line-height:0.5; display:block; margin-bottom:10px;}
+  .parent-points{ display:flex; flex-direction:column; gap:18px; }
+  .parent-point{ display:flex; gap:14px; align-items:flex-start; }
+  .parent-point .check{ width:26px; height:26px; border-radius:50%; background:var(--blue); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:var(--ink); margin-top:2px; }
+  .parent-point div{ font-size:15px; line-height:1.6; color:rgba(255,255,255,0.85); }
+  .parent-point b{ color:var(--white); }
+
+  /* CTA / email */
+  .cta{ text-align:center; }
+  .cta-card{ max-width:640px; margin:0 auto; background:var(--cream); border-radius:28px; padding:56px 44px; border:1px solid var(--line); position:relative; overflow:hidden; }
+  .cta-card .blob-3{ width:220px; height:220px; background:var(--pink); opacity:0.18; top:-90px; right:-70px; }
+  .cta-card h2{ font-size:28px; position:relative; z-index:1; }
+  .cta-card p{ margin:14px 0 30px; color:rgba(42,27,61,0.65); font-size:16px; position:relative; z-index:1; }
+  .cta-form{ display:flex; gap:10px; position:relative; z-index:1; flex-wrap:wrap; justify-content:center; }
+  .cta-form input[type=email]{ flex:1; min-width:220px; padding:14px 20px; border-radius:100px; border:2px solid var(--line); font-family:'Nunito', sans-serif; font-size:15px; outline:none; background:var(--white); }
+  .cta-form input[type=email]:focus{ border-color:var(--purple); }
+  .form-msg{ margin-top:16px; font-size:14px; font-weight:700; color:var(--purple); position:relative; z-index:1; min-height:20px; }
+
+  footer{ padding:72px 0 0; border-top:1px solid var(--line); background:var(--cream); }
+  .footer-top{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:52px; }
+  .footer-brand p{ font-size:14.5px; line-height:1.7; color:rgba(42,27,61,0.62); margin:16px 0 20px; max-width:260px; }
+  .footer-social{ display:flex; gap:10px; }
+  .footer-social a{
+    width:36px; height:36px; border-radius:10px; background:var(--white);
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+    font-size:15px; color:var(--purple); transition:background .15s, transform .15s;
+  }
+  .footer-social a:hover{ background:var(--grad); color:var(--white); transform:translateY(-2px); }
+  .footer-col h4{ font-family:'Baloo 2', sans-serif; font-size:15px; font-weight:700; color:var(--ink); margin-bottom:18px; }
+  .footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .footer-col a{ font-size:14.5px; font-weight:600; color:rgba(42,27,61,0.62); transition:color .15s; }
+  .footer-col a:hover{ color:var(--purple); }
+  .footer-bottom{
+    border-top:1px solid var(--line);
+    padding:22px 0 26px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+  .footer-bottom p{ font-size:13px; color:rgba(42,27,61,0.5); margin:0; }
+  .footer-legal{ display:flex; gap:20px; flex-wrap:wrap; }
+  .footer-legal a{ font-size:13px; color:rgba(42,27,61,0.5); font-weight:700; }
+  .footer-legal a:hover{ color:var(--purple); }
+  @media (max-width:860px){
+    .footer-top{ grid-template-columns:1fr 1fr; }
+    .footer-brand{ grid-column:1 / -1; }
+  }
+  @media (max-width:560px){
+    .footer-top{ grid-template-columns:1fr; }
+  }
+
+  @media (max-width:940px){
+    .hero-inner{ grid-template-columns:1fr; }
+    .hero h1{ font-size:32px; max-width:100%; }
+    .hero p.sub{ max-width:100%; }
+    .problem-grid, .steps{ grid-template-columns:1fr; }
+    .parents{ grid-template-columns:1fr; padding:40px 28px; border-radius:24px; }
+    .nav-links{ display:none; }
+    .hamburger{ display:flex; order:1; }
+    nav .logo{ order:2; }
+    .quiz-card{ padding:32px 22px; }
+    .quiz-question{ font-size:19px; }
+
+    /* slide-in-from-right entrance animation, mobile only */
+    .slide-card{
+      opacity:0;
+      transform:translateX(52px);
+      transition:opacity .55s ease, transform .55s ease;
+    }
+    .slide-card.in-view{ opacity:1; transform:translateX(0); }
+    .problem-grid .slide-card:nth-child(1){ transition-delay:0s; }
+    .problem-grid .slide-card:nth-child(2){ transition-delay:.12s; }
+    .problem-grid .slide-card:nth-child(3){ transition-delay:.24s; }
+    .steps .slide-card:nth-child(1){ transition-delay:0s; }
+    .steps .slide-card:nth-child(2){ transition-delay:.12s; }
+    .steps .slide-card:nth-child(3){ transition-delay:.24s; }
+
+    /* "why you need this" problem cards as a swipeable right-to-left carousel */
+    .problem-grid{
+      display:flex;
+      grid-template-columns:unset;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      gap:16px;
+      padding-bottom:6px;
+    }
+    .problem-grid::-webkit-scrollbar{ display:none; }
+    .problem-grid .problem-card{
+      flex:0 0 80%;
+      scroll-snap-align:start;
+    }
+
+    /* "how it works" steps as a swipeable right-to-left carousel */
+    .steps{
+      display:flex;
+      grid-template-columns:unset;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      gap:16px;
+      padding-bottom:6px;
+    }
+    .steps::-webkit-scrollbar{ display:none; }
+    .steps .step{
+      flex:0 0 80%;
+      scroll-snap-align:start;
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:26px 22px;
+      box-shadow:0 14px 34px -22px rgba(124,58,237,0.3);
+    }
+    .steps-hint{
+      display:flex; align-items:center; gap:6px;
+      justify-content:center;
+      font-size:13px; font-weight:700; color:rgba(42,27,61,0.45);
+      margin-top:14px;
+    }
+  }
+  @media (min-width:941px){ .steps-hint{ display:none; } }
+
+  @media (max-width:600px){
+    section{ padding:64px 0; }
+    .hero{ padding:44px 0 28px; }
+    .hero h1{ font-size:27px; }
+    .hero p.sub{ font-size:16px; }
+    .hero-ctas{ flex-direction:column; align-items:stretch; }
+    .hero-ctas .btn{ text-align:center; justify-content:center; width:100%; }
+    .section-head h2{ font-size:25px; }
+    .preview-card{ padding:24px 20px; min-height:auto; }
+    .swatch-row{ flex-wrap:wrap; }
+    .swatch{ flex:1 1 calc(50% - 5px); }
+    .parents{ padding:32px 20px; }
+    .parents h2{ font-size:24px; }
+    .quiz-card{ padding:26px 16px; }
+    .quiz-question{ font-size:17.5px; }
+    .quiz-option{ padding:14px 14px; font-size:14.5px; }
+    .result-name{ font-size:22px; }
+    .result-swatches{ flex-wrap:wrap; }
+    .result-swatch{ flex:1 1 calc(50% - 5px); }
+    .cta-card{ padding:36px 22px; }
+    .cta-form{ flex-direction:column; }
+    .cta-form input[type=email]{ width:100%; }
+    .cta-form .btn{ width:100%; justify-content:center; }
+    .footer-legal{ justify-content:center; width:100%; }
+    .footer-bottom{ justify-content:center; text-align:center; }
+  }
+
+  :focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .btn, .btn-primary:hover{ transition:none; transform:none; }
+    .mobile-menu{ transition:none; }
+    .slide-card{ opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">
+      <div class="logo-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 12L12 5l8 7" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 11v8h12v-8" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 19v-4h4v4" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="logo-text" dir="ltr">SMART<span class="logo-accent">ROOM</span></span>
+    </div>
+    <div class="nav-links">
+      <a href="#how">איך זה עובד</a>
+      <a href="#quiz">לשאלון</a>
+      <a href="#parents">להורים</a>
+      <a href="#quiz" class="btn btn-primary btn-small">בואו נתחיל</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="תפריט ניווט">
+  <div class="blob mobile-menu-blob"></div>
+  <div class="blob mobile-menu-blob-2"></div>
+  <div class="mobile-menu-top">
+    <div class="logo">
+      <div class="logo-mark" style="width:32px;height:32px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 12L12 5l8 7" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 11v8h12v-8" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="logo-text" dir="ltr" style="font-size:17px;">SMART<span class="logo-accent">ROOM</span></span>
+    </div>
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="סגירת תפריט">✕</button>
+  </div>
+  <div class="mobile-menu-links">
+    <a href="#how">איך זה עובד</a>
+    <a href="#quiz">לשאלון</a>
+    <a href="#parents">להורים</a>
+    <a href="#quiz" class="btn btn-primary">בואו נתחיל</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> שאלון פרופיל אופי לחדר שלך</span>
+      <h1>גלו איזה <span class="hl">חדר באמת מתאים</span> לאופי שלכם</h1>
+      <p class="sub">שאלון קצר וכיפי של 10 שאלות — ובסוף מקבלים פלטת צבעים שנבנתה בדיוק בשבילכם, ורשימת "רהיטי החובה" שהופכים את החדר לבאמת שלכם.</p>
+      <div class="hero-ctas">
+        <a href="#quiz" class="btn btn-primary">התחילו את השאלון</a>
+        <a href="#how" class="btn btn-ghost">איך זה עובד ↓</a>
+      </div>
+      <p class="hero-note">גילאי 8–18 · 10 שאלות · לוקח כ-2 דקות</p>
+    </div>
+    <div>
+      <div class="preview-card">
+        <span class="preview-tag">תוצאה לדוגמה</span>
+        <div class="preview-type" id="previewType">פרופיל האופי שלך</div>
+        <div class="preview-name" id="previewName">הגיימר/ית הטכנולוגי/ת</div>
+        <div class="swatch-row" id="previewSwatches"></div>
+        <div class="preview-furniture-label">רהיטי החובה שלך</div>
+        <div class="preview-furniture" id="previewFurniture"></div>
+        <div class="preview-dots" id="previewDots"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problems">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>למה בעצם צריך את זה</h2>
+      <p>לכל ילד יש חזון לחדר שלו. הבעיה היא הדרך מהראש למציאות.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card slide-card">
+        <div class="icon i1">💭</div>
+        <h3>לא יודעים מאיפה להתחיל</h3>
+        <p>קל לדעת שרוצים "לשנות משהו", אבל קשה לתרגם את זה לצבעים, פריטים והחלטות אמיתיות.</p>
+      </div>
+      <div class="problem-card slide-card">
+        <div class="icon i2">⏰</div>
+        <h3>אין זמן לתכנון</h3>
+        <p>בין העבודה, שיעורי הבית והחוגים — לשבת ולתכנן עיצוב חדר הוא הדבר האחרון שיש לו זמן פנוי.</p>
+      </div>
+      <div class="problem-card slide-card">
+        <div class="icon i3">🗯️</div>
+        <h3>כל שיחה נגמרת בוויכוח</h3>
+        <p>כל אחד בבית רואה משהו אחר בראש, ואף אחד לא יודע איך להפוך את זה להחלטה ברורה שכולם מסכימים עליה.</p>
+      </div>
+    </div>
+    <p class="steps-hint">👉 החליקו כדי לראות את כל הסיבות</p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>איך זה עובד</h2>
+      <p>שלושה צעדים פשוטים, שלוקחים בערך שתי דקות.</p>
+    </div>
+    <div class="steps">
+      <div class="step slide-card">
+        <span class="num">01</span>
+        <h3>עונים על שאלון פרופיל האופי</h3>
+        <p>10 שאלות קצרות וקלילות בסגנון שאלוני האישיות שאתם מכירים — לא על טעם, אלא על מי שאתם.</p>
+      </div>
+      <div class="step slide-card">
+        <span class="step-line"></span>
+        <span class="num">02</span>
+        <h3>מקבלים פלטת צבעים מנצחת</h3>
+        <p>שילוב הצבעים המדויק שמתאים לאופי שלכם, עם שמות שאפשר לקחת ישר לחנות הצבעים.</p>
+      </div>
+      <div class="step slide-card">
+        <span class="step-line"></span>
+        <span class="num">03</span>
+        <h3>מקבלים את רהיטי החובה</h3>
+        <p>3-4 פריטים ממוקדים שמתאימים בדיוק לאופי שזוהה — בלי בלגן של אלף אפשרויות.</p>
+      </div>
+    </div>
+    <p class="steps-hint">👉 החליקו כדי לראות את כל השלבים</p>
+  </div>
+</section>
+
+<section class="quiz-section" id="quiz">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>השאלון: מה פרופיל האופי שלכם?</h2>
+      <p>ענו בכנות — אין תשובה נכונה, יש רק תשובה שהיא באמת אתם.</p>
+    </div>
+
+    <div class="quiz-card slide-card">
+      <!-- Intro -->
+      <div class="quiz-intro" id="quizIntro">
+        <h3>מוכנים לגלות?</h3>
+        <p>10 שאלות קצרות, שלוש אפשרויות תשובה בכל שאלה. בסוף תקבלו את פלטת הצבעים ורשימת הרהיטים שמתאימות בדיוק לכם.</p>
+        <button class="btn btn-primary" id="startBtn">בואו נתחיל</button>
+      </div>
+
+      <!-- Question -->
+      <div class="hidden" id="quizQuestionWrap">
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="progressBar"></div></div>
+        <div class="quiz-step-label" id="stepLabel">שאלה 1 מתוך 10</div>
+        <div class="quiz-question" id="questionText"></div>
+        <div class="quiz-options" id="optionsWrap"></div>
+      </div>
+
+      <!-- Result -->
+      <div class="quiz-result hidden" id="quizResult">
+        <div class="result-badge" id="resultBadge">פרופיל האופי שלך</div>
+        <div class="result-name" id="resultName"></div>
+        <div class="result-desc" id="resultDesc"></div>
+        <div class="result-block-label">פלטת הצבעים שלך</div>
+        <div class="result-swatches" id="resultSwatches"></div>
+        <div class="result-block-label">רהיטי החובה שלך</div>
+        <div class="result-furniture" id="resultFurniture"></div>
+        <div class="result-actions">
+          <a href="#start" class="btn btn-primary">שמרו לי את התוצאה במייל</a>
+        </div>
+        <div style="margin-top:18px;">
+          <a href="#" class="restart-link" id="restartBtn">להתחיל את השאלון מחדש</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="parents-wrap" style="padding-top:0;">
+  <div class="wrap">
+    <div class="parents" id="parents">
+      <div>
+        <span class="quote-mark">”</span>
+        <h2>פינה קטנה להורים</h2>
+        <p>זה לא עוד הבטחה ריקה מהאינטרנט. הילד או הילדה עונים על שאלון קליל של 10 שאלות, ובסוף מקבלים פלטת צבעים ורשימת פריטים ברורה — הצעה קונקרטית שכולם בבית יכולים להסתכל עליה יחד ולהחליט, במקום לנחש ולריב.</p>
+      </div>
+      <div class="parent-points">
+        <div class="parent-point">
+          <span class="check">✓</span>
+          <div><b>פחות ויכוחים.</b> יש הצעה ברורה על השולחן, לא רק דעות.</div>
+        </div>
+        <div class="parent-point">
+          <span class="check">✓</span>
+          <div><b>שקיפות מלאה.</b> רואים בדיוק אילו צבעים ופריטים מומלצים לפני שקונים.</div>
+        </div>
+        <div class="parent-point">
+          <span class="check">✓</span>
+          <div><b>הילד/ה מוביל/ה.</b> תהליך עצמאי שמכבד את מי שהם באמת.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="start">
+  <div class="wrap">
+    <div class="cta-card">
+      <div class="blob blob-3"></div>
+      <h2>רוצים לשמור את התוצאה שלכם?</h2>
+      <p>השאירו מייל ונשלח לכם את פלטת הצבעים ורשימת הרהיטים המלאה שלכם, ונעדכן אתכם כשהגרסה המלאה עולה לאוויר.</p>
+      <form class="cta-form" id="signupForm">
+        <input type="email" id="emailInput" placeholder="האימייל שלך" required>
+        <button type="submit" class="btn btn-primary">שריינו לי מקום</button>
+      </form>
+      <div class="form-msg" id="formMsg"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark" style="width:32px;height:32px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 12L12 5l8 7" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 11v8h12v-8" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="logo-text" dir="ltr" style="font-size:17px;">SMART<span class="logo-accent">ROOM</span></span>
+        </div>
+        <p>שאלון פרופיל אופי לחדרי ילדים ונוער — פלטות צבעים ורהיטי חובה, מותאמים אישית בעזרת בינה מלאכותית.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="אינסטגרם">📷</a>
+          <a href="#" aria-label="טיקטוק">🎵</a>
+          <a href="#" aria-label="מייל">✉️</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>המוצר</h4>
+        <ul>
+          <li><a href="#how">איך זה עובד</a></li>
+          <li><a href="#quiz">שאלון פרופיל האופי</a></li>
+          <li><a href="#quiz">פלטות הצבעים</a></li>
+          <li><a href="#parents">פינה להורים</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>גלו עוד</h4>
+        <ul>
+          <li><a href="#quiz">רהיטי החובה שלכם</a></li>
+          <li><a href="#start">הצטרפות לרשימת ההמתנה</a></li>
+          <li><a href="#">שאלות נפוצות</a></li>
+          <li><a href="#">בלוג עיצוב</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>החברה</h4>
+        <ul>
+          <li><a href="#">אודות SMARTROOM</a></li>
+          <li><a href="#">צרו קשר</a></li>
+          <li><a href="#">שיתופי פעולה</a></li>
+          <li><a href="#">קריירה</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 SMARTROOM. כל הזכויות שמורות.</p>
+      <div class="footer-legal">
+        <a href="#">תנאי שימוש</a>
+        <a href="#">מדיניות פרטיות</a>
+        <a href="#">נגישות</a>
+      </div>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=smartroom" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<script>
+/* ---------------- data model ---------------- */
+const TYPES = {
+  A: {
+    key:'A',
+    name:'הגיימר/ית הטכנולוגי/ת',
+    desc:'החדר שלך הוא תחנת שליטה. אתם אוהבים פוקוס, שליטה מלאה בסביבה, ועולם שמתקדם כל הזמן.',
+    palette:[
+      {name:'שחור פחם', hex:'#1C1B22'},
+      {name:'סגול לד', hex:'#7C3AED'},
+      {name:'כחול חשמל', hex:'#33C7F0'},
+      {name:'אפור גרפיט', hex:'#4A4750'}
+    ],
+    furniture:[
+      {name:'כיסא גיימינג ארגונומי', color:'#7C3AED'},
+      {name:'מעמד לאוזניות', color:'#33C7F0'},
+      {name:'שולחן רחב עם תעלת כבלים', color:'#4A4750'},
+      {name:'תאורת לד נסתרת', color:'#FF4FA0'}
+    ]
+  },
+  B: {
+    key:'B',
+    name:'החולם/ת השקט/ה',
+    desc:'אתם שואבים אנרגיה משקט, ומרגישים הכי טוב בחלל רגוע שהוא לגמרי שלכם.',
+    palette:[
+      {name:'ירוק מרווה', hex:'#8A9A7E'},
+      {name:"בז' חול", hex:'#E8DFC8'},
+      {name:'לבן שמנת', hex:'#FAF6EE'},
+      {name:'חום עץ טבעי', hex:'#A9805A'}
+    ],
+    furniture:[
+      {name:'מנורת קריאה חמה', color:'#A9805A'},
+      {name:'כורסת קריאה נוחה', color:'#8A9A7E'},
+      {name:'מדף ספרים פתוח', color:'#E8DFC8'},
+      {name:'וילון האפלה רך', color:'#7C3AED'}
+    ]
+  },
+  C: {
+    key:'C',
+    name:'המארח/ת החברתי/ת',
+    desc:'החדר שלכם הוא המקום שכולם רוצים להיות בו. אתם שואבים אנרגיה מהאנשים סביבכם.',
+    palette:[
+      {name:'טרקוטה', hex:'#C97B5B'},
+      {name:'חרדל שמש', hex:'#E0A93E'},
+      {name:'קרם חלבי', hex:'#F6ECDD'},
+      {name:"ורוד אבק", hex:'#E2B4B0'}
+    ],
+    furniture:[
+      {name:'פוף ישיבה גדול', color:'#C97B5B'},
+      {name:'שולחן קפה נמוך', color:'#E0A93E'},
+      {name:'שטיח נעים לישיבה', color:'#E2B4B0'},
+      {name:'רמקול בלוטות\' קטן', color:'#7C3AED'}
+    ]
+  },
+  D: {
+    key:'D',
+    name:'היוצר/ת האמנותי/ת',
+    desc:'אתם רואים השראה בכל מקום, וצריכים חדר שמאפשר להביא אותה החוצה — בציור, בצבע ובחומר.',
+    palette:[
+      {name:'פוקסיה יצירתית', hex:'#E84393'},
+      {name:'צהוב שמש', hex:'#F9C74F'},
+      {name:'טורקיז', hex:'#43AA8B'},
+      {name:'לבן קנבס', hex:'#FDFBF7'}
+    ],
+    furniture:[
+      {name:'שולחן יצירה רחב', color:'#E84393'},
+      {name:'לוח פקקים להשראה', color:'#F9C74F'},
+      {name:'ארגונית לחומרי יצירה', color:'#43AA8B'},
+      {name:'תאורת סטודיו מתכווננת', color:'#7C3AED'}
+    ]
+  },
+  E: {
+    key:'E',
+    name:'ההרפתקן/ית הפעיל/ה',
+    desc:'קשה לכם לשבת במקום אחד. אתם צריכים חדר שזז יחד איתכם ומחזיק את כל הציוד שלכם בסדר.',
+    palette:[
+      {name:'ירוק אדרנלין', hex:'#2EC4B6'},
+      {name:'כתום אנרגיה', hex:'#FF6B35'},
+      {name:'כחול נייבי', hex:'#1B3A4B'},
+      {name:'לבן נקי', hex:'#F5F5F5'}
+    ],
+    furniture:[
+      {name:'ארון פתוח לציוד ספורט', color:'#1B3A4B'},
+      {name:'לוח מגנטי למדליות והישגים', color:'#FF6B35'},
+      {name:'שטיח יוגה מתקפל', color:'#2EC4B6'},
+      {name:'קרש רב-תכליתי לתלייה ואחסון', color:'#7C3AED'}
+    ]
+  }
+};
+
+const QUESTIONS = [
+  {q:'איך נראה סוף השבוע המושלם שלך?', opts:[
+    {t:'משחקי מחשב עד השעות הקטנות', type:'A'},
+    {t:'לקרוא ספר טוב במיטה', type:'B'},
+    {t:'לצאת ולבלות עם חברים', type:'C'},
+    {t:'לצייר, ליצור או להקליט משהו', type:'D'},
+    {t:'טיול, ריצה או משחק בחוץ', type:'E'}]},
+  {q:'מה הכי חשוב לך שיהיה בחדר?', opts:[
+    {t:'שיהיה חושך ומסכים', type:'A'},
+    {t:'שיהיה שקט ונעים ללמוד', type:'B'},
+    {t:'שיהיה מקום לארח חברים', type:'C'},
+    {t:'שיהיה מקום פנוי ליצור', type:'D'},
+    {t:'שיהיה מקום לציוד ולתנועה', type:'E'}]},
+  {q:'אם היית יכול/ה לבחור מתנה אחת לחדר, מה זה יהיה?', opts:[
+    {t:'מחשב גיימינג חזק', type:'A'},
+    {t:'מנורת קריאה חמה', type:'B'},
+    {t:'רמקול בלוטות\' לערבים עם חברים', type:'C'},
+    {t:'ערכת ציור או כלי נגינה', type:'D'},
+    {t:'ציוד ספורט חדש', type:'E'}]},
+  {q:'מה הכי מרגיש "אתה" בבוקר של יום חופש?', opts:[
+    {t:'לקום ומיד להתחבר לאונליין', type:'A'},
+    {t:'לקום לאט עם ספר או פודקאסט', type:'B'},
+    {t:'לתאם עם כולם מה עושים היום', type:'C'},
+    {t:'לקום עם רעיון חדש ליצירה', type:'D'},
+    {t:'לקום ולזוז מיד — ריצה או אימון', type:'E'}]},
+  {q:'איזה צבע קיר הכי מדבר אליך?', opts:[
+    {t:'שחור עם תאורת לד', type:'A'},
+    {t:'ירוק מרווה רגוע', type:'B'},
+    {t:'חרדל חמים', type:'C'},
+    {t:'פוקסיה או טורקיז שובבים', type:'D'},
+    {t:'כתום או ירוק אנרגטי', type:'E'}]},
+  {q:'מה הכי מלחיץ אותך בחדר לא מסודר?', opts:[
+    {t:'שהכבלים מסתבכים לי בציוד', type:'A'},
+    {t:'שאין לי שקט להתרכז', type:'B'},
+    {t:'שאין מקום לשבת עם חברים', type:'C'},
+    {t:'שאין מקום פנוי ליצור', type:'D'},
+    {t:'שהציוד שלי מפוזר בכל מקום', type:'E'}]},
+  {q:'אם חבר/ה היו מתארים אותך במילה אחת, מה זה יהיה?', opts:[
+    {t:'גיימר/ית', type:'A'},
+    {t:'חולם/ת', type:'B'},
+    {t:'חברותי/ת', type:'C'},
+    {t:'יצירתי/ת', type:'D'},
+    {t:'אנרגטי/ת', type:'E'}]},
+  {q:'באיזו פעילות אתה הכי "שוקע/ת" בלי לשים לב לזמן?', opts:[
+    {t:'משחק או סדרה', type:'A'},
+    {t:'ספר, ציור או מוזיקה בשקט', type:'B'},
+    {t:'שיחה עם חברים', type:'C'},
+    {t:'ציור, כתיבה או יצירה', type:'D'},
+    {t:'ספורט או פעילות בחוץ', type:'E'}]},
+  {q:'מה חשוב לך שיהיה על הקיר?', opts:[
+    {t:'מסכים ותאורה', type:'A'},
+    {t:'מדף ספרים או לוח השראה', type:'B'},
+    {t:'תמונות עם חברים', type:'C'},
+    {t:'יצירות ורישומים שלך', type:'D'},
+    {t:'מדליות, דגלים או פוסטרים של ספורט', type:'E'}]},
+  {q:'איך היית רוצה שהחדר ירגיש כשנכנסים אליו?', opts:[
+    {t:'כמו תחנת שליטה מגניבה', type:'A'},
+    {t:'כמו פינה שקטה ובטוחה', type:'B'},
+    {t:'כמו מקום שכולם רוצים להיות בו', type:'C'},
+    {t:'כמו סטודיו מלא השראה', type:'D'},
+    {t:'כמו בסיס אנרגטי ותוסס', type:'E'}]}
+];
+
+/* ---------------- hero rotating preview ---------------- */
+(function(){
+  const order = ['A','B','C','D','E'];
+  let idx = 0;
+  const nameEl = document.getElementById('previewName');
+  const swatchWrap = document.getElementById('previewSwatches');
+  const furnWrap = document.getElementById('previewFurniture');
+  const dotsWrap = document.getElementById('previewDots');
+
+  order.forEach((k,i)=>{
+    const d = document.createElement('span');
+    if(i===0) d.className='active';
+    dotsWrap.appendChild(d);
+  });
+
+  function render(){
+    const t = TYPES[order[idx]];
+    nameEl.style.opacity = 0;
+    setTimeout(()=>{
+      nameEl.textContent = t.name;
+      swatchWrap.innerHTML = t.palette.map(p=>`<div class="swatch" style="background:${p.hex}"><span>${p.name}</span></div>`).join('');
+      furnWrap.innerHTML = t.furniture.slice(0,3).map(f=>`<div class="furniture-chip"><span class="dotcol" style="background:${f.color}"></span>${f.name}</div>`).join('');
+      [...dotsWrap.children].forEach((d,i2)=> d.className = i2===idx ? 'active' : '');
+      nameEl.style.opacity = 1;
+    }, 200);
+  }
+  render();
+  setInterval(()=>{ idx = (idx+1)%order.length; render(); }, 3800);
+})();
+
+/* ---------------- quiz logic ---------------- */
+(function(){
+  const introEl = document.getElementById('quizIntro');
+  const questionWrap = document.getElementById('quizQuestionWrap');
+  const resultEl = document.getElementById('quizResult');
+  const startBtn = document.getElementById('startBtn');
+  const restartBtn = document.getElementById('restartBtn');
+  const progressBar = document.getElementById('progressBar');
+  const stepLabel = document.getElementById('stepLabel');
+  const questionText = document.getElementById('questionText');
+  const optionsWrap = document.getElementById('optionsWrap');
+
+  let current = 0;
+  let scores = {A:0,B:0,C:0,D:0,E:0};
+  const letters = ['א','ב','ג','ד','ה'];
+
+  function showQuestion(){
+    const q = QUESTIONS[current];
+    stepLabel.textContent = `שאלה ${current+1} מתוך ${QUESTIONS.length}`;
+    progressBar.style.width = `${(current/QUESTIONS.length)*100}%`;
+    questionText.textContent = q.q;
+    optionsWrap.innerHTML = '';
+    q.opts.forEach((opt, i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'quiz-option';
+      btn.type = 'button';
+      btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${opt.t}</span>`;
+      btn.addEventListener('click', ()=>{
+        scores[opt.type]++;
+        current++;
+        if(current < QUESTIONS.length){
+          showQuestion();
+        } else {
+          progressBar.style.width = '100%';
+          setTimeout(showResult, 250);
+        }
+      });
+      optionsWrap.appendChild(btn);
+    });
+  }
+
+  function showResult(){
+    questionWrap.classList.add('hidden');
+    resultEl.classList.remove('hidden');
+    let winner = 'A';
+    ['A','B','C','D','E'].forEach(k=>{ if(scores[k] > scores[winner]) winner = k; });
+    const t = TYPES[winner];
+    document.getElementById('resultName').textContent = t.name;
+    document.getElementById('resultDesc').textContent = t.desc;
+    document.getElementById('resultSwatches').innerHTML = t.palette.map(p=>`<div class="result-swatch" style="background:${p.hex}"><span>${p.name}</span></div>`).join('');
+    document.getElementById('resultFurniture').innerHTML = t.furniture.map(f=>`<div class="result-furniture-item"><span class="dotcol" style="background:${f.color}"></span>${f.name}</div>`).join('');
+  }
+
+  startBtn.addEventListener('click', ()=>{
+    introEl.classList.add('hidden');
+    questionWrap.classList.remove('hidden');
+    showQuestion();
+  });
+
+  restartBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    current = 0;
+    scores = {A:0,B:0,C:0,D:0,E:0};
+    resultEl.classList.add('hidden');
+    introEl.classList.remove('hidden');
+  });
+})();
+
+/* ---------------- signup form ---------------- */
+/* ---------------- scroll-in card animation (mobile) ---------------- */
+(function(){
+  const slideEls = document.querySelectorAll('.slide-card');
+  if(!('IntersectionObserver' in window)){
+    slideEls.forEach(el => el.classList.add('in-view'));
+    return;
+  }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.15});
+  slideEls.forEach(el => io.observe(el));
+})();
+
+/* ---------------- mobile menu ---------------- */
+(function(){
+  const hamburger = document.getElementById('hamburgerBtn');
+  const menu = document.getElementById('mobileMenu');
+  const closeBtn = document.getElementById('mobileMenuClose');
+  const menuLinks = menu.querySelectorAll('a');
+
+  function openMenu(){
+    menu.classList.add('open');
+    hamburger.classList.add('active');
+    hamburger.setAttribute('aria-expanded','true');
+    document.body.classList.add('no-scroll');
+  }
+  function closeMenu(){
+    menu.classList.remove('open');
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded','false');
+    document.body.classList.remove('no-scroll');
+  }
+
+  hamburger.addEventListener('click', ()=>{
+    if(menu.classList.contains('open')) closeMenu(); else openMenu();
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && menu.classList.contains('open')) closeMenu();
+  });
+  window.addEventListener('resize', ()=>{
+    if(window.innerWidth > 940 && menu.classList.contains('open')) closeMenu();
+  });
+})();
+
+document.getElementById('signupForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('emailInput').value;
+  const msg = document.getElementById('formMsg');
+  if(email){
+    msg.textContent = 'תודה! שמרנו לכם מקום ונשלח את התוצאה המלאה ברגע שהיא מוכנה. 🎉';
+    document.getElementById('emailInput').value = '';
+  }
+});
+</script>
+
+</body>
+</html>
