@@ -328,18 +328,7 @@ function closeModal() {
 // ===== CONTACT SUBMIT =====
 function submitContact(e) {
   e.preventDefault();
-  const inputs = e.target.querySelectorAll('input, textarea');
-  const name = inputs[0].value.trim();
-  const phone = inputs[1].value.trim();
-  const message = inputs[2] ? inputs[2].value.trim() : '';
-
-  let msg = `📩 *פנייה חדשה מ-HORSE FASHION*\n\n`;
-  msg += `👤 שם: ${name}\n📞 טלפון: ${phone}`;
-  if (message) msg += `\n\n💬 הודעה: ${message}`;
-
-  window.open(`https://wa.me/972559139557?text=${encodeURIComponent(msg)}`, '_blank');
-  showToast('✅ ההודעה נשלחה בוואטסאפ!');
-  e.target.reset();
+  showToast('יצירת הקשר סגורה כרגע');
 }
 
 // ===== TOAST =====
@@ -433,26 +422,7 @@ function removeFromCart(productId) {
 
 function submitCartOrder(e) {
   e.preventDefault();
-  const name = document.getElementById('cartName').value.trim();
-  const phone = document.getElementById('cartPhone').value.trim();
-  const notes = document.getElementById('cartNotes').value.trim();
-  if (!name || !phone) { alert('אנא מלא שם וטלפון'); return; }
-
-  const itemsText = cart.map(i => `• ${i.product.name} x${i.qty} — ₪${(i.product.price * i.qty).toLocaleString()}`).join('\n');
-  const total = cart.reduce((sum, i) => sum + i.product.price * i.qty, 0);
-
-  let msg = `🛒 *הזמנה חדשה מ-HORSE FASHION*\n\n`;
-  msg += `👤 שם: ${name}\n📞 טלפון: ${phone}\n\n`;
-  msg += `*פריטים:*\n${itemsText}\n\n`;
-  msg += `💰 סה"כ: ₪${total.toLocaleString()}`;
-  if (notes) msg += `\n\n📝 הערות: ${notes}`;
-
-  window.open(`https://wa.me/972559139557?text=${encodeURIComponent(msg)}`, '_blank');
-
-  cart = [];
-  updateCartBadge();
-  closeCart();
-  showToast('✅ ההזמנה נשלחה בוואטסאפ!');
+  showToast('ההזמנות סגורות כרגע');
 }
 
 // ===== MOBILE MENU =====
