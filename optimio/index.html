@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Optimio — השוואת ציוד גיימינג בלי לנחש</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700;800;900&display=swap">
+<style>
+:root{
+  /* base palette: slate */
+  --op-slate-950:#020617;
+  --op-slate-900:#0f172a;
+  --op-slate-800:#1e293b;
+  --op-slate-700:#334155;
+  --op-slate-600:#475569;
+  --op-slate-500:#64748b;
+  --op-slate-400:#94a3b8;
+  --op-slate-50:#f8fafc;
+
+  /* base palette: indigo (single brand accent) */
+  --op-indigo-300:#a5b4fc;
+  --op-indigo-400:#818cf8;
+  --op-indigo-500:#6366f1;
+  --op-indigo-600:#4f46e5;
+  --op-indigo-900:#312e81;
+
+  /* semantic — comparison table only, not part of brand identity */
+  --op-win:#4ade80;
+  --op-win-bg:rgba(74,222,128,.12);
+  --op-lose:#f87171;
+  --op-lose-bg:rgba(248,113,113,.10);
+
+  /* purpose tokens — default (base) section tone */
+  --op-bg:var(--op-slate-900);
+  --op-surface:var(--op-slate-800);
+  --op-surface-2:var(--op-slate-700);
+  --op-surface-3:var(--op-slate-600);
+  --op-border:var(--op-slate-700);
+  --op-border-soft:var(--op-slate-800);
+  --op-text:var(--op-slate-50);
+  --op-text-soft:var(--op-slate-400);
+  --op-text-mute:var(--op-slate-500);
+  --op-accent:var(--op-indigo-500);
+  --op-accent-soft:var(--op-indigo-300);
+  --op-accent-hover:var(--op-indigo-600);
+  --op-accent-deep:var(--op-indigo-900);
+  --op-grad:linear-gradient(135deg,var(--op-indigo-400) 0%,var(--op-indigo-600) 100%);
+
+  --op-radius-s:10px;
+  --op-radius-m:16px;
+  --op-radius-l:26px;
+  --op-shadow:0 30px 80px -30px rgba(0,0,0,.7);
+  --op-font-display:'Frank Ruhl Libre',serif;
+  --op-font-body:'Heebo','Segoe UI',sans-serif;
+}
+html,body{margin:0;padding:0;background:var(--op-slate-900);min-height:100%;}
+html{scroll-behavior:smooth;}
+.op-page,.op-page *{box-sizing:border-box;}
+.op-page{background:var(--op-bg);color:var(--op-text);font-family:var(--op-font-body);line-height:1.6;overflow-x:hidden;direction:rtl;text-align:right;}
+.op-page a{color:inherit;}
+.op-page h1,.op-page h2,.op-page h3,.op-page h4{margin:0;}
+.op-page select{font:inherit;}
+.op-page :focus-visible{outline:2px solid var(--op-accent-soft);outline-offset:3px;border-radius:6px;}
+
+/* alternating section tone — one shade lighter than the default, so neighboring sections read as distinct bands */
+.op-section-alt{
+  --op-bg:var(--op-slate-800);
+  --op-surface:var(--op-slate-700);
+  --op-surface-2:var(--op-slate-600);
+  --op-surface-3:var(--op-slate-500);
+  --op-border:var(--op-slate-600);
+  --op-border-soft:var(--op-slate-700);
+}
+
+/* buttons */
+.op-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding-inline:24px;padding-block:14px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .25s ease,box-shadow .25s ease,color .25s ease,border-color .25s ease;white-space:nowrap;}
+.op-btn-primary{background:var(--op-grad);color:var(--op-slate-50);box-shadow:0 14px 34px -12px rgba(99,102,241,.55);}
+.op-btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(99,102,241,.6);}
+.op-btn-outline{border-color:var(--op-border);color:var(--op-text);background:transparent;font-weight:600;}
+.op-btn-outline:hover{border-color:var(--op-accent-soft);color:var(--op-accent-soft);}
+.op-btn-ghost{padding-block:10px;padding-inline:18px;border:1px solid var(--op-border);color:var(--op-text-soft);font-size:14px;font-weight:600;}
+.op-btn-ghost:hover{color:var(--op-text);border-color:var(--op-accent-soft);}
+
+/* nav */
+.op-nav{position:sticky;top:0;z-index:50;background:rgba(15,23,42,.4);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:background .3s ease,border-color .3s ease;}
+.op-nav.op-scrolled{background:rgba(15,23,42,.9);border-bottom-color:var(--op-border);}
+.op-nav-inner{max-width:1180px;margin-inline:auto;padding-inline:24px;height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.op-logo{font-family:var(--op-font-body);font-weight:900;font-size:22px;background:var(--op-grad);-webkit-background-clip:text;background-clip:text;color:transparent;text-decoration:none;letter-spacing:.3px;}
+.op-nav-links{display:flex;gap:30px;list-style:none;margin:0;padding:0;}
+.op-nav-links a{color:var(--op-text-soft);text-decoration:none;font-size:15px;font-weight:500;transition:color .2s ease;}
+.op-nav-links a:hover{color:var(--op-text);}
+.op-burger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;flex-shrink:0;background:none;border:none;border-radius:10px;cursor:pointer;padding:0;transition:background .2s ease;}
+.op-burger:hover{background:var(--op-surface-2);}
+.op-burger span{width:22px;height:2px;background:var(--op-text);border-radius:2px;transition:transform .25s ease,opacity .25s ease;}
+.op-burger.op-open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.op-burger.op-open span:nth-child(2){opacity:0;}
+.op-burger.op-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.op-mobile-menu{position:fixed;top:74px;inset-inline:0;bottom:0;z-index:55;display:flex;flex-direction:column;background:rgba(15,23,42,.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .3s ease,transform .3s ease,visibility 0s linear .3s;overflow-y:auto;}
+.op-mobile-menu.op-open{opacity:1;visibility:visible;transform:translateY(0);transition:opacity .3s ease,transform .3s ease,visibility 0s linear 0s;}
+.op-mobile-links{display:flex;flex-direction:column;padding:14px 24px;}
+.op-mobile-links a{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--op-text-soft);text-decoration:none;padding:22px 8px;font-size:17px;font-weight:600;border-bottom:1px solid var(--op-border-soft);transition:color .2s ease;}
+.op-mobile-links a:last-child{border-bottom:none;}
+.op-mobile-links a:hover{color:var(--op-text);}
+.op-mobile-links a svg{flex-shrink:0;color:var(--op-accent-soft);width:22px;height:22px;}
+.op-mobile-divider{height:1px;background:var(--op-border);margin-inline:24px;}
+.op-mobile-actions{display:flex;flex-direction:column;gap:14px;padding:24px 24px 32px;}
+.op-mobile-actions .op-btn{padding-block:20px;font-size:17px;}
+.op-mobile-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.6);z-index:40;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+.op-mobile-backdrop.op-open{opacity:1;pointer-events:auto;}
+.op-mobile-cta-bar{display:none;}
+.op-nav-auth{display:flex;align-items:center;gap:10px;}
+.op-btn-compact{padding-inline:20px;padding-block:11px;font-size:14px;}
+
+/* auth modals */
+.op-modal-overlay{position:fixed;inset:0;background:rgba(2,6,23,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;}
+.op-modal-overlay.op-open{display:flex;}
+.op-modal{position:relative;width:100%;max-width:420px;background:var(--op-slate-800);border:1px solid var(--op-slate-700);border-radius:var(--op-radius-l);padding:36px 32px;box-shadow:var(--op-shadow);display:none;text-align:start;}
+.op-modal.op-modal-visible{display:block;}
+.op-modal-close{position:absolute;top:16px;inset-inline-end:16px;width:32px;height:32px;border-radius:50%;border:1px solid var(--op-slate-600);background:var(--op-slate-700);color:var(--op-slate-400);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease;}
+.op-modal-close:hover{color:var(--op-slate-50);border-color:var(--op-accent-soft);}
+.op-modal-title{font-family:var(--op-font-display);font-size:22px;font-weight:700;margin-bottom:8px;padding-inline-end:36px;color:var(--op-slate-50);}
+.op-modal-sub{font-size:14px;color:var(--op-slate-400);margin-bottom:24px;line-height:1.6;}
+.op-modal-form{display:flex;flex-direction:column;gap:16px;}
+.op-modal-form label{display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--op-slate-400);font-weight:500;}
+.op-modal-form input{padding:12px 16px;border-radius:10px;border:1px solid var(--op-slate-600);background:var(--op-slate-700);color:var(--op-slate-50);font-family:var(--op-font-body);font-size:14.5px;}
+.op-modal-form input::placeholder{color:var(--op-slate-500);}
+.op-modal-submit{width:100%;margin-top:6px;}
+.op-modal-switch{margin:20px 0 0;text-align:center;font-size:13.5px;color:var(--op-slate-400);}
+.op-modal-switch a{color:var(--op-accent-soft);text-decoration:none;font-weight:600;}
+.op-modal-switch a:hover{text-decoration:underline;}
+
+/* hero */
+.op-hero{background:var(--op-bg);position:relative;padding-block:96px 40px;overflow:hidden;text-align:center;display:flex;align-items:center;min-height:calc(100vh - 74px);min-height:calc(100dvh - 74px);}
+.op-hero-glow{position:absolute;inset:-25% -10% auto -10%;height:620px;background:radial-gradient(closest-side,rgba(99,102,241,.35),rgba(129,140,248,.15) 45%,transparent 72%);filter:blur(30px);pointer-events:none;z-index:0;animation:opPulse 11s ease-in-out infinite;}
+
+/* per-section background glow — decorative only, sits behind all content, never intercepts clicks */
+.op-section-glow{position:absolute;z-index:0;pointer-events:none;filter:blur(36px);background:radial-gradient(closest-side,rgba(99,102,241,.32),rgba(129,140,248,.14) 45%,transparent 72%);}
+.op-section-glow.op-reveal{transform:scale(.88);transition:opacity 1.4s ease,transform 1.4s ease;}
+.op-section-glow.op-reveal.op-in{opacity:1;transform:scale(1);animation:opPulse 12s ease-in-out infinite;}
+.op-glow-a{top:-32px;inset-inline-end:-12%;width:58%;height:460px;}
+.op-glow-b{top:-32px;inset-inline-start:-12%;width:58%;height:460px;}
+.op-glow-c{top:-32px;inset-inline-start:18%;width:56%;height:440px;}
+.op-glow-d{top:-32px;inset-inline-end:18%;width:56%;height:440px;}
+.op-glow-sm{height:300px;}
+@keyframes opPulse{0%,100%{opacity:.65;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+.op-hero-grid{position:relative;z-index:1;width:100%;max-width:1180px;margin:0 auto;padding-inline:24px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+.op-hero-text{text-align:start;}
+.op-hero-visual{display:flex;justify-content:center;position:relative;z-index:1;}
+.op-eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.2px;color:var(--op-accent-soft);background:rgba(99,102,241,.1);border:1px solid var(--op-accent-deep);padding:7px 18px;border-radius:999px;margin-bottom:22px;}
+.op-hero-title{font-family:var(--op-font-display);font-size:clamp(30px,4.6vw,54px);line-height:1.22;font-weight:700;margin:0 0 18px;}
+.op-hero-sub{font-size:17px;color:var(--op-text-soft);max-width:520px;margin:0 0 28px;line-height:1.75;}
+.op-hero-actions{display:flex;justify-content:start;gap:16px;flex-wrap:wrap;}
+
+/* floating hardware icons — decorative, behind all content, never intercepts clicks */
+.op-float-icons{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.op-float{position:absolute;color:var(--op-accent-soft);opacity:.14;animation:opFloat 7.5s ease-in-out infinite;}
+.op-float svg{display:block;}
+.op-float-kb{top:8%;inset-inline-start:6%;width:60px;height:60px;animation-delay:0s;}
+.op-float-hp{bottom:10%;inset-inline-start:16%;width:52px;height:52px;animation-delay:1.2s;}
+.op-float-mon{top:12%;inset-inline-end:44%;width:56px;height:56px;animation-delay:2s;}
+.op-float-gpu{top:6%;inset-inline-end:20%;width:54px;height:54px;animation-delay:.5s;}
+.op-float-chair{bottom:7%;inset-inline-end:24%;width:58px;height:58px;animation-delay:2.7s;}
+.op-float-kb2{top:9%;inset-inline-end:2%;width:48px;height:48px;animation-delay:1.7s;}
+@keyframes opFloat{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-14px) rotate(4deg);}}
+
+/* orbiting VS illustration */
+.op-orbit-wrap{position:relative;width:370px;height:370px;max-width:100%;margin:0 auto;transform:translateX(-28px);perspective:1100px;}
+.op-orbit-line{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transform-origin:50% 50%;animation:opConnectorSpin 16s linear infinite;}
+@keyframes opConnectorSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.op-orbit-ring{position:absolute;inset:8%;border:1px dashed var(--op-slate-700);border-radius:50%;}
+.op-orbit-vs{position:absolute;top:50%;left:50%;width:68px;height:68px;margin:-34px;border-radius:50%;background:var(--op-grad);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;font-family:var(--op-font-body);box-shadow:0 14px 34px -10px rgba(99,102,241,.6);z-index:3;}
+.op-orbit-item{position:absolute;top:50%;left:50%;width:84px;height:142px;margin:-71px 0 0 -42px;animation:opOrbitA 16s linear infinite;}
+.op-orbit-item-b{width:72px;height:118px;margin:-59px 0 0 -36px;animation:opOrbitB 16s linear infinite;}
+@keyframes opOrbitA{from{transform:rotate(0deg) translateX(148px) rotate(0deg);}to{transform:rotate(360deg) translateX(148px) rotate(-360deg);}}
+@keyframes opOrbitB{from{transform:rotate(180deg) translateX(148px) rotate(-180deg);}to{transform:rotate(540deg) translateX(148px) rotate(-540deg);}}
+.op-orbit-spin{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:opTumble 5s ease-in-out infinite;filter:drop-shadow(0 16px 18px rgba(0,0,0,.5));}
+.op-orbit-spin-b{animation-delay:2.4s;}
+@keyframes opTumble{0%,100%{transform:rotateY(-20deg) rotateX(5deg);}50%{transform:rotateY(20deg) rotateX(-5deg);}}
+.op-orbit-badge{position:absolute;top:-9px;inset-inline-end:-9px;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 6px 14px -4px rgba(0,0,0,.5);}
+.op-badge-win{background:var(--op-win);}
+.op-badge-lose{background:var(--op-lose);}
+
+/* sections */
+.op-section{background:var(--op-bg);padding-block:88px;position:relative;transition:background .3s ease;}
+.op-section-inner{position:relative;z-index:1;max-width:1180px;margin-inline:auto;padding-inline:24px;}
+.op-center-head{text-align:center;max-width:640px;margin-inline:auto;margin-bottom:44px;}
+.op-h2{font-family:var(--op-font-display);font-size:clamp(26px,3.4vw,40px);font-weight:700;margin:14px 0 0;}
+.op-center-head .op-h2{margin-inline:auto;}
+
+/* reveal */
+.op-reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+.op-reveal.op-in{opacity:1;transform:none;}
+
+/* problem cards */
+.op-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:start;}
+.op-slider-dots{display:none;justify-content:center;gap:8px;margin-top:18px;}
+.op-slider-dot{width:8px;height:8px;padding:0;border-radius:50%;border:none;background:var(--op-slate-600);cursor:pointer;transition:background .2s ease,transform .2s ease;}
+.op-slider-dot.is-active{background:var(--op-accent);transform:scale(1.3);}
+.op-card{background:var(--op-surface);border:1px solid var(--op-border);border-radius:var(--op-radius-m);padding:26px;transition:transform .3s ease,border-color .3s ease;}
+.op-card:hover{transform:translateY(-4px);border-color:var(--op-accent-deep);}
+.op-icon{width:46px;height:46px;border-radius:12px;background:var(--op-surface-2);display:flex;align-items:center;justify-content:center;color:var(--op-accent-soft);margin-bottom:18px;}
+.op-card h3{font-size:16.5px;margin:0 0 10px;font-weight:700;}
+.op-card p{font-size:14.5px;color:var(--op-text-soft);line-height:1.7;margin:0;}
+
+/* steps */
+.op-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;text-align:start;}
+.op-step-num{font-family:var(--op-font-display);font-size:38px;font-weight:700;background:var(--op-grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin-bottom:10px;}
+.op-step h3{font-size:18px;margin:0 0 8px;}
+.op-step p{font-size:14.5px;color:var(--op-text-soft);line-height:1.7;margin:0;}
+
+/* dashboard app view (opens after login) */
+.op-app-view{position:fixed;inset:0;z-index:300;background:var(--op-slate-900);display:none;flex-direction:column;overflow-y:auto;}
+.op-app-view.op-open{display:flex;}
+.op-app-topbar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:18px 32px;border-bottom:1px solid var(--op-slate-700);background:var(--op-slate-900);position:sticky;top:0;z-index:2;}
+.op-app-body{display:flex;flex:1;min-height:0;}
+.op-app-sidebar{width:220px;flex-shrink:0;background:var(--op-slate-800);border-inline-end:1px solid var(--op-slate-700);padding:28px 20px;display:flex;flex-direction:column;gap:4px;}
+.op-app-main{flex:1;padding:44px 48px;max-width:1120px;}
+.op-app-columns{display:grid;grid-template-columns:1.6fr 1fr;gap:32px;align-items:start;}
+.op-app-col-side{background:var(--op-slate-800);border:1px solid var(--op-slate-700);border-radius:16px;padding:22px;}
+.op-app-header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:32px;}
+.op-app-welcome{color:var(--op-slate-400);font-size:15px;margin:8px 0 0;}
+.op-dash-nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;color:var(--op-text-mute);font-size:14px;font-weight:500;text-decoration:none;}
+.op-dash-nav-item svg{flex-shrink:0;}
+.op-dash-nav-item.is-active{background:var(--op-accent-deep);color:var(--op-slate-50);}
+.op-dash-main h4{font-size:13.5px;color:var(--op-text-mute);font-weight:600;margin:0 0 14px;}
+.op-card-header{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--op-slate-700);}
+.op-card-header.op-mt{margin-top:30px;}
+.op-card-header h4{margin:0;font-size:15px;color:var(--op-slate-100);font-weight:700;}
+.op-card-header-icon{width:30px;height:30px;border-radius:9px;background:var(--op-slate-700);color:var(--op-accent-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.op-dash-main h4.op-mt{margin-top:32px;}
+.op-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px;}
+.op-stat-card{background:var(--op-slate-800);border:1px solid var(--op-slate-700);border-radius:14px;padding:18px 20px;transition:border-color .2s ease,transform .2s ease;}
+.op-stat-card:hover{border-color:var(--op-accent-deep);transform:translateY(-2px);}
+.op-stat-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;}
+.op-stat-icon{width:34px;height:34px;flex-shrink:0;border-radius:10px;background:var(--op-accent-deep);color:var(--op-accent-soft);display:flex;align-items:center;justify-content:center;}
+.op-stat-label{font-size:12.5px;color:var(--op-slate-400);}
+.op-stat-value{display:block;font-size:24px;font-weight:700;color:var(--op-slate-50);font-family:var(--op-font-display);}
+.op-dash-compare{background:var(--op-slate-800);border:1px solid var(--op-slate-700);border-radius:16px;padding:22px;margin-bottom:36px;}
+.op-dash-compare-table{display:flex;flex-direction:column;gap:2px;border:1px solid var(--op-slate-700);border-radius:12px;overflow:hidden;margin-bottom:18px;}
+.op-dash-compare-row{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:2px;background:var(--op-slate-700);}
+.op-dash-compare-row>span{background:var(--op-slate-800);padding:12px 14px;font-size:13.5px;}
+.op-dash-compare-head>span{background:var(--op-slate-700);font-weight:700;font-size:12.5px;color:var(--op-slate-300);}
+.op-dash-compare-label{color:var(--op-slate-400);font-weight:500;}
+.op-dash-compare-cell.win{color:var(--op-win);background:var(--op-win-bg);font-weight:700;}
+.op-dash-compare-cell.lose{color:var(--op-lose);background:var(--op-lose-bg);}
+.op-dash-verdict{position:relative;padding:18px 22px;padding-inline-start:26px;background:var(--op-slate-700);border-radius:12px;overflow:hidden;margin-bottom:18px;}
+.op-dash-verdict::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--op-grad);}
+.op-dash-verdict-label{display:block;font-size:12px;font-weight:700;color:var(--op-accent-soft);margin-bottom:8px;}
+.op-dash-verdict-text{font-family:var(--op-font-display);font-size:15.5px;line-height:1.75;font-style:italic;color:var(--op-slate-50);margin:0;}
+.op-dash-history{display:flex;flex-direction:column;gap:10px;}
+.op-dash-hist-card{background:var(--op-surface-2);border:1px solid var(--op-border-soft);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.op-tag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;background:var(--op-accent-deep);color:var(--op-accent-soft);padding:5px 11px;border-radius:999px;}
+.op-dash-hist-card p{margin:0;font-size:13.5px;flex:1;min-width:200px;}
+.op-vs-small{color:var(--op-text-mute);font-size:12px;margin-inline:6px;}
+.op-time{font-size:12px;color:var(--op-text-mute);}
+.op-hist-chevron{color:var(--op-slate-500);flex-shrink:0;}
+.op-chip-row{display:flex;flex-wrap:wrap;gap:10px;}
+.op-chip{display:inline-flex;align-items:center;gap:6px;background:var(--op-surface-2);border:1px solid var(--op-border-soft);padding:8px 16px;border-radius:999px;font-size:13px;color:var(--op-text-soft);transition:border-color .2s ease,color .2s ease;}
+.op-chip:hover{border-color:var(--op-accent-deep);color:var(--op-text);}
+.op-hidden{display:none !important;}
+.op-view{display:none;}
+.op-view.is-active{display:block;}
+
+/* categories view */
+.op-cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.op-cat-card{background:var(--op-slate-800);border:1px solid var(--op-slate-700);border-radius:14px;padding:22px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;cursor:pointer;font-family:inherit;text-align:start;transition:border-color .2s ease,transform .2s ease;}
+.op-cat-card:hover{border-color:var(--op-accent-deep);transform:translateY(-3px);}
+.op-cat-icon{width:44px;height:44px;border-radius:11px;background:var(--op-slate-700);color:var(--op-accent-soft);display:flex;align-items:center;justify-content:center;}
+.op-cat-name{font-size:15px;font-weight:700;color:var(--op-slate-50);}
+.op-cat-count{font-size:12.5px;color:var(--op-slate-400);}
+
+/* settings view */
+.op-settings-card{background:var(--op-slate-800);border:1px solid var(--op-slate-700);border-radius:16px;padding:24px 26px;margin-bottom:20px;}
+.op-settings-card h4{font-size:14px;color:var(--op-slate-300);font-weight:700;margin:0 0 18px;}
+.op-settings-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.op-settings-field{display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--op-slate-400);font-weight:500;}
+.op-settings-field input{padding:11px 14px;border-radius:10px;border:1px solid var(--op-slate-600);background:var(--op-slate-700);color:var(--op-slate-50);font-family:var(--op-font-body);font-size:14px;}
+.op-settings-field input::placeholder{color:var(--op-slate-500);}
+.op-settings-toggle{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 0;border-top:1px solid var(--op-slate-700);font-size:14px;color:var(--op-slate-200);cursor:pointer;}
+.op-settings-toggle:first-of-type{border-top:none;}
+.op-settings-toggle input{position:absolute;opacity:0;width:0;height:0;}
+.op-toggle-track{flex-shrink:0;position:relative;width:42px;height:24px;border-radius:999px;background:var(--op-slate-600);transition:background .2s ease;}
+.op-toggle-track::before{content:"";position:absolute;top:3px;inset-inline-start:3px;width:18px;height:18px;border-radius:50%;background:var(--op-slate-50);transition:inset-inline-start .2s ease;}
+.op-settings-toggle input:checked + .op-toggle-track{background:var(--op-accent);}
+.op-settings-toggle input:checked + .op-toggle-track::before{inset-inline-start:21px;}
+.op-settings-toggle input:focus-visible + .op-toggle-track{outline:2px solid var(--op-accent-soft);outline-offset:2px;}
+.op-settings-danger{border-color:rgba(248,113,113,.35);}
+.op-settings-danger-text{color:var(--op-slate-400);font-size:13.5px;line-height:1.7;margin:0 0 16px;}
+.op-btn-danger{border:1px solid var(--op-lose);color:var(--op-lose);background:transparent;font-weight:600;}
+.op-btn-danger:hover{background:var(--op-lose);color:var(--op-slate-950);}
+
+/* features */
+.op-grid-5{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:start;}
+
+/* audience */
+.op-persona-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;text-align:start;}
+.op-persona{background:var(--op-surface);border:1px solid var(--op-border);border-radius:var(--op-radius-m);padding:30px;}
+.op-persona .op-icon{color:var(--op-accent-soft);}
+.op-persona h3{font-size:19px;margin:0 0 10px;}
+.op-persona p{color:var(--op-text-soft);font-size:15px;line-height:1.75;margin:0;}
+
+/* trust */
+.op-trust{background:var(--op-bg);position:relative;padding-block:56px;border-top:1px solid var(--op-border-soft);border-bottom:1px solid var(--op-border-soft);}
+.op-trust-inner{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;}
+.op-trust-text{color:var(--op-text-mute);font-size:14.5px;}
+.op-logo-row{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;}
+.op-store-logo{font-weight:800;font-size:20px;color:var(--op-text-mute);letter-spacing:.4px;}
+
+/* cta */
+.op-cta{background:var(--op-bg);padding-block:100px;}
+.op-cta-card{max-width:640px;margin-inline:auto;background:linear-gradient(160deg,var(--op-surface) 0%,var(--op-surface-2) 100%);border:1px solid var(--op-border);border-radius:var(--op-radius-l);padding:56px 40px;text-align:center;position:relative;overflow:hidden;}
+.op-cta-card::before{content:"";position:absolute;inset:-40% -10% auto -10%;height:220px;background:radial-gradient(closest-side,rgba(99,102,241,.28),transparent 70%);pointer-events:none;}
+.op-cta-card>p{color:var(--op-text-soft);margin:14px 0 30px;position:relative;}
+.op-cta-form{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;position:relative;}
+.op-input{flex:1;min-width:220px;padding:14px 18px;border-radius:999px;border:1px solid var(--op-border);background:var(--op-surface-3);color:var(--op-text);font-family:var(--op-font-body);font-size:14.5px;}
+.op-input::placeholder{color:var(--op-text-mute);}
+.op-cta-note{display:block;margin-top:18px;font-size:12.5px;color:var(--op-text-mute);}
+
+/* footer — darkest tone of all, grounding the page */
+.op-footer{--op-bg:var(--op-slate-950);--op-border-soft:var(--op-slate-800);background:var(--op-bg);padding-block:64px 24px;border-top:1px solid var(--op-border-soft);}
+.op-footer-inner{max-width:1180px;margin-inline:auto;padding-inline:24px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;}
+.op-footer-brand p{color:var(--op-text-mute);font-size:13.5px;margin-top:10px;line-height:1.7;max-width:260px;}
+.op-footer-contact{display:inline-flex;align-items:center;gap:8px;margin-top:18px;color:var(--op-text-soft);text-decoration:none;font-size:13.5px;transition:color .2s ease;}
+.op-footer-contact:hover{color:var(--op-accent-soft);}
+.op-footer-heading{display:block;font-size:12.5px;font-weight:700;color:var(--op-text-mute);letter-spacing:.3px;margin-bottom:16px;}
+.op-footer-col{display:flex;flex-direction:column;gap:12px;}
+.op-footer-col a,.op-footer-col button{background:none;border:none;padding:0;margin:0;text-align:inherit;font:inherit;cursor:pointer;color:var(--op-text-soft);text-decoration:none;font-size:14px;transition:color .2s ease;}
+.op-footer-col a:hover,.op-footer-col button:hover{color:var(--op-text);}
+.op-footer-bottom{max-width:1180px;margin-inline:auto;padding-inline:24px;margin-top:44px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--op-text-mute);border-top:1px solid var(--op-border-soft);padding-top:20px;}
+.op-footer-top-link{color:var(--op-text-soft);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;transition:color .2s ease;}
+.op-footer-top-link:hover{color:var(--op-accent-soft);}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .op-hero-glow{animation:none;}
+  .op-section-glow{animation:none;}
+  .op-reveal{transition:none;opacity:1;transform:none;}
+  .op-orbit-item,.op-orbit-spin,.op-float,.op-orbit-line{animation:none;}
+  .op-orbit-item-a{transform:rotate(0deg) translateX(148px) rotate(0deg);}
+  .op-orbit-item-b{transform:rotate(180deg) translateX(148px) rotate(-180deg);}
+}
+
+@media(max-width:960px){
+  .op-grid-4{grid-template-columns:repeat(2,1fr);}
+  .op-grid-5{grid-template-columns:repeat(2,1fr);}
+  .op-steps{grid-template-columns:1fr;}
+  .op-step{text-align:center;}
+  .op-persona-grid{grid-template-columns:1fr;}
+  .op-nav-links{display:none;}
+  .op-nav-auth{display:none;}
+  .op-burger{display:flex;order:1;}
+  .op-logo{order:2;}
+  .op-footer-inner{grid-template-columns:repeat(2,1fr);}
+  .op-footer-brand{grid-column:1 / -1;}
+  .op-app-body{flex-direction:column;}
+  .op-app-sidebar{width:100%;flex-direction:row;flex-wrap:wrap;border-inline-end:none;border-bottom:1px solid var(--op-slate-700);}
+  .op-stat-grid{grid-template-columns:1fr 1fr;}
+  .op-app-columns{grid-template-columns:1fr;}
+  .op-cat-grid{grid-template-columns:repeat(2,1fr);}
+  .op-hero-grid{grid-template-columns:1fr;text-align:center;}
+  .op-hero-text{text-align:center;}
+  .op-hero-actions{justify-content:center;}
+  .op-hero-visual{order:-1;}
+  .op-orbit-wrap{transform:none;}
+  .op-float-mon{inset-inline-end:8%;}
+  .op-mobile-cta-bar{display:flex;position:fixed;bottom:0;inset-inline:0;z-index:56;gap:12px;padding:14px 16px;padding-bottom:calc(14px + env(safe-area-inset-bottom));background:rgba(15,23,42,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--op-border);box-shadow:0 -10px 30px -10px rgba(0,0,0,.5);transform:translateY(100%);opacity:0;pointer-events:none;transition:transform .3s ease,opacity .3s ease;}
+  .op-mobile-cta-bar.op-visible{transform:translateY(0);opacity:1;pointer-events:auto;}
+  .op-mobile-cta-bar .op-btn{flex:1;padding-inline:8px;font-size:14.5px;}
+  .op-footer{padding-bottom:110px;}
+}
+@media(max-width:640px){
+  .op-grid-5{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;gap:14px;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+  .op-grid-5::-webkit-scrollbar{display:none;}
+  .op-grid-5 .op-card{flex:0 0 84%;scroll-snap-align:start;}
+  .op-grid-4{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;gap:14px;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+  .op-grid-4::-webkit-scrollbar{display:none;}
+  .op-grid-4 .op-card{flex:0 0 84%;scroll-snap-align:start;}
+  .op-slider-dots{display:flex;}
+  .op-footer-inner{grid-template-columns:1fr;}
+  .op-footer-brand{grid-column:auto;}
+  .op-footer-bottom{flex-direction:column;align-items:flex-start;}
+  .op-app-topbar{padding:16px 20px;}
+  .op-app-main{padding:32px 24px;}
+  .op-stat-grid{grid-template-columns:1fr;}
+  .op-dash-compare-row{font-size:12px;}
+  .op-dash-compare-row>span{padding:9px 10px;}
+  .op-cat-grid{grid-template-columns:1fr;}
+  .op-settings-fields{grid-template-columns:1fr;}
+  .op-cta-form .op-input{min-width:100%;}
+  .op-dash-hist-card p{min-width:140px;}
+  .op-persona-grid,.op-logo-row{gap:20px;}
+  .op-orbit-wrap{width:260px;height:260px;}
+  .op-orbit-vs{width:60px;height:60px;margin:-30px;font-size:15px;}
+  .op-orbit-item{width:72px;height:122px;margin:-61px 0 0 -36px;}
+  .op-orbit-item-b{width:62px;height:102px;margin:-51px 0 0 -31px;}
+  .op-orbit-badge{top:-8px;inset-inline-end:-8px;width:26px;height:26px;}
+  @keyframes opOrbitA{from{transform:rotate(0deg) translateX(104px) rotate(0deg);}to{transform:rotate(360deg) translateX(104px) rotate(-360deg);}}
+  @keyframes opOrbitB{from{transform:rotate(180deg) translateX(104px) rotate(-180deg);}to{transform:rotate(540deg) translateX(104px) rotate(-540deg);}}
+}
+@media(max-width:640px) and (prefers-reduced-motion:reduce){
+  .op-orbit-item-a{transform:rotate(0deg) translateX(104px) rotate(0deg);}
+  .op-orbit-item-b{transform:rotate(180deg) translateX(104px) rotate(-180deg);}
+}
+@media(max-width:420px){
+  .op-nav-inner{height:64px;padding-inline:16px;}
+  .op-mobile-menu{top:64px;}
+  .op-logo{font-size:19px;}
+  .op-hero{padding-block:72px 28px;min-height:calc(100vh - 64px);min-height:calc(100dvh - 64px);}
+  .op-section{padding-block:56px;}
+  .op-section-inner{padding-inline:16px;}
+  .op-trust{padding-block:40px;}
+  .op-cta{padding-block:64px;}
+  .op-card{padding:20px;}
+  .op-cta-card{padding:36px 22px;}
+  .op-modal{padding:26px 20px;max-width:100%;}
+  .op-modal-title{font-size:19px;}
+  .op-settings-card{padding:18px 18px;}
+  .op-settings-toggle{flex-wrap:wrap;gap:10px;}
+  .op-app-main{padding:24px 16px;}
+  .op-app-topbar{padding:14px 16px;}
+  .op-app-header-row .op-btn{width:100%;}
+  .op-hero-actions .op-btn,.op-cta-form .op-btn{width:100%;}
+  .op-float{opacity:.09;}
+}
+</style>
+</head>
+<body>
+
+<div class="op-page" dir="rtl" lang="he">
+
+  <header class="op-nav" id="opNav">
+    <div class="op-nav-inner">
+      <a href="#" class="op-logo">Optimio</a>
+      <nav class="op-nav-links">
+        <a href="#problem">הבעיה</a>
+        <a href="#how">הפתרון</a>
+        <a href="#features">יכולות</a>
+        <a href="#audience">קהל היעד</a>
+      </nav>
+      <div class="op-nav-auth">
+        <button type="button" class="op-btn op-btn-ghost" data-open-modal="login">התחברות</button>
+        <button type="button" class="op-btn op-btn-primary op-btn-compact" data-open-modal="signup">הרשמה</button>
+      </div>
+      <button class="op-burger" id="opBurger" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="opMobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="op-mobile-menu" id="opMobileMenu">
+    <nav class="op-mobile-links">
+      <a href="#problem">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v5"/><circle cx="12" cy="16" r="0.6" fill="currentColor" stroke="none"/></svg>
+        <span>הבעיה</span>
+      </a>
+      <a href="#how">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 19 6v6c0 4.5-3 7.5-7 8.5-4-1-7-4-7-8.5V6l7-2.5Z"/><path d="M9 12l2 2 4-4"/></svg>
+        <span>הפתרון</span>
+      </a>
+      <a href="#features">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M12 4v16"/></svg>
+        <span>יכולות</span>
+      </a>
+      <a href="#audience">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="3"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle cx="17" cy="8.5" r="2.3"/><path d="M14.8 13.2c2.6.2 4.7 2.1 4.7 4.8"/></svg>
+        <span>קהל היעד</span>
+      </a>
+    </nav>
+    <div class="op-mobile-divider"></div>
+    <div class="op-mobile-actions">
+      <button type="button" class="op-btn op-btn-outline" data-open-modal="login">התחברות</button>
+      <button type="button" class="op-btn op-btn-primary" data-open-modal="signup">הרשמה</button>
+    </div>
+  </div>
+  <div class="op-mobile-backdrop" id="opMobileBackdrop"></div>
+
+  <div class="op-mobile-cta-bar" id="opMobileCtaBar">
+    <button type="button" class="op-btn op-btn-primary" data-open-modal="signup">הרשמה</button>
+    <a href="#cta" class="op-btn op-btn-outline">רשימת המתנה</a>
+  </div>
+
+  <div class="op-modal-overlay" id="opAuthOverlay">
+    <div class="op-modal" id="opModalSignup" role="dialog" aria-modal="true" aria-labelledby="opSignupTitle">
+      <button type="button" class="op-modal-close" data-close-modal aria-label="סגירה">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h3 id="opSignupTitle" class="op-modal-title">יצירת חשבון ב-Optimio</h3>
+      <p class="op-modal-sub">שמרו את ההשוואות שלכם וקבלו גישה לדשבורד האישי.</p>
+      <form class="op-modal-form" onsubmit="return false;">
+        <label>שם מלא<input type="text" placeholder="לדוגמה: דניאל כהן" required></label>
+        <label>אימייל<input type="email" placeholder="name@example.com" required></label>
+        <label>סיסמה<input type="password" placeholder="לפחות 8 תווים" required></label>
+        <button type="submit" class="op-btn op-btn-primary op-modal-submit">הרשמה</button>
+      </form>
+      <p class="op-modal-switch">כבר יש לכם חשבון? <a href="#" data-switch-modal="login">התחברות</a></p>
+    </div>
+    <div class="op-modal" id="opModalLogin" role="dialog" aria-modal="true" aria-labelledby="opLoginTitle">
+      <button type="button" class="op-modal-close" data-close-modal aria-label="סגירה">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h3 id="opLoginTitle" class="op-modal-title">התחברות ל-Optimio</h3>
+      <p class="op-modal-sub">חזרו לדשבורד ולהשוואות שהתחלתם.</p>
+      <form class="op-modal-form" id="opLoginForm">
+        <label>אימייל<input type="email" placeholder="name@example.com"></label>
+        <label>סיסמה<input type="password" placeholder="••••••••"></label>
+        <button type="submit" class="op-btn op-btn-primary op-modal-submit">התחברות</button>
+      </form>
+      <p class="op-modal-switch">עדיין אין לכם חשבון? <a href="#" data-switch-modal="signup">הרשמה</a></p>
+    </div>
+
+    <div class="op-modal" id="opModalPrivacy" role="dialog" aria-modal="true" aria-labelledby="opPrivacyTitle">
+      <button type="button" class="op-modal-close" data-close-modal aria-label="סגירה">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h3 id="opPrivacyTitle" class="op-modal-title">מדיניות פרטיות</h3>
+      <p class="op-modal-sub">Optimio נמצא כרגע בשלב MVP. מדיניות הפרטיות המלאה תתפרסם כאן לפני ההשקה הרשמית של השירות. לשאלות בינתיים אפשר לפנות אלינו ישירות במייל.</p>
+    </div>
+
+    <div class="op-modal" id="opModalTerms" role="dialog" aria-modal="true" aria-labelledby="opTermsTitle">
+      <button type="button" class="op-modal-close" data-close-modal aria-label="סגירה">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h3 id="opTermsTitle" class="op-modal-title">תנאי שימוש</h3>
+      <p class="op-modal-sub">Optimio נמצא כרגע בשלב MVP. תנאי השימוש המלאים יתפרסמו כאן לפני ההשקה הרשמית של השירות. לשאלות בינתיים אפשר לפנות אלינו ישירות במייל.</p>
+    </div>
+  </div>
+
+  <div class="op-app-view" id="opAppView">
+    <header class="op-app-topbar">
+      <span class="op-logo">Optimio</span>
+      <button type="button" class="op-btn op-btn-ghost" id="opLogoutBtn">יציאה</button>
+    </header>
+    <div class="op-app-body">
+      <aside class="op-app-sidebar">
+        <a class="op-dash-nav-item is-active" data-view="dashboard" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12 12 4l8 8"/><path d="M6 10v10h5v-6h2v6h5V10"/></svg>
+          <span>דשבורד</span>
+        </a>
+        <a class="op-dash-nav-item" data-view="comparisons" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M12 4v16"/></svg>
+          <span>ההשוואות שלי</span>
+        </a>
+        <a class="op-dash-nav-item" data-view="categories" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3H4v7l10 10a2 2 0 0 0 2.8 0l4.2-4.2a2 2 0 0 0 0-2.8L11 3Z"/><circle cx="8" cy="8" r="1.1" fill="currentColor" stroke="none"/></svg>
+          <span>קטגוריות</span>
+        </a>
+        <a class="op-dash-nav-item" data-view="settings" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 18h10M18 18h2M4 12h4M12 12h8"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg>
+          <span>הגדרות</span>
+        </a>
+      </aside>
+      <div class="op-app-main op-dash-main">
+        <div class="op-view is-active" data-view-panel="dashboard">
+        <div class="op-app-columns">
+          <div class="op-app-col-main">
+            <div class="op-app-header-row">
+              <div>
+                <h2 class="op-h2">ברוכים השבים</h2>
+                <p class="op-app-welcome">כל ההשוואות שלכם, שמורות ומוכנות מהמקום שבו עצרתם.</p>
+              </div>
+              <button type="button" class="op-btn op-btn-primary op-btn-compact">השוואה חדשה</button>
+            </div>
+
+            <div class="op-stat-grid">
+              <div class="op-stat-card">
+                <div class="op-stat-head">
+                  <span class="op-stat-label">השוואות שמורות</span>
+                  <span class="op-stat-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1Z"/></svg></span>
+                </div>
+                <span class="op-stat-value">3</span>
+              </div>
+              <div class="op-stat-card">
+                <div class="op-stat-head">
+                  <span class="op-stat-label">קטגוריה מובילה</span>
+                  <span class="op-stat-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 3v7"/></svg></span>
+                </div>
+                <span class="op-stat-value">עכברים</span>
+              </div>
+              <div class="op-stat-card">
+                <div class="op-stat-head">
+                  <span class="op-stat-label">חיסכון משוער השנה</span>
+                  <span class="op-stat-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v2h-3a2 2 0 0 0 0 4h3v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><circle cx="16" cy="11" r="0.8" fill="currentColor" stroke="none"/></svg></span>
+                </div>
+                <span class="op-stat-value">₪620</span>
+              </div>
+            </div>
+
+            <div class="op-dash-compare">
+              <div class="op-card-header">
+                <span class="op-card-header-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M12 4v16"/></svg></span>
+                <h4>ההשוואה האחרונה שלכם</h4>
+              </div>
+              <div class="op-dash-compare-table">
+                <div class="op-dash-compare-row op-dash-compare-head">
+                  <span></span><span>Logitech G Pro X Superlight</span><span>SteelSeries Rival 3</span>
+                </div>
+                <div class="op-dash-compare-row">
+                  <span class="op-dash-compare-label">דיוק תנועה (DPI)</span>
+                  <span class="op-dash-compare-cell win">25,600</span>
+                  <span class="op-dash-compare-cell lose">8,500</span>
+                </div>
+                <div class="op-dash-compare-row">
+                  <span class="op-dash-compare-label">משקל</span>
+                  <span class="op-dash-compare-cell win">63 גרם</span>
+                  <span class="op-dash-compare-cell lose">77 גרם</span>
+                </div>
+                <div class="op-dash-compare-row">
+                  <span class="op-dash-compare-label">חיבור</span>
+                  <span class="op-dash-compare-cell win">אלחוטי</span>
+                  <span class="op-dash-compare-cell lose">קווי</span>
+                </div>
+                <div class="op-dash-compare-row">
+                  <span class="op-dash-compare-label">מחיר</span>
+                  <span class="op-dash-compare-cell lose">₪549</span>
+                  <span class="op-dash-compare-cell win">₪129</span>
+                </div>
+              </div>
+              <div class="op-dash-verdict">
+                <span class="op-dash-verdict-label">פסק הדין של Optimio</span>
+                <p class="op-dash-verdict-text">ה-G Pro X Superlight מדויק יותר, קל יותר ואלחוטי — שדרוג משתלם אם אתם משחקים תחרותית. ה-Rival 3 עדיין עסקה מצוינת אם התקציב מוגבל.</p>
+              </div>
+              <button type="button" class="op-btn op-btn-primary">לרכישה בטוחה</button>
+            </div>
+          </div>
+
+          <aside class="op-app-col-side">
+            <div class="op-card-header">
+              <span class="op-card-header-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg></span>
+              <h4>השוואות אחרונות</h4>
+            </div>
+            <div class="op-dash-history">
+              <div class="op-dash-hist-card">
+                <span class="op-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 3v7"/></svg>עכברים</span>
+                <p>Logitech G Pro X Superlight <span class="op-vs-small">מול</span> SteelSeries Rival 3</p>
+                <span class="op-time">לפני יומיים</span>
+                <svg class="op-hist-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+              </div>
+              <div class="op-dash-hist-card">
+                <span class="op-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg>מסכים</span>
+                <p>Samsung Odyssey G5 <span class="op-vs-small">מול</span> LG UltraGear 27GP850</p>
+                <span class="op-time">לפני שבוע</span>
+                <svg class="op-hist-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+              </div>
+              <div class="op-dash-hist-card">
+                <span class="op-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M6 14h9"/></svg>מקלדות</span>
+                <p>Keychron K8 <span class="op-vs-small">מול</span> Razer Huntsman V3</p>
+                <span class="op-time">לפני שבועיים</span>
+                <svg class="op-hist-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+              </div>
+            </div>
+            <div class="op-card-header op-mt">
+              <span class="op-card-header-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3H4v7l10 10a2 2 0 0 0 2.8 0l4.2-4.2a2 2 0 0 0 0-2.8L11 3Z"/><circle cx="8" cy="8" r="1.1" fill="currentColor" stroke="none"/></svg></span>
+              <h4>קטגוריות פופולריות</h4>
+            </div>
+            <div class="op-chip-row">
+              <span class="op-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 3v7"/></svg>עכברים</span>
+              <span class="op-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M6 14h9"/></svg>מקלדות</span>
+              <span class="op-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg>מסכים</span>
+              <span class="op-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 7V5m4 2V5m4 2V5m4 2V5M7 19v-2m4 2v-2m4 2v-2m4 2v-2"/></svg>כרטיסי מסך</span>
+              <span class="op-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13v-2a7 7 0 0 1 14 0v2"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/></svg>אוזניות</span>
+              <span class="op-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h9v7H6z"/><path d="M6 11v8M15 11v3h3v5M6 19h6"/></svg>כיסאות גיימינג</span>
+            </div>
+          </aside>
+        </div>
+        </div>
+
+        <div class="op-view" data-view-panel="comparisons">
+          <div class="op-app-header-row">
+            <div>
+              <h2 class="op-h2">ההשוואות שלי</h2>
+              <p class="op-app-welcome">כל ההשוואות שביצעתם, שמורות במקום אחד וזמינות בכל רגע.</p>
+            </div>
+            <button type="button" class="op-btn op-btn-primary op-btn-compact">השוואה חדשה</button>
+          </div>
+          <div class="op-dash-history op-dash-history-full">
+            <div class="op-dash-hist-card">
+              <span class="op-tag">עכברים</span>
+              <p>Logitech G Pro X Superlight <span class="op-vs-small">מול</span> SteelSeries Rival 3</p>
+              <span class="op-time">לפני יומיים</span>
+              <svg class="op-hist-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+            </div>
+            <div class="op-dash-hist-card">
+              <span class="op-tag">מסכים</span>
+              <p>Samsung Odyssey G5 <span class="op-vs-small">מול</span> LG UltraGear 27GP850</p>
+              <span class="op-time">לפני שבוע</span>
+              <svg class="op-hist-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+            </div>
+            <div class="op-dash-hist-card">
+              <span class="op-tag">מקלדות</span>
+              <p>Keychron K8 <span class="op-vs-small">מול</span> Razer Huntsman V3</p>
+              <span class="op-time">לפני שבועיים</span>
+              <svg class="op-hist-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+            </div>
+            <div class="op-dash-hist-card">
+              <span class="op-tag">אוזניות</span>
+              <p>HyperX Cloud II <span class="op-vs-small">מול</span> SteelSeries Arctis 7</p>
+              <span class="op-time">לפני 3 שבועות</span>
+              <svg class="op-hist-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+            </div>
+            <div class="op-dash-hist-card">
+              <span class="op-tag">כרטיסי מסך</span>
+              <p>RTX 4060 <span class="op-vs-small">מול</span> RX 7600</p>
+              <span class="op-time">לפני חודש</span>
+              <svg class="op-hist-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+            </div>
+            <div class="op-dash-hist-card">
+              <span class="op-tag">כיסאות גיימינג</span>
+              <p>Secretlab Titan <span class="op-vs-small">מול</span> DXRacer Formula</p>
+              <span class="op-time">לפני חודשיים</span>
+              <svg class="op-hist-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="op-view" data-view-panel="categories">
+          <div class="op-app-header-row">
+            <div>
+              <h2 class="op-h2">קטגוריות</h2>
+              <p class="op-app-welcome">בחרו קטגוריה כדי להתחיל השוואה חדשה מתוך הקטלוג שלנו.</p>
+            </div>
+          </div>
+          <div class="op-cat-grid">
+            <button type="button" class="op-cat-card">
+              <span class="op-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 3v7"/></svg></span>
+              <span class="op-cat-name">עכברים</span>
+              <span class="op-cat-count">14 מוצרים במאגר</span>
+            </button>
+            <button type="button" class="op-cat-card">
+              <span class="op-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M6 14h9"/></svg></span>
+              <span class="op-cat-name">מקלדות</span>
+              <span class="op-cat-count">11 מוצרים במאגר</span>
+            </button>
+            <button type="button" class="op-cat-card">
+              <span class="op-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg></span>
+              <span class="op-cat-name">מסכים</span>
+              <span class="op-cat-count">9 מוצרים במאגר</span>
+            </button>
+            <button type="button" class="op-cat-card">
+              <span class="op-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 7V5m4 2V5m4 2V5m4 2V5M7 19v-2m4 2v-2m4 2v-2m4 2v-2"/></svg></span>
+              <span class="op-cat-name">כרטיסי מסך</span>
+              <span class="op-cat-count">8 מוצרים במאגר</span>
+            </button>
+            <button type="button" class="op-cat-card">
+              <span class="op-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13v-2a7 7 0 0 1 14 0v2"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/></svg></span>
+              <span class="op-cat-name">אוזניות</span>
+              <span class="op-cat-count">10 מוצרים במאגר</span>
+            </button>
+            <button type="button" class="op-cat-card">
+              <span class="op-cat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9v7H6z"/><path d="M6 11v8M15 11v3h3v5M6 19h6"/></svg></span>
+              <span class="op-cat-name">כיסאות גיימינג</span>
+              <span class="op-cat-count">6 מוצרים במאגר</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="op-view" data-view-panel="settings">
+          <div class="op-app-header-row">
+            <div>
+              <h2 class="op-h2">הגדרות</h2>
+              <p class="op-app-welcome">נהלו את פרטי החשבון וההעדפות שלכם.</p>
+            </div>
+          </div>
+
+          <div class="op-settings-card">
+            <h4>פרטי חשבון</h4>
+            <div class="op-settings-fields">
+              <label class="op-settings-field">שם מלא<input type="text" placeholder="לדוגמה: דניאל כהן"></label>
+              <label class="op-settings-field">אימייל<input type="email" placeholder="name@example.com"></label>
+            </div>
+            <button type="button" class="op-btn op-btn-primary op-btn-compact">שמירת שינויים</button>
+          </div>
+
+          <div class="op-settings-card">
+            <h4>העדפות</h4>
+            <label class="op-settings-toggle">
+              <span>עדכוני מייל על מבצעים וירידות מחיר</span>
+              <input type="checkbox" checked><span class="op-toggle-track" aria-hidden="true"></span>
+            </label>
+            <label class="op-settings-toggle">
+              <span>התראה כשיש התאמה טובה יותר לתקציב שלכם</span>
+              <input type="checkbox" checked><span class="op-toggle-track" aria-hidden="true"></span>
+            </label>
+            <label class="op-settings-toggle">
+              <span>שיתוף השוואות עם קהילת Optimio</span>
+              <input type="checkbox"><span class="op-toggle-track" aria-hidden="true"></span>
+            </label>
+          </div>
+
+          <div class="op-settings-card op-settings-danger">
+            <h4>אזור מסוכן</h4>
+            <p class="op-settings-danger-text">מחיקת החשבון תמחק לצמיתות את כל ההשוואות וההיסטוריה השמורה שלכם.</p>
+            <button type="button" class="op-btn op-btn-danger">מחיקת חשבון</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main id="opMarketingMain">
+    <section class="op-hero">
+      <div class="op-hero-glow" aria-hidden="true"></div>
+      <div class="op-float-icons" aria-hidden="true">
+        <span class="op-float op-float-kb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M6 14h9"/></svg></span>
+        <span class="op-float op-float-hp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13v-2a7 7 0 0 1 14 0v2"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/></svg></span>
+        <span class="op-float op-float-mon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg></span>
+        <span class="op-float op-float-gpu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 7V5m4 2V5m4 2V5m4 2V5M7 19v-2m4 2v-2m4 2v-2m4 2v-2"/></svg></span>
+        <span class="op-float op-float-chair"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9v7H6z"/><path d="M6 11v8M15 11v3h3v5M6 19h6"/></svg></span>
+        <span class="op-float op-float-kb2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M6 14h9"/></svg></span>
+      </div>
+      <div class="op-hero-grid">
+        <div class="op-hero-text">
+          <span class="op-eyebrow">השוואת ציוד גיימינג, בשפה שמבינים</span>
+          <h1 class="op-hero-title">תפסיקו לנחש איזה ציוד לקנות.<br>תתחילו לדעת.</h1>
+          <p class="op-hero-sub">Optimio משווה עבורכם ציוד גיימינג ראש בראש, מסמן כל יתרון וחיסרון בצבע ברור, ומזהיר מראש מבעיות התאמה — לפני שאתם משלמים על טעות.</p>
+          <div class="op-hero-actions">
+            <button type="button" class="op-btn op-btn-primary" data-open-modal="signup">הרשמה</button>
+            <a href="#cta" class="op-btn op-btn-outline">הצטרפו לרשימת ההמתנה</a>
+          </div>
+        </div>
+        <div class="op-hero-visual">
+          <div class="op-orbit-wrap">
+            <svg class="op-orbit-line" viewBox="0 0 320 320" aria-hidden="true">
+              <line x1="32" y1="160" x2="288" y2="160" stroke="#818cf8" stroke-width="2" stroke-dasharray="6 8" opacity=".5"/>
+            </svg>
+            <div class="op-orbit-ring" aria-hidden="true"></div>
+            <div class="op-orbit-vs" aria-hidden="true">VS</div>
+
+            <div class="op-orbit-item op-orbit-item-a">
+              <div class="op-orbit-spin">
+                <svg viewBox="0 0 72 122" width="100%" height="100%">
+                  <defs>
+                    <linearGradient id="opHeroGradWin" x1="0" y1="0" x2="72" y2="122">
+                      <stop offset="0%" stop-color="#5b6bb8"/>
+                      <stop offset="100%" stop-color="#1c2338"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="2" y="2" width="68" height="118" rx="34" fill="url(#opHeroGradWin)" stroke="#818cf8" stroke-width="2.5"/>
+                  <line x1="36" y1="2" x2="36" y2="50" stroke="#818cf8" stroke-width="2"/>
+                </svg>
+                <span class="op-orbit-badge op-badge-win" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="op-orbit-item op-orbit-item-b">
+              <div class="op-orbit-spin op-orbit-spin-b">
+                <svg viewBox="0 0 62 102" width="100%" height="100%">
+                  <defs>
+                    <linearGradient id="opHeroGradLose" x1="0" y1="0" x2="62" y2="102">
+                      <stop offset="0%" stop-color="#4b5563"/>
+                      <stop offset="100%" stop-color="#1a2130"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="2" y="2" width="58" height="98" rx="29" fill="url(#opHeroGradLose)" stroke="#64748b" stroke-width="2.5"/>
+                  <line x1="31" y1="2" x2="31" y2="42" stroke="#64748b" stroke-width="2"/>
+                </svg>
+                <span class="op-orbit-badge op-badge-lose" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#3a0d0d" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="op-section op-section-alt op-problem" id="problem">
+      <div class="op-section-glow op-glow-a op-reveal" aria-hidden="true"></div>
+      <div class="op-section-inner">
+        <div class="op-center-head">
+          <span class="op-eyebrow">המצב היום</span>
+          <h2 class="op-h2">משווים בין מפרטים ומרגישים אבודים?</h2>
+        </div>
+        <div class="op-grid-4">
+          <article class="op-card op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 4v16"/></svg>
+            </div>
+            <h3>מפרטים שלא אומרים כלום</h3>
+            <p>טבלאות עמוסות במספרים, בלי הסבר מה זה אומר בפועל ביום-יום.</p>
+          </article>
+          <article class="op-card op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v5"/><circle cx="12" cy="16" r="0.6" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <h3>טעויות רכישה יקרות</h3>
+            <p>ציוד שלא מתחבר, לא נכנס על השולחן, או סתם לא תואם למה שכבר יש לכם.</p>
+          </article>
+          <article class="op-card op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg>
+            </div>
+            <h3>שעות של מחקר עצמי</h3>
+            <p>פורומים, סרטוני יוטיוב וסקירות סותרות — ועדיין בלי החלטה אמיתית.</p>
+          </article>
+          <article class="op-card op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13M17 9l-3-3M17 9l-3 3"/><path d="M20 15H7M7 15l3-3M7 15l3 3"/></svg>
+            </div>
+            <h3>המלצות שסותרות אחת את השנייה</h3>
+            <p>כל אתר ממליץ על משהו אחר, בלי שום הסבר למה דווקא זה מתאים לכם.</p>
+          </article>
+        </div>
+        <div class="op-slider-dots" id="opProblemDots">
+          <button type="button" class="op-slider-dot is-active" data-slide="0" aria-label="כרטיס 1"></button>
+          <button type="button" class="op-slider-dot" data-slide="1" aria-label="כרטיס 2"></button>
+          <button type="button" class="op-slider-dot" data-slide="2" aria-label="כרטיס 3"></button>
+          <button type="button" class="op-slider-dot" data-slide="3" aria-label="כרטיס 4"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="op-section op-how" id="how">
+      <div class="op-section-glow op-glow-b op-reveal" aria-hidden="true"></div>
+      <div class="op-section-inner">
+        <div class="op-center-head">
+          <span class="op-eyebrow">איך זה עובד</span>
+          <h2 class="op-h2">שלושה צעדים, מבלבול להחלטה</h2>
+        </div>
+        <div class="op-steps">
+          <div class="op-step op-reveal">
+            <span class="op-step-num">01</span>
+            <h3>בוחרים שני מוצרים</h3>
+            <p>מהתפריט הנפתח — מה שיש לכם היום מול מה שאתם שוקלים לקנות.</p>
+          </div>
+          <div class="op-step op-reveal">
+            <span class="op-step-num">02</span>
+            <h3>רואים השוואה צבעונית</h3>
+            <p>כל יתרון מסומן בירוק, כל חיסרון באדום. ברור במבט אחד, בלי לפענח מספרים.</p>
+          </div>
+          <div class="op-step op-reveal">
+            <span class="op-step-num">03</span>
+            <h3>קוראים את פסק הדין</h3>
+            <p>סיכום פשוט שמזהיר מבעיות התאמה וממליץ מה משתלם יותר עבורכם.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="op-section op-features" id="features">
+      <div class="op-section-glow op-glow-c op-reveal" aria-hidden="true"></div>
+      <div class="op-section-inner">
+        <div class="op-center-head">
+          <span class="op-eyebrow">יכולות עיקריות</span>
+          <h2 class="op-h2">כל מה שצריך כדי להחליט נכון</h2>
+        </div>
+        <div class="op-grid-5">
+          <article class="op-card op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg>
+            </div>
+            <h3>דשבורד אישי</h3>
+            <p>היסטוריית ההשוואות שלכם שמורה מקומית בדפדפן, מוכנה בכל ביקור.</p>
+          </article>
+          <article class="op-card op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M12 4v16"/></svg>
+            </div>
+            <h3>השוואה ראש בראש</h3>
+            <p>מפרטים מלאים לשני מוצרים, זה לצד זה, מתוך קטלוג פנימי בדוק.</p>
+          </article>
+          <article class="op-card op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17Z" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <h3>סימון ירוק / אדום</h3>
+            <p>כל יתרון וחיסרון מסומן בצבע ברור, בלי לפענח מספרים בעצמכם.</p>
+          </article>
+          <article class="op-card op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 19 6v6c0 4.5-3 7.5-7 8.5-4-1-7-4-7-8.5V6l7-2.5Z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <h3>פסק דין ברור</h3>
+            <p>סיכום שמסביר בשפה פשוטה מה עדיף ולמה, כולל אזהרות תאימות.</p>
+          </article>
+          <article class="op-card op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 11h10.6L20 8H6.5"/><circle cx="9.5" cy="19" r="1"/><circle cx="17.5" cy="19" r="1"/></svg>
+            </div>
+            <h3>קנייה בקליק</h3>
+            <p>כפתור ישיר לחנות המומלצת, בלי לחפש את המוצר בעצמכם.</p>
+          </article>
+        </div>
+        <div class="op-slider-dots" id="opFeaturesDots">
+          <button type="button" class="op-slider-dot is-active" data-slide="0" aria-label="כרטיס 1"></button>
+          <button type="button" class="op-slider-dot" data-slide="1" aria-label="כרטיס 2"></button>
+          <button type="button" class="op-slider-dot" data-slide="2" aria-label="כרטיס 3"></button>
+          <button type="button" class="op-slider-dot" data-slide="3" aria-label="כרטיס 4"></button>
+          <button type="button" class="op-slider-dot" data-slide="4" aria-label="כרטיס 5"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="op-section op-section-alt op-audience" id="audience">
+      <div class="op-section-glow op-glow-d op-reveal" aria-hidden="true"></div>
+      <div class="op-section-inner">
+        <div class="op-center-head">
+          <span class="op-eyebrow">בשביל מי זה</span>
+          <h2 class="op-h2">בין אם קונים לעצמכם, ובין אם למישהו אחר</h2>
+        </div>
+        <div class="op-persona-grid">
+          <article class="op-persona op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="3"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle cx="17" cy="8.5" r="2.3"/><path d="M14.8 13.2c2.6.2 4.7 2.1 4.7 4.8"/></svg>
+            </div>
+            <h3>גיימרים, סטרימרים ויוצרי תוכן</h3>
+            <p>רוצים לשדרג את העמדה בתקציב מוגבל, ומעדיפים לדעת בדיוק מה משתלם לפני שהם קונים.</p>
+          </article>
+          <article class="op-persona op-reveal">
+            <div class="op-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="9.5" width="17" height="10" rx="1.5"/><path d="M3.5 9.5h17M12 9.5v10"/><path d="M12 9.5c-1.5-4-6-4-6-1 0 1 1 1 3 1M12 9.5c1.5-4 6-4 6-1 0 1-1 1-3 1"/></svg>
+            </div>
+            <h3>הורים שקונים מתנה</h3>
+            <p>רוצים לקנות ציוד גיימינג טוב לילדים שלהם, בלי להבין לעומק מפרטים טכניים.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="op-trust">
+      <div class="op-section-glow op-glow-b op-glow-sm op-reveal" aria-hidden="true"></div>
+      <div class="op-section-inner op-trust-inner">
+        <span class="op-trust-text">כל המלצה מובילה ישירות לחנות המהימנה שבה כדאי לקנות</span>
+        <div class="op-logo-row">
+          <span class="op-store-logo">Amazon</span>
+          <span class="op-store-logo">KSP</span>
+          <span class="op-store-logo">iBuy</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="op-section op-cta" id="cta">
+      <div class="op-section-glow op-glow-a op-glow-sm op-reveal" aria-hidden="true"></div>
+      <div class="op-section-inner">
+        <div class="op-cta-card">
+          <h2 class="op-h2">מוכנים להפסיק לנחש?</h2>
+          <p>הצטרפו לרשימת ההמתנה ותהיו הראשונים לדעת כשעולים לאוויר.</p>
+          <form class="op-cta-form" onsubmit="return false;">
+            <input type="email" dir="rtl" placeholder="האימייל שלכם" class="op-input" required>
+            <button class="op-btn op-btn-primary" type="submit">הצטרפו לרשימת ההמתנה</button>
+          </form>
+          <span class="op-cta-note">בלי ספאם. רק עדכון אחד כשהמוצר מוכן.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="op-footer">
+    <div class="op-footer-inner">
+      <div class="op-footer-brand">
+        <span class="op-logo">Optimio</span>
+        <p>השוואת ציוד גיימינג, בלי לנחש. פלטפורמה להשוואה חכמה של ציוד גיימינג וחומרה.</p>
+        <a class="op-footer-contact" href="mailto:hello@optimio.app">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+          hello@optimio.app
+        </a>
+      </div>
+
+      <nav class="op-footer-col" aria-label="מפת האתר — מוצר">
+        <span class="op-footer-heading">מוצר</span>
+        <a href="#problem">הבעיה</a>
+        <a href="#how">הפתרון</a>
+        <a href="#features">יכולות</a>
+        <a href="#audience">קהל היעד</a>
+      </nav>
+
+      <nav class="op-footer-col" aria-label="מפת האתר — חשבון">
+        <span class="op-footer-heading">חשבון</span>
+        <button type="button" data-open-modal="signup">הרשמה</button>
+        <button type="button" data-open-modal="login">התחברות</button>
+        <button type="button" data-open-modal="login">דשבורד</button>
+        <a href="#cta">רשימת המתנה</a>
+      </nav>
+
+      <nav class="op-footer-col" aria-label="מפת האתר — משפטי">
+        <span class="op-footer-heading">משפטי</span>
+        <button type="button" data-open-modal="privacy">מדיניות פרטיות</button>
+        <button type="button" data-open-modal="terms">תנאי שימוש</button>
+      </nav>
+    </div>
+
+    <div class="op-footer-bottom">
+      <span>© 2026 Optimio · פרויקט בשלב MVP</span>
+      <a class="op-footer-top-link" href="#opNav">
+        חזרה למעלה
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </a>
+    </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=optimio" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var burger = document.getElementById('opBurger');
+  var mobileMenu = document.getElementById('opMobileMenu');
+  var mobileBackdrop = document.getElementById('opMobileBackdrop');
+
+  function openMobileMenu(){
+    mobileMenu.classList.add('op-open');
+    burger.classList.add('op-open');
+    mobileBackdrop.classList.add('op-open');
+    burger.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileMenu(){
+    mobileMenu.classList.remove('op-open');
+    burger.classList.remove('op-open');
+    mobileBackdrop.classList.remove('op-open');
+    burger.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+  burger.addEventListener('click', function(){
+    if(mobileMenu.classList.contains('op-open')) closeMobileMenu();
+    else openMobileMenu();
+  });
+  mobileBackdrop.addEventListener('click', closeMobileMenu);
+  mobileMenu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMobileMenu);
+  });
+
+  var authOverlay = document.getElementById('opAuthOverlay');
+  var modals = {
+    signup: document.getElementById('opModalSignup'),
+    login: document.getElementById('opModalLogin'),
+    privacy: document.getElementById('opModalPrivacy'),
+    terms: document.getElementById('opModalTerms')
+  };
+
+  function openModal(type){
+    if(!modals[type]) return;
+    authOverlay.classList.add('op-open');
+    Object.keys(modals).forEach(function(key){
+      modals[key].classList.toggle('op-modal-visible', key === type);
+    });
+    document.body.style.overflow = 'hidden';
+    var focusTarget = modals[type].querySelector('input') || modals[type].querySelector('[data-close-modal]');
+    if(focusTarget) focusTarget.focus();
+    mobileBackdrop.classList.remove('op-open');
+    mobileMenu.classList.remove('op-open');
+    burger.classList.remove('op-open');
+    burger.setAttribute('aria-expanded','false');
+  }
+
+  function closeModal(){
+    authOverlay.classList.remove('op-open');
+    document.body.style.overflow = '';
+  }
+
+  var appView = document.getElementById('opAppView');
+  var marketingMain = document.getElementById('opMarketingMain');
+  var marketingFooter = document.querySelector('.op-footer');
+  var marketingNav = document.getElementById('opNav');
+
+  function showAppView(){
+    marketingNav.classList.add('op-hidden');
+    marketingMain.classList.add('op-hidden');
+    marketingFooter.classList.add('op-hidden');
+    appView.classList.add('op-open');
+    document.body.style.overflow = 'hidden';
+    appView.scrollTop = 0;
+  }
+
+  function hideAppView(){
+    marketingNav.classList.remove('op-hidden');
+    marketingMain.classList.remove('op-hidden');
+    marketingFooter.classList.remove('op-hidden');
+    appView.classList.remove('op-open');
+    document.body.style.overflow = '';
+    document.querySelectorAll('.op-dash-nav-item[data-view]').forEach(function(el){
+      el.classList.toggle('is-active', el.getAttribute('data-view') === 'dashboard');
+    });
+    document.querySelectorAll('.op-view[data-view-panel]').forEach(function(panel){
+      panel.classList.toggle('is-active', panel.getAttribute('data-view-panel') === 'dashboard');
+    });
+  }
+
+  var loginForm = document.getElementById('opLoginForm');
+  if(loginForm){
+    loginForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      closeModal();
+      showAppView();
+    });
+  }
+
+  var logoutBtn = document.getElementById('opLogoutBtn');
+  if(logoutBtn){
+    logoutBtn.addEventListener('click', hideAppView);
+  }
+
+  var dashNavItems = document.querySelectorAll('.op-dash-nav-item[data-view]');
+  var dashViews = document.querySelectorAll('.op-view[data-view-panel]');
+  dashNavItems.forEach(function(item){
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      var target = item.getAttribute('data-view');
+      dashNavItems.forEach(function(el){ el.classList.toggle('is-active', el === item); });
+      dashViews.forEach(function(panel){
+        panel.classList.toggle('is-active', panel.getAttribute('data-view-panel') === target);
+      });
+      appView.scrollTop = 0;
+    });
+  });
+
+  document.querySelectorAll('[data-open-modal]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      openModal(btn.getAttribute('data-open-modal'));
+    });
+  });
+
+  document.querySelectorAll('[data-close-modal]').forEach(function(btn){
+    btn.addEventListener('click', closeModal);
+  });
+
+  document.querySelectorAll('[data-switch-modal]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal(link.getAttribute('data-switch-modal'));
+    });
+  });
+
+  authOverlay.addEventListener('click', function(e){
+    if(e.target === authOverlay) closeModal();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    if(authOverlay.classList.contains('op-open')) closeModal();
+    if(appView.classList.contains('op-open')) hideAppView();
+    if(mobileMenu.classList.contains('op-open')) closeMobileMenu();
+  });
+
+  var nav = document.getElementById('opNav');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('op-scrolled', window.scrollY > 10);
+  });
+
+  if('IntersectionObserver' in window){
+    var revealEls = document.querySelectorAll('.op-reveal');
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('op-in');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.15});
+    revealEls.forEach(function(el){ obs.observe(el); });
+  } else {
+    document.querySelectorAll('.op-reveal').forEach(function(el){ el.classList.add('op-in'); });
+  }
+
+  function setupCardSlider(sliderEl, dotsWrapId){
+    var dots = document.querySelectorAll('#' + dotsWrapId + ' .op-slider-dot');
+    if(!sliderEl || !dots.length) return;
+    var cards = sliderEl.querySelectorAll('.op-card');
+    dots.forEach(function(dot){
+      dot.addEventListener('click', function(){
+        var idx = parseInt(dot.getAttribute('data-slide'), 10);
+        var target = cards[idx];
+        if(target) target.scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
+      });
+    });
+    if('IntersectionObserver' in window){
+      var dotObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting && entry.intersectionRatio > 0.6){
+            var idx = Array.prototype.indexOf.call(cards, entry.target);
+            dots.forEach(function(d,i){ d.classList.toggle('is-active', i === idx); });
+          }
+        });
+      }, {root:sliderEl, threshold:[0.6]});
+      cards.forEach(function(card){ dotObserver.observe(card); });
+    }
+  }
+  setupCardSlider(document.querySelector('.op-problem .op-grid-4'), 'opProblemDots');
+  setupCardSlider(document.querySelector('.op-features .op-grid-5'), 'opFeaturesDots');
+
+  var heroActionsEl = document.querySelector('.op-hero-actions');
+  var mobileCtaBar = document.getElementById('opMobileCtaBar');
+  if(heroActionsEl && mobileCtaBar && 'IntersectionObserver' in window){
+    var ctaBarObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        mobileCtaBar.classList.toggle('op-visible', !entry.isIntersecting);
+      });
+    }, {threshold:0});
+    ctaBarObserver.observe(heroActionsEl);
+  }
+})();
+</script>
+
+</body>
+</html>
