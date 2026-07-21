@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>אתגר ליום — האתגר הבא שלך מחכה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow:#FFD400;
+    --yellow-deep:#FFB800;
+    --green:#00D68F;
+    --green-deep:#00A876;
+    --blue:#2D7FF9;
+    --blue-deep:#1558C0;
+    --white:#FFFFFF;
+    --ink:#0B0E14;
+    --ink-soft:#131722;
+    --ink-card:#1A1F2C;
+    --line:#262C3B;
+    --text-dim:#8A94A6;
+    --radius:18px;
+    --grad-brand: linear-gradient(115deg, var(--yellow) 0%, var(--green) 55%, var(--blue) 100%);
+    --grad-warm: linear-gradient(120deg, var(--yellow) 0%, var(--yellow-deep) 100%);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--white);
+    font-family:'Heebo',sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Rubik',sans-serif;}
+  h1,h2,h3{margin:0;}
+  p{margin:0;}
+  ::selection{background:var(--yellow);color:var(--ink);}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  img,svg{display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding-inline:24px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:700;letter-spacing:.03em;
+    color:var(--ink);background:var(--grad-warm);
+    padding:6px 14px;border-radius:999px;
+  }
+  .grad-text{
+    background:var(--grad-brand);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  /* ===== NAV ===== */
+  .nav{
+    position:sticky;top:0;z-index:40;
+    background:rgba(11,14,20,.85);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Rubik',sans-serif;font-weight:800;font-size:20px;}
+  .logo-badge{
+    width:36px;height:36px;border-radius:11px;background:var(--grad-brand);
+    display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;
+  }
+  .nav-links{display:flex;gap:26px;font-size:15px;font-weight:500;color:#C7CDDA;}
+  .nav-links a:hover{color:var(--yellow);}
+  .xp-pill{
+    display:flex;align-items:center;gap:10px;
+    background:var(--ink-card);border:1px solid var(--line);
+    padding:6px 14px 6px 6px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;
+  }
+  .xp-pill .lvl-dot{
+    width:26px;height:26px;border-radius:50%;background:var(--grad-brand);
+    display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink);font-weight:800;flex:none;
+  }
+  .nav-cta{
+    background:var(--grad-warm);color:var(--ink);font-weight:800;font-size:14px;
+    padding:10px 20px;border-radius:999px;transition:transform .2s;white-space:nowrap;
+  }
+  .nav-cta:hover{transform:translateY(-2px);}
+  .nav-right{display:flex;align-items:center;gap:12px;}
+
+  /* ---- animated hamburger button (mobile only) ---- */
+  .burger{
+    display:none;background:var(--ink-card);border:1px solid var(--line);
+    width:42px;height:42px;border-radius:12px;align-items:center;justify-content:center;flex:none;
+    -webkit-tap-highlight-color:transparent;transition:border-color .2s, background .2s;
+  }
+  .burger:active{background:#20263480;}
+  .burger-box{position:relative;width:18px;height:13px;flex:none;}
+  .burger-box span{
+    position:absolute;right:0;left:0;height:2px;border-radius:2px;background:var(--white);
+    transition:transform .3s cubic-bezier(.4,0,.2,1), opacity .2s ease, top .3s cubic-bezier(.4,0,.2,1);
+  }
+  .burger-box span:nth-child(1){top:0;}
+  .burger-box span:nth-child(2){top:5.5px;}
+  .burger-box span:nth-child(3){top:11px;}
+  .burger[aria-expanded="true"] .burger-box span:nth-child(1){top:5.5px;transform:rotate(45deg);}
+  .burger[aria-expanded="true"] .burger-box span:nth-child(2){opacity:0;}
+  .burger[aria-expanded="true"] .burger-box span:nth-child(3){top:5.5px;transform:rotate(-45deg);}
+
+  /* ---- drawer overlay + panel ---- */
+  .drawer-overlay{
+    position:fixed;inset:0;z-index:105;background:rgba(4,6,10,.62);backdrop-filter:blur(3px);
+    opacity:0;pointer-events:none;transition:opacity .32s ease;
+  }
+  .drawer-overlay.show{opacity:1;pointer-events:auto;}
+  .mobile-drawer{
+    position:fixed;top:0;bottom:0;right:0;z-index:110;
+    width:min(82vw,330px);background:var(--ink-soft);border-inline-start:1px solid var(--line);
+    padding:18px 20px calc(20px + env(safe-area-inset-bottom));
+    padding-top:calc(18px + env(safe-area-inset-top));
+    display:flex;flex-direction:column;overflow-y:auto;
+    transform:translateX(105%);transition:transform .38s cubic-bezier(.22,1,.36,1);
+    box-shadow:-24px 0 60px -20px rgba(0,0,0,.6);
+  }
+  .mobile-drawer.open{transform:translateX(0);}
+  body.drawer-open{overflow:hidden;}
+  .drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+  .drawer-close{
+    background:var(--ink-card);border:1px solid var(--line);color:var(--white);
+    width:36px;height:36px;border-radius:10px;font-size:15px;display:flex;align-items:center;justify-content:center;flex:none;
+  }
+  .drawer-xp{
+    display:flex;align-items:center;gap:12px;background:var(--ink-card);border:1px solid var(--line);
+    border-radius:14px;padding:12px 14px;margin-bottom:22px;
+  }
+  .drawer-xp .lvl-dot{
+    width:32px;height:32px;border-radius:50%;background:var(--grad-brand);flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink);font-weight:800;
+  }
+  .drawer-xp-info{flex:1;min-width:0;}
+  .drawer-xp-info b{display:block;font-size:13px;font-weight:800;margin-bottom:6px;}
+  .drawer-links{display:flex;flex-direction:column;gap:2px;}
+  .drawer-links a{
+    display:flex;align-items:center;gap:10px;padding:14px 6px;font-size:15.5px;font-weight:700;
+    color:#DDE2EC;border-bottom:1px solid var(--line);transition:color .15s;
+  }
+  .drawer-links a:active{color:var(--yellow);}
+  .drawer-cta{
+    margin-top:20px;background:var(--grad-warm);color:var(--ink);text-align:center;
+    padding:15px;border-radius:13px;font-weight:800;font-size:15px;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;padding:64px 0 40px;overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;inset:-20% -10% auto -10%;height:600px;
+    background:radial-gradient(60% 60% at 30% 20%, rgba(255,212,0,.16), transparent 70%),
+               radial-gradient(50% 50% at 80% 10%, rgba(45,127,249,.18), transparent 70%),
+               radial-gradient(45% 45% at 60% 60%, rgba(0,214,143,.13), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(36px,5.4vw,60px);font-weight:900;line-height:1.06;letter-spacing:-.01em;
+  }
+  .hero p.lead{
+    margin-top:20px;font-size:18px;color:#B9C0CF;max-width:520px;
+  }
+  .hero-stats{display:flex;gap:28px;margin-top:32px;flex-wrap:wrap;}
+  .hero-stat b{display:block;font-family:'Rubik',sans-serif;font-size:26px;font-weight:800;}
+  .hero-stat span{font-size:13px;color:var(--text-dim);}
+  .hero-actions{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--grad-warm);color:var(--ink);font-weight:800;font-size:16px;
+    padding:15px 26px;border-radius:14px;box-shadow:0 12px 30px -10px rgba(255,180,0,.55);
+    transition:transform .2s;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{
+    background:transparent;color:var(--white);font-weight:700;font-size:16px;
+    padding:15px 22px;border-radius:14px;border:1px solid var(--line);
+  }
+  .btn-ghost:hover{border-color:#454e63;}
+
+  /* generator card */
+  .gen-card{
+    position:relative;background:var(--ink-card);border:1px solid var(--line);
+    border-radius:24px;padding:26px;box-shadow:0 30px 70px -30px rgba(0,0,0,.6);
+  }
+  .gen-card::after{
+    content:'';position:absolute;inset:0;border-radius:24px;padding:1px;
+    background:var(--grad-brand);opacity:.35;
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
+  }
+  .gen-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .gen-head h3{font-size:16px;font-weight:700;color:#DDE2EC;}
+  .gen-tag{font-size:11px;font-weight:800;color:var(--ink);background:var(--green);padding:4px 10px;border-radius:999px;}
+  .cat-row,.diff-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+  .chip{
+    flex:1;min-width:96px;background:#12161f;border:1px solid var(--line);color:#B9C0CF;
+    padding:12px 10px;border-radius:13px;font-size:13.5px;font-weight:700;text-align:center;
+    display:flex;flex-direction:column;align-items:center;gap:4px;transition:.15s;
+  }
+  .chip span.ic{font-size:18px;}
+  .chip:hover{border-color:#454e63;}
+  .chip.active[data-cat="sport"]{background:rgba(0,214,143,.14);border-color:var(--green);color:var(--white);}
+  .chip.active[data-cat="gaming"]{background:rgba(45,127,249,.14);border-color:var(--blue);color:var(--white);}
+  .chip.active[data-cat="extreme"]{background:rgba(255,212,0,.14);border-color:var(--yellow);color:var(--white);}
+  .chip.diff{flex:1;min-width:0;padding:9px 6px;font-size:12.5px;}
+  .chip.diff.active[data-diff="easy"]{background:rgba(0,214,143,.16);border-color:var(--green);}
+  .chip.diff.active[data-diff="medium"]{background:rgba(45,127,249,.16);border-color:var(--blue);}
+  .chip.diff.active[data-diff="hard"]{background:rgba(255,212,0,.16);border-color:var(--yellow);}
+  .gen-btn{
+    width:100%;background:var(--grad-brand);color:var(--ink);font-weight:800;font-size:15px;
+    padding:14px;border-radius:13px;margin-top:4px;transition:transform .15s, filter .2s;
+  }
+  .gen-btn:active{transform:scale(.98);}
+  .gen-btn:disabled{filter:grayscale(.6) brightness(.7);cursor:not-allowed;}
+  .result-box{
+    margin-top:16px;background:#0F1319;border:1px dashed var(--line);border-radius:15px;
+    padding:18px;min-height:96px;display:flex;flex-direction:column;justify-content:center;gap:12px;
+  }
+  .result-box.placeholder{color:var(--text-dim);font-size:14px;text-align:center;}
+  .result-badge{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;}
+  .result-badge .dot{width:8px;height:8px;border-radius:50%;}
+  .result-text{font-size:15.5px;font-weight:600;line-height:1.55;}
+  .done-row{display:flex;align-items:center;gap:10px;margin-top:2px;}
+  .btn-done{
+    background:var(--green);color:#04342C;font-weight:800;font-size:13.5px;
+    padding:9px 16px;border-radius:10px;transition:transform .15s;
+  }
+  .btn-done:hover{transform:translateY(-1px);}
+  .xp-toast{font-size:12.5px;font-weight:700;color:var(--yellow);opacity:0;transition:opacity .3s;}
+  .xp-toast.show{opacity:1;}
+  .safety-note{font-size:11.5px;color:var(--text-dim);margin-top:12px;line-height:1.5;}
+
+  /* progress bar in card */
+  .xp-bar-wrap{margin-top:16px;}
+  .xp-bar-labels{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-dim);margin-bottom:6px;}
+  .reset-btn{
+    display:block;width:100%;margin-top:10px;margin-bottom:2px;background:transparent;
+    border:1px solid var(--line);color:#8A94A6;font-size:12.5px;font-weight:700;
+    padding:9px;border-radius:10px;transition:border-color .2s,color .2s;
+  }
+  .reset-btn:hover{border-color:#ff6b6b;color:#ff9b9b;}
+  #resetXpBtnDrawer{margin-bottom:18px;}
+  .xp-bar{height:8px;border-radius:999px;background:#12161f;overflow:hidden;}
+  .xp-bar-fill{height:100%;background:var(--grad-brand);border-radius:999px;width:0%;transition:width .5s ease;}
+
+  /* ===== SECTION shells ===== */
+  section{padding:88px 0;}
+  .section-head{max-width:640px;margin-bottom:48px;}
+  .section-head h2{font-size:clamp(26px,3.6vw,38px);font-weight:800;margin-top:14px;line-height:1.2;}
+  .section-head p{margin-top:14px;color:#AEB6C6;font-size:16px;}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* problem/solution */
+  .ps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .ps-card{
+    background:var(--ink-card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 22px;
+  }
+  .ps-num{font-family:'Rubik',sans-serif;font-size:13px;font-weight:800;color:var(--ink);
+    background:var(--grad-warm);width:fit-content;padding:4px 10px;border-radius:999px;margin-bottom:16px;}
+  .ps-card h3{font-size:18px;font-weight:700;margin-bottom:10px;}
+  .ps-card p{font-size:14.5px;color:#AEB6C6;}
+
+  /* features grid */
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .feat-card{
+    background:var(--ink-card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 22px;transition:border-color .2s, transform .2s;
+  }
+  .feat-card:hover{transform:translateY(-4px);border-color:#3a4258;}
+  .feat-ic{
+    width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+    font-size:22px;margin-bottom:16px;
+  }
+  .feat-card h3{font-size:17px;font-weight:700;margin-bottom:8px;}
+  .feat-card p{font-size:14px;color:#AEB6C6;}
+  .carousel-dots{display:none;justify-content:center;gap:7px;margin-top:16px;}
+  .carousel-dots span{width:6px;height:6px;border-radius:50%;background:#333a4a;transition:.25s;}
+  .carousel-dots span.active{background:var(--yellow);width:18px;border-radius:999px;}
+
+  /* quiz */
+  .quiz-card{
+    background:var(--ink-card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 22px 20px;margin-bottom:16px;
+  }
+  .quiz-q{font-size:16px;font-weight:700;margin-bottom:14px;}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .quiz-opt{
+    background:#12161f;border:1px solid var(--line);color:#DDE2EC;text-align:right;
+    padding:12px 14px;border-radius:11px;font-size:14px;font-weight:600;transition:.15s;
+  }
+  .quiz-opt:hover:not(:disabled){border-color:#454e63;}
+  .quiz-opt.correct{background:rgba(0,214,143,.16);border-color:var(--green);color:#fff;}
+  .quiz-opt.wrong{background:rgba(255,90,90,.14);border-color:#ff6b6b;color:#fff;}
+  .quiz-opt:disabled{cursor:default;opacity:.8;}
+  .quiz-fb{margin-top:12px;font-size:13.5px;color:#AEB6C6;display:none;}
+  .quiz-fb.show{display:block;}
+  .quiz-score{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--ink-card);border:1px solid var(--line);border-radius:14px;
+    padding:14px 20px;margin-bottom:22px;font-size:14px;font-weight:700;color:#DDE2EC;
+  }
+
+  /* gear wizard */
+  .gear-card{
+    background:var(--ink-card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px;max-width:640px;
+  }
+  .gear-steps{display:flex;gap:6px;margin-bottom:22px;}
+  .gear-steps span{flex:1;height:4px;border-radius:999px;background:#1e2330;}
+  .gear-steps span.done{background:var(--grad-brand);}
+  .gear-q{font-size:18px;font-weight:700;margin-bottom:18px;}
+  .gear-opts{display:flex;flex-direction:column;gap:10px;}
+  .gear-opt{
+    background:#12161f;border:1px solid var(--line);color:#DDE2EC;text-align:right;
+    padding:14px 16px;border-radius:12px;font-size:14.5px;font-weight:600;transition:.15s;
+  }
+  .gear-opt:hover{border-color:var(--blue);}
+  .gear-result h3{font-size:20px;font-weight:800;margin-bottom:12px;}
+  .gear-result ul{margin:0;padding-inline-start:20px;font-size:14.5px;color:#C7CDDA;line-height:1.9;}
+  .gear-restart{margin-top:20px;background:transparent;border:1px solid var(--line);color:#DDE2EC;
+    padding:10px 18px;border-radius:10px;font-size:13.5px;font-weight:700;}
+
+  /* level explainer */
+  .level-wrap{
+    display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+  }
+  .level-steps{display:flex;flex-direction:column;gap:16px;}
+  .level-step{display:flex;gap:14px;align-items:flex-start;}
+  .level-step .n{
+    flex:none;width:34px;height:34px;border-radius:10px;background:var(--ink-card);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;
+  }
+  .level-step h4{font-size:15.5px;font-weight:700;margin-bottom:4px;}
+  .level-step p{font-size:14px;color:#AEB6C6;}
+  .level-visual{
+    background:var(--ink-card);border:1px solid var(--line);border-radius:22px;padding:30px;text-align:center;
+  }
+  .level-visual .big-badge{
+    width:110px;height:110px;border-radius:50%;background:var(--grad-brand);margin:0 auto 18px;
+    display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:var(--ink);
+    font-family:'Rubik',sans-serif;
+  }
+
+  /* cta / marketing */
+  .cta-band{
+    background:var(--grad-brand);border-radius:26px;padding:56px 44px;color:var(--ink);
+    display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+  }
+  .cta-band h2{font-size:clamp(24px,3.2vw,32px);font-weight:900;max-width:480px;}
+  .cta-band p{margin-top:10px;font-size:15px;font-weight:600;max-width:460px;opacity:.85;}
+  .cta-actions{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn-dark{background:var(--ink);color:var(--white);font-weight:800;font-size:15px;padding:14px 24px;border-radius:13px;}
+  .btn-outline-dark{background:transparent;border:2px solid var(--ink);color:var(--ink);font-weight:800;font-size:15px;padding:12px 22px;border-radius:13px;}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:40px 0;}
+  .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .foot-inner p{color:var(--text-dim);font-size:13px;}
+  .foot-links{display:flex;gap:20px;font-size:13.5px;color:#B9C0CF;}
+
+  /* level up overlay */
+  .lvl-overlay{
+    position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+    background:rgba(6,8,12,.72);backdrop-filter:blur(6px);
+    opacity:0;pointer-events:none;transition:opacity .35s ease;
+  }
+  .lvl-overlay.show{opacity:1;pointer-events:auto;}
+  .lvl-box{
+    text-align:center;transform:scale(.7);transition:transform .4s cubic-bezier(.2,1.4,.4,1);
+  }
+  .lvl-overlay.show .lvl-box{transform:scale(1);}
+  .lvl-box .ring{
+    width:140px;height:140px;border-radius:50%;background:var(--grad-brand);margin:0 auto 18px;
+    display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--ink);
+    box-shadow:0 0 0 8px rgba(255,212,0,.15), 0 0 60px rgba(45,127,249,.35);
+  }
+  .lvl-box h3{font-family:'Rubik',sans-serif;font-size:30px;font-weight:900;color:#fff;}
+  .lvl-box p{color:#B9C0CF;margin-top:6px;font-size:14px;}
+
+  /* ===== Tablet / 920px ===== */
+  @media (max-width:920px){
+    .hero-grid{grid-template-columns:1fr;gap:36px;}
+    .ps-grid,.feat-grid{grid-template-columns:1fr 1fr;}
+    .level-wrap{grid-template-columns:1fr;gap:32px;}
+    .nav-links{display:none;}
+    .xp-pill{display:none;}
+    .nav-cta{display:none;}
+    .burger{display:flex;}
+  }
+
+  /* ===== Large phones / small tablets 768px ===== */
+  @media (max-width:768px){
+    .wrap{padding-inline:18px;}
+    section{padding:64px 0;}
+    .hero{padding:44px 0 32px;}
+    .cta-band{padding:40px 28px;}
+    .gear-card{padding:24px;}
+    .level-visual{padding:24px;}
+  }
+
+  /* ===== Phones / 600px ===== */
+  @media (max-width:600px){
+    .ps-grid{grid-template-columns:1fr;}
+    .feat-grid{
+      display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+      gap:14px;margin:0 -24px;padding:4px 24px 14px;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;
+    }
+    .feat-grid::-webkit-scrollbar{display:none;}
+    .feat-card{scroll-snap-align:start;flex:0 0 78%;min-width:78%;}
+    .carousel-dots{display:flex;}
+    .quiz-opts{grid-template-columns:1fr;}
+    .cta-band{flex-direction:column;text-align:center;}
+    .cta-actions{justify-content:center;}
+    .hero-stats{gap:18px;}
+    section{padding:52px 0;}
+    .gen-card{padding:20px;}
+    .nav-inner{padding:12px 18px;}
+    .logo{font-size:17px;}
+  }
+
+  /* ===== Small phones / 420px ===== */
+  @media (max-width:420px){
+    .wrap{padding-inline:14px;}
+    .hero-actions{flex-direction:column;}
+    .hero-actions .btn-primary,.hero-actions .btn-ghost{width:100%;text-align:center;}
+    .cat-row .chip{min-width:0;font-size:12.5px;padding:10px 6px;}
+    .cat-row .chip span.ic{font-size:16px;}
+    .diff-row .chip.diff{font-size:11.5px;padding:8px 4px;}
+    .quiz-q,.gear-q{font-size:15px;}
+    .lvl-box .ring{width:110px;height:110px;font-size:38px;}
+    .lvl-box h3{font-size:24px;}
+    .btn-dark,.btn-outline-dark{width:100%;text-align:center;}
+    .cta-actions{flex-direction:column;width:100%;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-badge">🏃</span>אתגר ליום</div>
+    <div class="nav-links">
+      <a href="#generator">מחולל אתגרים</a>
+      <a href="#quiz">טריוויה</a>
+      <a href="#gear">התאמת ציוד</a>
+      <a href="#levels">רמות</a>
+    </div>
+    <div class="nav-right">
+      <div class="xp-pill"><span class="lvl-dot" id="navLevel">1</span><span id="navXpText">0 / 50 XP</span></div>
+      <a href="#generator" class="nav-cta">התחל אתגר</a>
+      <button class="burger" id="burgerBtn" aria-label="פתח תפריט" aria-haspopup="true" aria-expanded="false" aria-controls="mobileDrawer">
+        <span class="burger-box"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div class="logo"><span class="logo-badge">🏃</span>אתגר ליום</div>
+    <button class="drawer-close" id="drawerClose" aria-label="סגור תפריט">✕</button>
+  </div>
+  <div class="drawer-xp">
+    <span class="lvl-dot" id="drawerLevel">1</span>
+    <div class="drawer-xp-info">
+      <b id="drawerXpText">0 / 50 XP</b>
+      <div class="xp-bar"><div class="xp-bar-fill" id="drawerXpFill"></div></div>
+    </div>
+  </div>
+  <button class="reset-btn" id="resetXpBtnDrawer">איפוס ניקוד ↺</button>
+  <nav class="drawer-links">
+    <a href="#generator">🎲 מחולל אתגרים</a>
+    <a href="#quiz">🧠 טריוויה</a>
+    <a href="#gear">🎒 התאמת ציוד</a>
+    <a href="#levels">📈 רמות</a>
+  </nav>
+  <a href="#generator" class="drawer-cta">התחל אתגר</a>
+</aside>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">🎯 האפליקציה שהופכת שעמום לניצחון</span>
+      <h1 style="margin-top:22px;">משעמם לך?<br>יש לך <span class="grad-text">אתגר</span> שמחכה.</h1>
+      <p class="lead">מחולל אתגרים בספורט, גיימינג ואקסטרים. תבחר קטגוריה, תבחר רמת קושי, תגריל — ותראה אם אתה באמת מסוגל. כל אתגר שתשלים מקדם אותך ברמה.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>36</b><span>אתגרים שונים</span></div>
+        <div class="hero-stat"><b>3</b><span>קטגוריות</span></div>
+        <div class="hero-stat"><b>10XP</b><span>לכל אתגר שהושלם</span></div>
+      </div>
+      <div class="hero-actions">
+        <a href="#generator" class="btn-primary">הגרל אתגר עכשיו</a>
+        <a href="#quiz" class="btn-ghost">בחן את עצמך בטריוויה</a>
+      </div>
+    </div>
+
+    <div class="gen-card" id="generator">
+      <div class="gen-head">
+        <h3>מחולל האתגרים</h3>
+        <span class="gen-tag">MVP · חינם</span>
+      </div>
+
+      <div class="cat-row" id="catRow">
+        <button class="chip" data-cat="sport"><span class="ic">🏃‍♂️</span>ספורט</button>
+        <button class="chip" data-cat="gaming"><span class="ic">🎮</span>גיימינג</button>
+        <button class="chip" data-cat="extreme"><span class="ic">🧗‍♂️</span>אקסטרים</button>
+      </div>
+
+      <div class="diff-row" id="diffRow">
+        <button class="chip diff active" data-diff="easy">קל</button>
+        <button class="chip diff" data-diff="medium">בינוני</button>
+        <button class="chip diff" data-diff="hard">קשה מאוד</button>
+      </div>
+
+      <button class="gen-btn" id="genBtn" disabled>בחר/י קטגוריה כדי להגריל</button>
+
+      <div class="result-box placeholder" id="resultBox">
+        בחר/י קטגוריה ורמת קושי, ולחץ/י "הגרל אתגר" — האתגר שלך יופיע כאן.
+      </div>
+
+      <p class="safety-note" id="safetyNote" style="display:none;">⚠️ אתגרי אקסטרים — תמיד עם ליווי מבוגר אחראי, מדריך מוסמך וציוד בטיחות תקין.</p>
+
+      <div class="xp-bar-wrap">
+        <div class="xp-bar-labels"><span>התקדמות לרמה הבאה</span><span id="xpBarLabel">0 / 50</span></div>
+        <div class="xp-bar"><div class="xp-bar-fill" id="xpBarFill"></div></div>
+      </div>
+      <button class="reset-btn" id="resetXpBtn">איפוס ניקוד ↺</button>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">😐 המצב היום</span>
+      <h2>לנוער נמאס. וגם אין להם איפה לפרוק את זה.</h2>
+      <p>נוער שגדל על מסכים ואדרנלין רוצה אתגרים אמיתיים — לא עוד סקרול. הבעיה היא שאין מקום אחד שמאגד את כל התחומים שמעניינים אותם, נותן משימה ברורה, ומתגמל אותם על ביצוע.</p>
+    </div>
+    <div class="ps-grid">
+      <div class="ps-card reveal">
+        <span class="ps-num">הבעיה</span>
+        <h3>שעמום כרוני</h3>
+        <p>בלי יעד ברור, זמן פנוי הופך לגלילה אינסופית ברשתות במקום פעילות אמיתית שמפתחת ומאתגרת.</p>
+      </div>
+      <div class="ps-card reveal">
+        <span class="ps-num">קהל היעד</span>
+        <h3>נוער שרוצה להשתפר</h3>
+        <p>ילדים ובני נוער שאוהבים ספורט, אקסטרים וגיימינג, ומחפשים דרך לבדוק את עצמם ולראות התקדמות מוחשית.</p>
+      </div>
+      <div class="ps-card reveal">
+        <span class="ps-num">הפתרון</span>
+        <h3>אתגר, נקודות, רמה</h3>
+        <p>אתר אחד שמגריל אתגר מותאם, נותן נקודות על כל הצלחה, ומייצר תחושת התקדמות אמיתית — בלי חיבורים חיצוניים, ישר בדפדפן.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">⚡ מה מקבלים באתר</span>
+      <h2>חמישה כלים, משחק אחד</h2>
+      <p>כל פיצ'ר עומד בפני עצמו, וכולם מתחברים למערכת ניקוד אחת שנשמרת אצלך בדפדפן.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal">
+        <div class="feat-ic" style="background:rgba(0,214,143,.16);">🎲</div>
+        <h3>מחולל אתגרים</h3>
+        <p>בוחרים קטגוריה ורמת קושי, ומקבלים אתגר אקראי מתוך רשימה של 36 אתגרים מוכנים מראש.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ic" style="background:rgba(255,212,0,.18);">🏆</div>
+        <h3>XP ומד רמות</h3>
+        <p>כל אתגר שמושלם שווה 10 נקודות ניסיון. בכל 50 נקודות עולים רמה, עם אנימציית חגיגה. הכל נשמר בדפדפן.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ic" style="background:rgba(45,127,249,.18);">🧠</div>
+        <h3>טריוויה מהירה</h3>
+        <p>שאלות אמריקאיות בנושאי ספורט, אקסטרים וגיימינג, עם חיווי מיידי והסבר קצר לכל תשובה.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ic" style="background:rgba(0,214,143,.16);">🎚️</div>
+        <h3>בורר קושי</h3>
+        <p>קל, בינוני או קשה מאוד — המחולל מסנן ומגריל רק אתגרים שמתאימים לרמה שבחרת.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ic" style="background:rgba(255,212,0,.18);">🎒</div>
+        <h3>התאמת ציוד</h3>
+        <p>שאלון של שלוש שאלות שמסתיים בהמלצת ציוד בסיסי, מותאם לתחום ולתקציב שלך.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ic" style="background:rgba(45,127,249,.18);">📈</div>
+        <h3>שמירה אוטומטית</h3>
+        <p>הניקוד והרמה שלך נשמרים במכשיר, כך שהם נשארים גם אחרי שמרעננים או סוגרים את הדף.</p>
+      </div>
+    </div>
+    <div class="carousel-dots" id="featDots"></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">🧠 בחן את עצמך</span>
+      <h2>טריוויה: ספורט, אקסטרים וגיימינג</h2>
+      <p>ענה נכון ותרוויח 5 XP נוספים לכל שאלה. תשובה נכונה או שגויה — תמיד תקבל הסבר קצר.</p>
+    </div>
+    <div class="quiz-score">
+      <span>הציון שלך בקוויז</span>
+      <span id="quizScore">0 / 6 נכונות</span>
+    </div>
+    <div id="quizWrap"></div>
+  </div>
+</section>
+
+<section id="gear">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">🎒 מחשבון ציוד</span>
+      <h2>איזה ציוד באמת מתאים לך?</h2>
+      <p>שלוש שאלות קצרות, והאתר יבנה לך המלצת ציוד בסיסית להתחלה.</p>
+    </div>
+    <div class="gear-card reveal" id="gearCard"></div>
+  </div>
+</section>
+
+<section id="levels">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">📈 איך עולים רמה</span>
+      <h2>כל אתגר שאתה משלים מקרב אותך לרמה הבאה</h2>
+    </div>
+    <div class="level-wrap">
+      <div class="level-steps reveal">
+        <div class="level-step">
+          <div class="n">1</div>
+          <div><h4>בוחרים קטגוריה ורמת קושי</h4><p>ספורט, גיימינג או אקסטרים — בקושי קל, בינוני או קשה מאוד.</p></div>
+        </div>
+        <div class="level-step">
+          <div class="n">2</div>
+          <div><h4>מגרילים אתגר ומבצעים אותו</h4><p>האתגר מוצג על המסך. יוצאים לבצע אותו בעולם האמיתי.</p></div>
+        </div>
+        <div class="level-step">
+          <div class="n">3</div>
+          <div><h4>לוחצים "ביצעתי!"</h4><p>מקבלים 10 נקודות ניסיון (XP) שנוספות למד ההתקדמות שלך.</p></div>
+        </div>
+        <div class="level-step">
+          <div class="n">4</div>
+          <div><h4>עולים רמה בכל 50 נקודות</h4><p>אנימציית "עלית רמה!" מופיעה, והמונה מתאפס לרמה הבאה.</p></div>
+        </div>
+      </div>
+      <div class="level-visual reveal">
+        <div class="big-badge" id="levelVisualBadge">1</div>
+        <h3 style="font-size:18px;font-weight:700;">רמה נוכחית שלך</h3>
+        <p style="color:var(--text-dim);font-size:13.5px;margin-top:6px;" id="levelVisualSub">0 XP נצברו · השלם/י אתגר כדי להתחיל</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <div>
+        <h2>המשחק שלך מתחיל עכשיו, לא מחר</h2>
+        <p>עוקבים אחרינו בטיקטוק לאתגרים חדשים כל שבוע, או פשוט מתחילים ישר באתר.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="#generator" class="btn-dark">התחל אתגר עכשיו</a>
+        <a href="https://www.tiktok.com" class="btn-outline-dark" target="_blank" rel="noopener">עקבו בטיקטוק ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="logo" style="font-size:16px;"><span class="logo-badge" style="width:28px;height:28px;font-size:14px;">🔥</span>אתגר ליום</div>
+    <p>אתגר ליום · MVP · הבנוי כדי לגרום לך לזוז מהספה</p>
+    <div class="foot-links">
+      <a href="#generator">מחולל</a>
+      <a href="#quiz">טריוויה</a>
+      <a href="#gear">ציוד</a>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=atgar-layom" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<div class="lvl-overlay" id="lvlOverlay">
+  <div class="lvl-box">
+    <div class="ring">🎉</div>
+    <h3>עלית רמה!</h3>
+    <p id="lvlOverlayText">עכשיו אתה ברמה 2</p>
+  </div>
+</div>
+
+<script>
+(function(){
+
+  var CHALLENGES = {
+    sport: {
+      easy: [
+        "רוץ/י 1 ק\"מ בלי לעצור — בקצב נוח.",
+        "בצע/י 20 שכיבות סמיכה ברצף.",
+        "קפוץ/י בחבל 100 קפיצות.",
+        "בצע/י מתיחות של 10 דקות לפני האימון הבא שלך."
+      ],
+      medium: [
+        "רוץ/י 3 ק\"מ מתחת ל-18 דקות.",
+        "בצע/י 3 סטים של 15 סקוואטים עם קפיצה.",
+        "שחה/י 500 מטר בבריכה ללא הפסקה.",
+        "שחק/י משחק כדורסל 1 על 1 עד 11 נקודות."
+      ],
+      hard: [
+        "רוץ/י 10 ק\"מ ברצף — הזמן לא משנה, רק תסיים/י.",
+        "בצע/י אימון HIIT של 30 דקות בעצימות מלאה.",
+        "טריאתלון מיני: 500 מ' שחייה + 10 ק\"מ אופניים + 2 ק\"מ ריצה.",
+        "בצע/י 100 בורפיז ברצף (הפסקות נשימה מותרות, בלי לזוז)."
+      ]
+    },
+    gaming: {
+      easy: [
+        "נצח/י משחק בכדורגל וירטואלי בלי לקבל אף גול.",
+        "השלם/י שלב במשחק פלטפורמות בלי למות פעם אחת.",
+        "שחק/י 30 דקות במשחק חדש שמעולם לא ניסית.",
+        "הגע/י ל-Top 5 בלוח תוצאות במשחק ארקייד."
+      ],
+      medium: [
+        "נצח/י 3 משחקים ברצף במצב אונליין (Win Streak).",
+        "השלם/י שלב ברמת קושי \"קשה\" בלי לרדת רמה.",
+        "בנה/י בסיס ששורד 24 שעות במשחק הישרדות.",
+        "עלה/י דרגה אחת (Rank Up) במשחק תחרותי השבוע."
+      ],
+      hard: [
+        "נצח/י טורניר 1 נגד 1 מול חבר בלי להפסיד סיבוב.",
+        "השלם/י משחק שלם ב-Speedrun מתחת לזמן שקבעת מראש.",
+        "הגע/י לדרג האליטה במשחק התחרותי שלך.",
+        "השלם/י קרב בוס בלי לספוג אף פגיעה (No-Hit Run)."
+      ]
+    },
+    extreme: {
+      easy: [
+        "טפס/י על קיר טיפוס מקורה עד לגובה 5 מטר.",
+        "רכב/י על אופני הרים במסלול שטח קל של 3 ק\"מ.",
+        "עמוד/י על סקייטבורד 60 שניות בלי ליפול.",
+        "בצע/י 50 קפיצות ברצף על טרמפולינה."
+      ],
+      medium: [
+        "טפס/י מסלול בולדרינג ברמת קושי בינונית.",
+        "רכב/י על גלשן מים (Wakeboard) ועמוד/י 20 שניות.",
+        "בצע/י ראפל (חבלים) מגובה 10 מטר בליווי מדריך.",
+        "רכב/י על אופני BMX וגלוש/י על רמפה נמוכה."
+      ],
+      hard: [
+        "טפס/י מסלול סנפלינג ברמת קושי מתקדמת.",
+        "נסה/י קפיצת בנג'י בליווי מקצועי ואישור הורים.",
+        "גלוש/י בגלישת רוח בתנאי רוח בינוניים-חזקים.",
+        "רכב/י על אופני הרים במסלול דאונהיל טכני."
+      ]
+    }
+  };
+
+  var DIFF_LABEL = {easy:"קל", medium:"בינוני", hard:"קשה מאוד"};
+  var DIFF_COLOR = {easy:"var(--green)", medium:"var(--blue)", hard:"var(--yellow)"};
+  var CAT_LABEL = {sport:"ספורט", gaming:"גיימינג", extreme:"אקסטרים"};
+
+  var state = { cat: null, diff: 'easy', xp: 0 };
+
+  function loadXp(){
+    var saved = localStorage.getItem('atgar_xp');
+    state.xp = saved ? parseInt(saved,10) || 0 : 0;
+  }
+  function saveXp(){ localStorage.setItem('atgar_xp', String(state.xp)); }
+
+  function levelFromXp(xp){ return Math.floor(xp/50) + 1; }
+  function xpIntoLevel(xp){ return xp % 50; }
+
+  function refreshXpUI(){
+    var level = levelFromXp(state.xp);
+    var into = xpIntoLevel(state.xp);
+    document.getElementById('navLevel').textContent = level;
+    document.getElementById('navXpText').textContent = into + ' / 50 XP';
+    document.getElementById('xpBarLabel').textContent = into + ' / 50';
+    document.getElementById('xpBarFill').style.width = (into/50*100) + '%';
+    var drawerLevel = document.getElementById('drawerLevel');
+    if(drawerLevel){
+      drawerLevel.textContent = level;
+      document.getElementById('drawerXpText').textContent = into + ' / 50 XP';
+      document.getElementById('drawerXpFill').style.width = (into/50*100) + '%';
+    }
+    document.getElementById('levelVisualBadge').textContent = level;
+    document.getElementById('levelVisualSub').textContent = state.xp + ' XP נצברו סה"כ · ' + into + ' מתוך 50 לרמה הבאה';
+  }
+
+  function showLevelUp(newLevel){
+    document.getElementById('lvlOverlayText').textContent = 'עכשיו אתה ברמה ' + newLevel;
+    var overlay = document.getElementById('lvlOverlay');
+    overlay.classList.add('show');
+    setTimeout(function(){ overlay.classList.remove('show'); }, 2000);
+  }
+
+  function addXp(amount){
+    var beforeLevel = levelFromXp(state.xp);
+    state.xp += amount;
+    saveXp();
+    refreshXpUI();
+    var afterLevel = levelFromXp(state.xp);
+    if(afterLevel > beforeLevel){ showLevelUp(afterLevel); }
+  }
+
+  function resetXp(){
+    var ok = window.confirm('לאפס את כל הניקוד שלך חזרה ל-0? הפעולה הזו לא הפיכה.');
+    if(!ok) return;
+    state.xp = 0;
+    saveXp();
+    refreshXpUI();
+  }
+  var resetXpBtn = document.getElementById('resetXpBtn');
+  var resetXpBtnDrawer = document.getElementById('resetXpBtnDrawer');
+  if(resetXpBtn) resetXpBtn.addEventListener('click', resetXp);
+  if(resetXpBtnDrawer) resetXpBtnDrawer.addEventListener('click', resetXp);
+
+  // ---- generator ----
+  var catRow = document.getElementById('catRow');
+  var diffRow = document.getElementById('diffRow');
+  var genBtn = document.getElementById('genBtn');
+  var resultBox = document.getElementById('resultBox');
+  var safetyNote = document.getElementById('safetyNote');
+
+  catRow.addEventListener('click', function(e){
+    var btn = e.target.closest('.chip');
+    if(!btn) return;
+    Array.prototype.forEach.call(catRow.querySelectorAll('.chip'), function(c){ c.classList.remove('active'); });
+    btn.classList.add('active');
+    state.cat = btn.getAttribute('data-cat');
+    genBtn.disabled = false;
+    genBtn.textContent = 'הגרל אתגר';
+    safetyNote.style.display = state.cat === 'extreme' ? 'block' : 'none';
+  });
+
+  diffRow.addEventListener('click', function(e){
+    var btn = e.target.closest('.chip');
+    if(!btn) return;
+    Array.prototype.forEach.call(diffRow.querySelectorAll('.chip'), function(c){ c.classList.remove('active'); });
+    btn.classList.add('active');
+    state.diff = btn.getAttribute('data-diff');
+  });
+
+  function renderChallenge(){
+    var list = CHALLENGES[state.cat][state.diff];
+    var pick = list[Math.floor(Math.random()*list.length)];
+    resultBox.classList.remove('placeholder');
+    resultBox.innerHTML =
+      '<div class="result-badge"><span class="dot" style="background:'+DIFF_COLOR[state.diff]+';"></span>' +
+      CAT_LABEL[state.cat] + ' · ' + DIFF_LABEL[state.diff] + '</div>' +
+      '<div class="result-text">' + pick + '</div>' +
+      '<div class="done-row"><button class="btn-done" id="doneBtn">ביצעתי! ✔</button><span class="xp-toast" id="xpToast">+10 XP</span></div>';
+    document.getElementById('doneBtn').addEventListener('click', function(){
+      addXp(10);
+      var toast = document.getElementById('xpToast');
+      if(toast){
+        toast.classList.add('show');
+        this.disabled = true;
+        this.style.opacity = '.6';
+        setTimeout(function(){ toast.classList.remove('show'); }, 1600);
+      }
+    });
+  }
+
+  genBtn.addEventListener('click', function(){
+    if(!state.cat) return;
+    renderChallenge();
+  });
+
+  // ---- quiz ----
+  var QUIZ = [
+    {q:"איזה קשר הוא הבסיסי ביותר לחיבור לרתמה בסנפלינג?", opts:["קשר שמיני (Figure-8)","קשר פרפר","קשר דייגים","קשר סבתא"], correct:0, exp:"קשר השמיני הוא הקשר הנפוץ והבטוח ביותר לחיבור לרתמה בטיפוס וסנפלינג."},
+    {q:"כמה שחקנים מכל קבוצה נמצאים על מגרש כדורסל בו-זמנית?", opts:["4","5","6","7"], correct:1, exp:"בכדורסל משחקים 5 נגד 5 על המגרש בכל רגע נתון."},
+    {q:"מה תפקיד השחרור (Cooldown) בסוף אימון?", opts:["מוריד את הדופק בהדרגה ומפחית סיכון לפציעה","מגביר שריפת קלוריות","מחליף את החימום","אין לו תפקיד ממשי"], correct:0, exp:"שחרור מבוקר בסוף אימון עוזר לדופק ולנשימה לחזור לקצב רגיל בהדרגה."},
+    {q:"באיזה ז'אנר משחק נפוץ המונח \"Battle Royale\"?", opts:["משחק שבו שורדים אחרונים מנצחים","משחק קלפים קלאסי","משחק לוח משפחתי","סימולטור נהיגה"], correct:0, exp:"במשחקי Battle Royale משתתפים רבים נלחמים על הישרדות עד לשחקן או קבוצה אחרונה שנותרו."},
+    {q:"כמה זמן מומלץ למתוח שריר מתוח לאחר מאמץ?", opts:["15–30 שניות","5 שניות","5 דקות","אין צורך למתוח"], correct:0, exp:"מתיחה של כ-15 עד 30 שניות לכל שריר עוזרת לגמישות ולהתאוששות."},
+    {q:"מה המשמעות של \"FPS\" בעולם הגיימינג?", opts:["ז'אנר משחקי ירי בגוף ראשון","סוג בקר משחק","שם קבוצת eSports","מצב תשלום במשחק"], correct:0, exp:"FPS (First-Person Shooter) הוא ז'אנר משחקי ירי שבו רואים את הפעולה מנקודת המבט של הדמות."}
+  ];
+
+  var quizWrap = document.getElementById('quizWrap');
+  var quizScoreEl = document.getElementById('quizScore');
+  var quizCorrectCount = 0;
+
+  function updateQuizScore(){
+    quizScoreEl.textContent = quizCorrectCount + ' / ' + QUIZ.length + ' נכונות';
+  }
+
+  QUIZ.forEach(function(item, qi){
+    var card = document.createElement('div');
+    card.className = 'quiz-card reveal';
+    var optsHtml = item.opts.map(function(o,i){
+      return '<button class="quiz-opt" data-i="'+i+'">'+o+'</button>';
+    }).join('');
+    card.innerHTML =
+      '<p class="quiz-q">' + (qi+1) + '. ' + item.q + '</p>' +
+      '<div class="quiz-opts">' + optsHtml + '</div>' +
+      '<p class="quiz-fb"></p>';
+    quizWrap.appendChild(card);
+
+    var opts = card.querySelectorAll('.quiz-opt');
+    var fb = card.querySelector('.quiz-fb');
+    opts.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var chosen = parseInt(btn.getAttribute('data-i'),10);
+        opts.forEach(function(b){ b.disabled = true; });
+        if(chosen === item.correct){
+          btn.classList.add('correct');
+          fb.textContent = 'נכון! ' + item.exp;
+          quizCorrectCount++;
+          addXp(5);
+        } else {
+          btn.classList.add('wrong');
+          opts[item.correct].classList.add('correct');
+          fb.textContent = 'לא מדויק. ' + item.exp;
+        }
+        fb.classList.add('show');
+        updateQuizScore();
+      });
+    });
+  });
+
+  // ---- gear wizard ----
+  var gearCard = document.getElementById('gearCard');
+  var gearState = { step:1, cat:null, budget:null };
+
+  var GEAR_RESULTS = {
+    sport: {
+      low: {title:"ציוד ספורט להתחלה חכמה", items:["נעלי ריצה בסיסיות מתאימות לסוג הריצה שלך","בקבוק מים רב-פעמי","בגדי ספורט נושמים"]},
+      mid: {title:"ציוד ספורט לשלב הבא", items:["נעלי ריצה איכותיות","שעון ספורט בסיסי למעקב קצב וזמן","סט בגדי ספורט טכניים"]},
+      high: {title:"ציוד ספורט ברמה מקצועית", items:["נעליים מותאמות אישית למבנה כף הרגל","שעון GPS ספורטיבי","ליווי מאמן אישי לתקופת ניסיון"]}
+    },
+    gaming: {
+      low: {title:"ציוד גיימינג להתחלה חכמה", items:["עכבר בסיסי מדויק","כרית עכבר איכותית","אוזניות סטריאו פשוטות"]},
+      mid: {title:"ציוד גיימינג לשלב הבא", items:["עכבר גיימינג עם DPI מתכוונן","אוזניות גיימינג עם מיקרופון","כיסא ישיבה נוח"]},
+      high: {title:"ציוד גיימינג ברמה מקצועית", items:["מקלדת מכנית","עכבר גיימינג מקצועי","מסך עם קצב רענון גבוה (144Hz ומעלה)","אוזניות פרימיום"]}
+    },
+    extreme: {
+      low: {title:"ציוד אקסטרים להתחלה חכמה", items:["קסדה בסיסית תקנית","כפפות מגן","בגדים שאפשר ללכלך", "התחלה במסלולים מבוקרים עם מדריך"]},
+      mid: {title:"ציוד אקסטרים לשלב הבא", items:["קסדה מוסמכת","ציוד מגן למרפקיים וברכיים","נעליים ייעודיות לענף שבחרת"]},
+      high: {title:"ציוד אקסטרים ברמה מקצועית", items:["ציוד מקצועי מלא כולל רתמה וקסדה מוסמכת בינלאומית","ליווי מדריך מוסמך","ביטוח מתאים לספורט אתגרי"]}
+    }
+  };
+
+  function renderGearStep(){
+    var stepsHtml = '<div class="gear-steps">' +
+      [1,2,3].map(function(n){ return '<span class="'+(gearState.step>=n?'done':'')+'"></span>'; }).join('') +
+      '</div>';
+
+    if(gearState.step === 1){
+      gearCard.innerHTML = stepsHtml +
+        '<p class="gear-q">מה הכי מעניין אותך?</p>' +
+        '<div class="gear-opts">' +
+        '<button class="gear-opt" data-v="sport">🏃‍♂️ ספורט</button>' +
+        '<button class="gear-opt" data-v="gaming">🎮 גיימינג</button>' +
+        '<button class="gear-opt" data-v="extreme">🧗‍♂️ אקסטרים</button>' +
+        '</div>';
+      Array.prototype.forEach.call(gearCard.querySelectorAll('.gear-opt'), function(b){
+        b.addEventListener('click', function(){ gearState.cat = b.getAttribute('data-v'); gearState.step=2; renderGearStep(); });
+      });
+    } else if(gearState.step === 2){
+      gearCard.innerHTML = stepsHtml +
+        '<p class="gear-q">מה התקציב שלך?</p>' +
+        '<div class="gear-opts">' +
+        '<button class="gear-opt" data-v="low">עד 150 ₪</button>' +
+        '<button class="gear-opt" data-v="mid">150–500 ₪</button>' +
+        '<button class="gear-opt" data-v="high">מעל 500 ₪</button>' +
+        '</div>';
+      Array.prototype.forEach.call(gearCard.querySelectorAll('.gear-opt'), function(b){
+        b.addEventListener('click', function(){ gearState.budget = b.getAttribute('data-v'); gearState.step=3; renderGearStep(); });
+      });
+    } else {
+      var rec = GEAR_RESULTS[gearState.cat][gearState.budget];
+      var itemsHtml = rec.items.map(function(i){ return '<li>'+i+'</li>'; }).join('');
+      gearCard.innerHTML = stepsHtml +
+        '<div class="gear-result"><h3>'+rec.title+'</h3><ul>'+itemsHtml+'</ul></div>' +
+        '<button class="gear-restart" id="gearRestart">התחל/י שוב</button>';
+      document.getElementById('gearRestart').addEventListener('click', function(){
+        gearState = {step:1, cat:null, budget:null};
+        renderGearStep();
+      });
+    }
+  }
+  renderGearStep();
+
+  // ---- mobile drawer menu ----
+  var burgerBtn = document.getElementById('burgerBtn');
+  var drawer = document.getElementById('mobileDrawer');
+  var overlay = document.getElementById('drawerOverlay');
+  var drawerClose = document.getElementById('drawerClose');
+
+  function openDrawer(){
+    drawer.classList.add('open');
+    overlay.classList.add('show');
+    document.body.classList.add('drawer-open');
+    burgerBtn.setAttribute('aria-expanded','true');
+    drawer.setAttribute('aria-hidden','false');
+  }
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.classList.remove('drawer-open');
+    burgerBtn.setAttribute('aria-expanded','false');
+    drawer.setAttribute('aria-hidden','true');
+  }
+  if(burgerBtn){
+    burgerBtn.addEventListener('click', function(){
+      var isOpen = burgerBtn.getAttribute('aria-expanded') === 'true';
+      if(isOpen){ closeDrawer(); } else { openDrawer(); }
+    });
+    overlay.addEventListener('click', closeDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){ closeDrawer(); }
+    });
+    drawer.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeDrawer);
+    });
+    window.addEventListener('resize', function(){
+      if(window.innerWidth > 920){ closeDrawer(); }
+    });
+  }
+
+  // ---- reveal on scroll ----
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // ---- feature carousel dots (mobile slide indicator) ----
+  var featGrid = document.querySelector('.feat-grid');
+  var featDots = document.getElementById('featDots');
+  if(featGrid && featDots){
+    var featCards = Array.prototype.slice.call(featGrid.querySelectorAll('.feat-card'));
+    featCards.forEach(function(_, i){
+      var d = document.createElement('span');
+      if(i === 0) d.classList.add('active');
+      featDots.appendChild(d);
+    });
+    var dotEls = Array.prototype.slice.call(featDots.children);
+    var dotTimer = null;
+    featGrid.addEventListener('scroll', function(){
+      if(dotTimer) clearTimeout(dotTimer);
+      dotTimer = setTimeout(function(){
+        var containerRect = featGrid.getBoundingClientRect();
+        var containerMid = containerRect.left + containerRect.width / 2;
+        var closest = 0, closestDist = Infinity;
+        featCards.forEach(function(card, i){
+          var r = card.getBoundingClientRect();
+          var cardMid = r.left + r.width / 2;
+          var dist = Math.abs(cardMid - containerMid);
+          if(dist < closestDist){ closestDist = dist; closest = i; }
+        });
+        dotEls.forEach(function(d, i){ d.classList.toggle('active', i === closest); });
+      }, 80);
+    }, {passive:true});
+  }
+
+  loadXp();
+  refreshXpUI();
+})();
+</script>
+</body>
+</html>
