@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>דאנסינג — 5 רעיונות שמניעים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink-light:#FFD9EA;
+    --pink-lighter:#FFEDF5;
+    --pink-dark:#D6236F;
+    --pink-deep:#A5165A;
+    --turquoise:#22B8A8;
+    --turquoise-deep:#0E7A70;
+    --yellow:#FFD23F;
+    --ink:#2B1830;
+    --ink-strong:#2B1830;
+    --white:#FFFFFF;
+    --gradient-cc: linear-gradient(90deg, #D6236F 0%, #A5165A 100%);
+    --shadow: 0 10px 30px rgba(43,24,48,0.12);
+  }
+  .gradient-text{
+    background:var(--gradient-cc);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--pink-lighter);
+    color:var(--ink);
+    font-family:'Heebo',sans-serif;
+    font-weight:400;
+    overflow-x:hidden;
+    color-scheme:light;
+  }
+  h1,h2,h3,.display{
+    font-family:'Rubik',sans-serif;
+    font-weight:900;
+    letter-spacing:-0.5px;
+    margin:0;
+  }
+  .eyebrow{
+    font-family:'Heebo',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:1.5px;
+    color:var(--pink-dark);
+    text-transform:uppercase;
+    display:inline-block;
+    margin-bottom:10px;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  input,select{font-family:inherit;font-size:16px;}
+  img,svg{max-width:100%;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:linear-gradient(180deg,#DCE8FF 0%, #EDE4FF 45%, var(--pink-lighter) 90%);
+    padding:80px 0 60px;
+    overflow:hidden;
+  }
+  .hero .wrap{display:flex;align-items:center;gap:40px;flex-wrap:wrap;}
+  .hero-text{flex:1 1 380px;}
+  .hero h1{font-size:clamp(42px,7vw,72px);line-height:0.95;color:var(--ink);}
+  .hero h1 span{background:var(--gradient-cc);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero p{font-size:18px;line-height:1.6;color:var(--ink);opacity:0.85;max-width:480px;margin-top:18px;}
+  .hero-dancer{flex:0 1 220px;display:flex;justify-content:center;max-width:200px;margin:0 auto;}
+  .hero-dancer svg{width:100%;height:auto;}
+  .dot{
+    position:absolute;border-radius:50%;opacity:0.5;
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section.feature{
+    padding:70px 0;
+    border-top:6px solid var(--white);
+  }
+  .feature-head{display:flex;align-items:baseline;gap:14px;margin-bottom:28px;flex-wrap:wrap;}
+  .feature-num{
+    font-family:'Rubik',sans-serif;font-weight:900;font-size:15px;
+    background:var(--gradient-cc);color:#fff;
+    border-radius:999px;padding:6px 14px;
+  }
+  .feature h2{font-size:clamp(26px,4vw,36px);}
+  .feature-sub{font-size:15px;opacity:0.75;margin-top:6px;max-width:600px;}
+  .card{
+    background:var(--white);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+    padding:32px;
+  }
+
+  /* section color themes */
+  .theme-turquoise{background:#E4F7F4;}
+  .theme-yellow{background:#FFF6DC;}
+  .theme-pink{background:var(--pink-lighter);}
+  .theme-white{background:var(--white);}
+
+  /* ---------- 1. FLIPBOOK ---------- */
+  .flip-stage{
+    display:flex;gap:30px;align-items:center;flex-wrap:wrap;justify-content:center;
+  }
+  .flip-svg-box{
+    background:linear-gradient(180deg,var(--white),var(--pink-lighter));
+    border-radius:18px;
+    padding:10px;
+    width:220px;
+    max-width:100%;
+    box-shadow:inset 0 0 0 2px var(--pink-light);
+  }
+  .flip-svg-box svg{display:block;width:100%;height:auto;}
+  .flip-controls{flex:1 1 260px;min-width:240px;}
+  input[type=range]{
+    width:100%;height:8px;border-radius:999px;
+    -webkit-appearance:none;background:var(--pink-light);
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+    background:var(--pink-dark);border:4px solid var(--white);box-shadow:var(--shadow);cursor:pointer;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--pink-dark);border:4px solid var(--white);box-shadow:var(--shadow);cursor:pointer;
+  }
+  .frame-label{
+    font-family:'Rubik',sans-serif;font-weight:800;color:var(--pink-dark);
+    font-size:15px;margin-top:14px;
+  }
+  .mini-btns{display:flex;gap:8px;margin-top:16px;}
+  .mini-btn{
+    background:var(--turquoise);color:white;border-radius:10px;padding:8px 14px;font-weight:700;font-size:14px;
+  }
+  .mini-btn:hover{background:var(--turquoise-deep);}
+
+  /* ---------- 2. QUIZ ---------- */
+  .quiz-q{display:none;}
+  .quiz-q.active{display:block;}
+  .quiz-progress{
+    height:6px;background:var(--pink-light);border-radius:999px;overflow:hidden;margin-bottom:24px;
+  }
+  .quiz-progress-bar{height:100%;background:var(--pink-dark);width:20%;transition:width .3s;}
+  .quiz-q h3{font-size:20px;margin-bottom:16px;}
+  .quiz-opts{display:grid;gap:10px;}
+  .quiz-opt{
+    background:var(--pink-lighter);border:2px solid transparent;border-radius:14px;
+    padding:14px 18px;text-align:right;font-size:15px;font-weight:500;transition:.15s;
+  }
+  .quiz-opt:hover{border-color:var(--pink-dark);background:var(--pink-light);}
+  .quiz-result{display:none;text-align:center;}
+  .quiz-result.active{display:block;}
+  .quiz-result .badge{
+    font-family:'Rubik',sans-serif;font-weight:900;font-size:28px;color:var(--pink-dark);
+  }
+  .quiz-restart{margin-top:18px;background:var(--pink-dark);color:white;border-radius:12px;padding:10px 22px;font-weight:700;}
+
+  /* ---------- 3. CALCULATOR ---------- */
+  .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  @media(max-width:640px){.calc-grid{grid-template-columns:1fr;}}
+  .calc-field label{font-weight:700;font-size:14px;display:flex;justify-content:space-between;}
+  .calc-field .val{color:var(--turquoise-deep);font-family:'Rubik',sans-serif;font-weight:900;}
+  .calc-bars{margin-top:26px;}
+  .bar-row{margin-bottom:16px;}
+  .bar-row .lbl{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin-bottom:6px;}
+  .bar-track{background:var(--pink-lighter);border-radius:999px;height:22px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:999px;transition:width .4s;}
+  .bar-fill.dance-class{background:var(--pink-dark);}
+  .bar-fill.dancing-app{background:var(--turquoise);}
+  .calc-save{
+    margin-top:18px;background:var(--yellow);border-radius:14px;padding:14px 18px;
+    font-family:'Rubik',sans-serif;font-weight:900;font-size:16px;color:var(--ink-strong);text-align:center;
+  }
+
+  /* ---------- 4. CHALLENGE PLANNER ---------- */
+  .planner-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  @media(max-width:640px){.planner-grid{grid-template-columns:1fr;}}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-weight:700;font-size:14px;margin-bottom:6px;}
+  .field input, .field select{
+    width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--pink-light);
+    font-size:15px;background:var(--pink-lighter);color:var(--ink);color-scheme:light;
+  }
+  .field select option{background:var(--white);color:var(--ink);}
+  .field input:focus, .field select:focus{outline:none;border-color:var(--pink-dark);}
+  .gen-btn{
+    background:var(--gradient-cc);color:white;padding:14px 20px;border-radius:14px;font-weight:800;font-size:15px;width:100%;
+  }
+  .gen-btn:hover{opacity:0.9;}
+  .challenge-card{
+    background:linear-gradient(150deg,var(--turquoise),var(--turquoise-deep));
+    color:white;border-radius:20px;padding:26px;min-height:200px;
+    display:flex;flex-direction:column;justify-content:center;gap:10px;
+  }
+  .challenge-card .tag{font-size:12px;letter-spacing:1px;opacity:0.85;text-transform:uppercase;font-weight:700;}
+  .challenge-card h3{font-size:24px;font-family:'Rubik',sans-serif;}
+  .challenge-card .stars{font-size:20px;letter-spacing:4px;}
+  .card-actions{display:flex;gap:10px;margin-top:16px;}
+  .card-actions button{
+    background:rgba(255,255,255,0.2);color:white;border-radius:10px;padding:9px 14px;font-weight:700;font-size:13px;
+    flex:1;
+  }
+  .card-actions button:hover{background:rgba(255,255,255,0.35);}
+
+  /* ---------- 5. WISHLIST ---------- */
+  .wish-form{display:flex;gap:10px;margin-bottom:22px;}
+  .wish-form input{
+    flex:1;padding:14px 16px;border-radius:14px;border:2px solid var(--pink-light);background:var(--pink-lighter);font-size:15px;
+  }
+  .wish-form button{background:var(--yellow);border-radius:14px;padding:0 22px;font-weight:800;color:var(--ink-strong);}
+  .wish-list{display:flex;flex-direction:column;gap:10px;}
+  .wish-item{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--pink-lighter);border-radius:14px;padding:12px 18px;
+  }
+  .wish-item .song{font-weight:600;}
+  .wish-item .votes{display:flex;align-items:center;gap:10px;}
+  .up-btn{background:var(--turquoise);color:white;border-radius:10px;width:34px;height:34px;font-size:16px;font-weight:800;}
+  .up-btn:hover{background:var(--turquoise-deep);}
+  .count{font-family:'Rubik',sans-serif;font-weight:900;color:var(--pink-dark);min-width:22px;text-align:center;}
+
+  footer{padding:40px 0 60px;text-align:center;font-size:13px;opacity:0.6;}
+
+  /* ---------- TOP NAV (floating capsule) ---------- */
+  body{padding-top:110px;}
+  .topbar{
+    position:fixed;top:18px;right:0;left:0;z-index:1000;
+    display:flex;justify-content:center;
+    pointer-events:none;
+  }
+  .capsule{
+    pointer-events:auto;
+    display:flex;align-items:center;gap:4px;
+    background:var(--ink-strong);
+    border-radius:999px;
+    padding:8px 8px 8px 8px;
+    box-shadow:0 12px 30px rgba(255,46,146,0.28), 0 4px 14px rgba(0,0,0,0.5);
+    max-width:calc(100% - 32px);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
+  }
+  .topbar.scrolled .capsule{
+    transform:translateY(-2px) scale(0.97);
+    box-shadow:0 8px 20px rgba(43,24,48,0.35);
+  }
+  .brand{
+    display:flex;align-items:center;gap:8px;
+    font-family:'Rubik',sans-serif;font-weight:900;font-size:17px;color:white;
+    text-decoration:none;
+    padding:8px 16px 8px 10px;
+    border-radius:999px;
+    background:var(--gradient-cc);
+  }
+  .brand-dot{
+    width:10px;height:10px;border-radius:50%;
+    background:white;
+  }
+  .nav-links{
+    display:flex;align-items:center;gap:2px;
+    list-style:none;margin:0;padding:0;
+  }
+  .nav-links a{
+    display:block;
+    text-decoration:none;color:rgba(255,255,255,0.72);
+    font-weight:600;font-size:13.5px;
+    padding:10px 15px;border-radius:999px;
+    transition:background .15s, color .15s;
+    white-space:nowrap;
+  }
+  .nav-links a:hover{color:white;background:rgba(255,255,255,0.1);}
+  .nav-links a.active{background:var(--turquoise);color:white;}
+  .nav-cta{
+    background:var(--gradient-cc);color:white;
+    padding:10px 20px;border-radius:999px;
+    font-weight:800;font-size:13.5px;text-decoration:none;
+    white-space:nowrap;margin-right:2px;
+  }
+  .nav-cta:hover{opacity:0.9;}
+  .nav-toggle{
+    display:none;
+    width:42px;height:42px;border-radius:999px;
+    background:rgba(255,255,255,0.12);align-items:center;justify-content:center;
+    flex-direction:column;gap:5px;
+    flex-shrink:0;
+  }
+  .nav-toggle span{display:block;width:19px;height:2.5px;background:white;border-radius:2px;transition:transform .2s, opacity .2s;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+
+  @media(max-width:900px){
+    .capsule{width:calc(100% - 32px);justify-content:space-between;}
+    .nav-links{
+      position:fixed;inset:0;top:0;right:0;left:0;bottom:0;
+      background:var(--ink-strong);
+      flex-direction:column;align-items:stretch;justify-content:center;
+      padding:24px;border-radius:0;
+      gap:6px;
+      transform:translateY(-12px);
+      opacity:0;pointer-events:none;
+      transition:opacity .22s, transform .22s;
+      z-index:1500;
+    }
+    .nav-links.open{opacity:1;pointer-events:auto;transform:translateY(0);}
+    .nav-links a{padding:20px 18px;border-radius:16px;color:rgba(255,255,255,0.8);font-size:20px;font-weight:700;text-align:center;}
+    .nav-links a.active{background:var(--turquoise);color:white;}
+    .nav-cta{display:none;}
+    .nav-toggle{display:flex;position:relative;z-index:1600;}
+  }
+
+  /* ---------- SMALL PHONES / GENERAL FINE-TUNING ---------- */
+  @media(max-width:640px){
+    .wrap{padding:0 18px;}
+    .card{padding:22px;}
+    section.feature{padding:50px 0;}
+    .hero{padding:60px 0 40px;}
+    .hero p{font-size:16px;}
+    .quiz-q h3{font-size:18px;}
+    .up-btn{width:40px;height:40px;font-size:18px;}
+    .wish-form{flex-wrap:wrap;}
+    .wish-form input{flex:1 1 100%;}
+    .wish-form button{flex:1 1 100%;padding:12px;}
+    .mini-btns{flex-wrap:wrap;}
+    .mini-btn{flex:1 1 auto;text-align:center;}
+    .card-actions{flex-direction:column;}
+  }
+  @media(max-width:400px){
+    .wrap{padding:0 14px;}
+    body{padding-top:96px;}
+    .topbar{top:12px;}
+    .brand{font-size:15px;padding:7px 13px 7px 8px;}
+    .card{padding:18px;}
+    .feature-num{font-size:13px;padding:5px 12px;}
+  }
+  /* ---------- BOTTOM APP TAB BAR (CapCut-style) ---------- */
+  .tab-bar{
+    display:none;
+    position:fixed;bottom:0;right:0;left:0;z-index:1200;
+    background:rgba(255,255,255,0.96);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-top:1px solid #EAEAEE;
+    padding:8px 4px calc(6px + env(safe-area-inset-bottom));
+    justify-content:space-around;align-items:center;
+  }
+  .tab-item{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+    text-decoration:none;color:#9A9AA3;
+    padding:6px 2px;border-radius:12px;
+    font-size:11px;font-weight:700;
+    transition:color .15s;
+  }
+  .tab-icon{font-size:20px;line-height:1;filter:grayscale(1);opacity:0.55;transition:filter .15s, opacity .15s, transform .15s;}
+  .tab-item.active{color:var(--ink);}
+  .tab-item.active .tab-icon{filter:none;opacity:1;transform:translateY(-2px) scale(1.08);}
+
+  @media(max-width:900px){
+    .tab-bar{display:flex;}
+    body{padding-bottom:74px;}
+  }
+  /* ---------- CAMERA FEATURE ---------- */
+  .cam-preview-wrap{
+    position:relative;border-radius:16px;overflow:hidden;background:#0A0A0F;
+    aspect-ratio:16/9;margin-bottom:16px;
+  }
+  .cam-preview-wrap video{
+    width:100%;height:100%;object-fit:cover;display:block;transform:scaleX(-1);
+  }
+  .cam-placeholder{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:rgba(255,255,255,0.5);gap:8px;
+  }
+  .cam-rec-dot{
+    position:absolute;top:10px;left:10px;z-index:2;
+    background:rgba(0,0,0,0.55);color:#fff;padding:6px 12px;border-radius:999px;
+    font-size:12px;font-weight:800;display:none;align-items:center;gap:6px;
+  }
+  .cam-rec-dot.show{display:flex;}
+  #cam-result{margin-top:6px;}
+  .download-link{
+    display:inline-block;background:var(--turquoise);color:white;padding:11px 20px;
+    border-radius:999px;font-weight:800;text-decoration:none;font-size:14px;margin-top:10px;
+  }
+  .cam-error{color:var(--pink-dark);font-weight:700;font-size:13.5px;margin-top:10px;}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<header class="topbar" id="topbar">
+  <div class="capsule">
+    <button class="nav-toggle" id="nav-toggle" aria-label="תפריט" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#f1" class="nav-link">פירוק צעדים</a></li>
+        <li><a href="#f2" class="nav-link">איזה רקדן אתם</a></li>
+        <li><a href="#f3" class="nav-link">מחשבון חיסכון</a></li>
+        <li><a href="#f4" class="nav-link">אתגרי כיתה</a></li>
+        <li><a href="#f5" class="nav-link">פולס 2026</a></li>
+        <li><a href="#f6" class="nav-link">צילום ריקוד</a></li>
+      </ul>
+    </nav>
+    <a href="#f5" class="nav-cta">נסו עכשיו</a>
+    <a href="#" class="brand"><span class="brand-dot"></span>דאנסינג</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="dot" style="width:120px;height:120px;background:var(--yellow);top:-20px;left:-30px;"></div>
+  <div class="dot" style="width:80px;height:80px;background:var(--turquoise);bottom:10px;right:60px;"></div>
+  <div class="wrap">
+    <div class="hero-text">
+      <div class="eyebrow">6 רעיונות פשוטים לאתר של דאנסינג</div>
+      <h1>לומדים לרקוד<br><span>צעד אחרי צעד.</span></h1>
+      <p>שישה כלים אינטראקטיביים שאפשר לבנות עם קוד קליל בלבד — בלי שרתים, בלי מסדי נתונים, רק כיף שמדגים בדיוק איך האפליקציה עובדת. גללו למטה ותנסו כל אחד מהם.</p>
+    </div>
+    <div class="hero-dancer">
+      <svg id="hero-svg" viewBox="0 0 200 260" width="180" height="234"></svg>
+    </div>
+  </div>
+</section>
+
+<!-- 1. FLIPBOOK -->
+<section class="feature theme-pink" id="f1">
+  <div class="wrap">
+    <div class="feature-head">
+      <span class="feature-num">01</span>
+      <h2>סימולטור פירוק צעדים</h2>
+      <span class="trend-badge">🔥 טרנדי</span>
+    </div>
+    <p class="feature-sub">גררו את הסליידר וצפו בתנועת הריקוד מתפרקת פריים־אחרי־פריים, לאט ומקרוב — בדיוק כמו שהאפליקציה מלמדת. בחרו דוגמה כדי לראות איך המנגנון עובד עם דפוסי תנועה שונים.</p>
+    <div class="card flip-stage">
+      <div class="flip-svg-box">
+        <svg id="flip-svg" viewBox="0 0 200 260" width="200" height="260"></svg>
+      </div>
+      <div class="flip-controls">
+        <div class="field" style="margin-bottom:14px;">
+          <label style="font-size:13px;">בחרו שיר (ריקוד מומצא)</label>
+          <select id="flip-trend">
+            <option value="default">תנועת בסיס</option>
+            <option value="daidai">DAI DAI</option>
+            <option value="eichrokedet">איך שהיא רוקדת</option>
+            <option value="rio">ריו דה ז'נרו</option>
+            <option value="lokotevet">לא כותבת על אקסים</option>
+            <option value="hilton">הילטון</option>
+            <option value="meule">מעולה</option>
+          </select>
+        </div>
+        <input type="range" id="flip-slider" min="0" max="100" value="0" step="0.1">
+        <div class="frame-label" id="flip-label">שלב: עמידה</div>
+        <div class="mini-btns">
+          <button class="mini-btn" id="flip-play-slow">🐢 נגן לאט</button>
+          <button class="mini-btn" id="flip-play-fast">⏩ נגן מהר</button>
+          <button class="mini-btn" id="flip-reset" style="background:var(--pink-dark);">איפוס</button>
+        </div>
+        <div style="font-size:12px;opacity:0.6;margin-top:14px;line-height:1.5;">
+          ℹ️ הבהרה: 6 הריקודים כאן הם המצאה מקורית וכיפית שלי לכל שם שיר — לא שחזור של כוריאוגרפיה אמיתית מהקליפ או מטיקטוק. חושבו על זה כדוגמת "placeholder" למנגנון; באפליקציה האמיתית כאן היו מוטמעים צילומי וידאו או נתוני תנועה אמיתיים מרקדן מקצועי לכל שיר.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. QUIZ -->
+<section class="feature theme-turquoise" id="f2">
+  <div class="wrap">
+    <div class="feature-head">
+      <span class="feature-num">02</span>
+      <h2>איזה רקדן אתם?</h2>
+      <span class="trend-badge">⭐ פופולרי</span>
+    </div>
+    <p class="feature-sub">שאלון קצר ומהיר — הלוגיקה כולה רצה בדפדפן, בלי הרשמה ובלי שרת.</p>
+    <div class="card" style="max-width:560px;">
+      <div class="quiz-progress"><div class="quiz-progress-bar" id="quiz-progress"></div></div>
+
+      <div class="quiz-q active" data-q="0">
+        <h3>מה השיר שגורם לכם לקפוץ מהספה?</h3>
+        <div class="quiz-opts">
+          <div class="quiz-opt" data-style="היפ-הופ">בס כבד וקצבי</div>
+          <div class="quiz-opt" data-style="פופ">להיט פופ שכולם שרים</div>
+          <div class="quiz-opt" data-style="לטיני">קצב חם ולוהט</div>
+          <div class="quiz-opt" data-style="ישראלי">שיר ישראלי עם מסר</div>
+        </div>
+      </div>
+
+      <div class="quiz-q" data-q="1">
+        <h3>איך אתם מגיבים כשמתחיל טרנד חדש בטיקטוק?</h3>
+        <div class="quiz-opts">
+          <div class="quiz-opt" data-style="פופ">לומדים אותו תוך 5 דקות</div>
+          <div class="quiz-opt" data-style="היפ-הופ">מוסיפים לו סטייל משלי</div>
+          <div class="quiz-opt" data-style="ישראלי">מראים לחברים בקבוצה</div>
+          <div class="quiz-opt" data-style="לטיני">מזיזים את כל הגוף</div>
+        </div>
+      </div>
+
+      <div class="quiz-q" data-q="2">
+        <h3>מה מתאר אתכם בחדר הכושר או במסדרון בהפסקה?</h3>
+        <div class="quiz-opts">
+          <div class="quiz-opt" data-style="לטיני">תנועות ירך חלקות</div>
+          <div class="quiz-opt" data-style="היפ-הופ">צעדים חדים וחזקים</div>
+          <div class="quiz-opt" data-style="ישראלי">מעגל וקפיצות</div>
+          <div class="quiz-opt" data-style="פופ">כוריאוגרפיה מסונכרנת</div>
+        </div>
+      </div>
+
+      <div class="quiz-q" data-q="3">
+        <h3>איזה בגד ריקוד הכי "אתם"?</h3>
+        <div class="quiz-opts">
+          <div class="quiz-opt" data-style="היפ-הופ">מכנסי טרנינג רחבים</div>
+          <div class="quiz-opt" data-style="לטיני">חולצה זורמת וצבעונית</div>
+          <div class="quiz-opt" data-style="ישראלי">חולצת קבוצה עם כולם</div>
+          <div class="quiz-opt" data-style="פופ">משהו נוצץ שנראה טוב במצלמה</div>
+        </div>
+      </div>
+
+      <div class="quiz-result" id="quiz-result">
+        <div class="eyebrow">התוצאה שלכם</div>
+        <div class="badge" id="quiz-badge"></div>
+        <p id="quiz-text" style="margin-top:10px;font-size:15px;"></p>
+        <button class="quiz-restart" id="quiz-restart">לנסות שוב</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. CALCULATOR -->
+<section class="feature theme-yellow" id="f3">
+  <div class="wrap">
+    <div class="feature-head">
+      <span class="feature-num">03</span>
+      <h2>מחשבון החיסכון</h2>
+      <span class="trend-badge">✨ חדש</span>
+    </div>
+    <p class="feature-sub">מדבר ישירות להורים: כמה עולה חוג ריקוד מול מנוי לאפליקציה, בזמן אמת.</p>
+    <div class="card">
+      <div class="calc-grid">
+        <div class="calc-field">
+          <label>כמה ילדים בבית רוקדים? <span class="val" id="kids-val">1</span></label>
+          <input type="range" id="kids-slider" min="1" max="4" value="1">
+        </div>
+        <div class="calc-field">
+          <label>כמה חודשים בשנה? <span class="val" id="months-val">10</span></label>
+          <input type="range" id="months-slider" min="1" max="12" value="10">
+        </div>
+      </div>
+      <div class="calc-bars">
+        <div class="bar-row">
+          <div class="lbl"><span>חוג ריקוד ממוצע</span><span id="class-cost">₪3,600</span></div>
+          <div class="bar-track"><div class="bar-fill dance-class" id="class-bar" style="width:100%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="lbl"><span>מנוי דאנסינג Music-Pro</span><span id="app-cost">₪240</span></div>
+          <div class="bar-track"><div class="bar-fill dancing-app" id="app-bar" style="width:7%;"></div></div>
+        </div>
+      </div>
+      <div class="calc-save" id="calc-save">חוסכים ₪3,360 בשנה 🎉</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CHALLENGE PLANNER -->
+<section class="feature theme-white" id="f4">
+  <div class="wrap">
+    <div class="feature-head">
+      <span class="feature-num">04</span>
+      <h2>מחולל אתגרי כיתה</h2>
+      <span class="trend-badge">🏆 מומלץ</span>
+    </div>
+    <p class="feature-sub">שלושה פרטים והמערכת מייצרת דף חוקים מוכן להעתקה לוואטסאפ.</p>
+    <div class="card planner-grid">
+      <div>
+        <div class="field">
+          <label>שם הקבוצה או הכיתה</label>
+          <input type="text" id="p-name" placeholder="לדוגמה: כיתה ח׳2" value="כיתה ח׳2">
+        </div>
+        <div class="field">
+          <label>סגנון ריקוד</label>
+          <select id="p-style">
+            <option>פופ</option>
+            <option>היפ-הופ</option>
+            <option>לטיני</option>
+            <option>ישראלי</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>רמת קושי</label>
+          <select id="p-level">
+            <option>קליל</option>
+            <option>בינוני</option>
+            <option>מאתגר</option>
+          </select>
+        </div>
+        <button class="gen-btn" id="p-generate">✨ צרו את דף האתגר</button>
+      </div>
+      <div class="challenge-card" id="challenge-card">
+        <div class="tag">אתגר ריקוד דאנסינג</div>
+        <h3 id="cc-title">כיתה ח׳2 יוצאת לדרך!</h3>
+        <div id="cc-sub">סגנון: פופ · רמה: קליל</div>
+        <div class="stars">⭐⭐⭐</div>
+        <div id="cc-line">מי יגיע ל-3 כוכבים ראשון?</div>
+        <div class="card-actions">
+          <button id="cc-copy">העתיקו לוואטסאפ</button>
+          <button id="cc-print">הדפיסו כ-PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. WISHLIST -->
+<section class="feature theme-pink" id="f5">
+  <div class="wrap">
+    <div class="feature-head">
+      <span class="feature-num">05</span>
+      <h2>🔥 הפולס האמיתי של הריקוד — טיקטוק 2026</h2>
+      <span class="trend-badge">📈 בעלייה</span>
+    </div>
+    <p class="feature-sub">התחלנו את הרשימה עם כמה מהשירים והטרנדים שבאמת מובילים כרגע בטיקטוק. משתמשים יכולים להוסיף שיר משלהם ולהצביע לטובים ביותר.</p>
+    <div class="card" style="max-width:560px;">
+      <div class="wish-form">
+        <input type="text" id="wish-input" placeholder="הקלידו שם שיר...">
+        <button id="wish-add">הציעו שיר</button>
+      </div>
+      <div class="wish-list" id="wish-list"></div>
+      <div style="font-size:12px;opacity:0.55;margin-top:14px;">מבוסס על טרנדים ויראליים שדווחו ביולי 2026 · הרשימה מתעדכנת ידנית</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. CAMERA -->
+<section class="feature theme-turquoise" id="f6">
+  <div class="wrap">
+    <div class="feature-head">
+      <span class="feature-num">06</span>
+      <h2>📷 מצלמים את הריקוד שלכם</h2>
+      <span class="trend-badge">🎥 חדש</span>
+    </div>
+    <p class="feature-sub">מפעילים את המצלמה, מקליטים את עצמכם רוקדים, ומורידים את הסרטון לשמירה או שיתוף. ההקלטה נשארת אצלכם בלבד — שום דבר לא נשלח לשרת.</p>
+    <div class="card" style="max-width:560px;">
+      <div class="cam-preview-wrap">
+        <video id="cam-video" autoplay playsinline muted></video>
+        <div class="cam-rec-dot" id="cam-rec-dot">⏺ מקליטים <span id="cam-timer">00:00</span></div>
+        <div class="cam-placeholder" id="cam-placeholder"><span style="font-size:32px;">📷</span><span style="font-size:13px;">המצלמה תופיע כאן</span></div>
+      </div>
+      <div class="mini-btns">
+        <button class="mini-btn" id="cam-start">📷 הפעלת מצלמה</button>
+        <button class="mini-btn" id="cam-record" style="background:var(--pink-dark);" disabled>⏺ התחל הקלטה</button>
+        <button class="mini-btn" id="cam-stop" style="background:var(--ink-strong);" disabled>⏹ עצור הקלטה</button>
+      </div>
+      <div id="cam-result"></div>
+      <div style="font-size:12px;opacity:0.6;margin-top:14px;line-height:1.5;">
+        ℹ️ הדפדפן יבקש הרשאת מצלמה ומיקרופון — צריך לאשר כדי שזה יעבוד. אם זה לא עובד, ייתכן שהדפדפן חוסם גישה למצלמה מקובץ מקומי; זה יעבוד כרגיל כשהאתר יעלה לאינטרנט (HTTPS).
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>נבנה כדוגמה חיה לששת הרעיונות · דאנסינג
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:12px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=dancing" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<nav class="tab-bar" id="tab-bar">
+  <a href="#f1" class="nav-link tab-item"><span class="tab-icon">🕺</span><span class="tab-label">צעדים</span></a>
+  <a href="#f2" class="nav-link tab-item"><span class="tab-icon">🧭</span><span class="tab-label">סגנון</span></a>
+  <a href="#f3" class="nav-link tab-item"><span class="tab-icon">💰</span><span class="tab-label">חיסכון</span></a>
+  <a href="#f4" class="nav-link tab-item"><span class="tab-icon">🏆</span><span class="tab-label">אתגר</span></a>
+  <a href="#f5" class="nav-link tab-item"><span class="tab-icon">🔥</span><span class="tab-label">פולס</span></a>
+  <a href="#f6" class="nav-link tab-item"><span class="tab-icon">📷</span><span class="tab-label">צילום</span></a>
+</nav>
+
+<script>
+/* ============ Top nav behavior ============ */
+const topbar = document.getElementById('topbar');
+const navLinks = document.getElementById('nav-links');
+const navToggle = document.getElementById('nav-toggle');
+const sections = ['f1','f2','f3','f4','f5'].map(id=>document.getElementById(id));
+const linkEls = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', ()=>{
+  topbar.classList.toggle('scrolled', window.scrollY>10);
+  let current = null;
+  sections.forEach(sec=>{
+    const rect = sec.getBoundingClientRect();
+    if(rect.top <= 110 && rect.bottom > 110) current = sec.id;
+  });
+  linkEls.forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('href') === '#'+current);
+  });
+});
+
+navToggle.addEventListener('click', ()=>{
+  const isOpen = navLinks.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+linkEls.forEach(a=>a.addEventListener('click', ()=>{
+  navLinks.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}));
+
+/* ============ Stick-figure dancer engine (used in hero + flipbook) ============ */
+const poseKeys = ['head','shoulder','hip','lHand','rHand','lFoot','rFoot'];
+
+const defaultFrames = [
+  {name:'עמידה',      points:{head:[100,40],shoulder:[100,70],hip:[100,150],lHand:[70,110],rHand:[130,110],lFoot:[80,230],rFoot:[120,230]}},
+  {name:'ידיים למעלה', points:{head:[100,38],shoulder:[100,68],hip:[102,150],lHand:[55,30], rHand:[145,30], lFoot:[78,230],rFoot:[122,230]}},
+  {name:'ירך שמאלה',   points:{head:[96,42], shoulder:[96,72], hip:[80,150], lHand:[40,100],rHand:[150,100],lFoot:[70,228],rFoot:[120,232]}},
+  {name:'ירך ימינה',   points:{head:[104,42],shoulder:[104,72],hip:[120,150],lHand:[130,90],rHand:[78,90], lFoot:[90,232],rFoot:[130,228]}},
+  {name:'כפיפה',       points:{head:[100,70],shoulder:[100,100],hip:[100,170],lHand:[60,140],rHand:[140,140],lFoot:[75,230],rFoot:[125,230]}},
+  {name:'קפיצה',       points:{head:[100,20],shoulder:[100,50],hip:[100,110],lHand:[30,40], rHand:[170,40], lFoot:[70,200],rFoot:[130,200]}},
+];
+
+/* Six ORIGINAL, explicitly-invented mini-choreographies, one per song title the user
+   gave — made up for fun as a demo of the flipbook mechanic. These are not reproductions
+   of any real choreography. See disclaimer in UI. Each uses a distinct body silhouette
+   (stance width, crouch depth, arm span) so they actually read as different dances,
+   not just re-timed versions of the same wiggle. */
+const trendFrameSets = {
+  default: defaultFrames,
+  daidai: [ // wide football-chant stance, big alternating overhead arms, deep bounce
+    {name:'עמידה רחבה',            points:{head:[100,44],shoulder:[100,74],hip:[100,150],lHand:[75,120],rHand:[125,120],lFoot:[60,230],rFoot:[140,230]}},
+    {name:'יד שמאל למעלה',         points:{head:[95,44], shoulder:[95,74], hip:[95,150], lHand:[40,20], rHand:[130,120],lFoot:[55,230],rFoot:[145,228]}},
+    {name:'יד ימין למעלה',         points:{head:[105,44],shoulder:[105,74],hip:[105,150],lHand:[70,120],rHand:[160,20], lFoot:[55,228],rFoot:[145,230]}},
+    {name:'כריעה עמוקה',           points:{head:[100,90],shoulder:[100,120],hip:[100,175],lHand:[50,150],rHand:[150,150],lFoot:[55,230],rFoot:[145,230]}},
+    {name:'שתי ידיים ב-V',         points:{head:[100,20],shoulder:[100,50],hip:[100,120],lHand:[35,10], rHand:[165,10], lFoot:[60,210],rFoot:[140,210]}},
+    {name:'חזרה לעמידה רחבה',      points:{head:[100,44],shoulder:[100,74],hip:[100,150],lHand:[75,120],rHand:[125,120],lFoot:[60,230],rFoot:[140,230]}},
+  ],
+  eichrokedet: [ // narrow feet-together stance, one arm sweeps at a time, torso lean
+    {name:'רגליים צמודות',        points:{head:[100,40],shoulder:[100,70],hip:[100,150],lHand:[85,115],rHand:[115,115],lFoot:[95,232],rFoot:[105,232]}},
+    {name:'נטייה שמאלה, יד למעלה', points:{head:[80,50], shoulder:[88,76], hip:[100,150],lHand:[40,10], rHand:[105,110],lFoot:[95,232],rFoot:[105,232]}},
+    {name:'נטייה ימינה, יד למעלה', points:{head:[120,50],shoulder:[112,76],hip:[100,150],lHand:[95,110],rHand:[160,10], lFoot:[95,232],rFoot:[105,232]}},
+    {name:'קשת גב, ידיים נגררות',  points:{head:[100,60],shoulder:[100,90],hip:[100,140],lHand:[75,180],rHand:[125,180],lFoot:[95,232],rFoot:[105,232]}},
+    {name:'עלייה על קצות האצבעות', points:{head:[100,20],shoulder:[100,48],hip:[100,110],lHand:[110,60],rHand:[90,60],  lFoot:[95,220],rFoot:[105,220]}},
+    {name:'חזרה לרגליים צמודות',   points:{head:[100,40],shoulder:[100,70],hip:[100,150],lHand:[85,115],rHand:[115,115],lFoot:[95,232],rFoot:[105,232]}},
+  ],
+  rio: [ // huge samba lunges side to side, fan arms, split jump
+    {name:'עמידה',              points:{head:[100,42],shoulder:[100,72],hip:[100,150],lHand:[75,120],rHand:[125,120],lFoot:[85,230],rFoot:[115,230]}},
+    {name:'צלילה רחבה שמאלה',    points:{head:[75,44], shoulder:[75,74], hip:[70,150], lHand:[30,60], rHand:[110,110],lFoot:[40,232],rFoot:[130,225]}},
+    {name:'צלילה רחבה ימינה',    points:{head:[125,44],shoulder:[125,74],hip:[130,150],lHand:[90,110],rHand:[170,60], lFoot:[70,225],rFoot:[160,232]}},
+    {name:'מניפה כפולה למעלה',   points:{head:[100,30],shoulder:[100,58],hip:[100,135],lHand:[20,10], rHand:[180,10], lFoot:[60,220],rFoot:[140,220]}},
+    {name:'כריעת שייק',         points:{head:[100,70],shoulder:[100,100],hip:[100,168],lHand:[65,140],rHand:[135,140],lFoot:[75,232],rFoot:[125,232]}},
+    {name:'קפיצת ספליט',        points:{head:[100,20],shoulder:[100,50],hip:[100,110],lHand:[30,20], rHand:[170,20], lFoot:[50,200],rFoot:[150,200]}},
+  ],
+  lokotevet: [ // feet stay almost still, all the attitude lives in the upper body
+    {name:'עמידה שקטה',          points:{head:[100,42],shoulder:[100,72],hip:[100,150],lHand:[85,120],rHand:[115,120],lFoot:[92,232],rFoot:[108,232]}},
+    {name:'יד לירך, ראש מוטה',   points:{head:[115,50],shoulder:[100,72],hip:[92,150], lHand:[95,155],rHand:[135,100],lFoot:[92,232],rFoot:[108,232]}},
+    {name:'הצבעה הצידה',         points:{head:[85,50], shoulder:[100,72],hip:[108,150],lHand:[50,90], rHand:[125,120],lFoot:[92,232],rFoot:[108,232]}},
+    {name:'משיכת כתפיים',        points:{head:[100,55],shoulder:[100,78],hip:[100,150],lHand:[80,110],rHand:[120,110],lFoot:[92,232],rFoot:[108,232]}},
+    {name:'ידיים משולבות',       points:{head:[100,44],shoulder:[100,72],hip:[100,150],lHand:[115,95],rHand:[85,95], lFoot:[92,232],rFoot:[108,232]}},
+    {name:'מבט מעבר לכתף',       points:{head:[118,46],shoulder:[103,72],hip:[100,150],lHand:[85,120],rHand:[115,120],lFoot:[92,232],rFoot:[108,232]}},
+  ],
+  hilton: [ // windmill arms, a kick, and a big jump — glam and playful
+    {name:'עמידה נוצצת',         points:{head:[100,40],shoulder:[100,70],hip:[100,150],lHand:[78,115],rHand:[122,115],lFoot:[85,230],rFoot:[115,230]}},
+    {name:'טחנת רוח - יד שמאל',  points:{head:[85,42], shoulder:[95,70], hip:[100,150],lHand:[40,140],rHand:[150,20], lFoot:[83,230],rFoot:[117,230]}},
+    {name:'טחנת רוח - יד ימין',  points:{head:[115,42],shoulder:[105,70],hip:[100,150],lHand:[50,20], rHand:[160,140],lFoot:[83,230],rFoot:[117,230]}},
+    {name:'בעיטה שובבה',        points:{head:[100,44],shoulder:[100,72],hip:[95,148], lHand:[70,100],rHand:[130,100],lFoot:[100,180],rFoot:[120,232]}},
+    {name:'קפיצת מסיבה',        points:{head:[100,18],shoulder:[100,48],hip:[100,112],lHand:[35,10], rHand:[165,10], lFoot:[75,205],rFoot:[125,205]}},
+    {name:'פוזה, ידיים על המותניים',points:{head:[100,40],shoulder:[100,68],hip:[100,150],lHand:[70,155],rHand:[130,155],lFoot:[85,230],rFoot:[115,230]}},
+  ],
+  meule: [ // very low crouch base, explosive full-extension jump at the peak
+    {name:'כריעה נמוכה',         points:{head:[100,80],shoulder:[100,108],hip:[100,168],lHand:[75,140],rHand:[125,140],lFoot:[75,230],rFoot:[125,230]}},
+    {name:'אגרוף שמאל מהכריעה',  points:{head:[100,75],shoulder:[100,105],hip:[100,166],lHand:[70,20], rHand:[125,140],lFoot:[75,230],rFoot:[125,230]}},
+    {name:'אגרוף ימין מהכריעה',  points:{head:[100,75],shoulder:[100,105],hip:[100,166],lHand:[75,140],rHand:[130,20], lFoot:[75,230],rFoot:[125,230]}},
+    {name:'אגרוף כפול',         points:{head:[100,70],shoulder:[100,100],hip:[100,164],lHand:[60,15], rHand:[140,15], lFoot:[75,230],rFoot:[125,230]}},
+    {name:'קפיצה בפריסה מלאה',   points:{head:[100,10],shoulder:[100,40],hip:[100,100],lHand:[45,0],  rHand:[155,0],  lFoot:[70,190],rFoot:[130,190]}},
+    {name:'נחיתה חזרה לכריעה',   points:{head:[100,80],shoulder:[100,108],hip:[100,168],lHand:[75,140],rHand:[125,140],lFoot:[75,230],rFoot:[125,230]}},
+  ],
+};
+Object.values(trendFrameSets).forEach(fs => fs.push(fs[0])); // loop back to start
+
+/* Distinct accent colors per dance so a switch is unmistakable even before reading the label */
+const trendColors = {
+  default:     ['#A5165A', '#0E7A70'],
+  daidai:      ['#0E7A70', '#D6236F'],
+  eichrokedet: ['#A5165A', '#22B8A8'],
+  rio:         ['#22B8A8', '#D6236F'],
+  lokotevet:   ['#2B1830', '#D6236F'],
+  hilton:      ['#D6236F', '#0E7A70'],
+  meule:       ['#0E7A70', '#A5165A'],
+};
+
+function lerp(a,b,t){return a+(b-a)*t;}
+function poseAt(t, frames){ // t in [0,1]
+  frames = frames || defaultFrames;
+  const seg = t*(frames.length-1);
+  const i = Math.min(Math.floor(seg), frames.length-2);
+  const frac = seg-i;
+  const A = frames[i].points, B = frames[i+1].points;
+  const p = {};
+  poseKeys.forEach(k=>{
+    p[k] = [lerp(A[k][0],B[k][0],frac), lerp(A[k][1],B[k][1],frac)];
+  });
+  return {points:p, name: frac<0.5 ? frames[i].name : frames[i+1].name};
+}
+
+const METAL = '#454E63';
+const METAL_LIGHT = '#7C879E';
+
+function angleDeg(p1, p2){ return Math.atan2(p2[1]-p1[1], p2[0]-p1[0]) * 180/Math.PI; }
+function dist(p1, p2){ return Math.hypot(p2[0]-p1[0], p2[1]-p1[1]); }
+function mid(p1, p2){ return [(p1[0]+p2[0])/2, (p1[1]+p2[1])/2]; }
+
+function renderDancer(svgEl, pose, color1, color2){
+  const p = pose.points;
+  const torsoMid = mid(p.shoulder, p.hip);
+  const torsoLen = dist(p.shoulder, p.hip) + 8;
+  const torsoAngle = angleDeg(p.shoulder, p.hip) - 90;
+  const torsoWidth = 30;
+
+  svgEl.innerHTML = `
+    <!-- legs -->
+    <line x1="${p.hip[0]}" y1="${p.hip[1]}" x2="${p.lFoot[0]}" y2="${p.lFoot[1]}" stroke="${METAL}" stroke-width="12" stroke-linecap="round"/>
+    <line x1="${p.hip[0]}" y1="${p.hip[1]}" x2="${p.rFoot[0]}" y2="${p.rFoot[1]}" stroke="${METAL}" stroke-width="12" stroke-linecap="round"/>
+    <!-- foot thrusters -->
+    <rect x="${p.lFoot[0]-9}" y="${p.lFoot[1]-5}" width="18" height="10" rx="3" fill="${color2}"/>
+    <rect x="${p.rFoot[0]-9}" y="${p.rFoot[1]-5}" width="18" height="10" rx="3" fill="${color2}"/>
+    <!-- hip joint -->
+    <circle cx="${p.hip[0]}" cy="${p.hip[1]}" r="7" fill="${METAL_LIGHT}"/>
+    <!-- arms -->
+    <line x1="${p.shoulder[0]}" y1="${p.shoulder[1]}" x2="${p.lHand[0]}" y2="${p.lHand[1]}" stroke="${METAL}" stroke-width="10" stroke-linecap="round"/>
+    <line x1="${p.shoulder[0]}" y1="${p.shoulder[1]}" x2="${p.rHand[0]}" y2="${p.rHand[1]}" stroke="${METAL}" stroke-width="10" stroke-linecap="round"/>
+    <!-- hand orbs -->
+    <circle cx="${p.lHand[0]}" cy="${p.lHand[1]}" r="6.5" fill="${color1}"/>
+    <circle cx="${p.rHand[0]}" cy="${p.rHand[1]}" r="6.5" fill="${color1}"/>
+    <!-- shoulder joints -->
+    <circle cx="${p.shoulder[0]}" cy="${p.shoulder[1]}" r="7.5" fill="${METAL_LIGHT}"/>
+    <!-- torso chassis -->
+    <rect x="${-torsoWidth/2}" y="${-torsoLen/2}" width="${torsoWidth}" height="${torsoLen}" rx="8"
+          fill="${METAL}" stroke="${METAL_LIGHT}" stroke-width="2"
+          transform="translate(${torsoMid[0]},${torsoMid[1]}) rotate(${torsoAngle})"/>
+    <!-- chest core -->
+    <circle cx="${torsoMid[0]}" cy="${torsoMid[1]}" r="7" fill="${color2}"/>
+    <circle cx="${torsoMid[0]}" cy="${torsoMid[1]}" r="11" fill="none" stroke="${color2}" stroke-width="1.5" opacity="0.5"/>
+    <!-- neck -->
+    <line x1="${p.shoulder[0]}" y1="${p.shoulder[1]}" x2="${p.head[0]}" y2="${p.head[1]}" stroke="${METAL}" stroke-width="7" stroke-linecap="round"/>
+    <!-- head -->
+    <rect x="${p.head[0]-15}" y="${p.head[1]-14}" width="30" height="26" rx="8" fill="${METAL}" stroke="${METAL_LIGHT}" stroke-width="2"/>
+    <!-- visor -->
+    <rect x="${p.head[0]-10}" y="${p.head[1]-4}" width="20" height="7" rx="3.5" fill="${color1}"/>
+    <!-- antenna -->
+    <line x1="${p.head[0]}" y1="${p.head[1]-14}" x2="${p.head[0]}" y2="${p.head[1]-24}" stroke="${METAL_LIGHT}" stroke-width="2"/>
+    <circle cx="${p.head[0]}" cy="${p.head[1]-25}" r="3" fill="${color2}"/>
+  `;
+}
+
+
+
+
+
+/* Hero: ambient auto-looping dancer */
+const heroSvg = document.getElementById('hero-svg');
+let heroT = 0;
+function animateHero(){
+  heroT += 0.0035;
+  if(heroT>1) heroT-=1;
+  renderDancer(heroSvg, poseAt(heroT, defaultFrames), '#D6236F', '#22B8A8');
+  requestAnimationFrame(animateHero);
+}
+animateHero();
+
+/* Flipbook: slider-controlled, per selected trend */
+const flipSvg = document.getElementById('flip-svg');
+const flipSlider = document.getElementById('flip-slider');
+const flipLabel = document.getElementById('flip-label');
+const flipTrendSelect = document.getElementById('flip-trend');
+function updateFlip(){
+  const t = flipSlider.value/100;
+  const key = flipTrendSelect.value;
+  const frames = trendFrameSets[key] || defaultFrames;
+  const colors = trendColors[key] || trendColors.default;
+  const pose = poseAt(t, frames);
+  renderDancer(flipSvg, pose, colors[0], colors[1]);
+  flipLabel.textContent = 'שלב: ' + pose.name;
+}
+flipSlider.addEventListener('input', ()=>{ stopFlipPlay(); updateFlip(); });
+flipTrendSelect.addEventListener('change', updateFlip);
+updateFlip();
+
+const flipPlaySlowBtn = document.getElementById('flip-play-slow');
+const flipPlayFastBtn = document.getElementById('flip-play-fast');
+let flipAnimId = null, flipAnimStart = null, flipAnimDuration = null;
+
+function stopFlipPlay(){
+  if(flipAnimId) cancelAnimationFrame(flipAnimId);
+  flipAnimId = null; flipAnimDuration = null;
+  flipPlaySlowBtn.textContent = '🐢 נגן לאט';
+  flipPlayFastBtn.textContent = '⏩ נגן מהר';
+}
+
+function startFlipPlay(durationMs, label, btnEl, otherBtnEl, otherLabel){
+  const wasThisSpeed = flipAnimDuration === durationMs;
+  stopFlipPlay();
+  if(wasThisSpeed) return; // clicking the same active speed just stops it
+  flipAnimDuration = durationMs;
+  const startVal = parseFloat(flipSlider.value) || 0;
+  flipAnimStart = null;
+  function step(ts){
+    if(flipAnimStart === null) flipAnimStart = ts - (startVal/100)*durationMs;
+    const elapsed = ts - flipAnimStart;
+    const v = (elapsed % durationMs) / durationMs * 100;
+    flipSlider.value = v;
+    updateFlip();
+    flipAnimId = requestAnimationFrame(step);
+  }
+  flipAnimId = requestAnimationFrame(step);
+  btnEl.textContent = '⏸ עצירה';
+  otherBtnEl.textContent = otherLabel;
+}
+
+flipPlaySlowBtn.addEventListener('click', ()=>{
+  startFlipPlay(7000, '🐢 נגן לאט', flipPlaySlowBtn, flipPlayFastBtn, '⏩ נגן מהר');
+});
+flipPlayFastBtn.addEventListener('click', ()=>{
+  startFlipPlay(2200, '⏩ נגן מהר', flipPlayFastBtn, flipPlaySlowBtn, '🐢 נגן לאט');
+});
+document.getElementById('flip-reset').addEventListener('click', ()=>{
+  stopFlipPlay();
+  flipSlider.value = 0; updateFlip();
+});
+
+/* ============ Quiz ============ */
+const quizQs = document.querySelectorAll('.quiz-q');
+const quizProgress = document.getElementById('quiz-progress');
+let quizIndex = 0;
+const tally = {'היפ-הופ':0,'פופ':0,'לטיני':0,'ישראלי':0};
+const styleInfo = {
+  'היפ-הופ': {badge:'היפ-הופרים בנשמה! 🔥', text:'אתם אוהבים תנועות חדות וקצב חזק. נסו את מדריך הריקוד "Street Groove" הראשון שלכם באפליקציה.'},
+  'פופ': {badge:'כוכבי פופ אמיתיים! ⭐', text:'אתם קולטים כוריאוגרפיה מהר ואוהבים ריקודים סינכרוניים. תתחילו עם הלהיט הפופולרי השבוע.'},
+  'לטיני': {badge:'רקדני לטיני חמים! 💃', text:'תנועות ירך חלקות וקצב חם — הריקוד הלטיני הראשון באפליקציה נוצר בשבילכם.'},
+  'ישראלי': {badge:'רוח ישראלית! 🕺', text:'אתם אוהבים לרקוד במעגל עם כולם. נסו את ריקוד העם הראשון באפליקציה.'}
+};
+document.querySelectorAll('.quiz-opt').forEach(opt=>{
+  opt.addEventListener('click', ()=>{
+    tally[opt.dataset.style]++;
+    quizIndex++;
+    if(quizIndex < quizQs.length){
+      quizQs.forEach(q=>q.classList.remove('active'));
+      document.querySelector(`.quiz-q[data-q="${quizIndex}"]`).classList.add('active');
+      quizProgress.style.width = ((quizIndex)/quizQs.length*100)+'%';
+    } else {
+      quizQs.forEach(q=>q.classList.remove('active'));
+      quizProgress.style.width = '100%';
+      const winner = Object.entries(tally).sort((a,b)=>b[1]-a[1])[0][0];
+      document.getElementById('quiz-badge').textContent = styleInfo[winner].badge;
+      document.getElementById('quiz-text').textContent = styleInfo[winner].text;
+      document.getElementById('quiz-result').classList.add('active');
+    }
+  });
+});
+document.getElementById('quiz-restart').addEventListener('click', ()=>{
+  quizIndex = 0;
+  Object.keys(tally).forEach(k=>tally[k]=0);
+  document.getElementById('quiz-result').classList.remove('active');
+  quizQs.forEach(q=>q.classList.remove('active'));
+  document.querySelector('.quiz-q[data-q="0"]').classList.add('active');
+  quizProgress.style.width = '0%';
+});
+
+/* ============ Calculator ============ */
+const kidsSlider = document.getElementById('kids-slider');
+const monthsSlider = document.getElementById('months-slider');
+const CLASS_MONTHLY_PER_KID = 300; // ~3600/year
+const APP_YEARLY = 240;
+function updateCalc(){
+  const kids = parseInt(kidsSlider.value);
+  const months = parseInt(monthsSlider.value);
+  document.getElementById('kids-val').textContent = kids;
+  document.getElementById('months-val').textContent = months;
+  const classCost = kids * months * CLASS_MONTHLY_PER_KID;
+  const appCost = APP_YEARLY; // flat, regardless of kids/months
+  document.getElementById('class-cost').textContent = '₪'+classCost.toLocaleString();
+  document.getElementById('app-cost').textContent = '₪'+appCost.toLocaleString();
+  const max = Math.max(classCost, appCost, 1);
+  document.getElementById('class-bar').style.width = (classCost/max*100)+'%';
+  document.getElementById('app-bar').style.width = (appCost/max*100)+'%';
+  const savings = classCost - appCost;
+  document.getElementById('calc-save').textContent = savings>0
+    ? 'חוסכים ₪'+savings.toLocaleString()+' בשנה 🎉'
+    : 'עלות דומה — אבל בלי לצאת מהבית 🏠';
+}
+kidsSlider.addEventListener('input', updateCalc);
+monthsSlider.addEventListener('input', updateCalc);
+updateCalc();
+
+/* ============ Challenge planner ============ */
+function generateChallenge(){
+  const name = document.getElementById('p-name').value.trim() || 'הקבוצה שלנו';
+  const style = document.getElementById('p-style').value;
+  const level = document.getElementById('p-level').value;
+  document.getElementById('cc-title').textContent = `${name} יוצאת לדרך!`;
+  document.getElementById('cc-sub').textContent = `סגנון: ${style} · רמה: ${level}`;
+  document.getElementById('cc-line').textContent = 'מי יגיע ל-3 כוכבים ראשון?';
+}
+document.getElementById('p-generate').addEventListener('click', generateChallenge);
+
+document.getElementById('cc-copy').addEventListener('click', ()=>{
+  const text = `${document.getElementById('cc-title').textContent}\n${document.getElementById('cc-sub').textContent}\n⭐⭐⭐\n${document.getElementById('cc-line').textContent}`;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.getElementById('cc-copy');
+    const original = btn.textContent;
+    btn.textContent = 'הועתק! ✓';
+    setTimeout(()=>btn.textContent=original, 1500);
+  }).catch(()=>{ alert(text); });
+});
+document.getElementById('cc-print').addEventListener('click', ()=>{ window.print(); });
+
+/* ============ Wishlist board ============ */
+let songs = [
+  {name:'Cheerleader (Felix Jaehn Remix) — OMI', votes:24},
+  {name:'Chiki Sha — Arthur Lima (טרנד ברזילאי)', votes:19},
+  {name:'Baby Laugh — DJ Baby Laugh (טרנד ברזילאי)', votes:15},
+  {name:'Hate That I Love You x Baby One More Time (מיקס)', votes:11},
+  {name:'ריקוד מונדיאל 2026', votes:9},
+];
+function renderWishlist(){
+  const list = document.getElementById('wish-list');
+  list.innerHTML = '';
+  songs.sort((a,b)=>b.votes-a.votes).forEach((s,i)=>{
+    const row = document.createElement('div');
+    row.className = 'wish-item';
+    row.innerHTML = `
+      <span class="song">${s.name}</span>
+      <span class="votes"><span class="count">${s.votes}</span>
+      <button class="up-btn" data-i="${i}">▲</button></span>
+    `;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('.up-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      songs[parseInt(btn.dataset.i)].votes++;
+      renderWishlist();
+    });
+  });
+  syncWishSongsToFlipbook();
+}
+
+/* Give every song suggested/voted in the wishlist board its own dance option
+   in the flipbook selector (section 1), by reusing one of our invented style
+   patterns on a rotation — so every song people add gets an actual dance. */
+const wishDanceStyleCycle = ['daidai','eichrokedet','rio','lokotevet','hilton','meule'];
+const wishSongDanceKeys = {}; // songName -> generated key, so re-renders stay stable
+let wishDanceCounter = 0;
+function syncWishSongsToFlipbook(){
+  const select = document.getElementById('flip-trend');
+  if(!select) return;
+  const selectedBefore = select.value;
+  // remove previously-added wishlist optgroup
+  const oldGroup = select.querySelector('optgroup[data-wish="1"]');
+  if(oldGroup) oldGroup.remove();
+  const group = document.createElement('optgroup');
+  group.label = '🎵 שירים מהקהילה';
+  group.dataset.wish = '1';
+  songs.forEach(s=>{
+    let key = wishSongDanceKeys[s.name];
+    if(!key){
+      const styleKey = wishDanceStyleCycle[wishDanceCounter % wishDanceStyleCycle.length];
+      wishDanceCounter++;
+      key = 'wish_' + Object.keys(wishSongDanceKeys).length;
+      wishSongDanceKeys[s.name] = key;
+      trendFrameSets[key] = trendFrameSets[styleKey];
+      trendColors[key] = trendColors[styleKey];
+    }
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = s.name;
+    group.appendChild(opt);
+  });
+  select.appendChild(group);
+  // keep the previous selection if it still exists, otherwise leave as-is
+  if([...select.options].some(o=>o.value===selectedBefore)) select.value = selectedBefore;
+}
+
+document.getElementById('wish-add').addEventListener('click', ()=>{
+  const input = document.getElementById('wish-input');
+  const val = input.value.trim();
+  if(val){
+    songs.push({name:val, votes:1});
+    input.value='';
+    renderWishlist();
+  }
+});
+document.getElementById('wish-input').addEventListener('keydown', (e)=>{
+  if(e.key==='Enter') document.getElementById('wish-add').click();
+});
+renderWishlist();
+
+/* ============ 6. Camera recording feature ============ */
+const camVideo = document.getElementById('cam-video');
+const camStartBtn = document.getElementById('cam-start');
+const camRecordBtn = document.getElementById('cam-record');
+const camStopBtn = document.getElementById('cam-stop');
+const camRecDot = document.getElementById('cam-rec-dot');
+const camTimerEl = document.getElementById('cam-timer');
+const camResult = document.getElementById('cam-result');
+const camPlaceholder = document.getElementById('cam-placeholder');
+
+let camStream = null, camRecorder = null, camChunks = [], camTimerInterval = null, camSeconds = 0;
+
+camStartBtn.addEventListener('click', async ()=>{
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    camResult.innerHTML = '<div class="cam-error">הדפדפן הזה לא תומך בגישה למצלמה.</div>';
+    return;
+  }
+  try{
+    camStream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
+    camVideo.srcObject = camStream;
+    camPlaceholder.style.display = 'none';
+    camStartBtn.textContent = '✅ מצלמה פעילה';
+    camStartBtn.disabled = true;
+    camRecordBtn.disabled = false;
+    camResult.innerHTML = '';
+  }catch(err){
+    camResult.innerHTML = '<div class="cam-error">לא הצלחנו לגשת למצלמה. ודאו שאישרתם הרשאה בדפדפן, ושהאתר רץ מכתובת מאובטחת (https) או localhost.</div>';
+  }
+});
+
+camRecordBtn.addEventListener('click', ()=>{
+  if(!camStream) return;
+  camChunks = [];
+  let recorder;
+  try{ recorder = new MediaRecorder(camStream, {mimeType:'video/webm;codecs=vp9'}); }
+  catch(e1){
+    try{ recorder = new MediaRecorder(camStream, {mimeType:'video/webm'}); }
+    catch(e2){ recorder = new MediaRecorder(camStream); }
+  }
+  camRecorder = recorder;
+  camRecorder.ondataavailable = (e)=>{ if(e.data && e.data.size>0) camChunks.push(e.data); };
+  camRecorder.onstop = ()=>{
+    const blob = new Blob(camChunks, {type:'video/webm'});
+    const url = URL.createObjectURL(blob);
+    camResult.innerHTML = `<a class="download-link" href="${url}" download="הריקוד-שלי.webm">⬇ הורידו את הסרטון</a>`;
+  };
+  camRecorder.start();
+  camSeconds = 0;
+  camTimerEl.textContent = '00:00';
+  camRecDot.classList.add('show');
+  camTimerInterval = setInterval(()=>{
+    camSeconds++;
+    const m = String(Math.floor(camSeconds/60)).padStart(2,'0');
+    const s = String(camSeconds%60).padStart(2,'0');
+    camTimerEl.textContent = `${m}:${s}`;
+  }, 1000);
+  camRecordBtn.disabled = true;
+  camStopBtn.disabled = false;
+  camResult.innerHTML = '';
+});
+
+camStopBtn.addEventListener('click', ()=>{
+  if(camRecorder && camRecorder.state !== 'inactive') camRecorder.stop();
+  clearInterval(camTimerInterval);
+  camRecDot.classList.remove('show');
+  camRecordBtn.disabled = false;
+  camStopBtn.disabled = true;
+});
+</script>
+</body>
+</html>
