@@ -1131,15 +1131,7 @@ async function submitRegistration(e) {
   // Loading state
   btn.disabled = true;
   btn.querySelector('span').textContent = 'כניסה...';
-
-  // Send WhatsApp notification silently in background
-  const msg = encodeURIComponent(
-    `נרשם משתמש חדש ל-NOAM!\nשם: ${name}\nאימייל: ${email}\nטלפון: ${phone}`
-  );
-  fetch(
-    `https://api.callmebot.com/whatsapp.php?phone=972586868107&text=${msg}&apikey=${CALLMEBOT_API_KEY}`,
-    { mode: 'no-cors' }
-  ).catch(() => {}); // Silent — user sees nothing
+  // Notification disabled — student contact details removed
 
   // Short delay for UX feel, then enter site
   setTimeout(() => {

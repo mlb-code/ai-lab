@@ -29,6 +29,30 @@
 
   <!-- Blog -->
   <url>
+    <loc>https://ai-lab.co.il/blog/coding-class-vs-ai-course.html</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-lab.co.il/blog/ai-course-price-kids.html</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-lab.co.il/blog/real-kids-ai-projects.html</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-lab.co.il/blog/vibe-coding-for-kids.html</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-lab.co.il/blog/</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>weekly</changefreq>

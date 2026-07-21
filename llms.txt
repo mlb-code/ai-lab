@@ -44,6 +44,10 @@
 ## בלוג — מדריכים בעברית על בינה מלאכותית
 - [עולם ה-AI — כל המאמרים](https://ai-lab.co.il/blog/)
 - [איך לבחור קורס בינה מלאכותית? המדריך המלא 2026](https://ai-lab.co.il/blog/how-to-choose-ai-course.html)
+- [חוג תכנות או קורס בינה מלאכותית — מה עדיף לילד ב-2026?](https://ai-lab.co.il/blog/coding-class-vs-ai-course.html)
+- [כמה עולה קורס בינה מלאכותית לילדים? מדריך מחירים 2026](https://ai-lab.co.il/blog/ai-course-price-kids.html)
+- [36 פרויקטים אמיתיים שילדים ישראלים בנו עם AI](https://ai-lab.co.il/blog/real-kids-ai-projects.html)
+- [Vibe Coding לילדים — לבנות אפליקציה בלי לכתוב קוד](https://ai-lab.co.il/blog/vibe-coding-for-kids.html)
 - [קייטנת AI לילדים — מה זה ולמה זה שונה מקייטנה רגילה](https://ai-lab.co.il/blog/summer-ai-camp.html)
 - [קורס בינה מלאכותית למבוגרים — אף פעם לא מאוחר להתחיל](https://ai-lab.co.il/blog/ai-course-for-adults.html)
 - [ללמוד בינה מלאכותית בגיל מבוגר — אפשרי, וכך מתחילים](https://ai-lab.co.il/blog/learn-ai-older-age.html)
