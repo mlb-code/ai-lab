@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
 <title>הרשמה לקורס קיץ לילדים ובני נוער — AI Lab</title>
 <meta name="description" content="הרשמה לקורס קיץ לילדים ובני נוער ב-AI Lab. השאירו פרטים ונחזור אליכם לתיאום.">
 <!-- ===== Meta Pixel ===== -->
@@ -21,6 +22,16 @@
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1494500642118868&ev=PageView&noscript=1"/></noscript>
 <!-- ===== End Meta Pixel ===== -->
+
+<!-- ===== Google Analytics (GA4) ===== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-37WXJMRB9C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-37WXJMRB9C');
+</script>
+<!-- ===== End Google Analytics ===== -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,13 +173,51 @@
   }
   @keyframes sp{to{transform:rotate(360deg)}}
 
+  /* ====== URGENCY TOP BAR ====== */
+  .topbar{
+    position:sticky;top:0;z-index:40;text-align:center;
+    background:linear-gradient(90deg,var(--purple),var(--teal-dark));
+    color:#fff;font-weight:700;font-size:13.5px;padding:9px 16px;
+    letter-spacing:.2px;box-shadow:0 6px 20px -8px rgba(0,0,0,.6);
+  }
+  .topbar a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+
+  /* ====== DATES BLOCK ====== */
+  .dates{margin-top:28px}
+  .dates-title{font-size:15px;font-weight:800;color:#eafffb;margin-bottom:12px}
+  .dates-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .dchip{
+    display:inline-flex;align-items:center;gap:7px;font-weight:800;font-size:16px;
+    color:#eafffb;background:rgba(0,212,170,.10);
+    border:1.5px solid rgba(0,212,170,.45);padding:11px 18px;border-radius:14px;
+    box-shadow:0 0 22px -10px var(--teal);
+  }
+  .dchip .cal{font-size:14px;opacity:.9}
+  .dates-urgency{
+    margin-top:14px;font-size:13.5px;font-weight:600;color:#ffd0e0;
+    background:rgba(255,77,141,.10);border:1px solid rgba(255,77,141,.35);
+    display:inline-block;padding:8px 16px;border-radius:999px;
+  }
+
+  /* ====== URGENCY INSIDE FORM ====== */
+  .urgent-note{
+    display:flex;align-items:center;gap:10px;
+    background:rgba(255,77,141,.10);border:1px solid rgba(255,77,141,.35);
+    color:#ffd0e0;font-size:13.5px;font-weight:600;
+    padding:12px 15px;border-radius:13px;margin-bottom:22px;
+  }
+  .urgent-note .fire{font-size:18px;flex-shrink:0}
+
   @media(max-width:480px){
     .opts.cols2{grid-template-columns:1fr}
     .card{padding:24px 18px}
+    .dchip{font-size:15px;padding:10px 14px}
   }
 </style>
 </head>
 <body>
+
+  <div class="topbar">🔥 המחזורים מתמלאים במהירות — מספר המקומות מוגבל · <a href="#regForm">להרשמה עכשיו ←</a></div>
 
   <header class="hero">
     <div class="brand" dir="ltr">AI&nbsp;<b>Lab</b></div>
@@ -181,6 +230,17 @@
       <span class="feat"><span class="ic">👥</span> קבוצות קטנות</span>
       <span class="feat"><span class="ic">🕒</span> שעות גמישות</span>
     </div>
+
+    <div class="dates">
+      <div class="dates-title">📅 מועדי פתיחת הקורס — בחרו את המחזור שמתאים לכם</div>
+      <div class="dates-chips">
+        <span class="dchip"><span class="cal">📅</span> 26.07</span>
+        <span class="dchip"><span class="cal">📅</span> 02.08</span>
+        <span class="dchip"><span class="cal">📅</span> 09.08</span>
+        <span class="dchip"><span class="cal">📅</span> 16.08</span>
+      </div>
+      <div class="dates-urgency">⏳ כל מחזור נפתח בקבוצה קטנה — ההרשמה נסגרת כשהמקומות מתמלאים</div>
+    </div>
   </header>
 
   <main class="formsec">
@@ -188,6 +248,8 @@
       <div class="card" id="cardForm">
         <h2>השארת פרטים להרשמה</h2>
         <p class="lead">מלאו את הפרטים ונחזור אליכם לתיאום אישי. התשלום מתבצע בשלב נפרד לאחר השיחה.</p>
+
+        <div class="urgent-note"><span class="fire">🔥</span> הקבוצות קטנות והמקומות אוזלים מהר — כדאי להשאיר פרטים עכשיו כדי לשריין מקום למחזור המועדף.</div>
 
         <div class="errbox" id="errBox"></div>
 
@@ -365,6 +427,7 @@
       if(!json.success) throw new Error(json.error || 'שגיאה לא ידועה');
 
       if(window.fbq) fbq('track', 'CompleteRegistration', {content_name:'summer-kids'});
+      if(window.gtag) gtag('event', 'sign_up', {method:'summer-kids-form', course_date:data.course_date});
 
       overlay.classList.remove('show');
       document.getElementById('cardForm').style.display='none';
