@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה של המגרש — מצא את התפקיד שלך</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow:#FFC61A;
+    --yellow-deep:#FF9500;
+    --blue:#1E4FD6;
+    --blue-deep:#0B1A4D;
+    --ink:#0A1230;
+    --white:#FFFFFF;
+    --cream:#FFF7E3;
+    --card-shadow: 0 20px 50px rgba(11,26,77,0.25);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Heebo',sans-serif;
+    background:var(--white);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Rubik',sans-serif;
+    font-weight:800;
+  }
+  a{text-decoration:none;color:inherit;}
+  img,svg{display:block;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* ===== NAV ===== */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:linear-gradient(90deg, var(--yellow) 50%, var(--blue) 50%);
+    border-bottom:1px solid rgba(11,26,77,0.15);
+  }
+  nav .wrap{position:relative;display:flex;align-items:center;height:72px;gap:20px;}
+  .brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-size:20px;font-weight:700;white-space:nowrap;}
+  .brand .mark{width:34px;height:34px;flex-shrink:0;}
+  .nav-group{display:flex;align-items:center;gap:22px;list-style:none;}
+  .nav-spacer{flex:1;}
+  .nav-link{font-weight:600;font-size:15px;color:var(--ink);opacity:0.85;white-space:nowrap;}
+  .nav-link:hover{opacity:1;}
+  .nav-links{display:none;list-style:none;}
+  .nav-links-cta-mobile{display:none;}
+  .nav-cta{
+    background:linear-gradient(90deg,var(--yellow),var(--yellow-deep));
+    color:var(--blue-deep);
+    padding:10px 22px;
+    border-radius:100px;
+    font-weight:700;
+    font-size:15px;
+    box-shadow:0 6px 18px rgba(255,149,0,0.35);
+    transition:transform .15s ease;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{transform:translateY(-2px);}
+  .hamburger{
+    display:none;flex-direction:column;justify-content:center;gap:5px;
+    width:36px;height:36px;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;
+    position:relative;z-index:101;
+  }
+  .hamburger span{display:block;width:100%;height:3px;background:var(--ink);border-radius:3px;transition:transform .2s ease, opacity .2s ease;}
+  .hamburger.open span{background:var(--white);}
+  .hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 25% 20%, rgba(255,198,26,0.35), transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(30,79,214,0.55), transparent 50%),
+      linear-gradient(160deg, var(--blue-deep) 0%, #10225E 55%, var(--blue-deep) 100%);
+    color:var(--white);
+    padding:96px 0 70px;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse at center, black 30%, transparent 75%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;z-index:2;
+    display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,198,26,0.15);
+    border:1px solid rgba(255,198,26,0.4);
+    color:var(--yellow);
+    font-size:14px;font-weight:700;
+    padding:6px 16px;border-radius:100px;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:50px;line-height:1.12;
+    color:var(--white);
+    margin-bottom:20px;
+  }
+  .hero h1 span{
+    background:linear-gradient(90deg,var(--yellow),#FFE9A8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{
+    font-size:19px;line-height:1.7;
+    color:rgba(255,255,255,0.82);
+    max-width:520px;margin-bottom:34px;
+  }
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn-primary{
+    background:linear-gradient(90deg,var(--yellow),var(--yellow-deep));
+    color:var(--blue-deep);
+    padding:16px 34px;border-radius:100px;
+    font-weight:800;font-size:17px;
+    box-shadow:0 10px 30px rgba(255,149,0,0.4);
+    transition:transform .15s ease;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary:hover{transform:translateY(-3px) scale(1.02);}
+  .btn-ghost{
+    border:1.5px solid rgba(255,255,255,0.35);
+    color:var(--white);
+    padding:16px 30px;border-radius:100px;
+    font-weight:700;font-size:17px;
+  }
+  .hero-stats{display:flex;gap:28px;margin-top:38px;}
+  .hero-stats div{font-size:13px;color:rgba(255,255,255,0.65);}
+  .hero-stats strong{display:block;font-size:22px;color:var(--white);font-family:'Rubik';}
+
+  /* ===== SIGNATURE CARD ===== */
+  .card-stage{position:relative;perspective:1200px;display:flex;justify-content:center;}
+  .player-card{
+    width:290px;aspect-ratio:5/7;
+    border-radius:22px;
+    position:relative;
+    background:linear-gradient(160deg,#132A6E 0%, #0B1A4D 70%);
+    border:2px solid rgba(255,198,26,0.5);
+    box-shadow:var(--card-shadow);
+    transform-style:preserve-3d;
+    transition:transform .25s ease;
+    overflow:hidden;
+  }
+  .player-card::before{
+    content:"";
+    position:absolute;inset:0;
+    background:conic-gradient(from 0deg, rgba(255,198,26,0) 0%, rgba(255,198,26,0.45) 8%, rgba(30,79,214,0) 16%);
+    animation:spin 5s linear infinite;
+    mix-blend-mode:screen;
+    opacity:0.9;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .player-card .inner{
+    position:relative;z-index:2;height:100%;
+    display:flex;flex-direction:column;align-items:center;
+    padding:22px 18px;
+  }
+  .rank-badge{
+    align-self:flex-start;
+    background:var(--yellow);color:var(--blue-deep);
+    font-size:12px;font-weight:800;padding:4px 12px;border-radius:100px;
+    margin-bottom:14px;
+  }
+  .avatar-shape{
+    width:120px;height:120px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--yellow-deep));
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;
+    box-shadow:0 0 0 6px rgba(255,255,255,0.06);
+  }
+  .player-card h3{color:var(--white);font-size:21px;text-align:center;margin-bottom:4px;}
+  .player-card .role-sub{color:var(--yellow);font-size:13px;font-weight:700;margin-bottom:14px;text-align:center;}
+  .stat-row{width:100%;display:flex;flex-direction:column;gap:8px;margin-top:auto;}
+  .stat-line{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.75);}
+  .stat-track{flex:1;height:6px;background:rgba(255,255,255,0.12);border-radius:10px;overflow:hidden;}
+  .stat-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--yellow));border-radius:10px;}
+  .card-caption{
+    text-align:center;color:rgba(255,255,255,0.55);font-size:13px;margin-top:18px;
+  }
+
+  /* ===== SECTIONS shared ===== */
+  section{padding:96px 0;}
+  .section-head{max-width:640px;margin:0 auto 56px;text-align:center;}
+  .section-head .kicker{
+    color:var(--blue);font-weight:700;font-size:14px;
+    letter-spacing:.03em;margin-bottom:10px;display:block;
+  }
+  .section-head h2{font-size:34px;color:var(--ink);margin-bottom:14px;}
+  .section-head p{font-size:17px;color:#555;line-height:1.7;}
+
+  /* ===== SLIDER (shared) ===== */
+  .slider{position:relative;}
+  .slider-track{
+    display:flex;gap:24px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;-ms-overflow-style:none;
+    padding:4px 4px 6px;
+  }
+  .slider-track::-webkit-scrollbar{display:none;}
+  .slider-slide{flex:0 0 100%;scroll-snap-align:start;}
+  .slider-dots{display:flex;justify-content:center;gap:9px;margin-top:22px;}
+  .slider-dot{
+    width:9px;height:9px;border-radius:50%;
+    background:rgba(255,255,255,0.3);border:none;padding:0;cursor:pointer;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .slider-dot.active{background:var(--yellow);transform:scale(1.3);}
+  .slider-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:46px;height:46px;border-radius:50%;
+    background:rgba(255,255,255,0.12);
+    border:1.5px solid rgba(255,255,255,0.3);
+    color:var(--white);font-size:22px;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;z-index:5;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .slider-arrow:hover{background:rgba(255,255,255,0.28);transform:translateY(-50%) scale(1.05);}
+  .slider-arrow.prev{right:-8px;}
+  .slider-arrow.next{left:-8px;}
+  @media (max-width:640px){
+    .slider-arrow{display:none;}
+  }
+
+  /* ===== PROBLEM ===== */
+  .problem{
+    background:#000000;
+    position:relative;
+    overflow:hidden;
+  }
+  .problem .wrap{position:relative;z-index:2;}
+  .problem .section-head .kicker{color:var(--yellow);}
+  .problem .section-head h2{color:var(--white);}
+  .problem .section-head p{color:rgba(255,255,255,0.65);}
+  .bg-figures{position:absolute;inset:0;z-index:0;pointer-events:none;}
+  .bg-figure{position:absolute;top:50%;transform:translateY(-50%);height:115%;opacity:0.16;}
+  .bg-figure.ninja{right:-20px;color:var(--yellow);}
+  .bg-figure.footballer{left:-20px;color:var(--blue);}
+  .problem-card{
+    background:var(--white);border-radius:20px;padding:32px;
+    box-shadow:0 10px 30px rgba(11,26,77,0.06);
+  }
+  .problem-card.bad{border:2px solid #E7E1D2;}
+  .problem-card.good{border:2px solid var(--yellow);position:relative;}
+  .figure-badge{
+    width:54px;height:54px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;margin-bottom:16px;position:relative;
+  }
+  .figure-badge.figure-naruto{background:linear-gradient(135deg,var(--yellow),var(--yellow-deep));}
+  .figure-badge.figure-ronaldo{background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:var(--white);}
+  .figure-badge .jersey-num{
+    position:absolute;bottom:-4px;left:-4px;
+    background:var(--white);color:var(--blue-deep);
+    font-family:'Rubik';font-weight:800;font-size:11px;
+    width:18px;height:18px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .tag-pill{display:inline-block;font-size:13px;font-weight:700;padding:5px 14px;border-radius:100px;margin-bottom:16px;}
+  .tag-bad{background:#EFEAE0;color:#8A7B4E;}
+  .tag-good{background:var(--yellow);color:var(--blue-deep);}
+  .problem-card h3{font-size:22px;margin-bottom:12px;}
+  .problem-card ul{padding-inline-start:20px;color:#555;line-height:1.9;font-size:15.5px;}
+  .problem-card.bad ul{list-style:'✕  ';}
+  .problem-card.good ul{list-style:'✓  ';}
+
+  /* ===== HOW IT WORKS ===== */
+  #how{
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at center, transparent 78px, rgba(255,255,255,0.35) 80px, rgba(255,255,255,0.35) 83px, transparent 85px),
+      radial-gradient(circle at center, rgba(255,255,255,0.6) 3px, transparent 4px),
+      repeating-linear-gradient(90deg, #2E7D32 0px, #2E7D32 70px, #34893D 70px, #34893D 140px),
+      linear-gradient(160deg,#1B5E20,#2E7D32);
+  }
+  #how::before{
+    content:"";
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:3px;height:calc(100% - 80px);
+    background:rgba(255,255,255,0.35);
+    z-index:1;
+  }
+  #how::after{
+    content:"";
+    position:absolute;inset:40px;
+    border:3px solid rgba(255,255,255,0.3);
+    z-index:1;
+  }
+  #how .wrap{position:relative;z-index:2;}
+  #how .section-head h2{color:var(--white);}
+  #how .section-head p{color:rgba(255,255,255,0.8);}
+  #how .section-head .kicker{color:var(--yellow);}
+  .step{
+    background:var(--blue-deep);
+    color:var(--white);
+    border-radius:20px;padding:36px 28px;
+    position:relative;overflow:hidden;
+  }
+  .slider-slide:nth-child(2) .step{background:linear-gradient(160deg,var(--blue),#0B1A4D);}
+  .slider-slide:nth-child(3) .step{background:linear-gradient(160deg,#0B1A4D,#142E7A);}
+  .step .num{
+    font-family:'Rubik';font-size:46px;font-weight:900;
+    color:rgba(255,198,26,0.9);
+    margin-bottom:14px;
+  }
+  .step h3{font-size:20px;margin-bottom:10px;color:var(--white);}
+  .step p{font-size:15px;color:rgba(255,255,255,0.75);line-height:1.7;}
+
+  /* ===== QUIZ APP ===== */
+  .quiz-section{
+    position:relative;overflow:hidden;
+    background:radial-gradient(ellipse at top, #16255C 0%, #070B1F 55%, #020208 100%);
+  }
+  .star-field{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      radial-gradient(1.5px 1.5px at 10% 15%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 25% 55%, #fff, transparent),
+      radial-gradient(2px 2px at 40% 20%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 55% 75%, #fff, transparent),
+      radial-gradient(2px 2px at 70% 35%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 85% 65%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 95% 25%, #fff, transparent),
+      radial-gradient(2px 2px at 15% 85%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 60% 10%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 33% 92%, #fff, transparent);
+    background-repeat:repeat;
+    background-size:340px 340px;
+    animation:twinkle 4s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle{0%{opacity:0.4;}100%{opacity:0.9;}}
+  .shooting-star{
+    position:absolute;
+    width:3px;height:3px;
+    background:var(--white);
+    border-radius:50%;
+    box-shadow:0 0 8px 2px rgba(255,255,255,0.8);
+    animation:shooting-star linear infinite;
+  }
+  .shooting-star::before{
+    content:"";
+    position:absolute;top:50%;left:100%;
+    width:110px;height:2px;
+    background:linear-gradient(270deg, rgba(255,255,255,0.9), rgba(255,198,26,0));
+    transform:translateY(-50%);
+  }
+  @keyframes shooting-star{
+    0%{transform:translate(0,0);opacity:0;}
+    3%{opacity:1;}
+    18%{transform:translate(-320px,300px);opacity:0;}
+    100%{transform:translate(-320px,300px);opacity:0;}
+  }
+  .quiz-section .wrap{position:relative;z-index:2;}
+  .quiz-section .section-head h2{color:var(--white);}
+  .quiz-section .section-head p{color:rgba(255,255,255,0.7);}
+  .quiz-section .section-head .kicker{color:var(--yellow);}
+  .quiz-section .quiz-caption{color:rgba(255,255,255,0.6);}
+  .quiz-app{
+    max-width:600px;margin:0 auto;
+    background:var(--white);border-radius:24px;padding:40px;
+    box-shadow:0 20px 45px rgba(11,26,77,0.12);
+    border:1px solid #eee;
+    position:relative;overflow:hidden;
+  }
+  .quiz-panel{display:none;}
+  .quiz-panel.active{display:block;}
+  .quiz-start{text-align:center;padding:16px 0;}
+  .start-icon{
+    width:72px;height:72px;margin:0 auto 20px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--yellow-deep));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .quiz-start h3{font-size:23px;margin-bottom:10px;}
+  .quiz-start p{color:#666;font-size:15.5px;margin-bottom:28px;line-height:1.7;}
+  .quiz-btn{
+    background:linear-gradient(90deg,var(--yellow),var(--yellow-deep));
+    color:var(--blue-deep);border:none;cursor:pointer;
+    padding:15px 32px;border-radius:100px;font-weight:800;font-size:16px;
+    font-family:'Heebo',sans-serif;transition:transform .15s ease;
+  }
+  .quiz-btn:hover{transform:translateY(-2px);}
+  .quiz-btn.secondary{
+    background:var(--white);color:var(--blue-deep);border:1.5px solid #ddd;
+  }
+  .qhead{display:flex;justify-content:space-between;font-size:13px;color:#999;margin-bottom:18px;}
+  .qtitle{font-size:19px;font-weight:700;margin-bottom:22px;font-family:'Rubik';line-height:1.4;}
+  .quiz-opt{
+    display:flex;align-items:center;gap:12px;
+    border:1.5px solid #eee;border-radius:12px;
+    padding:14px 16px;margin-bottom:10px;font-size:15px;color:#333;
+    cursor:pointer;transition:border-color .15s ease, background .15s ease;
+  }
+  .quiz-opt:hover{border-color:var(--yellow-deep);background:#FFFBF0;}
+  .quiz-opt.picked{border-color:var(--yellow-deep);background:#FFF7E3;font-weight:700;}
+  .quiz-opt .dot{width:20px;height:20px;border-radius:50%;border:2px solid #ccc;flex-shrink:0;}
+  .quiz-opt.picked .dot{background:var(--yellow-deep);border-color:var(--yellow-deep);}
+  .qbar{height:6px;background:#eee;border-radius:10px;overflow:hidden;margin-top:22px;}
+  .qbar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--yellow));transition:width .3s ease;}
+  .result-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .result-eyebrow{color:var(--blue);font-weight:700;font-size:14px;margin-bottom:6px;}
+  .result-wrap h3{font-size:23px;margin-bottom:22px;}
+  .result-desc{color:#666;font-size:14.5px;max-width:380px;margin-top:16px;line-height:1.6;}
+  .result-actions{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;justify-content:center;}
+  .quiz-caption{text-align:center;color:#777;font-size:14.5px;max-width:560px;margin:26px auto 0;line-height:1.7;}
+
+  /* ===== BUSINESS MODEL ===== */
+  .biz{background:var(--blue-deep);color:var(--white);position:relative;overflow:hidden;}
+  .biz::before{
+    content:"";position:absolute;top:-120px;left:-120px;width:340px;height:340px;
+    background:radial-gradient(circle,rgba(255,198,26,0.25),transparent 70%);
+  }
+  .biz .section-head h2{color:var(--white);}
+  .biz .section-head p{color:rgba(255,255,255,0.72);}
+  .biz .section-head .kicker{color:var(--yellow);}
+  .skin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;z-index:2;}
+  .skin{
+    border-radius:18px;padding:22px 16px;text-align:center;
+    border:1.5px solid rgba(255,255,255,0.15);
+  }
+  .skin .swatch{
+    width:100%;aspect-ratio:1/1;border-radius:14px;margin-bottom:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .skin.free .swatch{background:#1B2B5C;}
+  .skin.gold .swatch{background:linear-gradient(135deg,#FFE9A8,#FFC61A,#B87E00);}
+  .skin.saiya .swatch{background:linear-gradient(135deg,#FFF3B0,#FFEB3B,#FDD835);}
+  .skin.leaf .swatch{background:linear-gradient(135deg,#0B1A4D,#1E4FD6,#6DBBFF);}
+  .skin h4{font-size:15px;margin-bottom:4px;}
+  .skin p{font-size:13px;color:rgba(255,255,255,0.6);}
+  .skin .price{
+    display:inline-block;margin-top:10px;font-size:13px;font-weight:700;
+    background:rgba(255,198,26,0.15);color:var(--yellow);
+    padding:4px 12px;border-radius:100px;
+  }
+  .skin.free .price{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);}
+
+  /* ===== ROADMAP / MARKETING ===== */
+  .footer-cta{
+    background:linear-gradient(120deg,var(--yellow) 0%, var(--yellow-deep) 100%);
+    border-radius:28px;
+    padding:64px 48px;text-align:center;
+    color:var(--blue-deep);
+    margin:0 24px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .footer-cta h2{font-size:36px;margin-bottom:16px;color:var(--blue-deep);}
+  .footer-cta p{font-size:17px;margin-bottom:30px;color:rgba(11,26,77,0.75);}
+  .footer-cta .btn-primary{background:var(--blue-deep);color:var(--white);box-shadow:0 10px 30px rgba(11,26,77,0.3);}
+
+  footer{
+    padding:90px 0 70px;
+    text-align:center;
+    position:relative;overflow:hidden;
+    min-height:520px;
+    box-sizing:border-box;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  footer .bg-figures{position:absolute;inset:0;z-index:0;pointer-events:none;}
+  footer .bg-figure.referee{
+    position:absolute;top:50%;right:30px;
+    transform:translateY(-50%);
+    height:88%;
+    color:var(--ink);
+    opacity:0.11;
+  }
+  footer .wrap{position:relative;z-index:2;}
+  footer .brand{color:var(--ink);justify-content:center;margin-bottom:14px;}
+  footer .social{display:flex;justify-content:center;gap:16px;margin-bottom:16px;}
+  footer .social a{
+    width:40px;height:40px;border-radius:50%;
+    background:var(--cream);display:flex;align-items:center;justify-content:center;
+  }
+  footer p.small{color:#999;font-size:13px;}
+
+  @media (max-width:860px){
+    .hamburger{display:flex;order:1;}
+    .brand{order:2;}
+    .nav-group,.nav-spacer{display:none;}
+    .nav-links{
+      display:none;
+      position:fixed;inset:0;
+      background:var(--blue-deep);
+      flex-direction:column;align-items:center;justify-content:center;
+      gap:6px;
+      z-index:100;
+      padding:0;
+      border-radius:0;
+      box-shadow:none;
+    }
+    .nav-links.open{display:flex;}
+    .nav-link{
+      color:var(--white);
+      padding:16px 24px;border-bottom:none;
+      font-size:22px;font-weight:700;font-family:'Rubik',sans-serif;
+    }
+    .nav-links-cta-mobile{display:block;padding:26px 24px 0;}
+    .nav-links-cta-mobile .nav-cta{display:block;text-align:center;padding:16px 40px;font-size:17px;}
+    .nav-cta-desktop{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:36px;}
+    .bg-figure{opacity:0.08;}
+    .quiz-app{padding:24px;}
+    footer{min-height:340px;padding:60px 0 40px;}
+    footer .bg-figure.referee{height:70%;right:0;opacity:0.08;}
+    .skin-grid{grid-template-columns:repeat(2,1fr);}
+    .footer-cta{padding:44px 24px;margin:0 12px;}
+    .footer-cta h2{font-size:26px;}
+  }
+
+  @media (max-width:520px){
+    .wrap{padding:0 16px;}
+    section{padding:64px 0;}
+    .brand{font-size:16px;gap:8px;}
+    .brand .mark{width:28px;height:28px;}
+    .hero{padding:64px 0 44px;}
+    .eyebrow{font-size:12px;padding:5px 12px;}
+    .hero h1{font-size:28px;}
+    .hero p.lead{font-size:15.5px;max-width:100%;}
+    .hero-ctas{flex-direction:column;align-items:stretch;}
+    .btn-primary,.btn-ghost{text-align:center;padding:14px 22px;font-size:15.5px;}
+    .hero-stats{gap:16px;flex-wrap:wrap;}
+    .player-card{width:230px;}
+    .section-head h2{font-size:24px;}
+    .section-head p{font-size:15px;}
+    .problem-card{padding:24px;}
+    .step{padding:28px 22px;}
+    .quiz-app{padding:18px;}
+    .quiz-start h3{font-size:19px;}
+    .qtitle{font-size:17px;}
+    .result-actions{flex-direction:column;width:100%;}
+    .result-actions .quiz-btn{width:100%;}
+    .skin-grid{grid-template-columns:1fr 1fr;gap:12px;}
+    .footer-cta{padding:36px 18px;}
+    .footer-cta h2{font-size:22px;}
+    footer{min-height:280px;}
+    footer .bg-figure.referee{height:60%;opacity:0.07;}
+  }
+
+  @media (max-width:360px){
+    .skin-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:24px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" fill="#0B1A4D" stroke="#FFC61A" stroke-width="2"/>
+        <path d="M20 6 L23 17 L34 20 L23 23 L20 34 L17 23 L6 20 L17 17 Z" fill="#FFC61A"/>
+      </svg>
+      נינג'ה של המגרש
+    </div>
+    <ul class="nav-group nav-group-right">
+      <li><a class="nav-link" href="#problem">הבעיה</a></li>
+      <li><a class="nav-link" href="#how">איך זה עובד</a></li>
+    </ul>
+    <div class="nav-spacer"></div>
+    <ul class="nav-group nav-group-left">
+      <li><a class="nav-link" href="#quiz">השאלון</a></li>
+      <li><a class="nav-link" href="#pricing">מחירים</a></li>
+    </ul>
+    <ul class="nav-links" id="navLinks">
+      <li><a class="nav-link" href="#problem">הבעיה</a></li>
+      <li><a class="nav-link" href="#how">איך זה עובד</a></li>
+      <li><a class="nav-link" href="#quiz">השאלון</a></li>
+      <li><a class="nav-link" href="#pricing">מחירים</a></li>
+      <li class="nav-links-cta-mobile"><a class="nav-cta" href="#quiz">התחל את השאלון</a></li>
+    </ul>
+    <a class="nav-cta nav-cta-desktop" href="#quiz">התחל את השאלון</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="פתח תפריט" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">🍃 בהשראת עולם הנינג'ות</span>
+      <h1>גלה איזה <span>נינג'ה כדורגלן</span><br>אתה במגרש שלך</h1>
+      <p class="lead">
+        סוף לוויכוחים על מי משחק מה בהפסקה. שאלון חכם של 10 שאלות חושף את
+        סגנון המשחק שלך, ונותן לך כרטיס שחקן אישי ומעצים — בדיוק כמו בכפר העלה הנסתר.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#quiz">התחל את השאלון החינמי ←</a>
+        <a class="btn-ghost" href="#how">איך זה עובד</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>10</strong>שאלות מהירות</div>
+        <div><strong>1</strong>כרטיס אישי בסוף</div>
+        <div><strong>2 ₪</strong>לשדרוג נדיר</div>
+      </div>
+    </div>
+
+    <div class="card-stage">
+      <div>
+        <div class="player-card" id="heroCard">
+          <div class="inner">
+            <span class="rank-badge">ג'ינצ'וריקי · חלוץ</span>
+            <div class="avatar-shape">
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none"><path d="M12 2 2 22h20L12 2z" fill="#0B1A4D"/></svg>
+            </div>
+            <h3>אריה, גיל 10</h3>
+            <div class="role-sub">חלוץ הכוח של הקבוצה</div>
+            <div class="stat-row">
+              <div class="stat-line">מהירות<div class="stat-track"><div class="stat-fill" style="width:88%"></div></div></div>
+              <div class="stat-line">אומץ<div class="stat-track"><div class="stat-fill" style="width:95%"></div></div></div>
+              <div class="stat-line">עבודת צוות<div class="stat-track"><div class="stat-fill" style="width:70%"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <p class="card-caption">כך נראה כרטיס שחקן אמיתי שנוצר בשאלון</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="problem" id="problem">
+  <div class="bg-figures">
+    <svg class="bg-figure ninja" viewBox="0 0 260 640" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <rect x="95" y="430" width="34" height="170" rx="14" transform="rotate(8 112 430)"/>
+      <rect x="140" y="430" width="34" height="150" rx="14" transform="rotate(-25 157 430)"/>
+      <rect x="90" y="260" width="90" height="180" rx="30"/>
+      <path d="M90 280 Q40 320 55 400 Q65 340 100 300 Z"/>
+      <rect x="150" y="270" width="26" height="110" rx="13" transform="rotate(-50 163 270)"/>
+      <rect x="205" y="185" width="16" height="40" rx="3" transform="rotate(20 213 205)"/>
+      <rect x="80" y="270" width="26" height="90" rx="13" transform="rotate(40 93 270)"/>
+      <circle cx="135" cy="200" r="48"/>
+      <path d="M100 180 Q60 210 70 260 Q85 220 110 200 Z"/>
+      <path d="M170 180 Q210 210 200 260 Q185 220 160 200 Z"/>
+      <rect x="90" y="185" width="90" height="14"/>
+      <path d="M100 160 L108 130 L118 158 L128 122 L138 158 L148 122 L158 158 L168 130 L176 160 Z"/>
+    </svg>
+    <svg class="bg-figure footballer" viewBox="0 0 260 640" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <rect x="120" y="420" width="32" height="170" rx="14"/>
+      <rect x="150" y="430" width="30" height="140" rx="14" transform="rotate(-60 165 430)"/>
+      <circle cx="230" cy="560" r="18"/>
+      <rect x="95" y="260" width="85" height="170" rx="28" transform="rotate(-8 137 260)"/>
+      <rect x="70" y="270" width="24" height="100" rx="12" transform="rotate(70 82 270)"/>
+      <rect x="160" y="270" width="24" height="90" rx="12" transform="rotate(-30 172 270)"/>
+      <circle cx="132" cy="210" r="46"/>
+      <path d="M90 195 Q132 150 174 195 Q170 175 132 165 Q94 175 90 195 Z"/>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">הבעיה</span>
+      <h2>ההפסקה נגמרת, והוויכוח רק מתחיל</h2>
+      <p>מי שוער, מי חלוץ, מי "סתם" מגן — כל יום אותו ריב, ובסוף מישהו נשאר בצד עם תחושת החמצה.</p>
+    </div>
+    <div class="slider">
+      <div class="slider-track">
+        <div class="slider-slide">
+          <div class="problem-card good">
+            <div class="figure-badge figure-naruto">🥷</div>
+            <span class="tag-pill tag-good">עם נינג'ה של המגרש (בהשראת נארוטו)</span>
+            <h3>ביטחון עצמי וכיף</h3>
+            <ul>
+              <li>שאלון חכם מגלה את התפקיד המתאים לאופי שלך</li>
+              <li>כל ילד מקבל כרטיס שחקן אישי ומעצים</li>
+              <li>חלוקת תפקידים הופכת לחוויה, לא לריב</li>
+            </ul>
+          </div>
+        </div>
+        <div class="slider-slide">
+          <div class="problem-card bad">
+            <div class="figure-badge figure-ronaldo">⚽<span class="jersey-num">7</span></div>
+            <span class="tag-pill tag-bad">המצב היום (כדורגל רגיל, בהשראת רונאלדו)</span>
+            <h3>משעמם מאד</h3>
+            <ul>
+              <li>אותם ילדים תמיד "לוקחים" את התפקידים המבוקשים</li>
+              <li>אין דרך הוגנת ומהירה להחליט מי משחק מה</li>
+              <li>ילדים ביישנים נשארים בלי תפקיד ברור</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <button class="slider-arrow prev" aria-label="הקודם">›</button>
+      <button class="slider-arrow next" aria-label="הבא">‹</button>
+      <div class="slider-dots"></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">איך זה עובד</span>
+      <h2>שלושה שלבים לכרטיס הנינג'ה שלך</h2>
+      <p>פשוט, מהיר, ומתאים בדיוק לגיל שבו קורים הכי הרבה ויכוחים על המגרש.</p>
+    </div>
+    <div class="slider">
+      <div class="slider-track">
+        <div class="slider-slide">
+          <div class="step">
+            <div class="num">01</div>
+            <h3>עונים על 10 שאלות</h3>
+            <p>שאלות קצרות וכיפיות על סגנון המשחק, האופי והחלומות שלך על המגרש.</p>
+          </div>
+        </div>
+        <div class="slider-slide">
+          <div class="step">
+            <div class="num">02</div>
+            <h3>מקבלים תוצאה מותאמת</h3>
+            <p>האלגוריתם מתאים לך תפקיד נינג'ה-כדורגלן שמשקף מי אתה באמת.</p>
+          </div>
+        </div>
+        <div class="slider-slide">
+          <div class="step">
+            <div class="num">03</div>
+            <h3>מקבלים כרטיס שחקן</h3>
+            <p>כרטיס דיגיטלי אישי לשמירה ולשיתוף — ואפשר לשדרג לעיצוב נדיר ונוצץ.</p>
+          </div>
+        </div>
+      </div>
+      <button class="slider-arrow prev" aria-label="הקודם">›</button>
+      <button class="slider-arrow next" aria-label="הבא">‹</button>
+      <div class="slider-dots"></div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz" class="quiz-section">
+  <div class="star-field"></div>
+  <div class="shooting-star" style="top:8%;right:15%;animation-duration:5.5s;animation-delay:0s;"></div>
+  <div class="shooting-star" style="top:20%;right:55%;animation-duration:6.5s;animation-delay:1.6s;"></div>
+  <div class="shooting-star" style="top:5%;right:75%;animation-duration:7s;animation-delay:3.2s;"></div>
+  <div class="shooting-star" style="top:30%;right:30%;animation-duration:5s;animation-delay:2.1s;"></div>
+  <div class="shooting-star" style="top:15%;right:90%;animation-duration:6s;animation-delay:4.4s;"></div>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">השאלון החכם</span>
+      <h2>לא עוד "מי רוצה להיות שוער?"</h2>
+      <p>כל שאלה מקרבת אתכם לתפקיד הנינג'ה-כדורגלן שמתאים בול לאופי שלכם.</p>
+    </div>
+
+    <div class="quiz-app" id="quizApp">
+      <div class="quiz-panel active" id="panelStart">
+        <div class="quiz-start">
+          <div class="start-icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M12 2 2 22h20L12 2z" fill="#0B1A4D"/></svg>
+          </div>
+          <h3>מוכנים לגלות איזה נינג'ה אתם?</h3>
+          <p>10 שאלות קצרות ומהירות, ובסוף מחכה לכם כרטיס שחקן אישי לשמירה ולשיתוף.</p>
+          <button class="quiz-btn" id="startBtn">בואו נתחיל ←</button>
+        </div>
+      </div>
+
+      <div class="quiz-panel" id="panelQuestion">
+        <div class="qhead"><span id="qCounter">שאלה 1 מתוך 10</span><span>🍃 חשבו מהר, אין תשובה נכונה</span></div>
+        <div class="qtitle" id="qTitle"></div>
+        <div id="qOptions"></div>
+        <div class="qbar"><span id="qProgress"></span></div>
+      </div>
+
+      <div class="quiz-panel" id="panelResult">
+        <div class="result-wrap">
+          <span class="result-eyebrow">התוצאה שלך</span>
+          <h3>הכרטיס האישי שלך מוכן!</h3>
+          <div class="player-card" id="resultCardEl">
+            <div class="inner">
+              <span class="rank-badge" id="resRank"></span>
+              <div class="avatar-shape">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none"><path d="M12 2 2 22h20L12 2z" fill="#0B1A4D"/></svg>
+              </div>
+              <h3 id="resName">הנינג'ה שלכם</h3>
+              <div class="role-sub" id="resSub"></div>
+              <div class="stat-row" id="resStats"></div>
+            </div>
+          </div>
+          <p class="result-desc" id="resDesc"></p>
+          <div class="result-actions">
+            <button class="quiz-btn" id="saveBtn">שמרו או שתפו את הכרטיס 📤</button>
+            <button class="quiz-btn secondary" id="retryBtn">מלאו שוב</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="quiz-caption">בנוי בדיוק לגילאי 8–13 — הגיל שבו כל הפסקה הופכת למשחק כדורגל אמיתי, ובו הוויכוחים על תפקידים הכי חריפים.</p>
+  </div>
+</section>
+
+<section class="biz" id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">שדרוג הכרטיס</span>
+      <h2>הכרטיס החינמי, ועוד כמה עיצובים נדירים</h2>
+      <p>כל ילד מקבל כרטיס במתנה. מי שרוצה, יכול לשדרג בעלות סמלית של 2 ₪ לעיצוב נוצץ ונדיר.</p>
+    </div>
+    <div class="skin-grid">
+      <div class="skin free">
+        <div class="swatch"></div>
+        <h4>עיצוב רגיל</h4>
+        <p>הכרטיס הבסיסי שלך</p>
+        <span class="price">חינם</span>
+      </div>
+      <div class="skin gold">
+        <div class="swatch"></div>
+        <h4>זהב של מכבי</h4>
+        <p>גימור זהב נוצץ</p>
+        <span class="price">2 ₪</span>
+      </div>
+      <div class="skin saiya">
+        <div class="swatch"></div>
+        <h4>סופר-סאיה</h4>
+        <p>אנרגיה זוהרת בשיא העוצמה</p>
+        <span class="price">2 ₪</span>
+      </div>
+      <div class="skin leaf">
+        <div class="swatch"></div>
+        <h4>כפר העלה הנסתר</h4>
+        <p>רקע ניני בהשראת האגדה</p>
+        <span class="price">2 ₪</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="footer-cta">
+      <h2>מוכנים לגלות איזה נינג'ה אתם?</h2>
+      <p>MVP חי ופתוח לכולם. ילדים כבר מגלים את התפקיד שלהם — הצטרפו אליהם.</p>
+      <a class="btn-primary" href="#quiz">התחל את השאלון עכשיו ←</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="bg-figures">
+    <svg class="bg-figure referee" viewBox="0 0 260 640" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <rect x="105" y="430" width="30" height="170" rx="12"/>
+      <rect x="145" y="430" width="30" height="170" rx="12"/>
+      <rect x="90" y="270" width="100" height="170" rx="26"/>
+      <rect x="70" y="280" width="24" height="110" rx="12"/>
+      <rect x="185" y="150" width="24" height="140" rx="12" transform="rotate(15 197 150)"/>
+      <rect x="175" y="90" width="60" height="85" rx="6" fill="#E53935" transform="rotate(15 205 130)"/>
+      <circle cx="140" cy="220" r="46"/>
+      <path d="M120 255 Q110 270 100 260" stroke="currentColor" stroke-width="4" fill="none"/>
+      <ellipse cx="128" cy="262" rx="10" ry="7"/>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" fill="#0B1A4D" stroke="#FFC61A" stroke-width="2"/>
+        <path d="M20 6 L23 17 L34 20 L23 23 L20 34 L17 23 L6 20 L17 17 Z" fill="#FFC61A"/>
+      </svg>
+      נינג'ה של המגרש
+    </div>
+    <div class="social">
+      <a href="#" aria-label="טיקטוק">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#0B1A4D"><path d="M16.5 2c.3 2 1.7 3.6 3.7 4v3.2c-1.5 0-2.9-.4-4-1.2v6.7c0 3.5-2.8 6.3-6.3 6.3S3.6 17.2 3.6 13.7c0-3.4 2.6-6.1 5.9-6.3v3.3c-1.5.2-2.6 1.5-2.6 3 0 1.7 1.4 3 3 3s3-1.3 3-3V2h3.6z"/></svg>
+      </a>
+      <a href="#" aria-label="יוטיוב">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1A4D"><path d="M23 12s0-3.4-.4-5c-.3-.9-1-1.6-1.9-1.9C19 4.7 12 4.7 12 4.7s-7 0-8.7.4c-.9.3-1.6 1-1.9 1.9C1 8.6 1 12 1 12s0 3.4.4 5c.3.9 1 1.6 1.9 1.9 1.7.4 8.7.4 8.7.4s7 0 8.7-.4c.9-.3 1.6-1 1.9-1.9.4-1.6.4-5 .4-5zM9.8 15.3V8.7l5.8 3.3-5.8 3.3z"/></svg>
+      </a>
+    </div>
+    <p class="small">נינג'ה של המגרש · פרויקט MVP · 2026</p>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=ninja-hamigrash" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+(function(){
+  const roles = {
+    hokage: {
+      rank: "הוקאגה · קפטן הקבוצה",
+      sub: "המנהיג שרואה את כל המגרש",
+      desc: "אתה הראש הקריר שמוביל את הקבוצה, מקבל החלטות ברגעי לחץ ותמיד יודע מה הצעד הבא.",
+      stats: [["מנהיגות",95],["קור רוח",85],["ראיית משחק",90]]
+    },
+    jinchuriki: {
+      rank: "ג'ינצ'וריקי · חלוץ הכוח",
+      sub: "עוצמה טהורה שדוהרת לשער",
+      desc: "כשהכדור אצלך, כולם יודעים שמשהו גדול עומד לקרות. האנרגיה שלך מדביקה את כל הקבוצה.",
+      stats: [["מהירות",92],["אומץ",95],["עוצמה",88]]
+    },
+    anbu: {
+      rank: "אנבו · מגן הצללים",
+      sub: "בלתי ניתן לעבור",
+      desc: "אתה עובד בשקט, בלי הרבה תשומת לב, אבל בלעדיך אין הגנה. אתה תמיד שם ברגע הקריטי.",
+      stats: [["משמעת",93],["קריאת משחק",87],["עמידות",90]]
+    },
+    jonin: {
+      rank: "ג'ונין · שוער אגדי",
+      sub: "השומר הקר-רוח של השער",
+      desc: "לחץ הוא שם המשחק שלך. כשכולם מתוחים, אתה הכי רגוע במגרש — ותמיד שם בשנייה הנכונה.",
+      stats: [["רפלקסים",94],["ריכוז",91],["ביטחון עצמי",89]]
+    },
+    academy: {
+      rank: "אקדמיה · קשר יצירתי",
+      sub: "המוח שמחבר את כל המשחק",
+      desc: "אתה רואה מסירות שאף אחד אחר לא רואה. היצירתיות שלך הופכת כל משחק לבלתי צפוי.",
+      stats: [["יצירתיות",96],["מסירות",90],["עבודת צוות",93]]
+    }
+  };
+
+  const questions = [
+    {t:"כשהכדור מגיע אליך, מה קורה קודם בראש?", o:[
+      ["אני מחפש איך להבקיע בעצמי","jinchuriki"],
+      ["אני מסתכל מי הכי פנוי כדי למסור","academy"],
+      ["אני חושב על התוכנית של כל הקבוצה","hokage"],
+      ["אני כבר מתכנן איך לחזור להגן","anbu"],
+      ["אני מוודא שאני מסונכרן עם השוער","jonin"]
+    ]},
+    {t:"מה הכי מלחיץ אותך במשחק?", o:[
+      ["לפספס הזדמנות להבקיע","jinchuriki"],
+      ["לאכזב את הקבוצה בקבלת החלטה","hokage"],
+      ["לתת לשחקן יריב לעבור אותי","anbu"],
+      ["לקבל גול שיכולתי למנוע","jonin"],
+      ["לא להצליח לחבר בין השחקנים","academy"]
+    ]},
+    {t:"חבר בקבוצה טועה טעות גדולה. מה אתה עושה?", o:[
+      ["מעודד אותו ומזכיר שהמשחק עוד לא נגמר","hokage"],
+      ["רץ מיד לעזור ולתקן את המצב בהגנה","anbu"],
+      ["ממשיך להתרכז בלתקוף כדי לפצות","jinchuriki"],
+      ["נשאר קר רוח ומוודא שהשער בטוח","jonin"],
+      ["מנסה למצוא לו מסירה טובה בפעם הבאה","academy"]
+    ]},
+    {t:"באיזה רגע במשחק אתה הכי בקטע שלך?", o:[
+      ["רגע לפני בעיטה חופשית מסוכנת","jinchuriki"],
+      ["כשצריך לארגן את כל הקבוצה מחדש","hokage"],
+      ["כשעוצרים בעיטת עונשין","jonin"],
+      ["כשחוסמים התקפה של היריב ברגע האחרון","anbu"],
+      ["כשמוצאים מסירה שאף אחד לא ראה","academy"]
+    ]},
+    {t:"איך היית מתאר את הסגנון שלך במגרש?", o:[
+      ["מנהיג שרואה את כל הלוח","hokage"],
+      ["לוחם שלא מוותר על שום כדור","anbu"],
+      ["יצירתי ותמיד מפתיע","academy"],
+      ["שקט, ממוקד ולא מתרגש מלחץ","jonin"],
+      ["מלא אנרגיה ותמיד רוצה לתקוף","jinchuriki"]
+    ]},
+    {t:"באיזה תפקיד הכי הרבה חברים סומכים עליך?", o:[
+      ["להכריע מי עושה מה","hokage"],
+      ["לבלום את השחקן הכי טוב ביריבה","anbu"],
+      ["להבקיע כשהקבוצה הכי צריכה","jinchuriki"],
+      ["להציל אותנו ברגע האחרון","jonin"],
+      ["לחבר בין כולם למשחק אחד","academy"]
+    ]},
+    {t:"איך אתה מגיב אחרי הפסד קשה?", o:[
+      ["מנתח מה השתבש ומתכנן את הפעם הבאה","hokage"],
+      ["כועס על עצמי שלא הבקעתי מספיק","jinchuriki"],
+      ["חושב על הרגעים שיכולתי להגן טוב יותר","anbu"],
+      ["זוכר כל גול שספגתי","jonin"],
+      ["מחפש דרך לגרום לקבוצה לשחק יותר ביחד","academy"]
+    ]},
+    {t:"מה הכי כיף לך לתרגל?", o:[
+      ["בעיטות לשער מרחוק","jinchuriki"],
+      ["עצירות ורפלקסים","jonin"],
+      ["טאקלים וחסימות","anbu"],
+      ["מסירות ותרגילי משחק קבוצתי","academy"],
+      ["תרגילי הובלה וקריאת משחק","hokage"]
+    ]},
+    {t:"חברים בקבוצה מתווכחים על טקטיקה. מה אתה עושה?", o:[
+      ["מקבל החלטה ומוביל את כולם","hokage"],
+      ["מציע רעיון יצירתי שאף אחד לא חשב עליו","academy"],
+      ["אומר שהכי חשוב זה להגן קודם","anbu"],
+      ["שותק, אבל בטוח שישמרו על השער שלי","jonin"],
+      ["רק רוצה שיתנו לי כבר לשחק ולתקוף","jinchuriki"]
+    ]},
+    {t:"איזו כותרת הייתה הכי מתאימה לך בעיתון הספורט של בית הספר?", o:[
+      ["המנהיג הצעיר שמוביל את הקבוצה לניצחון","hokage"],
+      ["מכונת הגולים של המגרש","jinchuriki"],
+      ["החומה שאי אפשר לעבור","anbu"],
+      ["השוער שעוצר הכל","jonin"],
+      ["המוח היצירתי מאחורי כל מהלך","academy"]
+    ]}
+  ];
+
+  let current = 0;
+  let scores = {hokage:0, jinchuriki:0, anbu:0, jonin:0, academy:0};
+
+  const panelStart = document.getElementById('panelStart');
+  const panelQuestion = document.getElementById('panelQuestion');
+  const panelResult = document.getElementById('panelResult');
+  const qCounter = document.getElementById('qCounter');
+  const qTitle = document.getElementById('qTitle');
+  const qOptions = document.getElementById('qOptions');
+  const qProgress = document.getElementById('qProgress');
+
+  function showPanel(panel){
+    [panelStart, panelQuestion, panelResult].forEach(p => p.classList.remove('active'));
+    panel.classList.add('active');
+  }
+
+  function renderQuestion(){
+    const q = questions[current];
+    qCounter.textContent = `שאלה ${current + 1} מתוך ${questions.length}`;
+    qProgress.style.width = ((current) / questions.length * 100) + '%';
+    qTitle.textContent = q.t;
+    qOptions.innerHTML = '';
+    q.o.forEach(([label, role]) => {
+      const div = document.createElement('div');
+      div.className = 'quiz-opt';
+      div.innerHTML = `<span class="dot"></span>${label}`;
+      div.addEventListener('click', () => selectOption(div, role));
+      qOptions.appendChild(div);
+    });
+  }
+
+  function selectOption(el, role){
+    document.querySelectorAll('#qOptions .quiz-opt').forEach(o => o.classList.remove('picked'));
+    el.classList.add('picked');
+    scores[role]++;
+    qProgress.style.width = ((current + 1) / questions.length * 100) + '%';
+    setTimeout(() => {
+      current++;
+      if(current < questions.length){
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }, 380);
+  }
+
+  function showResult(){
+    let bestRole = 'hokage';
+    let bestScore = -1;
+    Object.keys(scores).forEach(role => {
+      if(scores[role] > bestScore){
+        bestScore = scores[role];
+        bestRole = role;
+      }
+    });
+    const data = roles[bestRole];
+    document.getElementById('resRank').textContent = data.rank;
+    document.getElementById('resSub').textContent = data.sub;
+    document.getElementById('resDesc').textContent = data.desc;
+    const statsEl = document.getElementById('resStats');
+    statsEl.innerHTML = '';
+    data.stats.forEach(([label, val]) => {
+      const line = document.createElement('div');
+      line.className = 'stat-line';
+      line.innerHTML = `${label}<div class="stat-track"><div class="stat-fill" style="width:${val}%"></div></div>`;
+      statsEl.appendChild(line);
+    });
+    showPanel(panelResult);
+  }
+
+  document.getElementById('startBtn').addEventListener('click', () => {
+    current = 0;
+    scores = {hokage:0, jinchuriki:0, anbu:0, jonin:0, academy:0};
+    renderQuestion();
+    showPanel(panelQuestion);
+  });
+
+  document.getElementById('retryBtn').addEventListener('click', () => {
+    showPanel(panelStart);
+  });
+
+  document.getElementById('saveBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('saveBtn');
+    const original = btn.textContent;
+    btn.textContent = 'מכינים תמונה...';
+    try{
+      const canvas = await html2canvas(document.getElementById('resultCardEl'), {backgroundColor: null, scale: 2});
+      canvas.toBlob(async (blob) => {
+        btn.textContent = original;
+        const file = new File([blob], 'ninja-card.png', {type: 'image/png'});
+        if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+          try{
+            await navigator.share({files:[file], title:"הכרטיס שלי", text:"תראו את כרטיס הנינג'ה שלי!"});
+            return;
+          } catch(e){}
+        }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ninja-card.png';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    } catch(err){
+      btn.textContent = original;
+    }
+  });
+})();
+</script>
+
+<script>
+  function initSlider(root){
+    const track = root.querySelector('.slider-track');
+    const slides = Array.from(track.children);
+    const dotsWrap = root.querySelector('.slider-dots');
+    const prevBtn = root.querySelector('.slider-arrow.prev');
+    const nextBtn = root.querySelector('.slider-arrow.next');
+    let current = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'שקופית ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function updateDots(){
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    function goTo(i){
+      current = Math.max(0, Math.min(slides.length - 1, i));
+      slides[current].scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
+      updateDots();
+    }
+
+    if(prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+    if(nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    let scrollTimeout;
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const trackRect = track.getBoundingClientRect();
+        let closest = 0, minDist = Infinity;
+        slides.forEach((s, i) => {
+          const dist = Math.abs(s.getBoundingClientRect().left - trackRect.left);
+          if(dist < minDist){ minDist = dist; closest = i; }
+        });
+        current = closest;
+        updateDots();
+      }, 120);
+    });
+  }
+  document.querySelectorAll('.slider').forEach(initSlider);
+</script>
+
+<script>
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navLinks = document.getElementById('navLinks');
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburgerBtn.classList.toggle('open', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburgerBtn.classList.remove('open');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+
+<script>
+  const card = document.getElementById('heroCard');
+  const stage = card.parentElement.parentElement;
+  stage.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `rotateY(${x * -18}deg) rotateX(${y * 18}deg)`;
+  });
+  stage.addEventListener('mouseleave', () => {
+    card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+  });
+</script>
+
+</body>
+</html>
