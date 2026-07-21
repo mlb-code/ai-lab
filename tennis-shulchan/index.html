@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>טניס שולחן מציאות — משחקים בין שווים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --paper:#F7F6F3;
+    --ink:#10131A;
+    --ink-soft:#4B5162;
+    --red:#E5342B;
+    --red-dark:#B91F1F;
+    --red-pale:#FDEBEA;
+    --blue:#1554D8;
+    --blue-dark:#0A2E7A;
+    --blue-pale:#EAF0FD;
+    --line:#E4E2DD;
+    --radius:18px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Assistant', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    direction:rtl;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3, .display{
+    font-family:'Rubik', sans-serif;
+    font-weight:900;
+    letter-spacing:-0.01em;
+    line-height:1.08;
+  }
+  .num{ font-family:'Rubik', sans-serif; font-variant-numeric: tabular-nums; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  ::selection{background:var(--red); color:var(--white);}
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{outline:3px solid var(--blue); outline-offset:3px; border-radius:6px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001s !important; animation-iteration-count:1 !important; transition-duration:0.001s !important;}
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:60;
+    background:rgba(255,255,255,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Rubik'; font-weight:800; font-size:19px;
+  }
+  .logo-mark{
+    width:34px; height:34px; border-radius:10px;
+    background:linear-gradient(135deg, var(--red) 0%, var(--blue) 100%);
+    position:relative; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:19px; line-height:1;
+  }
+  nav ul{list-style:none; display:flex; gap:30px;}
+  nav ul a{font-size:15px; font-weight:600; color:var(--ink-soft); transition:color .2s;}
+  nav ul a:hover{color:var(--red);}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px 24px; border-radius:999px; font-weight:700; font-size:15px;
+    border:none; cursor:pointer; transition:transform .2s ease, box-shadow .2s ease;
+    font-family:'Assistant', sans-serif;
+  }
+  .btn-primary{
+    background:linear-gradient(90deg, var(--red) 0%, var(--red-dark) 100%);
+    color:var(--white);
+    box-shadow:0 8px 20px -6px rgba(229,52,43,0.55);
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 26px -6px rgba(229,52,43,0.65);}
+  .btn-ghost{
+    background:var(--white); color:var(--ink); border:1.5px solid var(--line);
+  }
+  .btn-ghost:hover{border-color:var(--blue); color:var(--blue);}
+  .nav-right{display:flex; align-items:center; gap:14px;}
+  .nav-cta{display:none;}
+  @media(min-width:860px){ .nav-cta{display:inline-flex;} }
+
+  /* hamburger */
+  .hamburger{
+    display:none; flex-direction:column; align-items:center; justify-content:center;
+    gap:5px; width:42px; height:42px; border:1.5px solid var(--line); border-radius:10px;
+    background:var(--white); cursor:pointer; flex-shrink:0; padding:0;
+  }
+  .hamburger span{
+    width:20px; height:2px; border-radius:2px; background:var(--ink);
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-menu{
+    display:none; flex-direction:column;
+    position:fixed; inset:0; z-index:55;
+    background:var(--white);
+    padding:104px 28px 40px;
+    overflow-y:auto;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu ul{list-style:none; display:flex; flex-direction:column;}
+  .mobile-menu ul a{
+    display:block; padding:18px 2px; font-size:21px; font-weight:800;
+    font-family:'Rubik', sans-serif;
+    color:var(--ink); border-bottom:1px solid var(--line);
+  }
+  .mobile-menu ul a:hover{color:var(--red);}
+  .mobile-menu > .btn{margin-top:28px; width:100%; padding:16px 24px; font-size:16px;}
+
+  @media(max-width:859px){
+    nav.nav-links{display:none;}
+    .hamburger{display:flex;}
+    .nav-right{order:1;}
+    .logo{order:2;}
+  }
+  @media(min-width:860px){
+    .mobile-menu{display:none !important;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:76px 0 60px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:-10% -10% auto auto; width:640px; height:640px;
+    background:radial-gradient(circle, rgba(21,84,216,0.10) 0%, rgba(21,84,216,0) 70%);
+    top:-160px; left:-160px; z-index:0;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; width:640px; height:640px;
+    background:radial-gradient(circle, rgba(229,52,43,0.10) 0%, rgba(229,52,43,0) 70%);
+    bottom:-220px; right:-180px; z-index:0;
+  }
+  .hero-grid{
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:1fr; gap:52px; align-items:center;
+  }
+  @media(min-width:960px){ .hero-grid{grid-template-columns:1.05fr 0.95fr;} }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--blue-pale); color:var(--blue-dark);
+    font-weight:700; font-size:13px; padding:7px 14px; border-radius:999px;
+    margin-bottom:22px;
+  }
+  .eyebrow span.dot{width:7px; height:7px; border-radius:50%; background:var(--red);}
+  .hero h1{font-size:clamp(34px, 5vw, 60px); margin-bottom:22px;}
+  .hero h1 .accent{
+    background:linear-gradient(90deg, var(--red), var(--blue));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lead{
+    font-size:19px; color:var(--ink-soft); max-width:520px; margin-bottom:34px; line-height:1.65;
+  }
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:30px;}
+  .hero-trust{display:flex; gap:22px; flex-wrap:wrap; font-size:14px; color:var(--ink-soft); font-weight:600;}
+  .hero-trust li{display:flex; align-items:center; gap:7px; list-style:none;}
+  .hero-trust svg{flex-shrink:0;}
+
+  /* signature: match visual */
+  .match-card{
+    position:relative;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:34px 28px 28px;
+    box-shadow:0 30px 60px -30px rgba(10,20,50,0.25);
+  }
+  .match-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:26px;}
+  .match-head .tag{font-size:12px; font-weight:800; letter-spacing:.06em; color:var(--ink-soft); text-transform:uppercase;}
+  .match-head .live{display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--red);}
+  .live .blip{width:7px; height:7px; border-radius:50%; background:var(--red); animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+  .players{display:flex; align-items:center; justify-content:space-between; position:relative; padding:10px 6px 26px;}
+  .player{display:flex; flex-direction:column; align-items:center; gap:10px; width:110px; z-index:2;}
+  .avatar{
+    width:64px; height:64px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Rubik'; font-weight:800; font-size:20px; color:var(--white);
+  }
+  .avatar.a{background:linear-gradient(135deg, var(--red), var(--red-dark));}
+  .avatar.b{background:linear-gradient(135deg, var(--blue), var(--blue-dark));}
+  .player .rating{font-family:'Rubik'; font-weight:800; font-size:22px;}
+  .player .rname{font-size:13px; color:var(--ink-soft); font-weight:600;}
+
+  .rally-track{
+    position:absolute; top:44px; right:110px; left:110px; height:2px;
+    background:repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 16px);
+    z-index:1;
+  }
+  .ball{
+    position:absolute; top:-4px; width:10px; height:10px; border-radius:50%;
+    background:var(--ink); box-shadow:0 2px 6px rgba(0,0,0,.25);
+    animation:rally 2.4s ease-in-out infinite;
+  }
+  @keyframes rally{
+    0%{right:0; top:-4px;}
+    25%{top:-16px;}
+    50%{right:calc(100% - 10px); top:-4px;}
+    75%{top:-16px;}
+    100%{right:0; top:-4px;}
+  }
+
+  .match-score{
+    text-align:center; padding-top:14px; border-top:1px dashed var(--line);
+  }
+  .match-score .big{
+    font-family:'Rubik'; font-weight:900; font-size:44px;
+    background:linear-gradient(90deg, var(--red), var(--blue));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    line-height:1;
+  }
+  .match-score .cap{font-size:13px; color:var(--ink-soft); font-weight:700; margin-top:6px;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:640px; margin-bottom:52px;}
+  .section-head .eyebrow{margin-bottom:16px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,42px); margin-bottom:16px;}
+  .section-head p{color:var(--ink-soft); font-size:17px; line-height:1.6;}
+
+  /* problem */
+  .problem-split{
+    display:grid; grid-template-columns:1fr; gap:22px;
+  }
+  @media(min-width:820px){.problem-split{grid-template-columns:1fr 1fr;}}
+  .split-card{
+    border-radius:20px; padding:32px; position:relative; overflow:hidden;
+  }
+  .split-card.old{background:var(--white); border:1.5px solid var(--line);}
+  .split-card.new{
+    background:linear-gradient(150deg, var(--blue-dark) 0%, var(--blue) 100%);
+    color:var(--white);
+  }
+  .split-card .kicker{font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; opacity:.7; margin-bottom:14px;}
+  .split-card h3{font-size:22px; margin-bottom:14px; font-weight:700; font-family:'Assistant';}
+  .split-card p{line-height:1.7; font-size:15.5px;}
+  .split-card.old p{color:var(--ink-soft);}
+  .split-card.new p{color:rgba(255,255,255,0.9);}
+  .split-card ul{margin-top:16px; display:flex; flex-direction:column; gap:10px;}
+  .split-card li{display:flex; align-items:flex-start; gap:10px; font-size:15px; line-height:1.5;}
+  .split-card.old li{color:var(--ink-soft);}
+  .split-card.new li{color:rgba(255,255,255,0.92);}
+
+  /* how it works - real process */
+  .steps{display:grid; grid-template-columns:1fr; gap:20px;}
+  @media(min-width:820px){.steps{grid-template-columns:repeat(3,1fr);}}
+  .step{
+    background:var(--white); border:1px solid var(--line); border-radius:20px; padding:30px 26px;
+    position:relative;
+  }
+  .step .stepnum{
+    font-family:'Rubik'; font-weight:900; font-size:14px; color:var(--white);
+    background:var(--ink); width:30px; height:30px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+  }
+  .step:nth-child(1) .stepnum{background:var(--red);}
+  .step:nth-child(2) .stepnum{background:linear-gradient(135deg,var(--red),var(--blue));}
+  .step:nth-child(3) .stepnum{background:var(--blue);}
+  .step h3{font-family:'Assistant'; font-size:18px; font-weight:700; margin-bottom:10px;}
+  .step p{color:var(--ink-soft); font-size:15px; line-height:1.6;}
+  .step-arrow{display:none;}
+  @media(min-width:820px){
+    .steps{position:relative;}
+  }
+
+  /* pricing / business model */
+  .price-grid{
+    display:grid; grid-template-columns:1fr; gap:24px; margin-bottom:28px;
+  }
+  @media(min-width:820px){.price-grid{grid-template-columns:repeat(3,1fr); align-items:start;}}
+  .price-card{
+    background:var(--white); border:1.5px solid var(--line); border-radius:24px;
+    padding:34px 30px; position:relative; overflow:hidden;
+  }
+  .price-card::before{
+    content:""; position:absolute; top:-40%; left:-20%; width:220px; height:220px; border-radius:50%;
+    background:radial-gradient(circle, var(--red-pale), transparent 70%);
+  }
+  .price-badge{
+    font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--ink-soft); margin-bottom:14px; position:relative;
+  }
+  .price-top{display:flex; align-items:baseline; gap:10px; margin-bottom:6px; position:relative;}
+  .price-top .amount{font-family:'Rubik'; font-weight:900; font-size:52px; color:var(--red);}
+  .price-top .cur{font-family:'Rubik'; font-weight:800; font-size:20px; color:var(--red);}
+  .price-card .desc{font-size:14.5px; color:var(--ink-soft); margin-bottom:22px; position:relative; min-height:40px;}
+  .price-list{display:flex; flex-direction:column; gap:12px; position:relative;}
+  .price-list li{display:flex; align-items:flex-start; gap:10px; font-size:14.5px; color:var(--ink); line-height:1.5;}
+  .checkicon{flex-shrink:0; margin-top:2px;}
+
+  .price-card.featured{
+    border-color:var(--blue); box-shadow:0 24px 44px -26px rgba(21,84,216,0.4);
+  }
+  .price-card.featured::before{background:radial-gradient(circle, var(--blue-pale), transparent 70%);}
+  .price-card.featured .price-badge{color:var(--blue-dark);}
+  .price-card.featured .amount, .price-card.featured .cur{color:var(--blue);}
+  .price-tag{
+    position:absolute; top:-13px; left:30px;
+    background:var(--blue); color:var(--white); font-size:12px; font-weight:800;
+    padding:6px 16px; border-radius:999px; box-shadow:0 8px 16px -6px rgba(21,84,216,.5);
+  }
+
+  .price-card.dark{
+    background:linear-gradient(160deg, var(--ink) 0%, #1b2233 100%); border-color:transparent;
+  }
+  .price-card.dark::before{background:radial-gradient(circle, rgba(229,52,43,0.25), transparent 70%);}
+  .price-card.dark .price-badge{color:var(--red);}
+  .price-card.dark .amount, .price-card.dark .cur{color:var(--red);}
+  .price-card.dark .desc{color:rgba(255,255,255,0.72);}
+  .price-card.dark .price-list li{color:rgba(255,255,255,0.9);}
+
+  .price-note{
+    background:var(--blue-pale); border-radius:20px; padding:30px; color:var(--blue-dark);
+  }
+  .price-note h3{font-family:'Assistant'; font-weight:700; font-size:18px; margin-bottom:10px;}
+  .price-note p{font-size:15px; line-height:1.7; color:var(--blue-dark); opacity:.9;}
+
+  /* audience */
+  .audience{
+    background:linear-gradient(120deg, var(--ink) 0%, #1b2233 100%);
+    color:var(--white); border-radius:28px; padding:56px 40px;
+    position:relative; overflow:hidden;
+  }
+  .audience::after{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(circle at 85% 20%, rgba(229,52,43,0.25), transparent 45%),
+               radial-gradient(circle at 15% 85%, rgba(21,84,216,0.3), transparent 45%);
+  }
+  .audience-inner{position:relative; z-index:1; max-width:680px;}
+  .audience .eyebrow{background:rgba(255,255,255,0.12); color:var(--white);}
+  .audience h2{font-size:clamp(26px,3vw,36px); margin-bottom:18px;}
+  .audience p{font-size:17px; line-height:1.7; color:rgba(255,255,255,0.82);}
+
+  /* marketing / locations */
+  .loc-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media(min-width:820px){.loc-grid{grid-template-columns:repeat(4,1fr);}}
+  .loc-card{
+    background:var(--white); border:1px solid var(--line); border-radius:18px; padding:26px 20px;
+    text-align:center; transition:transform .2s, box-shadow .2s;
+  }
+  .loc-card:hover{transform:translateY(-4px); box-shadow:0 18px 30px -18px rgba(10,20,50,.25);}
+  .loc-icon{
+    width:52px; height:52px; border-radius:14px; margin:0 auto 16px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--paper);
+  }
+  .loc-card h3{font-size:15.5px; font-weight:700; font-family:'Assistant'; margin-bottom:6px;}
+  .loc-card p{font-size:13px; color:var(--ink-soft); line-height:1.5;}
+
+  /* success vision */
+  .success{
+    position:relative; border-radius:28px; overflow:hidden;
+    background:linear-gradient(135deg, var(--red) 0%, var(--red-dark) 40%, var(--blue-dark) 100%);
+    padding:70px 44px; text-align:center;
+  }
+  .success::before, .success::after{
+    content:""; position:absolute; border-radius:50%;
+    background:rgba(255,255,255,0.08);
+  }
+  .success::before{width:280px; height:280px; top:-100px; right:-80px;}
+  .success::after{width:200px; height:200px; bottom:-90px; left:-60px;}
+  .success p.quote{
+    position:relative; z-index:1;
+    font-family:'Rubik'; font-weight:800; font-size:clamp(22px,3.2vw,34px);
+    color:var(--white); line-height:1.45; max-width:820px; margin:0 auto;
+  }
+  .success .who{position:relative; z-index:1; margin-top:24px; color:rgba(255,255,255,0.8); font-weight:600; font-size:14px;}
+
+  /* final cta */
+  .cta-final{
+    background:var(--white); border:1.5px solid var(--line); border-radius:28px;
+    padding:56px 40px; text-align:center;
+  }
+  .cta-final h2{font-size:clamp(26px,3vw,38px); margin-bottom:16px;}
+  .cta-final p{color:var(--ink-soft); font-size:16px; margin-bottom:30px;}
+  .cta-form{
+    display:flex; gap:10px; max-width:440px; margin:0 auto; flex-wrap:wrap; justify-content:center;
+  }
+  .cta-form input{
+    flex:1; min-width:220px; padding:14px 18px; border-radius:999px;
+    border:1.5px solid var(--line); font-family:'Assistant'; font-size:15px; background:var(--paper);
+  }
+  .cta-form input:focus{outline:none; border-color:var(--blue);}
+
+  footer{
+    border-top:1px solid var(--line); padding:34px 0; margin-top:20px;
+  }
+  .foot-inner{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;}
+  .foot-inner .logo{font-size:16px;}
+  footer p{font-size:13px; color:var(--ink-soft);}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- RESPONSIVE REFINEMENTS ---------- */
+  @media(max-width:600px){
+    .wrap{padding:0 18px;}
+    .nav{padding:14px 18px;}
+    .mobile-menu{padding:92px 18px 32px;}
+    section{padding:56px 0;}
+    .hero{padding:44px 0 32px;}
+    .price-card{padding:26px 20px;}
+    .audience{padding:36px 22px;}
+    .success{padding:44px 22px;}
+    .cta-final{padding:36px 20px;}
+    .step, .split-card{padding:24px 20px;}
+  }
+  @media(max-width:420px){
+    .players{padding:6px 0 22px;}
+    .player{width:82px; gap:7px;}
+    .avatar{width:50px; height:50px; font-size:15px;}
+    .player .rating{font-size:18px;}
+    .player .rname{font-size:11.5px;}
+    .rally-track{right:82px; left:82px; top:38px;}
+    .match-score .big{font-size:34px;}
+    .match-card{padding:24px 18px 20px;}
+    .price-top .amount{font-size:44px;}
+  }
+  @media(max-width:380px){
+    .loc-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:480px){
+    .cta-form input, .cta-form button{width:100%; min-width:0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo"><span class="logo-mark">🏓</span> טניס שולחן מציאות</div>
+    <nav class="nav-links">
+      <ul>
+        <li><a href="#problem">הבעיה</a></li>
+        <li><a href="#how">איך זה עובד</a></li>
+        <li><a href="#pricing">מודל עסקי</a></li>
+        <li><a href="#marketing">איפה נמצא אתכם</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <a href="#join" class="btn btn-primary nav-cta">הצטרפו לרשימת ההמתנה</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#problem">הבעיה</a></li>
+    <li><a href="#how">איך זה עובד</a></li>
+    <li><a href="#pricing">מודל עסקי</a></li>
+    <li><a href="#marketing">איפה נמצא אתכם</a></li>
+  </ul>
+  <a href="#join" class="btn btn-primary">הצטרפו לרשימת ההמתנה</a>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> שידוך שחקנים מבוסס AI</div>
+        <h1>מוצאים לך <span class="accent">יריב באמת ברמה שלך</span>, לא רק מישהו שהתפנה</h1>
+        <p class="lead">
+          אנשים לא מוצאים עם מי לשחק טניס שולחן ברמה שמתאימה להם — אז אנחנו מוצאים להם.
+          הפלטפורמה שלנו מנתחת את רמת המשחק האמיתית שלכם מתוך סרטון, ומשדכת אתכם עם יריב שישאיר אתכם על קצה השולחן.
+        </p>
+        <div class="hero-ctas">
+          <a href="#join" class="btn btn-primary">הצטרפו לרשימת ההמתנה</a>
+          <a href="#how" class="btn btn-ghost">איך זה עובד</a>
+        </div>
+        <ul class="hero-trust">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M12 3l1.9 1.6 2.4-.6.8 2.3 2.3.8-.6 2.4L21 12l-1.6 1.9.6 2.4-2.3.8-.8 2.3-2.4-.6L12 21l-1.9-1.6-2.4.6-.8-2.3-2.3-.8.6-2.4L3 12l1.6-1.9-.6-2.4 2.3-.8.8-2.3 2.4.6z" stroke="#1554D8" stroke-width="1.6" stroke-linejoin="round"/></svg> התאמה לפי רמה אמיתית, לא לפי מי שהמאמן מכיר</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="#E5342B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> ניתוח וידאו חכם, לא שאלון סובייקטיבי</li>
+        </ul>
+      </div>
+
+      <div class="match-card">
+        <div class="match-head">
+          <span class="tag">שידוך חי</span>
+          <span class="live"><span class="blip"></span> מנתח וידאו כעת</span>
+        </div>
+        <div class="players">
+          <div class="player">
+            <div class="avatar a">נ.כ</div>
+            <div class="rating num">1,450</div>
+            <div class="rname">נועה, גני תקווה</div>
+          </div>
+          <div class="rally-track"><div class="ball"></div></div>
+          <div class="player">
+            <div class="avatar b">א.ר</div>
+            <div class="rating num">1,480</div>
+            <div class="rname">אורי, פארק הירקון</div>
+          </div>
+        </div>
+        <div class="match-score">
+          <div class="big num">94%</div>
+          <div class="cap">רמת התאמה — משחק צמוד צפוי</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="dot"></span> הבעיה</div>
+        <h2>המצב היום מבוסס על מי שהמאמן מכיר, לא על מי שבאמת מתאים לך</h2>
+        <p>ברוב הטורנירים והחוגים השכונתיים, מי שמחלק אתכם לזוגות משחק הוא בן אדם אחד — עם היכרות מוגבלת, זיכרון לא מושלם, וזמן קצוב. התוצאה: משחקים לא צמודים, שחקנים מתוסכלים, ואנשים רבים שפשוט אין להם עם מי לשחק בכלל.</p>
+      </div>
+      <div class="problem-split">
+        <div class="split-card old reveal">
+          <div class="kicker">המצב הקיים</div>
+          <h3>טורנירים שכונתיים וחלוקה ידנית</h3>
+          <p>המאמן או המארגן משבץ שחקנים לפי מה שהוא זוכר מהם, לא לפי נתונים אמיתיים על המשחק שלהם.</p>
+          <ul>
+            <li>🔴 שיבוץ מבוסס זיכרון והיכרות אישית</li>
+            <li>🔴 שחקנים חדשים נשארים בלי יריב</li>
+            <li>🔴 פערי רמה גדולים → משחקים לא מהנים</li>
+          </ul>
+        </div>
+        <div class="split-card new reveal">
+          <div class="kicker">עם טניס שולחן מציאות</div>
+          <h3>שידוך דיגיטלי לפי רמה אמיתית</h3>
+          <p>AI מנתח את הווידאו שלכם ומודד את רמת המשחק בפועל — ואז מוצא לכם יריב שבאמת מתאים.</p>
+          <ul>
+            <li>⚪ הערכת רמה אובייקטיבית מתוך וידאו</li>
+            <li>⚪ שידוך לפי נתונים, לא לפי מכרים</li>
+            <li>⚪ משחקים צמודים שכיף לחזור אליהם</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="dot"></span> איך זה עובד</div>
+        <h2>משלושה צעדים פשוטים, מהסרטון עד היריב הבא שלכם</h2>
+        <p>התהליך בנוי בסדר קבוע — כל שלב מזין את הבא אחריו, מהעלאת הווידאו ועד למשחק בפועל.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="stepnum">1</div>
+          <h3>מעלים סרטון משחק קצר</h3>
+          <p>מצלמים כמה נקודות מול הקיר או מול יריב, ומעלים לפלטפורמה ישירות מהנייד.</p>
+        </div>
+        <div class="step reveal">
+          <div class="stepnum">2</div>
+          <h3>ה-AI מנתח את הרמה</h3>
+          <p>המערכת בוחנת טכניקה, עוצמה ועקביות מתוך הווידאו, וקובעת דירוג רמה אמיתי.</p>
+        </div>
+        <div class="step reveal">
+          <div class="stepnum">3</div>
+          <h3>מקבלים שידוך ליריב מתאים</h3>
+          <p>אנחנו מציעים לכם יריב באזור שלכם ברמה דומה — ואם תרצו, גם דוח אימון מפורט.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="dot"></span> מודל עסקי</div>
+        <h2>השידוך תמיד חינם. הניתוח — לפי כמה עמוק אתם רוצים לצלול</h2>
+        <p>שלוש רמות של דוח אימון AI, מבוסס על סרטון המשחק שהעליתם — כל אחת מותאמת לרמת שאפתנות אחרת.</p>
+      </div>
+      <div class="price-grid">
+        <div class="price-card reveal">
+          <div class="price-badge">למתחילים</div>
+          <div class="price-top">
+            <span class="amount num">10</span>
+            <span class="cur">₪</span>
+          </div>
+          <div class="desc">דוח אימון בסיסי, מושלם למי שרק מתחיל להכיר את המשחק שלו</div>
+          <ul class="price-list">
+            <li><span class="checkicon">✅</span> ניתוח טכניקה: אחיזה, מכת מגרש ומכת טופ-ספין</li>
+            <li><span class="checkicon">✅</span> נקודות חוזק ונקודות לשיפור, בשפה פשוטה</li>
+            <li><span class="checkicon">✅</span> דירוג רמה מעודכן שמשמש לשידוכים הבאים</li>
+          </ul>
+        </div>
+        <div class="price-card featured reveal">
+          <div class="price-tag">הכי פופולרי</div>
+          <div class="price-badge">למתקדמים</div>
+          <div class="price-top">
+            <span class="amount num">50</span>
+            <span class="cur">₪</span>
+          </div>
+          <div class="desc">ניתוח מעמיק למי שכבר משחק ברצינות ורוצה לשבור תקרת זכוכית</div>
+          <ul class="price-list">
+            <li><span class="checkicon">✅</span> כל מה שכלול בחבילת המתחילים</li>
+            <li><span class="checkicon">✅</span> השוואה מול המשחקים הקודמים שלכם</li>
+            <li><span class="checkicon">✅</span> תוכנית תרגול אישית לשבוע הקרוב</li>
+          </ul>
+        </div>
+        <div class="price-card dark reveal">
+          <div class="price-badge">למטורפים</div>
+          <div class="price-top">
+            <span class="amount num">75</span>
+            <span class="cur">₪</span>
+          </div>
+          <div class="desc">ניתוח מקצועי מלא, לשחקנים ששואפים לרמה תחרותית</div>
+          <ul class="price-list">
+            <li><span class="checkicon">✅</span> כל מה שכלול בחבילת המתקדמים</li>
+            <li><span class="checkicon">✅</span> ניתוח פריים-אחר-פריים לכל מכה</li>
+            <li><span class="checkicon">✅</span> עדיפות בשידוך מול יריבים ברמה גבוהה</li>
+          </ul>
+        </div>
+      </div>
+      <div class="price-note reveal">
+        <h3>למה זה עובד</h3>
+        <p>השידוך עצמו נשאר חינמי כדי שכולם ישתמשו בו — וההכנסה מגיעה מהשחקנים שרוצים להשקיע ולהשתפר, בדיוק כשהם הכי מונעים לכך: אחרי משחק אמיתי.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="audience">
+    <div class="wrap">
+      <div class="audience reveal">
+        <div class="audience-inner">
+          <div class="eyebrow"><span class="dot"></span> קהל היעד</div>
+          <h2>לכל מי שאוהב לשחק, ופשוט אין לו עם מי</h2>
+          <p>עברתם דירה, אין לכם בן זוג קבוע למשחק, או שאתם פשוט חדשים בטניס שולחן ולא מכירים אף אחד באזור שלכם ברמה דומה — טניס שולחן מציאות בנוי בדיוק בשבילכם.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="marketing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="dot"></span> שיווק</div>
+        <h2>נמצא אתכם במקום שבו כבר משחקים</h2>
+        <p>לא ממתינים שתגיעו אלינו — אנחנו יוצאים לשולחנות ולמגרשים.</p>
+      </div>
+      <div class="loc-grid">
+        <div class="loc-card reveal">
+          <div class="loc-icon">🏓</div>
+          <h3>פארקים שכונתיים</h3>
+          <p>שולחנות טניס שולחן ציבוריים בכל שכונה</p>
+        </div>
+        <div class="loc-card reveal">
+          <div class="loc-icon">🏆</div>
+          <h3>מועדוני ספורט</h3>
+          <p>חוגים וקבוצות משחק מאורגנות</p>
+        </div>
+        <div class="loc-card reveal">
+          <div class="loc-icon">🌴</div>
+          <h3>קאנטרי קלאבים</h3>
+          <p>שחקנים קבועים שמחפשים אתגר חדש</p>
+        </div>
+        <div class="loc-card reveal">
+          <div class="loc-icon">🏖️</div>
+          <h3>חופי הים</h3>
+          <p>רשתות מטקות ופוצ'בול לאורך החוף</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="success">
+    <div class="wrap">
+      <div class="success reveal">
+        <p class="quote">"הצלחה נראית כמו שולחנות בפארק ומגרשי פוצ'בול בים, מלאים באנשים שנפגשו דרכנו — משחקים משחק צמוד ומותח, כי ה-AI שידך ביניהם בול."</p>
+        <div class="who">החזון של טניס שולחן מציאות</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="join">
+    <div class="wrap">
+      <div class="cta-final reveal">
+        <h2>מוכנים למצוא יריב שבאמת ברמה שלכם?</h2>
+        <p>הצטרפו לרשימת ההמתנה ותהיו הראשונים שיקבלו הזמנה כשה-MVP עולה לאוויר.</p>
+        <form class="cta-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='נרשמת בהצלחה ✓';">
+          <input type="email" placeholder="כתובת האימייל שלך" required>
+          <button type="submit" class="btn btn-primary">הצטרפות</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="logo"><span class="logo-mark" style="width:26px;height:26px;">🏓</span> טניס שולחן מציאות</div>
+    <p>© 2026 טניס שולחן מציאות · שידוך שחקנים מבוסס AI</p>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=tennis-shulchan" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function closeMenu(){
+    mobileMenu.classList.remove('open');
+    hamburgerBtn.classList.remove('active');
+    hamburgerBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+  hamburgerBtn.addEventListener('click', ()=>{
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburgerBtn.classList.toggle('active', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeMenu));
+  window.addEventListener('resize', ()=>{ if(window.innerWidth >= 860) closeMenu(); });
+</script>
+
+</body>
+</html>
