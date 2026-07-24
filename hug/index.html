@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>חוג המשך — יזמות ובינה מלאכותית · AI Lab</title>
+<meta name="description" content="חוג שנתי לבוגרי הקורסים של AI Lab — יזמות ובינה מלאכותית. מפגש שבועי של שעה ואתגר לאורך השבוע. השאירו פרטים.">
+
+<!-- דף הפצה להורים — לא לאינדוקס -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="bingbot" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+
+<meta name="theme-color" content="#0f0f1e">
+<meta property="og:title" content="חוג המשך — יזמות ובינה מלאכותית · AI Lab">
+<meta property="og:description" content="לבוגרי הקורסים של AI Lab. מפגש שבועי של שעה ואתגר לאורך השבוע — בונים מיזם אמיתי לאורך השנה.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f0f1e'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%238B5CF6'/%3E%3Ccircle cx='21' cy='11' r='3.5' fill='%2300D4AA'/%3E%3C/svg%3E">
+
+<style>
+:root{
+  --ground:#0f0f1e; --surface:#181830; --raised:#22224a;
+  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.18);
+  --violet:#8B5CF6; --violet-deep:#6C3CE1; --teal:#00D4AA; --teal-light:#34EABB;
+  --gold:#F5C842; --coral:#FF7849;
+  --ink:#f0eef5; --ink-2:#c3bcd8; --ink-3:#8079a4;
+  --font:"Assistant","Heebo",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --r-s:10px; --r-m:18px; --r-pill:999px;
+  --pad:clamp(18px,4vw,28px);
+  --wa:#25D366;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--font);font-size:clamp(15.5px,1.05vw + 12px,17px);line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:clip;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+img{max-width:100%}
+.wrap{width:min(1060px,100%);margin-inline:auto;padding-inline:var(--pad)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ── nav ── */
+.bar{position:sticky;top:0;z-index:60;background:rgba(15,15,30,.92);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-block-end:1px solid var(--line)}
+.bar-in{display:flex;align-items:center;gap:14px;min-height:58px}
+.mark{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px}
+.mark i{inline-size:10px;block-size:10px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--teal));box-shadow:0 0 14px rgba(139,92,246,.75)}
+.mark small{color:var(--ink-3);font-weight:500;font-size:11.5px}
+.bar .cta{margin-inline-start:auto}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:inherit;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;
+  padding:11px 20px;border-radius:var(--r-pill);border:1px solid transparent;
+  min-block-size:44px;transition:transform .15s,box-shadow .15s,background .15s;
+}
+.btn-primary{background:linear-gradient(120deg,var(--violet-deep),var(--violet));color:#fff;box-shadow:0 8px 22px rgba(108,60,225,.4)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(108,60,225,.5)}
+.btn-ghost{background:var(--surface);color:var(--ink);border-color:var(--line-2)}
+.btn-ghost:hover{background:var(--raised)}
+.btn-sm{padding:9px 16px;font-size:14px;min-block-size:40px}
+
+/* ── hero ── */
+.hero{
+  position:relative;padding-block:clamp(44px,8vw,78px) clamp(34px,6vw,56px);
+  border-block-end:1px solid var(--line);text-align:center;
+  background-image:
+    radial-gradient(120% 90% at 50% -20%,rgba(108,60,225,.34),transparent 60%),
+    radial-gradient(90% 70% at 12% 120%,rgba(0,212,170,.13),transparent 62%);
+}
+.pill-top{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px;font-weight:700;color:var(--teal-light);
+  background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.28);
+  padding:6px 15px;border-radius:var(--r-pill);
+}
+h1{margin:18px auto 0;font-size:clamp(30px,7.2vw,56px);font-weight:900;line-height:1.08;letter-spacing:-.025em;max-width:16ch;text-wrap:balance}
+h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet),var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{margin:18px auto 0;color:var(--ink-2);font-size:clamp(16px,1.3vw + 11px,20px);max-width:44ch;text-wrap:pretty}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-block-start:30px}
+.hero-note{margin-block-start:16px;color:var(--ink-3);font-size:14px}
+
+/* ── section frame ── */
+.sect{padding-block:clamp(42px,6.5vw,66px);border-block-end:1px solid var(--line)}
+.head{text-align:center;margin-block-end:34px}
+.head .kick{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
+.head h2{margin:9px 0 0;font-size:clamp(23px,3.8vw,34px);font-weight:800;letter-spacing:-.02em;text-wrap:balance}
+.head p{margin:10px auto 0;color:var(--ink-3);font-size:15.5px;max-width:60ch;text-wrap:pretty}
+
+/* ── how it works ── */
+.how{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.how .cell{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:22px}
+.how .cell .ic{font-size:26px;line-height:1;margin-block-end:12px}
+.how .cell h3{margin:0 0 6px;font-size:18px;font-weight:800}
+.how .cell p{margin:0;color:var(--ink-3);font-size:14.5px;line-height:1.55}
+.how .cell.spot{background:linear-gradient(140deg,rgba(0,212,170,.14),rgba(108,60,225,.1));border-color:rgba(0,212,170,.32)}
+.how .cell.spot h3{color:var(--teal-light)}
+
+/* ── tracks ── */
+.tracks{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.track{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:26px}
+.track::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;inline-size:4px;background:var(--c)}
+.track .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;color:var(--c);background:var(--cbg);padding:4px 12px;border-radius:var(--r-pill)}
+.track h3{margin:14px 0 4px;font-size:23px;font-weight:800}
+.track .for{color:var(--ink-2);font-size:15px}
+.track .goal{margin:14px 0 0;color:var(--ink-2);font-size:14.5px;line-height:1.6;text-wrap:pretty}
+.track .groups{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.track .groups li{display:flex;align-items:center;gap:9px;font-size:14.5px;color:var(--ink-2)}
+.track .groups li b{color:var(--ink)}
+.track .groups li::before{content:"";inline-size:7px;block-size:7px;border-radius:50%;background:var(--c);flex:none}
+
+/* ── learn chips ── */
+.stages{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.stg{background:var(--surface);border:1px solid var(--line);border-block-start:3px solid var(--c);border-radius:var(--r-m);padding:18px}
+.stg .n{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--c)}
+.stg h4{margin:4px 0 8px;font-size:17px;font-weight:800}
+.stg .chips{display:flex;flex-wrap:wrap;gap:6px}
+.stg .chips span{font-size:12.5px;color:var(--ink-2);background:var(--raised);border:1px solid var(--line);padding:4px 10px;border-radius:var(--r-pill)}
+
+/* ── form ── */
+.form-sect{background:linear-gradient(180deg,transparent,rgba(108,60,225,.05))}
+.formcard{
+  width:min(720px,100%);margin-inline:auto;
+  background:var(--surface);border:1px solid var(--line-2);border-radius:calc(var(--r-m) + 4px);
+  padding:clamp(22px,4vw,38px);box-shadow:0 24px 60px rgba(0,0,0,.35);
+}
+.formcard .lead{text-align:center;color:var(--ink-2);font-size:15.5px;margin:0 0 8px}
+.polls{display:grid;gap:22px;margin-block:26px}
+.field label.q{display:block;font-weight:700;font-size:16px;margin-block-end:4px}
+.field .hint{color:var(--ink-3);font-size:13.5px;margin-block-end:12px}
+.choices{display:flex;flex-wrap:wrap;gap:10px}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.choice span{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 18px;border-radius:var(--r-pill);
+  background:var(--raised);border:1.5px solid var(--line);
+  font-size:15px;font-weight:600;color:var(--ink-2);cursor:pointer;
+  transition:border-color .15s,background .15s,color .15s;min-block-size:46px;
+}
+.choice span::before{content:"";inline-size:18px;block-size:18px;border-radius:6px;border:2px solid var(--line-2);flex:none;transition:.15s}
+.choice input:checked + span{border-color:var(--violet);background:rgba(108,60,225,.2);color:#fff}
+.choice input:checked + span::before{background:var(--violet);border-color:var(--violet);box-shadow:inset 0 0 0 3px var(--surface)}
+.choice input:focus-visible + span{outline:2px solid var(--teal);outline-offset:2px}
+.choice.hour input:checked + span{border-color:var(--teal);background:rgba(0,212,170,.18)}
+.choice.hour input:checked + span::before{background:var(--teal);border-color:var(--teal)}
+
+.grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.inp label{display:block;font-size:14px;font-weight:600;color:var(--ink-2);margin-block-end:6px}
+.inp label .req{color:var(--coral)}
+.inp input,.inp select,.inp textarea{
+  width:100%;font-family:inherit;font-size:16px;color:var(--ink);
+  background:var(--ground);border:1.5px solid var(--line);border-radius:var(--r-s);
+  padding:12px 14px;transition:border-color .15s;min-block-size:48px;
+}
+.inp textarea{min-block-size:70px;resize:vertical}
+.inp input:focus,.inp select:focus,.inp textarea:focus{outline:none;border-color:var(--violet)}
+.inp select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238079a4' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center}
+.trackpick{display:flex;flex-wrap:wrap;gap:10px}
+.trackpick .choice input:checked + span::before{border-radius:50%}
+.trackpick .choice input:checked + span::before{box-shadow:inset 0 0 0 4px var(--surface)}
+
+.submit-row{margin-block-start:26px}
+.formcard .btn-primary{width:100%;font-size:17px;padding:15px}
+.formnote{text-align:center;color:var(--ink-3);font-size:13px;margin-block-start:14px}
+.msg{margin-block-start:16px;padding:14px 16px;border-radius:var(--r-s);font-size:15px;font-weight:600;display:none}
+.msg.ok{display:block;background:rgba(0,212,170,.14);border:1px solid rgba(0,212,170,.4);color:var(--teal-light)}
+.msg.err{display:block;background:rgba(255,120,73,.14);border:1px solid rgba(255,120,73,.4);color:#ffb499}
+
+/* ── faq / price strip ── */
+.strip{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.strip .item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:20px}
+.strip .item h4{margin:0 0 6px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
+.strip .item p{margin:0;color:var(--ink-3);font-size:14px;line-height:1.55}
+
+/* ── footer ── */
+.foot{padding-block:34px 46px;text-align:center;color:var(--ink-3);font-size:13.5px}
+.foot .wa{display:inline-flex;align-items:center;gap:8px;color:var(--ink-2);text-decoration:none;font-weight:600;margin-block-end:12px}
+.foot .wa i{inline-size:22px;block-size:22px;border-radius:50%;background:var(--wa);display:grid;place-items:center;color:#fff;font-size:12px}
+.foot b{color:var(--ink-2)}
+
+@media (max-width:600px){
+  .hero-cta .btn{width:100%}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap bar-in">
+    <div class="mark"><i></i>AI&nbsp;Lab <small>ai-lab.co.il</small></div>
+    <a class="btn btn-primary btn-sm cta" href="#register">להרשמה</a>
+  </div>
+</header>
+
+<!-- ═══ hero ═══ -->
+<section class="hero">
+  <div class="wrap">
+    <span class="pill-top">● חוג שנתי לבוגרי הקורסים שלנו</span>
+    <h1>ממשיכים בגדול: <em>יזמות ובינה מלאכותית</em></h1>
+    <p class="sub">אחרי שהילדים טעמו — הגיע הזמן לבנות מיזם אמיתי משלהם, לאורך שנה שלמה, עם הכלים הכי מתקדמים שיש.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#register">שריינו מקום ובחרו זמן</a>
+      <a class="btn btn-ghost" href="#how">איך זה עובד?</a>
+    </div>
+    <p class="hero-note">מפגש שבועי של שעה · קבוצות קטנות · מחיר מיוחד לבוגרי הקורסים</p>
+  </div>
+</section>
+
+<!-- ═══ how it works ═══ -->
+<section class="sect" id="how">
+  <div class="wrap">
+    <div class="head">
+      <p class="kick">איך זה עובד</p>
+      <h2>שעה בשבוע — ולמידה שממשיכה כל השבוע</h2>
+      <p>הקצב בנוי כך שהוא נכנס בקלות לשגרה, בלי להעמיס על הילד ועל המשפחה.</p>
+    </div>
+    <div class="how">
+      <div class="cell spot">
+        <div class="ic">⏱️</div>
+        <h3>מפגש אחד בשבוע, שעה</h3>
+        <p>יום קבוע ושעה קבועה אחר הצהריים. קל לזכור, קל להתמיד.</p>
+      </div>
+      <div class="cell spot">
+        <div class="ic">🎯</div>
+        <h3>אתגר שבועי לבית</h3>
+        <p>בסוף כל מפגש הילד מקבל אתגר קטן להמשך השבוע — כך הלמידה לא נעצרת כשהמפגש נגמר, והמיזם מתקדם צעד־צעד.</p>
+      </div>
+      <div class="cell">
+        <div class="ic">🚀</div>
+        <h3>מיזם אמיתי לאורך השנה</h3>
+        <p>לא תרגילים בודדים — כל ילד בונה רעיון משלו, שלב אחרי שלב, עד למוצר או אתר חי.</p>
+      </div>
+      <div class="cell">
+        <div class="ic">👥</div>
+        <h3>קבוצה קטנה</h3>
+        <p>קבוצות מצומצמות לפי גיל, כדי שכל ילד מקבל ליווי אישי למיזם שלו.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ tracks ═══ -->
+<section class="sect" id="tracks">
+  <div class="wrap">
+    <div class="head">
+      <p class="kick">שני מסלולים</p>
+      <h2>לכל ילד — לפי הקורס שסיים אצלנו</h2>
+      <p>ממשיכים בדיוק מהמקום שבו עצרנו, בקצב ובעומק שמתאימים לגיל ולרקע.</p>
+    </div>
+    <div class="tracks">
+
+      <article class="track" style="--c:var(--violet);--cbg:rgba(108,60,225,.18)">
+        <span class="tag">לבוגרי הקורס הבסיסי</span>
+        <h3>המסלול הבסיסי</h3>
+        <p class="for">לילדים שסיימו את הקורס הבסיסי ב-AI Lab</p>
+        <p class="goal">ממשיכים לבנות: מרעיון ראשון, דרך מותג ואתר חי, ועד תוכן ורשתות חברתיות — כל ילד עם המיזם שלו.</p>
+        <ul class="groups">
+          <li><b>קבוצה א׳</b> · גילאי 9–11</li>
+          <li><b>קבוצה ב׳</b> · גילאי 12–14</li>
+        </ul>
+      </article>
+
+      <article class="track" style="--c:var(--teal);--cbg:rgba(0,212,170,.16)">
+        <span class="tag">לבוגרי הקורס המתקדם</span>
+        <h3>המסלול המתקדם</h3>
+        <p class="for">לבני נוער שסיימו את הקורס המתקדם ב-AI Lab</p>
+        <p class="goal">בונים מוצר דיגיטלי אמיתי שעולה לאוויר עם משתמשים — כולל סוכני AI, כלים מתקדמים ומודל הכנסות.</p>
+        <ul class="groups">
+          <li><b>קבוצה מתקדמת</b> · גילאי 12–15</li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ what we cover ═══ -->
+<section class="sect" id="learn">
+  <div class="wrap">
+    <div class="head">
+      <p class="kick">במה נעסוק במהלך השנה</p>
+      <h2>מסע בארבעה שלבים</h2>
+      <p>אותה דרך לכל הקבוצות, בעומק שמתאים לגיל — כדי שכולם מגיעים יחד לקו הסיום.</p>
+    </div>
+    <div class="stages">
+      <div class="stg" style="--c:var(--violet)">
+        <div class="n">שלב 1</div><h4>גילוי</h4>
+        <div class="chips"><span>מציאת רעיון</span><span>מי הלקוח</span><span>בעיה ששווה לפתור</span></div>
+      </div>
+      <div class="stg" style="--c:var(--teal)">
+        <div class="n">שלב 2</div><h4>בנייה</h4>
+        <div class="chips"><span>מותג ולוגו</span><span>אתר חי</span><span>אב טיפוס</span></div>
+      </div>
+      <div class="stg" style="--c:var(--gold)">
+        <div class="n">שלב 3</div><h4>תוכן ורשתות</h4>
+        <div class="chips"><span>וידאו קצר</span><span>עריכה חכמה</span><span>לוח תוכן</span></div>
+      </div>
+      <div class="stg" style="--c:var(--coral)">
+        <div class="n">שלב 4</div><h4>השקה ותערוכה</h4>
+        <div class="chips"><span>לקוחות ראשונים</span><span>מדידה</span><span>תערוכה דיגיטלית</span></div>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--ink-3);font-size:13px;margin-block-start:18px">* התכנים המפורטים עשויים להשתנות מעט במהלך השנה, בהתאם לקבוצה ולהתקדמות.</p>
+  </div>
+</section>
+
+<!-- ═══ register + availability poll ═══ -->
+<section class="sect form-sect" id="register">
+  <div class="wrap">
+    <div class="head">
+      <p class="kick">הרשמה ובחירת זמן</p>
+      <h2>שריינו מקום — ועזרו לנו לקבוע את הזמן</h2>
+      <p>אנחנו סוגרים עכשיו את הימים והשעות. סמנו את <b>כל</b> האפשרויות שנוחות לכם, ונבחר את המשבצת שמתאימה לרוב.</p>
+    </div>
+
+    <form class="formcard" id="clubForm" novalidate>
+      <p class="lead">מילוי לוקח דקה. ניצור קשר בוואטסאפ עם כל הפרטים והמחיר המיוחד לבוגרים.</p>
+
+      <div class="polls">
+        <!-- ימים -->
+        <div class="field">
+          <label class="q">אילו ימים נוחים לכם? <span style="color:var(--coral)">*</span></label>
+          <p class="hint">בחירה מרובה — סמנו כל יום שיכול להתאים.</p>
+          <div class="choices" id="days">
+            <label class="choice"><input type="checkbox" name="day" value="ראשון"><span>ראשון</span></label>
+            <label class="choice"><input type="checkbox" name="day" value="שני"><span>שני</span></label>
+            <label class="choice"><input type="checkbox" name="day" value="שלישי"><span>שלישי</span></label>
+          </div>
+        </div>
+
+        <!-- שעות -->
+        <div class="field">
+          <label class="q">אילו שעות נוחות לכם? <span style="color:var(--coral)">*</span></label>
+          <p class="hint">כל מפגש הוא שעה אחת. סמנו כל משבצת שמתאימה (אחר הצהריים, 16:00–19:00).</p>
+          <div class="choices" id="hours">
+            <label class="choice hour"><input type="checkbox" name="hour" value="16:00–17:00"><span class="num">16:00–17:00</span></label>
+            <label class="choice hour"><input type="checkbox" name="hour" value="17:00–18:00"><span class="num">17:00–18:00</span></label>
+            <label class="choice hour"><input type="checkbox" name="hour" value="18:00–19:00"><span class="num">18:00–19:00</span></label>
+          </div>
+        </div>
+
+        <!-- מסלול -->
+        <div class="field">
+          <label class="q">איזה קורס הילד/ה סיים/ה אצלנו? <span style="color:var(--coral)">*</span></label>
+          <p class="hint">כדי לשבץ למסלול הנכון.</p>
+          <div class="trackpick" id="track">
+            <label class="choice"><input type="radio" name="track" value="בסיסי"><span>הקורס הבסיסי</span></label>
+            <label class="choice"><input type="radio" name="track" value="מתקדם"><span>הקורס המתקדם</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- פרטים -->
+      <div class="grid2">
+        <div class="inp">
+          <label>שם ההורה <span class="req">*</span></label>
+          <input type="text" name="parent_name" autocomplete="name" required>
+        </div>
+        <div class="inp">
+          <label>טלפון (וואטסאפ) <span class="req">*</span></label>
+          <input type="tel" name="parent_phone" inputmode="tel" autocomplete="tel" placeholder="05X-XXXXXXX" required>
+        </div>
+        <div class="inp">
+          <label>שם הילד/ה <span class="req">*</span></label>
+          <input type="text" name="child_name" required>
+        </div>
+        <div class="inp">
+          <label>גיל הילד/ה <span class="req">*</span></label>
+          <select name="child_age" required>
+            <option value="" selected disabled>בחרו גיל</option>
+            <option>9</option><option>10</option><option>11</option><option>12</option>
+            <option>13</option><option>14</option><option>15</option>
+          </select>
+        </div>
+        <div class="inp">
+          <label>עיר / אזור</label>
+          <input type="text" name="city" autocomplete="address-level2">
+        </div>
+        <div class="inp">
+          <label>הערה (לא חובה)</label>
+          <input type="text" name="note" placeholder="אחים נוספים, אילוצי זמן, שאלה...">
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn btn-primary" id="submitBtn">שליחת הפרטים ובחירת הזמן</button>
+      </div>
+      <p class="formnote">בלחיצה על שליחה אתם מאשרים שניצור קשר בוואטסאפ לגבי החוג. הפרטים נשמרים אצלנו בלבד.</p>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ═══ price / details strip ═══ -->
+<section class="sect" id="details">
+  <div class="wrap">
+    <div class="strip">
+      <div class="item">
+        <h4>💜 מחיר מיוחד לבוגרים</h4>
+        <p>לבוגרי הקורסים שלנו יש תנאי הרשמה מיוחדים. הפרטים המלאים והמחיר יימסרו בשיחה האישית אחרי ההרשמה.</p>
+      </div>
+      <div class="item">
+        <h4>📅 מתי מתחילים</h4>
+        <p>החוג נפתח באוקטובר 2026 ורץ לאורך שנת הלימודים. היום קובעים יחד את היום והשעה הקבועים.</p>
+      </div>
+      <div class="item">
+        <h4>💻 מה צריך</h4>
+        <p>מחשב נייד ואוזניות. את כל הכלים והחשבונות נסדר יחד — אין צורך בידע מוקדם מעבר לקורס שהילד סיים.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <a class="wa" href="#register"><i>✔</i>נשמח לענות על כל שאלה בוואטסאפ</a><br>
+    <b>AI Lab</b> · מאיר לביא · ai-lab.co.il
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  // ▼▼▼ אחרי פריסת ה-Apps Script, הדביקו כאן את כתובת ה-Web App (מסתיימת ב-/exec) ▼▼▼
+  const APPS_SCRIPT_URL = "PASTE_WEB_APP_URL_HERE";
+  // ▲▲▲
+
+  const form = document.getElementById("clubForm");
+  const btn  = document.getElementById("submitBtn");
+  const msg  = document.getElementById("msg");
+
+  const getChecked = name =>
+    [...form.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
+
+  const show = (text, kind) => {
+    msg.textContent = text;
+    msg.className = "msg " + kind;
+    msg.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  };
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const days  = getChecked("day");
+    const hours = getChecked("hour");
+    const track = getChecked("track")[0] || "";
+    const f = form.elements;
+
+    if (!days.length)  return show("סמנו לפחות יום אחד שנוח לכם.", "err");
+    if (!hours.length) return show("סמנו לפחות שעה אחת שנוחה לכם.", "err");
+    if (!track)        return show("בחרו איזה קורס הילד/ה סיים/ה.", "err");
+    if (!f.parent_name.value.trim()) return show("נא למלא את שם ההורה.", "err");
+    if (!f.parent_phone.value.trim()) return show("נא למלא טלפון ליצירת קשר.", "err");
+    if (!f.child_name.value.trim())  return show("נא למלא את שם הילד/ה.", "err");
+    if (!f.child_age.value)          return show("נא לבחור את גיל הילד/ה.", "err");
+
+    const payload = {
+      form_type: "club",
+      days: days.join(", "),
+      hours: hours.join(", "),
+      track,
+      parent_name:  f.parent_name.value.trim(),
+      parent_phone: f.parent_phone.value.trim(),
+      child_name:   f.child_name.value.trim(),
+      child_age:    f.child_age.value,
+      city:         f.city.value.trim(),
+      note:         f.note.value.trim(),
+      page: "hug"
+    };
+
+    btn.disabled = true;
+    const orig = btn.textContent;
+    btn.textContent = "שולח...";
+    msg.className = "msg";
+
+    if (APPS_SCRIPT_URL.includes("PASTE_")) {
+      btn.disabled = false; btn.textContent = orig;
+      return show("הטופס יופעל בקרוב מאוד. אם אתם רואים את זה — כתבו לנו ישירות בוואטסאפ.", "err");
+    }
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+      // no-cors ⇒ לא ניתן לקרוא את התשובה; מניחים הצלחה
+      form.reset();
+      form.querySelectorAll("input:checked").forEach(el => el.checked = false);
+      show("קיבלנו! תודה 🙏 ניצור קשר בוואטסאפ עם כל הפרטים והמחיר המיוחד.", "ok");
+      btn.textContent = "נשלח בהצלחה ✓";
+    } catch (err) {
+      btn.disabled = false; btn.textContent = orig;
+      show("משהו השתבש בשליחה. נסו שוב, או כתבו לנו ישירות בוואטסאפ.", "err");
+    }
+  });
+})();
+</script>
+</body>
+</html>
