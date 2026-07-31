@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>SWIMUP — כל תנועה נספרת</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Heebo:wght@300;400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#052539;
+    --navy-2:#0a3a52;
+    --pool:#0e5c7e;
+    --cyan:#2fe0f0;
+    --cyan-2:#9ff3fa;
+    --cyan-dim:#1aa8b8;
+    --yellow:#ffc93c;
+    --yellow-2:#ffe39a;
+    --flame:#ff9d3d;
+    --foam:#f3fbfc;
+    --ink:#04202e;
+    --white:#ffffff;
+    --shadow: 0 20px 50px -20px rgba(5,37,57,0.45);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Heebo', sans-serif;
+    background:var(--foam);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  h1,h2,h3, .display{
+    font-family:'Secular One', 'Heebo', sans-serif;
+    font-weight:400;
+    line-height:1.15;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  img,svg{ display:block; max-width:100%; }
+  .wrap{ max-width:1160px; margin:0 auto; padding:0 24px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.8rem; font-weight:700; letter-spacing:0.5px;
+    color:var(--cyan-dim); background:rgba(47,224,240,0.1);
+    border:1px solid rgba(47,224,240,0.35);
+    padding:6px 14px; border-radius:999px; margin-bottom:18px;
+  }
+  .eyebrow.on-dark{ color:var(--cyan-2); background:rgba(47,224,240,0.12); border-color:rgba(47,224,240,0.3); }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--yellow); }
+
+  /* ===== lane texture ===== */
+  .lanes{
+    position:absolute; inset:0; pointer-events:none;
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 96px);
+    opacity:0.5;
+  }
+
+  /* ===== header ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(5,37,57,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; height:74px; }
+  .logo{ display:flex; align-items:center; gap:10px; font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--white); }
+  .nav-links{ display:flex; align-items:center; gap:34px; }
+  .nav-links a{ color:rgba(255,255,255,0.75); font-size:0.95rem; font-weight:500; transition:color .2s; }
+  .nav-links a:hover{ color:var(--cyan-2); }
+  .logo .wave-mark{ width:34px; height:34px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:999px;
+    font-weight:700; font-size:0.95rem; cursor:pointer;
+    border:none; transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover{ transform: translateY(-2px); }
+  .btn-primary{
+    background: linear-gradient(95deg, var(--cyan) 0%, var(--yellow) 100%);
+    color: var(--navy);
+    box-shadow: 0 12px 30px -10px rgba(47,224,240,0.5);
+  }
+  .btn-ghost{
+    background:transparent; color:var(--white);
+    border:1px solid rgba(255,255,255,0.35);
+  }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.08); }
+  .btn-dark{ background:var(--navy); color:var(--white); }
+  .nav .btn{ padding:11px 22px; font-size:0.88rem; }
+  .burger{
+    display:none; flex-direction:column; justify-content:center; align-items:center; gap:5px;
+    width:42px; height:42px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15);
+    border-radius:12px; cursor:pointer; padding:0; position:relative; z-index:60;
+  }
+  .burger span{
+    width:20px; height:2px; background:#fff; border-radius:2px;
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  .burger.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .burger.active span:nth-child(2){ opacity:0; }
+  .burger.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:74px 0 0 0; z-index:49;
+    background:rgba(4,26,40,0.98); backdrop-filter: blur(14px);
+    display:flex; flex-direction:column; padding:10px 24px 34px;
+    transform:translateY(-16px); opacity:0; pointer-events:none;
+    transition: transform .3s ease, opacity .25s ease;
+    overflow-y:auto;
+  }
+  .mobile-menu.open{ transform:translateY(0); opacity:1; pointer-events:auto; }
+  .mobile-menu a{
+    color:rgba(255,255,255,0.88); font-size:1.15rem; font-weight:700;
+    padding:18px 4px; border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .mobile-menu a.btn{
+    border-bottom:none; margin-top:22px; width:100%; justify-content:center;
+    font-size:0.98rem; color:var(--navy);
+  }
+  body.no-scroll{ overflow:hidden; }
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(60% 60% at 85% 10%, rgba(47,224,240,0.22), transparent 60%),
+      radial-gradient(45% 45% at 10% 90%, rgba(255,201,60,0.16), transparent 60%),
+      linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    color:var(--white);
+    padding:90px 0 40px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.05fr 0.95fr; gap:50px; align-items:center;
+    position:relative; z-index:2;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 4.6vw, 3.9rem);
+    color:var(--white);
+    margin-bottom:22px;
+  }
+  .hero h1 .hi{
+    background:linear-gradient(95deg, var(--cyan) 10%, var(--yellow) 90%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lead{
+    font-size:1.15rem; line-height:1.75; color:rgba(255,255,255,0.78);
+    max-width:520px; margin-bottom:34px;
+  }
+  .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin-bottom:44px; }
+  .hero-meta{ display:flex; gap:30px; flex-wrap:wrap; }
+  .hero-meta div{ display:flex; flex-direction:column; gap:4px; }
+  .hero-meta .num{ font-family:'JetBrains Mono',monospace; font-size:1.5rem; font-weight:700; color:var(--cyan-2); }
+  .hero-meta .lbl{ font-size:0.82rem; color:rgba(255,255,255,0.6); }
+
+  /* phone mockup */
+  .phone-stage{ position:relative; display:flex; justify-content:center; }
+  .phone{
+    width:290px; background:var(--navy);
+    border:8px solid #0d3550;
+    border-radius:38px; padding:18px 16px 22px;
+    box-shadow: var(--shadow);
+    position:relative; z-index:2;
+  }
+  .phone-notch{ width:70px; height:6px; border-radius:6px; background:rgba(255,255,255,0.15); margin:0 auto 16px; }
+  .phone-card{
+    background:linear-gradient(160deg, var(--navy-2), var(--pool));
+    border-radius:20px; padding:18px; margin-bottom:12px;
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .phone-card .top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .phone-card .top .t{ font-size:0.75rem; color:rgba(255,255,255,0.55); font-weight:500; }
+  .phone-card .top .v{ font-family:'JetBrains Mono',monospace; color:var(--cyan-2); font-size:0.78rem; }
+  .log-row{ display:flex; justify-content:space-between; padding:9px 2px; font-size:0.78rem; color:rgba(255,255,255,0.78); border-bottom:1px solid rgba(255,255,255,0.06); }
+  .log-row:last-child{ border-bottom:none; }
+  .log-row.head{ color:rgba(255,255,255,0.42); font-weight:700; font-size:0.68rem; border-bottom:1px solid rgba(255,255,255,0.15); }
+  .log-row .mono{ font-family:'JetBrains Mono',monospace; color:var(--cyan-2); }
+  .streak-badge{
+    position:absolute; top:26px; left:-26px; z-index:3;
+    background:linear-gradient(135deg, var(--yellow), var(--flame));
+    color:var(--navy); border-radius:18px; padding:12px 16px;
+    box-shadow:0 16px 32px -12px rgba(255,157,61,0.55);
+    display:flex; align-items:center; gap:10px;
+    animation: floaty 4.5s ease-in-out infinite;
+  }
+  .streak-badge .flame{ width:26px; height:26px; }
+  .streak-badge .num{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:1.15rem; line-height:1; }
+  .streak-badge .lbl{ font-size:0.68rem; font-weight:700; }
+  @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
+
+  .set-pill{
+    display:flex; align-items:center; justify-content:space-between;
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px; padding:12px 14px; margin-bottom:10px;
+  }
+  .set-pill .l{ font-size:0.8rem; color:rgba(255,255,255,0.75); }
+  .set-pill .r{ font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--yellow); font-weight:700; }
+
+  /* wave divider */
+  .wave{ position:relative; line-height:0; z-index:2; }
+  .wave svg{ width:100%; height:auto; }
+
+  /* ===== problem section ===== */
+  .section{ padding:96px 0; position:relative; }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(1.8rem,3.2vw,2.5rem); color:var(--ink); }
+  .section-head p{ color:#43607a; font-size:1.05rem; margin-top:14px; line-height:1.7; }
+
+  .problem{ background:var(--navy); color:var(--white); }
+  .problem .section-head h2{ color:var(--white); }
+  .problem .section-head p{ color:rgba(255,255,255,0.65); }
+  .problem-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .p-card{
+    background:rgba(255,255,255,0.045);
+    border:1px solid rgba(255,255,255,0.09);
+    border-radius:18px; padding:26px 24px;
+  }
+  .p-card .ic{ width:38px; height:38px; margin-bottom:18px; color:var(--cyan-2); }
+  .p-card h3{ font-family:'Heebo'; font-weight:700; font-size:1.08rem; margin-bottom:10px; color:var(--white); }
+  .p-card p{ font-size:0.92rem; line-height:1.65; color:rgba(255,255,255,0.62); }
+  .p-card .x{ display:inline-block; margin-top:14px; font-size:0.78rem; color:#ff9d9d; font-weight:700; }
+
+  /* ===== features ===== */
+  .features{ background:var(--foam); }
+  .feat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .f-card{
+    background:var(--white); border-radius:20px; padding:30px;
+    border:1px solid #e2eef1;
+    box-shadow:0 20px 40px -30px rgba(4,32,46,0.25);
+    transition: transform .25s ease;
+  }
+  .f-card:hover{ transform: translateY(-6px); }
+  .f-card .ic-wrap{
+    width:54px; height:54px; border-radius:15px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:20px;
+  }
+  .f-card:nth-child(1) .ic-wrap, .f-card:nth-child(3) .ic-wrap{ background:linear-gradient(135deg, var(--cyan), var(--cyan-dim)); }
+  .f-card:nth-child(2) .ic-wrap, .f-card:nth-child(4) .ic-wrap{ background:linear-gradient(135deg, var(--yellow), var(--flame)); }
+  .f-card .ic-wrap svg{ width:28px; height:28px; color:var(--navy); }
+  .f-card h3{ font-family:'Heebo'; font-weight:700; font-size:1.18rem; margin-bottom:10px; }
+  .f-card p{ color:#4a6172; font-size:0.95rem; line-height:1.7; }
+  .f-tag{ display:inline-block; margin-top:14px; font-size:0.72rem; font-weight:700; color:var(--cyan-dim); background:rgba(47,224,240,0.1); padding:4px 12px; border-radius:999px; }
+  .swipe-hint{ display:none; }
+  .f-try{
+    display:flex; align-items:center; gap:8px; margin-top:18px;
+    background:none; border:none; padding:0; cursor:pointer;
+    font-family:'Heebo'; font-weight:700; font-size:0.9rem; color:var(--navy);
+  }
+  .f-try:hover{ color:var(--cyan-dim); }
+  .f-try .pulse{ width:8px; height:8px; border-radius:50%; background:var(--yellow); animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ transform:scale(1); opacity:1; } 50%{ transform:scale(1.6); opacity:0.4; } }
+
+  /* ===== demo section ===== */
+  .demo{ background: linear-gradient(180deg, var(--navy), var(--navy-2)); color:var(--white); }
+  .demo-tabs{ display:flex; justify-content:center; gap:10px; margin-bottom:36px; flex-wrap:wrap; }
+  .demo-tab{
+    padding:12px 22px; border-radius:999px; border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7);
+    font-family:'Heebo'; font-weight:700; font-size:0.9rem; cursor:pointer;
+    transition: all .2s ease;
+  }
+  .demo-tab:hover{ background:rgba(255,255,255,0.1); }
+  .demo-tab.active{
+    background:linear-gradient(95deg, var(--cyan), var(--yellow));
+    color:var(--navy); border-color:transparent;
+  }
+  .demo-stage{ display:flex; justify-content:center; }
+  .demo-panel{ width:100%; max-width:460px; }
+  .demo-card{
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+    border-radius:22px; padding:26px; backdrop-filter: blur(6px);
+  }
+  .demo-card.center{ text-align:center; }
+  .demo-card-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; font-weight:700; }
+  .demo-card-head .muted{ font-weight:500; color:rgba(255,255,255,0.5); font-size:0.8rem; }
+  .log-form{ display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+  .log-form input{
+    flex:1; min-width:110px; padding:11px 14px; border-radius:12px;
+    border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06);
+    color:var(--white); font-family:'Heebo'; font-size:0.85rem;
+  }
+  .log-form input::placeholder{ color:rgba(255,255,255,0.4); }
+  .log-form .btn{ padding:11px 20px; font-size:0.85rem; }
+  .log-table{ border-top:1px solid rgba(255,255,255,0.08); padding-top:6px; }
+  .log-row.new{ animation: rowIn .5s ease; }
+  @keyframes rowIn{ from{ background:rgba(47,224,240,0.25); } to{ background:transparent; } }
+  .streak-big{ font-size:4.2rem; line-height:1; margin-bottom:8px; transition: transform .3s ease; }
+  .streak-days{ font-size:1rem; color:rgba(255,255,255,0.75); margin-bottom:14px; }
+  .streak-days .mono{ font-size:1.6rem; color:var(--yellow); font-weight:700; }
+  .demo-note{ font-size:0.85rem; color:rgba(255,255,255,0.55); margin-bottom:22px; }
+  .quote-box{
+    font-family:'Secular One'; font-size:1.3rem; line-height:1.6;
+    background:rgba(255,255,255,0.06); border-radius:16px; padding:26px 20px; margin-bottom:22px;
+    min-height:120px; display:flex; align-items:center; justify-content:center;
+    transition: opacity .25s ease;
+  }
+
+  /* ===== how it works ===== */
+  .how{ background: linear-gradient(180deg, var(--foam), #e7f6f8); }
+  .how-flow{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; position:relative; }
+  .how-step{ position:relative; padding:0 22px; text-align:center; }
+  .how-step .idx{
+    width:56px; height:56px; border-radius:50%; margin:0 auto 20px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--navy); color:var(--cyan-2);
+    font-family:'JetBrains Mono',monospace; font-weight:700; font-size:1.2rem;
+    border:3px solid var(--cyan);
+  }
+  .how-step h3{ font-size:1.08rem; margin-bottom:10px; font-weight:700; font-family:'Heebo'; }
+  .how-step p{ color:#4a6172; font-size:0.92rem; line-height:1.65; }
+  .how-connector{
+    position:absolute; top:28px; right:100%; width:100%; height:2px;
+    background:repeating-linear-gradient(90deg, var(--cyan) 0 8px, transparent 8px 16px);
+  }
+  .how-step:first-child .how-connector{ display:none; }
+
+  /* ===== pricing ===== */
+  .pricing{ background:var(--white); }
+  .price-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:820px; margin:0 auto; }
+  .price-grid.single{ grid-template-columns:1fr; max-width:440px; }
+  .price-grid.single li{ justify-content:center; }
+  .price-card{
+    border-radius:22px; padding:34px 30px;
+    border:1px solid #e2eef1;
+  }
+  .price-card.free{ background:var(--foam); }
+  .price-card.pro{
+    background:linear-gradient(165deg, var(--navy), var(--navy-2));
+    color:var(--white); position:relative; overflow:hidden;
+    box-shadow:0 30px 60px -25px rgba(5,37,57,0.5);
+  }
+  .price-card.pro::before{
+    content:''; position:absolute; inset:-40% -20% auto auto; width:220px; height:220px;
+    background: radial-gradient(circle, rgba(255,201,60,0.35), transparent 70%);
+  }
+  .badge-pop{
+    position:absolute; top:20px; left:20px; background:var(--yellow); color:var(--navy);
+    font-size:0.7rem; font-weight:700; padding:5px 12px; border-radius:999px;
+  }
+  .price-card h3{ font-family:'Heebo'; font-weight:700; font-size:1.15rem; margin-bottom:6px; }
+  .price-card .price{ font-family:'JetBrains Mono',monospace; font-size:2.1rem; font-weight:700; margin:14px 0 20px; }
+  .price-card .price span{ font-size:0.95rem; font-weight:500; opacity:0.65; }
+  .price-card ul{ list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:26px; position:relative; z-index:1; }
+  .price-card li{ font-size:0.92rem; display:flex; align-items:flex-start; gap:10px; line-height:1.5; }
+  .price-card.free li{ color:#3d5566; }
+  .price-card.pro li{ color:rgba(255,255,255,0.85); }
+  .price-card li svg{ width:18px; height:18px; flex-shrink:0; margin-top:2px; }
+  .price-card.free li svg{ color:var(--cyan-dim); }
+  .price-card.pro li svg{ color:var(--yellow); }
+
+  /* ===== final cta ===== */
+  .final-cta{
+    background:
+      radial-gradient(50% 80% at 20% 0%, rgba(47,224,240,0.25), transparent 60%),
+      radial-gradient(50% 80% at 85% 100%, rgba(255,201,60,0.2), transparent 60%),
+      var(--navy);
+    color:var(--white); text-align:center; padding:100px 0;
+  }
+  .final-cta h2{ font-size:clamp(1.9rem,4vw,2.9rem); margin-bottom:16px; }
+  .final-cta h2 .hi{ background:linear-gradient(95deg, var(--cyan), var(--yellow)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .final-cta p{ color:rgba(255,255,255,0.7); font-size:1.05rem; max-width:540px; margin:0 auto 36px; }
+  .signup{ display:flex; gap:10px; justify-content:center; max-width:440px; margin:0 auto; flex-wrap:wrap; }
+  .signup input{
+    flex:1; min-width:220px; padding:15px 20px; border-radius:999px; border:1px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.06); color:var(--white); font-size:0.95rem; font-family:'Heebo';
+  }
+  .signup input::placeholder{ color:rgba(255,255,255,0.4); }
+  .signup input:focus{ outline:2px solid var(--cyan); outline-offset:2px; }
+  .signup-note{ margin-top:14px; font-size:0.8rem; color:rgba(255,255,255,0.45); }
+
+  /* ===== footer ===== */
+  footer{ background:#031825; color:rgba(255,255,255,0.55); padding:50px 0 30px; }
+  .foot-top{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px; padding-bottom:34px; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .foot-logo{ display:flex; align-items:center; gap:10px; color:var(--white); font-family:'Secular One'; font-size:1.2rem; margin-bottom:10px; }
+  .foot-tag{ font-size:0.88rem; max-width:280px; line-height:1.6; }
+  .foot-links{ display:flex; gap:50px; flex-wrap:wrap; }
+  .foot-col h4{ font-size:0.8rem; color:rgba(255,255,255,0.4); margin-bottom:14px; font-weight:700; }
+  .foot-col a{ display:block; font-size:0.9rem; margin-bottom:10px; color:rgba(255,255,255,0.65); }
+  .foot-col a:hover{ color:var(--cyan-2); }
+  .foot-bottom{ display:flex; justify-content:space-between; padding-top:24px; font-size:0.8rem; flex-wrap:wrap; gap:10px; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.show{ opacity:1; transform:translateY(0); }
+
+  @media (max-width:920px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .phone-stage{ margin-top:20px; }
+    .problem-grid{
+      display:flex; grid-template-columns:none;
+      overflow-x:auto; scroll-snap-type:x mandatory;
+      gap:16px; padding-bottom:6px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+    }
+    .problem-grid::-webkit-scrollbar{ display:none; }
+    .p-card{ flex:0 0 82%; scroll-snap-align:start; }
+    .feat-grid{
+      display:flex; grid-template-columns:none;
+      overflow-x:auto; scroll-snap-type:x mandatory;
+      gap:16px; padding-bottom:6px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+    }
+    .feat-grid::-webkit-scrollbar{ display:none; }
+    .f-card{ flex:0 0 82%; scroll-snap-align:start; }
+    .f-card:hover{ transform:none; }
+    .swipe-hint{ display:inline-block; margin-top:14px; font-size:0.82rem; font-weight:700; color:var(--cyan-dim); }
+    .swipe-hint.on-dark{ color:var(--cyan-2); }
+    .how-flow{ grid-template-columns:1fr; gap:36px; }
+    .how-connector{ display:none; }
+    .price-grid{ grid-template-columns:1fr; }
+    .nav-links, #nav-cta{ display:none; }
+    .burger{ display:flex; }
+    .foot-top{ flex-direction:column; }
+    .foot-links{ gap:32px; }
+    .section{ padding:72px 0; }
+  }
+  @media (min-width:921px) and (max-width:1120px){
+    .feat-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:640px){
+    .nav{ height:66px; }
+    .mobile-menu{ inset:66px 0 0 0; }
+    .hero{ padding:56px 0 30px; }
+    .hero-ctas{ flex-direction:column; align-items:stretch; gap:12px; margin-bottom:34px; }
+    .hero-ctas .btn{ justify-content:center; }
+    .hero-meta{ gap:20px; }
+    .phone{ width:100%; max-width:270px; padding:16px 14px 20px; }
+    .streak-badge{ left:0; top:-16px; padding:9px 13px; }
+    .streak-badge .num{ font-size:1rem; }
+    .section-head{ margin-bottom:36px; }
+    .price-card{ padding:26px 20px; }
+    .demo-tabs{ gap:8px; }
+    .demo-tab{ padding:10px 16px; font-size:0.82rem; }
+    .demo-card{ padding:20px; }
+    .log-form .btn{ width:100%; justify-content:center; }
+    .signup{ flex-direction:column; }
+    .signup input{ width:100%; }
+    .signup .btn{ width:100%; justify-content:center; }
+    .foot-links{ gap:24px; }
+    .foot-bottom{ flex-direction:column; gap:8px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .streak-badge{ animation:none; }
+    .reveal{ transition:none; opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <button id="burger" class="burger" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobile-menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="logo">
+      <svg class="wave-mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" fill="#0a3a52"/>
+        <path d="M6 20c3-4 6-4 9 0s6 4 9 0 6-4 9 0" stroke="#2fe0f0" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <path d="M6 26c3-4 6-4 9 0s6 4 9 0 6-4 9 0" stroke="#ffc93c" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.85"/>
+      </svg>
+      SWIMUP
+    </div>
+    <nav class="nav-links">
+      <a href="#problem">הבעיה</a>
+      <a href="#features">יכולות</a>
+      <a href="#demo">נסו עכשיו</a>
+      <a href="#how">איך זה עובד</a>
+      <a href="#free">בחינם</a>
+    </nav>
+    <a href="#join" id="nav-cta" class="btn btn-primary">הצטרפו לרשימת ההמתנה</a>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="#problem" onclick="closeMenu()">הבעיה</a>
+    <a href="#features" onclick="closeMenu()">יכולות</a>
+    <a href="#demo" onclick="closeMenu()">נסו עכשיו</a>
+    <a href="#how" onclick="closeMenu()">איך זה עובד</a>
+    <a href="#free" onclick="closeMenu()">בחינם</a>
+    <a href="#join" class="btn btn-primary" onclick="closeMenu()">הצטרפו לרשימת ההמתנה</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="lanes"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow on-dark"><span class="dot"></span> לשחייני נבחרות וקבוצות, גילאי 12–18</div>
+      <h1>כל אימון נרשם. <span class="hi">כל רצף נשמר</span>.</h1>
+      <p class="lead">SWIMUP עוזרת לכם לתעד זמן ומרחק בסוף כל אימון בטבלה פשוטה, לשמור על רצף ימים רצוף עם להבה שגדלה, ולהיכנס למים עם משפט מוטיבציה שמדליק את הראש.</p>
+      <div class="hero-ctas">
+        <a href="#join" class="btn btn-primary">הצטרפו לגל הראשון</a>
+        <a href="#how" class="btn btn-ghost">איך זה עובד ⌄</a>
+      </div>
+      <div class="hero-meta">
+        <div><span class="num mono">30 שנ׳</span><span class="lbl">לתעד אימון שלם</span></div>
+        <div><span class="num mono">🔥</span><span class="lbl">רצף שגדל כל יום</span></div>
+        <div><span class="num mono">0₪</span><span class="lbl">כדי להתחיל</span></div>
+      </div>
+    </div>
+
+    <div class="phone-stage">
+      <div class="streak-badge">
+        <svg class="flame" viewBox="0 0 24 24" fill="none"><path d="M12 2c1 4-3 5-3 9a3 3 0 0 0 6 0c1 1 2 2 2 4a5 5 0 0 1-10 0c0-5 3-6 5-13Z" fill="#052539"/></svg>
+        <div><div class="num">12</div><div class="lbl">ימים ברצף</div></div>
+      </div>
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-card">
+          <div class="top"><span class="t">יומן אימונים</span><span class="v">השבוע</span></div>
+          <div class="log-row head"><span>תאריך</span><span>מרחק</span><span>זמן</span></div>
+          <div class="log-row"><span>25.7</span><span class="mono">2,000 מ׳</span><span class="mono">42:10</span></div>
+          <div class="log-row"><span>23.7</span><span class="mono">1,800 מ׳</span><span class="mono">38:45</span></div>
+          <div class="log-row"><span>21.7</span><span class="mono">2,200 מ׳</span><span class="mono">45:00</span></div>
+        </div>
+        <div class="set-pill"><span class="l">משפט היום</span><span class="r">💬 תמשיכו לדחוף</span></div>
+        <div class="set-pill"><span class="l">רצף נוכחי</span><span class="r">12 ימים 🔥</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wave">
+    <svg viewBox="0 0 1440 90" preserveAspectRatio="none"><path d="M0,40 C240,90 480,0 720,30 C960,60 1200,10 1440,40 L1440,90 L0,90 Z" fill="#f3fbfc"/></svg>
+  </div>
+</section>
+
+<section id="problem" class="section problem">
+  <div class="lanes"></div>
+  <div class="wrap" style="position:relative;">
+    <div class="section-head reveal">
+      <div class="eyebrow on-dark"><span class="dot"></span> המצב היום</div>
+      <h2>שעון חכם סופר לפים. הוא לא סופר קדימה.</h2>
+      <p>שחיינים צעירים כבר מנסים לעקוב אחרי עצמם — רק שהכלים הקיימים לא בנויים בשביל זה.</p>
+      <span class="swipe-hint on-dark">👉 להחליק ולראות עוד</span>
+    </div>
+    <div class="problem-grid">
+      <div class="p-card reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>שעונים חכמים</h3>
+        <p>נותנים זמן ומרחק כלליים, אבל לא בונים תמונה לאורך זמן ולא מראים אם באמת משתפרים מאימון לאימון.</p>
+        <span class="x">✕ בלי מעקב אמיתי</span>
+      </div>
+      <div class="p-card reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M6 3h9l3 3v15H6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 9h6M9 13h6M9 17h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>מחברת אימונים</h3>
+        <p>עוד עמוד עם מספרים יבשים. אין רצף, אין להבה, ואין שום דבר שגורם לפתוח אותה שוב מחר.</p>
+        <span class="x">✕ בלי מוטיבציה</span>
+      </div>
+      <div class="p-card reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M8 10a4 4 0 1 1 8 0c0 3-4 4-4 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="20" r="0.8" fill="currentColor"/></svg>
+        <h3>מעקב בעל פה מול המאמן</h3>
+        <p>תלוי בזיכרון של רגע אחד בין אימון לאימון. קשה לראות התקדמות אמיתית לאורך שבועות, ואין למה לחזור.</p>
+        <span class="x">✕ בלי נתונים</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="section features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="dot"></span> הפתרון</div>
+      <h2>שלושה כלים פשוטים שמחזיקים אתכם באימון</h2>
+      <p>לא עוד כלי מדידה מסובך. SWIMUP בנויה סביב מה שקורה אחרי האימון — התיעוד, הרצף, והראש שנכנס איתכם למים.</p>
+      <span class="swipe-hint">👉 להחליק ולראות עוד</span>
+    </div>
+    <div class="feat-grid">
+      <div class="f-card reveal">
+        <div class="ic-wrap"><svg viewBox="0 0 24 24" fill="none"><path d="M5 4h14v16H5z" stroke="#052539" stroke-width="2" stroke-linejoin="round"/><path d="M5 10h14M9 4v16" stroke="#052539" stroke-width="2"/></svg></div>
+        <h3>רישום אימונים</h3>
+        <p>בסוף כל אימון מקלידים את הזמן והמרחק לטבלה פשוטה וברורה — בלי שעון חכם, בלי סנכרון, תוך פחות מדקה.</p>
+        <span class="f-tag">רישום אימונים</span>
+        <button class="f-try" onclick="openDemo('log')">נסו עכשיו ← <span class="pulse"></span></button>
+      </div>
+      <div class="f-card reveal">
+        <div class="ic-wrap"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2c1 4-3 5-3 9a3 3 0 0 0 6 0c1 1 2 2 2 4a5 5 0 0 1-10 0c0-5 3-6 5-13Z" fill="#052539"/></svg></div>
+        <h3>רצף אימונים</h3>
+        <p>כל יום אימון שמדווחים מעלה את הרצף שלכם. סמל הלהבה בפרופיל האישי גדל ככל שמתמידים לאורך העונה.</p>
+        <span class="f-tag">Streak</span>
+        <button class="f-try" onclick="openDemo('streak')">נסו עכשיו ← <span class="pulse"></span></button>
+      </div>
+      <div class="f-card reveal">
+        <div class="ic-wrap"><svg viewBox="0 0 24 24" fill="none"><path d="M7 8c-2 0-3 1.6-3 3.5S5 15 7 15M7 8v7M13 8v7l5-3.5L13 8Z" stroke="#052539" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>משפטי מוטיבציה</h3>
+        <p>מסך טקסט עם משפטי עידוד ודרבון שמתחלפים בלחיצת כפתור אחת — בדיוק לקראת כניסה למים.</p>
+        <span class="f-tag">מוטיבציה</span>
+        <button class="f-try" onclick="openDemo('quote')">נסו עכשיו ← <span class="pulse"></span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo" class="section demo">
+  <div class="lanes"></div>
+  <div class="wrap" style="position:relative;">
+    <div class="section-head reveal" style="margin-left:auto; margin-right:auto; text-align:center;">
+      <div class="eyebrow on-dark" style="margin:0 auto 18px;"><span class="dot"></span> נסו את זה ממש עכשיו</div>
+      <h2 style="color:#fff;">שלושת הכלים, חיים בדף</h2>
+      <p style="color:rgba(255,255,255,0.65); margin-right:auto; margin-left:auto;">בלי הורדה, בלי הרשמה. תלחצו, תקלידו, תרגישו איך זה עובד באפליקציה עצמה.</p>
+    </div>
+
+    <div class="demo-tabs reveal">
+      <button class="demo-tab active" data-target="log" onclick="switchDemo('log')">רישום אימונים</button>
+      <button class="demo-tab" data-target="streak" onclick="switchDemo('streak')">רצף אימונים</button>
+      <button class="demo-tab" data-target="quote" onclick="switchDemo('quote')">משפטי מוטיבציה</button>
+    </div>
+
+    <div class="demo-stage reveal">
+
+      <div class="demo-panel" id="panel-log">
+        <div class="demo-card">
+          <div class="demo-card-head">
+            <span>יומן אימונים</span>
+            <span class="mono muted" id="log-count">2 אימונים החודש</span>
+          </div>
+          <form class="log-form" onsubmit="return addLog(event)">
+            <input type="number" id="log-distance" placeholder="מרחק (מטרים)" required min="1">
+            <input type="text" id="log-time" placeholder="זמן (למשל 42:10)" required pattern="^\d{1,3}:\d{2}$" title="פורמט: דקות:שניות, למשל 42:10">
+            <button type="submit" class="btn btn-primary">הוספה לטבלה</button>
+          </form>
+          <div class="log-table" id="log-table">
+            <div class="log-row head"><span>תאריך</span><span>מרחק</span><span>זמן</span></div>
+            <div class="log-row"><span>25.7</span><span class="mono">2,000 מ׳</span><span class="mono">42:10</span></div>
+            <div class="log-row"><span>23.7</span><span class="mono">1,800 מ׳</span><span class="mono">38:45</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-panel" id="panel-streak" hidden>
+        <div class="demo-card center">
+          <div class="demo-card-head" style="justify-content:center;"><span>הפרופיל שלי</span></div>
+          <div class="streak-big" id="streak-flame">🔥</div>
+          <div class="streak-days"><span class="mono" id="streak-num">12</span> ימים ברצף</div>
+          <p class="demo-note">כל יום שמדווחים על אימון, הלהבה גדלה ומספר הימים עולה.</p>
+          <button class="btn btn-primary" onclick="bumpStreak()">סמנו אימון להיום ✓</button>
+        </div>
+      </div>
+
+      <div class="demo-panel" id="panel-quote" hidden>
+        <div class="demo-card center">
+          <div class="demo-card-head" style="justify-content:center;"><span>לקראת כניסה למים</span></div>
+          <div class="quote-box" id="quote-box">״הכאב זמני, הגאווה נשארת לתמיד.״</div>
+          <button class="btn btn-primary" onclick="nextQuote()">משפט הבא ←</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="how" class="section how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="dot"></span> איך זה עובד</div>
+      <h2>משחייה לתיעוד — בשלושה צעדים פשוטים</h2>
+    </div>
+    <div class="how-flow">
+      <div class="how-step reveal">
+        <div class="how-connector"></div>
+        <div class="idx mono">01</div>
+        <h3>שוחים את האימון כרגיל</h3>
+        <p>מתאמנים כרגיל בבריכה, בלי לשנות שום דבר בשגרה או בציוד.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-connector"></div>
+        <div class="idx mono">02</div>
+        <h3>מתעדים זמן ומרחק</h3>
+        <p>בסוף האימון מקלידים את הזמן והמרחק לטבלה פשוטה — לוקח פחות מדקה.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-connector"></div>
+        <div class="idx mono">03</div>
+        <h3>שומרים על הרצף</h3>
+        <p>כל דיווח מעלה את הרצף שלכם ביום אחד, ולקראת האימון הבא מחכה משפט מוטיבציה חדש.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="free" class="section pricing">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-left:auto; margin-right:auto; text-align:center;">
+      <div class="eyebrow" style="margin:0 auto 18px;"><span class="dot"></span> מודל עסקי</div>
+      <h2>כל 3 היכולות. בחינם. בלי הרשמה.</h2>
+      <p style="margin-right:auto; margin-left:auto;">אין חשבון ליצור, אין כרטיס אשראי, אין גרסה נעולה. פותחים את SWIMUP ומתחילים לתעד את האימון הראשון.</p>
+    </div>
+    <div class="price-grid single">
+      <div class="price-card free reveal" style="text-align:center;">
+        <h3>SWIMUP · גרסה מלאה</h3>
+        <div class="price">₪0<span> / בלי הרשמה</span></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>רישום אימונים</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>רצף אימונים (Streak)</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>משפטי מוטיבציה</li>
+        </ul>
+        <a href="#join" class="btn btn-dark" style="width:100%; justify-content:center;">פותחים את SWIMUP</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join" class="final-cta">
+  <div class="lanes"></div>
+  <div class="wrap" style="position:relative;">
+    <div class="eyebrow on-dark reveal" style="margin:0 auto 20px;"><span class="dot"></span> MVP בדרך</div>
+    <h2 class="reveal">הצטרפו ל<span class="hi">גל הראשון</span> של SWIMUP</h2>
+    <p class="reveal">אנחנו בונים את הגרסה הראשונה עכשיו. תנו לנו את המייל שלכם ותהיו הראשונים לדעת כשהאפליקציה עולה.</p>
+    <form class="signup reveal" onsubmit="event.preventDefault(); this.querySelector('button').textContent='נרשמת בהצלחה! 🌊'; this.querySelector('button').disabled=true;">
+      <input type="email" required placeholder="האימייל שלך" aria-label="אימייל">
+      <button type="submit" class="btn btn-primary">שריינו לי מקום</button>
+    </form>
+    <p class="signup-note">בלי ספאם. רק עדכון כשעולים למים.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" fill="#0a3a52"/><path d="M6 20c3-4 6-4 9 0s6 4 9 0 6-4 9 0" stroke="#2fe0f0" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>
+          SWIMUP
+        </div>
+        <p class="foot-tag">האפליקציה שעוזרת לכם לתעד כל אימון, לשמור על הרצף, ולהישאר מחוברים למוטיבציה לאורך כל העונה.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>מוצר</h4>
+          <a href="#problem">הבעיה</a>
+          <a href="#features">יכולות</a>
+          <a href="#free">בחינם</a>
+        </div>
+        <div class="foot-col">
+          <h4>קהילה</h4>
+          <a href="#">אינסטגרם</a>
+          <a href="#">טיקטוק</a>
+          <a href="#join">הצטרפות</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 SWIMUP. כל הזכויות שמורות.</span>
+      <span>נבנה בישראל, לשחיינים מכל הבריכות.</span>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=swimup" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+
+  /* ---- mobile menu ---- */
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  function toggleMenu(){
+    const isOpen = mobileMenu.classList.toggle('open');
+    burger.classList.toggle('active', isOpen);
+    burger.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('no-scroll', isOpen);
+  }
+  function closeMenu(){
+    mobileMenu.classList.remove('open');
+    burger.classList.remove('active');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('no-scroll');
+  }
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeMenu(); });
+  window.addEventListener('resize', () => { if(window.innerWidth > 920) closeMenu(); });
+
+  /* ---- demo tabs ---- */
+  function switchDemo(target){
+    document.querySelectorAll('.demo-tab').forEach(t => t.classList.toggle('active', t.dataset.target === target));
+    document.querySelectorAll('.demo-panel').forEach(p => p.hidden = (p.id !== 'panel-' + target));
+  }
+  function openDemo(target){
+    switchDemo(target);
+    document.getElementById('demo').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  /* ---- log demo ---- */
+  let logCount = 2;
+  function addLog(e){
+    e.preventDefault();
+    const distanceEl = document.getElementById('log-distance');
+    const timeEl = document.getElementById('log-time');
+    const distance = Number(distanceEl.value);
+    const time = timeEl.value.trim();
+    if(!distance || !time) return false;
+    const today = new Date();
+    const dateStr = today.getDate() + '.' + (today.getMonth() + 1);
+    const table = document.getElementById('log-table');
+    const row = document.createElement('div');
+    row.className = 'log-row new';
+    row.innerHTML = `<span>${dateStr}</span><span class="mono">${distance.toLocaleString('he-IL')} מ׳</span><span class="mono">${time}</span>`;
+    table.insertBefore(row, table.children[1]);
+    logCount++;
+    document.getElementById('log-count').textContent = logCount + ' אימונים החודש';
+    distanceEl.value = ''; timeEl.value = '';
+    return false;
+  }
+
+  /* ---- streak demo ---- */
+  let streakDays = 12;
+  function bumpStreak(){
+    streakDays++;
+    document.getElementById('streak-num').textContent = streakDays;
+    const flame = document.getElementById('streak-flame');
+    flame.style.transform = 'scale(1.35)';
+    setTimeout(() => { flame.style.transform = 'scale(1)'; }, 260);
+    if(streakDays % 10 === 0){ flame.textContent = '🔥🔥'; } 
+  }
+
+  /* ---- quote demo ---- */
+  const quotes = [
+    '״הכאב זמני, הגאווה נשארת לתמיד.״',
+    '״לא צריך להיות מושלם, צריך רק להיות במים.״',
+    '״כל אורך הוא עוד צעד קדימה.״',
+    '״מי שמתאמן כשקשה, מנצח כשחשוב.״',
+    '״אתם לא מתחרים באחרים — אתם מתחרים באתמול שלכם.״',
+    '״נשימה עמוקה, ראש שקט, יציאה חזקה.״',
+    '״העונה ארוכה. תישארו בפנים.״'
+  ];
+  let quoteIdx = 0;
+  function nextQuote(){
+    const box = document.getElementById('quote-box');
+    quoteIdx = (quoteIdx + 1) % quotes.length;
+    box.style.opacity = 0;
+    setTimeout(() => { box.textContent = quotes[quoteIdx]; box.style.opacity = 1; }, 200);
+  }
+</script>
+
+</body>
+</html>
