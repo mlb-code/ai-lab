@@ -100,6 +100,21 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
 .head h2{margin:9px 0 0;font-size:clamp(23px,3.8vw,34px);font-weight:800;letter-spacing:-.02em;text-wrap:balance}
 .head p{margin:10px auto 0;color:var(--ink-3);font-size:15.5px;max-width:60ch;text-wrap:pretty}
 
+/* ── perks strip ── */
+.perks-sect{padding-block:clamp(24px,4vw,34px);border-block-end:1px solid var(--line)}
+.perks{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+.perks li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:18px 16px;text-align:center}
+.perks .pk-ic{font-size:27px;line-height:1;display:block;margin-block-end:8px}
+.perks b{display:block;font-size:16.5px;font-weight:800;color:var(--ink)}
+.perks li>span{display:block;font-size:13px;color:var(--ink-3);margin-block-start:3px;line-height:1.4}
+
+/* ── year arc ── */
+.arc-sect{padding-block:clamp(30px,4.5vw,44px);border-block-end:1px solid var(--line);text-align:center}
+.arc-title{margin:0 0 16px;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--teal-ink);text-transform:uppercase}
+.arc{display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:center}
+.arc span{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-pill);padding:9px 17px;font-weight:700;font-size:14.5px;color:var(--ink)}
+.arc i{color:var(--violet);font-style:normal;font-weight:800;font-size:17px}
+
 /* ── how it works ── */
 .how{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
 .how .cell{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:22px}
@@ -211,46 +226,24 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
   <div class="wrap">
     <span class="pill-top">● חוג שנתי לבוגרי הקורסים שלנו</span>
     <h1>ממשיכים בגדול: <em>יזמות ובינה מלאכותית</em></h1>
-    <p class="sub">בקורסים הילדים בנו בסיס חזק. בחוג מעמיקים — יותר הסברים, הבנה אמיתית של הבינה המלאכותית והיזמות, ומיזם משלהם שנבנה לאורך שנה שלמה.</p>
-    <p class="hero-when">📅 נפתח במהלך אוקטובר 2026 · לאורך כל שנת הלימודים</p>
+    <p class="sub">חוג המשך שנתי שבו כל ילד בונה מיזם אמיתי משלו — ומעמיק בבינה המלאכותית הרבה מעבר לקורס.</p>
+    <p class="hero-when">📅 נפתח באוקטובר 2026 · שעה בשבוע, לאורך שנת הלימודים</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#register">שריינו מקום ובחרו זמן</a>
-      <a class="btn btn-ghost" href="#how">איך זה עובד?</a>
+      <a class="btn btn-primary" href="#register">שריינו מקום ובחרו זמן ›</a>
     </div>
-    <p class="hero-note">מפגש שבועי של שעה · קבוצות קטנות · מחיר מיוחד לבוגרי הקורסים</p>
+    <p class="hero-note">בלעדי לתלמידים שכבר למדו אצלנו · מחיר מיוחד לבוגרים</p>
   </div>
 </section>
 
-<!-- ═══ how it works ═══ -->
-<section class="sect" id="how">
+<!-- ═══ perks strip ═══ -->
+<section class="perks-sect">
   <div class="wrap">
-    <div class="head">
-      <p class="kick">איך זה עובד</p>
-      <h2>שעה בשבוע — ולמידה שממשיכה כל השבוע</h2>
-      <p>הקצב בנוי כך שהוא נכנס בקלות לשגרה, בלי להעמיס על הילד ועל המשפחה.</p>
-    </div>
-    <div class="how">
-      <div class="cell spot">
-        <div class="ic">⏱️</div>
-        <h3>מפגש אחד בשבוע, שעה</h3>
-        <p>יום קבוע ושעה קבועה אחר הצהריים. קל לזכור, קל להתמיד.</p>
-      </div>
-      <div class="cell spot">
-        <div class="ic">🎯</div>
-        <h3>אתגר שבועי לבית</h3>
-        <p>בסוף כל מפגש הילד מקבל אתגר קטן להמשך השבוע — כך הלמידה לא נעצרת כשהמפגש נגמר, והמיזם מתקדם צעד־צעד.</p>
-      </div>
-      <div class="cell">
-        <div class="ic">🚀</div>
-        <h3>מיזם אמיתי לאורך השנה</h3>
-        <p>לא תרגילים בודדים — כל ילד בונה רעיון משלו, שלב אחרי שלב, עד למוצר או אתר חי.</p>
-      </div>
-      <div class="cell">
-        <div class="ic">👥</div>
-        <h3>קבוצה קטנה</h3>
-        <p>קבוצות מצומצמות לפי גיל, כדי שכל ילד מקבל ליווי אישי למיזם שלו.</p>
-      </div>
-    </div>
+    <ul class="perks">
+      <li><span class="pk-ic">⏱️</span><b>שעה בשבוע</b><span>מפגש קבוע, בלי להעמיס</span></li>
+      <li><span class="pk-ic">🎯</span><b>אתגר שבועי</b><span>הלמידה ממשיכה כל השבוע</span></li>
+      <li><span class="pk-ic">🚀</span><b>מיזם אמיתי</b><span>כל ילד בונה משלו</span></li>
+      <li><span class="pk-ic">👥</span><b>קבוצה קטנה</b><span>ליווי אישי לכל אחד</span></li>
+    </ul>
   </div>
 </section>
 
@@ -259,8 +252,8 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
   <div class="wrap">
     <div class="head">
       <p class="kick">שני מסלולים</p>
-      <h2>לכל ילד — לפי הקורס שסיים אצלנו</h2>
-      <p>לא חזרה על מה שכבר נלמד — אלא העמקה: יותר הבנה של הבינה המלאכותית, יותר כלים, ובנייה אמיתית מהמקום שבו עצרנו.</p>
+      <h2>מוצאים את המסלול של הילד/ה</h2>
+      <p>לא חזרה על החומר — אלא העמקה, לפי הקורס שכבר סיימו אצלנו.</p>
     </div>
     <div class="tracks">
 
@@ -268,7 +261,7 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
         <span class="tag">לבוגרי הקורס הבסיסי</span>
         <h3>המסלול הבסיסי</h3>
         <p class="for">לילדים שסיימו את הקורס הבסיסי ב-AI Lab</p>
-        <p class="goal">ממשיכים לבנות: מרעיון ראשון, דרך מותג ואתר חי, ועד תוכן ורשתות חברתיות — כל ילד עם המיזם שלו.</p>
+        <p class="goal">בונים מיזם ראשון: רעיון, מותג, אתר חי ותוכן לרשתות.</p>
         <ul class="groups">
           <li><b>קבוצה א׳</b> · גילאי 9–11</li>
           <li><b>קבוצה ב׳</b> · גילאי 12–14</li>
@@ -279,7 +272,7 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
         <span class="tag">לבוגרי הקורס המתקדם</span>
         <h3>המסלול המתקדם</h3>
         <p class="for">לבני נוער שסיימו את הקורס המתקדם ב-AI Lab</p>
-        <p class="goal">בונים מוצר דיגיטלי אמיתי שעולה לאוויר עם משתמשים — כולל סוכני AI, כלים מתקדמים ומודל הכנסות.</p>
+        <p class="goal">בונים מוצר דיגיטלי אמיתי שעולה לאוויר — כולל סוכני AI ומשתמשים.</p>
         <ul class="groups">
           <li><b>קבוצה מתקדמת</b> · גילאי 12–15</li>
         </ul>
@@ -289,33 +282,13 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
   </div>
 </section>
 
-<!-- ═══ what we cover ═══ -->
-<section class="sect" id="learn">
+<!-- ═══ one-line year arc ═══ -->
+<section class="arc-sect">
   <div class="wrap">
-    <div class="head">
-      <p class="kick">במה נעסוק במהלך השנה</p>
-      <h2>מסע בארבעה שלבים</h2>
-      <p>אותה דרך לכל הקבוצות, בעומק שמתאים לגיל — כדי שכולם מגיעים יחד לקו הסיום.</p>
+    <p class="arc-title">המסע במהלך השנה</p>
+    <div class="arc">
+      <span>רעיון</span><i>›</i><span>מותג ואתר</span><i>›</i><span>תוכן ורשתות</span><i>›</i><span>השקה</span><i>›</i><span>תערוכה דיגיטלית</span>
     </div>
-    <div class="stages">
-      <div class="stg" style="--c:var(--violet)">
-        <div class="n">שלב 1</div><h4>גילוי</h4>
-        <div class="chips"><span>מציאת רעיון</span><span>מי הלקוח</span><span>בעיה ששווה לפתור</span></div>
-      </div>
-      <div class="stg" style="--c:var(--teal-ink)">
-        <div class="n">שלב 2</div><h4>בנייה</h4>
-        <div class="chips"><span>מותג ולוגו</span><span>אתר חי</span><span>אב טיפוס</span></div>
-      </div>
-      <div class="stg" style="--c:var(--gold)">
-        <div class="n">שלב 3</div><h4>תוכן ורשתות</h4>
-        <div class="chips"><span>וידאו קצר</span><span>עריכה חכמה</span><span>לוח תוכן</span></div>
-      </div>
-      <div class="stg" style="--c:var(--coral)">
-        <div class="n">שלב 4</div><h4>השקה ותערוכה</h4>
-        <div class="chips"><span>לקוחות ראשונים</span><span>מדידה</span><span>תערוכה דיגיטלית</span></div>
-      </div>
-    </div>
-    <p style="text-align:center;color:var(--ink-3);font-size:13px;margin-block-start:18px">* התכנים המפורטים עשויים להשתנות מעט במהלך השנה, בהתאם לקבוצה ולהתקדמות.</p>
   </div>
 </section>
 
@@ -403,26 +376,6 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
       <p class="formnote">בלחיצה על שליחה אתם מאשרים שניצור קשר בוואטסאפ לגבי החוג. הפרטים נשמרים אצלנו בלבד.</p>
       <div class="msg" id="msg" role="status" aria-live="polite"></div>
     </form>
-  </div>
-</section>
-
-<!-- ═══ price / details strip ═══ -->
-<section class="sect" id="details">
-  <div class="wrap">
-    <div class="strip">
-      <div class="item">
-        <h4>💜 מחיר מיוחד לבוגרים</h4>
-        <p>לבוגרי הקורסים שלנו יש תנאי הרשמה מיוחדים. הפרטים המלאים והמחיר יימסרו בשיחה האישית אחרי ההרשמה.</p>
-      </div>
-      <div class="item">
-        <h4>📅 מתי מתחילים</h4>
-        <p>החוג נפתח באוקטובר 2026 ורץ לאורך שנת הלימודים. היום קובעים יחד את היום והשעה הקבועים.</p>
-      </div>
-      <div class="item">
-        <h4>💻 מה צריך</h4>
-        <p>מחשב נייד ואוזניות. את כל הכלים והחשבונות נסדר יחד — אין צורך בידע מוקדם מעבר לקורס שהילד סיים.</p>
-      </div>
-    </div>
   </div>
 </section>
 
