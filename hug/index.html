@@ -108,6 +108,41 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
 .perks b{display:block;font-size:16.5px;font-weight:800;color:var(--ink)}
 .perks li>span{display:block;font-size:13px;color:var(--ink-3);margin-block-start:3px;line-height:1.4}
 
+/* ── price + coupon ── */
+.price-sect{padding-block:clamp(30px,5vw,50px);border-block-end:1px solid var(--line)}
+.pricecard{
+  width:min(720px,100%);margin-inline:auto;display:grid;gap:22px;
+  grid-template-columns:1fr 1fr;align-items:center;
+  background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-m);
+  padding:clamp(20px,3.5vw,30px);box-shadow:0 12px 32px rgba(76,60,120,.1);
+}
+.price-main{text-align:center;border-inline-end:1px solid var(--line);padding-inline-end:22px}
+.price-eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--teal-ink);text-transform:uppercase}
+.price-figure{display:flex;align-items:baseline;justify-content:center;gap:6px;margin-block:6px}
+.price-figure b{font-size:clamp(38px,7vw,52px);font-weight:900;color:var(--violet-deep);line-height:1;font-variant-numeric:tabular-nums}
+.price-figure span{font-size:16px;font-weight:700;color:var(--ink-2)}
+.price-note{display:block;min-block-size:20px;font-size:14px;color:var(--teal-ink);font-weight:700}
+.price-note s{color:var(--ink-3);font-weight:500}
+.price-sub{display:block;font-size:13.5px;color:var(--ink-3);margin-block-start:4px}
+.coupon-label{display:block;font-size:15px;font-weight:800;color:var(--ink)}
+.coupon-hint{margin:5px 0 12px;font-size:13px;color:var(--ink-3);line-height:1.5}
+.coupon-row{display:flex;gap:8px}
+.coupon-row input{
+  flex:1;min-inline-size:0;font-family:inherit;font-size:15px;color:var(--ink);
+  background:var(--ground);border:1.5px solid var(--line);border-radius:var(--r-s);
+  padding:11px 14px;min-block-size:46px;
+}
+.coupon-row input:focus{outline:none;border-color:var(--violet)}
+.coupon-row input:disabled{opacity:.7}
+.coupon-row .btn{flex:none}
+.coupon-msg{font-size:13.5px;font-weight:600;margin-block-start:10px;min-block-size:18px}
+.coupon-msg.ok{color:var(--teal-ink)}
+.coupon-msg.no{color:#b3431a}
+@media (max-width:560px){
+  .pricecard{grid-template-columns:1fr}
+  .price-main{border-inline-end:0;border-block-end:1px solid var(--line);padding-inline-end:0;padding-block-end:18px}
+}
+
 /* ── year arc ── */
 .arc-sect{padding-block:clamp(30px,4.5vw,44px);border-block-end:1px solid var(--line);text-align:center}
 .arc-title{margin:0 0 16px;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--teal-ink);text-transform:uppercase}
@@ -231,7 +266,7 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
     <div class="hero-cta">
       <a class="btn btn-primary" href="#register">שריינו מקום ובחרו זמן ›</a>
     </div>
-    <p class="hero-note">בלעדי לתלמידים שכבר למדו אצלנו · מחיר מיוחד לבוגרים</p>
+    <p class="hero-note">בלעדי לתלמידים שכבר למדו אצלנו · 400&nbsp;₪ לחודש</p>
   </div>
 </section>
 
@@ -292,6 +327,29 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
   </div>
 </section>
 
+<!-- ═══ price + coupon ═══ -->
+<section class="sect price-sect">
+  <div class="wrap">
+    <div class="pricecard">
+      <div class="price-main">
+        <span class="price-eyebrow">עלות החוג</span>
+        <div class="price-figure"><b id="priceNum">400</b><span>₪ / חודש</span></div>
+        <span class="price-note" id="priceOld"></span>
+        <span class="price-sub">לאורך כל שנת הלימודים</span>
+      </div>
+      <div class="coupon">
+        <label class="coupon-label" for="coupon">🎟️ קוד הרשמה מוקדמת — 10% הנחה</label>
+        <p class="coupon-hint">מכירים את הקוד? הזינו אותו וקבלו את המחיר המוזל.</p>
+        <div class="coupon-row">
+          <input type="text" id="coupon" placeholder="הקלידו קוד קופון" autocomplete="off">
+          <button type="button" class="btn btn-ghost btn-sm" id="couponBtn">החל</button>
+        </div>
+        <div class="coupon-msg" id="couponMsg" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ register + availability poll ═══ -->
 <section class="sect form-sect" id="register">
   <div class="wrap">
@@ -302,7 +360,7 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
     </div>
 
     <form class="formcard" id="clubForm" novalidate>
-      <p class="lead">מילוי לוקח דקה. ניצור קשר בוואטסאפ עם כל הפרטים והמחיר המיוחד לבוגרים.</p>
+      <p class="lead">מילוי לוקח דקה. ניצור קשר בוואטסאפ לתיאום מקום וכל הפרטים.</p>
 
       <div class="polls">
         <!-- ימים -->
@@ -401,6 +459,35 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
   const getChecked = name =>
     [...form.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
 
+  /* ── קוד קופון: hug2026 = 10% הנחה ── */
+  const PRICE = 400, COUPON_CODE = "hug2026";
+  let couponApplied = false;
+  const couponInput = document.getElementById("coupon");
+  const couponBtn   = document.getElementById("couponBtn");
+  const couponMsg   = document.getElementById("couponMsg");
+  const priceNum    = document.getElementById("priceNum");
+  const priceOld    = document.getElementById("priceOld");
+
+  const applyCoupon = () => {
+    const code = couponInput.value.trim().toLowerCase();
+    if (!code) { couponMsg.textContent = ""; couponMsg.className = "coupon-msg"; return; }
+    if (code === COUPON_CODE) {
+      couponApplied = true;
+      const now = Math.round(PRICE * 0.9);
+      priceNum.textContent = now;
+      priceOld.innerHTML = `10% הנחה · <s>${PRICE} ₪</s> ${now} ₪ לחודש 🎉`;
+      couponMsg.textContent = "הקוד הופעל בהצלחה!";
+      couponMsg.className = "coupon-msg ok";
+      couponInput.disabled = true; couponBtn.disabled = true;
+    } else {
+      couponApplied = false;
+      couponMsg.textContent = "הקוד שהוזן אינו תקין.";
+      couponMsg.className = "coupon-msg no";
+    }
+  };
+  couponBtn.addEventListener("click", applyCoupon);
+  couponInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); applyCoupon(); } });
+
   const show = (text, kind) => {
     msg.textContent = text;
     msg.className = "msg " + kind;
@@ -433,7 +520,10 @@ h1 em{font-style:normal;background:linear-gradient(115deg,var(--violet-deep),var
       child_name:   f.child_name.value.trim(),
       child_age:    f.child_age.value,
       city:         f.city.value.trim(),
-      note:         f.note.value.trim(),
+      note:         couponApplied
+                      ? ((f.note.value.trim() ? f.note.value.trim() + " · " : "") + "קופון hug2026 (10%)")
+                      : f.note.value.trim(),
+      coupon:       couponApplied ? "hug2026" : "",
       page: "hug"
     };
 
