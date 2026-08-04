@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#190F35">
+<meta name="robots" content="noindex, follow">
+<title>MindfulMe — רוגע בשתי שניות</title>
+<meta name="description" content="בוחרים מצב רוח, מקבלים תרגיל נשימה קצר שמתאים בדיוק לתחושה. בלי חיפוש, בלי פרסומות.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@300;400;600;700&family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  /* צבעי המותג — כל החלפת פלטה מתחילה ונגמרת כאן */
+  --c1:#8B5CF6;             /* סגול — הצבע העיקרי */
+  --c1-deep:#6D35E0;
+  --c2:#FFC736;             /* צהוב — הצבע המשני */
+  --c2-deep:#E0A100;
+  --c3:#D6236E;             /* ורוד כהה — הצבע השלישי */
+  --c3-deep:#A4114F;
+  --c4:#FF9EC4;             /* ורוד בהיר — הצבע הרביעי */
+  --c4-deep:#F272A8;
+  --accent:#C9B4FF;
+  --accent-deep:#E4D9FF;
+  --cream:#190F35;          /* רקע העמוד */
+  --paper:#251650;          /* משטח הכרטיסים */
+  --ink:#F4EEFF;
+  --ink-soft:#B4A5D9;
+  --line:rgba(244,238,255,.15);
+  --shadow:0 20px 55px -26px rgba(9,4,24,.85);
+  --grad-sun:linear-gradient(135deg,#A97BFF,#8B5CF6 42%,#D6236E);
+  --grad-tide:linear-gradient(155deg,#4B2A9E,#160C2E);
+  --grad-line:linear-gradient(90deg,var(--c2),var(--c4),var(--c3),var(--c1));
+  --font-display:"Secular One","Heebo",system-ui,sans-serif;
+  --font-body:"Assistant",system-ui,-apple-system,sans-serif;
+  --font-num:"Heebo",ui-monospace,monospace;
+  --r:20px;
+  --r-lg:30px;
+}
+body.calm{
+  --c1:#7B45E8;
+  --c1-deep:#5C28C4;
+  --c2:#E8A800;
+  --c2-deep:#B98200;
+  --c3:#C11A61;
+  --c3-deep:#930F48;
+  --c4:#D9457F;
+  --c4-deep:#B62E64;
+  --accent:#6D42C9;
+  --accent-deep:#3A1C7A;
+  --cream:#F7F3FF;
+  --paper:#FFFFFF;
+  --ink:#241046;
+  --ink-soft:#665185;
+  --line:rgba(36,16,70,.14);
+  --shadow:0 18px 50px -24px rgba(36,16,70,.35);
+  --grad-sun:linear-gradient(135deg,#A97BFF,#7B45E8 42%,#C11A61);
+  --grad-tide:linear-gradient(155deg,#4B2A9E,#241046);
+  --grad-line:linear-gradient(90deg,var(--c2),var(--c4),var(--c3),var(--c1));
+}
+
+*{box-sizing:border-box}
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  /* הגלילה נעצרת על כל סקשן. proximity ולא mandatory — כך סקשן
+     שגבוה מהמסך עדיין ניתן לגלילה חופשית בתוכו */
+  scroll-snap-type:y proximity;
+  scroll-padding-top:4.6rem;
+}
+#landing > section,#landing > footer{scroll-snap-align:start;scroll-snap-stop:normal}
+.hero{scroll-snap-align:start}
+.strip-band{scroll-snap-align:none}
+body{
+  margin:0;
+  overflow-x:hidden;
+  min-height:100svh;
+  padding-inline:env(safe-area-inset-right) env(safe-area-inset-left);
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:clamp(15.5px,.55vw + 14.2px,17px);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  transition:background .5s ease,color .5s ease;
+}
+h1,h2,h3,.display{font-family:var(--font-display);font-weight:400;line-height:1.12;letter-spacing:-.01em;margin:0}
+p{margin:0}
+a{color:inherit}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+.num{font-family:var(--font-num);font-variant-numeric:tabular-nums;font-weight:800}
+.wrap{width:min(1120px,100% - clamp(1.6rem,5vw,2.6rem));margin-inline:auto}
+.hidden{display:none !important}
+body.menu-open{overflow:hidden}
+body.menu-open,body.modal-open{scroll-snap-type:none}
+html:has(#dash:not(.hidden)){scroll-snap-type:none}
+body.menu-open header{z-index:70}
+[id]{scroll-margin-top:5.2rem}
+img,svg{max-width:100%}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.78rem 1.5rem;border-radius:100px;font-weight:700;
+  text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.btn-solid{background:var(--grad-sun);color:#FFF8F0;box-shadow:0 10px 26px -12px rgba(238,46,114,.5)}
+.btn-deep{background:var(--grad-tide);color:#FFF8F0;box-shadow:0 10px 26px -12px rgba(58,10,36,.6)}
+.btn-ghost{border:1.5px solid var(--line);color:var(--ink)}
+@media(hover:hover){
+  .btn:hover{transform:translateY(-2px);filter:saturate(1.08)}
+  .btn-ghost:hover{border-color:var(--accent)}
+}
+.btn:active{transform:scale(.97)}
+.btn-sm{padding:.5rem 1.05rem;font-size:.92rem}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--cream) 86%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:clamp(.5rem,2vw,1.4rem);padding:.7rem 0;padding-top:calc(.7rem + env(safe-area-inset-top))}
+.logo{display:flex;align-items:center;gap:.55rem;font-family:var(--font-display);font-size:1.22rem}
+.logo i{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--grad-sun);display:block;box-shadow:inset 0 0 0 4px color-mix(in srgb,var(--cream) 70%,transparent)}
+.nav-links{display:flex;gap:1.35rem;margin-inline-start:auto;font-size:.96rem;color:var(--ink-soft)}
+.menu-cta{display:none}  /* כפתורי הכניסה של התפריט — מובייל בלבד */
+.nav .logo{margin-inline-start:1.4rem}
+.nav-links a{text-decoration:none}
+@media(hover:hover){.nav-links a:hover{color:var(--ink)}}
+.nav-cta{display:flex;gap:.5rem;align-items:center;min-width:0}
+.menu-btn{display:none;width:2.6rem;height:2.6rem;border-radius:14px;border:1.5px solid var(--line);align-items:center;justify-content:center;flex:none}
+.menu-btn span{display:block;width:1.1rem;height:2px;background:var(--ink);border-radius:2px;position:relative;transition:transform .2s ease,background .2s ease}
+.menu-btn span::before,.menu-btn span::after{content:"";position:absolute;inset-inline:0;height:2px;background:var(--ink);border-radius:2px;transition:transform .2s ease}
+.menu-btn span::before{top:-6px}.menu-btn span::after{top:6px}
+.menu-btn[aria-expanded="true"] span{background:transparent}
+.menu-btn[aria-expanded="true"] span::before{transform:translateY(6px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span::after{transform:translateY(-6px) rotate(-45deg)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;background:color-mix(in srgb,#000 12%,var(--cream));padding:clamp(2.2rem,6vw,4.4rem) 0 clamp(2.6rem,7vw,4.6rem)}
+.sketch{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.sketch path{fill:none;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:0;animation:draw 1.8s cubic-bezier(.25,1,.5,1) both}
+.s-c1 path{stroke:var(--c1);stroke-width:6;opacity:.6}
+.s-c1 path+path{opacity:.32;animation-delay:.12s}
+.s-c3{stroke:var(--c3);stroke-width:4.5;opacity:.55;animation-delay:.2s}
+.s-c2{stroke:var(--c2);stroke-width:3.5;opacity:.5;animation-delay:.32s}
+.s-c1b{stroke:var(--c1);stroke-width:3.5;opacity:.75;animation-delay:.5s}
+.s-c3b{stroke:var(--c4);stroke-width:3;opacity:.65;animation-delay:.6s}
+@keyframes draw{from{stroke-dashoffset:calc(var(--len) * -1)}}  /* שלילי = ציור מימין לשמאל */
+.hero .wrap{position:relative;z-index:1;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.85rem;font-weight:700;letter-spacing:.04em;color:var(--accent-deep);background:var(--paper);border:1px solid var(--line);padding:.35rem .9rem;border-radius:100px}
+body.calm .eyebrow{color:var(--accent)}
+.hero h1{font-size:clamp(2.3rem,6.4vw,4.1rem);margin:1.1rem auto .85rem;max-width:24ch}
+.hero h1 em{font-style:normal;background:var(--grad-sun);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:clamp(1.02rem,2.1vw,1.2rem);color:var(--ink-soft);max-width:46ch;margin-inline:auto;font-weight:300}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.9rem;justify-content:center}
+.scroll-hint{display:none;flex-direction:column;align-items:center;gap:.3rem;margin-top:2rem;color:var(--ink-soft);font-size:.82rem}
+.scroll-hint svg{width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;animation:nudge 1.9s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* signature: the picker is the hero */
+.picker{margin-top:2.1rem;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.picker-top{padding:1.5rem clamp(1.1rem,3vw,1.9rem) 1.35rem}
+.moods{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem}
+.mood{
+  display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.05rem;border-radius:100px;
+  border:1.5px solid var(--line);background:transparent;font-weight:600;font-size:.98rem;
+  transition:border-color .18s,background .18s,transform .18s;
+}
+.mood .face{width:1.45rem;height:1.45rem;flex:none;color:var(--fc);fill:none;stroke:currentColor;stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round}
+@media(hover:hover){.mood:hover{border-color:var(--fc)}}
+.mood[aria-pressed="true"] .face{color:#fff}
+.ex-head{display:flex;align-items:center;justify-content:center;gap:.85rem;margin-bottom:.5rem}
+.ex-head .face{width:3rem;height:3rem;flex:none;color:var(--fc);fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+@media(hover:hover){.mood:hover{transform:translateY(-2px)}}
+.mood:active{transform:scale(.97)}
+.mood[aria-pressed="true"]{background:var(--grad-tide);color:#fff;border-color:transparent}
+.picker-body{border-top:1px solid var(--line);background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 7%,transparent),transparent 60%)}
+.picker-empty{padding:1.5rem clamp(1.1rem,3vw,1.9rem);color:var(--ink-soft);font-weight:300;text-align:center}
+.result{display:grid;text-align:center;grid-template-columns:1.1fr .9fr;gap:clamp(1.2rem,3vw,2.2rem);padding:clamp(1.3rem,3vw,1.9rem)}
+.ex-name{font-family:var(--font-display);font-size:clamp(1.35rem,3vw,1.75rem)}
+.ex-why{color:var(--ink-soft);font-weight:300;margin:0 auto 1.05rem;max-width:34ch}
+.ex-steps{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
+.ex-steps li{display:flex;gap:.7rem;align-items:flex-start;justify-content:center;font-size:.99rem;text-align:start}
+.ex-steps b{font-family:var(--font-num);font-size:.78rem;font-weight:800;color:var(--accent-deep);background:color-mix(in srgb,var(--accent) 18%,transparent);min-width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;flex:none;margin-top:.15rem}
+body.calm .ex-steps b{color:var(--ink)}
+
+/* breathing orb */
+.orb-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;text-align:center}
+.orb{
+  width:clamp(9rem,22vw,12.5rem);aspect-ratio:1;border-radius:50%;
+  background:var(--grad-tide);display:grid;place-items:center;color:#fff;
+  transform:scale(.85);transition:transform 4s cubic-bezier(.4,0,.5,1);
+  box-shadow:0 0 0 12px color-mix(in srgb,var(--accent) 14%,transparent),0 22px 44px -20px rgba(58,10,36,.5);
+}
+.orb-phase{font-family:var(--font-display);font-size:1.02rem;opacity:.92}
+.orb-count{font-family:var(--font-num);font-size:2.1rem;font-weight:800;line-height:1}
+.orb-meta{font-size:.87rem;color:var(--ink-soft);min-height:1.4em}
+
+/* stats strip */
+.strip-band{padding-bottom:clamp(1.4rem,4vw,2rem);text-align:center;background:color-mix(in srgb,#000 12%,var(--cream))}
+body.calm .strip-band,body.calm .hero{background:color-mix(in srgb,var(--c1) 7%,var(--cream))}
+.strip{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(1rem,4vw,3rem);padding-top:1.4rem;border-top:1px solid var(--line)}
+.stat{flex:0 1 auto}
+.stat b{display:block;font-family:var(--font-num);font-size:1.7rem;font-weight:800;line-height:1}
+.stat small{color:var(--ink-soft);font-size:.9rem}
+
+/* ---------- sections ---------- */
+.sec{padding:clamp(3.2rem,8vw,5.6rem) 0;position:relative}
+
+/* ---------- הפרדה עדינה בין סקשנים ----------
+   שני גוונים בלבד, במרחק קטן מאוד זה מזה, לסירוגין —
+   מספיק כדי לראות גבול, לא מספיק כדי להיראות כמו פסים. */
+#mood,#flow,#plans{background:color-mix(in srgb,var(--paper) 78%,var(--cream))}
+#app,#feats,#target{background:color-mix(in srgb,#000 12%,var(--cream))}
+body.calm #app,body.calm #feats,body.calm #target{background:color-mix(in srgb,var(--c1) 7%,var(--cream))}
+/* קו שיער מפריד, נמוג לצדדים */
+.card,.step,.feat,.plan,.goal,.picker,.showcase-list li{box-shadow:0 6px 18px -12px rgba(0,0,0,.5)}
+#mood .picker,#flow .step,#plans .plan{background:color-mix(in srgb,var(--paper) 96%,#fff)}
+body.calm #mood .picker,body.calm #flow .step,body.calm #plans .plan{background:var(--paper)}
+.sec::before{
+  content:"";position:absolute;inset-block-start:0;inset-inline:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent);
+}
+.strip-band + .sec::before{background:none}
+.sec-head{max-width:52ch;margin:0 auto 2.4rem;text-align:center}
+.sec-tag{font-family:var(--font-num);font-size:.8rem;font-weight:800;letter-spacing:.12em;color:var(--accent-deep)}
+body.calm .sec-tag{color:var(--accent)}
+.sec-head h2{font-size:clamp(1.8rem,4.4vw,2.7rem);margin:.5rem 0 .8rem}
+.sec-head p{color:var(--ink-soft);font-weight:300;font-size:1.06rem}
+
+
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.2rem}
+.step{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:1.6rem;text-align:center}
+.step .t{font-family:var(--font-num);font-weight:800;font-size:.95rem;color:var(--accent)}
+.step h3{font-size:1.16rem;margin:.55rem 0 .5rem}
+.step p{color:var(--ink-soft);font-weight:300;font-size:.97rem}
+
+/* ---------- סליידרים אופקיים (RTL — נגררים מימין לשמאל) ---------- */
+.slider{
+  display:flex;gap:1rem;
+  /* safe center: ממורכז כשהכל נכנס, ונצמד להתחלה כשיש גלישה
+     כדי שהכרטיס הראשון לא ייחתך */
+  justify-content:safe center;
+  overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-padding-inline-start:.2rem;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+  padding:.4rem .2rem 1.1rem;
+  scrollbar-width:thin;scrollbar-color:var(--c1) transparent;
+}
+.slider::-webkit-scrollbar{height:6px}
+.slider::-webkit-scrollbar-thumb{background:var(--c1);border-radius:100px}
+.slider::-webkit-scrollbar-track{background:color-mix(in srgb,var(--ink) 10%,transparent);border-radius:100px}
+.slider > *{scroll-snap-align:start;flex:0 0 auto}
+.slide-hint{display:flex;align-items:center;justify-content:center;gap:.5rem;font-size:.85rem;color:var(--ink-soft);margin-top:-.2rem}
+.slide-hint svg{width:1.1rem;height:1.1rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:swipe 2.2s ease-in-out infinite}
+@keyframes swipe{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+
+/* features */
+.feats > *{width:clamp(15rem,74vw,19rem)}
+.feat{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:1.6rem;text-align:center;transition:transform .2s ease,box-shadow .2s ease}
+@media(hover:hover){.feat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}}
+.feat i{display:grid;place-items:center;width:2.7rem;height:2.7rem;border-radius:14px;font-size:1.3rem;font-style:normal;background:var(--grad-sun);margin:0 auto .9rem}
+.feat:nth-child(2n) i{background:var(--grad-tide);color:#FFF8F0}
+.feat:nth-child(3n) i{background:var(--c2);color:#2A1550}
+.feat h3{font-size:1.1rem;margin-bottom:.45rem}
+.feat p{color:var(--ink-soft);font-weight:300;font-size:.96rem}
+.feat.wide{display:flex;flex-direction:column;align-items:center;gap:.9rem}
+.feat.wide i{margin:0;flex:none}
+
+
+/* ---------- מוקאפ הטלפון ---------- */
+.showcase{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.6rem,5vw,3.4rem);align-items:center;justify-items:center}
+.phone-wrap{position:relative;padding:1.2rem}
+.phone-wrap::before{
+  content:"";position:absolute;inset:8% -6% 6% -6%;border-radius:50%;
+  background:var(--grad-sun);filter:blur(46px);opacity:.28;z-index:0;
+}
+.phone{
+  position:relative;z-index:1;
+  width:clamp(15rem,26vw,17.5rem);aspect-ratio:9/19.5;
+  background:linear-gradient(150deg,#3A3450,#171426 40%,#2C2740);
+  border-radius:clamp(2.4rem,4.4vw,3rem);
+  padding:.62rem;
+  box-shadow:
+    0 0 0 1.5px rgba(255,255,255,.22) inset,
+    0 2px 0 rgba(255,255,255,.14) inset,
+    0 34px 70px -26px rgba(0,0,0,.75),
+    0 10px 26px -14px rgba(0,0,0,.6);
+}
+.phone-side{position:absolute;inset-inline-start:-2.5px;width:2.5px;border-radius:2px;background:linear-gradient(#6B6480,#3A3450)}
+.s-a{top:16%;height:5%}.s-b{top:24%;height:8.5%}.s-c{top:34.5%;height:8.5%}
+.phone::after{content:"";position:absolute;inset-inline-end:-2.5px;top:23%;width:2.5px;height:11%;border-radius:2px;background:linear-gradient(#6B6480,#3A3450)}
+.screen{
+  position:relative;height:100%;overflow:hidden;
+  border-radius:clamp(1.95rem,3.7vw,2.5rem);
+  background:var(--cream);
+  display:flex;flex-direction:column;
+  text-align:start;
+}
+.island{
+  position:absolute;top:.55rem;inset-inline:0;margin-inline:auto;
+  width:32%;height:1.35rem;border-radius:100px;background:#0B0814;z-index:3;
+}
+.status{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.5rem 1.15rem .1rem;font-size:.66rem;color:var(--ink);position:relative;z-index:2;
+}
+.status .dots{display:flex;gap:.2rem;align-items:center}
+.status .dots i{width:.3rem;height:.3rem;border-radius:50%;background:var(--ink);opacity:.75;display:block}
+.status .dots i:last-child{width:1.1rem;height:.55rem;border-radius:3px;opacity:.9}
+.app{flex:1;padding:1.5rem .95rem .6rem;display:flex;flex-direction:column;gap:.6rem;overflow:hidden}
+.app-bar{display:flex;align-items:center;justify-content:space-between;font-size:.72rem}
+.app-logo{display:flex;align-items:center;gap:.35rem;font-family:var(--font-display)}
+.app-logo i{width:.85rem;height:.85rem;border-radius:50%;background:var(--grad-sun);display:block}
+.app-streak{font-size:.7rem;color:var(--ink-soft)}
+.app-hi{font-family:var(--font-display);font-size:1.02rem;margin-top:.2rem}
+.app-sub{font-size:.72rem;color:var(--ink-soft);margin-top:-.35rem}
+.app-moods{display:grid;grid-template-columns:repeat(4,1fr);gap:.32rem}
+.app-moods button{
+  display:grid;place-items:center;gap:.15rem;padding:.42rem .1rem;border-radius:12px;
+  border:1px solid var(--line);font-size:.55rem;color:var(--ink-soft);pointer-events:none;
+}
+.app-moods button[data-on="1"]{background:var(--grad-tide);border-color:transparent;color:#fff}
+.app-moods .face{width:1.15rem;height:1.15rem;color:var(--fc);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.app-moods button[data-on="1"] .face{color:#fff}
+.app-card{
+  background:var(--paper);border:1px solid var(--line);border-radius:18px;
+  padding:.85rem .7rem;display:grid;justify-items:center;gap:.28rem;
+}
+.app-orb{
+  width:4.6rem;aspect-ratio:1;border-radius:50%;background:var(--grad-tide);
+  display:grid;place-items:center;color:#fff;text-align:center;line-height:1.1;
+  box-shadow:0 0 0 7px color-mix(in srgb,var(--c1) 16%,transparent);
+  animation:appBreath 8s ease-in-out infinite;
+}
+.app-orb .num{font-size:1.15rem;font-weight:800;display:block}
+.app-orb small{font-size:.55rem;opacity:.9}
+@keyframes appBreath{0%,100%{transform:scale(.9)}22%{transform:scale(1.08)}55%{transform:scale(1.08)}85%{transform:scale(.9)}}
+.app-ex{font-family:var(--font-display);font-size:.85rem}
+.app-meta{font-size:.62rem;color:var(--ink-soft)}
+.app-row{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:auto}
+.app-mini{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:.5rem;text-align:center}
+.app-mini b{display:block;font-size:1rem;font-weight:800;line-height:1.1}
+.app-mini small{font-size:.58rem;color:var(--ink-soft)}
+.home-bar{width:32%;height:4px;border-radius:100px;background:var(--ink);opacity:.5;margin:.3rem auto .45rem}
+
+.showcase-list{list-style:none;margin:0;padding:0;display:grid;gap:.9rem;max-width:34rem;text-align:start}
+.showcase-list li{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
+  padding:1rem 1.1rem;display:grid;gap:.2rem;
+}
+.showcase-list b{font-family:var(--font-display);font-weight:400;font-size:1.02rem}
+.showcase-list span{font-size:.93rem;color:var(--ink-soft);font-weight:300}
+
+/* pricing */
+.plans{align-items:stretch;gap:1.2rem}
+.plans > *{width:clamp(17rem,80vw,25rem);display:flex;flex-direction:column}
+.plans .btn{margin-top:auto}
+.plan{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:1.9rem;text-align:center}
+.plan.pro{
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--paper),var(--paper)),var(--grad-sun);
+  background-origin:border-box;background-clip:padding-box,border-box;
+  border:1.6px solid transparent;
+  box-shadow:0 26px 60px -38px rgba(58,10,36,.35);
+}
+.plan.pro .price{background:var(--grad-sun);-webkit-background-clip:text;background-clip:text;color:transparent}
+.badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.79rem;font-weight:700;padding:.3rem .85rem;border-radius:100px;margin-bottom:.9rem}
+.badge-pro{background:color-mix(in srgb,var(--c4) 18%,transparent);color:var(--c4)}
+.badge-free{background:color-mix(in srgb,var(--c2) 18%,transparent);color:var(--c2)}
+.plan h3{font-size:1.3rem}
+.plan .price{font-family:var(--font-num);font-weight:800;font-size:2.4rem;line-height:1.2;margin:.5rem 0 .1rem}
+.plan .per{font-size:.9rem;opacity:.72}
+.plan ul{list-style:none;padding:0;margin:1.3rem 0 1.6rem;display:grid;gap:.62rem;font-size:.97rem}
+.plan li{display:flex;gap:.6rem;justify-content:center;text-align:start}
+.plan li::before{content:"◆";color:var(--accent);font-size:.7rem;margin-top:.42rem}
+.plan.pro li::before{color:var(--c4)}
+.plan .btn{width:100%}
+
+/* goal band */
+.goal{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(1.8rem,4vw,2.8rem);text-align:center;display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(1.4rem,4vw,2.6rem);align-items:center}
+.goal h2{font-size:clamp(1.6rem,3.6vw,2.2rem);margin-bottom:.7rem}
+.goal p{color:var(--ink-soft);font-weight:300}
+.bar{height:12px;border-radius:100px;background:color-mix(in srgb,var(--ink) 10%,transparent);overflow:hidden;margin:.9rem 0 .5rem}
+.bar i{display:block;height:100%;width:4%;background:var(--grad-line);border-radius:100px}
+.bar-l{display:flex;justify-content:space-between;font-size:.85rem;color:var(--ink-soft)}
+
+/* footer */
+footer{position:relative;padding:3rem 0 calc(2rem + env(safe-area-inset-bottom));color:var(--ink-soft);font-size:.92rem}
+footer::before{content:"";position:absolute;inset-block-start:0;inset-inline:0;height:3px;background:var(--grad-line)}
+.foot-top{display:grid;grid-template-columns:1fr 2.6fr;gap:clamp(1.8rem,5vw,3.4rem);padding-bottom:2rem;border-bottom:1px solid var(--line)}
+.foot-brand p{max-width:30ch;margin:.7rem 0 1.1rem;font-weight:300}
+.foot-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6rem}
+.foot-cols h4{font-family:var(--font-display);font-weight:400;font-size:.98rem;color:var(--ink);margin-bottom:.8rem}
+.foot-cols ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.foot-cols a,.foot-cols button{color:var(--ink-soft);text-decoration:none;font-size:.92rem;text-align:start;padding:0;font-weight:300}
+@media(hover:hover){.foot-cols a:hover,.foot-cols button:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}}
+.foot-bar{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;justify-content:space-between;padding-top:1.4rem;font-size:.86rem}
+
+/* ---------- modal ---------- */
+.veil{position:fixed;inset:0;z-index:80;background:rgba(6,12,32,.68);backdrop-filter:blur(6px);display:grid;place-items:center;padding:1.2rem;overflow-y:auto;overscroll-behavior:contain}
+.sheet{width:min(430px,100%);max-height:calc(100svh - 2.4rem);overflow-y:auto;background:var(--paper);border-radius:var(--r-lg);padding:clamp(1.2rem,4vw,1.8rem);box-shadow:0 40px 80px -30px rgba(0,0,0,.5)}
+.tabs{display:flex;gap:.35rem;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:.28rem;border-radius:100px;margin-bottom:1.4rem}
+.tab{flex:1;padding:.55rem;border-radius:100px;font-weight:700;font-size:.95rem;color:var(--ink-soft)}
+.tab[aria-selected="true"]{background:color-mix(in srgb,var(--ink) 14%,transparent);color:var(--ink);box-shadow:0 4px 14px -8px rgba(0,0,0,.4)}
+.field{margin-bottom:.95rem}
+.field label{display:block;font-size:.88rem;font-weight:600;margin-bottom:.35rem}
+.field input{width:100%;padding:.8rem .9rem;border-radius:14px;border:1.5px solid var(--line);background:transparent;color:var(--ink);font-family:inherit;font-size:16px}  /* 16px מונע זום אוטומטי ב-iOS */
+.field input:focus{outline:none;border-color:var(--accent)}
+.note{font-size:.82rem;color:var(--ink-soft);margin-top:.9rem;line-height:1.5}
+.err{font-size:.88rem;color:#FF9DB5;margin-bottom:.8rem;font-weight:600}
+body.calm .err{color:#D6335C}
+
+/* ---------- dashboard ---------- */
+.dash-top{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;padding:1.5rem 0 0}
+.hi{margin-inline-end:auto}
+.hi h2{font-size:clamp(1.5rem,3.6vw,2rem)}
+.hi p{color:var(--ink-soft);font-size:.95rem;font-weight:300}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1.2rem;padding:1.8rem 0 3.5rem}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(1.2rem,3vw,1.7rem);text-align:center}
+.card h3{font-size:1.14rem;margin-bottom:.3rem}
+.card .cap{font-size:.88rem;color:var(--ink-soft);font-weight:300;margin-bottom:1.1rem}
+.c-mood{grid-column:span 7}
+.c-breath{grid-column:span 5}
+.c-msg{grid-column:span 5}
+.c-count{grid-column:span 4}
+.c-pro{grid-column:span 3}
+.pat{display:flex;gap:.45rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem}
+.pat button{padding:.42rem .85rem;border-radius:100px;border:1.5px solid var(--line);font-size:.88rem;font-weight:600}
+.pat button[aria-pressed="true"]{background:var(--grad-sun);color:#FFF8F0;border-color:transparent}
+.quote{font-family:var(--font-display);justify-content:center;text-align:center;font-size:clamp(1.15rem,2.6vw,1.45rem);line-height:1.4;min-height:4.2em;display:flex;align-items:center}
+.ring{position:relative;width:8.5rem;aspect-ratio:1;margin:0 auto 1rem;display:grid;place-items:center}
+.ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10}
+.ring .bg{stroke:color-mix(in srgb,var(--ink) 10%,transparent)}
+.ring .fg{stroke:url(#g1);stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.ring b{font-family:var(--font-num);font-size:2.2rem;font-weight:800}
+.ring small{display:block;font-family:var(--font-body);font-size:.78rem;font-weight:400;color:var(--ink-soft)}
+.c-pro{background:var(--grad-tide);color:#fff;border-color:transparent}
+.c-pro .cap{color:rgba(255,255,255,.78)}
+.c-pro .btn{width:100%;margin-top:.4rem}
+.toast{position:fixed;inset-block-end:calc(1.4rem + env(safe-area-inset-bottom));inset-inline:0;margin-inline:auto;width:max-content;max-width:90%;background:var(--ink);color:var(--cream);padding:.72rem 1.3rem;border-radius:100px;font-weight:600;font-size:.93rem;z-index:90;box-shadow:0 18px 40px -18px rgba(0,0,0,.6)}
+
+/* ---------- responsive ---------- */
+
+/* טאבלט לרוחב וקטן ממנו */
+@media(max-width:1024px){
+  .foot-cols{gap:1.2rem}
+  .plans > *{width:clamp(17rem,44vw,23rem)}
+}
+
+/* טאבלט */
+@media(max-width:900px){
+  /* התפריט נפתח על כל המסך.
+     חשוב: בלי backdrop-filter על ה-header — הוא הופך אותו לבסיס של position:fixed
+     ואז התפריט נלכד בתוך הבר במקום לכסות את המסך. */
+  header{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--cream)}
+  .nav-links{
+    display:flex;position:fixed;inset:0;z-index:70;
+    flex-direction:column;justify-content:flex-start;gap:.2rem;
+    margin:0;padding:calc(5.2rem + env(safe-area-inset-top)) clamp(1.6rem,6vw,2.6rem) calc(2rem + env(safe-area-inset-bottom));
+    background:var(--cream);
+    font-size:1rem;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .22s ease,transform .22s ease,visibility .22s;
+    overflow-y:auto;overscroll-behavior:contain;
+  }
+  .nav-links.open{opacity:1;visibility:visible;transform:none}
+  .nav-links a{
+    padding:1rem .2rem;min-height:56px;display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:var(--font-display);font-size:clamp(1.35rem,6vw,1.8rem);color:var(--ink);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-links a:last-of-type{border-bottom:0}
+  .menu-cta{display:grid;gap:.6rem;margin-top:1.8rem}
+  .menu-cta .btn{width:100%;padding:.9rem 1.2rem;font-size:1rem}
+  .nav-auth{display:none}
+  .menu-btn{display:inline-flex;position:relative;z-index:80}
+  .nav-cta{margin-inline-end:0}
+  header{position:sticky}
+  .nav{position:relative;flex-wrap:nowrap}
+  .nav .logo{margin-inline-start:auto;position:relative;z-index:80}
+
+  .showcase{grid-template-columns:1fr;gap:1.6rem}
+  .showcase-list{width:100%}
+  .foot-top{grid-template-columns:1fr;gap:1.8rem}
+  .foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .result{grid-template-columns:1fr}
+  .goal{grid-template-columns:1fr;gap:1.4rem}
+  .c-mood,.c-breath,.c-msg,.c-count,.c-pro{grid-column:span 12}
+  .grid{gap:1rem}
+}
+
+/* טאבלט לאורך: שני כרטיסים בשורה בדשבורד */
+@media(min-width:600px) and (max-width:900px){
+  .c-msg,.c-count,.c-pro{grid-column:span 6}
+  .c-pro{grid-column:span 12}
+}
+
+/* מובייל */
+@media(max-width:600px){
+  [id]{scroll-margin-top:4.2rem}
+  html{scroll-padding-top:4.2rem}
+  .sec{padding:clamp(2.4rem,9vw,3.4rem) 0}
+  .sec-head{margin-bottom:1.8rem}
+  .sec-head p{font-size:1rem}
+  /* ההירו תופס את כל גובה המסך, פחות הבר העליון */
+  .hero{
+    min-height:calc(100svh - 4.2rem);
+    display:flex;align-items:center;
+    padding:2rem 0 2.4rem;
+  }
+  .hero .wrap{width:min(1120px,100% - clamp(1.6rem,5vw,2.6rem))}
+  .hero h1{font-size:clamp(2.1rem,8.6vw,2.7rem);max-width:none;margin-block:1rem .7rem}
+  .hero-sub{font-size:1rem}
+  .hero-cta{flex-direction:column;align-items:stretch;margin-top:1.5rem}
+  .hero-cta .btn{width:100%;padding:.9rem 1.2rem}
+  .sketch{opacity:.55}
+  .eyebrow{font-size:.78rem}
+  .scroll-hint{display:flex}
+
+  /* שמונה תחושות: רשת של שתיים, כל כפתור בגודל אצבע */
+  .moods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+  .mood{justify-content:flex-start;padding:.7rem .8rem;font-size:.92rem;min-height:48px}
+  .mood .face{width:1.3rem;height:1.3rem}
+  .picker{margin-top:1.5rem;border-radius:var(--r)}
+  .picker-top{padding:1.1rem 1rem}
+  .result{padding:1.1rem 1rem;gap:1.4rem}
+  .ex-head .face{width:2.4rem;height:2.4rem}
+  .ex-steps li{font-size:.95rem}
+
+  .orb{width:min(58vw,11rem)}
+  .orb-count{font-size:1.9rem}
+  .orb-box .btn{width:100%;max-width:16rem}
+
+  /* הנתונים יוצאים מההירו ויושבים מתחתיו */
+  .strip-band{padding-bottom:.4rem}
+  .strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.1rem;padding-top:1.6rem}
+  .stat b{font-size:1.45rem}
+  .stat small{font-size:.84rem}
+
+  .flow{grid-template-columns:1fr;gap:.8rem}
+  .step{padding:1.2rem}
+  .feats{gap:.8rem}
+  .feats > *{width:min(78vw,17rem)}
+  .feat{padding:1.2rem}
+  .plans{gap:.9rem}
+  .plans > *{width:min(84vw,20rem)}
+  .plan{padding:1.5rem}
+  .plan .price{font-size:2.1rem}
+  .goal{padding:1.5rem}
+  .phone{width:min(66vw,14rem)}
+  .phone-wrap{padding:.6rem}
+  .showcase-list li{padding:.85rem .95rem}
+
+  .foot-cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}
+  .foot-cols a,.foot-cols button{min-height:38px;display:flex;align-items:center}
+  .foot-brand .btn{width:100%}
+  .foot-bar{flex-direction:column;gap:.4rem;text-align:center}
+
+  .dash-top{padding-top:1.2rem}
+  .card{padding:1.2rem 1rem}
+  .quote{min-height:5.2em;font-size:1.1rem}
+  .ring{width:7.5rem}
+  .pat button{min-height:44px;padding:.5rem .9rem}
+  .toast{font-size:.88rem;padding:.65rem 1.1rem}
+}
+
+/* מסכים צרים במיוחד — iPhone SE, Galaxy Fold סגור */
+@media(max-width:400px){
+  .nav{gap:.4rem}
+  .btn-sm{padding:.5rem .8rem;font-size:.86rem}
+  .logo{font-size:1.05rem}
+  .hero h1{font-size:1.8rem}
+  .moods{grid-template-columns:1fr}
+  .mood{font-size:.95rem}
+  .strip{grid-template-columns:1fr;gap:.9rem;text-align:center}
+  .foot-cols{grid-template-columns:1fr}
+  .sheet{padding:1.1rem;border-radius:var(--r)}
+  .nav-links a{font-size:1.25rem;min-height:50px;padding-block:.8rem}
+  .menu-cta{margin-top:1.2rem}
+  .hero{min-height:calc(100svh - 4rem)}
+  .phone{width:min(74vw,13rem)}
+  .tab{font-size:.9rem;padding:.6rem .3rem}
+}
+
+/* מובייל שמוחזק לרוחב — מסך נמוך מאוד */
+@media(max-height:520px) and (orientation:landscape){
+  header{position:static}
+  html{scroll-snap-type:none}
+  .hero{min-height:0;padding:1.2rem 0 1.6rem;display:block}
+  .hero h1{font-size:1.8rem;margin-top:.6rem}
+  .scroll-hint{display:none !important}
+  .nav-links{padding-top:4.6rem;text-align:center}
+  .nav-links a{font-size:1.15rem;min-height:46px}
+  .sec{padding:2rem 0}
+  .orb{width:min(28vw,8rem)}
+  .phone{width:min(30vw,11rem)}
+  .veil{place-items:start center;padding-block:.8rem}
+}
+
+/* מסכים גדולים מאוד */
+@media(min-width:1600px){
+  .wrap{width:min(1240px,100% - 3rem)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important}
+  .app-orb{transform:scale(1.02)}
+  html{scroll-behavior:auto;scroll-snap-type:none}
+  .orb{transition:none !important;transform:scale(1.1) !important}
+  .btn:hover,.feat:hover,.mood:hover,.btn:active,.mood:active{transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LANDING ============ -->
+<div id="landing">
+
+<header>
+  <div class="wrap nav">
+    <div class="nav-cta">
+      <button class="btn btn-ghost btn-sm nav-auth" data-auth="login">התחברות</button>
+      <button class="btn btn-solid btn-sm nav-auth" data-auth="signup">הרשמה</button>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks" aria-label="פתיחת תפריט"><span></span></button>
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#mood">בחירת תחושה</a>
+      <a href="#app">האפליקציה</a>
+      <a href="#flow">איך זה עובד</a>
+      <a href="#feats">מה יש בפנים</a>
+      <a href="#plans">מסלולים</a>
+      <div class="menu-cta">
+        <button class="btn btn-solid" data-auth="signup">הרשמה</button>
+        <button class="btn btn-ghost" data-auth="login">התחברות</button>
+        <button class="btn btn-ghost" data-guest>כניסה בלי הרשמה</button>
+      </div>
+    </nav>
+    <div class="logo"><i></i><span>MindfulMe</span></div>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="sketch" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g class="s-c1">
+      <path style="--len:1800" d="M-60 96C170 40 320 150 546 88 772 26 950 18 1260 92"/>
+      <path style="--len:1800" d="M-60 108C176 52 324 162 552 98 778 36 954 30 1260 104"/>
+    </g>
+    <path class="s-c3" style="--len:1900" d="M-50 486C210 556 424 400 648 470 872 540 1010 512 1250 434"/>
+    <path class="s-c2" style="--len:1300" d="M140-30C226 140 126 288 266 456 350 556 316 600 296 680"/>
+    <path class="s-c1b" style="--len:420" d="M866 540C924 506 966 566 1036 528"/>
+    <path class="s-c3b" style="--len:520" d="M986 60C1038 102 1100 60 1154 112"/>
+  </svg>
+  <div class="wrap">
+    <span class="eyebrow">שתי שניות מהלחץ עד התרגיל</span>
+    <h1>אין זמן לחפש רוגע. <em>תבחרו תחושה</em>, אנחנו נביא את התרגיל.</h1>
+    <p class="hero-sub">MindfulMe שואל דבר אחד — איך מרגישים עכשיו — ומיד פותח תרגיל נשימה או יוגה קצר שמתאים בדיוק לתחושה הזאת. אפשר לנסות מיד, בלי הרשמה.</p>
+
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="#mood">בחירת תחושה עכשיו</a>
+      <button class="btn btn-ghost" data-guest>כניסה לדשבורד בלי הרשמה</button>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true"><span>גוללים למטה</span><svg viewBox="0 0 24 24"><path d="M12 4.5v14"/><path d="M5.5 12.5 12 19l6.5-6.5"/></svg></div>
+  </div>
+</section>
+
+<section class="strip-band">
+  <div class="wrap">
+    <div class="strip">
+      <div class="stat"><b>0:02</b><small>מהכניסה לתרגיל</small></div>
+      <div class="stat"><b>8</b><small>מצבי רוח, תרגיל לכל אחד</small></div>
+      <div class="stat"><b>5</b><small>כלים בדשבורד</small></div>
+      <div class="stat"><b>0</b><small>פרסומות. תמיד</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="mood">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">התרגיל שלכם</span>
+      <h2>איך את/ה מרגיש/ה ברגע הזה?</h2>
+      <p>לחיצה אחת על הפנים שמתאימות לתחושה בוחרת גם את התרגיל וגם את קצב הנשימה. בלי חיפוש, בלי תפריטים, ובלי להירשם כדי לנסות.</p>
+    </div>
+    <div class="picker">
+      <div class="picker-top">
+        <div class="moods" id="pickMoods" role="group" aria-label="בחירת מצב רוח"></div>
+      </div>
+      <div class="picker-body">
+        <p class="picker-empty" id="pickEmpty">בחרו תחושה אחת למעלה — התרגיל נפתח כאן, בלי לעבור עמוד.</p>
+        <div class="result hidden" id="pickResult">
+          <div>
+            <h3 class="ex-name" id="pickExName"></h3>
+            <p class="ex-why" id="pickExWhy"></p>
+            <ol class="ex-steps" id="pickExSteps"></ol>
+          </div>
+          <div class="orb-box">
+            <div class="orb" id="pickOrb">
+              <div>
+                <div class="orb-count" id="pickCount">—</div>
+                <div class="orb-phase" id="pickPhase">מוכנים?</div>
+              </div>
+            </div>
+            <p class="orb-meta" id="pickMeta"></p>
+            <button class="btn btn-deep btn-sm" id="pickPlay">התחלת התרגיל</button>
+            <button class="btn btn-ghost btn-sm" id="pickGuest" data-guest>כל חמשת הכלים, בלי הרשמה</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="app">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">האזור האישי</span>
+      <h2>הדשבורד יושב טוב ביד.</h2>
+      <p>אותו אזור אישי בדיוק שנפתח אחרי ההתחברות, רק בגודל שנוח להחזיק. בלי הורדה מחנות האפליקציות — פותחים בדפדפן ומוסיפים למסך הבית.</p>
+    </div>
+
+    <div class="showcase">
+      <div class="phone-wrap">
+        <div class="phone" role="img" aria-label="תצוגה של הדשבורד על מסך טלפון">
+          <div class="phone-side s-a"></div><div class="phone-side s-b"></div><div class="phone-side s-c"></div>
+          <div class="screen">
+            <div class="status"><span class="num">9:41</span><span class="dots"><i></i><i></i><i></i></span></div>
+            <div class="island"></div>
+            <div class="app">
+              <div class="app-bar">
+                <span class="app-logo"><i></i>MindfulMe</span>
+                <span class="app-streak num">🔥 4</span>
+              </div>
+              <p class="app-hi">ערב טוב, נועה.</p>
+              <p class="app-sub">בחרי תחושה ונתחיל.</p>
+              <div class="app-moods" id="appMoods"></div>
+              <div class="app-card">
+                <div class="app-orb"><span class="num" id="appCount">4</span><small id="appPhase">שאיפה</small></div>
+                <p class="app-ex" id="appEx">נשימת 4-7-8</p>
+                <p class="app-meta">מחזור 2 מתוך 3</p>
+              </div>
+              <div class="app-row">
+                <div class="app-mini"><b class="num">12</b><small>תרגולים</small></div>
+                <div class="app-mini"><b class="num">3</b><small>השבוע</small></div>
+              </div>
+            </div>
+            <div class="home-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="showcase-list">
+        <li><b>מוסיפים למסך הבית</b><span>שיתוף ואז "הוספה למסך הבית". נפתח במסך מלא, בלי סרגל הדפדפן.</span></li>
+        <li><b>עובד גם בלי אינטרנט</b><span>התרגילים והמונה יושבים בדפדפן, כך שאפשר לנשום גם ברכבת התחתית.</span></li>
+        <li><b>שתי לחיצות לתרגיל</b><span>פותחים, בוחרים תחושה, נושמים. אין תפריטים ואין חיפוש.</span></li>
+        <li><b>אין התראות מציקות</b><span>האפליקציה לא רודפת אחריכם. אתם פותחים אותה כשבא לכם.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="flow">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">איך זה עובד</span>
+      <h2>שלוש פעולות, אף אחת מהן לא חיפוש.</h2>
+    </div>
+    <div class="flow">
+      <div class="step">
+        <div class="t">0:00</div>
+        <h3>פותחים את הדשבורד</h3>
+        <p>הרשמה מקומית בשם ומייל, ואתם בפנים. אין הגדרות, אין שאלון, אין מסלול של שישה שבועות.</p>
+      </div>
+      <div class="step">
+        <div class="t">0:02</div>
+        <h3>לוחצים על התחושה</h3>
+        <p>לחוץ, עייף, מפוזר, כועס, מוצף, מתוסכל, מתרגש או רגוע. לחיצה אחת בוחרת גם את התרגיל וגם את קצב הנשימה.</p>
+      </div>
+      <div class="step">
+        <div class="t">0:45</div>
+        <h3>נושמים עם העיגול</h3>
+        <p>העיגול גדל בשאיפה ומתכנס בנשיפה, עם ספירה על המסך. כשמסיימים, מונה התרגולים עולה באחד.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="feats">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">מה יש בפנים</span>
+      <h2>חמישה כלים. כולם עובדים בדפדפן, מיד.</h2>
+    </div>
+    <div class="feats slider">
+      <div class="feat"><i>◐</i><h3>בורר מצב רוח</h3><p>שמונה תחושות, ולכל אחת תרגיל נשימה או מתיחת יוגה קצרה עם שלושה שלבים ברורים.</p></div>
+      <div class="feat"><i>◉</i><h3>אנימציית נשימה</h3><p>עיגול שמדריך את הקצב — שאיפה, החזקה, נשיפה — עם ספירת שניות שאין צורך לעקוב אחריה בראש.</p></div>
+      <div class="feat"><i>✦</i><h3>מסר חיובי אקראי</h3><p>לחיצה אחת מגרילה משפט קצר. לא סיסמאות מנופחות — משהו שאפשר להישאר איתו רגע.</p></div>
+      <div class="feat"><i>◑</i><h3>מעבר לצבעים מרגיעים</h3><p>כפתור אחד מחליף את הכחול הכהה לתצוגה בהירה ורכה, לפי מה שנוח לעיניים באותו רגע.</p></div>
+      <div class="feat"><i>▲</i><h3>מונה תרגולים</h3><p>כל תרגול שמסתיים נשמר בדפדפן שלכם, ומראה את ההתקדמות מול יעד שבועי.</p></div>
+      <div class="feat"><i>◇</i><h3>בלי הורדה ובלי הרשאות</h3><p>הכול רץ בדפדפן, במחשב ובנייד. אין אפליקציה להתקין ואין בקשות גישה למיקום, למיקרופון או לאנשי הקשר.</p></div>
+      <div class="feat"><i>○</i><h3>בלי פרסומות, בשני המסלולים</h3><p>ההכנסה באה ממנויים, ולכן שום דבר לא קופץ, לא מתנגן ולא מהבהב באמצע נשימה.</p></div>
+      <div class="feat"><i>◎</i><h3>נגיש גם בלי עכבר</h3><p>אפשר לנווט ולתרגל מהמקלדת בלבד, עם חיווי מיקום ברור, וכיבוד ההגדרה של המערכת לצמצום אנימציות.</p></div>
+      <div class="feat wide"><i>◈</i><div><h3>הכול נשמר אצלכם</h3><p>בגרסה הזאת ההרשמה והנתונים יושבים בדפדפן שלכם בלבד — בלי שרת, בלי מסד נתונים חיצוני, בלי חשבון לנהל.</p></div></div>
+    </div>
+    <p class="slide-hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 6 8 12l6 6"/></svg><span>מחליקים לצדדים לעוד</span></p>
+  </div>
+</section>
+
+<section class="sec" id="plans">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">מסלולים</span>
+      <h2>חינם באמת, ופרימיום למי שרוצה להעמיק.</h2>
+      <p>ההכנסה באה ממנויים, לא מפרסומות. פרסומת באמצע תרגיל נשימה הורסת בדיוק את מה שבאנו לעשות.</p>
+    </div>
+    <div class="plans slider">
+      <div class="plan">
+        <span class="badge badge-free">להתחיל בלי כלום</span>
+        <h3>חופשי</h3>
+        <div class="price">₪0</div>
+        <div class="per">לתמיד, לכל אחד</div>
+        <ul>
+          <li>שמונה תחושות עם תרגיל מותאם לכל אחת</li>
+          <li>אנימציית נשימה עם שלושה קצבים</li>
+          <li>מסרים חיוביים ומונה תרגולים</li>
+          <li>מעבר לצבעים מרגיעים</li>
+        </ul>
+        <button class="btn btn-ghost" data-auth="signup">להתחיל עכשיו</button>
+      </div>
+      <div class="plan pro">
+        <span class="badge badge-pro">למי שמתרגל כל יום</span>
+        <h3>פרימיום</h3>
+        <div class="price">₪19</div>
+        <div class="per">לחודש, אפשר לבטל בכל רגע</div>
+        <ul>
+          <li>ספריית תרגילים מורחבת, כולל רצפי יוגה ארוכים</li>
+          <li>תרגילים ממוקדים לשינה, למבחנים ולרגע שלפני הצגה</li>
+          <li>קצבי נשימה שאפשר לכייל לעצמכם</li>
+          <li>היסטוריית תרגול לפי מצב רוח</li>
+          <li>בלי פרסומות. בשני המסלולים</li>
+        </ul>
+        <button class="btn btn-solid" data-auth="signup">להתחיל בחינם ולשדרג אחר כך</button>
+      </div>
+    </div>
+    <p class="slide-hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 6 8 12l6 6"/></svg><span>מחליקים לצדדים לעוד</span></p>
+  </div>
+</section>
+
+<section class="sec" id="target">
+  <div class="wrap">
+    <div class="goal">
+      <div>
+        <span class="sec-tag">היעד</span>
+        <h2>1,000 אנשים שנושמים איתנו.</h2>
+        <p>זה המספר שמגדיר הצלחה לגרסה הראשונה. הדרך לשם היא רשתות חברתיות, שיתופי פעולה, ובעיקר אנשים שמעבירים את הקישור לחבר שנשמע לחוץ.</p>
+      </div>
+      <div>
+        <div class="bar"><i></i></div>
+        <div class="bar-l"><span>הצטרפו בשלב הראשון</span><span class="num">1,000 היעד</span></div>
+        <button class="btn btn-deep" id="shareBtn" style="margin-top:1.1rem">שליחת הקישור לחבר</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="logo"><i></i><span>MindfulMe</span></div>
+        <p>בוחרים תחושה, מקבלים תרגיל נשימה קצר. שתי שניות מהלחץ עד ההרפיה.</p>
+        <button class="btn btn-solid btn-sm" data-guest>כניסה לדשבורד</button>
+      </div>
+      <nav class="foot-cols" aria-label="מפת האתר">
+        <div>
+          <h4>האתר</h4>
+          <ul>
+            <li><a href="#mood">בחירת תחושה</a></li>
+            <li><a href="#app">האפליקציה</a>
+      <a href="#flow">איך זה עובד</a></li>
+            <li><a href="#feats">מה יש בפנים</a></li>
+            <li><a href="#plans">מסלולים ומחירים</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>התרגילים</h4>
+          <ul>
+            <li><a href="#mood">כשלחוץ — נשימת 4-7-8</a></li>
+            <li><a href="#mood">כשעייף — חתול-פרה נושם</a></li>
+            <li><a href="#mood">כשמפוזר — נשימת קופסה</a></li>
+            <li><a href="#mood">כשכועס — נשיפת שחרור</a></li>
+            <li><a href="#mood">כשמוצף — עיגון 5-4-3-2-1</a></li>
+            <li><a href="#mood">כשמתוסכל — נשיפה כפולה</a></li>
+            <li><a href="#mood">כשמתרגש — עיגון ההתרגשות</a></li>
+            <li><a href="#mood">כשרגוע — נשימת שוויון</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>החשבון</h4>
+          <ul>
+            <li><button data-auth="signup">הרשמה</button></li>
+            <li><button data-auth="login">התחברות</button></li>
+            <li><button data-guest>כניסה בלי פרטים</button></li>
+            <li><button class="soon">שחזור התקדמות</button></li>
+          </ul>
+        </div>
+        <div>
+          <h4>מידע</h4>
+          <ul>
+            <li><button class="soon">שאלות נפוצות</button></li>
+            <li><button class="soon">הצהרת נגישות</button></li>
+            <li><button class="soon">פרטיות</button></li>
+            <li><button class="soon">תנאי שימוש</button></li>
+            <li><button class="soon">צרו קשר</button></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="foot-bar">
+      <p>© 2026 MindfulMe. גרסת MVP — ההרשמה והתרגולים נשמרים בדפדפן שלכם בלבד.</p>
+      <p>נבנה כדי לעבוד ברגע הלחץ, לא אחריו.</p>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=mindfulme" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="dash" class="hidden">
+  <header>
+    <div class="wrap nav">
+      <div class="logo"><i></i><span>MindfulMe</span></div>
+      <div class="nav-cta" style="margin-inline-start:auto">
+        <button class="btn btn-ghost btn-sm" id="themeBtn" aria-pressed="false">צבעים מרגיעים</button>
+        <button class="btn btn-ghost btn-sm" id="logoutBtn">יציאה</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap dash-top">
+    <div class="hi">
+      <h2 id="greet">היי</h2>
+      <p id="greetSub">בחרו תחושה ונתחיל. תרגיל אחד עושה שינוי.</p>
+    </div>
+  </div>
+
+  <div class="wrap grid">
+    <div class="card c-mood">
+      <h3>איך מרגישים עכשיו?</h3>
+      <p class="cap">לחיצה בוחרת את התרגיל ואת קצב הנשימה יחד.</p>
+      <div class="moods" id="dashMoods" role="group" aria-label="בחירת מצב רוח"></div>
+      <div id="dashEx" class="hidden" style="margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid var(--line)">
+        <h3 class="ex-name" id="dashExName"></h3>
+        <p class="ex-why" id="dashExWhy"></p>
+        <ol class="ex-steps" id="dashExSteps"></ol>
+      </div>
+    </div>
+
+    <div class="card c-breath">
+      <h3>נשימה מונחית</h3>
+      <p class="cap">שלושה קצבים. העיגול גדל בשאיפה ומתכנס בנשיפה.</p>
+      <div class="pat" id="patRow" role="group" aria-label="בחירת קצב נשימה"></div>
+      <div class="orb-box">
+        <div class="orb" id="dashOrb">
+          <div>
+            <div class="orb-count" id="dashCount">—</div>
+            <div class="orb-phase" id="dashPhase">מוכנים?</div>
+          </div>
+        </div>
+        <p class="orb-meta" id="dashMeta"></p>
+        <button class="btn btn-deep btn-sm" id="dashPlay">התחלת התרגיל</button>
+      </div>
+    </div>
+
+    <div class="card c-msg">
+      <h3>מסר לרגע הזה</h3>
+      <p class="cap">משפט אחד, אקראי, בלי מוסר השכל.</p>
+      <p class="quote" id="quote">לחצו על הכפתור וקבלו משפט.</p>
+      <button class="btn btn-solid btn-sm" id="quoteBtn">הגרלת מסר</button>
+    </div>
+
+    <div class="card c-count">
+      <h3>מונה התרגולים</h3>
+      <p class="cap">נשמר בדפדפן שלכם. היעד: חמישה תרגולים בשבוע.</p>
+      <div class="ring">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFC736"/><stop offset="50%" stop-color="#FF9EC4"/><stop offset="100%" stop-color="#8B5CF6"/>
+          </linearGradient></defs>
+          <circle class="bg" cx="60" cy="60" r="52"/>
+          <circle class="fg" id="ringFg" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"/>
+        </svg>
+        <b><span id="countNum">0</span><small>תרגולים</small></b>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="manualBtn" style="width:100%">סימון תרגול שהושלם</button>
+    </div>
+
+    <div class="card c-pro">
+      <h3>פרימיום</h3>
+      <p class="cap">רצפי יוגה ארוכים, תרגילים לשינה ולמבחנים, וקצבים שאפשר לכייל.</p>
+      <div class="price num" style="font-size:2rem">₪19<span style="font-size:.9rem;font-weight:400">/חודש</span></div>
+      <button class="btn btn-solid btn-sm" id="proBtn">שדרוג</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- storage that never breaks the page ---------- */
+var mem = {};
+var store = {
+  get:function(k){ try{ var v=localStorage.getItem(k); return v===null ? (k in mem?mem[k]:null) : v; }catch(e){ return (k in mem)?mem[k]:null; } },
+  set:function(k,v){ mem[k]=v; try{ localStorage.setItem(k,v); }catch(e){} },
+  del:function(k){ delete mem[k]; try{ localStorage.removeItem(k); }catch(e){} }
+};
+
+/* ---------- content ---------- */
+var MOODS = [
+  { id:'stress', color:'#FF7A45', label:'לחוץ/ה',
+    name:'נשימת 4-7-8',
+    why:'הנשיפה הארוכה מאותתת לגוף שאפשר להוריד הילוך.',
+    steps:['שבו זקוף ושחררו את הכתפיים כלפי מטה.','שאפו דרך האף בארבע שניות.','נשפו דרך הפה בשמונה שניות, עד הסוף.'],
+    pattern:[{label:'שאיפה',s:4,scale:1.42},{label:'החזקה',s:7,scale:1.42},{label:'נשיפה',s:8,scale:.85}] },
+  { id:'tired', color:'#7E88C4', label:'עייף/ה',
+    name:'חתול-פרה נושם',
+    why:'תנועה קטנה בעמוד השדרה מחזירה ערנות בלי קפאין.',
+    steps:['שבו על קצה הכיסא, כפות ידיים על הירכיים.','בשאיפה פתחו את החזה ומשכו כתפיים אחורה.','בנשיפה עגלו את הגב והורידו סנטר לחזה.'],
+    pattern:[{label:'שאיפה',s:4,scale:1.4},{label:'נשיפה',s:4,scale:.86}] },
+  { id:'focus', color:'#FFC736', label:'מפוזר/ת',
+    name:'נשימת קופסה',
+    why:'ארבעה מקטעים שווים נותנים לתשומת הלב משהו אחד להיאחז בו.',
+    steps:['הניחו כף יד על הבטן.','שאפו, החזיקו, נשפו והחזיקו — ארבע שניות כל מקטע.','אם המחשבה נדדה, חזרו לספירה בלי לשפוט.'],
+    pattern:[{label:'שאיפה',s:4,scale:1.4},{label:'החזקה',s:4,scale:1.4},{label:'נשיפה',s:4,scale:.86},{label:'החזקה',s:4,scale:.86}] },
+  { id:'angry', color:'#FF4D6D', label:'כועס/ת',
+    name:'נשיפת שחרור 4-8',
+    why:'נשיפה בשריקה משחררת את הלסת ואת הכתפיים, שם הכעס נאגר.',
+    steps:['פזרו את הרגליים ונעצו את כפות הרגליים ברצפה.','שאפו דרך האף בארבע שניות.','נשפו דרך שפתיים כמעט סגורות בשמונה שניות, בקול.'],
+    pattern:[{label:'שאיפה',s:4,scale:1.42},{label:'נשיפה',s:8,scale:.84}] },
+  { id:'flood', color:'#4FC3E0', label:'מוצף/ת',
+    name:'עיגון 5-4-3-2-1',
+    why:'החושים מחזירים את תשומת הלב מהמחשבות אל החדר שאתם בו.',
+    steps:['נשמו חמש פנימה, חמש החוצה, ותנו לעיניים לנוח.','מנו בשקט חמישה דברים שאתם רואים, ואז ארבעה שאתם שומעים.','המשיכו לשלושה מגעים, שני ריחות ונשימה אחת עמוקה.'],
+    pattern:[{label:'שאיפה',s:5,scale:1.38},{label:'נשיפה',s:5,scale:.86}] },
+  { id:'stuck', color:'#C98CFF', label:'מתוסכל/ת',
+    name:'נשיפה כפולה',
+    why:'שאיפה שנייה קצרה פותחת את הריאות עד הסוף, והנשיפה הארוכה שאחריה מורידה את הדופק מהר משאיפה עמוקה אחת.',
+    steps:['שבו ותנו לכתפיים ליפול; תסכול נאגר בלסת ובאגרופים.','שאפו דרך האף, ומיד שאפו עוד קצת בלי לנשוף.','נשפו לאט דרך הפה שבע שניות, ופתחו את כפות הידיים.'],
+    pattern:[{label:'שאיפה',s:4,scale:1.34},{label:'שאיפה קצרה',s:2,scale:1.46},{label:'נשיפה',s:7,scale:.85}] },
+  { id:'excited', color:'#7BE0A5', label:'מתרגש/ת',
+    name:'עיגון ההתרגשות 4-6',
+    why:'התרגשות היא אנרגיה טובה. נשיפה ארוכה מעט מהשאיפה שומרת אותה ממוקדת במקום מפוזרת.',
+    steps:['עמדו זקוף, כפות רגליים ברוחב האגן, ידיים רפויות.','שאפו ארבע שניות והרגישו את הרצפה מתחתיכם.','נשפו שש שניות, ותנו לחיוך להישאר.'],
+    pattern:[{label:'שאיפה',s:4,scale:1.4},{label:'נשיפה',s:6,scale:.86}] },
+  { id:'calm', color:'#FFC1DC', label:'רגוע/ה',
+    name:'נשימת שוויון 6-6',
+    why:'כשטוב, שווה לתרגל — ככה הרוגע זמין גם ביום פחות טוב.',
+    steps:['שבו נוח ועצמו עיניים או הנמיכו מבט.','שאפו שש שניות דרך האף, נשפו שש שניות.','שימו לב לרווח הקטן שבין הנשיפה לשאיפה הבאה.'],
+    pattern:[{label:'שאיפה',s:6,scale:1.36},{label:'נשיפה',s:6,scale:.88}] }
+];
+
+var PATTERNS = [
+  { id:'478', label:'4-7-8 להרגעה', pattern:MOODS[0].pattern },
+  { id:'box', label:'קופסה 4-4-4-4', pattern:MOODS[2].pattern },
+  { id:'even', label:'שוויון 6-6', pattern:MOODS[5].pattern }
+];
+
+var MESSAGES = [
+  'הנשימה הזאת שלכם. אף אחד לא צריך לדעת עליה.',
+  'אתם לא מאחרים לחיים שלכם. יש דקה.',
+  'לא צריך להרגיש טוב כדי לנוח. מותר לנוח קודם.',
+  'מה שדחוף עכשיו יהיה דחוף גם בעוד ארבעים שניות.',
+  'הגוף רוצה לעזור. הוא רק מחכה לנשיפה ארוכה.',
+  'תרגיל אחד הוא לא פחות משלושה. הוא פשוט אחד.',
+  'הכתפיים לא צריכות להחזיק את היום. הן יכולות לרדת.',
+  'אתם מותרים בטעויות, גם בשבוע כזה.',
+  'המחשבה שחוזרת לא מוכיחה שום דבר עליכם.',
+  'לרצות שיהיה שקט זה כבר צעד לכיוון שקט.',
+  'לא חייבים לדעת מה לעשות. אפשר רק לנשום.',
+  'העייפות היא בקשה, לא חולשה.',
+  'שתי דקות עכשיו יחסכו שעה של גרירת רגליים אחר כך.',
+  'הרוגע לא נעלם. הוא רק מחכה שתפסיקו לרוץ.'
+];
+
+/* ---------- אייקוני פנים, בצבע הרגש ---------- */
+var FACES = {
+  stress:'<path d="M7.9 8.3 10.4 9.4"/><path d="M16.1 8.3 13.6 9.4"/><circle cx="9.4" cy="11.5" r="1" fill="currentColor" stroke="none"/><circle cx="14.6" cy="11.5" r="1" fill="currentColor" stroke="none"/><path d="M8.7 15.6l1.65-1.1 1.65 1.1 1.65-1.1 1.65 1.1"/>',
+  tired:'<path d="M7.5 10.9q1.5 1.5 3 0"/><path d="M13.5 10.9q1.5 1.5 3 0"/><path d="M9.2 16q2.8-1.9 5.6 0"/>',
+  focus:'<circle cx="9.2" cy="11.3" r="1" fill="currentColor" stroke="none"/><circle cx="14.8" cy="11.3" r="1.7"/><path d="M8.8 15.4q1.6-1.5 3.2 0 1.6 1.5 3.2 0"/><circle cx="19.8" cy="4.3" r=".85" fill="currentColor" stroke="none"/><circle cx="4.4" cy="5.6" r=".65" fill="currentColor" stroke="none"/>',
+  angry:'<path d="M7.6 9.6 10.7 8.1"/><path d="M16.4 9.6 13.3 8.1"/><circle cx="9.5" cy="11.8" r="1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="11.8" r="1" fill="currentColor" stroke="none"/><path d="M9.1 16.1q2.9-2 5.8 0"/>',
+  flood:'<path d="M7.7 11.1h2.6"/><path d="M13.7 11.1h2.6"/><circle cx="12" cy="15.2" r="1.5"/><path d="M7.2 18.6q1.6-1 3.2 0 1.6 1 3.2 0"/>',
+  stuck:'<path d="M7.7 8.9q1.5-.9 2.9.4"/><path d="M16.3 8.9q-1.5-.9-2.9.4"/><circle cx="9.5" cy="11.9" r="1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="11.9" r="1" fill="currentColor" stroke="none"/><path d="M9.1 16.3 14.7 15.2"/>',
+  excited:'<path d="M7.6 8.5q1.5-1.3 2.9-.3"/><path d="M16.4 8.5q-1.5-1.3-2.9-.3"/><circle cx="9.4" cy="11.6" r="1.05" fill="currentColor" stroke="none"/><circle cx="14.6" cy="11.6" r="1.05" fill="currentColor" stroke="none"/><path d="M8.2 14.1q3.8 3.6 7.6 0"/><path d="M20.4 4.2v2.6M19.1 5.5h2.6"/><path d="M3.8 6.4v1.8M2.9 7.3h1.8"/>',
+  calm:'<path d="M7.6 11.7q1.5-1.5 3 0"/><path d="M13.4 11.7q1.5-1.5 3 0"/><path d="M8.9 14.5q3.1 2.5 6.2 0"/>'
+};
+function faceSvg(m){
+  return '<svg class="face" viewBox="0 0 24 24" aria-hidden="true">'+
+    '<circle cx="12" cy="12" r="9.2" fill="currentColor" fill-opacity=".14" stroke="currentColor"/>'+
+    (FACES[m.id]||'')+'</svg>';
+}
+
+/* ---------- helpers ---------- */
+function $(s){ return document.querySelector(s); }
+function el(t,c,x){ var n=document.createElement(t); if(c)n.className=c; if(x!==undefined)n.textContent=x; return n; }
+var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function toast(msg){
+  var old=$('.toast'); if(old) old.remove();
+  var t=el('div','toast',msg); document.body.appendChild(t);
+  setTimeout(function(){ if(t.parentNode) t.remove(); },2600);
+}
+
+/* ---------- breathing engine ---------- */
+function Breather(orb,countEl,phaseEl,metaEl,btn,onDone){
+  var self=this;
+  this.pattern=null; this.i=0; this.cycles=0; this.target=3;
+  this.running=false; this.t1=null; this.t2=null;
+
+  this.setPattern=function(p){ this.pattern=p; this.reset(); };
+
+  this.reset=function(){
+    clearTimeout(this.t1); clearInterval(this.t2);
+    this.running=false; this.i=0; this.cycles=0;
+    if(!reduce) orb.style.transitionDuration='.6s', orb.style.transform='scale(.85)';
+    countEl.textContent='—'; phaseEl.textContent='מוכנים?';
+    metaEl.textContent = this.pattern ? ('שלושה מחזורים, בערך '+Math.round(cycleLen(this.pattern)*3)+' שניות.') : '';
+    btn.textContent='התחלת התרגיל';
+  };
+
+  this.toggle=function(){ this.running ? this.reset() : this.start(); };
+
+  this.start=function(){
+    if(!this.pattern) return;
+    this.running=true; this.i=0; this.cycles=0;
+    btn.textContent='עצירה';
+    this.phase();
+  };
+
+  this.phase=function(){
+    var p=this.pattern[this.i];
+    phaseEl.textContent=p.label;
+    if(!reduce){ orb.style.transitionDuration=p.s+'s'; orb.style.transform='scale('+p.scale+')'; }
+    var left=p.s; countEl.textContent=left;
+    clearInterval(this.t2);
+    this.t2=setInterval(function(){ left--; countEl.textContent=Math.max(left,0); },1000);
+    this.t1=setTimeout(function(){
+      clearInterval(self.t2);
+      self.i++;
+      if(self.i>=self.pattern.length){
+        self.i=0; self.cycles++;
+        metaEl.textContent='מחזור '+self.cycles+' מתוך '+self.target;
+        if(self.cycles>=self.target){ self.finish(); return; }
+      }
+      if(self.running) self.phase();
+    }, p.s*1000);
+  };
+
+  this.finish=function(){
+    this.reset();
+    phaseEl.textContent='סיימתם';
+    countEl.textContent='✓';
+    metaEl.textContent='תרגול נשמר. שימו לב איך הכתפיים מרגישות עכשיו.';
+    if(onDone) onDone();
+  };
+
+  btn.addEventListener('click', function(){ self.toggle(); });
+}
+function cycleLen(p){ var s=0; for(var i=0;i<p.length;i++) s+=p[i].s; return s; }
+
+/* ---------- mood pills ---------- */
+function buildMoods(host,onPick){
+  MOODS.forEach(function(m){
+    var b=el('button','mood');
+    b.type='button'; b.setAttribute('aria-pressed','false');
+    b.style.setProperty('--fc',m.color);
+    b.innerHTML=faceSvg(m);
+    b.appendChild(document.createTextNode(m.label));
+    b.addEventListener('click',function(){
+      host.querySelectorAll('.mood').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+      b.setAttribute('aria-pressed','true');
+      onPick(m);
+    });
+    host.appendChild(b);
+  });
+}
+function renderEx(m,nameEl,whyEl,stepsEl){
+  nameEl.innerHTML=faceSvg(m)+'<span>'+m.name+'</span>';
+  nameEl.className='ex-name ex-head';
+  nameEl.style.setProperty('--fc',m.color);
+  whyEl.textContent=m.why;
+  stepsEl.innerHTML='';
+  m.steps.forEach(function(s,i){
+    var li=el('li'); li.appendChild(el('b','',String(i+1))); li.appendChild(el('span','',s)); stepsEl.appendChild(li);
+  });
+}
+
+/* ---------- hero ---------- */
+var pickBreath = new Breather($('#pickOrb'),$('#pickCount'),$('#pickPhase'),$('#pickMeta'),$('#pickPlay'),function(){
+  toast('תרגול הושלם. בדשבורד הוא נספר גם במונה שלכם.');
+});
+buildMoods($('#pickMoods'), function(m){
+  $('#pickEmpty').classList.add('hidden');
+  $('#pickResult').classList.remove('hidden');
+  renderEx(m,$('#pickExName'),$('#pickExWhy'),$('#pickExSteps'));
+  pickBreath.setPattern(m.pattern);
+});
+
+/* ---------- auth ---------- */
+function users(){ try{ return JSON.parse(store.get('mm.users')||'[]'); }catch(e){ return []; } }
+function saveUsers(u){ store.set('mm.users', JSON.stringify(u)); }
+function findUser(id){ var l=users(); for(var i=0;i<l.length;i++){ if(l[i].email===id) return l[i]; } return null; }
+function upsertUser(u){ var l=users(); for(var i=0;i<l.length;i++){ if(l[i].email===u.email){ l[i].name=u.name||l[i].name; saveUsers(l); return l[i]; } } l.push(u); saveUsers(l); return u; }
+
+/* כניסה בלי פרטים בכלל — ישר לדשבורד */
+function enterGuest(){
+  if(window.closeMenu) window.closeMenu();
+  var g=upsertUser({name:'',email:'guest'});
+  store.set('mm.session','guest');
+  enterDash(g);
+}
+
+function openAuth(mode){
+  if(window.closeMenu) window.closeMenu();
+  var veil=el('div','veil');
+  veil.innerHTML =
+    '<div class="sheet" role="dialog" aria-modal="true" aria-label="כניסה לחשבון">'+
+      '<div class="tabs"><button class="tab" data-t="signup">הרשמה</button><button class="tab" data-t="login">התחברות</button></div>'+
+      '<div class="err hidden" id="authErr"></div>'+
+      '<div class="field" id="nameField"><label for="fName">שם פרטי <span style="font-weight:400;color:var(--ink-soft)">— לא חובה</span></label><input id="fName" type="text" autocomplete="given-name" placeholder="איך לקרוא לכם?"></div>'+
+      '<div class="field"><label for="fMail">אימייל <span style="font-weight:400;color:var(--ink-soft)">— לא חובה</span></label><input id="fMail" type="email" autocomplete="email" placeholder="you@example.com"></div>'+
+      '<div class="field"><label for="fPass">סיסמה <span style="font-weight:400;color:var(--ink-soft)">— לא חובה</span></label><input id="fPass" type="password" autocomplete="new-password" placeholder="אפשר להשאיר ריק"></div>'+
+      '<button class="btn btn-solid" id="authGo" style="width:100%">כניסה לדשבורד</button>'+
+      '<button class="btn btn-ghost btn-sm" id="authSkip" style="width:100%;margin-top:.6rem">כניסה בלי פרטים</button>'+
+      '<p class="note" id="authNote"></p>'+
+      '<button class="btn btn-ghost btn-sm" id="authClose" style="width:100%;margin-top:.7rem">חזרה לעמוד</button>'+
+    '</div>';
+  document.body.appendChild(veil);
+  var scrollY=window.scrollY;
+  document.body.style.overflow='hidden';
+  document.body.classList.add('modal-open');
+
+  var cur=mode;
+  function paint(){
+    veil.querySelectorAll('.tab').forEach(function(t){ t.setAttribute('aria-selected', String(t.dataset.t===cur)); });
+    veil.querySelector('#nameField').classList.toggle('hidden', cur!=='signup');
+    veil.querySelector('#authGo').textContent = cur==='signup' ? 'יצירת חשבון וכניסה' : 'התחברות';
+    veil.querySelector('#authNote').textContent = cur==='signup'
+      ? 'אפשר להיכנס גם עם שדות ריקים. אם תמלאו שם, הוא יופיע בברכה ומונה התרגולים יישמר תחתיו בדפדפן שלכם. הסיסמה לא נשמרת ולא נשלחת לשום מקום.'
+      : 'לא חייבים למלא כלום — לחיצה על התחברות מכניסה לדשבורד. מי שנרשם עם אימייל בדפדפן הזה יחזור להתקדמות שלו.';
+    veil.querySelector('#authErr').classList.add('hidden');
+  }
+  paint();
+  veil.querySelectorAll('.tab').forEach(function(t){ t.addEventListener('click',function(){ cur=t.dataset.t; paint(); }); });
+
+  function fail(msg){ var e=veil.querySelector('#authErr'); e.textContent=msg; e.classList.remove('hidden'); }
+  function close(){ veil.remove(); document.body.style.overflow=''; document.body.classList.remove('modal-open'); window.scrollTo(0,scrollY); }
+  veil.querySelector('#authClose').addEventListener('click',close);
+  veil.addEventListener('click',function(e){ if(e.target===veil) close(); });
+  document.addEventListener('keydown',function esc(e){ if(e.key==='Escape'){ close(); document.removeEventListener('keydown',esc); } });
+
+  veil.querySelector('#authSkip').addEventListener('click',function(){ close(); enterGuest(); });
+
+  veil.querySelector('#authGo').addEventListener('click',function(){
+    var name=(veil.querySelector('#fName').value||'').trim();
+    var mail=(veil.querySelector('#fMail').value||'').trim().toLowerCase();
+
+    /* שדות ריקים — נכנסים כאורח, בלי לחסום כלום */
+    if(!name && !mail){ close(); enterGuest(); return; }
+
+    /* אימייל נחסם רק אם הקלידו משהו שהוא לא כתובת */
+    if(mail && !/^\S+@\S+\.\S+$/.test(mail)) return fail('האימייל לא תקין. תקנו את הכתובת, או השאירו את השדה ריק ותיכנסו בלי פרטים.');
+
+    var id = mail || ('local:'+name);
+    var found = findUser(id);
+    var isNew = !found;
+    found = upsertUser({ name:name || (found&&found.name) || '', email:id });
+
+    store.set('mm.session', id);
+    close(); enterDash(found);
+    if(cur==='login' && isNew) toast('פתחנו לכם מקום חדש בדפדפן הזה. ההתקדמות תישמר כאן.');
+  });
+  setTimeout(function(){ var f=veil.querySelector(cur==='signup'?'#fName':'#fMail'); if(f) f.focus(); },40);
+}
+document.querySelectorAll('[data-auth]').forEach(function(b){
+  b.addEventListener('click',function(){ openAuth(b.dataset.auth); });
+});
+/* מוקאפ הטלפון: ממלא את המסך הקטן מאותם נתונים של האתר */
+(function(){
+  var host=$('#appMoods'); if(!host) return;
+  MOODS.slice(0,8).forEach(function(m,i){
+    var b=el('button'); b.type='button'; b.tabIndex=-1; b.setAttribute('aria-hidden','true');
+    b.style.setProperty('--fc',m.color);
+    if(m.id==='stress') b.dataset.on='1';
+    b.innerHTML=faceSvg(m)+'<span>'+m.label.replace('/ה','').replace('/ת','')+'</span>';
+    host.appendChild(b);
+  });
+  /* ספירה מדומה שרצה יחד עם אנימציית העיגול */
+  var seq=[['שאיפה',4],['החזקה',7],['נשיפה',8]], si=0, left=seq[0][1];
+  var cEl=$('#appCount'), pEl=$('#appPhase');
+  setInterval(function(){
+    left--;
+    if(left<=0){ si=(si+1)%seq.length; left=seq[si][1]; pEl.textContent=seq[si][0]; }
+    cEl.textContent=left;
+  },1000);
+})();
+
+/* סליידרים: הרמז מוצג רק כשיש לאן להחליק */
+(function(){
+  function sync(){
+    document.querySelectorAll('.slider').forEach(function(sl){
+      var hint=sl.nextElementSibling;
+      if(!hint||!hint.classList.contains('slide-hint')) return;
+      hint.style.display = (sl.scrollWidth - sl.clientWidth > 8) ? 'flex' : 'none';
+    });
+  }
+  sync();
+  window.addEventListener('resize',sync);
+  window.addEventListener('load',sync);
+})();
+
+/* תפריט מובייל */
+(function(){
+  var btn=$('#menuBtn'), nav=$('#navLinks');
+  if(!btn||!nav) return;
+  function setOpen(on){
+    nav.classList.toggle('open',on);
+    btn.setAttribute('aria-expanded',String(on));
+    btn.setAttribute('aria-label', on?'סגירת תפריט':'פתיחת תפריט');
+    document.body.classList.toggle('menu-open',on);
+  }
+  window.closeMenu=function(){ setOpen(false); };
+  btn.addEventListener('click',function(){ setOpen(!nav.classList.contains('open')); });
+  nav.querySelectorAll('a,button').forEach(function(x){ x.addEventListener('click',function(){ setOpen(false); }); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') setOpen(false); });
+  window.addEventListener('resize',function(){ if(window.innerWidth>900) setOpen(false); });
+})();
+
+document.querySelectorAll('.soon').forEach(function(b){
+  b.addEventListener('click',function(){ toast('העמוד הזה עוד לא נבנה. הוא בתור לגרסה הבאה.'); });
+});
+document.querySelectorAll('[data-guest]').forEach(function(b){
+  b.addEventListener('click',function(){ pickBreath.reset(); enterGuest(); });
+});
+
+/* ---------- dashboard ---------- */
+var user=null;
+var dashBreath = new Breather($('#dashOrb'),$('#dashCount'),$('#dashPhase'),$('#dashMeta'),$('#dashPlay'),function(){
+  addPractice(); toast('תרגול נשמר. המונה עלה באחד.');
+});
+buildMoods($('#dashMoods'), function(m){
+  $('#dashEx').classList.remove('hidden');
+  renderEx(m,$('#dashExName'),$('#dashExWhy'),$('#dashExSteps'));
+  dashBreath.setPattern(m.pattern);
+  $('#patRow').querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+  $('#dashMeta').textContent='הקצב הותאם ל'+m.label.replace('/ה','')+'. שלושה מחזורים.';
+});
+
+PATTERNS.forEach(function(p,idx){
+  var b=el('button','',p.label); b.type='button'; b.setAttribute('aria-pressed', idx===0?'true':'false');
+  b.addEventListener('click',function(){
+    $('#patRow').querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+    b.setAttribute('aria-pressed','true');
+    dashBreath.setPattern(p.pattern);
+  });
+  $('#patRow').appendChild(b);
+});
+dashBreath.setPattern(PATTERNS[0].pattern);
+
+$('#quoteBtn').addEventListener('click',function(){
+  var q=$('#quote'), prev=q.textContent, pick=prev;
+  while(pick===prev){ pick=MESSAGES[Math.floor(Math.random()*MESSAGES.length)]; }
+  q.textContent=pick;
+});
+
+function countKey(){ return 'mm.count.'+(user?user.email:'guest'); }
+function paintCount(){
+  var n=parseInt(store.get(countKey())||'0',10);
+  $('#countNum').textContent=n;
+  var inWeek = (n>0 && n%5===0) ? 5 : n%5;   /* יעד שבועי: חמישה תרגולים */
+  var pct = inWeek/5;
+  $('#ringFg').setAttribute('stroke-dashoffset', String(327-327*pct));
+}
+function addPractice(){
+  var n=parseInt(store.get(countKey())||'0',10)+1;
+  store.set(countKey(),String(n)); paintCount();
+}
+$('#manualBtn').addEventListener('click',function(){ addPractice(); toast('נספר. שיהיה קל יותר.'); });
+$('#proBtn').addEventListener('click',function(){ toast('הפרימיום עוד בבנייה. בגרסה הזאת הכול פתוח בחינם.'); });
+
+/* theme */
+function paintTheme(){
+  var on = store.get('mm.theme')==='calm';
+  document.body.classList.toggle('calm',on);
+  var b=$('#themeBtn'); b.setAttribute('aria-pressed',String(on));
+  b.textContent = on ? 'חזרה לכהה' : 'צבעים בהירים';
+}
+$('#themeBtn').addEventListener('click',function(){
+  store.set('mm.theme', store.get('mm.theme')==='calm' ? 'light' : 'calm'); paintTheme();
+});
+paintTheme();
+
+/* share */
+$('#shareBtn').addEventListener('click',function(){
+  var txt='MindfulMe — בוחרים מצב רוח ומקבלים תרגיל נשימה קצר מיד.';
+  if(navigator.share){ navigator.share({title:'MindfulMe',text:txt}).catch(function(){}); return; }
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt+' '+location.href).then(function(){ toast('הקישור הועתק. אפשר לשלוח.'); },function(){ toast('העתיקו את הכתובת מהדפדפן ושלחו.'); }); return; }
+  toast('העתיקו את הכתובת מהדפדפן ושלחו.');
+});
+
+function enterDash(u){
+  user=u;
+  var hour=new Date().getHours();
+  var part = hour<5?'לילה טוב' : hour<12?'בוקר טוב' : hour<17?'צהריים טובים' : hour<21?'ערב טוב' : 'לילה טוב';
+  $('#greet').textContent = u.name ? (part+', '+u.name+'.') : (part+'.');
+  $('#greetSub').textContent = u.name
+    ? 'בחרו תחושה ונתחיל. תרגיל אחד עושה שינוי.'
+    : 'נכנסתם בלי פרטים, והכול פתוח. התרגולים נשמרים בדפדפן הזה.';
+  paintCount();
+  $('#landing').classList.add('hidden');
+  $('#dash').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+$('#logoutBtn').addEventListener('click',function(){
+  store.del('mm.session'); user=null;
+  dashBreath.reset();
+  $('#dash').classList.add('hidden');
+  $('#landing').classList.remove('hidden');
+  window.scrollTo(0,0);
+});
+
+/* restore session */
+(function(){
+  var mail=store.get('mm.session'); if(!mail) return;
+  var list=users();
+  for(var i=0;i<list.length;i++){ if(list[i].email===mail){ enterDash(list[i]); return; } }
+})();
+</script>
+</body>
+</html>
