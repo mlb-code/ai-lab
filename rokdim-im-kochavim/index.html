@@ -1,0 +1,2899 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>האתר הלא רשמי של רוקדים עם כוכבים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple: #c9b6f7;
+    --purple-deep: #7c3aed;
+    --pink: #f9a8d4;
+    --pink-deep: #db2777;
+    --turq: #5eead4;
+    --turq-deep: #0d9488;
+    --ink: #241534;
+    --ink-soft: #4a3966;
+    --bg: #fdf9ff;
+    --card: #ffffff;
+    --line: rgba(124,58,237,0.14);
+    --shadow: 0 20px 50px -20px rgba(124,58,237,0.35);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; overflow-x:hidden; width:100%; }
+
+  body{
+    background: linear-gradient(180deg, #7c3aed 0%, #db2777 50%, #0d9488 100%);
+    color: #fff;
+    font-family: 'Heebo', sans-serif;
+    overflow-x: hidden;
+    width:100%;
+    max-width:100vw;
+    line-height:1.6;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Rubik', sans-serif;
+    font-weight:900;
+    letter-spacing:-0.01em;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  img,svg{ display:block; max-width:100%; }
+
+  .wrap{ max-width:1140px; margin:0 auto; padding:0 24px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(14px);
+    background: rgba(255,255,255,0.14);
+    border-bottom:1px solid rgba(255,255,255,0.22);
+    color:#fff;
+  }
+  .nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:14px; padding-bottom:14px;
+    gap:20px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Rubik'; font-weight:800; font-size:1.05rem; white-space:nowrap; }
+  .brand .dot{
+    width:34px; height:34px; border-radius:50%;
+    background: conic-gradient(from 180deg, var(--purple), var(--pink), var(--turq), var(--purple));
+    box-shadow: var(--shadow);
+    flex-shrink:0;
+  }
+  .nav-links{ display:flex; align-items:center; gap:28px; font-weight:600; font-size:0.92rem; }
+  .nav-links a{ opacity:0.88; transition: opacity .2s ease; }
+  .nav-links a:hover{ opacity:1; text-decoration:underline; text-underline-offset:5px; }
+  .nav-cta{
+    background: var(--ink);
+    color:#fff;
+    padding:10px 20px;
+    border-radius:100px;
+    font-weight:700;
+    font-size:0.92rem;
+    white-space:nowrap;
+  }
+  .hamburger{
+    display:none;
+    align-items:center; justify-content:center;
+    width:38px; height:38px;
+    background:rgba(255,255,255,0.14);
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:10px;
+    color:#fff; font-size:1.2rem; cursor:pointer;
+    flex-shrink:0;
+  }
+  .mobile-menu{
+    display:none;
+    flex-direction:column;
+    gap:14px;
+    padding:6px 24px 20px;
+    background:rgba(255,255,255,0.14);
+    backdrop-filter: blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.22);
+  }
+  .mobile-menu a{ color:#fff; font-weight:600; font-size:0.95rem; }
+  .mobile-menu .nav-cta{ width:fit-content; }
+  .brand-short{ display:none; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding: 76px 0 110px;
+    overflow:hidden;
+    background:
+      radial-gradient(650px 420px at 85% -10%, rgba(255,255,255,0.16), transparent 60%),
+      radial-gradient(600px 400px at -5% 10%, rgba(255,255,255,0.12), transparent 60%);
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap:56px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background: linear-gradient(90deg, var(--purple), var(--pink));
+    color: var(--ink);
+    font-weight:700;
+    font-size:0.82rem;
+    padding:7px 16px;
+    border-radius:100px;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size: clamp(2.3rem, 4.6vw, 3.6rem);
+    line-height:1.12;
+    margin-bottom:22px;
+  }
+  .hero h1 .grad{
+    background: linear-gradient(90deg, #fff, var(--turq), var(--pink), var(--purple), #fff);
+    background-size: 300% 100%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation: gradShift 6s ease-in-out infinite;
+  }
+  @keyframes gradShift{
+    0%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+    100%{ background-position:0% 50%; }
+  }
+  .hero p.lead{
+    font-size:1.13rem;
+    color: rgba(255,255,255,0.85);
+    max-width:480px;
+    margin-bottom:34px;
+  }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-primary{
+    background: linear-gradient(90deg, var(--purple-deep), var(--pink-deep));
+    color:#fff;
+    padding:16px 30px;
+    border-radius:100px;
+    font-weight:700;
+    font-size:1rem;
+    box-shadow: var(--shadow);
+    transition: transform .2s ease, box-shadow .2s ease;
+    border:none; cursor:pointer;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 24px 55px -18px rgba(219,39,119,0.5); }
+  .btn-ghost{
+    padding:16px 26px;
+    border-radius:100px;
+    font-weight:700;
+    border: 1.5px solid rgba(255,255,255,0.65);
+    transition: background .2s ease;
+  }
+  .btn-ghost:hover{ background: rgba(255,255,255,0.14); }
+
+  .hero-stats{ display:flex; gap:28px; margin-top:44px; flex-wrap:wrap; }
+  .hero-stats div strong{ display:block; font-family:'Rubik'; font-size:1.5rem; font-weight:800; }
+  .hero-stats div span{ font-size:0.82rem; color:rgba(255,255,255,0.75); }
+
+  /* Scoreboard mock card */
+  .mock{
+    position:relative;
+    background: var(--card);
+    color: var(--ink);
+    border-radius:26px;
+    box-shadow: var(--shadow);
+    padding:22px;
+    transform: rotate(-2deg);
+    border: 1px solid var(--line);
+  }
+  .mock-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .mock-head strong{ font-family:'Rubik'; font-weight:800; font-size:1rem; }
+  .live-pill{
+    display:flex; align-items:center; gap:6px;
+    background:#fee2e2; color:#dc2626;
+    font-size:0.72rem; font-weight:700;
+    padding:4px 10px; border-radius:100px;
+  }
+  .live-dot{ width:7px; height:7px; border-radius:50%; background:#dc2626; animation: pulse 1.4s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+  .row{
+    display:flex; align-items:center; gap:12px;
+    padding:11px 8px;
+    border-radius:14px;
+  }
+  .row:nth-child(odd){ background: #faf6ff; }
+  .rank{
+    width:26px; height:26px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Rubik'; font-weight:800; font-size:0.78rem; color:#fff;
+    flex-shrink:0;
+  }
+  .rank.r1{ background: linear-gradient(135deg,var(--pink-deep),var(--purple-deep)); }
+  .rank.r2{ background: var(--turq-deep); }
+  .rank.r3{ background: #c4b5fd; color:var(--ink); }
+  .row .name{ flex:1; font-weight:600; font-size:0.92rem; }
+  .row .pts{ font-family:'Rubik'; font-weight:800; font-size:0.92rem; color: var(--purple-deep); }
+  .bar-track{ height:6px; border-radius:100px; background:#f1e9fc; overflow:hidden; margin-top:4px; }
+  .bar-fill{ height:100%; border-radius:100px; background: linear-gradient(90deg,var(--turq),var(--purple)); }
+
+  .float-badge{
+    position:absolute; left:-18px; top:-16px;
+    background: var(--turq);
+    color: var(--ink);
+    font-family:'Rubik'; font-weight:800; font-size:0.8rem;
+    padding:10px 16px; border-radius:16px;
+    box-shadow: var(--shadow);
+    transform: rotate(6deg);
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section{ padding:88px 0; }
+  .section-head{ text-align:center; max-width:640px; margin: 0 auto 56px; }
+  .kicker{
+    color: rgba(255,255,255,0.9); font-weight:700; font-size:0.85rem;
+    text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px; display:block;
+  }
+  .section-head h2{ font-size:clamp(1.7rem, 3vw, 2.4rem); margin-bottom:14px; }
+  .section-head p{ color:rgba(255,255,255,0.85); font-size:1.05rem; }
+
+  /* ---------- PROBLEM ---------- */
+  .problem-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .problem-card{
+    background:#fff; color: var(--ink); border-radius:22px; padding:32px;
+    border:1px solid var(--line);
+  }
+  .problem-card .emoji{ font-size:2.1rem; margin-bottom:16px; }
+  .problem-card h3{ font-size:1.15rem; margin-bottom:10px; }
+  .problem-card p{ color:var(--ink-soft); font-size:0.96rem; }
+  .problem-card.before{ background: linear-gradient(160deg,#fff,#fdf1f8); }
+  .problem-card.after{ background: linear-gradient(160deg,#fff,#f0fdfa); }
+
+  /* ---------- FEATURES ---------- */
+  .feat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  .feat-card{
+    background:#fff;
+    color: var(--ink);
+    border-radius:24px;
+    padding:30px 26px;
+    border:1px solid var(--line);
+    box-shadow: 0 16px 40px -26px rgba(124,58,237,0.4);
+    transition: transform .25s ease;
+  }
+  .feat-card:hover{ transform: translateY(-6px); }
+  .extra-game{ display:none; }
+  .feat-grid.show-extra .extra-game{ display:block; }
+  .show-more-wrap{ text-align:center; margin-top:32px; }
+  .show-more-btn{
+    background: linear-gradient(90deg,var(--purple-deep),var(--pink-deep));
+    color:#fff; border:none; padding:14px 30px; border-radius:100px;
+    font-weight:700; font-size:0.95rem; cursor:pointer; font-family:'Heebo';
+  }
+  .feat-icon{
+    width:52px; height:52px; border-radius:16px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem; margin-bottom:18px;
+  }
+  .feat-icon.i1{ background: linear-gradient(135deg,var(--purple),var(--pink)); }
+  .feat-icon.i2{ background: linear-gradient(135deg,var(--pink),var(--turq)); }
+  .feat-icon.i3{ background: linear-gradient(135deg,var(--turq),var(--purple)); }
+  .feat-card h3{ font-size:1.1rem; margin-bottom:10px; }
+  .feat-card p{ color:var(--ink-soft); font-size:0.93rem; margin-bottom:18px; }
+
+  .mini-judges{ display:flex; gap:8px; align-items:flex-end; height:56px; }
+  .mini-judges .bar{ flex:1; border-radius:8px 8px 0 0; background: linear-gradient(180deg,var(--turq),var(--turq-deep)); }
+  .mini-judges span{ display:block; text-align:center; font-family:'Rubik'; font-weight:800; font-size:0.78rem; margin-top:6px; color: var(--ink-soft); }
+
+  .bingo-mini{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+  .bingo-mini div{
+    aspect-ratio:1; border-radius:8px;
+    background:#f6effe; border:1px dashed var(--purple);
+  }
+  .bingo-mini div.hit{ background: linear-gradient(135deg,var(--pink),var(--purple)); border-style:solid; }
+
+  .swatch-row{ display:flex; align-items:center; gap:10px; }
+  .swatch{
+    width:30px; height:30px; border-radius:50%;
+    border:2px solid #fff; box-shadow:0 0 0 1.5px var(--line);
+    flex-shrink:0;
+  }
+  .swatch.active{ box-shadow:0 0 0 2.5px var(--purple-deep); transform:scale(1.12); }
+  .swatch-avatar{
+    width:46px; height:46px; border-radius:14px;
+    background: linear-gradient(135deg,var(--pink),var(--purple));
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.4rem; margin-left:auto;
+  }
+
+  .coin-row{ display:flex; align-items:center; justify-content:space-between; background:#fdf9ee; border:1px solid #f6e7b0; border-radius:14px; padding:10px 14px; }
+  .coin-row .amt{ display:flex; align-items:center; gap:6px; font-family:'Rubik'; font-weight:800; color:#b45309; }
+  .coin-plus{ background:#fef3c7; color:#b45309; font-size:0.72rem; font-weight:800; padding:3px 9px; border-radius:100px; }
+  .shop-chip{ display:inline-flex; align-items:center; gap:5px; background:#f6effe; border-radius:8px; padding:6px 10px; font-size:0.76rem; font-weight:600; margin-top:10px; margin-left:6px; }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; position:relative; }
+  .step{ text-align:center; padding:0 20px; position:relative; }
+  .step-num{
+    width:46px; height:46px; border-radius:50%;
+    background:#fff; border:2px solid var(--purple-deep);
+    color:var(--purple-deep);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Rubik'; font-weight:800;
+    margin:0 auto 18px;
+    position:relative; z-index:2;
+  }
+  .step h3{ font-size:1.02rem; margin-bottom:8px; }
+  .step p{ color:rgba(255,255,255,0.8); font-size:0.9rem; }
+  .steps::before{
+    content:'';
+    position:absolute; top:23px; right:16.6%; left:16.6%;
+    height:2px;
+    background: linear-gradient(90deg,var(--purple),var(--pink),var(--turq));
+    z-index:1;
+  }
+
+  /* ---------- CTA / SHARE ---------- */
+  .cta{
+    background: rgba(255,255,255,0.14);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.32);
+    border-radius:32px;
+    padding:64px 40px;
+    text-align:center;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+    box-shadow: 0 30px 70px -30px rgba(0,0,0,0.4);
+  }
+  .cta h2{ color:#fff; font-size:clamp(1.6rem,3vw,2.2rem); margin-bottom:14px; }
+  .cta p{ color:rgba(255,255,255,0.88); max-width:460px; margin:0 auto 30px; font-size:1.02rem; }
+  .btn-white{
+    background:#fff; color: var(--ink);
+    padding:16px 32px; border-radius:100px;
+    font-weight:800; font-size:1rem;
+    display:inline-flex; align-items:center; gap:10px;
+    box-shadow: 0 20px 40px -14px rgba(0,0,0,0.35);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:40px 0 60px; text-align:center; color: rgba(255,255,255,0.75); font-size:0.85rem; }
+  footer strong{ color:#fff; }
+
+  /* ---------- GAME MODAL ---------- */
+  .feat-card{ cursor:pointer; }
+  .play-chip{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:16px; font-family:'Rubik'; font-weight:800; font-size:0.82rem;
+    color: var(--purple-deep);
+  }
+  .modal-overlay{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(20,10,35,0.55);
+    backdrop-filter: blur(5px);
+    display:none; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal-box{
+    background:#fff; color:var(--ink);
+    border-radius:26px; max-width:460px; width:100%;
+    max-height:86vh; overflow-y:auto; overflow-x:hidden;
+    padding:30px; position:relative;
+    box-shadow:0 50px 90px -25px rgba(0,0,0,0.55);
+  }
+  .modal-close{
+    position:absolute; top:16px; left:16px;
+    width:34px; height:34px; border-radius:50%;
+    background:#f6effe; border:none;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem; cursor:pointer; color: var(--ink);
+  }
+  .modal-box h3{ font-size:1.25rem; margin-bottom:6px; padding-left:40px; }
+  .modal-sub{ color: var(--ink-soft); font-size:0.9rem; margin-bottom:18px; }
+  .game-btn{
+    background: linear-gradient(90deg,var(--purple-deep),var(--pink-deep));
+    color:#fff; border:none; padding:11px 22px; border-radius:100px;
+    font-weight:700; cursor:pointer; font-size:0.92rem; font-family:'Heebo';
+  }
+  .game-btn:disabled{ opacity:0.45; cursor:not-allowed; }
+  .game-btn.secondary{ background:#f6effe; color:var(--ink); }
+  .game-select{
+    width:100%; padding:11px 12px; border-radius:12px;
+    border:1px solid var(--line); font-family:'Heebo'; font-size:0.94rem;
+    margin-bottom:12px; background:#faf6ff; color:var(--ink);
+  }
+  .field-label{ font-weight:700; font-size:0.86rem; margin-bottom:6px; display:block; }
+  .coin-banner{
+    display:flex; align-items:center; justify-content:space-between;
+    background:#fdf9ee; border:1px solid #f6e7b0; border-radius:14px;
+    padding:10px 14px; margin-bottom:18px; font-family:'Rubik'; font-weight:800; color:#b45309;
+  }
+  .quiz-opt{
+    display:block; width:100%; text-align:right;
+    background:#f6effe; border:1.5px solid transparent; border-radius:12px;
+    padding:12px 14px; margin-bottom:8px; cursor:pointer;
+    font-weight:600; font-size:0.94rem; font-family:'Heebo'; color:var(--ink);
+  }
+  .quiz-opt.correct{ background:#dcfce7; border-color:#16a34a; }
+  .quiz-opt.wrong{ background:#fee2e2; border-color:#dc2626; }
+  .quiz-opt:disabled{ cursor:default; }
+  .rating-btns{ display:flex; gap:6px; flex-wrap:wrap; margin:14px 0; justify-content:center; }
+  .rating-btns button{
+    width:36px; height:36px; border-radius:10px; border:1.5px solid var(--line);
+    background:#faf6ff; font-weight:700; cursor:pointer; font-family:'Rubik'; color:var(--ink);
+  }
+  .rating-btns button.selected{ background:var(--purple-deep); color:#fff; border-color:var(--purple-deep); }
+  .bingo-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:16px 0; }
+  .bingo-grid .sq{
+    aspect-ratio:1; border-radius:10px; background:#f6effe;
+    border:1.5px dashed var(--purple); display:flex; align-items:center; justify-content:center;
+    text-align:center; font-size:0.7rem; font-weight:600; padding:6px; cursor:pointer; color:var(--ink);
+  }
+  .bingo-grid .sq.marked{ background:linear-gradient(135deg,var(--pink),var(--purple)); border-style:solid; color:#fff; }
+  .shop-grid{ display:grid; gap:10px; margin-top:14px; }
+  .shop-item{
+    display:flex; align-items:center; justify-content:space-between;
+    background:#faf6ff; border-radius:12px; padding:10px 14px;
+  }
+  .shop-item.owned{ opacity:0.55; }
+  .avatar-preview{ display:flex; justify-content:center; align-items:center; margin:16px 0; position:relative; height:150px; }
+  .sparkle{ position:absolute; font-size:1.1rem; opacity:0; transition:opacity .3s ease; }
+  .sparkle.show{ opacity:1; }
+  .swatch.pick{ cursor:pointer; }
+  .win-msg{ text-align:center; font-weight:800; color:var(--purple-deep); margin-top:10px; }
+
+  /* ---------- PRINT (t-shirt design) ---------- */
+  .print-only{ display:none; }
+  @media print{
+    body *{ visibility:hidden; }
+    #printArea, #printArea *{ visibility:visible; }
+    #printArea{ position:absolute; top:0; left:0; width:100%; display:block !important; }
+  }
+
+  /* ---------- style quiz / champions trivia / young judge / dream team ---------- */
+  .style-opt-btn{
+    display:block; width:100%; text-align:right; background:#f6effe; border:1.5px solid transparent;
+    border-radius:12px; padding:12px 14px; margin-bottom:8px; cursor:pointer; font-weight:600;
+    font-size:0.94rem; font-family:'Heebo'; color:var(--ink);
+  }
+  .style-opt-btn:hover{ border-color:var(--purple-deep); }
+  .style-result{ text-align:center; padding:20px 10px; }
+  .style-result .emoji{ font-size:2.6rem; margin-bottom:10px; }
+  .style-result h4{ font-family:'Rubik'; font-size:1.3rem; margin-bottom:8px; color:var(--purple-deep); }
+  .timer-bar{ height:8px; border-radius:100px; background:#f1e9fc; overflow:hidden; margin-bottom:14px; }
+  .timer-fill{ height:100%; background:linear-gradient(90deg,var(--turq),var(--pink-deep)); transition:width 1s linear; }
+  .lb-row{ display:flex; justify-content:space-between; padding:8px 12px; border-radius:10px; background:#faf6ff; margin-bottom:6px; font-size:0.9rem; }
+  .lb-row.me{ background:#f6effe; font-weight:800; border:1.5px solid var(--purple-deep); }
+  .budget-bar{ display:flex; align-items:center; justify-content:space-between; background:#fdf9ee; border:1px solid #f6e7b0; border-radius:14px; padding:10px 14px; margin-bottom:14px; font-family:'Rubik'; font-weight:800; color:#b45309; }
+  .team-pick{ display:flex; align-items:center; justify-content:space-between; background:#faf6ff; border-radius:12px; padding:9px 12px; margin-bottom:6px; font-size:0.88rem; }
+  .team-pick label{ display:flex; align-items:center; gap:8px; cursor:pointer; flex:1; }
+  .team-pick .cost{ font-weight:700; color:var(--purple-deep); }
+  .choreo-block{ width:auto; flex:1 1 30%; }
+  #catchArea{ touch-action:none; }
+
+  /* ---------- NEW GAMES ---------- */
+  .wheel-wrap{ display:flex; flex-direction:column; align-items:center; margin:18px 0; }
+  .wheel{
+    width:180px; height:180px; border-radius:50%;
+    background: conic-gradient(var(--purple) 0deg 60deg, var(--pink) 60deg 120deg, var(--turq) 120deg 180deg, var(--purple) 180deg 240deg, var(--pink) 240deg 300deg, var(--turq) 300deg 360deg);
+    border:5px solid #fff; box-shadow:0 10px 30px -8px rgba(124,58,237,0.5);
+    position:relative; transition: transform 2.6s cubic-bezier(.17,.67,.16,.99);
+  }
+  .wheel-pointer{ font-size:1.8rem; margin-bottom:-6px; }
+  .wheel-result{ margin-top:16px; font-weight:800; text-align:center; }
+
+  .memory-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:16px 0; }
+  .memory-card{
+    aspect-ratio:1; border-radius:10px; background: linear-gradient(135deg,var(--purple-deep),var(--pink-deep));
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    font-size:0.68rem; font-weight:700; color:#fff; text-align:center; padding:4px;
+  }
+  .memory-card.flipped{ background:#faf6ff; color:var(--ink); border:1.5px solid var(--purple); }
+  .memory-card.matched{ background:#dcfce7; color:#16a34a; border:1.5px solid #16a34a; }
+
+  .guess-track{ display:flex; gap:5px; justify-content:center; margin:14px 0; flex-wrap:wrap; }
+  .guess-chip{ padding:6px 12px; border-radius:100px; background:#f6effe; font-size:0.82rem; font-weight:700; }
+  .guess-input-row{ display:flex; gap:8px; margin-bottom:10px; }
+  .guess-input-row input{
+    flex:1; padding:11px 12px; border-radius:12px; border:1px solid var(--line);
+    font-family:'Heebo'; font-size:1rem; background:#faf6ff; color:var(--ink); text-align:center;
+  }
+
+  /* ---------- FAN CARD ---------- */
+  .fan-section-box{ background:#fff; color:var(--ink); border-radius:24px; padding:32px; border:1px solid var(--line); max-width:560px; margin:0 auto; }
+  .fan-field{ margin-bottom:14px; }
+  .fan-field label{ display:block; font-weight:700; font-size:0.86rem; margin-bottom:6px; }
+  .fan-field input, .fan-field select, .fan-field textarea{
+    width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--line);
+    font-family:'Heebo'; font-size:0.94rem; background:#faf6ff; color:var(--ink);
+  }
+  .fan-field textarea{ resize:vertical; min-height:70px; }
+  .fan-note{ font-size:0.78rem; color:var(--ink-soft); margin-top:10px; }
+  .fan-card-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; margin-top:28px; }
+  .fan-card{ background:#fff; border-radius:16px; padding:16px; border:1px solid var(--line); }
+  .fan-card .who{ font-family:'Rubik'; font-weight:800; margin-bottom:4px; }
+  .fan-card .couple{ font-size:0.78rem; color:var(--purple-deep); font-weight:700; margin-bottom:8px; }
+  .fan-card .msg{ font-size:0.88rem; color:var(--ink-soft); }
+
+  /* ---------- PHONE MOCKUP SHOWCASE (desktop only) ---------- */
+  .phone-frame{
+    width:220px; height:450px;
+    background:#111;
+    border-radius:38px;
+    padding:10px;
+    box-shadow:0 40px 80px -25px rgba(0,0,0,0.5);
+    position:relative;
+    flex-shrink:0;
+  }
+  .phone-frame::before{
+    content:'';
+    position:absolute;
+    top:22px; left:50%; transform:translateX(-50%);
+    width:70px; height:16px;
+    background:#111;
+    border-radius:0 0 10px 10px;
+    z-index:3;
+  }
+  .phone-screen{
+    width:100%; height:100%;
+    border-radius:28px;
+    overflow:hidden;
+    background: linear-gradient(180deg, #7c3aed 0%, #db2777 55%, #0d9488 100%);
+    display:flex; flex-direction:column;
+    position:relative;
+  }
+  .phone-nav{
+    display:flex; align-items:center; gap:6px;
+    padding:16px 12px 6px;
+  }
+  .phone-nav .dot{ width:12px; height:12px; border-radius:50%; background:conic-gradient(from 180deg, var(--purple), var(--pink), var(--turq), var(--purple)); flex-shrink:0; }
+  .phone-nav .brandtxt{ color:#fff; font-family:'Rubik'; font-weight:800; font-size:0.48rem; white-space:nowrap; }
+  .phone-nav .ham{ margin-right:auto; color:#fff; font-size:0.6rem; line-height:1; }
+  .phone-hero{ padding:6px 12px 4px; }
+  .phone-hero .pill{ display:inline-block; background:rgba(255,255,255,0.85); color:#241534; font-size:0.34rem; font-weight:700; padding:2px 7px; border-radius:100px; margin-bottom:5px; }
+  .phone-hero h5{ color:#fff; font-family:'Rubik'; font-weight:800; font-size:0.6rem; line-height:1.3; margin:0 0 4px; }
+  .phone-hero h5 .g{ background:linear-gradient(90deg,#fff,var(--turq) 60%, var(--pink)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .phone-hero p{ color:rgba(255,255,255,0.85); font-size:0.34rem; line-height:1.4; margin-bottom:6px; }
+  .phone-hero .cta-mini{ display:inline-block; background:#fff; color:var(--ink); font-size:0.38rem; font-weight:700; padding:4px 10px; border-radius:100px; }
+  .phone-score{ margin:4px 12px; background:#fff; border-radius:8px; padding:6px 7px; box-shadow:0 6px 14px -6px rgba(0,0,0,0.35); }
+  .phone-score .head{ font-family:'Rubik'; font-weight:800; font-size:0.36rem; color:var(--ink); margin-bottom:4px; display:flex; justify-content:space-between; align-items:center; }
+  .phone-score .live{ background:#fee2e2; color:#dc2626; font-size:0.28rem; font-weight:800; padding:1px 5px; border-radius:100px; }
+  .phone-score .row2{ display:flex; align-items:center; gap:5px; font-size:0.36rem; color:var(--ink); margin-bottom:3px; }
+  .phone-score .rank2{ width:10px; height:10px; border-radius:50%; background:var(--purple-deep); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.28rem; font-weight:800; flex-shrink:0; }
+  .phone-score .nm{ flex:1; }
+  .phone-score .pts2{ font-weight:800; color:var(--purple-deep); }
+  .phone-games{ display:flex; gap:5px; padding:8px 12px 14px; margin-top:auto; }
+  .phone-games .gcard{ flex:1; background:#fff; border-radius:7px; padding:6px 3px 5px; text-align:center; }
+  .phone-games .gcard .em{ font-size:0.75rem; display:block; margin-bottom:2px; }
+  .phone-games .gcard .lbl{ font-size:0.28rem; font-weight:700; color:var(--ink); display:block; line-height:1.2; }
+  .phone-showcase-wrap{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; align-items:center; }
+
+  /* ---------- FOOTER ---------- */
+  .footer-grid{ display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; gap:36px; text-align:right; margin-bottom:34px; }
+  .footer-brand{ display:flex; align-items:center; gap:10px; font-family:'Rubik'; font-weight:800; font-size:1rem; margin-bottom:12px; }
+  .footer-tagline{ color:rgba(255,255,255,0.7); font-size:0.88rem; max-width:260px; line-height:1.6; }
+  .footer-col h4{ font-family:'Rubik'; font-size:0.92rem; color:#fff; margin-bottom:14px; }
+  .footer-col a{ display:block; color:rgba(255,255,255,0.72); font-size:0.9rem; margin-bottom:11px; transition:color .2s ease; }
+  .footer-col a:hover{ color:#fff; }
+  .footer-bottom{ border-top:1px solid rgba(255,255,255,0.15); padding-top:22px; text-align:center; color:rgba(255,255,255,0.65); font-size:0.82rem; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    .nav-links{ display:none; }
+    .hamburger{ display:flex; }
+    .nav .wrap > .nav-cta{ display:none; }
+    .brand-full{ display:none; }
+    .brand-short{ display:inline; }
+    .brand{ font-size:0.92rem; gap:8px; }
+    .brand img{ height:28px !important; }
+    .nav .wrap{ padding-top:12px; padding-bottom:12px; }
+    .wrap{ padding:0 16px; }
+    .hero .wrap{ grid-template-columns:1fr; }
+    .hero{ padding-top:44px; text-align:center; }
+    .hero p.lead{ margin-left:auto; margin-right:auto; }
+    .hero-actions{ justify-content:center; }
+    .hero-stats{ justify-content:center; }
+    .problem-grid{ grid-template-columns:1fr; }
+    .feat-grid{
+      display:flex !important;
+      grid-template-columns:unset !important;
+      overflow-x:auto !important;
+      flex-wrap:nowrap !important;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      gap:16px;
+      padding-bottom:10px;
+      margin:0 -16px;
+      padding-right:16px;
+      padding-left:16px;
+      scrollbar-width:none;
+    }
+    .feat-grid::-webkit-scrollbar{ display:none; }
+    .feat-grid .feat-card{
+      flex:0 0 82% !important;
+      width:82% !important;
+      scroll-snap-align:start;
+    }
+    .steps{ grid-template-columns:1fr; gap:36px; }
+    .steps::before{ display:none; }
+    .mock{ transform:none; max-width:380px; margin:0 auto; }
+    .float-badge{ display:none; }
+    .mobile-menu.open{ display:flex; }
+    #mobile-app-showcase{ display:none; }
+    .footer-grid{ grid-template-columns:1fr; text-align:center; gap:28px; }
+    .footer-brand{ justify-content:center; }
+    .footer-tagline{ max-width:none; margin:0 auto; }
+    .section{ padding:56px 0; }
+    .feat-card{ padding:24px 20px; }
+    .problem-card{ padding:24px; }
+    .cta{ padding:40px 22px; }
+    .fan-section-box{ padding:24px 20px; }
+    .modal-box{ padding:22px 18px; }
+  }
+  @media (max-width: 380px){
+    .brand{ font-size:0.82rem; gap:6px; }
+    .brand img{ height:24px !important; }
+    .wrap{ padding:0 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="brand"><img src="data:image/jpeg;base64,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" alt="לוגו רוקדים עם כוכבים" style="height:34px; width:auto; border-radius:8px; flex-shrink:0;"> <span class="brand-full">רוקדים עם כוכבים | הלא רשמי</span><span class="brand-short">רוקדים עם כוכבים</span></div>
+    <div class="nav-links">
+      <a href="#how">איך זה עובד</a>
+      <a href="#features">מה יש לעשות</a>
+      <a href="#fanclub">כרטיס מעריץ</a>
+    </div>
+    <a href="#join" class="nav-cta">הצטרפו עכשיו</a>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="תפריט">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#how" onclick="closeMobileMenu()">איך זה עובד</a>
+    <a href="#features" onclick="closeMobileMenu()">מה יש לעשות</a>
+    <a href="#fanclub" onclick="closeMobileMenu()">כרטיס מעריץ</a>
+    <a href="#join" class="nav-cta" onclick="closeMobileMenu()">הצטרפו עכשיו</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">🪩 עונה חדשה, משחק חדש</span>
+      <h1>הכי כיף לצפות<br>ב<span class="grad">רוקדים עם כוכבים</span><br>יחד עם החברים</h1>
+      <p class="lead">מנחשים מי ינצח, נותנים ציון משלכם לכל זוג, וממלאים בינגו תוך כדי הפרק. כל זה בזמן אמת, מול החברים שלכם.</p>
+      <div class="hero-actions">
+        <a href="#join" class="btn-primary">בואו נשחק בפרק הבא ←</a>
+        <a href="#how" class="btn-ghost">איך זה עובד</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>20+</strong><span>חברים משחקים כל עונה</span></div>
+        <div><strong>34</strong><span>משחקים באתר</span></div>
+        <div><strong>0₪</strong><span>עולה להצטרף</span></div>
+      </div>
+    </div>
+
+    <div class="mock">
+      <div class="float-badge">מי המוביל? 👑</div>
+      <div class="mock-head">
+        <strong>לוח מובילים</strong>
+        <span class="live-pill"><span class="live-dot"></span>LIVE</span>
+      </div>
+
+      <div class="row">
+        <div class="rank r1">1</div>
+        <div class="name">נועה<div class="bar-track"><div class="bar-fill" style="width:92%"></div></div></div>
+        <div class="pts">210</div>
+      </div>
+      <div class="row">
+        <div class="rank r2">2</div>
+        <div class="name">איתי<div class="bar-track"><div class="bar-fill" style="width:78%"></div></div></div>
+        <div class="pts">175</div>
+      </div>
+      <div class="row">
+        <div class="rank r3">3</div>
+        <div class="name">רוני<div class="bar-track"><div class="bar-fill" style="width:64%"></div></div></div>
+        <div class="pts">140</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">למה בכלל</span>
+      <h2>לצפות לבד זה משעמם. יש דרך אחרת</h2>
+      <p>היום, אחרי כל פרק שוב מתווכחים בקבוצת הוואטסאפ מי היה הכי טוב — ובלי טבלה, בלי ניקוד, אף אחד לא באמת יודע מי צדק.</p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card before">
+        <div class="emoji">😴</div>
+        <h3>ככה זה נראה היום</h3>
+        <p>מדברים בבית או בכיתה, כותבים ניחושים בוואטסאפ — ואז זה נשכח. אין מקום אחד שבו רואים מי באמת ניחש נכון.</p>
+      </div>
+      <div class="problem-card after">
+        <div class="emoji">🕺</div>
+        <h3>ככה זה נראה אצלנו</h3>
+        <p>כל ניחוש נכנס לטבלה, כל ציון נספר אוטומטית, ובסוף כל פרק כולם יודעים בדיוק מי המוביל של החבר'ה.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section features" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">מה יש באתר</span>
+      <h2>שלושים וארבעה משחקים, כל פרק מחדש</h2>
+      <p>כל מה שצריך כדי להפוך צפייה רגילה למשחק אמיתי מול החברים.</p>
+    </div>
+
+    <div class="feat-grid" id="featGrid">
+      <div class="feat-card" onclick="openGame('predict')">
+        <div class="feat-icon i1">🏆</div>
+        <h3>טבלת ניחושים</h3>
+        <p>לפני כל פרק בוחרים מי ינצח ומי יודח. אחרי הפרק הניקוד מתעדכן לבד, והטבלה מראה מי המוביל של החבר'ה.</p>
+        <div style="display:flex; gap:6px;">
+          <span style="background:#f6effe; border-radius:8px; padding:6px 10px; font-size:0.78rem; font-weight:600;">בחירת זוג מנצח</span>
+          <span style="background:#f6effe; border-radius:8px; padding:6px 10px; font-size:0.78rem; font-weight:600;">עדכון אוטומטי</span>
+        </div>
+        <span class="play-chip">▶ לנחש עכשיו</span>
+      </div>
+
+      <div class="feat-card" onclick="openGame('bingo')">
+        <div class="feat-icon i3">🎉</div>
+        <h3>בינגו לפרק</h3>
+        <p>כרטיס עם משבצות כמו "שופט התרגש עד דמעות" או "תלבושת נוצצת במיוחד". מסמנים תוך כדי צפייה — מי שמשלים שורה ראשון מנצח.</p>
+        <div class="bingo-mini">
+          <div class="hit"></div><div></div><div class="hit"></div>
+          <div></div><div class="hit"></div><div></div>
+          <div class="hit"></div><div></div><div></div>
+        </div>
+        <span class="play-chip">▶ לשחק בינגו</span>
+      </div>
+
+      <div class="feat-card" onclick="openGame('design')">
+        <div class="feat-icon i1">💃</div>
+        <h3>עצבו את הזוג שלכם</h3>
+        <p>בוחרים זוג רוקדים מהעונה, ואז מעצבים אותו: תלבושת, צבעים ונצנצים משלכם. כל חבר יכול לעצב את הזוג שהוא הכי אוהב.</p>
+        <div class="swatch-row">
+          <div class="swatch active" style="background:var(--purple)"></div>
+          <div class="swatch" style="background:var(--pink)"></div>
+          <div class="swatch" style="background:var(--turq)"></div>
+          <div class="swatch" style="background:#ffd166"></div>
+          <div class="swatch-avatar">🕺</div>
+        </div>
+        <span class="play-chip">▶ לעצב עכשיו</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('quiz')">
+        <div class="feat-icon i2">🪙</div>
+        <h3>חידון ומטבעות</h3>
+        <p>עונים נכון על שאלה בחידון ומקבלים 10 מטבעות. אוספים מטבעות וקונים בהם אביזרים ומדבקות לעיצוב הזוג.</p>
+        <div class="coin-row">
+          <div class="amt">🪙 <span id="homeCoinAmt">0</span></div>
+          <span class="coin-plus">+10 תשובה נכונה!</span>
+        </div>
+        <div>
+          <span class="shop-chip">🧩 חידון חדש</span>
+          <span class="shop-chip">✨ נצנצים</span>
+        </div>
+        <span class="play-chip">▶ לשחק בחידון</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('wheel')">
+        <div class="feat-icon i3">🎡</div>
+        <h3>גלגל המזל</h3>
+        <p>סיבוב אחד ביום — אולי תזכו בעוד מטבעות בלי לענות אפילו על שאלה אחת בחידון.</p>
+        <div style="display:flex; gap:6px;">
+          <span style="background:#f6effe; border-radius:8px; padding:6px 10px; font-size:0.78rem; font-weight:600;">סיבוב אחד ביום</span>
+          <span style="background:#f6effe; border-radius:8px; padding:6px 10px; font-size:0.78rem; font-weight:600;">עד 20 מטבעות</span>
+        </div>
+        <span class="play-chip">▶ לסובב את הגלגל</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('memory')">
+        <div class="feat-icon i1">🧠</div>
+        <h3>זיכרון הזוגות</h3>
+        <p>מדפדפים כרטיסים ומנסים למצוא את הזוגות המתאימים — כמה מהלכים תצטרכו כדי לזכור את כל הזוגות?</p>
+        <div style="display:flex; gap:6px;">
+          <span style="background:#f6effe; border-radius:8px; padding:6px 10px; font-size:0.78rem; font-weight:600;">12 כרטיסים</span>
+          <span style="background:#f6effe; border-radius:8px; padding:6px 10px; font-size:0.78rem; font-weight:600;">6 זוגות</span>
+        </div>
+        <span class="play-chip">▶ לשחק בזיכרון</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('guess')">
+        <div class="feat-icon i2">🔢</div>
+        <h3>ניחוש הציון</h3>
+        <p>האתר חושב על ציון בין 1 ל-10 שהשופטים ייתנו לזוג. תנחשו נכון בכמה שפחות ניסיונות ותרוויחו מטבעות.</p>
+        <div style="display:flex; gap:6px;">
+          <span style="background:#f6effe; border-radius:8px; padding:6px 10px; font-size:0.78rem; font-weight:600;">5 ניסיונות</span>
+          <span style="background:#f6effe; border-radius:8px; padding:6px 10px; font-size:0.78rem; font-weight:600;">גבוה/נמוך</span>
+        </div>
+        <span class="play-chip">▶ לנחש עכשיו</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('style')">
+        <div class="feat-icon i1">💃</div>
+        <h3>חנו את עצמכם — איזה סגנון ריקוד אתם?</h3>
+        <p>שאלון קצר וכיפי — איזו מוזיקה אתם הכי אוהבים, ואיזה בגד הייתם לובשים להופעה — ובסוף מגלים אם אתם סלסה אנרגטית, ואלס אלגנטי או היפ-הופ קצבי.</p>
+        <span class="play-chip">▶ לגלות את הסגנון שלי</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('champ')">
+        <div class="feat-icon i2">⏱️</div>
+        <h3>טריוויית אלופים</h3>
+        <p>שאלות בזמן מוגבל (10 שניות לשאלה!) על הצעדים, השופטים והתוכנית. ענו כמה שיותר מהר וצברו נקודות, ותופיעו בלוח המובילים בדפדפן שלכם.</p>
+        <span class="play-chip">▶ להתחיל את השעון</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('youngjudge')">
+        <div class="feat-icon i3">⭐</div>
+        <h3>השופט הצעיר</h3>
+        <p>מציגים בפניכם רגע מריקוד (הדמיה), ואתם מנחשים איזה ציון השופטים ייתנו — 1 עד 10. רואים איך הניחוש שלכם השתווה לציון האמיתי.</p>
+        <span class="play-chip">▶ לתת את הציון שלי</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('dreamteam')">
+        <div class="feat-icon i1">🏅</div>
+        <h3>נבחרת החלומות</h3>
+        <p>מקבלים תקציב דמיוני ומרכיבים נבחרת זוגות מהעונה. כל שבוע מדמים ניקוד — ככל שהזוגות שלכם "מנצחים" יותר, כך אתם צוברים יותר נקודות.</p>
+        <span class="play-chip">▶ להרכיב נבחרת</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('steps')">
+        <div class="feat-icon i2">🕺</div>
+        <h3>סדרת הצעדים</h3>
+        <p>משחק זיכרון קצבי בסגנון "סיימון אומר" — זוכרים רצף צעדים (שמאלה, ימינה, סיבוב, קפיצה) וחוזרים עליו לפי הסדר. כל סיבוב מוסיף עוד צעד!</p>
+        <span class="play-chip">▶ לזכור את הרצף</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('judgefill')">
+        <div class="feat-icon i3">💬</div>
+        <h3>השלימו את המילים של השופט</h3>
+        <p>ציטוט מצחיק של אחד השופטים עם מילה חסרה — משלימים נכון מתוך 4 אפשרויות ומרוויחים מטבעות על כל תשובה נכונה.</p>
+        <span class="play-chip">▶ להשלים את המשפט</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('choreo')">
+        <div class="feat-icon i1">🎨</div>
+        <h3>סדנת הכוריאוגרפיה</h3>
+        <p>בוחרים בלוקים של צעדים (סיבוב, קפיצה, החלקה, קידה) לפי הסדר שתרצו, ואז מריצים את הדמות באתר שרוקדת את הרצף שיצרתם!</p>
+        <span class="play-chip">▶ ליצור ריקוד</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('catch')">
+        <div class="feat-icon i2">🎯</div>
+        <h3>תפוסו את הנצנצים</h3>
+        <p>משחק ארקייד קצבי — זזים ימינה ושמאלה ואוספים נעליים, כתרים ונצנצים שנופלים מלמעלה, תוך התחמקות מכדורי דיסקו שבורים. 20 שניות על השעון!</p>
+        <span class="play-chip">▶ להתחיל לתפוס</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('trophy')">
+        <div class="feat-icon i3">🏆</div>
+        <h3>תפסו את גביע הניצחון</h3>
+        <p>גביעים מופיעים ונעלמים ברשת 3×3 — לחצו עליהם מהר ככל האפשר לפני שהם נעלמים. 20 שניות לצבור כמה שיותר נקודות.</p>
+        <span class="play-chip">▶ להתחיל לתפוס גביעים</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('hangman')">
+        <div class="feat-icon i1">🕺</div>
+        <h3>איש תלוי — נחשו את סגנון הריקוד</h3>
+        <p>מנחשים אותיות כדי לגלות איזה סגנון ריקוד מסתתר מאחורי הקווים — סלסה? ואלס? סמבה? 6 טעויות מותרות.</p>
+        <span class="play-chip">▶ לנחש אותיות</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('wordscramble')">
+        <div class="feat-icon i2">🔤</div>
+        <h3>פצחו את המילה</h3>
+        <p>לוחצים על אותיות מעורבבות לפי הסדר הנכון כדי לגלות מילה מעולם הריקוד והזוהר.</p>
+        <span class="play-chip">▶ לפצח מילה</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('stagename')">
+        <div class="feat-icon i3">🎤</div>
+        <h3>מחולל שמות הבמה</h3>
+        <p>מכניסים שם פרטי ומאכל אהוב, ומקבלים שם במה מגניב לרקדן מקצועי שרק אתם יכולתם להיות.</p>
+        <span class="play-chip">▶ ליצור שם במה</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('matchcalc')">
+        <div class="feat-icon i1">💫</div>
+        <h3>מחשבון ההתאמה</h3>
+        <p>בוחרים שני זוגות מהעונה ומגלים את "אחוז ההתאמה" המשעשע שלהם יחד — לכיף בלבד!</p>
+        <span class="play-chip">▶ לחשב התאמה</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('judgepersona')">
+        <div class="feat-icon i2">⚖️</div>
+        <h3>איזה שופט אתם היום?</h3>
+        <p>שאלון קצר שמגלה איזה טיפוס שופט הכי מתאים למצב הרוח שלכם היום — המבקר החד, המעודד החם, הדרמטי או המדויק הטכני.</p>
+        <span class="play-chip">▶ לגלות איזה שופט אני</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('faceexpr')">
+        <div class="feat-icon i3">🎭</div>
+        <h3>תחרות הבעות פנים</h3>
+        <p>הרקדנים חייבים לרקוד ולהציג הבעת פנים מוגזמת לפי הוראה — שמח מאוד, מופתע, או דרמטי במיוחד. מי שהצחיק הכי הרבה מנצח!</p>
+        <span class="play-chip">▶ לקבל הוראה</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('newspaper')">
+        <div class="feat-icon i1">📰</div>
+        <h3>ריקוד על עיתון</h3>
+        <p>כל זוג רוקד על דף עיתון פתוח. אחרי כל סיבוב מקפלים את הדף לחצי — האתר משמש כשעון עצר לכל סיבוב. מי שנשאר על הדף הכי קטן מנצח!</p>
+        <span class="play-chip">▶ להתחיל סיבוב</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('emojibattle')">
+        <div class="feat-icon i2">🎴</div>
+        <h3>קרב אייקונים</h3>
+        <p>מרימים כרטיסייה עם אימוג'י — רובוט, אש, כוכב ועוד — והרקדנים ממציאים תנועת ריקוד שמתאימה בדיוק לאייקון.</p>
+        <span class="play-chip">▶ להראות אייקון</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('tshirt')">
+        <div class="feat-icon i3">👕</div>
+        <h3>חולצת הריקודים שלי</h3>
+        <p>מעצבים חולצת מעריצים עם משפט מצחיק על התוכנית — בוחרים צבע ומשפט, ואז מדפיסים אותה בבית ישר מהאתר.</p>
+        <span class="play-chip">▶ לעצב חולצה</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('nextsong')">
+        <div class="feat-icon i1">🎵</div>
+        <h3>בחירת השיר הבא</h3>
+        <p>מציעים 2-3 סגנונות שירים ושואלים אתכם איזה זוג הכי מתאים לרקוד לצליליהם בפרק הבא.</p>
+        <span class="play-chip">▶ להציע שיר</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('judgerating')">
+        <div class="feat-icon i2">⚖️</div>
+        <h3>דירוג השופטים</h3>
+        <p>הפעם לא מדרגים זוגות — מדרגים את השופטים עצמם: מי הכי מקצועי, מי הכי מצחיק, ומי נתן את הניקוד הכי מפתיע.</p>
+        <span class="play-chip">▶ לדרג שופטים</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('viewersave')">
+        <div class="feat-icon i3">🛟</div>
+        <h3>גלגל ההצלה של הצופים</h3>
+        <p>אם יכולתם להחזיר זוג אחד שהודח בחזרה לרחבה — במי הייתם בוחרים? הצביעו וגלו מה דעתכם.</p>
+        <span class="play-chip">▶ להצביע</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('perfectmatch')">
+        <div class="feat-icon i1">💞</div>
+        <h3>השילוב המושלם</h3>
+        <p>מציעים צמד של מפורסם/ת ורקדן/ית מקצועי/ת שהייתם רוצים לראות ביחד בעונה הבאה.</p>
+        <span class="play-chip">▶ להציע שילוב</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('musthappen')">
+        <div class="feat-icon i2">🌟</div>
+        <h3>הריקוד שחייב לקרות</h3>
+        <p>בוחרים זוג ומציעים עבורו רעיון, נושא או תלבושת מיוחדת שהייתם רוצים לראות אותם מנסים בשידור החי.</p>
+        <span class="play-chip">▶ להציע רעיון</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('certificate')">
+        <div class="feat-icon i1">📜</div>
+        <h3>תעודת הוקרה מודפסת</h3>
+        <p>מכניסים שם ובוחרים תואר מגניב — מלך/ת הניחושים, אלוף/ת הבינגו ועוד — ומדפיסים תעודה אישית בבית.</p>
+        <span class="play-chip">▶ ליצור תעודה</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('superlatives')">
+        <div class="feat-icon i2">🏅</div>
+        <h3>לוח התארים</h3>
+        <p>מצביעים איזה זוג הכי סחורה, הכי מפתיע, הכי מצחיק והכי מסונכרן — כינויים כיפיים לזוגות העונה.</p>
+        <span class="play-chip">▶ להצביע על תארים</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('streak')">
+        <div class="feat-icon i3">🔥</div>
+        <h3>רצף המשחקים שלי</h3>
+        <p>כל משחק שפותחים בביקור הזה נספר, ובהגעה לאבני דרך מקבלים בונוס מטבעות אוטומטי.</p>
+        <span class="play-chip">▶ לראות את הרצף שלי</span>
+      </div>
+
+      <div class="feat-card extra-game" onclick="openGame('dice')">
+        <div class="feat-icon i1">🎲</div>
+        <h3>קוביית האתגרים</h3>
+        <p>מטילים קובייה דיגיטלית ומקבלים אתגר ריקוד קצר וכיפי לבית — מסיבוב סלסה ועד תנועה שאף אחד לא המציא עדיין.</p>
+        <span class="play-chip">▶ להטיל קובייה</span>
+      </div>
+    </div>
+    <div class="show-more-wrap" id="showMoreWrap">
+      <button class="show-more-btn" id="showMoreBtn" onclick="showMoreGames()">👀 לחצו לראות עוד משחקים</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">איך זה עובד</span>
+      <h2>שלוש דקות, וכבר בפנים</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>נכנסים לאתר</h3>
+        <p>בלי הרשמה מסובכת. בוחרים שם וזהו, אתם בפנים.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>מנחשים לפני הפרק</h3>
+        <p>בוחרים זוג מנצח, זוג מודח, ונותנים ציון תוך כדי הריקוד.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>רואים מי צדק</h3>
+        <p>אחרי הפרק הטבלה מתעדכנת, ומי שניחש הכי טוב עולה לפסגה.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="mobile-app-showcase">
+  <div class="wrap">
+    <div class="phone-showcase-wrap">
+      <div style="display:flex; justify-content:center;">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-nav">
+              <div class="dot"></div>
+              <div class="brandtxt">רוקדים עם כוכבים</div>
+              <div class="ham">☰</div>
+            </div>
+            <div class="phone-hero">
+              <span class="pill">🪩 עונה חדשה</span>
+              <h5>הכי כיף לצפות ב<span class="g">רוקדים עם כוכבים</span></h5>
+              <p>מנחשים, מדרגים, ומשחקים יחד עם החברים</p>
+              <span class="cta-mini">🕺 בואו נשחק</span>
+            </div>
+            <div class="phone-score">
+              <div class="head"><span>לוח מובילים</span><span class="live">LIVE</span></div>
+              <div class="row2"><span class="rank2">1</span><span class="nm">נועה</span><span class="pts2">210</span></div>
+              <div class="row2"><span class="rank2" style="background:var(--turq-deep);">2</span><span class="nm">איתי</span><span class="pts2">175</span></div>
+            </div>
+            <div class="phone-games">
+              <div class="gcard"><span class="em">🏆</span><span class="lbl">ניחושים</span></div>
+              <div class="gcard"><span class="em">🎉</span><span class="lbl">בינגו</span></div>
+              <div class="gcard"><span class="em">💃</span><span class="lbl">עיצוב</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="kicker">גם בנייד</span>
+        <h2 style="font-size:clamp(1.6rem,2.6vw,2.2rem); margin-bottom:14px;">האתר עובד מצוין גם מהטלפון</h2>
+        <p style="color:rgba(255,255,255,0.85); font-size:1.02rem; margin-bottom:20px;">אין צורך להוריד שום אפליקציה. מספיק לשלוח לחברות את הקישור בוואטסאפ — הן פותחות אותו בדפדפן של הטלפון, ומיד נכנסות למשחקים, לניחושים ולכרטיס המעריץ. בול כמו במחשב, רק בכף היד.</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <span style="background:rgba(255,255,255,0.14); padding:8px 16px; border-radius:100px; font-size:0.85rem; font-weight:600;">📲 בלי הורדה</span>
+          <span style="background:rgba(255,255,255,0.14); padding:8px 16px; border-radius:100px; font-size:0.85rem; font-weight:600;">⚡ נטען מהר</span>
+          <span style="background:rgba(255,255,255,0.14); padding:8px 16px; border-radius:100px; font-size:0.85rem; font-weight:600;">🎮 כל המשחקים כלולים</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="join">
+  <div class="wrap">
+    <div class="cta">
+      <h2>מוכנים להפוך את הצפייה למשחק?</h2>
+      <p>תזמינו את החברים, תתחילו לנחש, ותראו מי באמת מבין ברוקדים עם כוכבים.</p>
+      <a class="btn-white" href="#">
+        📲 שתפו את הקבוצה בוואטסאפ
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">מי מאחורי האתר</span>
+      <h2>קצת עליי</h2>
+    </div>
+    <div style="max-width:560px; margin:0 auto; background:#fff; color:var(--ink); border-radius:22px; padding:36px 32px; border:1px solid var(--line); text-align:center;">
+      <div style="font-size:2rem; margin-bottom:14px;">💬</div>
+      <p style="font-size:1.05rem; line-height:1.7; margin-bottom:18px;">"שלום, אני דרור, ויצרתי את האתר הזה כי בכל פעם שישבתי בבית וצפיתי ב'רוקדים עם כוכבים' רציתי שיהיה משהו שאפשר לדבר איתו ולדרג את הביצועים."</p>
+      <strong style="font-family:'Rubik'; font-size:1.02rem;">דרור</strong>
+      <div style="color:var(--ink-soft); font-size:0.85rem; margin-top:2px;">יוצרת האתר</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="fanclub">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">כרטיס מעריץ</span>
+      <h2>ספרו לנו למי אתם הכי מעודדים</h2>
+      <p>ממלאים כינוי, בוחרים זוג אהוב, וכותבים מסר עידוד — והכרטיס שלכם מצטרף לגלריה כאן למטה.</p>
+    </div>
+    <div class="fan-section-box">
+      <div class="fan-field">
+        <label>הכינוי שלכם</label>
+        <input type="text" id="fcNick" maxlength="24" placeholder="למשל: מלכת הריקוד">
+      </div>
+      <div class="fan-field">
+        <label>הזוג שאני הכי מעודד/ת</label>
+        <select id="fcCouple" autocomplete="off"></select>
+      </div>
+      <div class="fan-field">
+        <label>מסר עידוד קצר</label>
+        <textarea id="fcMsg" maxlength="140" placeholder="בהצלחה בפרק הבא! 💜"></textarea>
+      </div>
+      <button class="game-btn" onclick="submitFanCard()">פרסמו את הכרטיס</button>
+      <p class="fan-note">הכרטיסים כרגע מוצגים רק אצלכם בדפדפן — כדי שכל החברות יראו את אותה גלריה, יהיה צריך בעתיד לחבר את האתר לשרת אמיתי.</p>
+    </div>
+    <div class="fan-card-grid" id="fanCardGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span style="font-size:1.4rem;">🪩</span> רוקדים עם כוכבים | הלא רשמי</div>
+        <p class="footer-tagline">אתר מעריצים לא רשמי שהופך צפייה רגילה בטלוויזיה למשחק חברתי מול החברים.</p>
+      </div>
+      <div class="footer-col">
+        <h4>ניווט</h4>
+        <a href="#">בית</a>
+        <a href="#how">איך זה עובד</a>
+        <a href="#features">המשחקים</a>
+        <a href="#fanclub">כרטיס מעריץ</a>
+      </div>
+      <div class="footer-col">
+        <h4>עוד באתר</h4>
+        <a href="#mobile-app-showcase">גם בנייד</a>
+        <a href="#about">מי מאחורי האתר</a>
+        <a href="#join">הצטרפו עכשיו</a>
+      </div>
+      <div class="footer-col">
+        <h4>שתפו</h4>
+        <a href="#join">שתפו בוואטסאפ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <strong>האתר הלא רשמי של רוקדים עם כוכבים</strong> · פרויקט אוהדים, לא קשור להפקת התוכנית הרשמית
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=rokdim-im-kochavim" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalInner"></div>
+  </div>
+</div>
+<div id="printArea" class="print-only"></div>
+
+<script>
+  // ---------- shared game state (in-memory only, resets on refresh) ----------
+  const couples = ["מיה ושחר","אורי ואליסה","עדן וארטיום","שחר ומתנאל","בר וסנה","גיא וניקול","דניאל ואלון","אמיר ורומי","נועה ואיתן","טום ויאנה","פרידה ובוריס","בת חן ועידן","דיאן ולוטם","מתן ואלינור","שי לי ונדב","אבישג ואיוון","צחי ונינה","נייט וג'וליה"];
+  let coins = 0;
+  const extras = [
+    { id:'sparkle',  emoji:'✨', label:'נצנצים זוהרים',    price:30 },
+    { id:'crown',    emoji:'👑', label:'כתר מלכותי',       price:25 },
+    { id:'hat',      emoji:'🎩', label:'כובע מגנטי',       price:20 },
+    { id:'shades',   emoji:'🕶️', label:'משקפי שמש',        price:20 },
+    { id:'bowtie',   emoji:'🎀', label:'עניבת פרפר',       price:15 },
+    { id:'flowers',  emoji:'💐', label:'זר פרחים',         price:15 },
+    { id:'shoes',    emoji:'👠', label:'נעלי נצנצים',      price:15 },
+    { id:'stage',    emoji:'🎪', label:'רקע במה מוזהב',    price:35 },
+    { id:'necklace', emoji:'💎', label:'שרשרת יהלומים',    price:18 },
+    { id:'medal',    emoji:'🥇', label:'מדליית זהב',       price:22 },
+    { id:'wings',    emoji:'🦋', label:'כנפי פרפר',        price:20 },
+    { id:'cape',     emoji:'🦸', label:'גלימת סופרסטאר',   price:25 },
+    { id:'confetti', emoji:'🎊', label:'רקע קונפטי',       price:30 },
+    { id:'bow',      emoji:'🌸', label:'סרט לשיער',        price:12 },
+  ];
+  const accPos = {
+    crown:   'top:-8px; left:52px; font-size:1.5rem;',
+    hat:     'top:-10px; right:56px; font-size:1.6rem;',
+    shades:  'top:24px; right:58px; font-size:1.2rem;',
+    bowtie:  'top:50px; right:64px; font-size:1.1rem;',
+    flowers: 'bottom:8px; right:10px; font-size:1.4rem;',
+    shoes:   'bottom:-4px; left:66px; font-size:1.2rem;',
+    necklace:'top:48px; left:70px; font-size:1.1rem;',
+    medal:   'top:60px; right:44px; font-size:1.2rem;',
+    wings:   'top:36px; left:8px; font-size:1.5rem;',
+    cape:    'bottom:2px; right:36px; font-size:1.4rem;',
+    bow:     'top:-4px; left:78px; font-size:1.1rem;',
+  };
+  let owned = { sticker:false, sticker2:false, sticker3:false, newQuiz:false };
+  extras.forEach(e => owned[e.id] = false);
+
+  function toggleMobileMenu(){
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMobileMenu(){
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+  function showMoreGames(){
+    document.getElementById('featGrid').classList.add('show-extra');
+    document.getElementById('showMoreWrap').style.display = 'none';
+  }
+
+  function openModal(html){
+    document.getElementById('modalInner').innerHTML = html;
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+  function closeModal(){
+    document.getElementById('modalOverlay').classList.remove('open');
+    if(typeof catchState !== 'undefined' && catchState){
+      clearInterval(catchState.tickId);
+      clearInterval(catchState.spawnId);
+      clearInterval(catchState.timerId);
+      catchState = null;
+    }
+    if(typeof champTimer !== 'undefined'){ clearInterval(champTimer); }
+    if(typeof trophyState !== 'undefined' && trophyState){
+      clearInterval(trophyState.spawnId);
+      clearInterval(trophyState.timerId);
+      trophyState = null;
+    }
+    if(typeof newspaperTimer !== 'undefined'){ clearInterval(newspaperTimer); }
+  }
+  function updateCoinUI(){
+    document.getElementById('homeCoinAmt').textContent = coins;
+    const banner = document.getElementById('modalCoinAmt');
+    if(banner) banner.textContent = coins;
+  }
+  function floatCoin(evt){
+    const el = document.createElement('div');
+    el.textContent = '🪙 +10';
+    el.style.position='fixed';
+    el.style.left = (evt.clientX-20)+'px';
+    el.style.top = (evt.clientY-20)+'px';
+    el.style.fontFamily="'Rubik'";
+    el.style.fontWeight='800';
+    el.style.color='#f59e0b';
+    el.style.fontSize='1.3rem';
+    el.style.zIndex='300';
+    el.style.pointerEvents='none';
+    el.style.transition='all 1s ease';
+    document.body.appendChild(el);
+    requestAnimationFrame(()=>{ el.style.transform='translateY(-55px)'; el.style.opacity='0'; });
+    setTimeout(()=>el.remove(),1050);
+  }
+
+  function openGame(id){
+    bumpStreak();
+    if(id==='predict') return renderPredict();
+    if(id==='bingo') return renderBingo();
+    if(id==='design') return renderDesign();
+    if(id==='quiz') return renderQuiz();
+    if(id==='wheel') return renderWheel();
+    if(id==='memory') return renderMemory();
+    if(id==='guess') return renderGuess();
+    if(id==='style') return renderStyleQuiz();
+    if(id==='champ') return renderChampTrivia();
+    if(id==='youngjudge') return renderYoungJudge();
+    if(id==='dreamteam') return renderDreamTeam();
+    if(id==='steps') return renderStepGame();
+    if(id==='judgefill') return renderJudgeFill();
+    if(id==='choreo') return renderChoreo();
+    if(id==='catch') return renderCatchGame();
+    if(id==='trophy') return renderTrophyGame();
+    if(id==='hangman') return renderHangman();
+    if(id==='wordscramble') return renderWordScramble();
+    if(id==='stagename') return renderStageName();
+    if(id==='matchcalc') return renderMatchCalc();
+    if(id==='judgepersona') return renderJudgePersona();
+    if(id==='faceexpr') return renderFaceGame();
+    if(id==='newspaper') return renderNewspaperGame();
+    if(id==='emojibattle') return renderEmojiBattle();
+    if(id==='tshirt') return renderTshirt();
+    if(id==='nextsong') return renderNextSong();
+    if(id==='judgerating') return renderJudgeRating();
+    if(id==='viewersave') return renderViewerSave();
+    if(id==='perfectmatch') return renderPerfectMatch();
+    if(id==='musthappen') return renderMustHappen();
+    if(id==='certificate') return renderCertificate();
+    if(id==='superlatives') return renderSuperlatives();
+    if(id==='streak') return renderStreak();
+    if(id==='dice') return renderDiceGame();
+  }
+
+  // ---------- 1. prediction table ----------
+  function renderPredict(){
+    const opts = couples.map(c=>`<option value="${c}">${c}</option>`).join('');
+    openModal(`
+      <h3>🏆 טבלת ניחושים</h3>
+      <p class="modal-sub">בחרו מי ינצח ומי יודח בפרק הקרוב. הניחוש שלכם נכנס לטבלה של החבר'ה.</p>
+      <label class="field-label">מי ינצח לדעתכם?</label>
+      <select class="game-select" id="winPick">${opts}</select>
+      <label class="field-label">מי יודח לדעתכם?</label>
+      <select class="game-select" id="outPick">${opts}</select>
+      <button class="game-btn" onclick="submitPredict()">שמרו ניחוש</button>
+      <div id="predictResult"></div>
+    `);
+  }
+  function submitPredict(){
+    const win = document.getElementById('winPick').value;
+    const out = document.getElementById('outPick').value;
+    document.getElementById('predictResult').innerHTML = `
+      <div class="coin-banner" style="margin-top:16px;">
+        <span>✅ הניחוש נשמר!</span>
+        <span style="font-size:0.8rem; font-weight:600;">מנצח: ${win} · מודח: ${out}</span>
+      </div>
+      <p class="modal-sub" style="margin-top:8px;">אחרי הפרק נעדכן את התוצאה האמיתית ותקבלו נקודות אוטומטית בלוח המובילים.</p>
+    `;
+  }
+
+  // ---------- 2. bingo ----------
+  const bingoPhrases = ["שופט התרגש עד דמעות","רקדן החליק","תלבושת נוצצת במיוחד","מחיאות כפיים סוערות","שיר מפתיע בריקוד","זוג מקבל 10 מכל השופטים","תקלה טכנית קטנה","ראיון מרגש לפני הריקוד","קהל קם על הרגליים"];
+  let bingoState = new Array(9).fill(false);
+  function renderBingo(){
+    bingoState = new Array(9).fill(false);
+    openModal(`
+      <h3>🎉 בינגו לפרק</h3>
+      <p class="modal-sub">סמנו משבצות תוך כדי צפייה. שלוש ברצף (שורה, טור או אלכסון) = בינגו!</p>
+      <div class="bingo-grid" id="bingoGrid">
+        ${bingoPhrases.map((p,i)=>`<div class="sq" id="sq${i}" onclick="toggleBingo(${i})">${p}</div>`).join('')}
+      </div>
+      <div id="bingoWin"></div>
+    `);
+  }
+  function toggleBingo(i){
+    bingoState[i] = !bingoState[i];
+    document.getElementById('sq'+i).classList.toggle('marked');
+    const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    const win = lines.some(l=>l.every(idx=>bingoState[idx]));
+    document.getElementById('bingoWin').innerHTML = win ? `<div class="win-msg">🎊 בינגו! ניצחתם את החברים!</div>` : '';
+  }
+
+  // ---------- 3. design the couple ----------
+  let designState = {};
+  let selectedCouple = couples[0];
+  function getState(couple){
+    if(!designState[couple]) designState[couple] = {
+      a:'#c9b6f7', b:'#f9a8d4',
+      acc: { sparkle:false, crown:false, hat:false, shades:false, bowtie:false, flowers:false, shoes:false, stage:false }
+    };
+    return designState[couple];
+  }
+  function renderDesign(couple){
+    selectedCouple = couple || selectedCouple;
+    const st = getState(selectedCouple);
+    const nameParts = selectedCouple.split(' ');
+    const nameB = nameParts[nameParts.length-1].replace(/^ו/, '');
+    const nameA = nameParts.slice(0, -1).join(' ');
+    const stageStyle = st.acc.stage ? 'background:radial-gradient(circle, rgba(255,209,102,0.4), transparent 70%);' : '';
+    openModal(`
+      <h3>💃 עצבו את הזוג שלכם</h3>
+      <p class="modal-sub">בחרו זוג, תנו לו צבעים, ותצטיידו באביזרים שקונים בחנות המטבעות (רוכשים אותם עם המטבעות שמרוויחים בחידון).</p>
+      <label class="field-label">איזה זוג מעצבים?</label>
+      <select class="game-select" onchange="renderDesign(this.value)">
+        ${couples.map(c=>`<option value="${c}" ${c===selectedCouple?'selected':''}>${c}</option>`).join('')}
+      </select>
+      <div class="avatar-preview" style="${stageStyle}">
+        <svg viewBox="0 0 200 140" width="180" height="126">
+          <path d="M58 24 Q72 8 86 24 Q86 30 72 27 Q58 30 58 24 Z" fill="#3b2a20"/>
+          <circle cx="72" cy="30" r="14" fill="#f2c9a0"/>
+          <circle cx="67" cy="29" r="1.4" fill="#241534"/>
+          <circle cx="77" cy="29" r="1.4" fill="#241534"/>
+          <path d="M67 35 Q72 38.5 77 35" stroke="#241534" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <path id="bodyA" d="M56 46 Q72 36 88 46 L94 104 Q72 116 50 104 Z" fill="${st.a}"/>
+          <line x1="88" y1="58" x2="100" y2="72" stroke="${st.a}" stroke-width="7" stroke-linecap="round"/>
+
+          <path d="M114 24 Q128 8 142 24 Q142 30 128 27 Q114 30 114 24 Z" fill="#241534"/>
+          <circle cx="128" cy="30" r="14" fill="#d99e6c"/>
+          <circle cx="123" cy="29" r="1.4" fill="#241534"/>
+          <circle cx="133" cy="29" r="1.4" fill="#241534"/>
+          <path d="M123 35 Q128 38.5 133 35" stroke="#241534" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <path id="bodyB" d="M112 46 Q128 36 144 46 L150 104 Q128 116 106 104 Z" fill="${st.b}"/>
+          <line x1="112" y1="58" x2="100" y2="72" stroke="${st.b}" stroke-width="7" stroke-linecap="round"/>
+        </svg>
+        <span class="sparkle ${st.acc.sparkle?'show':''}" style="top:6px; right:26px;">✨</span>
+        <span class="sparkle ${st.acc.sparkle?'show':''}" style="bottom:12px; left:32px;">✨</span>
+        <span class="sparkle ${st.acc.sparkle?'show':''}" style="top:50%; right:6px;">✨</span>
+        ${Object.keys(accPos).map(id=>`<span class="sparkle ${st.acc[id]?'show':''}" style="${accPos[id]}">${extras.find(e=>e.id===id).emoji}</span>`).join('')}
+      </div>
+      <p style="text-align:center; font-size:0.8rem; color:var(--ink-soft); margin-top:-10px; margin-bottom:14px;">איור כללי של הזוג — עדיין בלי תמונות אמיתיות</p>
+      <label class="field-label">צבע התלבושת של ${nameA}</label>
+      <div class="swatch-row" style="margin-bottom:16px;">
+        ${['#c9b6f7','#f9a8d4','#5eead4','#ffd166','#7c3aed'].map(c=>`<div class="swatch pick ${c===st.a?'active':''}" style="background:${c}" onclick="setColor('a','${c}',this)"></div>`).join('')}
+      </div>
+      <label class="field-label">צבע התלבושת של ${nameB}</label>
+      <div class="swatch-row" style="margin-bottom:20px;">
+        ${['#f9a8d4','#c9b6f7','#5eead4','#ffd166','#db2777'].map(c=>`<div class="swatch pick ${c===st.b?'active':''}" style="background:${c}" onclick="setColor('b','${c}',this)"></div>`).join('')}
+      </div>
+      <label class="field-label">אביזרים (קונים עם מטבעות מהחידון)</label>
+      <div class="shop-grid">
+        ${extras.map(e=>accessoryRow(e, st)).join('')}
+      </div>
+    `);
+  }
+  function accessoryRow(e, st){
+    if(!owned[e.id]){
+      return `<div class="shop-item">
+        <span>${e.emoji} ${e.label}</span>
+        <button class="game-btn secondary" onclick="renderShop()">🔒 קונים ב-🪙${e.price}</button>
+      </div>`;
+    }
+    const on = st.acc[e.id];
+    return `<div class="shop-item owned">
+      <span>${e.emoji} ${e.label}</span>
+      <button class="game-btn ${on?'':'secondary'}" onclick="toggleAcc('${e.id}')">${on?'לובשים ✓':'הרכיבו'}</button>
+    </div>`;
+  }
+  function toggleAcc(id){
+    const st = getState(selectedCouple);
+    st.acc[id] = !st.acc[id];
+    renderDesign(selectedCouple);
+  }
+  function setColor(who, color, el){
+    getState(selectedCouple)[who] = color;
+    document.getElementById('body'+(who==='a'?'A':'B')).setAttribute('fill', color);
+    el.parentElement.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // ---------- 4. quiz + coins ----------
+  const quizSets = {
+    A: [
+      { q:"כמה זוגות מככבים בעונת 2026?", opts:["16","21","25"], correct:1 },
+      { q:"מתי מנחשים מי ינצח ומי יודח?", opts:["לפני כל פרק","אחרי כל פרק","באמצע הריקוד"], correct:0 },
+      { q:"כמה מטבעות מקבלים על תשובה נכונה בחידון?", opts:["5","10","20"], correct:1 },
+      { q:"מה אפשר לקנות בחנות המטבעות?", opts:["כרטיסים לאולפן","אביזרים ונצנצים לעיצוב הזוג","תלבושות אמיתיות של הרקדנים"], correct:1 },
+      { q:"כמה משבצות יש בכרטיס הבינגו?", opts:["6","9","12"], correct:1 },
+      { q:"איך מנצחים במשחק הבינגו?", opts:["מסמנים את כל הכרטיס","משלימים שורה, טור או אלכסון","עונים נכון על שאלה"], correct:1 },
+      { q:"מה קורה בטבלת הניחושים אחרי כל פרק?", opts:["הניקוד מתעדכן אוטומטית","צריך לחשב ידנית","שום דבר לא משתנה"], correct:0 },
+    ],
+    B: [
+      { q:"באיזה ערוץ טלוויזיה משודרת עונת 2026?", opts:["רשת 13","קשת 12","כאן 11","ערוץ 14"], correct:1 },
+      { q:'מי מנחה את עונת 2026?', opts:["רותם סלע","אילנית לוי","לוסי איוב","גיא זוארץ"], correct:2 },
+      { q:"כמה זוגות מתחרים על רחבת הריקודים?", opts:["16 זוגות","21 זוגות","12 זוגות","25 זוגות"], correct:1 },
+      { q:"איזה רקדן ושופט מוכר הצטרף מחדש לפאנל השופטים?", opts:["חיים פרשטיין","לאה ינאי","רונה-לי שמעון","איציק כהן"], correct:0 },
+      { q:"באיזה תאריך עלתה לשידור עונת 2026?", opts:["1 במאי 2026","30 במאי 2026","15 ביוני 2026","10 באפריל 2026"], correct:1 },
+      { q:"מיהי זמרת ונציגת ישראל לאירוויזיון 2024 שמתחרה השנה?", opts:["נועה קירל","נטע ברזילי","עדן גולן","שירי מימון"], correct:2 },
+      { q:"עם איזה רקדן מקצועי צוותה שירי מימון?", opts:["ארטיום ליאסקובסקי","רפאל פליישמן","חיים פרשטיין","לוטם מדמוני"], correct:1 },
+      { q:'איזה שחקן בינלאומי מ"יומני הערפד" משתתף השנה?', opts:["איאן סומרהולדר","פול ווסלי","נת'ניאל (נייט) בוזוליץ'","טיילור לאוטנר"], correct:2 },
+      { q:"מיהי הרקדנית שצוותה לשחקן נייט בוזוליץ'?", opts:["ג'וליה שחר","סנה סוקול","נינה סול","אליסה שריקי"], correct:0 },
+      { q:"איזה קומיקאי ואושיית רשת רוקד לצד ניקול רוגובין?", opts:["מתן פרץ","גיא הוכמן","אוראל צברי","חנוך דאום"], correct:1 },
+      { q:"איזו מדליסטית אולימפית משתתפת בעונת 2026?", opts:["לינוי אשרם","ענבר לניר","אבישג סמברג","רז הרשקו"], correct:2 },
+      { q:"איזה כדורגלן וקפטן מכבי תל אביב לשעבר משתתף?", opts:["ערן זהבי","שרן ייני","יוסי בניון","מאור בוזגלו"], correct:1 },
+      { q:"מי מבין הבאים אינו חבר בפאנל השופטים?", opts:["אנה ארונוב","דוד דביר","לאה ינאי","אלי מזרחי"], correct:2 },
+      { q:"איזה שחקן וזמר רוקד לצד נינה סול?", opts:["צחי הלוי","אורי פפר","בר ברימר","אמיר בנאי"], correct:0 },
+      { q:'איזה שף מוכר וזוכה "משחקי השף" משתתף השנה?', opts:["אסף גרניט","טום אביב","מאיר אדוני","עומר מילר"], correct:1 },
+      { q:"עם איזה רקדן מקצועי רוקדת השחקנית מיה דגן?", opts:["שחר זיסמנוביץ'","ארטיום ליאסקובסקי","בוריס דניסוב","אלון דווידובסקי"], correct:0 },
+      { q:"איזה דוגמן ושחקן רוקד עם הרקדנית סנה סוקול?", opts:["בר ברימר","אורי פפר","אמיר בנאי","מתן פרץ"], correct:0 },
+      { q:'איזו עונה בפורמט "קשת 12" משודרת ב-2026?', opts:["עונה 3","עונה 4","עונה 5","עונה 6"], correct:2 },
+      { q:"איזה זוג זכה במקום הראשון בעונה הקודמת (עונה 4, 2025)?", opts:["אלכס שטילוב ונינה סולוביוב","עדי חבשוש וארטיום ליאסקובסקי","אמיר שורוש וסנה סוקול","דור הררי וג'וליה שחר"], correct:2 },
+      { q:"מיהי משפיענית הרשת שמתחרה לצד הרקדן לוטם מדמוני?", opts:["דיאן שוורץ","פרידה עוזיאל","דניאל גרינברג","מעיין אדם"], correct:0 },
+    ]
+  };
+  let quizIdx = 0;
+  let currentQuizSet = 'A';
+  function renderQuiz(set){
+    currentQuizSet = set || 'A';
+    quizIdx = 0;
+    showQuizQuestion();
+  }
+  function showQuizQuestion(){
+    const list = quizSets[currentQuizSet];
+    if(quizIdx >= list.length) return renderShop();
+    const item = list[quizIdx];
+    openModal(`
+      <h3>🪙 חידון ומטבעות ${currentQuizSet==='B' ? '— טריוויה 2026' : ''}</h3>
+      <div class="coin-banner"><span>המטבעות שלכם</span><span>🪙 <span id="modalCoinAmt">${coins}</span></span></div>
+      <p class="modal-sub">שאלה ${quizIdx+1} מתוך ${list.length}</p>
+      <p style="font-weight:700; margin-bottom:12px;">${item.q}</p>
+      <div id="quizOpts">
+        ${item.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQuiz(${i},event)">${o}</button>`).join('')}
+      </div>
+      <div id="quizNext" style="margin-top:14px;"></div>
+    `);
+  }
+  function answerQuiz(i, evt){
+    const list = quizSets[currentQuizSet];
+    const item = list[quizIdx];
+    const btns = document.querySelectorAll('#quizOpts .quiz-opt');
+    btns.forEach(b=>b.disabled = true);
+    btns[i].classList.add(i===item.correct ? 'correct' : 'wrong');
+    if(i===item.correct){
+      coins += 10;
+      updateCoinUI();
+      floatCoin(evt);
+    } else {
+      btns[item.correct].classList.add('correct');
+    }
+    document.getElementById('quizNext').innerHTML = `<button class="game-btn" onclick="quizIdx++; showQuizQuestion();">
+      ${quizIdx < list.length-1 ? 'השאלה הבאה →' : 'לחנות המטבעות →'}
+    </button>`;
+  }
+  function renderShop(){
+    openModal(`
+      <h3>🛍️ חנות המטבעות</h3>
+      <div class="coin-banner"><span>המטבעות שלכם</span><span>🪙 <span id="modalCoinAmt">${coins}</span></span></div>
+      <p class="modal-sub">סיימתם את החידון! עכשיו אפשר לקנות עוד חידון ועוד אביזרים לעיצוב הזוג עם המטבעות שצברתם.</p>
+      <div class="shop-grid">
+        ${shopItem('newQuiz','🧩 טריוויה 2026 (20 שאלות)', 50, 'B')}
+        ${shopItem('sticker','🎟️ מדבקת בינגו מיוחדת', 20)}
+        ${shopItem('sticker2','💗 מדבקת לב נוצץ', 10)}
+        ${shopItem('sticker3','🥳 מדבקת ניצחון', 15)}
+        ${extras.map(e=>shopItem(e.id, e.emoji+' '+e.label, e.price)).join('')}
+      </div>
+      <button class="game-btn secondary" style="margin-top:16px;" onclick="renderDesign()">חזרה לעיצוב הזוג</button>
+    `);
+  }
+  function shopItem(key, label, price, playSet){
+    const isOwned = owned[key];
+    if(playSet && isOwned){
+      return `<div class="shop-item owned">
+        <span>${label}</span>
+        <button class="game-btn" onclick="renderQuiz('${playSet}')">▶ שחקו</button>
+      </div>`;
+    }
+    return `<div class="shop-item ${isOwned?'owned':''}">
+      <span>${label}</span>
+      <button class="game-btn ${isOwned?'secondary':''}" ${isOwned?'disabled':''} onclick="buyItem('${key}',${price})">
+        ${isOwned ? 'נרכש ✓' : '🪙 '+price}
+      </button>
+    </div>`;
+  }
+  function buyItem(key, price){
+    if(coins < price){ alert('אין מספיק מטבעות עדיין — ענו נכון על עוד שאלות בחידון!'); return; }
+    coins -= price;
+    owned[key] = true;
+    updateCoinUI();
+    renderShop();
+  }
+
+  // ---------- 5. wheel of fortune ----------
+  let wheelSpunToday = false;
+  const wheelPrizes = [0, 5, 10, 5, 20, 0, 10, 15];
+  function renderWheel(){
+    openModal(`
+      <h3>🎡 גלגל המזל</h3>
+      <p class="modal-sub">${wheelSpunToday ? 'כבר סובבתם היום — חזרו מחר לסיבוב נוסף!' : 'סיבוב אחד ביום. בהצלחה!'}</p>
+      <div class="wheel-wrap">
+        <div class="wheel-pointer">🔻</div>
+        <div class="wheel" id="wheelEl"></div>
+        <div class="wheel-result" id="wheelResult"></div>
+      </div>
+      <button class="game-btn" id="spinBtn" onclick="spinWheel()" ${wheelSpunToday?'disabled':''}>${wheelSpunToday?'חזרו מחר':'🎯 סובבו את הגלגל'}</button>
+    `);
+  }
+  function spinWheel(){
+    if(wheelSpunToday) return;
+    const btn = document.getElementById('spinBtn');
+    btn.disabled = true;
+    const prize = wheelPrizes[Math.floor(Math.random()*wheelPrizes.length)];
+    const extraSpins = 4 + Math.floor(Math.random()*3);
+    const finalDeg = extraSpins*360 + Math.floor(Math.random()*360);
+    const wheelEl = document.getElementById('wheelEl');
+    wheelEl.style.transform = `rotate(${finalDeg}deg)`;
+    setTimeout(()=>{
+      wheelSpunToday = true;
+      if(prize > 0){
+        coins += prize;
+        updateCoinUI();
+        document.getElementById('wheelResult').innerHTML = `🎉 זכיתם ב-🪙 ${prize} מטבעות!`;
+      } else {
+        document.getElementById('wheelResult').innerHTML = `😅 הפעם לא זכיתם — נסו שוב מחר!`;
+      }
+      btn.textContent = 'חזרו מחר';
+    }, 2700);
+  }
+
+  // ---------- 6. memory match ----------
+  let memCards = [];
+  let memFlipped = [];
+  let memMatched = 0;
+  let memLock = false;
+  let memMoves = 0;
+  function renderMemory(){
+    const picked = couples.slice(0, 6);
+    let deck = [];
+    picked.forEach((c,i)=>{ deck.push({couple:c,id:i}); deck.push({couple:c,id:i}); });
+    deck.sort(()=>Math.random()-0.5);
+    memCards = deck;
+    memFlipped = [];
+    memMatched = 0;
+    memLock = false;
+    memMoves = 0;
+    openModal(`
+      <h3>🧠 זיכרון הזוגות</h3>
+      <p class="modal-sub" id="memStatus">מצאו את 6 הזוגות התואמים. מהלכים: 0</p>
+      <div class="memory-grid" id="memGrid">
+        ${memCards.map((c,i)=>`<div class="memory-card" id="mem${i}" onclick="flipMem(${i})">?</div>`).join('')}
+      </div>
+    `);
+  }
+  function flipMem(i){
+    if(memLock) return;
+    const el = document.getElementById('mem'+i);
+    if(el.classList.contains('flipped') || el.classList.contains('matched')) return;
+    el.classList.add('flipped');
+    el.textContent = memCards[i].couple;
+    memFlipped.push(i);
+    if(memFlipped.length === 2){
+      memMoves++;
+      memLock = true;
+      const [a,b] = memFlipped;
+      if(memCards[a].id === memCards[b].id){
+        document.getElementById('mem'+a).classList.add('matched');
+        document.getElementById('mem'+b).classList.add('matched');
+        memMatched++;
+        memFlipped = [];
+        memLock = false;
+        checkMemWin();
+      } else {
+        setTimeout(()=>{
+          document.getElementById('mem'+a).classList.remove('flipped');
+          document.getElementById('mem'+a).textContent = '?';
+          document.getElementById('mem'+b).classList.remove('flipped');
+          document.getElementById('mem'+b).textContent = '?';
+          memFlipped = [];
+          memLock = false;
+        }, 800);
+      }
+    }
+    const status = document.getElementById('memStatus');
+    if(status) status.textContent = `מצאו את 6 הזוגות התואמים. מהלכים: ${memMoves}`;
+  }
+  function checkMemWin(){
+    if(memMatched === 6){
+      const reward = memMoves <= 10 ? 20 : memMoves <= 16 ? 10 : 5;
+      coins += reward;
+      updateCoinUI();
+      const status = document.getElementById('memStatus');
+      if(status) status.innerHTML = `🎊 סיימתם ב-${memMoves} מהלכים! זכיתם ב-🪙 ${reward} מטבעות.`;
+    }
+  }
+
+  // ---------- 7. guess the score ----------
+  let guessTarget = 0;
+  let guessLeft = 5;
+  let guessHistory = [];
+  function renderGuess(){
+    guessTarget = 1 + Math.floor(Math.random()*10);
+    guessLeft = 5;
+    guessHistory = [];
+    openModal(`
+      <h3>🔢 ניחוש הציון</h3>
+      <p class="modal-sub">חשבתי על ציון בין 1 ל-10. יש לכם 5 ניסיונות.</p>
+      <div class="guess-track" id="guessTrack"></div>
+      <div class="guess-input-row">
+        <input type="number" id="guessInput" min="1" max="10" placeholder="1-10">
+        <button class="game-btn" onclick="tryGuess()">נחשו</button>
+      </div>
+      <div id="guessResult" class="modal-sub"></div>
+    `);
+  }
+  function tryGuess(){
+    const input = document.getElementById('guessInput');
+    const val = parseInt(input.value, 10);
+    if(!val || val < 1 || val > 10){ alert('בחרו מספר בין 1 ל-10'); return; }
+    if(guessLeft <= 0) return;
+    guessLeft--;
+    const track = document.getElementById('guessTrack');
+    const hint = val === guessTarget ? '🎯' : (val < guessTarget ? '⬆️' : '⬇️');
+    track.innerHTML += `<span class="guess-chip">${val} ${hint}</span>`;
+    input.value = '';
+    if(val === guessTarget){
+      const reward = (guessLeft+1) * 5;
+      coins += reward;
+      updateCoinUI();
+      document.getElementById('guessResult').innerHTML = `🎉 ניחשתם נכון! זכיתם ב-🪙 ${reward} מטבעות.`;
+      document.querySelector('.guess-input-row').style.display = 'none';
+    } else if(guessLeft <= 0){
+      document.getElementById('guessResult').innerHTML = `😅 נגמרו הניסיונות. הציון היה ${guessTarget}.`;
+      document.querySelector('.guess-input-row').style.display = 'none';
+    } else {
+      document.getElementById('guessResult').textContent = `נשארו לכם ${guessLeft} ניסיונות`;
+    }
+  }
+
+  // ---------- style quiz ----------
+  const styleQuestions = [
+    { q:"איזו מוזיקה אתם הכי אוהבים?", opts:[["לטינית וקצבית","סלסה"],["קלאסית ורגועה","ואלס"],["היפ-הופ ורחוב","היפ-הופ"]] },
+    { q:"איזה בגד הייתם לובשים להופעה?", opts:[["שמלה אדומה עם ציצים","סלסה"],["שמלה לבנה מרשימה","ואלס"],["טרנינג עם נצנצים וסניקרס","היפ-הופ"]] },
+    { q:"איך הייתם רוצים שיתארו את הריקוד שלכם?", opts:[["חם ואנרגטי","סלסה"],["אלגנטי ומרשים","ואלס"],["קצבי ומגניב","היפ-הופ"]] },
+    { q:"עם איזה פרטנר הייתם הכי רוצים לרקוד?", opts:[["מישהו עם המון אנרגיה","סלסה"],["פרטנר קלאסי ורומנטי","ואלס"],["מישהו שיודע לעשות טריקים","היפ-הופ"]] },
+    { q:"מה הכי חשוב לכם בבמה?", opts:[["לגרום לקהל לקום ולרקוד","סלסה"],["לגרום לקהל להתרגש עד דמעות","ואלס"],["לגרום לקהל להשתגע ולצעוק","היפ-הופ"]] },
+  ];
+  const styleInfo = {
+    "סלסה": { emoji:"🔥", label:"סלסה אנרגטית", desc:"אתם כל הזמן בתנועה, אוהבים חום, קצב ואנרגיה שמדביקה את כולם." },
+    "ואלס": { emoji:"✨", label:"ואלס אלגנטי", desc:"יש בכם משהו קלאסי ומרשים — אתם אוהבים לרגש ולהיראות מדהים תוך כדי." },
+    "היפ-הופ": { emoji:"🎧", label:"היפ-הופ קצבי", desc:"אתם קצביים, מגניבים, ותמיד מוכנים להפתיע עם טריק חדש." },
+  };
+  let styleIdx = 0;
+  let styleScore = {};
+  function renderStyleQuiz(){
+    styleIdx = 0;
+    styleScore = { "סלסה":0, "ואלס":0, "היפ-הופ":0 };
+    showStyleQuestion();
+  }
+  function showStyleQuestion(){
+    if(styleIdx >= styleQuestions.length) return showStyleResult();
+    const item = styleQuestions[styleIdx];
+    openModal(`
+      <h3>💃 חנו את עצמכם — איזה סגנון ריקוד אתם?</h3>
+      <p class="modal-sub">שאלה ${styleIdx+1} מתוך ${styleQuestions.length}</p>
+      <p style="font-weight:700; margin-bottom:12px;">${item.q}</p>
+      ${item.opts.map(([label,style],i)=>`<button class="style-opt-btn" onclick="answerStyle('${style}')">${label}</button>`).join('')}
+    `);
+  }
+  function answerStyle(style){
+    styleScore[style] = (styleScore[style]||0) + 1;
+    styleIdx++;
+    showStyleQuestion();
+  }
+  function showStyleResult(){
+    let winner = "סלסה";
+    Object.keys(styleScore).forEach(k => { if(styleScore[k] > styleScore[winner]) winner = k; });
+    const info = styleInfo[winner];
+    openModal(`
+      <h3>💃 התוצאה שלכם</h3>
+      <div class="style-result">
+        <div class="emoji">${info.emoji}</div>
+        <h4>הסגנון שלכם הוא ${info.label}!</h4>
+        <p class="modal-sub">${info.desc}</p>
+      </div>
+      <button class="game-btn" style="width:100%;" onclick="renderStyleQuiz()">לשחק שוב</button>
+    `);
+  }
+
+  // ---------- champions trivia (timed, with local leaderboard) ----------
+  let champPool = [];
+  let champIdx = 0;
+  let champScore = 0;
+  let champTimer = null;
+  let champTimeLeft = 10;
+  let champLeaderboard = [];
+  function shuffleArr(arr){
+    const a = arr.slice();
+    for(let i=a.length-1; i>0; i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+  function renderChampTrivia(){
+    champPool = shuffleArr([...quizSets.A, ...quizSets.B]).slice(0, 8);
+    champIdx = 0;
+    champScore = 0;
+    showChampQuestion();
+  }
+  function showChampQuestion(){
+    clearInterval(champTimer);
+    if(champIdx >= champPool.length) return showChampResult();
+    const item = champPool[champIdx];
+    champTimeLeft = 10;
+    openModal(`
+      <h3>⏱️ טריוויית אלופים</h3>
+      <p class="modal-sub">שאלה ${champIdx+1} מתוך ${champPool.length} · ניקוד: ${champScore}</p>
+      <div class="timer-bar"><div class="timer-fill" id="champTimerFill" style="width:100%;"></div></div>
+      <p style="font-weight:700; margin-bottom:12px;">${item.q}</p>
+      <div id="champOpts">
+        ${item.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerChamp(${i})">${o}</button>`).join('')}
+      </div>
+    `);
+    champTimer = setInterval(()=>{
+      champTimeLeft -= 0.5;
+      const fill = document.getElementById('champTimerFill');
+      if(fill) fill.style.width = Math.max(0, champTimeLeft/10*100) + '%';
+      if(champTimeLeft <= 0){
+        clearInterval(champTimer);
+        answerChamp(-1);
+      }
+    }, 500);
+  }
+  function answerChamp(i){
+    clearInterval(champTimer);
+    const item = champPool[champIdx];
+    const btns = document.querySelectorAll('#champOpts .quiz-opt');
+    btns.forEach(b=>b.disabled = true);
+    if(i>=0) btns[i].classList.add(i===item.correct ? 'correct' : 'wrong');
+    if(item.correct>=0 && btns[item.correct]) btns[item.correct].classList.add('correct');
+    if(i===item.correct){ champScore += Math.max(10, Math.round(champTimeLeft*3)); }
+    setTimeout(()=>{ champIdx++; showChampQuestion(); }, 700);
+  }
+  function showChampResult(){
+    openModal(`
+      <h3>🏆 סיימתם את טריוויית האלופים!</h3>
+      <p class="modal-sub">הניקוד שלכם: <strong>${champScore}</strong></p>
+      <label class="field-label">כינוי לשמירה בלוח המובילים (בדפדפן הזה)</label>
+      <input type="text" id="champNick" class="game-select" maxlength="20" placeholder="הכינוי שלכם">
+      <button class="game-btn" style="width:100%; margin-bottom:14px;" onclick="saveChampScore()">שמרו בלוח המובילים</button>
+      <div id="champBoard"></div>
+    `);
+    renderChampBoard();
+  }
+  function saveChampScore(){
+    const nick = document.getElementById('champNick').value.trim() || 'אלמוני';
+    champLeaderboard.push({ nick, score: champScore });
+    champLeaderboard.sort((a,b)=>b.score-a.score);
+    champLeaderboard = champLeaderboard.slice(0,5);
+    renderChampBoard();
+  }
+  function renderChampBoard(){
+    const el = document.getElementById('champBoard');
+    if(!el) return;
+    if(!champLeaderboard.length){ el.innerHTML = `<p class="fan-note">עדיין אין ניקוד שמור בדפדפן הזה.</p>`; return; }
+    el.innerHTML = `<label class="field-label">מובילים (בדפדפן הזה)</label>` + champLeaderboard.map((r,i)=>`
+      <div class="lb-row"><span>${i+1}. ${escapeHtml(r.nick)}</span><span>${r.score}</span></div>
+    `).join('');
+  }
+
+  // ---------- young judge (guess the score) ----------
+  const danceMoments = [
+    "🕺💃 סלסה עוצרת נשימה עם הרמה מרשימה!",
+    "💃 ואלס עדין עם תחושת ריחוף מדהימה",
+    "🕺 היפ-הופ פרוע עם טריק קרקע מפתיע",
+    "💃🕺 ריקוד זוגי סינכרוני בול, שנייה מושלמת",
+    "🕺 קצת מעידה קטנה באמצע, אבל סיום חזק",
+  ];
+  let judgeMoment = "";
+  let judgeRealScore = 0;
+  let judgeGuesses = [];
+  function renderYoungJudge(){
+    judgeMoment = danceMoments[Math.floor(Math.random()*danceMoments.length)];
+    judgeRealScore = 6 + Math.floor(Math.random()*4);
+    openModal(`
+      <h3>⭐ השופט הצעיר</h3>
+      <p class="modal-sub">רגע מהריקוד (הדמיה, לא סרטון אמיתי):</p>
+      <div class="style-result" style="padding:14px 10px;">
+        <div class="emoji" style="font-size:2.2rem;">${judgeMoment}</div>
+      </div>
+      <p class="modal-sub">איזה ציון לדעתכם השופטים ייתנו לריקוד הזה?</p>
+      <div class="rating-btns" id="judgeRatingBtns">
+        ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button onclick="pickJudgeScore(this,${n})">${n}</button>`).join('')}
+      </div>
+      <div id="judgeResult2"></div>
+    `);
+  }
+  function pickJudgeScore(btn, n){
+    document.querySelectorAll('#judgeRatingBtns button').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    judgeGuesses.push(n);
+    const avg = (judgeGuesses.reduce((a,b)=>a+b,0)/judgeGuesses.length).toFixed(1);
+    document.getElementById('judgeResult2').innerHTML = `
+      <div class="coin-banner" style="margin-top:14px; color:var(--purple-deep); background:#f6effe; border-color:var(--line);">
+        <span>הניחוש שלכם: ${n}</span>
+        <span style="font-size:0.8rem;">ציון השופטים: ${judgeRealScore} · ממוצע הניחושים שלכם היום: ${avg}</span>
+      </div>
+      <button class="game-btn secondary" style="width:100%; margin-top:12px;" onclick="renderYoungJudge()">רגע נוסף</button>
+    `;
+  }
+
+  // ---------- dream team draft ----------
+  const DREAM_BUDGET = 100;
+  let dreamCosts = {};
+  let dreamTeam = [];
+  let dreamTotalPoints = 0;
+  function ensureDreamCosts(){
+    if(Object.keys(dreamCosts).length) return;
+    couples.forEach((c,i) => { dreamCosts[c] = 12 + ((i*7) % 18); });
+  }
+  function renderDreamTeam(){
+    ensureDreamCosts();
+    const spent = dreamTeam.reduce((s,c)=>s+dreamCosts[c], 0);
+    openModal(`
+      <h3>⭐ נבחרת החלומות</h3>
+      <p class="modal-sub">תקציב דמיוני של ${DREAM_BUDGET} — הרכיבו נבחרת מהזוגות שיצברו הכי הרבה נקודות (ניקוד לדוגמה, לא נתון אמיתי בזמן אמת).</p>
+      <div class="budget-bar"><span>תקציב שנותר</span><span>${DREAM_BUDGET-spent} / ${DREAM_BUDGET}</span></div>
+      <div id="dreamList">
+        ${couples.map(c=>`
+          <div class="team-pick">
+            <label><input type="checkbox" ${dreamTeam.includes(c)?'checked':''} onchange="toggleDreamPick('${c}',this.checked)"> ${c}</label>
+            <span class="cost">🪙 ${dreamCosts[c]}</span>
+          </div>
+        `).join('')}
+      </div>
+      <button class="game-btn" style="width:100%; margin-top:14px;" onclick="simulateDreamWeek()">▶ הדמיית שבוע ניקוד</button>
+      <div id="dreamResult" style="margin-top:12px;"></div>
+    `);
+  }
+  function toggleDreamPick(couple, checked){
+    ensureDreamCosts();
+    const spent = dreamTeam.reduce((s,c)=>s+dreamCosts[c], 0);
+    if(checked){
+      if(spent + dreamCosts[couple] > DREAM_BUDGET){
+        alert('אין מספיק תקציב לזוג הזה!');
+        renderDreamTeam();
+        return;
+      }
+      dreamTeam.push(couple);
+    } else {
+      dreamTeam = dreamTeam.filter(c=>c!==couple);
+    }
+    renderDreamTeam();
+  }
+  function simulateDreamWeek(){
+    if(!dreamTeam.length){ alert('בחרו לפחות זוג אחד לנבחרת!'); return; }
+    let weekPoints = 0;
+    const rows = dreamTeam.map(c=>{
+      const pts = 5 + Math.floor(Math.random()*16);
+      weekPoints += pts;
+      return `<div class="lb-row"><span>${c}</span><span>+${pts}</span></div>`;
+    }).join('');
+    dreamTotalPoints += weekPoints;
+    document.getElementById('dreamResult').innerHTML = `
+      <label class="field-label">תוצאות השבוע</label>
+      ${rows}
+      <div class="lb-row me"><span>סה"כ השבוע</span><span>+${weekPoints}</span></div>
+      <div class="lb-row me"><span>סה"כ נקודות נבחרת</span><span>${dreamTotalPoints}</span></div>
+    `;
+  }
+
+  // ---------- step sequence (Simon-says rhythm memory) ----------
+  const stepSymbols = ['⬅️','➡️','🔄','⬆️'];
+  let stepSeq = [];
+  let stepUserIdx = 0;
+  let stepBest = 0;
+  function renderStepGame(){
+    stepSeq = [];
+    openModal(`
+      <h3>🕺 סדרת הצעדים</h3>
+      <p class="modal-sub">תזכרו את רצף הצעדים ותחזרו עליו לפי הסדר. כל סיבוב מוסיף עוד צעד אחד! השיא שלכם: ${stepBest}</p>
+      <div class="style-result" style="padding:8px;">
+        <div class="emoji" id="stepDancer" style="font-size:2.4rem;">🕺</div>
+      </div>
+      <p class="modal-sub" id="stepStatus" style="text-align:center;">מוכנים?</p>
+      <div class="rating-btns" id="stepBtns">
+        ${stepSymbols.map((s,i)=>`<button style="font-size:1.3rem; width:44px; height:44px;" onclick="stepClick(${i})" disabled>${s}</button>`).join('')}
+      </div>
+      <button class="game-btn" id="stepStartBtn" style="width:100%; margin-top:10px;" onclick="nextStepRound()">▶ התחילו</button>
+    `);
+  }
+  function nextStepRound(){
+    document.getElementById('stepStartBtn').style.display = 'none';
+    stepSeq.push(Math.floor(Math.random()*stepSymbols.length));
+    stepUserIdx = 0;
+    document.getElementById('stepStatus').textContent = `סיבוב ${stepSeq.length} — צפו ברצף...`;
+    document.querySelectorAll('#stepBtns button').forEach(b=>b.disabled = true);
+    let i = 0;
+    const iv = setInterval(()=>{
+      const btns = document.querySelectorAll('#stepBtns button');
+      if(!btns.length){ clearInterval(iv); return; }
+      btns.forEach(b=>b.classList.remove('selected'));
+      if(i < stepSeq.length){
+        btns[stepSeq[i]].classList.add('selected');
+        setTimeout(()=>btns[stepSeq[i]] && btns[stepSeq[i]].classList.remove('selected'), 400);
+        i++;
+      } else {
+        clearInterval(iv);
+        const status = document.getElementById('stepStatus');
+        if(status) status.textContent = 'עכשיו תורכם! חזרו על הרצף';
+        document.querySelectorAll('#stepBtns button').forEach(b=>b.disabled = false);
+      }
+    }, 700);
+  }
+  function stepClick(i){
+    if(i === stepSeq[stepUserIdx]){
+      stepUserIdx++;
+      if(stepUserIdx === stepSeq.length){
+        document.getElementById('stepStatus').textContent = `כל הכבוד! מתחילים סיבוב ${stepSeq.length+1}`;
+        document.querySelectorAll('#stepBtns button').forEach(b=>b.disabled = true);
+        setTimeout(nextStepRound, 900);
+      }
+    } else {
+      stepBest = Math.max(stepBest, stepSeq.length-1);
+      document.getElementById('stepStatus').textContent = `אופס! טעיתם ברצף. הגעתם ל-${stepSeq.length-1} צעדים. השיא שלכם: ${stepBest}`;
+      document.querySelectorAll('#stepBtns button').forEach(b=>b.disabled = true);
+      const startBtn = document.getElementById('stepStartBtn');
+      startBtn.style.display = 'inline-block';
+      startBtn.textContent = 'לנסות שוב';
+      startBtn.onclick = renderStepGame;
+      stepSeq = [];
+    }
+  }
+
+  // ---------- complete the judge's quote ----------
+  const judgeFillQuotes = [
+    { text:"זה היה ___ לגמרי, לא ציפיתי לרמה כזאת!", correct:"מדהים", wrong:["משעמם","רגיל","מוזר"] },
+    { text:"הרגליים שלך זזו כאילו יש להן ___ משלהן.", correct:"קצב", wrong:["מוח","נעליים","זיכרון"] },
+    { text:"קצת ___ באמצע, אבל סיימת כמו כוכב.", correct:"התבלבלת", wrong:["ריקדת","שרת","ניצחת"] },
+    { text:"אם היה ציון 11, הייתי נותן לך אותו על ה-___ הזו.", correct:"אנרגיה", wrong:["נעליים","תספורת","הפסקה"] },
+    { text:"פשוט ___! זו הייתה ההופעה של הערב.", correct:"וואו", wrong:["לא רע","בסדר","משעמם"] },
+  ];
+  let judgeFillIdx = 0;
+  let judgeFillScore = 0;
+  let judgeFillCorrect = '';
+  function renderJudgeFill(){
+    judgeFillIdx = 0;
+    judgeFillScore = 0;
+    showJudgeFillQ();
+  }
+  function showJudgeFillQ(){
+    if(judgeFillIdx >= judgeFillQuotes.length) return showJudgeFillResult();
+    const item = judgeFillQuotes[judgeFillIdx];
+    const opts = shuffleArr([item.correct, ...item.wrong]);
+    judgeFillCorrect = item.correct;
+    openModal(`
+      <h3>💬 השלימו את המילים של השופט</h3>
+      <p class="modal-sub">שאלה ${judgeFillIdx+1} מתוך ${judgeFillQuotes.length} · ניקוד: ${judgeFillScore}</p>
+      <p style="font-weight:700; margin-bottom:14px; font-style:italic;">"אחד השופטים אמר: ${item.text}"</p>
+      <div id="jfOpts">
+        ${opts.map(o=>`<button class="quiz-opt" onclick="answerJudgeFill('${o}',event)">${o}</button>`).join('')}
+      </div>
+      <div id="jfNext" style="margin-top:14px;"></div>
+    `);
+  }
+  function answerJudgeFill(choice, evt){
+    const btns = document.querySelectorAll('#jfOpts .quiz-opt');
+    btns.forEach(b=>{
+      b.disabled = true;
+      if(b.textContent === judgeFillCorrect) b.classList.add('correct');
+      else if(b.textContent === choice) b.classList.add('wrong');
+    });
+    if(choice === judgeFillCorrect){ judgeFillScore++; coins += 5; updateCoinUI(); if(evt) floatCoin(evt); }
+    document.getElementById('jfNext').innerHTML = `<button class="game-btn" onclick="judgeFillIdx++; showJudgeFillQ();">
+      ${judgeFillIdx < judgeFillQuotes.length-1 ? 'הבא →' : 'לתוצאה →'}
+    </button>`;
+  }
+  function showJudgeFillResult(){
+    openModal(`
+      <h3>💬 סיימתם!</h3>
+      <p class="modal-sub">ענית נכון על ${judgeFillScore} מתוך ${judgeFillQuotes.length}, וקיבלתם 5 מטבעות על כל תשובה נכונה.</p>
+      <button class="game-btn" style="width:100%;" onclick="renderJudgeFill()">לשחק שוב</button>
+    `);
+  }
+
+  // ---------- choreography workshop ----------
+  const choreoBlocks = [
+    { id:'spin',  emoji:'🔄', label:'סיבוב' },
+    { id:'jump',  emoji:'⬆️', label:'קפיצה' },
+    { id:'slide', emoji:'↔️', label:'החלקה' },
+    { id:'bow',   emoji:'🙇', label:'קידה' },
+    { id:'dip',   emoji:'💫', label:'הטיה דרמטית' },
+  ];
+  let choreoSeq = [];
+  function renderChoreo(){
+    choreoSeq = [];
+    openModal(`
+      <h3>🎨 סדנת הכוריאוגרפיה</h3>
+      <p class="modal-sub">לחצו על הבלוקים לפי הסדר שתרצו כדי לבנות שגרת ריקוד, ואז הריצו את האנימציה.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+        ${choreoBlocks.map(b=>`<button class="style-opt-btn choreo-block" onclick="addChoreoBlock('${b.id}')">${b.emoji} ${b.label}</button>`).join('')}
+      </div>
+      <label class="field-label">הרצף שלכם (עד 8 צעדים)</label>
+      <div id="choreoSeqView" style="min-height:36px; font-size:1.3rem; margin-bottom:14px;">—</div>
+      <div style="display:flex; gap:8px;">
+        <button class="game-btn secondary" onclick="clearChoreo()">נקו</button>
+        <button class="game-btn" onclick="playChoreo()">▶ הריצו את הריקוד</button>
+      </div>
+      <div class="avatar-preview" style="margin-top:16px;">
+        <div id="choreoDancer" style="font-size:3rem;">🕺</div>
+      </div>
+      <p class="modal-sub" id="choreoStatus" style="text-align:center;"></p>
+    `);
+  }
+  function addChoreoBlock(id){
+    if(choreoSeq.length >= 8) return;
+    choreoSeq.push(id);
+    renderChoreoSeqView();
+  }
+  function clearChoreo(){
+    choreoSeq = [];
+    renderChoreoSeqView();
+    const st = document.getElementById('choreoStatus');
+    if(st) st.textContent = '';
+  }
+  function renderChoreoSeqView(){
+    const view = document.getElementById('choreoSeqView');
+    if(!view) return;
+    view.textContent = choreoSeq.length ? choreoSeq.map(id=>choreoBlocks.find(b=>b.id===id).emoji).join(' ') : '—';
+  }
+  function playChoreo(){
+    if(!choreoSeq.length){ alert('הוסיפו לפחות צעד אחד!'); return; }
+    const dancer = document.getElementById('choreoDancer');
+    const status = document.getElementById('choreoStatus');
+    let i = 0;
+    status.textContent = 'רוקדים...';
+    const iv = setInterval(()=>{
+      if(i >= choreoSeq.length){
+        clearInterval(iv);
+        if(dancer) dancer.textContent = '🕺';
+        if(status) status.textContent = '🎉 סיימתם את שגרת הריקוד שלכם!';
+        return;
+      }
+      const block = choreoBlocks.find(b=>b.id===choreoSeq[i]);
+      if(dancer) dancer.textContent = block.emoji;
+      i++;
+    }, 600);
+  }
+
+  // ---------- catch the sparkles (arcade) ----------
+  const catchGoodItems = ['👠','👑','✨'];
+  let catchState = null;
+  function renderCatchGame(){
+    openModal(`
+      <h3>🎯 תפוסו את הנצנצים</h3>
+      <p class="modal-sub">אספו נעליים, כתרים ונצנצים — והתחמקו מכדורי הדיסקו השבורים 💥. 20 שניות!</p>
+      <div class="coin-banner"><span>ניקוד</span><span id="catchScore">0</span></div>
+      <div id="catchArea" style="position:relative; height:220px; background:#f6effe; border-radius:16px; overflow:hidden; margin-bottom:14px;">
+        <div id="catchDancer" style="position:absolute; bottom:6px; left:46%; font-size:2rem; transition:left .15s ease;">🕺</div>
+      </div>
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button class="game-btn secondary" onclick="catchMove(-1)">⬅️</button>
+        <button class="game-btn secondary" onclick="catchMove(1)">➡️</button>
+      </div>
+      <p class="modal-sub" id="catchStatus" style="text-align:center; margin-top:10px;">זמן שנותר: 20</p>
+    `);
+    startCatchGame();
+  }
+  function catchMove(dir){
+    if(!catchState) return;
+    catchState.x = Math.max(4, Math.min(92, catchState.x + dir*10));
+    const d = document.getElementById('catchDancer');
+    if(d) d.style.left = catchState.x + '%';
+  }
+  function startCatchGame(){
+    catchState = { x:46, items:[], score:0, timeLeft:20 };
+    catchState.tickId = setInterval(catchTick, 50);
+    catchState.spawnId = setInterval(catchSpawn, 700);
+    catchState.timerId = setInterval(()=>{
+      if(!catchState) return;
+      catchState.timeLeft -= 1;
+      const st = document.getElementById('catchStatus');
+      if(st) st.textContent = 'זמן שנותר: ' + catchState.timeLeft;
+      if(catchState.timeLeft <= 0) endCatchGame();
+    }, 1000);
+  }
+  function catchSpawn(){
+    if(!catchState) return;
+    const isBad = Math.random() < 0.3;
+    const emoji = isBad ? '💥' : catchGoodItems[Math.floor(Math.random()*catchGoodItems.length)];
+    catchState.items.push({ x: 8+Math.random()*84, y:0, emoji, bad:isBad, el:null });
+  }
+  function catchTick(){
+    if(!catchState) return;
+    const area = document.getElementById('catchArea');
+    if(!area) return;
+    catchState.items.forEach(item=>{
+      item.y += 3;
+      if(!item.el){
+        item.el = document.createElement('div');
+        item.el.style.position = 'absolute';
+        item.el.style.fontSize = '1.5rem';
+        item.el.style.left = item.x + '%';
+        area.appendChild(item.el);
+      }
+      item.el.style.top = item.y + '%';
+      item.el.textContent = item.emoji;
+      if(!item.caught && item.y >= 78 && item.y <= 92 && Math.abs(item.x - catchState.x) < 9){
+        item.caught = true;
+        catchState.score = Math.max(0, catchState.score + (item.bad ? -5 : 10));
+        item.el.remove();
+        item.remove = true;
+        const sc = document.getElementById('catchScore');
+        if(sc) sc.textContent = catchState.score;
+      }
+    });
+    catchState.items = catchState.items.filter(item=>{
+      if(item.remove) return false;
+      if(item.y > 100){ if(item.el) item.el.remove(); return false; }
+      return true;
+    });
+  }
+  function endCatchGame(){
+    const finalScore = catchState.score;
+    clearInterval(catchState.tickId);
+    clearInterval(catchState.spawnId);
+    clearInterval(catchState.timerId);
+    const bonus = Math.floor(finalScore/2);
+    coins += bonus;
+    updateCoinUI();
+    catchState = null;
+    openModal(`
+      <h3>🎯 הזמן נגמר!</h3>
+      <p class="modal-sub">הניקוד הסופי שלכם: <strong>${finalScore}</strong>. קיבלתם 🪙 ${bonus} מטבעות בונוס.</p>
+      <button class="game-btn" style="width:100%;" onclick="renderCatchGame()">לשחק שוב</button>
+    `);
+  }
+
+  // ---------- catch the trophy (whack-a-mole) ----------
+  let trophyState = null;
+  function renderTrophyGame(){
+    openModal(`
+      <h3>🏆 תפסו את גביע הניצחון</h3>
+      <p class="modal-sub">גביעים מופיעים ונעלמים ברשת — לחצו עליהם מהר לפני שהם נעלמים! 20 שניות.</p>
+      <div class="coin-banner"><span>ניקוד</span><span id="trophyScore">0</span></div>
+      <div id="trophyGrid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;">
+        ${Array.from({length:9}).map((_,i)=>`<div class="sq" id="tcell${i}" onclick="hitTrophy(${i})" style="aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:1.6rem; background:#f6effe; border-radius:12px; cursor:pointer; border:1.5px dashed var(--purple);"></div>`).join('')}
+      </div>
+      <p class="modal-sub" id="trophyStatus" style="text-align:center;">זמן שנותר: 20</p>
+    `);
+    startTrophyGame();
+  }
+  function startTrophyGame(){
+    trophyState = { score:0, timeLeft:20, activeCell:-1 };
+    trophyState.spawnId = setInterval(spawnTrophy, 900);
+    trophyState.timerId = setInterval(()=>{
+      if(!trophyState) return;
+      trophyState.timeLeft--;
+      const st = document.getElementById('trophyStatus');
+      if(st) st.textContent = 'זמן שנותר: ' + trophyState.timeLeft;
+      if(trophyState.timeLeft <= 0) endTrophyGame();
+    }, 1000);
+  }
+  function spawnTrophy(){
+    if(!trophyState) return;
+    if(trophyState.activeCell >= 0){
+      const prevEl = document.getElementById('tcell'+trophyState.activeCell);
+      if(prevEl) prevEl.textContent = '';
+    }
+    const cell = Math.floor(Math.random()*9);
+    trophyState.activeCell = cell;
+    const el = document.getElementById('tcell'+cell);
+    if(el) el.textContent = '🏆';
+  }
+  function hitTrophy(i){
+    if(!trophyState || i !== trophyState.activeCell) return;
+    trophyState.score += 10;
+    const el = document.getElementById('tcell'+i);
+    if(el) el.textContent = '';
+    trophyState.activeCell = -1;
+    const sc = document.getElementById('trophyScore');
+    if(sc) sc.textContent = trophyState.score;
+  }
+  function endTrophyGame(){
+    const finalScore = trophyState.score;
+    clearInterval(trophyState.spawnId);
+    clearInterval(trophyState.timerId);
+    const bonus = Math.floor(finalScore/20);
+    coins += bonus;
+    updateCoinUI();
+    trophyState = null;
+    openModal(`
+      <h3>🏆 הזמן נגמר!</h3>
+      <p class="modal-sub">תפסתם ${finalScore} נקודות! קיבלתם 🪙 ${bonus} מטבעות בונוס.</p>
+      <button class="game-btn" style="width:100%;" onclick="renderTrophyGame()">לשחק שוב</button>
+    `);
+  }
+
+  // ---------- hangman — guess the dance style ----------
+  const hebrewLetters = ['א','ב','ג','ד','ה','ו','ז','ח','ט','י','כ','ל','מ','נ','ס','ע','פ','צ','ק','ר','ש','ת'];
+  const hangmanWords = ['סלסה','ואלס','סמבה','טנגו','רומבה','בולרו'];
+  let hangmanWord = '';
+  let hangmanGuessed = [];
+  let hangmanWrong = 0;
+  function renderHangman(){
+    hangmanWord = hangmanWords[Math.floor(Math.random()*hangmanWords.length)];
+    hangmanGuessed = [];
+    hangmanWrong = 0;
+    showHangman();
+  }
+  function showHangman(){
+    const display = hangmanWord.split('').map(ch=>hangmanGuessed.includes(ch)?ch:'_').join(' ');
+    const won = !display.includes('_');
+    const lost = hangmanWrong >= 6;
+    openModal(`
+      <h3>🕺 איש תלוי — נחשו את סגנון הריקוד</h3>
+      <p class="modal-sub">טעויות: ${hangmanWrong} / 6</p>
+      <div class="style-result" style="padding:10px;">
+        <div class="emoji" style="font-size:1.8rem; letter-spacing:4px;">${display}</div>
+      </div>
+      ${won ? `<p class="win-msg">🎉 ניצחתם! זה היה "${hangmanWord}"</p>` : ''}
+      ${lost ? `<p class="win-msg" style="color:#dc2626;">הפסדתם... המילה הייתה "${hangmanWord}"</p>` : ''}
+      ${(!won && !lost) ? `<div class="rating-btns">${hebrewLetters.map(l=>`<button ${hangmanGuessed.includes(l)?'disabled':''} onclick="guessHangman('${l}')">${l}</button>`).join('')}</div>` : ''}
+      <button class="game-btn" style="width:100%; margin-top:14px;" onclick="renderHangman()">${(won||lost) ? 'לשחק שוב' : 'התחילו מחדש'}</button>
+    `);
+  }
+  function guessHangman(l){
+    if(hangmanGuessed.includes(l)) return;
+    hangmanGuessed.push(l);
+    if(!hangmanWord.includes(l)) hangmanWrong++;
+    showHangman();
+  }
+
+  // ---------- word puzzle: crack the word ----------
+  const wsWords = ['ריקוד','זוהר','קצב','נצנצים','שמלה'];
+  let wsWord = '';
+  let wsTiles = [];
+  let wsPicked = [];
+  function renderWordScramble(){
+    wsWord = wsWords[Math.floor(Math.random()*wsWords.length)];
+    wsTiles = shuffleArr(wsWord.split(''));
+    wsPicked = [];
+    showWordScramble();
+  }
+  function showWordScramble(){
+    const attempt = wsPicked.map(i=>wsTiles[i]).join('');
+    const win = attempt === wsWord;
+    openModal(`
+      <h3>🔤 פצחו את המילה</h3>
+      <p class="modal-sub">לחצו על האותיות לפי הסדר הנכון כדי לגלות מילה מעולם הריקוד והזוהר (${wsWord.length} אותיות).</p>
+      <div class="style-result" style="padding:6px;">
+        <div class="emoji" style="font-size:1.6rem; letter-spacing:6px;">${attempt || '＿'.repeat(wsWord.length)}</div>
+      </div>
+      ${win ? `<p class="win-msg">🎉 כל הכבוד! המילה הייתה "${wsWord}"</p>` : `
+      <div class="rating-btns">
+        ${wsTiles.map((l,i)=>`<button ${wsPicked.includes(i)?'disabled':''} onclick="pickWsTile(${i})">${l}</button>`).join('')}
+      </div>`}
+      <div style="display:flex; gap:8px; margin-top:10px;">
+        <button class="game-btn secondary" onclick="wsPicked=[]; showWordScramble();">נקו</button>
+        <button class="game-btn" onclick="renderWordScramble()">מילה חדשה</button>
+      </div>
+    `);
+  }
+  function pickWsTile(i){
+    wsPicked.push(i);
+    showWordScramble();
+  }
+
+  // ---------- stage name generator ----------
+  function renderStageName(){
+    openModal(`
+      <h3>🎤 מחולל שמות הבמה</h3>
+      <p class="modal-sub">הכניסו את השם הפרטי שלכם והמאכל האהוב עליכם, ותקבלו שם במה לרקדן מקצועי!</p>
+      <label class="field-label">השם הפרטי שלכם</label>
+      <input type="text" id="snName" class="game-select" maxlength="20" placeholder="למשל: נועה">
+      <label class="field-label">המאכל האהוב עליכם</label>
+      <input type="text" id="snFood" class="game-select" maxlength="20" placeholder="למשל: פיצה">
+      <button class="game-btn" style="width:100%;" onclick="generateStageName()">צרו שם במה</button>
+      <div id="snResult" style="margin-top:14px;"></div>
+    `);
+  }
+  function generateStageName(){
+    const name = document.getElementById('snName').value.trim();
+    const food = document.getElementById('snFood').value.trim();
+    if(!name || !food){ alert('צריך למלא גם שם וגם מאכל אהוב 🙂'); return; }
+    const titles = ['הנוצץ','הזוהר','המהיר','המלכותי','הקצבי','הנדיר','האגדי','הסוער'];
+    const idx = (name.length + food.length) % titles.length;
+    const stageName = `${food} ${name} ${titles[idx]}`;
+    document.getElementById('snResult').innerHTML = `
+      <div class="style-result">
+        <div class="emoji">🌟</div>
+        <h4>שם הבמה שלכם:</h4>
+        <p class="modal-sub" style="font-size:1.2rem; font-weight:800; color:var(--purple-deep);">${escapeHtml(stageName)}</p>
+      </div>
+    `;
+  }
+
+  // ---------- match compatibility calculator ----------
+  function renderMatchCalc(){
+    const opts = couples.map(c=>`<option value="${c}">${c}</option>`).join('');
+    openModal(`
+      <h3>💫 מחשבון ההתאמה</h3>
+      <p class="modal-sub">בחרו שני זוגות מהעונה, ותגלו מה "סיכויי הניצחון המשותפים" שלהם (לשעשוע בלבד!).</p>
+      <label class="field-label">זוג ראשון</label>
+      <select class="game-select" id="mcA">${opts}</select>
+      <label class="field-label">זוג שני</label>
+      <select class="game-select" id="mcB">${opts}</select>
+      <button class="game-btn" style="width:100%;" onclick="calcMatch()">חשבו התאמה</button>
+      <div id="mcResult" style="margin-top:14px;"></div>
+    `);
+  }
+  function calcMatch(){
+    const a = document.getElementById('mcA').value;
+    const b = document.getElementById('mcB').value;
+    let seed = 0;
+    (a+b).split('').forEach(ch => seed += ch.charCodeAt(0));
+    const pct = 40 + (seed % 61);
+    const msgs = ['התאמה נפיצה של אנרגיה!','שילוב שקט אבל עוצמתי.','ניצוץ אמיתי על הרחבה!','זוג שסוחף את כולם!','קצב שמדבק את הקהל!'];
+    const msg = msgs[seed % msgs.length];
+    document.getElementById('mcResult').innerHTML = `
+      <div class="style-result">
+        <div class="emoji">${pct>=75?'🔥':pct>=55?'✨':'💫'}</div>
+        <h4>${pct}% התאמה!</h4>
+        <p class="modal-sub">${msg}</p>
+      </div>
+    `;
+  }
+
+  // ---------- which judge are you today ----------
+  const judgeQQuestions = [
+    { q:"איך אתם מגיבים כשחבר טועה במשחק?", opts:[["אומר לו בדיוק מה היה לא בסדר","המבקר החד"],["מעודד אותו לנסות שוב בחיוך","המעודד החם"],["עושה מזה סיפור דרמטי שלם","הדרמטי"],["מסביר טכנית מה להשתפר בדיוק","המדויק הטכני"]] },
+    { q:"מה הכי חשוב לכם בהופעה?", opts:[["דיוק מוחלט","המדויק הטכני"],["רגש אמיתי","המעודד החם"],["וואו-פקטור","הדרמטי"],["ביקורת בונה וישירה","המבקר החד"]] },
+    { q:"איך הייתם נותנים ציון נמוך?", opts:[["ישר ולעניין","המבקר החד"],["בעדינות ועם עידוד","המעודד החם"],["עם הרבה הבעות פנים","הדרמטי"],["עם רשימת נקודות לשיפור","המדויק הטכני"]] },
+    { q:"מה סוג המחמאה שהייתם נותנים?", opts:[["\"זה היה כמעט מושלם\"","המבקר החד"],["\"אני כל כך גאה בך!\"","המעודד החם"],["\"וואו!!! פשוט וואו!!!\"","הדרמטי"],["\"הטכניקה שלך השתפרה משמעותית\"","המדויק הטכני"]] },
+  ];
+  const judgePersonaInfo = {
+    "המבקר החד":     { emoji:'🧐', desc:'אתם ישרים, ממוקדים, ולא מפחדים להגיד את האמת.' },
+    "המעודד החם":    { emoji:'🤗', desc:'אתם תומכים, חמים, ומאמינים בכל אחד.' },
+    "הדרמטי":        { emoji:'🎭', desc:'אתם חיים כל רגע בעוצמה, עם הרבה הבעה!' },
+    "המדויק הטכני":  { emoji:'📐', desc:'אתם אוהבים דיוק, פרטים, ותשומת לב לכל תזוזה.' },
+  };
+  let judgeQIdx = 0;
+  let judgeQScore = {};
+  function renderJudgePersona(){
+    judgeQIdx = 0;
+    judgeQScore = { "המבקר החד":0, "המעודד החם":0, "הדרמטי":0, "המדויק הטכני":0 };
+    showJudgeQQuestion();
+  }
+  function showJudgeQQuestion(){
+    if(judgeQIdx >= judgeQQuestions.length) return showJudgePersonaResult();
+    const item = judgeQQuestions[judgeQIdx];
+    openModal(`
+      <h3>⚖️ איזה שופט אתם היום?</h3>
+      <p class="modal-sub">שאלה ${judgeQIdx+1} מתוך ${judgeQQuestions.length}</p>
+      <p style="font-weight:700; margin-bottom:12px;">${item.q}</p>
+      ${item.opts.map(([label,persona]) => `<button class="style-opt-btn" onclick="answerJudgeQ('${persona}')">${label}</button>`).join('')}
+    `);
+  }
+  function answerJudgeQ(persona){
+    judgeQScore[persona] = (judgeQScore[persona]||0) + 1;
+    judgeQIdx++;
+    showJudgeQQuestion();
+  }
+  function showJudgePersonaResult(){
+    let winner = "המבקר החד";
+    Object.keys(judgeQScore).forEach(k => { if(judgeQScore[k] > judgeQScore[winner]) winner = k; });
+    const info = judgePersonaInfo[winner];
+    openModal(`
+      <h3>⚖️ התוצאה שלכם</h3>
+      <div class="style-result">
+        <div class="emoji">${info.emoji}</div>
+        <h4>אתם ${winner}!</h4>
+        <p class="modal-sub">${info.desc}</p>
+      </div>
+      <button class="game-btn" style="width:100%;" onclick="renderJudgePersona()">לשחק שוב</button>
+    `);
+  }
+
+  // ---------- face expression contest ----------
+  const faceExpressions = ['שמח מאוד 😄','מופתע 😲','דרמטי במיוחד 🎭','כועס בקומיות 😤','מאוהב 🥰','מבועת 😱','גאה 😌','מנומנם 🥱','נלהב עד השמיים 🤩','מבולבל לגמרי 🫠'];
+  function renderFaceGame(){
+    showFaceExpr();
+  }
+  function showFaceExpr(){
+    const expr = faceExpressions[Math.floor(Math.random()*faceExpressions.length)];
+    openModal(`
+      <h3>🎭 תחרות הבעות פנים</h3>
+      <p class="modal-sub">כל רקדן/ית מקבל/ת הוראה — רוקדים ומציגים את ההבעה הזו כמה שיותר מוגזם. מי שהצחיק הכי הרבה מנצח!</p>
+      <div class="style-result">
+        <div class="emoji" style="font-size:2rem;">${expr}</div>
+      </div>
+      <button class="game-btn" style="width:100%;" onclick="showFaceExpr()">🔄 הוראה הבאה</button>
+    `);
+  }
+
+  // ---------- newspaper dance (round timer tool) ----------
+  let newspaperRound = 1;
+  let newspaperTimer = null;
+  function renderNewspaperGame(){
+    newspaperRound = 1;
+    showNewspaperRound();
+  }
+  function showNewspaperRound(){
+    openModal(`
+      <h3>📰 ריקוד על עיתון</h3>
+      <p class="modal-sub">כל זוג עומד על דף עיתון פתוח ורוקד. אחרי כל סיבוב מקפלים את הדף לחצי — מי שנשאר על הדף הכי קטן בלי לצאת ממנו מנצח!</p>
+      <div class="style-result">
+        <div class="emoji" style="font-size:2rem;">📰</div>
+        <h4>סיבוב ${newspaperRound}</h4>
+      </div>
+      <div class="timer-bar"><div class="timer-fill" id="npTimerFill" style="width:100%;"></div></div>
+      <p class="modal-sub" id="npStatus" style="text-align:center;">רוקדים! 15 שניות...</p>
+      <button class="game-btn" id="npNextBtn" style="width:100%; display:none;" onclick="nextNewspaperRound()">📐 קיפלנו! לסיבוב הבא</button>
+    `);
+    startNewspaperTimer();
+  }
+  function startNewspaperTimer(){
+    let timeLeft = 15;
+    clearInterval(newspaperTimer);
+    newspaperTimer = setInterval(()=>{
+      timeLeft -= 0.5;
+      const fill = document.getElementById('npTimerFill');
+      if(fill) fill.style.width = Math.max(0, timeLeft/15*100) + '%';
+      if(timeLeft <= 0){
+        clearInterval(newspaperTimer);
+        const status = document.getElementById('npStatus');
+        if(status) status.textContent = 'זמן! קפלו את העיתון לחצי 📐';
+        const btn = document.getElementById('npNextBtn');
+        if(btn) btn.style.display = 'block';
+      }
+    }, 500);
+  }
+  function nextNewspaperRound(){
+    newspaperRound++;
+    showNewspaperRound();
+  }
+
+  // ---------- emoji battle ----------
+  const battleEmojis = ['🤖 רובוט','🔥 אש','⭐ כוכב','🦋 פרפר','🌊 גל','⚡ ברק','🎈 בלון','🐍 נחש','🌪️ טורנדו','🍃 עלה ברוח'];
+  function renderEmojiBattle(){
+    showEmojiBattle();
+  }
+  function showEmojiBattle(){
+    const item = battleEmojis[Math.floor(Math.random()*battleEmojis.length)];
+    openModal(`
+      <h3>🎴 קרב אייקונים</h3>
+      <p class="modal-sub">מציגים את הכרטיס לרקדנים — הם צריכים להמציא תנועת ריקוד שמתאימה בדיוק לאייקון!</p>
+      <div class="style-result">
+        <div class="emoji" style="font-size:2.4rem;">${item}</div>
+      </div>
+      <button class="game-btn" style="width:100%;" onclick="showEmojiBattle()">🔄 אייקון הבא</button>
+    `);
+  }
+
+  // ---------- my dance t-shirt (design + print) ----------
+  const sloganPresets = [
+    "המעריץ/ה מספר 1",
+    "רוקד/ת בבית כאילו זו התחרות",
+    "שופט/ת מהספה הרשמי/ת",
+    "צריך עוד נצנצים בחיים",
+    "10 מכל הלב",
+    "רוקדים עם כוכבים זה קדוש",
+  ];
+  let tshirtColor = '#ffffff';
+  let tshirtSlogan = '';
+  function tshirtTextColor(bg){ return bg === '#241534' ? '#ffffff' : '#241534'; }
+  function wrapSloganLines(text){
+    if(text.length <= 16) return [text];
+    const mid = Math.floor(text.length/2);
+    let splitPos = text.lastIndexOf(' ', mid);
+    if(splitPos < 0) splitPos = text.indexOf(' ', mid);
+    if(splitPos < 0) return [text];
+    return [text.slice(0,splitPos), text.slice(splitPos+1)];
+  }
+  function tshirtSvg(size){
+    const lines = wrapSloganLines(tshirtSlogan || ' ');
+    return `<svg viewBox="0 0 200 200" width="${size}" height="${size}">
+      <path d="M60 22 L82 8 L100 20 L118 8 L140 22 L166 52 L142 74 L130 62 L130 186 L70 186 L70 62 L58 74 L34 52 Z" fill="${tshirtColor}" stroke="rgba(0,0,0,0.15)" stroke-width="2"/>
+      <text id="tshirtTextEl" x="100" y="118" text-anchor="middle" font-size="13" font-family="Rubik, sans-serif" font-weight="800" fill="${tshirtTextColor(tshirtColor)}">
+        ${lines.map((l,i)=>`<tspan x="100" dy="${i===0?0:16}">${escapeHtml(l)}</tspan>`).join('')}
+      </text>
+    </svg>`;
+  }
+  function renderTshirt(){
+    if(!tshirtSlogan) tshirtSlogan = sloganPresets[0];
+    showTshirt();
+  }
+  function showTshirt(){
+    const isCustom = !sloganPresets.includes(tshirtSlogan);
+    openModal(`
+      <h3>👕 חולצת הריקודים שלי</h3>
+      <p class="modal-sub">עצבו חולצת מעריצים עם משפט משלכם, ואז הדפיסו אותה בבית!</p>
+      <div class="avatar-preview" style="height:190px;">
+        ${tshirtSvg(170)}
+      </div>
+      <label class="field-label">צבע החולצה</label>
+      <div class="swatch-row" style="margin-bottom:16px;">
+        ${['#ffffff','#241534','#c9b6f7','#f9a8d4','#5eead4','#ffd166'].map(c=>`<div class="swatch pick ${c===tshirtColor?'active':''}" style="background:${c}; border:1px solid rgba(0,0,0,0.15);" onclick="setTshirtColor('${c}')"></div>`).join('')}
+      </div>
+      <label class="field-label">בחרו משפט</label>
+      <select class="game-select" onchange="pickPresetSlogan(this.value)">
+        ${sloganPresets.map(s=>`<option value="${s}" ${s===tshirtSlogan?'selected':''}>${s}</option>`).join('')}
+        <option value="__custom__" ${isCustom?'selected':''}>✍️ משפט משלי...</option>
+      </select>
+      ${isCustom ? `<input type="text" class="game-select" maxlength="30" value="${escapeHtml(tshirtSlogan)}" placeholder="כתבו משפט משלכם" oninput="setCustomSlogan(this.value)">` : ''}
+      <button class="game-btn" style="width:100%; margin-top:10px;" onclick="printTshirt()">🖨️ הדפיסו את החולצה</button>
+    `);
+  }
+  function setTshirtColor(c){ tshirtColor = c; showTshirt(); }
+  function pickPresetSlogan(v){
+    tshirtSlogan = (v === '__custom__') ? '' : v;
+    showTshirt();
+  }
+  function setCustomSlogan(v){
+    tshirtSlogan = v;
+    const el = document.getElementById('tshirtTextEl');
+    if(!el) return;
+    const lines = wrapSloganLines(v || ' ');
+    el.innerHTML = lines.map((l,i)=>`<tspan x="100" dy="${i===0?0:16}">${escapeHtml(l)}</tspan>`).join('');
+  }
+  function printTshirt(){
+    document.getElementById('printArea').innerHTML = `
+      <div style="display:flex; justify-content:center; padding:40px;">
+        ${tshirtSvg(340)}
+      </div>
+    `;
+    window.print();
+  }
+
+  // ---------- choose the next song ----------
+  const nextSongOptions = ["שיר לטיני קצבי ואנרגטי","בלדה רגשית ואיטית","להיט פופ שמח וקצבי"];
+  function renderNextSong(){
+    const opts = couples.map(c=>`<option value="${c}">${c}</option>`).join('');
+    openModal(`
+      <h3>🎵 בחירת השיר הבא</h3>
+      <p class="modal-sub">איזה סגנון שיר לדעתכם הכי מתאים לפרק הבא, ולאיזה זוג?</p>
+      <label class="field-label">בחרו סגנון שיר</label>
+      <select class="game-select" id="nsSong">${nextSongOptions.map(s=>`<option value="${s}">${s}</option>`).join('')}</select>
+      <label class="field-label">איזה זוג הכי מתאים לרקוד לזה?</label>
+      <select class="game-select" id="nsCouple">${opts}</select>
+      <button class="game-btn" style="width:100%;" onclick="submitNextSong()">שלחו הצעה</button>
+      <div id="nsResult"></div>
+    `);
+  }
+  function submitNextSong(){
+    const song = document.getElementById('nsSong').value;
+    const couple = document.getElementById('nsCouple').value;
+    document.getElementById('nsResult').innerHTML = `
+      <div class="coin-banner" style="margin-top:14px; color:var(--purple-deep); background:#f6effe; border-color:var(--line);">
+        <span>ההצעה שלכם נשמרה!</span>
+        <span style="font-size:0.8rem;">${escapeHtml(song)} ל${escapeHtml(couple)}</span>
+      </div>`;
+  }
+
+  // ---------- rate the judges ----------
+  const judgeRoles = ["שופט/ת 1","שופט/ת 2","שופט/ת 3"];
+  function renderJudgeRating(){
+    const opts = judgeRoles.map(j=>`<option value="${j}">${j}</option>`).join('');
+    openModal(`
+      <h3>⚖️ דירוג השופטים</h3>
+      <p class="modal-sub">הפעם לא מדרגים זוגות — מדרגים את השופטים עצמם! (שמות כלליים כאן — לא מייחסים תוצאה לשם ספציפי).</p>
+      <label class="field-label">מי נתן את ההערות הכי מקצועיות?</label>
+      <select class="game-select" id="jrProf">${opts}</select>
+      <label class="field-label">מי היה הכי מצחיק?</label>
+      <select class="game-select" id="jrFunny">${opts}</select>
+      <label class="field-label">מי נתן את הניקוד הכי מפתיע?</label>
+      <select class="game-select" id="jrSurprise">${opts}</select>
+      <button class="game-btn" style="width:100%;" onclick="submitJudgeRating()">שלחו דירוג</button>
+      <div id="jrResult"></div>
+    `);
+  }
+  function submitJudgeRating(){
+    document.getElementById('jrResult').innerHTML = `<p class="win-msg" style="margin-top:14px;">תודה על הדירוג! 🎉</p>`;
+  }
+
+  // ---------- viewers' save vote ----------
+  function renderViewerSave(){
+    const opts = couples.map(c=>`<option value="${c}">${c}</option>`).join('');
+    openModal(`
+      <h3>🛟 גלגל ההצלה של הצופים</h3>
+      <p class="modal-sub">אם יכולתם להחזיר זוג אחד שהודח בחזרה לרחבה — במי הייתם בוחרים?</p>
+      <select class="game-select" id="vsCouple">${opts}</select>
+      <button class="game-btn" style="width:100%;" onclick="submitViewerSave()">שלחו בחירה</button>
+      <div id="vsResult"></div>
+    `);
+  }
+  function submitViewerSave(){
+    const c = document.getElementById('vsCouple').value;
+    document.getElementById('vsResult').innerHTML = `
+      <div class="coin-banner" style="margin-top:14px; color:var(--purple-deep); background:#f6effe; border-color:var(--line);">
+        <span>ההצבעה שלכם:</span><span>${escapeHtml(c)}</span>
+      </div>`;
+  }
+
+  // ---------- the perfect match (fan-fantasy pairing) ----------
+  function renderPerfectMatch(){
+    openModal(`
+      <h3>💞 השילוב המושלם</h3>
+      <p class="modal-sub">איזה מפורסם/ת שעדיין לא השתתפו הייתם רוצים לראות בעונה הבאה, ועם איזה רקדן/ית מקצועי/ת? (הצעה לשעשוע בלבד)</p>
+      <label class="field-label">שם המפורסם/ת שהצעתם</label>
+      <input type="text" id="pmCeleb" class="game-select" maxlength="30" placeholder="למשל: שם שתרצו להציע">
+      <label class="field-label">עם איזה רקדן/ית מקצועי/ת?</label>
+      <input type="text" id="pmDancer" class="game-select" maxlength="30" placeholder="שם הרקדן/ית">
+      <button class="game-btn" style="width:100%;" onclick="submitPerfectMatch()">שלחו הצעה</button>
+      <div id="pmResult"></div>
+    `);
+  }
+  function submitPerfectMatch(){
+    const celeb = document.getElementById('pmCeleb').value.trim();
+    const dancer = document.getElementById('pmDancer').value.trim();
+    if(!celeb || !dancer){ alert('צריך למלא גם מפורסם/ת וגם רקדן/ית 🙂'); return; }
+    document.getElementById('pmResult').innerHTML = `
+      <div class="style-result">
+        <div class="emoji">💞</div>
+        <h4>${escapeHtml(celeb)} + ${escapeHtml(dancer)}</h4>
+        <p class="modal-sub">שילוב שיכול להיות ממש מעניין!</p>
+      </div>`;
+  }
+
+  // ---------- the dance that must happen ----------
+  function renderMustHappen(){
+    const opts = couples.map(c=>`<option value="${c}">${c}</option>`).join('');
+    openModal(`
+      <h3>🌟 הריקוד שחייב לקרות</h3>
+      <p class="modal-sub">בחרו זוג, והציעו רעיון, נושא או תלבושת מיוחדת שהייתם רוצים לראות אותם מנסים בפרק הבא!</p>
+      <select class="game-select" id="mhCouple">${opts}</select>
+      <label class="field-label">הרעיון שלכם</label>
+      <textarea id="mhIdea" class="game-select" maxlength="140" placeholder="למשל: ריקוד עם תלבושות זוהרות בנושא חלל"></textarea>
+      <button class="game-btn" style="width:100%;" onclick="submitMustHappen()">שלחו רעיון</button>
+      <div id="mhResult"></div>
+    `);
+  }
+  function submitMustHappen(){
+    const c = document.getElementById('mhCouple').value;
+    const idea = document.getElementById('mhIdea').value.trim();
+    if(!idea){ alert('כתבו רעיון קודם 🙂'); return; }
+    document.getElementById('mhResult').innerHTML = `
+      <div class="coin-banner" style="margin-top:14px; color:var(--purple-deep); background:#f6effe; border-color:var(--line);">
+        <span>הרעיון שלכם ל${escapeHtml(c)} נשמר!</span>
+      </div>
+      <p class="modal-sub" style="margin-top:8px;">${escapeHtml(idea)}</p>`;
+  }
+
+  // ---------- printable certificate of appreciation ----------
+  const certTitles = ["המעריץ/ה הכי נאמן/ה","מלך/ת הניחושים","אלוף/ת הבינגו","שופט/ת הספה הרשמי/ת","רקדן/ית הסלון הכי טוב/ה"];
+  let certName = '';
+  let certTitle = '';
+  function certificateHtml(name, title, width){
+    return `<div style="width:${width}px; border:3px solid #7c3aed; border-radius:14px; padding:18px; text-align:center; background:linear-gradient(160deg,#fff,#faf5ff); font-family:'Rubik',sans-serif; margin:0 auto;">
+      <div style="font-size:1.4rem; margin-bottom:6px;">🏆</div>
+      <div style="font-size:0.7rem; color:#7c3aed; font-weight:700; letter-spacing:0.05em;">תעודת הוקרה</div>
+      <div id="certNameDisplay" style="font-size:1.1rem; font-weight:900; margin:10px 0 4px; color:#241534;">${escapeHtml(name)}</div>
+      <div style="font-size:0.85rem; font-weight:700; color:#db2777; margin-bottom:10px;">${escapeHtml(title)}</div>
+      <div style="font-size:0.62rem; color:#6b5b8a;">מוענקת ע"י האתר הלא רשמי של רוקדים עם כוכבים</div>
+    </div>`;
+  }
+  function renderCertificate(){
+    if(!certTitle) certTitle = certTitles[0];
+    showCertificate();
+  }
+  function showCertificate(){
+    openModal(`
+      <h3>📜 תעודת הוקרה מודפסת</h3>
+      <p class="modal-sub">מכניסים שם ובוחרים תואר, ומקבלים תעודה מגניבה שאפשר להדפיס.</p>
+      <label class="field-label">השם שלכם</label>
+      <input type="text" class="game-select" maxlength="24" value="${escapeHtml(certName)}" oninput="setCertName(this.value)" placeholder="השם שלכם">
+      <label class="field-label">התואר</label>
+      <select class="game-select" onchange="setCertTitle(this.value)">
+        ${certTitles.map(t=>`<option value="${t}" ${t===certTitle?'selected':''}>${t}</option>`).join('')}
+      </select>
+      <div class="avatar-preview" style="height:auto; padding:16px 0;">
+        ${certificateHtml(certName || 'השם שלך', certTitle, 260)}
+      </div>
+      <button class="game-btn" style="width:100%;" onclick="printCertificate()">🖨️ הדפיסו את התעודה</button>
+    `);
+  }
+  function setCertName(v){
+    certName = v;
+    const el = document.getElementById('certNameDisplay');
+    if(el) el.textContent = v || 'השם שלך';
+  }
+  function setCertTitle(v){ certTitle = v; showCertificate(); }
+  function printCertificate(){
+    document.getElementById('printArea').innerHTML = `<div style="display:flex; justify-content:center; padding:40px;">${certificateHtml(certName || 'השם שלך', certTitle, 420)}</div>`;
+    window.print();
+  }
+
+  // ---------- superlatives board ----------
+  const superlativeCats = [
+    { id:'stylish',    label:'הכי סחורה (סטייל)' },
+    { id:'surprising', label:'הכי מפתיע/ה' },
+    { id:'funny',      label:'הכי מצחיק/ה' },
+    { id:'sync',       label:'הכי מסונכרן/ת' },
+  ];
+  let superlativeVotes = {};
+  function renderSuperlatives(){ showSuperlatives(); }
+  function showSuperlatives(){
+    const opts = couples.map(c=>`<option value="${c}">${c}</option>`).join('');
+    openModal(`
+      <h3>🏅 לוח התארים</h3>
+      <p class="modal-sub">מצביעים איזה זוג הכי מתאים לכל תואר.</p>
+      ${superlativeCats.map(cat=>`
+        <div style="margin-bottom:14px;">
+          <label class="field-label">${cat.label}</label>
+          <div style="display:flex; gap:8px;">
+            <select class="game-select" id="sl_${cat.id}">${opts}</select>
+            <button class="game-btn secondary" onclick="voteSuperlative('${cat.id}')">הצביעו</button>
+          </div>
+          <div id="slResult_${cat.id}"></div>
+        </div>
+      `).join('')}
+      <p class="fan-note">ההצבעה נשמרת רק אצלכם בדפדפן.</p>
+    `);
+  }
+  function voteSuperlative(catId){
+    const sel = document.getElementById('sl_'+catId);
+    const couple = sel.value;
+    if(!superlativeVotes[catId]) superlativeVotes[catId] = {};
+    superlativeVotes[catId][couple] = (superlativeVotes[catId][couple]||0) + 1;
+    const entries = Object.entries(superlativeVotes[catId]).sort((a,b)=>b[1]-a[1]);
+    document.getElementById('slResult_'+catId).innerHTML = `
+      <div class="coin-banner" style="margin-top:6px; background:#f6effe; color:var(--purple-deep); border-color:var(--line);">
+        <span>מוביל/ה אצלכם:</span><span>${entries[0][0]} (${entries[0][1]})</span>
+      </div>`;
+  }
+
+  // ---------- session streak ----------
+  let streakCount = 0;
+  let streakBonusGiven = {};
+  const streakMilestones = { 3:10, 5:20, 10:40 };
+  function bumpStreak(){
+    streakCount++;
+    if(streakMilestones[streakCount] && !streakBonusGiven[streakCount]){
+      streakBonusGiven[streakCount] = true;
+      coins += streakMilestones[streakCount];
+      updateCoinUI();
+    }
+  }
+  function renderStreak(){
+    const nextMilestone = Object.keys(streakMilestones).map(Number).sort((a,b)=>a-b).find(m => m > streakCount);
+    openModal(`
+      <h3>🔥 רצף המשחקים שלי</h3>
+      <p class="modal-sub">זה סופר כמה משחקים פתחתם באתר <strong>בביקור הזה</strong> — עדיין לא ספירת רצף יומי אמיתית, כי לזה צריך שרת אמיתי (כמו שכבר הסברתי לגבי דברים אחרים באתר).</p>
+      <div class="style-result">
+        <div class="emoji">🔥</div>
+        <h4>${streakCount} משחקים נפתחו</h4>
+        <p class="modal-sub">${nextMilestone ? `עוד ${nextMilestone-streakCount} ותקבלו בונוס מטבעות!` : 'פתחתם את כל הבונוסים הזמינים 🎉'}</p>
+      </div>
+    `);
+  }
+
+  // ---------- challenge dice ----------
+  const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+  const diceChallenges = [
+    "עשו סיבוב סלסה מושלם",
+    "עמדו על קצות האצבעות 5 שניות",
+    "רקדו 10 שניות עם עיניים עצומות",
+    "עשו תנועת יד דרמטית כמו בואלס",
+    "קפצו 3 קפיצות ריקוד ברצף",
+    "המציאו תנועה חדשה שאף אחד לא ראה!",
+  ];
+  function renderDiceGame(){
+    showDiceResult(null);
+  }
+  function showDiceResult(face){
+    openModal(`
+      <h3>🎲 קוביית האתגרים</h3>
+      <p class="modal-sub">מטילים קובייה ומקבלים אתגר ריקוד קצר לבית!</p>
+      <div class="style-result">
+        <div class="emoji" style="font-size:2.4rem;">${face !== null ? diceFaces[face] : '🎲'}</div>
+        ${face !== null ? `<p class="modal-sub" style="font-weight:700;">${diceChallenges[face]}</p>` : ''}
+      </div>
+      <button class="game-btn" style="width:100%;" onclick="rollDice()">🎲 הטילו קובייה</button>
+    `);
+  }
+  function rollDice(){
+    showDiceResult(Math.floor(Math.random()*6));
+  }
+
+  updateCoinUI();
+
+  // ---------- fan card (local only — each visitor sees their own cards in this browser) ----------
+  let fanCards = [];
+  function populateFanSelect(){
+    const sel = document.getElementById('fcCouple');
+    if(!sel) return;
+    sel.innerHTML = couples.map(c=>`<option value="${c}">${c}</option>`).join('');
+  }
+  function escapeHtml(s){
+    const div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
+  }
+  function submitFanCard(){
+    const nick = document.getElementById('fcNick').value.trim();
+    const couple = document.getElementById('fcCouple').value;
+    const msg = document.getElementById('fcMsg').value.trim();
+    if(!nick || !msg){ alert('צריך למלא כינוי ומסר עידוד לפני שמפרסמים 🙂'); return; }
+    fanCards.unshift({ nick, couple, msg });
+    document.getElementById('fcNick').value = '';
+    document.getElementById('fcMsg').value = '';
+    document.getElementById('fcCouple').selectedIndex = 0;
+    renderFanCards();
+  }
+  function renderFanCards(){
+    const grid = document.getElementById('fanCardGrid');
+    if(!grid) return;
+    if(!fanCards.length){ grid.innerHTML = `<p class="fan-note">עדיין אין כרטיסים — פרסמו את הראשון!</p>`; return; }
+    grid.innerHTML = fanCards.map(c => `
+      <div class="fan-card">
+        <div class="who">💌 ${escapeHtml(c.nick)}</div>
+        <div class="couple">מעודד/ת את ${escapeHtml(c.couple)}</div>
+        <div class="msg">${escapeHtml(c.msg)}</div>
+      </div>
+    `).join('');
+  }
+  populateFanSelect();
+  renderFanCards();
+</script>
+
+
+</body>
+</html>
