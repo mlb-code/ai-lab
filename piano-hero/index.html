@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>PIANO HERO — לומדים לנגן, בכיף, לבד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0d;
+    --bg-elev:#131318;
+    --bg-elev-2:#1c1c23;
+    --line:#28282f;
+    --text:#f5f5f7;
+    --text-muted:#9a9aa8;
+    --blue:#7edbff;
+    --pink:#ff9fcb;
+    --gold:#ffd876;
+    --blue-soft:rgba(126,219,255,.14);
+    --pink-soft:rgba(255,159,203,.14);
+    --grad:linear-gradient(120deg,var(--blue),var(--pink));
+    --frame-grad:linear-gradient(135deg, var(--gold), var(--pink), var(--blue));
+    --radius:20px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;width:100%;}
+  body{
+    margin:0;
+    width:100%;
+    max-width:100vw;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Assistant',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+  body::after{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;
+    z-index:999;
+    border:12px solid transparent;
+    border-image:var(--frame-grad) 1;
+    box-shadow:inset 0 0 40px rgba(255,216,118,.12);
+  }
+  h1,h2,h3,.brand{font-family:'Rubik',sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+  /* focus visibility */
+  a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:8px;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,10,13,.75);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1100px;margin:0 auto;}
+  .brand{font-weight:900;font-size:20px;letter-spacing:.5px;display:flex;align-items:center;gap:8px;}
+  .brand-dot{width:10px;height:10px;border-radius:50%;background:var(--grad);}
+  .nav-links{display:flex;gap:28px;font-size:15px;color:var(--text-muted);}
+  .nav-links a:hover{color:var(--text);}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:12px 22px;border-radius:999px;font-weight:700;font-size:15px;
+    border:none;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;
+    font-family:'Rubik',sans-serif;
+  }
+  .btn-primary{background:var(--grad);color:#0a0a0d;box-shadow:0 8px 24px -8px rgba(255,159,203,.5);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(255,159,203,.65);}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--blue);}
+  .nav .btn{padding:10px 20px;font-size:14px;}
+
+  /* hamburger — hidden on desktop by default */
+  .hamburger{
+    display:none;
+    flex-direction:column;justify-content:center;gap:5px;
+    width:38px;height:38px;
+    background:transparent;border:1px solid var(--line);border-radius:10px;
+    cursor:pointer;padding:0;
+  }
+  .hamburger span{
+    display:block;width:18px;height:2px;margin:0 auto;
+    background:var(--text);border-radius:2px;
+    transition:transform .22s ease, opacity .22s ease;
+  }
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-menu{
+    display:none;
+    flex-direction:column;gap:4px;
+    padding:10px 24px 22px;
+    border-top:1px solid var(--line);
+    background:rgba(10,10,13,.97);
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{
+    padding:12px 6px;font-size:15.5px;color:var(--text-muted);
+    border-bottom:1px solid var(--line);
+  }
+  .mobile-menu a:last-of-type{border-bottom:none;}
+  .mobile-menu a:hover{color:var(--text);}
+  .mobile-menu .btn{margin-top:10px;width:100%;}
+
+  /* mobile breakpoint: collapse full top bar into hamburger, only on mobile */
+  @media(max-width:760px){
+    .nav-links{display:none;}
+    .nav-cta{display:none;}
+    .hamburger{display:flex;}
+  }
+  @media(min-width:761px){
+    .mobile-menu{display:none !important;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:76px 0 40px;position:relative;}
+  .hero-glow{
+    position:absolute;inset:-200px 0 auto 0;height:600px;
+    background:radial-gradient(60% 60% at 50% 0%, var(--blue-soft), transparent 70%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;color:var(--text-muted);
+    border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+    margin-bottom:22px;
+  }
+  .eyebrow span{width:6px;height:6px;border-radius:50%;background:var(--pink);}
+  .hero h1{
+    font-size:clamp(34px,6vw,64px);
+    font-weight:900;line-height:1.08;letter-spacing:-.5px;
+    max-width:760px;margin:0 0 22px;
+  }
+  .hero h1 .grad-text{
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{font-size:clamp(16px,2.2vw,19px);color:var(--text-muted);max-width:540px;margin:0 0 32px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:56px;}
+
+  /* hero two-column layout: text + song library card */
+  .hero-top{display:flex;align-items:flex-start;gap:36px;}
+  .hero-text{flex:1 1 auto;min-width:0;}
+  .song-library{
+    flex:0 0 320px;
+    max-width:100%;
+    background:var(--bg-elev);border:1px solid var(--line);border-radius:24px;
+    padding:26px 24px;margin-bottom:40px;
+  }
+  .song-lib-badge{
+    display:inline-block;font-size:12.5px;color:var(--text-muted);
+    border:1px solid var(--line);padding:5px 12px;border-radius:999px;margin-bottom:14px;
+  }
+  .song-library h3{font-size:17px;margin:0 0 14px;line-height:1.35;}
+  .song-lib-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}
+  .song-lib-list li{
+    position:relative;padding-inline-start:20px;font-size:14px;color:var(--text-muted);
+    cursor:pointer;transition:color .15s ease;
+  }
+  .song-lib-list li:hover{color:var(--text);}
+  .song-lib-list li:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px;}
+  .song-lib-list li::before{
+    content:"";position:absolute;inline-size:8px;block-size:8px;border-radius:50%;
+    inset-inline-start:0;top:6px;background:var(--blue);
+  }
+  .song-lib-list#song-lib-basic li:nth-child(1)::before{background:var(--blue);}
+  .song-lib-list#song-lib-basic li:nth-child(2)::before{background:#a9d9ff;}
+  .song-lib-list#song-lib-basic li:nth-child(3)::before{background:#d3c9ff;}
+  .song-lib-list#song-lib-basic li:nth-child(4)::before{background:#ffb3e0;}
+  .song-lib-divider{height:1px;background:var(--line);margin:18px 0;}
+  .song-lib-premium-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .premium-tag{
+    font-family:'Rubik',sans-serif;font-weight:800;font-size:12.5px;color:#0a0a0d;
+    background:var(--grad);padding:4px 10px;border-radius:999px;
+  }
+  .premium-note{font-size:12px;color:var(--text-muted);}
+  .song-lib-list.locked li{color:#6d6d78;}
+  .song-lib-list.locked li::before{background:var(--pink);opacity:.55;}
+  .song-lib-foot{font-size:12.5px;color:var(--text-muted);margin:14px 0 0;}
+
+  @media(max-width:900px){
+    .hero-top{flex-direction:column;}
+    .song-library{flex:none;width:100%;margin-bottom:32px;}
+  }
+
+  /* piano */
+  .piano-card{
+    background:var(--bg-elev);border:1px solid var(--line);border-radius:28px;
+    padding:28px 28px 24px;position:relative;overflow:hidden;
+  }
+  .piano-hint{font-size:14px;color:var(--text-muted);margin:0 0 18px;text-align:center;}
+  .piano-hint strong{color:var(--text);}
+  .keyboard-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;width:100%;max-width:100%;}
+  .keyboard{
+    direction:ltr;position:relative;height:190px;margin:0 auto;
+    user-select:none;-webkit-user-select:none;
+  }
+  .key{
+    position:absolute;top:0;border-radius:0 0 10px 10px;
+    display:flex;align-items:flex-end;justify-content:center;
+    padding-bottom:12px;font-family:'Rubik',sans-serif;font-weight:700;
+    cursor:pointer;transition:filter .08s ease, transform .05s ease;
+  }
+  .key.white{
+    width:58px;height:190px;background:#f5f5f7;color:#0a0a0d;
+    border:1px solid #d8d8dd;font-size:13px;z-index:1;
+  }
+  .key.white:not(:first-child){border-radius:0 0 10px 10px;}
+  .key.black{
+    width:34px;height:114px;background:#141417;color:#eee;
+    border:1px solid #000;font-size:10px;z-index:2;box-shadow:0 4px 8px rgba(0,0,0,.4);
+  }
+  .key:active, .key.playing{transform:translateY(2px);}
+  .key .note-pop{
+    position:absolute;top:-34px;left:50%;transform:translateX(-50%) translateY(6px);
+    font-size:12px;font-weight:700;padding:4px 9px;border-radius:8px;color:#0a0a0d;
+    opacity:0;transition:opacity .25s ease, transform .25s ease;white-space:nowrap;
+    font-family:'Rubik',sans-serif;
+  }
+  .key.pop .note-pop{opacity:1;transform:translateX(-50%) translateY(-4px);}
+
+  /* songbook strip */
+  .songbook{
+    margin-top:22px;padding-top:20px;border-top:1px dashed var(--line);
+  }
+  .songbook-title{
+    font-family:'Rubik',sans-serif;font-weight:700;font-size:14.5px;
+    color:var(--text-muted);margin:0 0 14px;text-align:center;
+  }
+  .song-sheet{
+    direction:ltr;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  }
+  .song-note{
+    width:46px;height:46px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Rubik',sans-serif;font-weight:800;font-size:14px;color:#0a0a0d;
+    cursor:pointer;border:2px solid rgba(255,255,255,.25);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .song-note:hover{transform:translateY(-3px);}
+  .song-note.done{box-shadow:0 0 0 3px rgba(255,255,255,.5) inset;}
+  .song-note.next{animation:pulseNext 1.4s infinite;}
+  @keyframes pulseNext{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.5);}50%{box-shadow:0 0 0 6px rgba(255,255,255,0);}}
+  @media(prefers-reduced-motion:reduce){.song-note.next{animation:none;}}
+  .song-win{
+    text-align:center;font-family:'Rubik',sans-serif;font-weight:700;font-size:14px;
+    margin:14px 0 0;color:var(--pink);opacity:0;transition:opacity .3s ease;
+  }
+  .song-win.show{opacity:1;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:620px;margin:0 auto 48px;text-align:center;}
+  .section-head h2{font-size:clamp(26px,4vw,38px);font-weight:800;margin:0 0 14px;letter-spacing:-.3px;}
+  .section-head p{color:var(--text-muted);font-size:16px;margin:0;}
+  .eyebrow-2{font-size:13px;color:var(--pink);font-weight:700;letter-spacing:.4px;margin-bottom:12px;display:block;}
+
+  /* challenge */
+  .challenge-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto;}
+  .challenge-card{
+    background:var(--bg-elev);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;
+  }
+  .challenge-card .num{
+    font-family:'Rubik',sans-serif;font-weight:900;font-size:14px;
+    width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--blue-soft);color:var(--blue);margin-bottom:16px;
+  }
+  .challenge-card:nth-child(2) .num{background:var(--pink-soft);color:var(--pink);}
+  .challenge-card h3{margin:0 0 8px;font-size:18px;}
+  .challenge-card p{margin:0;color:var(--text-muted);font-size:15px;}
+  @media(max-width:700px){.challenge-grid{grid-template-columns:1fr;}}
+
+  /* features */
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .feature-card{
+    background:var(--bg-elev);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 26px;display:flex;flex-direction:column;gap:16px;
+  }
+  .feature-visual{height:86px;display:flex;align-items:center;justify-content:center;}
+  .dots-row{display:flex;gap:10px;}
+  .note-dot{width:16px;height:16px;border-radius:50%;}
+  .feature-card h3{margin:0;font-size:19px;}
+  .feature-card p{margin:0;color:var(--text-muted);font-size:14.5px;}
+  @media(max-width:820px){
+    .feature-grid{grid-template-columns:1fr;}
+  }
+
+  /* mobile-only: feature cards become a right-to-left swipeable strip instead of a stack */
+  @media(max-width:600px){
+    .feature-grid{
+      display:flex;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      gap:16px;
+      padding-bottom:10px;
+      margin:0 -24px;
+      padding-inline:24px;
+    }
+    .feature-card{
+      flex:0 0 82%;
+      scroll-snap-align:start;
+    }
+  }
+
+  .quiz-demo{display:flex;align-items:center;gap:14px;}
+  .quiz-note{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:'Rubik',sans-serif;font-weight:800;color:#0a0a0d;font-size:15px;}
+  .quiz-arrow{color:var(--text-muted);font-size:20px;}
+  .quiz-keys{display:flex;gap:6px;}
+  .quiz-key{width:26px;height:40px;border-radius:0 0 6px 6px;background:#2a2a31;border:1px solid var(--line);}
+  .quiz-key.correct{background:var(--pink-soft);border-color:var(--pink);}
+
+  .seq-row{display:flex;gap:8px;align-items:center;}
+  .seq-dot{width:20px;height:20px;border-radius:50%;opacity:.35;animation:seqlight 3.2s infinite;}
+  .seq-dot:nth-child(1){animation-delay:0s;}
+  .seq-dot:nth-child(2){animation-delay:.5s;}
+  .seq-dot:nth-child(3){animation-delay:1s;}
+  .seq-dot:nth-child(4){animation-delay:1.5s;}
+  @keyframes seqlight{0%,100%{opacity:.35;transform:scale(1);}15%{opacity:1;transform:scale(1.25);}30%{opacity:.35;transform:scale(1);}}
+  @media(prefers-reduced-motion:reduce){.seq-dot{animation:none;opacity:.9;}}
+
+  /* audience */
+  .aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .aud-card{
+    border:1px solid var(--line);border-radius:var(--radius);padding:26px;
+    background:linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
+  }
+  .aud-card h3{margin:0 0 8px;font-size:17px;}
+  .aud-card p{margin:0;color:var(--text-muted);font-size:14.5px;}
+  @media(max-width:820px){.aud-grid{grid-template-columns:1fr;}}
+
+  /* why us */
+  .why-wrap{
+    display:flex;gap:40px;align-items:center;flex-wrap:wrap;
+    background:var(--bg-elev);border:1px solid var(--line);border-radius:28px;padding:44px;
+    max-width:100%;
+  }
+  .why-wrap .side{flex:1 1 260px;min-width:0;}
+  .why-wrap h2{font-size:28px;margin:0 0 14px;}
+  .why-wrap p{color:var(--text-muted);margin:0 0 20px;font-size:15.5px;}
+  .compare{display:flex;flex-direction:column;gap:12px;}
+  .compare-row{display:flex;align-items:center;gap:12px;font-size:14.5px;color:var(--text-muted);
+    background:var(--bg-elev-2);border:1px solid var(--line);border-radius:12px;padding:12px 16px;}
+  .compare-row.good{color:var(--text);border-color:transparent;background:var(--pink-soft);}
+  .compare-row .mark{font-family:'Rubik',sans-serif;font-weight:900;font-size:14px;}
+
+  /* pricing */
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:820px;margin:0 auto;}
+  .price-card{
+    border:1px solid var(--line);border-radius:var(--radius);padding:32px;background:var(--bg-elev);
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .price-card.highlight{border:1px solid transparent;background:
+      linear-gradient(var(--bg-elev),var(--bg-elev)) padding-box,
+      var(--grad) border-box;
+  }
+  .price-tag{font-size:13px;color:var(--pink);font-weight:700;}
+  .price-card h3{margin:0;font-size:20px;}
+  .price-amount{font-family:'Rubik',sans-serif;font-weight:900;font-size:32px;margin:6px 0;}
+  .price-amount span{font-size:14px;color:var(--text-muted);font-weight:500;}
+  .price-list{list-style:none;padding:0;margin:6px 0 12px;display:flex;flex-direction:column;gap:10px;font-size:14.5px;color:var(--text-muted);}
+  .price-list li{display:flex;align-items:center;gap:8px;}
+  .price-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;}
+  @media(max-width:700px){.price-grid{grid-template-columns:1fr;}}
+
+  /* final cta */
+  .final-cta{
+    text-align:center;padding:70px 24px;border-radius:28px;max-width:1052px;margin:0 auto;
+    background:radial-gradient(70% 100% at 50% 0%, var(--blue-soft), transparent 60%), var(--bg-elev);
+    border:1px solid var(--line);
+  }
+  .final-cta h2{font-size:clamp(26px,4vw,36px);margin:0 0 16px;}
+  .final-cta p{color:var(--text-muted);margin:0 0 28px;}
+
+  footer{border-top:1px solid var(--line);padding:32px 24px;text-align:center;color:var(--text-muted);font-size:13.5px;}
+
+  /* song modal */
+  .song-modal-backdrop{
+    display:none;position:fixed;inset:0;z-index:1000;
+    background:rgba(6,6,8,.72);backdrop-filter:blur(4px);
+    align-items:center;justify-content:center;padding:20px;
+  }
+  .song-modal-backdrop.open{display:flex;}
+  .song-modal{
+    position:relative;width:100%;max-width:440px;max-height:80vh;overflow-y:auto;
+    background:var(--bg-elev);border:1px solid var(--line);border-radius:22px;
+    padding:30px 26px;
+  }
+  .song-modal-close{
+    position:absolute;top:16px;left:16px;
+    width:32px;height:32px;border-radius:50%;border:1px solid var(--line);
+    background:var(--bg-elev-2);color:var(--text);cursor:pointer;font-size:14px;
+  }
+  .song-modal-tag{font-size:12.5px;color:var(--pink);font-weight:700;margin:0 0 8px;}
+  .song-modal h3{margin:0 0 18px;font-size:20px;padding-inline-end:34px;}
+  .song-modal-notes{direction:ltr;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .song-modal-note{
+    width:40px;height:40px;border-radius:50%;flex-shrink:0;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Rubik',sans-serif;font-weight:800;font-size:12px;color:#0a0a0d;
+    transition:transform .12s ease;
+  }
+  .song-modal-note:hover{transform:translateY(-2px);}
+  .song-modal-hint{font-size:13px;color:var(--text-muted);margin:0;}
+  .song-modal-teaser{
+    background:var(--bg-elev-2);border:1px dashed var(--line);border-radius:14px;
+    padding:20px;text-align:center;
+  }
+  .song-modal-teaser p{margin:0 0 14px;color:var(--text-muted);font-size:14.5px;}
+  .song-modal-teaser .btn{width:100%;}
+  .song-modal-sheet-link{
+    display:block;margin-top:12px;font-size:13px;color:var(--blue);text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  .song-modal-sheet-link:hover{color:var(--pink);}
+
+  /* creator preview mode badge */
+  .creator-badge{
+    position:fixed;bottom:18px;left:18px;z-index:1001;
+    background:var(--grad);color:#0a0a0d;font-family:'Rubik',sans-serif;font-weight:800;
+    font-size:12.5px;padding:8px 14px;border-radius:999px;
+    box-shadow:0 8px 20px -6px rgba(0,0,0,.5);
+  }
+
+  /* checkout modal */
+  .checkout-modal-backdrop{
+    display:none;position:fixed;inset:0;z-index:1000;
+    background:rgba(6,6,8,.75);backdrop-filter:blur(4px);
+    align-items:center;justify-content:center;padding:20px;
+  }
+  .checkout-modal-backdrop.open{display:flex;}
+  .checkout-modal{
+    position:relative;width:100%;max-width:420px;max-height:88vh;overflow-y:auto;
+    background:var(--bg-elev);border:1px solid var(--line);border-radius:22px;
+    padding:30px 26px;
+  }
+  .checkout-modal h3{margin:0 0 10px;font-size:20px;padding-inline-end:34px;}
+  .checkout-demo-note{
+    font-size:12.5px;color:var(--text-muted);background:var(--bg-elev-2);
+    border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin:0 0 20px;
+  }
+  .checkout-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;font-size:13.5px;color:var(--text-muted);}
+  .checkout-field input{
+    background:var(--bg-elev-2);border:1px solid var(--line);border-radius:10px;
+    padding:11px 14px;color:var(--text);font-family:'Assistant',sans-serif;font-size:14.5px;
+    direction:ltr;text-align:right;
+  }
+  .checkout-field input:focus{outline:none;border-color:var(--blue);}
+  .checkout-row{display:flex;gap:12px;}
+  .checkout-row .checkout-field{flex:1;}
+  .checkout-pay-btn{width:100%;margin-top:6px;font-size:16px;padding:14px;}
+  .checkout-success{text-align:center;padding:10px 4px;}
+  .checkout-success-icon{
+    width:56px;height:56px;border-radius:50%;background:var(--grad);color:#0a0a0d;
+    display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;
+    margin:0 auto 18px;
+  }
+  .checkout-success h3{margin:0 0 10px;}
+  .checkout-success p{color:var(--text-muted);font-size:14.5px;margin:0 0 22px;}
+  .checkout-success .btn{width:100%;}
+
+  /* ---------- GLOBAL MOBILE TIGHTENING ---------- */
+  @media(max-width:640px){
+    body::after{border-width:8px;}
+    section{padding:56px 0;}
+    .hero{padding:48px 0 28px;}
+    .piano-card{padding:20px 16px 18px;border-radius:20px;}
+    .final-cta{padding:48px 20px;}
+    .why-wrap{padding:28px;gap:24px;}
+    .hero-ctas .btn, .hero-ctas a{width:100%;justify-content:center;}
+    .hero-ctas{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand"><span class="brand-dot"></span>PIANO HERO</div>
+    <div class="nav-links">
+      <a href="#solution">איך זה עובד</a>
+      <a href="#audience">למי זה מתאים</a>
+      <a href="#pricing">מחירים</a>
+    </div>
+    <a href="#pricing" class="btn btn-primary nav-cta">התחילו בחינם</a>
+    <button class="hamburger" id="hamburger" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#solution">איך זה עובד</a>
+    <a href="#audience">למי זה מתאים</a>
+    <a href="#pricing">מחירים</a>
+    <a href="#pricing" class="btn btn-primary">התחילו בחינם</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="wrap">
+      <div class="hero-top">
+        <div class="hero-text">
+          <span class="eyebrow"><span></span>שבוע ניסיון חינם, בלי צורך במורה</span>
+          <h1>כל אחד יכול להיות<br><span class="grad-text">גיבור פסנתר.</span></h1>
+          <p class="lead">לומדים לנגן דרך משחק, ניקוד ומשוב מיידי על כל תו — בקצב שלכם, בלי תלות בהורה או במורה שיושב לידכם.</p>
+          <div class="hero-ctas">
+            <a href="#pricing" class="btn btn-primary">התחילו לנגן בחינם</a>
+            <a href="#solution" class="btn btn-ghost">גלו איך זה עובד</a>
+          </div>
+        </div>
+
+        <aside class="song-library">
+          <span class="song-lib-badge">🎵 מה תוכלו לנגן</span>
+          <h3>שירים ומנגינות שכולם מכירים</h3>
+          <ul class="song-lib-list" id="song-lib-basic">
+            <li data-key="twinkle">Twinkle Twinkle Little Star</li>
+            <li data-key="ode">Ode to Joy — בטהובן</li>
+            <li data-key="mary">Mary Had a Little Lamb</li>
+            <li data-key="hava">הבה נגילה</li>
+            <li data-key="rio">ריו דה ז'נרו — עומר אדם</li>
+            <li data-key="shnei">שני משוגעים — עומר אדם</li>
+            <li data-key="ani">אני ואתה — אריק איינשטיין</li>
+            <li data-key="yerushalayim">ירושלים של זהב — נעמי שמר</li>
+            <li data-key="lu">לו יהי — נעמי שמר</li>
+            <li data-key="shalom">שיר לשלום</li>
+            <li data-key="michelle">מישל — נועם בתן</li>
+          </ul>
+
+          <div class="song-lib-divider"></div>
+
+          <div class="song-lib-premium-head">
+            <span class="premium-tag">🔒 פרימיום</span>
+            <span class="premium-note">נפתח עם שדרוג</span>
+          </div>
+          <ul class="song-lib-list locked" id="song-lib-premium">
+            <li data-key="furelise" data-locked="1">Für Elise — קטע מלא</li>
+            <li data-key="claire" data-locked="1">Clair de Lune — דביסי</li>
+            <li data-key="heroesdance" data-locked="1">ריקוד הגיבורים — מנגינה מקורית</li>
+            <li data-key="starrynight" data-locked="1">לילה של כוכבים — מנגינה מקורית</li>
+            <li data-key="littlewin" data-locked="1">ניצחון קטן — מנגינה מקורית</li>
+            <li data-key="daidai" data-locked="1">Dai Dai</li>
+            <li data-key="allofme" data-locked="1">All of Me — John Legend</li>
+            <li data-key="beatit" data-locked="1">Beat It — Michael Jackson</li>
+            <li data-key="replay" data-locked="1">Replay — Iyaz</li>
+            <li data-key="tamid" data-locked="1">תמיד אוהב אותי</li>
+            <li data-key="more" data-locked="1">ועוד שירים של זמרים ישראלים מוכרים ואהובים</li>
+          </ul>
+          <p class="song-lib-foot">+ תווים מתקדמים ועדכוני רשימה שוטפים</p>
+        </aside>
+      </div>
+
+      <div class="piano-card">
+        <p class="piano-hint">לחצו על המקשים ותרגישו — <strong>כל תו מקבל צליל וצבע משלו</strong></p>
+        <div class="keyboard-scroll">
+          <div class="keyboard" id="keyboard"></div>
+        </div>
+
+        <div class="songbook">
+          <p class="songbook-title">📖 החוברת הראשונה שלכם — הניגון המקורי של PIANO HERO</p>
+          <div class="song-sheet" id="song-sheet"></div>
+          <p class="song-win" id="song-win">איזה כיף! ניגנת את השיר הראשון שלך! 🎉</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="song-modal-backdrop" id="song-modal-backdrop">
+    <div class="song-modal" role="dialog" aria-modal="true" aria-labelledby="song-modal-title">
+      <button class="song-modal-close" id="song-modal-close" aria-label="סגירה">✕</button>
+      <p class="song-modal-tag" id="song-modal-tag"></p>
+      <h3 id="song-modal-title"></h3>
+      <div id="song-modal-body"></div>
+    </div>
+  </div>
+
+  <section id="challenge">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-2">האתגר</span>
+        <h2>ללמוד תווים לבד, זה לא תמיד פשוט</h2>
+      </div>
+      <div class="challenge-grid">
+        <div class="challenge-card">
+          <div class="num">01</div>
+          <h3>עמוד שחור-לבן שמפחיד</h3>
+          <p>דף מלא בתווים קלאסיים יכול להיראות כמו שפה זרה לילד (ולפעמים גם למבוגר), ובלי הכוונה קל מאוד לוותר באמצע הדרך.</p>
+        </div>
+        <div class="challenge-card">
+          <div class="num">02</div>
+          <h3>מורה זה כסף וזמן</h3>
+          <p>שיעורי פסנתר פרטיים עולים כסף בכל חודש, ולא תמיד יש מורה או הורה פנויים בדיוק ברגע שבא לכם לנגן.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="solution">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-2">הפתרון</span>
+        <h2>שלושה כלים שהופכים תו לחוויה</h2>
+        <p>כל תו באפליקציה מקבל צבע קבוע משלו — מכחול בהיר לתווים הנמוכים ועד ורוד בהיר לגבוהים. ככה מזהים כל תו במבט אחד.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-visual">
+            <div class="dots-row" id="feat-dots-1"></div>
+          </div>
+          <h3>מקלדת אינטראקטיבית</h3>
+          <p>מקלדת פסנתר אמיתית על המסך, בדיוק כמו זו שלמעלה. כל לחיצה משמיעה צליל נקי ומדליקה את הצבע של התו.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-visual quiz-demo">
+            <div class="quiz-note" id="quiz-note-color">דו</div>
+            <span class="quiz-arrow">←</span>
+            <div class="quiz-keys">
+              <div class="quiz-key"></div>
+              <div class="quiz-key correct"></div>
+              <div class="quiz-key"></div>
+            </div>
+          </div>
+          <h3>משחק זיהוי תווים</h3>
+          <p>תו צבעוני מופיע על המסך, ואתם לוחצים על המקש שמתאים לו. צדקתם? ניקוד ואפקט ניצחון. טעיתם? האפליקציה מראה בדיוק לאן ללכת.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-visual">
+            <div class="seq-row" id="feat-dots-3"></div>
+          </div>
+          <h3>מנגינות שלב-אחר-שלב</h3>
+          <p>רצף קצר של תווים צבעוניים — דו־רה־מי־דו. מסיימים אותו בהצלחה ומקבלים שיר קטן ומוכר מנוגן במלואו, ועוד קצת ביטחון עצמי בדרך.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="audience">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-2">למי זה מתאים</span>
+        <h2>מהצעד הראשון ועד השיר המורכב</h2>
+      </div>
+      <div class="aud-grid">
+        <div class="aud-card">
+          <h3>ילדים שרק מתחילים</h3>
+          <p>לומדים בקצב שנוח להם, בלי לחץ ובלי צורך שהורה ישב לידם כל דקה.</p>
+        </div>
+        <div class="aud-card">
+          <h3>מבוגרים שרוצים להתחיל</h3>
+          <p>חוויה נעימה ובטוחה שמלמדת יסודות ותווים בלי תחושת "בית ספר".</p>
+        </div>
+        <div class="aud-card">
+          <h3>מי שכבר מנגן ורוצה להשתפר</h3>
+          <p>שירים ויצירות ברמות עולות, כדי להתקדם הרבה מעבר ליסודות.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="why-wrap">
+        <div class="side">
+          <h2>למה PIANO HERO ולא מורה פרטי?</h2>
+          <p>אפליקציות דומות קיימות, אבל כאן הלמידה קורית דרך הצלחות קטנות ומשוב מיידי — לא דרך תרגול יבש. ובלי תשלום חודשי למורה פרטי.</p>
+        </div>
+        <div class="side">
+          <div class="compare">
+            <div class="compare-row"><span class="mark">מורה פרטי</span> תשלום גבוה לשיעור, תלוי בזמינות</div>
+            <div class="compare-row good"><span class="mark">PIANO HERO</span> מנגנים מתי שנוח, בלי תלות באף אחד</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-2">מחירים</span>
+        <h2>מתחילים חינם, ממשיכים בקצב שלכם</h2>
+        <p>שבוע ראשון על הבית. אחר כך בוחרים את המסלול שמתאים.</p>
+      </div>
+      <div class="price-grid">
+        <div class="price-card">
+          <span class="price-tag">בסיסי</span>
+          <h3>מנוי חודשי</h3>
+          <div class="price-amount">10 ₪ <span>לחודש, לאחר שבוע ניסיון חינם</span></div>
+          <ul class="price-list">
+            <li>מקלדת אינטראקטיבית מלאה</li>
+            <li>משחקי זיהוי תווים</li>
+            <li>מבחר שירים ומנגינות כיפיות</li>
+          </ul>
+          <a href="#" class="btn btn-ghost" id="checkout-btn-basic">התחילו שבוע חינם</a>
+        </div>
+        <div class="price-card highlight">
+          <span class="price-tag">פרימיום</span>
+          <h3>לרוצים להעמיק</h3>
+          <div class="price-amount">39.99 ₪ <span>לחודש — כל הבסיסי + עומק והתקדמות</span></div>
+          <ul class="price-list">
+            <li>תווים ויצירות מורכבים יותר</li>
+            <li>עוד שירים ועוד סגנונות</li>
+            <li>קצב התקדמות אישי ומתקדם</li>
+          </ul>
+          <a href="#" class="btn btn-primary" id="checkout-btn-premium">שדרגו לפרימיום</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="checkout-modal-backdrop" id="checkout-modal-backdrop">
+    <div class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+      <button class="song-modal-close" id="checkout-close" aria-label="סגירה">✕</button>
+
+      <div id="checkout-form-view">
+        <p class="song-modal-tag" id="checkout-plan-tag">מנוי בסיסי</p>
+        <h3 id="checkout-title">פרטי תשלום</h3>
+        <p class="checkout-demo-note">🔒 דמו להדגמה בלבד — לא מתבצע חיוב אמיתי ולא נשלח מידע לשום מקום.</p>
+
+        <label class="checkout-field">
+          <span>שם בעל הכרטיס</span>
+          <input type="text" placeholder="ישראל ישראלי" autocomplete="off">
+        </label>
+        <label class="checkout-field">
+          <span>מספר כרטיס</span>
+          <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="off">
+        </label>
+        <div class="checkout-row">
+          <label class="checkout-field">
+            <span>תוקף</span>
+            <input type="text" placeholder="MM/YY" maxlength="5" autocomplete="off">
+          </label>
+          <label class="checkout-field">
+            <span>CVC</span>
+            <input type="text" placeholder="123" maxlength="3" autocomplete="off">
+          </label>
+        </div>
+
+        <button class="btn btn-primary checkout-pay-btn" id="checkout-pay-btn">שלמו <span id="checkout-pay-amount"></span></button>
+      </div>
+
+      <div id="checkout-success-view" class="checkout-success" hidden>
+        <div class="checkout-success-icon">✓</div>
+        <h3>התשלום בוצע בהצלחה!</h3>
+        <p id="checkout-success-text"></p>
+        <button class="btn btn-ghost" id="checkout-done-btn">סגירה</button>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="final-cta">
+        <h2>המקשים מחכים לכם</h2>
+        <p>נסו את המקלדת למעלה, ואז תנו לגיבור הפסנתר שבכם לצאת לדרך.</p>
+        <a href="#pricing" class="btn btn-primary">התחילו לנגן בחינם</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">PIANO HERO © 2026 — לומדים לנגן, בכיף, לבד.</div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=piano-hero" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<script>
+// ---- creator preview mode (owner-only, this browser/computer only) ----
+// Visit once with ?creator=PIANOHERO-OWNER-2026 in the URL, then it's remembered
+// on this browser via localStorage. Doesn't fabricate real notation for copyrighted
+// songs — just removes the paywall UI and shows a placeholder for the owner.
+const CREATOR_SECRET = 'PIANOHERO-OWNER-2026';
+let creatorMode = false;
+try{
+  const params = new URLSearchParams(location.search);
+  if(params.get('creator') === CREATOR_SECRET){
+    localStorage.setItem('pianoHeroCreatorMode', '1');
+  }
+  creatorMode = localStorage.getItem('pianoHeroCreatorMode') === '1';
+}catch(e){ creatorMode = false; }
+
+if(creatorMode){
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('creator-mode');
+    const badge = document.createElement('div');
+    badge.className = 'creator-badge';
+    badge.textContent = '🔑 מצב יוצר — צפייה פרטית';
+    document.body.appendChild(badge);
+  });
+}
+
+// ---- checkout (demo only — no real payment, nothing sent anywhere) ----
+let purchasedTier = null;
+try{ purchasedTier = localStorage.getItem('pianoHeroPurchasedTier'); }catch(e){ purchasedTier = null; }
+
+const checkoutBackdrop = document.getElementById('checkout-modal-backdrop');
+const checkoutClose = document.getElementById('checkout-close');
+const checkoutFormView = document.getElementById('checkout-form-view');
+const checkoutSuccessView = document.getElementById('checkout-success-view');
+const checkoutPlanTag = document.getElementById('checkout-plan-tag');
+const checkoutPayAmount = document.getElementById('checkout-pay-amount');
+const checkoutPayBtn = document.getElementById('checkout-pay-btn');
+const checkoutSuccessText = document.getElementById('checkout-success-text');
+const checkoutDoneBtn = document.getElementById('checkout-done-btn');
+
+let checkoutPlan = 'basic';
+function openCheckout(plan){
+  checkoutPlan = plan;
+  checkoutPlanTag.textContent = plan === 'premium' ? 'מנוי פרימיום' : 'מנוי בסיסי';
+  checkoutPayAmount.textContent = plan === 'premium' ? '39.99 ₪' : '10 ₪';
+  checkoutFormView.hidden = false;
+  checkoutSuccessView.hidden = true;
+  checkoutBackdrop.classList.add('open');
+}
+function closeCheckout(){
+  checkoutBackdrop.classList.remove('open');
+}
+
+document.getElementById('checkout-btn-basic').addEventListener('click', (e) => { e.preventDefault(); openCheckout('basic'); });
+document.getElementById('checkout-btn-premium').addEventListener('click', (e) => { e.preventDefault(); openCheckout('premium'); });
+checkoutClose.addEventListener('click', closeCheckout);
+checkoutDoneBtn.addEventListener('click', closeCheckout);
+checkoutBackdrop.addEventListener('click', (e) => { if(e.target === checkoutBackdrop) closeCheckout(); });
+
+checkoutPayBtn.addEventListener('click', () => {
+  // demo only: no validation, no network call, nothing is charged or transmitted
+  purchasedTier = checkoutPlan;
+  try{ localStorage.setItem('pianoHeroPurchasedTier', purchasedTier); }catch(e){}
+  checkoutFormView.hidden = true;
+  checkoutSuccessView.hidden = false;
+  checkoutSuccessText.textContent = checkoutPlan === 'premium'
+    ? 'המנוי הפרימיום שלכם פעיל — כל השירים והתווים המתקדמים זמינים עכשיו.'
+    : 'המנוי הבסיסי שלכם פעיל — המקלדת, המשחקים והשירים הבסיסיים זמינים עכשיו.';
+});
+
+// ---- song library: click-to-open note viewer ----
+// Public-domain melodies only (classical works whose copyright has long expired,
+// and generic teaching-note sequences) get real playable notes below.
+// Every modern commercial track opens a locked "unlocks in the app" teaser instead —
+// we never reproduce an artist's actual copyrighted composition here.
+const noteFreqHe = {
+  'דו':261.63,'דו#':277.18,'רה':293.66,'רה#':311.13,'מי':329.63,'פה':349.23,
+  'פה#':369.99,'סול':392.00,'סול#':415.30,'לה':440.00,'לה#':466.16,'סי':493.88
+};
+function colorForLabel(label){
+  const order = ['דו','דו#','רה','רה#','מי','פה','פה#','סול','סול#','לה','לה#','סי'];
+  const i = order.indexOf(label.replace('#',''));
+  return lerpColor(BLUE, PINK, (order.indexOf(label))/11);
+}
+const publicDomainSongs = {
+  twinkle: ['דו','דו','סול','סול','לה','לה','סול'],
+  ode:     ['מי','מי','פה','סול','סול','פה','מי','רה','דו','דו','רה','מי','מי','רה'],
+  mary:    ['מי','רה','דו','רה','מי','מי','מי'],
+  furelise:['מי','רה#','מי','רה#','מי','סי','רה','דו','לה'],
+  // original PIANO HERO compositions — fully original, safe to play in full
+  heroesdance: ['דו','מי','סול','דו','סול','מי','פה','רה','דו'],
+  starrynight: ['לה','פה','דו','רה','מי','פה','סול'],
+  littlewin:   ['סול','דו','רה','מי','פה','סול','לה','סול'],
+};
+
+const songModalBackdrop = document.getElementById('song-modal-backdrop');
+const songModalTitle = document.getElementById('song-modal-title');
+const songModalTag = document.getElementById('song-modal-tag');
+const songModalBody = document.getElementById('song-modal-body');
+const songModalClose = document.getElementById('song-modal-close');
+
+function openSongModal(li){
+  const key = li.dataset.key;
+  const title = li.textContent;
+  const isLocked = li.dataset.locked === '1';
+  const melody = publicDomainSongs[key];
+
+  songModalTitle.textContent = title;
+  songModalBody.innerHTML = '';
+
+  if(melody){
+    songModalTag.textContent = 'אפשר לנגן עכשיו';
+    const row = document.createElement('div');
+    row.className = 'song-modal-notes';
+    melody.forEach(label => {
+      const n = document.createElement('div');
+      n.className = 'song-modal-note';
+      n.textContent = label;
+      n.style.background = colorForLabel(label);
+      n.addEventListener('click', () => playTone(noteFreqHe[label] || 440));
+      row.appendChild(n);
+    });
+    songModalBody.appendChild(row);
+    const hint = document.createElement('p');
+    hint.className = 'song-modal-hint';
+    hint.textContent = 'לחצו על כל תו כדי לשמוע אותו, לפי הסדר.';
+    songModalBody.appendChild(hint);
+  } else {
+    const teaser = document.createElement('div');
+    teaser.className = 'song-modal-teaser';
+    const ownerHasAccess = creatorMode || (isLocked && purchasedTier === 'premium') || (!isLocked && (purchasedTier === 'basic' || purchasedTier === 'premium'));
+
+    if(creatorMode){
+      songModalTag.textContent = 'מצב יוצר — תצוגה פרטית';
+      const p = document.createElement('p');
+      p.textContent = 'כאן ייכנסו התווים בעצמכם בעתיד (עדיין אין כאן שחזור של יצירה מוגנת בזכויות יוצרים) — שאר הגולשים ימשיכו לראות את מסך התשלום הרגיל.';
+      teaser.appendChild(p);
+    } else if(ownerHasAccess){
+      songModalTag.textContent = 'כלול במנוי שלכם ✓';
+      const p = document.createElement('p');
+      p.textContent = 'השיר הזה כלול במנוי שלכם — התווים המלאים נטענים בתוך שיעור הלמידה באפליקציה.';
+      teaser.appendChild(p);
+    } else {
+      songModalTag.textContent = isLocked ? 'שיר פרימיום' : 'שיר ברשימה';
+      const p = document.createElement('p');
+      p.textContent = isLocked
+        ? 'התווים המלאים לשיר הזה נפתחים בשיעור מלא בתוך האפליקציה, במסלול הפרימיום.'
+        : 'התווים המלאים לשיר הזה נפתחים בשיעור מלא בתוך האפליקציה.';
+      const btn = document.createElement('a');
+      btn.href = '#pricing';
+      btn.className = 'btn btn-primary';
+      btn.textContent = isLocked ? 'שדרגו לפרימיום' : 'התחילו לנגן בחינם';
+      btn.addEventListener('click', () => closeSongModal());
+      teaser.appendChild(p);
+      teaser.appendChild(btn);
+    }
+
+    // real, licensed sheet-music sources — never our own fabricated notation
+    const officialLinks = {
+      allofme: 'https://www.musicnotes.com/sheetmusic/all-of-me/81516',
+    };
+    const sheetLink = document.createElement('a');
+    sheetLink.className = 'song-modal-sheet-link';
+    sheetLink.target = '_blank';
+    sheetLink.rel = 'noopener';
+    sheetLink.href = officialLinks[key] || ('https://www.google.com/search?q=' + encodeURIComponent(title + ' piano sheet music'));
+    sheetLink.textContent = '🔗 תווים רשמיים ומורשים לשיר הזה';
+    teaser.appendChild(sheetLink);
+
+    songModalBody.appendChild(teaser);
+  }
+
+  songModalBackdrop.classList.add('open');
+}
+function closeSongModal(){
+  songModalBackdrop.classList.remove('open');
+}
+
+document.querySelectorAll('.song-lib-list li').forEach(li => {
+  li.tabIndex = 0;
+  li.setAttribute('role','button');
+  li.addEventListener('click', () => openSongModal(li));
+  li.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openSongModal(li); }
+  });
+});
+songModalClose.addEventListener('click', closeSongModal);
+songModalBackdrop.addEventListener('click', (e) => {
+  if(e.target === songModalBackdrop) closeSongModal();
+});
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') closeSongModal();
+});
+
+// ---- mobile hamburger menu ----
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// ---- color helpers ----
+function hexToRgb(hex){
+  const v = hex.replace('#','');
+  return [parseInt(v.slice(0,2),16), parseInt(v.slice(2,4),16), parseInt(v.slice(4,6),16)];
+}
+function lerpColor(c1, c2, t){
+  const a = hexToRgb(c1), b = hexToRgb(c2);
+  const r = Math.round(a[0] + (b[0]-a[0])*t);
+  const g = Math.round(a[1] + (b[1]-a[1])*t);
+  const bl = Math.round(a[2] + (b[2]-a[2])*t);
+  return `rgb(${r},${g},${bl})`;
+}
+const BLUE = '#7edbff', PINK = '#ff9fcb';
+
+// ---- note data: two octaves, C4 to C6 ----
+const noteNamesHe = ['דו','דו#','רה','רה#','מי','פה','פה#','סול','סול#','לה','לה#','סי'];
+const isWhiteSemitone = [true,false,true,false,true,true,false,true,false,true,false,true];
+const TOTAL_SEMITONES = 24; // two full octaves, ending on the second C6
+
+const notes = [];
+for(let s = 0; s <= TOTAL_SEMITONES; s++){
+  const freq = 261.63 * Math.pow(2, s/12);
+  notes.push({
+    label: noteNamesHe[s % 12],
+    freq: freq,
+    white: isWhiteSemitone[s % 12],
+    semitone: s % 12 // color stays tied to the note letter, same note = same color in every octave
+  });
+}
+
+const whiteKeyWidth = 58;
+let whiteIndex = -1;
+
+const keyboard = document.getElementById('keyboard');
+const keyEls = [];
+
+notes.forEach((n) => {
+  const color = lerpColor(BLUE, PINK, n.semitone/12);
+  const el = document.createElement('div');
+  el.tabIndex = 0;
+  el.setAttribute('role','button');
+  el.setAttribute('aria-label', 'נגן תו ' + n.label);
+
+  if(n.white){
+    whiteIndex++;
+    el.className = 'key white';
+    el.style.left = (whiteIndex*whiteKeyWidth) + 'px';
+    el.textContent = n.label;
+  } else {
+    el.className = 'key black';
+    el.style.left = ((whiteIndex+1)*whiteKeyWidth - 17) + 'px';
+  }
+
+  const pop = document.createElement('div');
+  pop.className = 'note-pop';
+  pop.textContent = n.label;
+  pop.style.background = color;
+  el.appendChild(pop);
+  el.dataset.color = color;
+  el.dataset.freq = n.freq;
+
+  keyboard.appendChild(el);
+  keyEls.push(el);
+});
+
+keyboard.style.width = ((whiteIndex + 1) * whiteKeyWidth) + 'px';
+
+// ---- audio ----
+let audioCtx;
+function playTone(freq){
+  audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'triangle';
+  osc.frequency.value = freq;
+  const now = audioCtx.currentTime;
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(0.25, now + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+  osc.connect(gain).connect(audioCtx.destination);
+  osc.start(now);
+  osc.stop(now + 0.9);
+}
+
+function activateKey(el){
+  const freq = parseFloat(el.dataset.freq);
+  playTone(freq);
+  const originalBg = el.classList.contains('white') ? '#f5f5f7' : '#141417';
+  el.style.background = el.dataset.color;
+  el.classList.add('playing','pop');
+  setTimeout(() => {
+    el.style.background = originalBg;
+    el.classList.remove('playing','pop');
+  }, 260);
+}
+
+keyEls.forEach(el => {
+  el.addEventListener('mousedown', () => activateKey(el));
+  el.addEventListener('touchstart', (e) => { e.preventDefault(); activateKey(el); }, {passive:false});
+  el.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activateKey(el); }
+  });
+});
+
+// ---- songbook: a short known melody built from the same note set ----
+// original PIANO HERO motif — a small triumphant rise-and-return: דו מי סול לה סול מי דו
+const noteMap = {};
+notes.forEach(n => { if(!noteMap[n.label] || n.freq < 400) noteMap[n.label] = n; });
+const songLabels = ['דו','מי','סול','לה','סול','מי','דו'];
+const song = songLabels.map(l => notes.find(n => n.label === l && n.white));
+
+const sheet = document.getElementById('song-sheet');
+const winMsg = document.getElementById('song-win');
+let songStep = 0;
+
+song.forEach((n, i) => {
+  const card = document.createElement('div');
+  card.className = 'song-note';
+  card.textContent = n.label;
+  card.style.background = lerpColor(BLUE, PINK, n.semitone/12);
+  card.dataset.freq = n.freq;
+  card.dataset.index = i;
+  card.tabIndex = 0;
+  card.setAttribute('role','button');
+  card.setAttribute('aria-label', 'תו ' + (i+1) + ' בשיר: ' + n.label);
+  if(i === 0) card.classList.add('next');
+  sheet.appendChild(card);
+});
+
+function trySongNote(card){
+  const idx = parseInt(card.dataset.index);
+  playTone(parseFloat(card.dataset.freq));
+  if(idx === songStep){
+    card.classList.remove('next');
+    card.classList.add('done');
+    songStep++;
+    const nextCard = sheet.children[songStep];
+    if(nextCard){ nextCard.classList.add('next'); }
+    else {
+      winMsg.classList.add('show');
+      setTimeout(() => {
+        [...sheet.children].forEach(c => c.classList.remove('done'));
+        songStep = 0;
+        sheet.children[0].classList.add('next');
+        winMsg.classList.remove('show');
+      }, 2200);
+    }
+  }
+}
+
+[...sheet.children].forEach(card => {
+  card.addEventListener('mousedown', () => trySongNote(card));
+  card.addEventListener('touchstart', (e) => { e.preventDefault(); trySongNote(card); }, {passive:false});
+  card.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); trySongNote(card); }
+  });
+});
+
+// ---- feature section dots (visual echo of the note-color system) ----
+function fillDots(id, count){
+  const row = document.getElementById(id);
+  for(let i=0;i<count;i++){
+    const d = document.createElement('div');
+    d.className = (id === 'feat-dots-3') ? 'seq-dot' : 'note-dot';
+    d.style.background = lerpColor(BLUE, PINK, i/(count-1));
+    row.appendChild(d);
+  }
+}
+fillDots('feat-dots-1', 6);
+fillDots('feat-dots-3', 4);
+
+// quiz demo note color
+document.getElementById('quiz-note-color').style.background = lerpColor(BLUE, PINK, 0.15);
+</script>
+
+</body>
+</html>
