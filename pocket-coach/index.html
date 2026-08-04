@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>Pocket Coach — מאמן אישי בכיס</title>
+<meta name="description" content="Pocket Coach: מתארים את הבעיה במגרש, מקבלים תרגיל ממוקד תוך שנייה — טכניקה, קליעה ותרגילי הרגעה. בחינם.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Assistant:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#071633;
+    --navy:#0E2A63;
+    --navy-2:#123A86;
+    --skin:#D9A066;
+    --hair:#241C14;
+    --blue:#2D5BFF;
+    --blue-light:#6E93FF;
+    --yellow:#FFD500;
+    --yellow-soft:#FFEA80;
+    --white:#FFFFFF;
+    --cloud:#F5F7FF;
+    --charcoal:#16213A;
+    --muted:#5B6B95;
+    --line:rgba(255,255,255,.14);
+    --line-soft:rgba(255,255,255,.08);
+    --line-dark:rgba(7,22,51,.1);
+    --radius-lg:24px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --shadow-lg:0 30px 70px rgba(7,22,51,.28);
+    --shadow-md:0 14px 34px rgba(7,22,51,.18);
+    --font-display:'Rubik', sans-serif;
+    --font-body:'Assistant', sans-serif;
+    --font-mono:'Space Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  body{
+    font-family:var(--font-body);
+    background:var(--cloud);
+    color:var(--charcoal);
+    line-height:1.6;
+    overflow-x:hidden;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="%238B3A28"/><circle cx="16" cy="16" r="14" fill="none" stroke="%2315151a" stroke-width="1.4"/><path d="M16 2 Q13 16 16 30" fill="none" stroke="%23F2E6CC" stroke-width="1.7"/><path d="M2 16 Q16 19 30 16" fill="none" stroke="%23F2E6CC" stroke-width="1.7"/><path d="M9 3 Q3 16 9 29" fill="none" stroke="%23F2E6CC" stroke-width="1.7"/><path d="M23 3 Q29 16 23 29" fill="none" stroke="%23F2E6CC" stroke-width="1.7"/></svg>') 16 16, auto;
+  }
+
+  h1,h2,h3,h4{font-family:var(--font-display); line-height:1.15; letter-spacing:-0.01em;}
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; border:none; background:none; cursor:inherit;}
+  ul{list-style:none;}
+  .num{font-family:var(--font-mono); direction:ltr; unicode-bidi:isolate;}
+
+  :focus-visible{outline:3px solid var(--yellow); outline-offset:3px; border-radius:4px;}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  section{position:relative;}
+
+  /* ---------- scroll progress ---------- */
+  .progress-bar{position:fixed; top:0; right:0; left:0; height:3px; background:linear-gradient(90deg,var(--yellow),var(--blue)); width:0%; z-index:200; transform-origin:right;}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky; top:0; z-index:100;
+    background:var(--nav-bg, rgba(7,22,51,.7));
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line-soft);
+    transition:box-shadow .3s ease, background .6s ease;
+  }
+  .nav.scrolled{box-shadow:0 10px 30px rgba(0,0,0,.25);}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 28px; max-width:1180px; margin:0 auto;}
+  .logo{display:flex; align-items:center; gap:10px; color:var(--white); font-family:var(--font-display); font-weight:800; font-size:1.15rem;}
+  .logo-mark{width:34px; height:34px; flex-shrink:0;}
+  .logo-sub{display:block; font-family:var(--font-body); font-weight:500; font-size:.68rem; color:var(--yellow-soft); letter-spacing:.02em;}
+  .nav-links{display:flex; align-items:center; gap:30px; list-style:none;}
+  .nav-links a{color:rgba(255,255,255,.82); font-size:.95rem; font-weight:500; transition:color .2s;}
+  .nav-links a:hover{color:var(--yellow);}
+  .nav-cta{background:var(--yellow); color:var(--ink); padding:10px 22px; border-radius:100px; font-weight:700; font-size:.92rem; transition:transform .2s, box-shadow .2s;}
+  .nav-cta:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(255,213,0,.35);}
+  .nav-toggle{display:none; width:44px; height:44px; position:relative; flex-shrink:0;}
+  .nav-toggle span{position:absolute; right:9px; width:26px; height:2px; background:var(--white); border-radius:2px; transition:.25s;}
+  .nav-toggle span:nth-child(1){top:12px;}
+  .nav-toggle span:nth-child(2){top:21px;}
+  .nav-toggle span:nth-child(3){top:30px;}
+  .nav-toggle.open span:nth-child(1){transform:translateY(9px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg);}
+
+  @media (max-width:880px){
+    .nav-links{position:fixed; inset-inline:0; top:66px; flex-direction:column; align-items:stretch; gap:0;
+      background:rgba(7,22,51,.98); backdrop-filter:blur(14px);
+      max-height:0; overflow:hidden; transition:max-height .35s ease; border-bottom:1px solid var(--line-soft);}
+    .nav-links.open{max-height:420px;}
+    .nav-links li{border-top:1px solid var(--line-soft);}
+    .nav-links a{display:block; padding:16px 28px;}
+    .nav-cta{margin:16px 28px;}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- court background motif ---------- */
+  .court-lines{position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0;}
+  .court-lines svg{position:absolute; opacity:.14;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(1100px 600px at 12% -10%, rgba(255,213,0,.16), transparent 60%),
+      radial-gradient(900px 700px at 100% 10%, rgba(110,147,255,.25), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--navy) 55%, var(--navy-2) 100%);
+    color:var(--white);
+    padding:76px 0 90px;
+    overflow:hidden;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center; position:relative; z-index:2;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.08); border:1px solid var(--line); color:var(--yellow-soft); font-weight:600; font-size:.82rem; padding:7px 16px; border-radius:100px; margin-bottom:22px;}
+  .eyebrow-dot{width:7px; height:7px; border-radius:50%; background:var(--yellow); box-shadow:0 0 0 4px rgba(255,213,0,.25);}
+  .hero h1{font-size:clamp(2.3rem, 4.6vw, 3.6rem); font-weight:800; margin-bottom:22px;}
+  .hero h1 .accent{background:linear-gradient(90deg, var(--yellow), #ffedb0); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero-sub{font-size:1.14rem; color:rgba(255,255,255,.78); max-width:520px; margin-bottom:34px;}
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:28px;}
+  .btn{display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:1rem; padding:15px 30px; border-radius:100px; transition:transform .2s ease, box-shadow .2s ease, background .2s ease;}
+  .btn-primary{background:var(--yellow); color:var(--ink);}
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 16px 32px rgba(255,213,0,.32);}
+  .btn-ghost{background:rgba(255,255,255,.06); color:var(--white); border:1px solid var(--line);}
+  .btn-ghost:hover{background:rgba(255,255,255,.12); transform:translateY(-3px);}
+  .btn-ghost.dark{color:var(--ink); border-color:var(--line-dark); background:rgba(7,22,51,.04);}
+  .btn-ghost.dark:hover{background:rgba(7,22,51,.08);}
+  .btn svg{width:16px; height:16px;}
+  .trust-line{display:flex; flex-wrap:wrap; gap:18px; color:rgba(255,255,255,.55); font-size:.86rem;}
+  .trust-line span{display:flex; align-items:center; gap:7px;}
+  .trust-line svg{width:14px; height:14px; color:var(--yellow);}
+
+  /* ---------- demo card (signature interactive element) ---------- */
+  .demo-card{
+    position:relative; z-index:2;
+    background:rgba(255,255,255,.06);
+    border:1px solid var(--line);
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    border-radius:var(--radius-lg);
+    padding:22px;
+    box-shadow:var(--shadow-lg);
+  }
+  .demo-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;}
+  .demo-live{display:flex; align-items:center; gap:7px; font-size:.76rem; font-weight:700; color:var(--yellow-soft); text-transform:uppercase; letter-spacing:.04em;}
+  .live-pulse{width:8px; height:8px; border-radius:50%; background:#5CFF9B; box-shadow:0 0 0 0 rgba(92,255,155,.6); animation:pulse 1.8s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(92,255,155,.55);}
+    70%{box-shadow:0 0 0 9px rgba(92,255,155,0);}
+    100%{box-shadow:0 0 0 0 rgba(92,255,155,0);}
+  }
+  .fav-count{font-size:.78rem; color:rgba(255,255,255,.6); font-family:var(--font-mono);}
+
+  .search-row{position:relative; margin-bottom:12px;}
+  .search-row svg.search-icon{position:absolute; top:50%; right:16px; transform:translateY(-50%); width:18px; height:18px; color:rgba(255,255,255,.45); pointer-events:none;}
+  .search-input{
+    width:100%; padding:14px 46px 14px 16px; border-radius:14px;
+    background:rgba(255,255,255,.08); border:1px solid var(--line); color:var(--white);
+    font-family:var(--font-body); font-size:.95rem;
+  }
+  .search-input::placeholder{color:rgba(255,255,255,.42);}
+  .search-input:focus{background:rgba(255,255,255,.13); border-color:rgba(255,213,0,.5);}
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .chip{padding:11px 16px; border-radius:100px; font-size:.82rem; font-weight:600; background:rgba(255,255,255,.06); border:1px solid var(--line); color:rgba(255,255,255,.75); transition:.2s;}
+  .chip:hover{background:rgba(255,255,255,.12);}
+  .chip.active{background:var(--yellow); color:var(--ink); border-color:var(--yellow);}
+
+  .drill-list{display:flex; flex-direction:column; gap:10px; max-height:330px; overflow-y:auto; padding-left:2px;}
+  .drill-list::-webkit-scrollbar{width:6px;}
+  .drill-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2); border-radius:10px;}
+
+  .drill-card{background:rgba(255,255,255,.055); border:1px solid var(--line-soft); border-radius:14px; padding:13px 14px; transition:background .2s, border-color .2s;}
+  .drill-card:hover{background:rgba(255,255,255,.09);}
+  .drill-top{display:flex; align-items:flex-start; gap:11px;}
+  .drill-icon{width:36px; height:36px; border-radius:10px; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .drill-icon svg{width:18px; height:18px; color:var(--yellow-soft);}
+  .drill-icon.cat-shooting{background:rgba(255,213,0,.16);}
+  .drill-icon.cat-technique{background:rgba(110,147,255,.2);}
+  .drill-icon.cat-calm{background:rgba(92,255,155,.16);}
+  .drill-info{flex:1; min-width:0;}
+  .drill-name{font-weight:700; font-size:.94rem; color:var(--white); margin-bottom:2px;}
+  .drill-desc{font-size:.78rem; color:rgba(255,255,255,.55); line-height:1.45;}
+  .star-btn{flex-shrink:0; width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:8px; transition:.2s;}
+  .star-btn:hover{background:rgba(255,255,255,.1);}
+  .star-btn svg{width:17px; height:17px; color:rgba(255,255,255,.4); transition:.2s;}
+  .star-btn.saved svg{color:var(--yellow); fill:var(--yellow);}
+
+  .drill-bottom{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-top:11px; padding-top:11px; border-top:1px solid var(--line-soft);}
+  .drill-dur{font-family:var(--font-mono); font-size:.78rem; color:rgba(255,255,255,.5);}
+  .drill-actions{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .start-btn{display:flex; align-items:center; gap:6px; background:rgba(255,213,0,.14); color:var(--yellow-soft); font-weight:700; font-size:.78rem; padding:11px 15px; border-radius:100px; transition:.2s;}
+  .start-btn:hover{background:var(--yellow); color:var(--ink);}
+  .start-btn svg{width:11px; height:11px;}
+
+
+
+  .timer-panel{margin-top:11px; padding-top:11px; border-top:1px solid var(--line-soft); display:none;}
+  .timer-panel.active{display:block;}
+  .timer-row{display:flex; align-items:center; gap:12px;}
+  .timer-digits{font-family:var(--font-mono); font-size:1.5rem; font-weight:700; color:var(--white); min-width:58px; direction:ltr;}
+  .timer-track{flex:1; height:6px; background:rgba(255,255,255,.12); border-radius:10px; overflow:hidden;}
+  .timer-fill{height:100%; width:100%; background:linear-gradient(90deg,var(--yellow),#ffedb0); border-radius:10px; transition:width 1s linear;}
+  .timer-actions{display:flex; gap:6px;}
+  .timer-actions button{width:38px; height:38px; border-radius:8px; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center;}
+  .timer-actions button:hover{background:rgba(255,255,255,.16);}
+  .timer-actions svg{width:12px; height:12px; color:var(--white);}
+  .timer-done{display:none; align-items:center; gap:8px; color:#5CFF9B; font-weight:700; font-size:.84rem;}
+  .timer-done.show{display:flex;}
+  .timer-done svg{width:15px; height:15px;}
+
+  .no-results{text-align:center; padding:36px 10px; color:rgba(255,255,255,.5); font-size:.88rem;}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (max-width:880px){
+    .how-steps .step-card.reveal{transform:translateX(60px);}
+    .how-steps .step-card.reveal.in{transform:translateX(0);}
+    .feature-grid .feature-card.reveal{transform:translateX(60px);}
+    .feature-grid .feature-card.reveal.in{transform:translateX(0);}
+    .growth-grid .growth-card.reveal{transform:translateX(60px);}
+    .growth-grid .growth-card.reveal.in{transform:translateX(0);}
+    .audience-grid .persona.reveal{transform:translateX(60px);}
+    .audience-grid .persona.reveal.in{transform:translateX(0);}
+    .pricing-grid .price-card.reveal{transform:translateX(60px);}
+    .pricing-grid .price-card.reveal.in{transform:translateX(0);}
+  }
+
+  /* ---------- section shared ---------- */
+  .section-head{max-width:640px; margin-bottom:52px;}
+  .section-head.center{margin-inline:auto; text-align:center;}
+  .kicker{display:inline-block; font-family:var(--font-mono); font-size:.78rem; font-weight:700; letter-spacing:.08em; color:var(--blue); background:rgba(45,91,255,.09); padding:6px 14px; border-radius:100px; margin-bottom:16px;}
+  .kicker.on-dark{color:var(--yellow-soft); background:rgba(255,213,0,.12);}
+  .section-head h2{font-size:clamp(1.8rem, 3vw, 2.5rem); font-weight:800; color:var(--ink); margin-bottom:14px;}
+  .section-head p{color:var(--muted); font-size:1.05rem;}
+
+  /* ---------- problem ---------- */
+  .problem{background:var(--white); padding:104px 0 96px;}
+  .problem-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+  .problem-copy p{color:var(--muted); font-size:1.06rem; margin-bottom:16px;}
+  .problem-copy strong{color:var(--ink);}
+  .scatter-box{position:relative; aspect-ratio:1/1; background:linear-gradient(155deg,#0E2A63,#071633); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md);}
+  .scatter-box svg{width:100%; height:100%;}
+  .scatter-caption{position:absolute; bottom:20px; right:20px; left:20px; background:rgba(7,22,51,.55); backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:12px 16px; color:var(--white); font-size:.84rem; font-weight:600;}
+
+  /* ---------- how it works ---------- */
+  .how{background:var(--cloud); padding:104px 0;}
+  .how-steps{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; position:relative;}
+  .step-card{background:var(--white); border-radius:var(--radius-md); padding:32px 26px; box-shadow:var(--shadow-md); position:relative;}
+  .step-num{font-family:var(--font-mono); font-size:.85rem; font-weight:700; color:var(--blue); background:rgba(45,91,255,.09); width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;}
+  .step-card h3{font-size:1.18rem; font-weight:700; color:var(--ink); margin-bottom:10px;}
+  .step-card p{color:var(--muted); font-size:.92rem;}
+  .step-arrow{position:absolute; top:38px; left:-33px; width:26px; height:26px; color:var(--line-dark); display:flex; z-index:1;}
+  @media (max-width:900px){.step-arrow{display:none;}}
+
+  /* ---------- compare ---------- */
+  .compare{background:var(--ink); padding:104px 0; color:var(--white); position:relative; overflow:hidden;}
+  .compare-scroll{overflow-x:auto; padding-bottom:6px; -webkit-overflow-scrolling:touch;}
+  .compare-grid{display:grid; grid-template-columns:repeat(3,minmax(240px,1fr)); gap:18px; min-width:760px;}
+  .compare-col{background:rgba(255,255,255,.05); border:1px solid var(--line); border-radius:var(--radius-md); overflow:hidden;}
+  .compare-col.highlight{background:linear-gradient(165deg, rgba(255,213,0,.14), rgba(255,255,255,.05)); border-color:rgba(255,213,0,.4); box-shadow:0 0 0 1px rgba(255,213,0,.15), var(--shadow-lg);}
+  .compare-col-head{padding:22px 20px; border-bottom:1px solid var(--line); text-align:center;}
+  .compare-col-head .tag{display:inline-block; font-size:.68rem; font-weight:700; color:var(--ink); background:var(--yellow); padding:3px 10px; border-radius:100px; margin-bottom:10px;}
+  .compare-col-head h4{font-size:1.05rem; font-weight:700;}
+  .compare-row{padding:16px 20px; border-bottom:1px solid var(--line-soft); font-size:.86rem;}
+  .compare-row:last-child{border-bottom:none;}
+  .compare-row .row-label{display:block; font-family:var(--font-mono); font-size:.68rem; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.05em; margin-bottom:5px;}
+  .compare-row .row-value{color:rgba(255,255,255,.88); line-height:1.5;}
+  .compare-col.highlight .row-value{color:var(--white); font-weight:600;}
+
+  /* ---------- features ---------- */
+  .features{background:var(--white); padding:104px 0;}
+  .feature-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .feature-card{border:1px solid var(--line-dark); border-radius:var(--radius-md); padding:30px 26px; transition:transform .25s, box-shadow .25s;}
+  .feature-card:hover{transform:translateY(-6px); box-shadow:var(--shadow-md);}
+  .feature-icon{width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:20px;}
+  .feature-icon.f1{background:linear-gradient(140deg,#2D5BFF,#6E93FF);}
+  .feature-icon.f2{background:linear-gradient(140deg,#FFD500,#FFB700);}
+  .feature-icon.f3{background:linear-gradient(140deg,#123A86,#2D5BFF);}
+  .feature-icon svg{width:26px; height:26px; color:var(--white);}
+  .feature-card h3{font-size:1.16rem; font-weight:700; color:var(--ink); margin-bottom:10px;}
+  .feature-card p{color:var(--muted); font-size:.92rem;}
+
+  /* ---------- audience ---------- */
+  .audience{background:var(--cloud); padding:104px 0;}
+  .audience-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .persona{background:var(--white); border-radius:var(--radius-lg); padding:34px 30px; box-shadow:var(--shadow-md); position:relative; overflow:hidden;}
+  .persona::before{content:''; position:absolute; top:0; right:0; width:120px; height:120px; background:radial-gradient(circle, rgba(255,213,0,.16), transparent 70%);}
+  .persona-age{display:inline-block; font-family:var(--font-mono); font-size:.78rem; font-weight:700; color:var(--blue); background:rgba(45,91,255,.08); padding:5px 12px; border-radius:100px; margin-bottom:16px;}
+  .persona h3{font-size:1.3rem; font-weight:800; color:var(--ink); margin-bottom:14px;}
+  .persona ul{display:flex; flex-direction:column; gap:11px;}
+  .persona li{display:flex; gap:10px; color:var(--muted); font-size:.92rem; align-items:flex-start;}
+  .persona li svg{width:16px; height:16px; color:var(--blue); flex-shrink:0; margin-top:3px;}
+
+  /* ---------- pricing ---------- */
+  .pricing{background:var(--white); padding:104px 0;}
+  .pricing-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:840px; margin:0 auto;}
+  .price-card{border-radius:var(--radius-lg); padding:36px 32px; border:1px solid var(--line-dark);}
+  .price-card.premium{
+    background:linear-gradient(165deg, var(--ink), var(--navy-2));
+    color:var(--white); border:none; box-shadow:var(--shadow-lg); position:relative;
+  }
+  .price-card.premium::after{content:'פרימיום'; position:absolute; top:22px; left:24px; background:var(--yellow); color:var(--ink); font-size:.7rem; font-weight:700; padding:5px 12px; border-radius:100px;}
+  .price-plan{font-size:.85rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-bottom:10px;}
+  .price-card.premium .price-plan{color:var(--yellow-soft);}
+  .price-amount{font-family:var(--font-mono); font-size:2.6rem; font-weight:700; color:var(--ink); margin-bottom:6px;}
+  .price-card.premium .price-amount{color:var(--white);}
+  .price-amount .cur{font-size:1.1rem; font-weight:400; margin-left:4px;}
+  .price-note{font-size:.8rem; color:var(--muted); margin-bottom:26px;}
+  .price-card.premium .price-note{color:rgba(255,255,255,.55);}
+  .price-list{display:flex; flex-direction:column; gap:13px; margin-bottom:28px;}
+  .price-list li{display:flex; gap:10px; font-size:.92rem; color:var(--charcoal);}
+  .price-card.premium .price-list li{color:rgba(255,255,255,.85);}
+  .price-list svg{width:17px; height:17px; color:var(--blue); flex-shrink:0; margin-top:2px;}
+  .price-card.premium .price-list svg{color:var(--yellow);}
+  .price-btn{display:block; text-align:center; width:100%; padding:14px; border-radius:100px; font-weight:700; font-size:.94rem;}
+  .price-card:not(.premium) .price-btn{background:var(--ink); color:var(--white);}
+  .price-card.premium .price-btn{background:rgba(255,255,255,.1); color:var(--white); border:1px solid var(--line);}
+  .price-btn .soon{font-family:var(--font-mono); font-size:.7rem; opacity:.6; margin-right:6px;}
+
+  /* ---------- growth ---------- */
+  .growth{background:var(--cloud); padding:104px 0;}
+  .growth-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .growth-card{background:var(--white); border-radius:var(--radius-md); padding:28px 24px; box-shadow:var(--shadow-md);}
+  .growth-num{font-family:var(--font-mono); font-size:.78rem; color:var(--blue); font-weight:700; margin-bottom:14px;}
+  .growth-card h3{font-size:1.05rem; font-weight:700; color:var(--ink); margin-bottom:10px;}
+  .growth-card p{color:var(--muted); font-size:.9rem;}
+
+  /* ---------- goal ---------- */
+  .goal{
+    background:linear-gradient(160deg, var(--navy-2), var(--ink));
+    color:var(--white); padding:100px 0; text-align:center; position:relative; overflow:hidden;
+  }
+  .goal-target{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:.08; pointer-events:none;}
+  .goal-target svg{width:640px; height:640px;}
+  .goal-inner{position:relative; z-index:2; max-width:640px; margin:0 auto;}
+  .goal-num{font-family:var(--font-mono); font-size:clamp(4rem,10vw,6.5rem); font-weight:700; color:var(--yellow); line-height:1; margin-bottom:6px;}
+  .goal-label{font-size:1.05rem; color:rgba(255,255,255,.75); margin-bottom:28px;}
+  .goal-quote{font-family:var(--font-display); font-size:1.3rem; font-weight:500; line-height:1.6; color:var(--white); border-top:1px solid var(--line); padding-top:28px;}
+
+  /* ---------- final cta ---------- */
+  .cta-final{background:var(--white); padding:110px 0; text-align:center;}
+  .cta-final h2{font-size:clamp(1.9rem,3.6vw,2.7rem); font-weight:800; color:var(--ink); margin-bottom:16px;}
+  .cta-final p{color:var(--muted); font-size:1.05rem; margin-bottom:34px; max-width:480px; margin-inline:auto;}
+  .cta-final .hero-ctas{justify-content:center;}
+  .cta-final .btn-primary{background:linear-gradient(90deg,var(--blue),var(--blue-light)); color:var(--white);}
+  .cta-final .btn-primary:hover{box-shadow:0 16px 32px rgba(45,91,255,.28);}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink); color:rgba(255,255,255,.55); padding:64px 0 28px; font-size:.9rem;}
+  .footer-main{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:36px; padding-bottom:40px; border-bottom:1px solid var(--line-soft);}
+  .footer-brand-col .footer-logo{display:flex; align-items:center; gap:8px; color:var(--white); font-family:var(--font-display); font-weight:700; font-size:1.05rem; margin-bottom:14px;}
+  .footer-brand-col .footer-logo svg{width:22px; height:22px;}
+  .footer-brand-col p{max-width:260px; line-height:1.6; color:rgba(255,255,255,.5); margin-bottom:18px;}
+  .footer-badges{display:flex; flex-wrap:wrap; gap:8px;}
+  .footer-badge{font-family:var(--font-mono); font-size:.68rem; color:rgba(255,255,255,.55); background:rgba(255,255,255,.06); border:1px solid var(--line-soft); padding:5px 11px; border-radius:100px;}
+  .footer-col h4{color:var(--white); font-family:var(--font-display); font-size:.86rem; font-weight:700; margin-bottom:16px;}
+  .footer-col ul{display:flex; flex-direction:column; gap:11px;}
+  .footer-col a{color:rgba(255,255,255,.55); transition:color .2s;}
+  .footer-col a:hover{color:var(--yellow-soft);}
+  .footer-bottom{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:26px; font-size:.8rem; color:rgba(255,255,255,.4);}
+  .footer-bottom-links{display:flex; gap:20px; flex-wrap:wrap;}
+  .footer-bottom-links a{color:rgba(255,255,255,.4); transition:color .2s;}
+  .footer-bottom-links a:hover{color:rgba(255,255,255,.75);}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr; gap:44px;}
+    .problem-grid{grid-template-columns:1fr;}
+    .problem-grid .scatter-box{order:-1; max-width:420px; margin:0 auto;}
+    .how-steps{grid-template-columns:1fr;}
+    .feature-grid{grid-template-columns:1fr;}
+    .audience-grid{grid-template-columns:1fr;}
+    .pricing-grid{grid-template-columns:1fr;}
+    .growth-grid{grid-template-columns:1fr;}
+    .footer-main{grid-template-columns:1fr 1fr; gap:32px 24px;}
+    .footer-brand-col{grid-column:1 / -1;}
+  }
+  @media (max-width:520px){
+    .wrap{padding:0 20px;}
+    .hero{padding:56px 0 64px;}
+    .problem,.how,.compare,.features,.audience,.pricing,.growth,.goal,.cta-final{padding-top:70px; padding-bottom:70px;}
+    .hero-ctas .btn, .cta-final .btn{width:100%; justify-content:center;}
+    .footer-main{grid-template-columns:1fr; gap:28px; text-align:center;}
+    .footer-brand-col p{margin-inline:auto;}
+    .footer-badges{justify-content:center;}
+    .footer-bottom{flex-direction:column; text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">
+      <svg class="logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18" stroke="#FFD500" stroke-width="2.5"/>
+        <path d="M20 2V38M2 20H38" stroke="#FFD500" stroke-width="2" stroke-linecap="round"/>
+        <path d="M6 8C10 14 10 26 6 32M34 8C30 14 30 26 34 32" stroke="#FFD500" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Pocket Coach<span class="logo-sub">מאמן אישי בכיס</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#problem">הבעיה</a></li>
+      <li><a href="#how">איך זה עובד</a></li>
+      <li><a href="#demo">תרגילים</a></li>
+      <li><a href="#audience">למי זה מיועד</a></li>
+      <li><a href="#pricing">מודל עסקי</a></li>
+      <li><a href="#join" class="nav-cta">נסו בחינם</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="פתיחת תפריט"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top" data-tint="a">
+  <div class="court-lines" aria-hidden="true">
+    <svg width="600" height="600" style="top:-160px; left:-160px;" viewBox="0 0 600 600" fill="none">
+      <circle cx="300" cy="300" r="140" stroke="white" stroke-width="1.5"/>
+      <path d="M300 460 A220 220 0 0 1 80 300" stroke="white" stroke-width="1.5"/>
+    </svg>
+    <svg width="500" height="500" style="bottom:-140px; right:-140px;" viewBox="0 0 500 500" fill="none">
+      <circle cx="250" cy="250" r="110" stroke="#FFD500" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="eyebrow-dot"></span> MVP חדש · בחינם לגמרי</span>
+      <h1>מתארים מה קשה לכם במגרש. <span class="accent">מקבלים תרגיל — לא בזבוז זמן.</span></h1>
+      <p class="hero-sub">Pocket Coach הוא המאמן האישי שבכיס שלכם: כותבים במילים שלכם מה מקשה — קליעה, כדרור או לחץ לפני זריקה — ומקבלים מיד תרגיל ממוקד עם טיימר מובנה. בלי לשלם על מאמן פרטי, בלי לחפש שעות ביוטיוב.</p>
+      <div class="hero-ctas">
+        <a href="#demo" class="btn btn-primary">
+          נסו את המאמן עכשיו
+          <svg viewBox="0 0 20 20" fill="none"><path d="M12.5 5L7.5 10L12.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#how" class="btn btn-ghost">איך זה עובד?</a>
+      </div>
+      <div class="trust-line">
+        <span><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> בלי הרשמה</span>
+        <span><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> בלי כרטיס אשראי</span>
+        <span><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> ישר למגרש</span>
+      </div>
+    </div>
+
+    <!-- LIVE INTERACTIVE DEMO -->
+    <div class="demo-card" id="demo">
+      <div class="demo-head">
+        <span class="demo-live"><span class="live-pulse"></span> נסו בעצמכם — זה עובד באמת</span>
+        <span class="fav-count">מועדפים: <span class="num" id="favCount">0</span></span>
+      </div>
+      <div class="search-row">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M14 14L18 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="מה קשה לכם היום? למשל: לחץ לפני זריקה...">
+      </div>
+      <div class="chip-row" id="chipRow">
+        <button class="chip active" data-cat="all">הכל</button>
+        <button class="chip" data-cat="technique">טכניקה</button>
+        <button class="chip" data-cat="shooting">קליעה</button>
+        <button class="chip" data-cat="calm">הרגעה מנטלית</button>
+      </div>
+      <div class="drill-list" id="drillList"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PROBLEM ============ -->
+<section class="problem" id="problem" data-tint="b">
+  <div class="wrap problem-grid">
+    <div class="problem-copy reveal">
+      <span class="kicker">הבעיה</span>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem); color:var(--ink); font-weight:800; margin-bottom:20px;">שעה במגרש, ואפס התקדמות אמיתית</h2>
+      <p><strong>הרבה שחקנים מגיעים למגרש, זורקים קצת לסל בלי תוכנית</strong> — ואחרי חודשים של "אימונים" הם באותה נקודה בדיוק. אין להם מי שיגיד להם על מה בדיוק לעבוד עכשיו.</p>
+      <p>מאמן פרטי עולה מאות שקלים לאימון בודד. חיפוש ביוטיוב וטיקטוק מציף אלפי סרטונים כלליים — בלי מענה למה שהם באמת צריכים, ובלי מי שיגיד כמה חזרות לעשות.</p>
+      <p>Pocket Coach נותן את התרגיל המדויק, בדיוק לרגע הזה — לא עוד סרטון אקראי.</p>
+    </div>
+    <div class="scatter-box reveal">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="70" cy="80" r="5" fill="#FFD500" opacity=".7"/>
+        <circle cx="180" cy="50" r="4" fill="white" opacity=".4"/>
+        <circle cx="300" cy="110" r="6" fill="#FFD500" opacity=".55"/>
+        <circle cx="120" cy="180" r="4" fill="white" opacity=".35"/>
+        <circle cx="250" cy="200" r="5" fill="#FFD500" opacity=".6"/>
+        <circle cx="340" cy="240" r="4" fill="white" opacity=".4"/>
+        <circle cx="60" cy="270" r="6" fill="#FFD500" opacity=".5"/>
+        <circle cx="190" cy="310" r="4" fill="white" opacity=".35"/>
+        <circle cx="290" cy="330" r="5" fill="#FFD500" opacity=".6"/>
+        <circle cx="140" cy="90" r="3" fill="white" opacity=".3"/>
+        <circle cx="330" cy="60" r="3" fill="white" opacity=".3"/>
+        <circle cx="90" cy="340" r="4" fill="#FFD500" opacity=".45"/>
+        <path d="M70 80 Q125 60 180 50 T300 110" stroke="white" stroke-width="1" stroke-dasharray="3 6" fill="none" opacity=".2"/>
+        <path d="M120 180 Q185 190 250 200 T340 240" stroke="white" stroke-width="1" stroke-dasharray="3 6" fill="none" opacity=".2"/>
+      </svg>
+      <div class="scatter-caption">זריקות אקראיות בלי כיוון — בזבוז זמן על המגרש</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how" id="how" data-tint="c">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="kicker">איך זה עובד</span>
+      <h2>משפט אחד, ואתם כבר מתאמנים</h2>
+      <p>שלושה צעדים בין "אני תקוע" לבין תרגול אמיתי — בלי תיאום, בלי המתנה.</p>
+    </div>
+    <div class="how-steps">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <h3>מתארים את הקושי</h3>
+        <p>מכדרור וקליעה ועד לחץ לפני משחק — כותבים במילים שלכם, בלי מונחים מקצועיים.</p>
+        <svg class="step-arrow" viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L14 6M20 12L14 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">02</div>
+        <h3>מקבלים תרגיל מדויק</h3>
+        <p>מתוך מאגר תרגילים ממוקד — לא סרטון אקראי, אלא בדיוק מה שיעזור לבעיה שתיארתם.</p>
+        <svg class="step-arrow" viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L14 6M20 12L14 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">03</div>
+        <h3>מתאמנים עם טיימר מובנה</h3>
+        <p>ספירה לאחור על המסך — לתרגול כדרור, לזריקות ברצף, או לנשימות הרגעה לפני משחק.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="compare" id="compare" data-tint="d">
+  <div class="wrap">
+    <div class="section-head center reveal" style="margin-inline:auto;">
+      <span class="kicker on-dark">האלטרנטיבות</span>
+      <h2 style="color:var(--white);">למה לא פשוט לשכור מאמן, או לחפש בגוגל?</h2>
+      <p style="color:rgba(255,255,255,.65);">שתי האפשרויות הקיימות פותרות חצי מהבעיה — במחיר גבוה, או בזמן שאין לכם.</p>
+    </div>
+    <div class="compare-scroll reveal">
+      <div class="compare-grid">
+        <div class="compare-col">
+          <div class="compare-col-head"><h4>מאמן פרטי</h4></div>
+          <div class="compare-row"><span class="row-label">מחיר</span><span class="row-value">מאות ש״ח לאימון בודד</span></div>
+          <div class="compare-row"><span class="row-label">זמינות</span><span class="row-value">רק לפי יומן המאמן</span></div>
+          <div class="compare-row"><span class="row-label">התאמה אישית</span><span class="row-value">גבוהה, אבל יקרה מדי לשימוש קבוע</span></div>
+          <div class="compare-row"><span class="row-label">זמן עד תרגול</span><span class="row-value">ימים, עד לתיאום</span></div>
+        </div>
+        <div class="compare-col">
+          <div class="compare-col-head"><h4>יוטיוב וטיקטוק</h4></div>
+          <div class="compare-row"><span class="row-label">מחיר</span><span class="row-value">חינם</span></div>
+          <div class="compare-row"><span class="row-label">זמינות</span><span class="row-value">תמיד זמין</span></div>
+          <div class="compare-row"><span class="row-label">התאמה אישית</span><span class="row-value">כללית — לא לפי הבעיה הספציפית שלכם</span></div>
+          <div class="compare-row"><span class="row-label">זמן עד תרגול</span><span class="row-value">שעות של חיפוש בין אלפי סרטונים</span></div>
+        </div>
+        <div class="compare-col highlight">
+          <div class="compare-col-head"><span class="tag">Pocket Coach</span><h4>מאמן אישי בכיס</h4></div>
+          <div class="compare-row"><span class="row-label">מחיר</span><span class="row-value">חינם, עם שדרוג זול לפרימיום</span></div>
+          <div class="compare-row"><span class="row-label">זמינות</span><span class="row-value">24/7, ישר מהטלפון על המגרש</span></div>
+          <div class="compare-row"><span class="row-label">התאמה אישית</span><span class="row-value">מדויקת לפי מה שתיארתם ברגע הזה</span></div>
+          <div class="compare-row"><span class="row-label">זמן עד תרגול</span><span class="row-value">פחות מדקה</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="features" id="features" data-tint="e">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">יכולות עיקריות</span>
+      <h2>מה שבאמת עוזר על המגרש</h2>
+      <p>שלוש יכולות פשוטות שמחליפות תכנון אימונים, סטופר נפרד, ורשימת "לבדוק אחר כך" בפתק.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon f1"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="white" stroke-width="2"/><path d="M20 20L15 15" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <h3>חיפוש וסינון מהיר</h3>
+        <p>תיבת חיפוש פשוטה וכפתורי סינון לפי קטגוריה — טכניקה, קליעה או כלים מנטליים להרגעה — מציגים מיידית את התרגיל המתאים מתוך מאגר מקומי.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon f2"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><path d="M12 7V12L15.5 14.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>טיימר אימונים ונשימות</h3>
+        <p>ספירה לאחור מובנית על המסך — 4-7-8 שניות לתרגילי נשימה, או דקה שלמה לתרגול כדרור — בדיוק כמו שצריך, בלי אפליקציית סטופר נפרדת.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon f3"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4L14.6 9.3L20.5 10.2L16.2 14.3L17.3 20L12 17.2L6.7 20L7.8 14.3L3.5 10.2L9.4 9.3L12 4Z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div>
+        <h3>מועדפים בלי הרשמה</h3>
+        <p>כפתור "שמור במועדפים" ליד כל תרגיל, שמאפשר לגשת אליו בלחיצה אחת דרך הדפדפן — בלי משתמש, בלי סיסמה, בלי חיכוך.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AUDIENCE ============ -->
+<section class="audience" id="audience" data-tint="f">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="kicker">למי זה מיועד</span>
+      <h2>שני סוגי שחקנים, אותו צורך</h2>
+      <p>מגרש השכונה והליגה החובבנית — שניהם רוצים להשתפר בלי לשלם על זה הון.</p>
+    </div>
+    <div class="audience-grid">
+      <div class="persona reveal">
+        <span class="persona-age">גילאי 10–18</span>
+        <h3>שחקני נוער ושכונה</h3>
+        <ul>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> רוצים להשתפר ולהתבלט מול החברים על המגרש</li>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> אין תקציב למאמן אישי פרטי</li>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> צריכים תרגיל קצר וברור — לא סרטון של 20 דקות</li>
+        </ul>
+      </div>
+      <div class="persona reveal">
+        <span class="persona-age">גילאי 18+</span>
+        <h3>חובבים ומבוגרים</h3>
+        <ul>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> משחקים בערבים ובסופ״שים עם חברים</li>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> רוצים לתקן טעות ספציפית ולנצח, לא "להתאמן בכללי"</li>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> מחפשים פתרון מהיר בלי להתחייב למאמן קבוע</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing" id="pricing" data-tint="g">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="kicker">מודל עסקי</span>
+      <h2>חינם עם פרימיום</h2>
+      <p>גישה בסיסית בחינם לכולם, ושדרוג קל לשחקנים שרוצים עוד.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-plan">גרסה חינמית</div>
+        <div class="price-amount">₪0</div>
+        <div class="price-note">לתמיד, ללא הרשמה</div>
+        <ul class="price-list">
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> גישה בסיסית לתרגילי טכניקה וקליעה</li>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> טיימר אימונים ונשימות מובנה</li>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> רשימת מועדפים דרך הדפדפן</li>
+        </ul>
+        <a href="#demo" class="price-btn">התחילו עכשיו</a>
+      </div>
+      <div class="price-card premium reveal">
+        <div class="price-plan">מנוי חודשי</div>
+        <div class="price-amount">₪15<span class="cur">/חודש</span></div>
+        <div class="price-note">מחיר השקה · ביטול בכל עת</div>
+        <ul class="price-list">
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> שימוש בלתי מוגבל במאמן החכם</li>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> תרגילים מנטליים מתקדמים להורדת לחץ</li>
+          <li><svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> מעקב אישי אחר ההתקדמות</li>
+        </ul>
+        <a href="#" id="premiumBtn" class="price-btn"><span class="soon" id="premiumBadge">בקרוב</span> שדרוג לפרימיום</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROWTH ============ -->
+<section class="growth" id="growth" data-tint="h">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="kicker">שיווק</span>
+      <h2>הגעה לשחקנים — הכל דיגיטלי, הכל עצמאי</h2>
+      <p>בלי תקציב פרסום גדול. שלושה ערוצים אורגניים שמתחילים היום.</p>
+    </div>
+    <div class="growth-grid">
+      <div class="growth-card reveal">
+        <div class="growth-num">ערוץ 01</div>
+        <h3>תוכן קצר בטיקטוק ואינסטגרם</h3>
+        <p>סרטוני טיפים, תרגילים ותרגילי נשימה לפני משחק — תוכן שמגיע אורגנית לשחקנים צעירים.</p>
+      </div>
+      <div class="growth-card reveal">
+        <div class="growth-num">ערוץ 02</div>
+        <h3>קהילות כדורסל קיימות</h3>
+        <p>הפצה חינמית בקבוצות פייסבוק, דיסקורד וווטסאפ של שחקני נוער ושכונה.</p>
+      </div>
+      <div class="growth-card reveal">
+        <div class="growth-num">ערוץ 03</div>
+        <h3>חבר מביא חבר, בתוך האפליקציה</h3>
+        <p>הזמנת חברים למגרש מזכה בימי פרימיום — צמיחה שמתחילה מכל שחקן בודד.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GOAL ============ -->
+<section class="goal" id="goal" data-tint="i">
+  <div class="goal-target" aria-hidden="true">
+    <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="95" stroke="#FFD500" stroke-width="1"/><circle cx="100" cy="100" r="62" stroke="#FFD500" stroke-width="1"/><circle cx="100" cy="100" r="30" stroke="#FFD500" stroke-width="1"/></svg>
+  </div>
+  <div class="wrap goal-inner reveal">
+    <span class="kicker on-dark">הגדרת הצלחה</span>
+    <div class="goal-num" id="goalNum">0</div>
+    <div class="goal-label">שחקנים פעילים — היעד לחודשים הראשונים</div>
+    <p class="goal-quote">"מאמן אישי בכיס לכל שחקן — שמשפר ביצועים על המגרש ומוריד לחץ לפני משחק, בלי להוציא שקל."</p>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="cta-final" id="join" data-tint="j">
+  <div class="wrap reveal">
+    <h2>המגרש מחכה. התרגיל שלכם — מרחק חיפוש אחד</h2>
+    <p>בלי הרשמה, בלי כרטיס אשראי. מתארים מה קשה, ומתחילים להתאמן נכון היום.</p>
+    <div class="hero-ctas">
+      <a href="#demo" class="btn btn-primary">נסו את Pocket Coach בחינם</a>
+      <a href="#how" class="btn btn-ghost dark">קראו איך זה עובד</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-main">
+      <div class="footer-brand-col">
+        <div class="footer-logo">
+          <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#FFD500" stroke-width="2.5"/><path d="M20 2V38M2 20H38" stroke="#FFD500" stroke-width="2" stroke-linecap="round"/></svg>
+          Pocket Coach
+        </div>
+        <p>המאמן האישי שבכיס שלכם — מתארים מה קשה במגרש ומקבלים תרגיל ממוקד תוך שנייה. בחינם.</p>
+        <div class="footer-badges">
+          <span class="footer-badge">ללא הרשמה</span>
+          <span class="footer-badge">MVP · 2026</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>המוצר</h4>
+        <ul>
+          <li><a href="#problem">הבעיה</a></li>
+          <li><a href="#how">איך זה עובד</a></li>
+          <li><a href="#features">יכולות עיקריות</a></li>
+          <li><a href="#compare">השוואה לחלופות</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>העסק</h4>
+        <ul>
+          <li><a href="#audience">למי זה מיועד</a></li>
+          <li><a href="#pricing">מודל עסקי</a></li>
+          <li><a href="#growth">שיווק וצמיחה</a></li>
+          <li><a href="#goal">היעד שלנו</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>התחלה</h4>
+        <ul>
+          <li><a href="#demo">נסו את המאמן</a></li>
+          <li><a href="#join">הצטרפות בחינם</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Pocket Coach · MVP</div>
+      <div class="footer-bottom-links">
+        <a href="#top">חזרה למעלה</a>
+      </div>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=pocket-coach" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<script>
+(function(){
+  // ---------- nav scroll state + mobile toggle ----------
+  const nav = document.getElementById('nav');
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progressBar.style.width = scrolled + '%';
+  });
+
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', function(){
+    navToggle.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navToggle.classList.remove('open');
+    navLinks.classList.remove('open');
+  }));
+
+  // ---------- nav color shifts per section ----------
+  const NAV_TINTS = {
+    a: 'linear-gradient(100deg, rgba(120,20,25,.9), rgba(7,22,51,.93))',
+    b: 'linear-gradient(100deg, rgba(180,80,10,.88), rgba(7,22,51,.9))',
+    c: 'linear-gradient(100deg, rgba(160,130,5,.88), rgba(7,22,51,.9))',
+    d: 'linear-gradient(100deg, rgba(20,120,60,.88), rgba(7,22,51,.92))',
+    e: 'linear-gradient(120deg, rgba(10,120,140,.85), rgba(7,22,51,.9))',
+    f: 'linear-gradient(80deg, rgba(45,91,255,.6), rgba(7,22,51,.9))',
+    g: 'linear-gradient(100deg, rgba(60,50,170,.85), rgba(7,22,51,.92))',
+    h: 'linear-gradient(60deg, rgba(120,50,170,.82), rgba(7,22,51,.9))',
+    i: 'linear-gradient(140deg, rgba(180,30,110,.85), rgba(7,22,51,.93))',
+    j: 'linear-gradient(100deg, rgba(200,40,40,.55), rgba(230,150,10,.5), rgba(30,150,70,.5), rgba(45,91,255,.55), rgba(140,60,180,.55))'
+  };
+  const tintSections = document.querySelectorAll('[data-tint]');
+  const tintIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const tint = e.target.getAttribute('data-tint');
+        nav.style.setProperty('--nav-bg', NAV_TINTS[tint] || NAV_TINTS.a);
+      }
+    });
+  }, {rootMargin: '-45% 0px -50% 0px', threshold: 0});
+  tintSections.forEach(el => tintIO.observe(el));
+
+  // ---------- reveal on scroll ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.15});
+  revealEls.forEach(el => io.observe(el));
+
+  // ---------- goal count-up ----------
+  const goalNum = document.getElementById('goalNum');
+  const goalSection = document.querySelector('.goal');
+  let goalDone = false;
+  const goalIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !goalDone){
+        goalDone = true;
+        let n = 0;
+        const target = 20;
+        const step = setInterval(() => {
+          n++;
+          goalNum.textContent = n;
+          if(n >= target) clearInterval(step);
+        }, 65);
+      }
+    });
+  }, {threshold:.5});
+  goalIO.observe(goalSection);
+
+  // ---------- premium upgrade button ----------
+  // כדי להפעיל תשלומים אמיתיים: הדביקו כאן את קישור התשלום מ-Stripe / PayPal / Paddle
+  // (Payment Link) במקום המחרוזת placeholder, ושמרו את הקובץ.
+  const PREMIUM_PAYMENT_LINK = 'PASTE_YOUR_PAYMENT_LINK_HERE';
+
+  const premiumBtn = document.getElementById('premiumBtn');
+  const premiumBadge = document.getElementById('premiumBadge');
+  const linkIsConfigured = PREMIUM_PAYMENT_LINK && PREMIUM_PAYMENT_LINK !== 'PASTE_YOUR_PAYMENT_LINK_HERE';
+
+  if(linkIsConfigured){
+    premiumBtn.href = PREMIUM_PAYMENT_LINK;
+    premiumBtn.target = '_blank';
+    premiumBtn.rel = 'noopener noreferrer';
+    if(premiumBadge) premiumBadge.remove();
+  } else {
+    premiumBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('כדי להפעיל תשלומים: פתחו חשבון ב-Stripe / PayPal, צרו קישור תשלום למנוי ₪15/חודש, והדביקו אותו בקוד תחת PREMIUM_PAYMENT_LINK.');
+    });
+  }
+
+  // ---------- drill data ----------
+  const ICONS = {
+    target: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>',
+    dribble: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="5" stroke="currentColor" stroke-width="1.8"/><path d="M12 14V20M8 20H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 18C6 16 9 15.5 12 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".6"/></svg>',
+    breath: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 12C5 8 7 8 9 12C11 16 13 16 15 12C17 8 19 8 21 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+
+  const drills = [
+    {id:1, name:'קליעת עונשין בלחץ', cat:'shooting', desc:'10 זריקות ברצף עם דמיון של קהל רועש, לבניית ביטחון בזריקה החשובה.', dur:90},
+    {id:2, name:'כדרור דו־ידני מהיר', cat:'technique', desc:'החלפות כדרור בין הידיים תוך תנועה, לשיפור שליטה בכדור.', dur:60},
+    {id:3, name:'נשימת 4-7-8 לפני זריקה', cat:'calm', desc:'שאיפה 4 שניות, החזקה 7, נשיפה 8 — להרגעת הדופק לפני זריקה מכרעת.', dur:57},
+    {id:4, name:'קרוסאובר נמוך ומהיר', cat:'technique', desc:'עבודת רגליים וכדרור נמוך לחמיקה מהמגן שמולכם.', dur:75},
+    {id:5, name:'זריקת שלוש בתנועה', cat:'shooting', desc:'ריצה לפינה וקליעה מיידית, לדמות מצב משחק אמיתי.', dur:80, court:'3pt'},
+    {id:6, name:'מיקוד לפני זריקה חופשית', cat:'calm', desc:'שגרת התמקדות קצרה שמנתקת מהרעש שמסביב.', dur:45},
+    {id:7, name:'תפיסת ריבאונד בזמן', cat:'technique', desc:'קפיצה ותזמון נכון כדי להשתלט על הלוח.', dur:70},
+    {id:8, name:'קליעה תחת מגע הגנתי', cat:'shooting', desc:'זריקה מיד אחרי קבלת מגע, לדייק גם כשלא נוח.', dur:65},
+    {id:9, name:'הרפיה מהירה בין רבעים', cat:'calm', desc:'סבב נשימות קצר שמאפס את הראש בפסק זמן.', dur:40},
+    {id:10, name:'סבב זריקות מ-5 עמדות', cat:'shooting', desc:'זריקה מכל עמדה סביב הקשת עד קליעה, לבניית עקביות מכל זווית.', dur:240, court:'3pt'},
+    {id:11, name:'כדרור עם עיניים עצומות', cat:'technique', desc:'כדרור בעמידה בלי להסתכל על הכדור, לחיזוק התחושה הטבעית שלו.', dur:180},
+    {id:12, name:'נשימת קופסה (Box Breathing)', cat:'calm', desc:'שאיפה 4, החזקה 4, נשיפה 4, החזקה 4 — שיטת ספורטאי עלית להורדת מתח לפני תחרות.', dur:120},
+    {id:13, name:'סולם זריזות רגליים', cat:'technique', desc:'עבודת רגליים מהירה בדפוס קבוע, לשיפור זריזות ותזמון הגנתי.', dur:150},
+    {id:14, name:'50 זריקות עונשין ברצף', cat:'shooting', desc:'מבחן עקביות אמיתי — סופרים אחוזי הצלחה ומשתפרים מאימון לאימון.', dur:300},
+    {id:15, name:'דמיון מודרך לפני משחק', cat:'calm', desc:'עיניים עצומות ודמיון של הרגע המנצח שלכם, להיכנס למשחק עם ביטחון.', dur:180},
+    {id:16, name:'זריקה ביד אחת מתחת לסל', cat:'shooting', desc:'זריקות קרובות רק ביד אחת, לבניית טכניקת שחרור נקייה בלי לדחוף עם היד השנייה.', dur:60},
+    {id:17, name:'שליטה בכדור — עיגולים סביב הגוף', cat:'technique', desc:'מעבירים את הכדור בעיגולים מסביב למותניים, לראש ולברכיים, לחיזוק תחושת הכדור.', dur:90, variant:'between'},
+    {id:18, name:'טכניקת שחרור וזריקה', cat:'shooting', desc:'תרגול עמידת רגליים ותנועת שחרור אחידה, בלי לזרוק בפועל לסל — מתמקדים בטופס.', dur:60},
+    {id:19, name:'כדרור בשמונה בין הרגליים', cat:'technique', desc:'מעבירים את הכדור בתנועת שמונה בין הרגליים, לשיפור קואורדינציה ותחושת כדור.', dur:60, variant:'between'},
+    {id:20, name:'העברת כדור מהירה מיד ליד', cat:'technique', desc:'מעבירים את הכדור בין הידיים מול הגוף במהירות מרבית, לזירוז תגובת הידיים.', dur:40, variant:'between'},
+    {id:21, name:'כדרור בין הרגליים בתנועה', cat:'technique', desc:'כדרור בין הרגליים תוך כדי הליכה קדימה, לשילוב שליטה ותנועה.', dur:75, variant:'between'},
+    {id:22, name:'כדרור מאחורי הגב', cat:'technique', desc:'העברת הכדור מאחורי הגב בין יד ליד, לפתיחת זווית וחמיקה מהמגן.', dur:60, variant:'behind'},
+    {id:23, name:'כדרור עם שני כדורים', cat:'technique', desc:'כדרור בו־זמני בשתי ידיים עם שני כדורים, לפיתוח שליטה שווה בשתי הידיים.', dur:90, variant:'two'},
+    {id:24, name:'עמדת הגנה ותזוזה צידית', cat:'technique', desc:'עמדת הגנה נמוכה עם תזוזה צידית מהירה, לשיפור זריזות הגנתית מול חלוץ.', dur:60},
+    {id:25, name:'פריצה ראשונה בהתקפה', cat:'technique', desc:'צעד ראשון מהיר מעמדת עצירה, לפתיחת פינה ולהשתחררות מההגנה.', dur:60},
+    {id:26, name:'קפיצה בחבל בקצב אחיד', cat:'technique', desc:'קפיצות בחבל בקצב קבוע, לשיפור סיבולת רגליים ותיאום כללי.', dur:120},
+    {id:27, name:'ספרינטים קצרים לכושר', cat:'technique', desc:'ספרינטים קצרים לאורך המגרש עם מנוחה ביניהם, לבניית מהירות וכושר גופני.', dur:180}
+  ];
+
+  const CAT_LABEL = {shooting:'קליעה', technique:'טכניקה', calm:'הרגעה'};
+
+  let activeCat = 'all';
+  let query = '';
+  let favorites = new Set();
+  let timers = {}; // id -> {interval, remaining, total}
+
+  const drillList = document.getElementById('drillList');
+  const favCountEl = document.getElementById('favCount');
+  const searchInput = document.getElementById('searchInput');
+  const chipRow = document.getElementById('chipRow');
+
+  function fmtTime(s){
+    const m = Math.floor(s/60);
+    const sec = s%60;
+    return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec;
+  }
+
+  function render(){
+    const q = query.trim().toLowerCase();
+    const filtered = drills.filter(d => {
+      const matchesCat = activeCat === 'all' || d.cat === activeCat;
+      const matchesQuery = !q || d.name.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q);
+      return matchesCat && matchesQuery;
+    });
+
+    if(filtered.length === 0){
+      drillList.innerHTML = '<div class="no-results">לא מצאנו תרגיל תואם — נסו מילה אחרת או קטגוריה שונה.</div>';
+      return;
+    }
+
+    drillList.innerHTML = filtered.map(d => {
+      const isFav = favorites.has(d.id);
+      const t = timers[d.id];
+      const running = t && t.interval;
+      const remaining = t ? t.remaining : d.dur;
+      const pct = t ? Math.max(0,(t.remaining/t.total)*100) : 100;
+      const finished = t && t.remaining <= 0;
+      return `
+      <div class="drill-card" data-id="${d.id}">
+        <div class="drill-top">
+          <div class="drill-icon cat-${d.cat}">${ICONS[d.cat === 'calm' ? 'breath' : (d.cat === 'shooting' ? 'target' : 'dribble')]}</div>
+          <div class="drill-info">
+            <div class="drill-name">${d.name}</div>
+            <div class="drill-desc">${d.desc}</div>
+          </div>
+          <button class="star-btn ${isFav?'saved':''}" data-star="${d.id}" aria-label="שמור במועדפים">
+            <svg viewBox="0 0 24 24" fill="${isFav?'currentColor':'none'}"><path d="M12 3L14.6 9.3L21.5 9.9L16.2 14.4L17.8 21.1L12 17.5L6.2 21.1L7.8 14.4L2.5 9.9L9.4 9.3L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="drill-bottom">
+          <span class="drill-dur num">${CAT_LABEL[d.cat]} · ${fmtTime(d.dur)}</span>
+          <div class="drill-actions">
+            <button class="start-btn" data-start="${d.id}" ${running?'style="display:none"':''}>
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 1L10 6L2 11V1Z" fill="currentColor"/></svg>
+              התחילו תרגיל
+            </button>
+          </div>
+        </div>
+        <div class="timer-panel ${t?'active':''}" data-panel="${d.id}">
+          <div class="timer-row">
+            <span class="timer-digits">${fmtTime(Math.max(0,remaining))}</span>
+            <div class="timer-track"><div class="timer-fill" style="width:${pct}%"></div></div>
+            <div class="timer-actions">
+              <button data-pause="${d.id}" aria-label="השהיה/המשך">
+                ${running ? '<svg viewBox="0 0 12 12" fill="none"><rect x="2" y="1" width="3" height="10" fill="currentColor"/><rect x="7" y="1" width="3" height="10" fill="currentColor"/></svg>' : '<svg viewBox="0 0 12 12" fill="none"><path d="M2 1L10 6L2 11V1Z" fill="currentColor"/></svg>'}
+              </button>
+              <button data-reset="${d.id}" aria-label="איפוס">
+                <svg viewBox="0 0 14 14" fill="none"><path d="M12 7A5 5 0 1 1 10.5 3.5M12 2V5.5H8.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="timer-done ${finished?'show':''}">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            כל הכבוד! התרגיל הושלם
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    favCountEl.textContent = favorites.size;
+    attachCardEvents();
+  }
+
+  function attachCardEvents(){
+    drillList.querySelectorAll('[data-star]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number(btn.dataset.star);
+        if(favorites.has(id)) favorites.delete(id); else favorites.add(id);
+        render();
+      });
+    });
+    drillList.querySelectorAll('[data-start]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number(btn.dataset.start);
+        startTimer(id);
+      });
+    });
+    drillList.querySelectorAll('[data-pause]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number(btn.dataset.pause);
+        toggleTimer(id);
+      });
+    });
+    drillList.querySelectorAll('[data-reset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number(btn.dataset.reset);
+        resetTimer(id);
+      });
+    });
+  }
+
+  function startTimer(id){
+    const drill = drills.find(d => d.id === id);
+    if(!drill) return;
+    clearInterval((timers[id]||{}).interval);
+    timers[id] = {remaining: drill.dur, total: drill.dur, interval: null};
+    render();
+    timers[id].interval = setInterval(() => {
+      const t = timers[id];
+      if(!t) return;
+      t.remaining -= 1;
+      if(t.remaining <= 0){
+        t.remaining = 0;
+        clearInterval(t.interval);
+        t.interval = null;
+        render();
+        return;
+      }
+      updateTimerDom(id);
+    }, 1000);
+  }
+
+  function updateTimerDom(id){
+    const t = timers[id];
+    if(!t) return;
+    const panel = drillList.querySelector('[data-panel="'+id+'"]');
+    if(!panel) return;
+    const digits = panel.querySelector('.timer-digits');
+    const fill = panel.querySelector('.timer-fill');
+    digits.textContent = fmtTime(Math.max(0,t.remaining));
+    fill.style.width = Math.max(0,(t.remaining/t.total)*100) + '%';
+  }
+
+  function toggleTimer(id){
+    const t = timers[id];
+    if(!t) return;
+    if(t.interval){
+      clearInterval(t.interval);
+      t.interval = null;
+    } else {
+      if(t.remaining <= 0) return;
+      t.interval = setInterval(() => {
+        t.remaining -= 1;
+        if(t.remaining <= 0){
+          t.remaining = 0;
+          clearInterval(t.interval);
+          t.interval = null;
+          render();
+          return;
+        }
+        updateTimerDom(id);
+      }, 1000);
+    }
+    render();
+  }
+
+  function resetTimer(id){
+    clearInterval((timers[id]||{}).interval);
+    delete timers[id];
+    render();
+  }
+
+  chipRow.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      chipRow.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeCat = chip.dataset.cat;
+      render();
+    });
+  });
+
+  searchInput.addEventListener('input', (e) => {
+    query = e.target.value;
+    render();
+  });
+
+  render();
+
+})();
+</script>
+
+</body>
+</html>
