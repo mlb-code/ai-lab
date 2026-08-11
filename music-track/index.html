@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>Music Track — תראה את ההתקדמות שלך</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Heebo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#060c16;
+    --bg-soft:#0a1424;
+    --panel:#0f1e33;
+    --panel-2:#122542;
+    --panel-border:rgba(255,255,255,0.09);
+    --blue:#4C8CFF;
+    --blue-soft:#2A5BCC;
+    --teal:#1BE8B2;
+    --teal-soft:#0FBE8D;
+    --red:#FF4B5E;
+    --red-soft:#E22344;
+    --text:#EAF2FF;
+    --text-dim:#93A6C6;
+    --text-faint:#56698C;
+    --grad-primary: linear-gradient(120deg, var(--blue), var(--teal) 90%);
+    --grad-flame: linear-gradient(135deg, #FF8A4C, var(--red));
+    --font-display:'Rubik', sans-serif;
+    --font-body:'Heebo', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --radius-lg: 26px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:
+      linear-gradient(to bottom,
+        rgba(76,140,255,0.13) 0%,
+        rgba(76,140,255,0.03) 9%,
+        rgba(27,232,178,0.02) 15%,
+        rgba(27,232,178,0.12) 23%,
+        rgba(27,232,178,0.03) 33%,
+        rgba(255,90,110,0.02) 39%,
+        rgba(255,90,110,0.10) 49%,
+        rgba(255,90,110,0.02) 57%,
+        rgba(76,140,255,0.02) 63%,
+        rgba(76,140,255,0.11) 71%,
+        rgba(76,140,255,0.02) 79%,
+        rgba(27,232,178,0.02) 84%,
+        rgba(27,232,178,0.11) 92%,
+        rgba(27,232,178,0.03) 100%
+      ),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+  section{ scroll-margin-top:84px; }
+
+  ::selection{ background:var(--teal); color:#04140f; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+
+  /* ---------- background texture ---------- */
+  .bg-glow{
+    position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background:
+      radial-gradient(700px 520px at 84% -6%, rgba(76,140,255,0.30), transparent 62%),
+      radial-gradient(750px 560px at 6% 20%, rgba(27,232,178,0.22), transparent 62%),
+      radial-gradient(560px 460px at 60% 88%, rgba(255,75,94,0.15), transparent 62%),
+      radial-gradient(520px 420px at 96% 70%, rgba(27,232,178,0.10), transparent 60%);
+  }
+  .bg-lines{
+    position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.35;
+    background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+  .compare-card:nth-child(2), .feature-card:nth-child(2), .price-card:nth-child(2){ transition-delay:.08s; }
+  .compare-card:nth-child(3), .feature-card:nth-child(3){ transition-delay:.16s; }
+  .compare-card:nth-child(4), .feature-card:nth-child(4){ transition-delay:.24s; }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- nav ---------- */
+  .navbar{
+    position:sticky; top:0; z-index:110;
+    backdrop-filter:blur(14px);
+    background:rgba(6,12,22,0.72);
+    border-bottom:1px solid var(--panel-border);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:800; font-size:1.25rem; letter-spacing:-0.01em; }
+  .logo-mark{ width:34px; height:34px; border-radius:10px; background:var(--grad-primary); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .logo-mark svg{ width:18px; height:18px; }
+
+  .nav-actions{ display:none; align-items:center; gap:10px; }
+  .nav-links{ display:none; align-items:center; gap:32px; font-size:1.05rem; color:var(--text-dim); }
+  .nav-links a{ transition:color .2s; }
+  .nav-links a:hover{ color:var(--text); }
+
+  .hamburger{
+    display:flex; width:54px; height:54px; align-items:center; justify-content:center; border-radius:15px; flex-shrink:0;
+    position:relative; z-index:101; transition:background .2s;
+  }
+  .hamburger:hover{ background:rgba(255,255,255,0.07); }
+  .hamburger.active{ background:rgba(255,255,255,0.09); }
+  .hamburger-box{ position:relative; width:22px; height:15px; display:block; }
+  .hamburger-line{ position:absolute; right:0; left:0; height:2.5px; background:var(--text); border-radius:2px; transition:transform .3s ease, opacity .3s ease, top .3s ease; }
+  .hamburger-line.line-top{ top:0; }
+  .hamburger-line.line-mid{ top:6.5px; }
+  .hamburger-line.line-bottom{ top:13px; }
+  .hamburger.active .hamburger-line.line-top{ top:6.5px; transform:rotate(45deg); }
+  .hamburger.active .hamburger-line.line-mid{ opacity:0; }
+  .hamburger.active .hamburger-line.line-bottom{ top:6.5px; transform:rotate(-45deg); }
+
+  @media (min-width:900px){
+    .hamburger{ display:none; }
+    .nav-inner{ display:grid; grid-template-columns:1fr auto 1fr; }
+    .nav-actions{ display:flex; justify-self:start; }
+    .nav-links{ display:flex; justify-self:center; }
+    .logo{ justify-self:end; }
+  }
+
+  .mobile-menu-overlay{
+    position:fixed; inset:0; z-index:100;
+    background:
+      radial-gradient(560px 420px at 88% 6%, rgba(76,140,255,0.20), transparent 62%),
+      radial-gradient(580px 460px at 8% 92%, rgba(27,232,178,0.17), transparent 62%),
+      radial-gradient(420px 340px at 50% 48%, rgba(255,75,94,0.08), transparent 62%),
+      rgba(6,12,22,0.97);
+    backdrop-filter:blur(20px);
+    display:flex; flex-direction:column; align-items:center; justify-content:space-between; gap:32px;
+    padding:calc(var(--nav-h, 72px) + 28px) 24px 44px;
+    opacity:0; pointer-events:none; transform:translateY(-14px);
+    transition:opacity .3s ease, transform .3s ease;
+    overflow-y:auto;
+  }
+  .mobile-menu-overlay.open{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  body.menu-open{ overflow:hidden; }
+  body.modal-open{ overflow:hidden; }
+  .mobile-menu-links{ display:flex; flex-direction:column; align-items:center; gap:12px; margin:auto 0; }
+  .mobile-link{ display:flex; align-items:center; gap:12px; font-family:var(--font-display); font-weight:700; font-size:clamp(1.6rem, 5vw, 2.3rem); color:var(--text); padding:10px 22px; transition:color .2s; }
+  .mobile-link:hover{ color:var(--teal); }
+  .mobile-link .dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .mobile-menu-links li:nth-child(1) .dot{ background:var(--teal); box-shadow:0 0 10px rgba(27,232,178,0.6); }
+  .mobile-menu-links li:nth-child(2) .dot{ background:var(--blue); box-shadow:0 0 10px rgba(76,140,255,0.6); }
+  .mobile-menu-links li:nth-child(3) .dot{ background:var(--red); box-shadow:0 0 10px rgba(255,75,94,0.6); }
+  .mobile-menu-links li:nth-child(4) .dot{ background:var(--teal); box-shadow:0 0 10px rgba(27,232,178,0.6); }
+  .mobile-menu-actions{ display:flex; flex-direction:column; gap:14px; width:min(320px, 82vw); flex-shrink:0; }
+  .mobile-menu-actions .btn{ width:100%; }
+  .mobile-menu-actions .btn-ghost{ border-color:rgba(27,232,178,0.35); }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:11px 22px; border-radius:999px; font-weight:600; font-size:0.92rem;
+    white-space:nowrap; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .btn-primary{ background:var(--grad-primary); color:#04140f; box-shadow:0 8px 24px -8px rgba(27,232,178,0.5); }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 30px -8px rgba(27,232,178,0.65); }
+  .btn-ghost{ color:var(--text-dim); border:1px solid var(--panel-border); }
+  .btn-ghost:hover{ color:var(--text); border-color:rgba(255,255,255,0.25); }
+  .btn-outline{ border:1px solid var(--panel-border); color:var(--text); }
+  .btn-outline:hover{ border-color:var(--teal); color:var(--teal); }
+  .btn-lg{ padding:15px 30px; font-size:1rem; }
+  .btn-block{ width:100%; }
+
+  /* ---------- section head ---------- */
+  .section{ padding:96px 0; }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.06em;
+    color:var(--teal); margin-bottom:16px; text-transform:uppercase;
+  }
+  .eyebrow::before{ content:''; width:16px; height:1px; background:var(--teal); }
+  .section-title{
+    font-family:var(--font-display); font-weight:800; font-size:clamp(1.7rem, 3.2vw, 2.5rem);
+    letter-spacing:-0.015em; margin-bottom:14px;
+  }
+  .section-desc{ color:var(--text-dim); font-size:1.05rem; max-width:560px; }
+  .center{ text-align:center; margin-left:auto; margin-right:auto; }
+
+  /* ---------- section dividers: soft line blending the two adjacent hues ---------- */
+  .divider-row{ padding:44px 0; }
+  .section-divider{
+    display:block; width:100%; height:2px; opacity:0.8;
+    -webkit-mask-image:linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+    mask-image:linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+  }
+  .section-divider.blue-teal{ background:linear-gradient(90deg, var(--blue), var(--teal)); box-shadow:0 0 16px rgba(76,140,255,0.3), 0 0 16px rgba(27,232,178,0.3); }
+  .section-divider.teal-red{ background:linear-gradient(90deg, var(--teal), var(--red)); box-shadow:0 0 16px rgba(27,232,178,0.3), 0 0 16px rgba(255,75,94,0.3); }
+  .section-divider.red-blue{ background:linear-gradient(90deg, var(--red), var(--blue)); box-shadow:0 0 16px rgba(255,75,94,0.3), 0 0 16px rgba(76,140,255,0.3); }
+
+  /* ================= HERO ================= */
+  .hero{
+    min-height:calc(100vh - var(--nav-h, 72px));
+    min-height:calc(var(--vh, 100vh) - var(--nav-h, 72px));
+    min-height:calc(100dvh - var(--nav-h, 72px));
+    display:flex;
+    align-items:center;
+    padding:48px 0;
+    position:relative;
+  }
+  .hero-inner{ display:flex; flex-direction:column; align-items:center; gap:52px; width:100%; text-align:center; }
+  .hero-content{ max-width:960px; width:100%; margin-inline:auto; }
+  .hero-title{
+    font-family:var(--font-display); font-weight:900; font-size:clamp(3.2rem, 9.6vw, 7.3rem);
+    letter-spacing:-0.03em; line-height:1.05; margin-bottom:32px;
+  }
+  .hero-title .grad{
+    background:var(--grad-primary); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub{ font-size:1.18rem; color:var(--text-dim); max-width:600px; margin:0 auto 36px; }
+  .hero-actions{ display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
+  .hero-note{ display:flex; align-items:center; justify-content:center; gap:8px; font-size:0.85rem; color:var(--text-faint); }
+  .hero-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--teal); box-shadow:0 0 0 4px rgba(27,232,178,0.15); }
+
+  .hero-visual{ width:100%; display:flex; justify-content:center; }
+
+  @media (min-width:900px){
+    .hero-inner{ flex-direction:row; align-items:center; text-align:right; gap:64px; }
+    .hero-content{ flex:1.15 1 0; min-width:0; max-width:none; margin-inline:0; }
+    .hero-title{ font-size:clamp(3rem, 5.4vw, 5.6rem); line-height:1.06; margin-bottom:28px; }
+    .hero-sub{ margin:0 0 36px; }
+    .hero-actions{ justify-content:flex-start; }
+    .hero-note{ justify-content:flex-start; }
+    .hero-visual{ flex:0.9 1 0; min-width:0; width:auto; }
+    .dash-card{ max-width:400px; padding:19px; }
+  }
+
+
+  .dash-card{
+    width:100%; max-width:335px; background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--panel-border); border-radius:var(--radius-lg);
+    padding:16px; box-shadow:0 30px 70px -30px rgba(0,0,0,0.6);
+    position:relative;
+  }
+  .dash-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+  .dash-user{ display:flex; align-items:center; gap:10px; }
+  .avatar{ width:34px; height:34px; border-radius:50%; background:var(--grad-primary); }
+  .dash-user-name{ font-size:0.85rem; font-weight:600; }
+  .dash-user-sub{ font-size:0.72rem; color:var(--text-faint); }
+
+  .streak-pill{
+    display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px;
+    background:rgba(255,75,94,0.12); border:1px solid rgba(255,75,94,0.3);
+  }
+  .streak-flame{ width:15px; height:15px; }
+  .streak-num{ font-family:var(--font-mono); font-weight:700; font-size:0.85rem; color:#FFD3D9; }
+
+  .dash-panel{ background:rgba(0,0,0,0.18); border:1px solid var(--panel-border); border-radius:var(--radius-md); padding:16px; margin-bottom:14px; }
+  .dash-panel-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px; }
+  .dash-panel-title{ font-size:0.78rem; color:var(--text-dim); }
+  .dash-bpm{ font-family:var(--font-mono); font-weight:700; font-size:1.5rem; }
+  .dash-bpm span{ font-size:0.7rem; color:var(--text-faint); font-weight:400; }
+
+  .chart-svg{ width:100%; height:64px; }
+  .chart-path{ fill:none; stroke:url(#chartGrad); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+  .chart-area{ fill:url(#chartFill); opacity:0.5; }
+
+  .goal-row{ display:flex; align-items:center; gap:10px; padding:9px 4px; font-size:0.85rem; }
+  .goal-row + .goal-row{ border-top:1px solid rgba(255,255,255,0.06); }
+  .goal-check{ width:18px; height:18px; border-radius:6px; border:1.5px solid var(--panel-border); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .goal-check.done{ background:var(--grad-primary); border-color:transparent; }
+  .goal-check.done svg{ width:11px; height:11px; }
+  .goal-row.done span{ color:var(--text-faint); text-decoration:line-through; }
+
+  .dash-float{
+    position:absolute; padding:10px 14px; background:var(--panel-2); border:1px solid var(--panel-border);
+    border-radius:12px; font-size:0.72rem; display:flex; align-items:center; gap:8px; box-shadow:0 12px 30px -12px rgba(0,0,0,0.6);
+  }
+  .dash-float.f1{ top:-16px; inset-inline-start:-18px; }
+  .dash-float.f2{ bottom:-14px; inset-inline-end:-14px; }
+  @media (max-width:640px){ .dash-float{ display:none; } }
+
+  /* ================= PROBLEM ================= */
+  .problem-grid{ display:flex; gap:56px; align-items:center; }
+  .problem-text{ flex:1 1 460px; min-width:0; }
+  .problem-text p{ color:var(--text-dim); margin-bottom:16px; font-size:1.02rem; }
+  .problem-text p strong{ color:var(--text); font-weight:600; }
+  .problem-visual{ flex:1 1 400px; min-width:0; }
+
+  .compare-lines{ background:var(--panel); border:1px solid var(--panel-border); border-radius:var(--radius-lg); padding:26px; }
+  .compare-line-row{ margin-bottom:22px; }
+  .compare-line-row:last-child{ margin-bottom:0; }
+  .compare-line-label{ font-size:0.82rem; color:var(--text-faint); margin-bottom:8px; display:flex; justify-content:space-between; }
+  .compare-line-label b{ color:var(--text-dim); font-weight:500; }
+
+  /* ================= COMPARE CARDS ================= */
+  .compare-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; }
+  .compare-card{
+    background:var(--panel); border:1px solid var(--panel-border); border-radius:var(--radius-md);
+    padding:24px 20px; display:flex; flex-direction:column; gap:10px;
+  }
+  .compare-card-label{ font-family:var(--font-mono); font-size:0.7rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.04em; }
+  .compare-card-title{ font-family:var(--font-display); font-weight:700; font-size:1.05rem; }
+  .compare-card-desc{ color:var(--text-dim); font-size:0.88rem; }
+  .compare-card.highlight{
+    background:linear-gradient(160deg, rgba(27,232,178,0.14), rgba(76,140,255,0.08));
+    border-color:rgba(27,232,178,0.45);
+    box-shadow:0 20px 50px -25px rgba(27,232,178,0.35);
+  }
+  .compare-card.highlight .compare-card-label{ color:var(--teal); }
+
+  @media (max-width:720px){
+    .compare-grid{
+      display:flex; gap:14px;
+      overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+      margin-inline:-28px; padding-inline:28px; padding-bottom:6px;
+    }
+    .compare-grid::-webkit-scrollbar{ display:none; }
+    .compare-card{ flex:0 0 78%; scroll-snap-align:start; }
+  }
+
+  /* ================= FEATURES ================= */
+  .features-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:20px; }
+  .feature-card{
+    background:linear-gradient(160deg, var(--panel), rgba(15,30,51,0.4));
+    border:1px solid var(--panel-border); border-radius:var(--radius-lg);
+    padding:28px; display:flex; flex-direction:column; gap:16px;
+    transition:border-color .25s, transform .25s;
+  }
+  .feature-card:hover{ border-color:rgba(255,255,255,0.2); transform:translateY(-4px); }
+  .feature-icon{
+    width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    background:rgba(76,140,255,0.14); border:1px solid rgba(76,140,255,0.3);
+  }
+  .feature-icon svg{ width:22px; height:22px; stroke:var(--blue); }
+  .feature-card:nth-child(2) .feature-icon{ background:rgba(27,232,178,0.14); border-color:rgba(27,232,178,0.32); }
+  .feature-card:nth-child(2) .feature-icon svg{ stroke:var(--teal); }
+  .feature-card:nth-child(3) .feature-icon{ background:rgba(255,75,94,0.14); border-color:rgba(255,75,94,0.32); }
+  .feature-card:nth-child(3) .feature-icon svg{ stroke:var(--red); }
+  .feature-card:nth-child(4) .feature-icon{ background:rgba(76,140,255,0.14); border-color:rgba(76,140,255,0.3); }
+  .feature-card:nth-child(4) .feature-icon svg{ stroke:var(--blue); }
+
+  .feature-title{ font-family:var(--font-display); font-weight:700; font-size:1.18rem; }
+  .feature-desc{ color:var(--text-dim); font-size:0.94rem; }
+  .feature-mini{ margin-top:auto; padding-top:14px; border-top:1px solid rgba(255,255,255,0.07); }
+
+  .mini-timer{ display:flex; align-items:center; gap:12px; font-family:var(--font-mono); }
+  .mini-timer-time{ font-size:1.4rem; font-weight:700; }
+  .mini-timer-tag{ font-size:0.72rem; color:var(--text-faint); background:rgba(255,255,255,0.05); padding:4px 10px; border-radius:999px; }
+
+  .mini-flame-row{ display:flex; align-items:center; gap:14px; }
+  .mini-flame-circle{
+    width:52px; height:52px; border-radius:50%; background:var(--grad-flame);
+    display:flex; align-items:center; justify-content:center; font-family:var(--font-mono);
+    font-weight:700; font-size:1.1rem; color:#1a0206; flex-shrink:0;
+  }
+  .mini-flame-label{ font-size:0.82rem; color:var(--text-dim); }
+
+  .mini-goals .goal-row{ padding:6px 0; font-size:0.82rem; }
+
+  /* ================= ONBOARDING STRIP ================= */
+  .onboard{
+    background:linear-gradient(120deg, rgba(76,140,255,0.08), rgba(27,232,178,0.06));
+    border:1px solid var(--panel-border); border-radius:var(--radius-lg);
+    padding:40px; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;
+  }
+  .onboard-steps{ display:flex; gap:36px; flex-wrap:wrap; }
+  .onboard-step{ display:flex; align-items:center; gap:12px; max-width:230px; }
+  .onboard-step-mark{ width:8px; height:8px; border-radius:50%; background:var(--teal); flex-shrink:0; box-shadow:0 0 0 4px rgba(27,232,178,0.15); }
+  .onboard-step-text b{ display:block; font-size:0.95rem; margin-bottom:2px; }
+  .onboard-step-text span{ font-size:0.82rem; color:var(--text-dim); }
+
+  /* ================= PRICING ================= */
+  .pricing-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:760px; margin:0 auto; }
+  .price-card{
+    background:var(--panel); border:1px solid var(--panel-border); border-radius:var(--radius-lg);
+    padding:32px; display:flex; flex-direction:column; gap:22px;
+  }
+  .price-card.featured{
+    background:linear-gradient(160deg, rgba(27,232,178,0.12), rgba(76,140,255,0.06));
+    border-color:rgba(27,232,178,0.4);
+  }
+  .price-name{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
+  .price-tag{ font-size:0.78rem; color:var(--teal); font-family:var(--font-mono); }
+  .price-amount{ font-family:var(--font-mono); font-size:2.4rem; font-weight:700; }
+  .price-amount span{ font-size:0.9rem; color:var(--text-faint); font-weight:400; }
+  .price-features{ display:flex; flex-direction:column; gap:11px; }
+  .price-feature{ display:flex; align-items:center; gap:10px; font-size:0.9rem; color:var(--text-dim); }
+  .price-feature svg{ width:16px; height:16px; stroke:var(--teal); flex-shrink:0; }
+
+  @media (max-width:720px){
+    .pricing-grid{
+      display:flex; max-width:none; margin:0; gap:14px;
+      overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+      margin-inline:-28px; padding-inline:28px; padding-bottom:6px;
+    }
+    .pricing-grid::-webkit-scrollbar{ display:none; }
+    .price-card{ flex:0 0 82%; scroll-snap-align:start; }
+  }
+
+  /* ================= FINAL CTA ================= */
+  .final-cta{
+    text-align:center; padding:90px 0; position:relative;
+  }
+  .final-cta-title{ font-family:var(--font-display); font-weight:900; font-size:clamp(2rem, 4vw, 3rem); letter-spacing:-0.02em; margin-bottom:18px; }
+  .final-cta-sub{ color:var(--text-dim); font-size:1.05rem; margin-bottom:36px; max-width:480px; margin-inline:auto; }
+
+  /* ================= FOOTER ================= */
+  footer{ border-top:1px solid var(--panel-border); padding:48px 0 32px; }
+  .footer-inner{ display:flex; justify-content:space-between; align-items:flex-start; gap:32px; flex-wrap:wrap; }
+  .footer-brand-sub{ color:var(--text-faint); font-size:0.85rem; margin-top:8px; max-width:280px; }
+  .footer-links{ display:flex; gap:40px; flex-wrap:wrap; }
+  .footer-col b{ display:block; font-size:0.82rem; color:var(--text-dim); margin-bottom:12px; }
+  .footer-col a{ display:block; font-size:0.86rem; color:var(--text-faint); padding:5px 0; transition:color .2s; }
+  .footer-col a:hover{ color:var(--text); }
+  .footer-bottom{ margin-top:40px; padding-top:20px; border-top:1px solid var(--panel-border); font-size:0.78rem; color:var(--text-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  /* ================= DASHBOARD ================= */
+  .dash-navbar{ position:sticky; top:0; z-index:50; background:rgba(6,12,22,0.85); backdrop-filter:blur(14px); border-bottom:1px solid var(--panel-border); }
+  .dash-navbar-inner{ display:flex; align-items:center; justify-content:space-between; padding:16px 28px; }
+
+  .dashboard-body{ padding:36px 28px 90px; }
+  .dashboard-header{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:28px; }
+  .dashboard-header h1{ font-family:var(--font-display); font-weight:800; font-size:1.55rem; margin-bottom:4px; }
+  .dashboard-header-actions{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .text-dim{ color:var(--text-dim); font-size:0.92rem; }
+
+  .streak-pill.large{ padding:10px 18px; gap:10px; }
+  .streak-pill.large svg{ width:20px; height:20px; }
+  .streak-pill.large span{ font-size:1.02rem; }
+
+  .stats-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:28px; }
+  .stat-card{ background:var(--panel); border:1px solid var(--panel-border); border-radius:var(--radius-md); padding:18px 20px; }
+  .stat-label{ display:block; font-size:0.76rem; color:var(--text-faint); margin-bottom:6px; }
+  .stat-value{ font-family:var(--font-mono); font-weight:700; font-size:1.5rem; }
+
+  .dashboard-grid{ display:grid; grid-template-columns:1.6fr 1fr; gap:22px; align-items:start; }
+
+  .panel-card{ background:linear-gradient(160deg, var(--panel), rgba(15,30,51,0.4)); border:1px solid var(--panel-border); border-radius:var(--radius-lg); padding:24px; margin-bottom:22px; }
+  .panel-card h3{ font-family:var(--font-display); font-weight:700; font-size:1.02rem; margin-bottom:16px; }
+
+  .panel-head-row{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px; }
+  .panel-head-row h3{ margin-bottom:0; }
+
+  .metronome{ display:flex; align-items:center; gap:9px; flex-shrink:0; }
+  .metronome-body{ width:36px; height:44px; overflow:visible; flex-shrink:0; }
+  .metronome-arm-pivot{
+    transform-box:fill-box; transform-origin:50% 8%;
+    animation:metronomeSwing 1.1s ease-in-out infinite;
+  }
+  @keyframes metronomeSwing{
+    0%{ transform:rotate(-16deg); }
+    50%{ transform:rotate(16deg); }
+    100%{ transform:rotate(-16deg); }
+  }
+  .metronome-bpm-label{ font-family:var(--font-mono); font-size:0.72rem; color:var(--text-faint); white-space:nowrap; }
+
+  .select-input, .text-input{
+    width:100%; background:rgba(0,0,0,0.25); border:1px solid var(--panel-border); border-radius:10px;
+    padding:11px 14px; color:var(--text); font-family:var(--font-body); font-size:0.9rem; margin-bottom:14px;
+  }
+  .select-input:focus, .text-input:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+
+  .timer-display{ font-family:var(--font-mono); font-size:2.5rem; font-weight:700; text-align:center; letter-spacing:0.02em; margin:4px 0 18px; }
+
+  .bpm-input-row{ display:flex; gap:10px; margin-top:4px; }
+  .bpm-input-row input{ flex:1; margin-bottom:0; }
+
+  .log-item{ display:flex; align-items:center; justify-content:space-between; padding:11px 2px; font-size:0.87rem; gap:12px; }
+  .log-item + .log-item{ border-top:1px solid rgba(255,255,255,0.06); }
+  .log-item-topic{ color:var(--text); }
+  .log-item-date{ color:var(--text-faint); font-size:0.76rem; margin-top:2px; }
+  .log-item-minutes{ font-family:var(--font-mono); color:var(--teal); font-weight:600; flex-shrink:0; }
+
+  .goal-add-row{ display:flex; gap:8px; margin-bottom:12px; }
+  .goal-add-row input{ flex:1; margin-bottom:0; }
+  .goal-item-text{ flex:1; font-size:0.89rem; }
+  .goal-del{ width:22px; height:22px; display:flex; align-items:center; justify-content:center; border-radius:6px; color:var(--text-faint); flex-shrink:0; font-size:0.85rem; transition:.2s; }
+  .goal-del:hover{ color:var(--red); background:rgba(255,75,94,0.12); }
+
+  .empty-state{ color:var(--text-faint); font-size:0.83rem; padding:16px 4px; text-align:center; }
+
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(16px);
+    background:var(--panel-2); border:1px solid var(--panel-border); padding:12px 22px; border-radius:999px;
+    font-size:0.85rem; opacity:0; pointer-events:none; transition:opacity .3s ease, transform .3s ease; z-index:200;
+    box-shadow:0 14px 34px -12px rgba(0,0,0,0.6);
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ================= DAY SUMMARY MODAL ================= */
+  .summary-modal-overlay{
+    position:fixed; inset:0; z-index:300;
+    background:rgba(4,9,17,0.72); backdrop-filter:blur(10px);
+    display:flex; align-items:center; justify-content:center; padding:24px;
+    opacity:0; pointer-events:none; transition:opacity .25s ease;
+  }
+  .summary-modal-overlay.open{ opacity:1; pointer-events:auto; }
+  .summary-modal-wrap{
+    position:relative; width:100%; max-width:420px; max-height:90vh; overflow-y:auto;
+    transform:translateY(14px) scale(.98); transition:transform .25s ease;
+  }
+  .summary-modal-overlay.open .summary-modal-wrap{ transform:translateY(0) scale(1); }
+  .summary-modal-close{ position:absolute; top:-14px; left:-14px; z-index:2; background:var(--panel-2); border:1px solid var(--panel-border); }
+
+  /* ================= AUTH MODAL ================= */
+  .auth-modal-overlay{
+    position:fixed; inset:0; z-index:300;
+    background:rgba(4,9,17,0.72); backdrop-filter:blur(10px);
+    display:flex; align-items:center; justify-content:center; padding:24px;
+    opacity:0; pointer-events:none; transition:opacity .25s ease;
+  }
+  .auth-modal-overlay.open{ opacity:1; pointer-events:auto; }
+  .auth-modal{
+    position:relative; width:100%; max-width:400px; max-height:90vh; overflow-y:auto;
+    background:linear-gradient(160deg, var(--panel), var(--panel-2)); border:1px solid var(--panel-border);
+    border-radius:var(--radius-lg); padding:32px 28px 28px; text-align:center;
+    transform:translateY(14px) scale(.98); transition:transform .25s ease;
+    box-shadow:0 30px 80px -25px rgba(0,0,0,0.7);
+  }
+  .auth-modal-overlay.open .auth-modal{ transform:translateY(0) scale(1); }
+  .auth-modal-close{
+    position:absolute; top:16px; left:16px; width:32px; height:32px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center; color:var(--text-faint); font-size:0.9rem;
+    transition:background .2s, color .2s;
+  }
+  .auth-modal-close:hover{ background:rgba(255,255,255,0.07); color:var(--text); }
+  .auth-modal-logo{ display:flex; justify-content:center; margin-bottom:16px; }
+  .auth-modal-logo .logo-mark{ width:42px; height:42px; border-radius:12px; background:var(--grad-primary); display:flex; align-items:center; justify-content:center; }
+  .auth-modal-logo svg{ width:22px; height:22px; }
+  .auth-modal-title{ font-family:var(--font-display); font-weight:800; font-size:1.3rem; margin-bottom:8px; }
+  .auth-modal-sub{ color:var(--text-dim); font-size:0.88rem; margin-bottom:26px; }
+  .auth-field{ text-align:right; margin-bottom:16px; display:none; }
+  .auth-field.active{ display:block; }
+  .auth-field label{ display:block; font-size:0.8rem; color:var(--text-dim); margin-bottom:7px; }
+  .auth-field .text-input{ margin-bottom:0; }
+  .auth-field-row{ display:flex; gap:10px; margin-top:10px; }
+  .auth-field-row .text-input{ flex:1; }
+  .auth-demo-note{ font-size:0.74rem; color:var(--text-faint); margin-top:10px; line-height:1.5; }
+  #authModalSubmit{ margin-top:6px; }
+
+  @media (max-width:880px){
+    .dashboard-grid{ grid-template-columns:1fr; }
+    .stats-row{
+      display:flex; gap:14px;
+      overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+      margin-inline:-28px; padding-inline:28px; padding-bottom:6px;
+    }
+    .stats-row::-webkit-scrollbar{ display:none; }
+    .stat-card{ flex:0 0 68%; scroll-snap-align:start; }
+  }
+
+  /* ---------- flame pulse ---------- */
+  @keyframes pulseSoft{ 0%,100%{ opacity:1; } 50%{ opacity:0.55; } }
+  .pulse{ animation:pulseSoft 2.4s ease-in-out infinite; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:960px){
+    .problem-grid{ flex-direction:column; }
+  }
+  @media (max-width:720px){
+    .features-grid{
+      display:flex; gap:16px;
+      overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+      margin-inline:-28px; padding-inline:28px; padding-bottom:6px;
+    }
+    .features-grid::-webkit-scrollbar{ display:none; }
+    .feature-card{ flex:0 0 84%; scroll-snap-align:start; }
+  }
+  @media (max-width:600px){
+    .section{ padding:68px 0; }
+    .onboard{ padding:28px; }
+    .compare-grid{ gap:12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-lines"></div>
+
+<div id="landingRoot">
+
+<!-- NAV -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <button class="hamburger" id="hamburgerBtn" aria-label="פתח תפריט" aria-expanded="false" aria-controls="mobileMenuOverlay">
+      <span class="hamburger-box">
+        <span class="hamburger-line line-top"></span>
+        <span class="hamburger-line line-mid"></span>
+        <span class="hamburger-line line-bottom"></span>
+      </span>
+    </button>
+
+    <div class="nav-actions">
+      <a href="#" class="btn btn-ghost js-open-dashboard" data-auth="login" id="loginBtnDesktop">התחברות</a>
+      <a href="#" class="btn btn-primary js-open-dashboard" data-auth="signup" id="signupBtnDesktop">הרשמה</a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#problem">הבעיה</a></li>
+      <li><a href="#features">תכונות</a></li>
+      <li><a href="#compare">למה אנחנו</a></li>
+      <li><a href="#pricing">מחירים</a></li>
+    </ul>
+
+    <a href="#top" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#04140f" stroke-width="2.2" stroke-linecap="round"><path d="M4 14 L4 20 M9 9 L9 20 M14 15 L14 20 M19 6 L19 20"/></svg>
+      </span>
+      Music Track
+    </a>
+  </div>
+</nav>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+  <ul class="mobile-menu-links">
+    <li><a href="#problem" class="mobile-link"><span class="dot"></span>הבעיה</a></li>
+    <li><a href="#features" class="mobile-link"><span class="dot"></span>תכונות</a></li>
+    <li><a href="#compare" class="mobile-link"><span class="dot"></span>למה אנחנו</a></li>
+    <li><a href="#pricing" class="mobile-link"><span class="dot"></span>מחירים</a></li>
+  </ul>
+  <div class="mobile-menu-actions">
+    <a href="#" class="btn btn-ghost btn-lg js-open-dashboard" data-auth="login">התחברות</a>
+    <a href="#" class="btn btn-primary btn-lg js-open-dashboard" data-auth="signup">הרשמה</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="hero-content reveal">
+      <div class="eyebrow">ל־12,000+ נגנים עצמאיים</div>
+      <h1 class="hero-title">תפסיק לנחש אם אתה<br><span class="grad">משתפר.</span> תראה את זה.</h1>
+      <p class="hero-sub">Music Track הופך כל אימון לנתון מדיד: מהירות המטרונום, רצף הימים והיעדים שלך — במסך אחד שמוכיח שאתה לא דורך במקום.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary btn-lg js-open-dashboard" data-auth="signup" id="heroSignup">התחל בחינם</a>
+        <a href="#features" class="btn btn-outline btn-lg">איך זה עובד</a>
+      </div>
+      <div class="hero-note"><span class="dot"></span> בלי סיסמה, בלי כרטיס אשראי — מתחילים מדף נקי תוך שניות</div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="dash-card">
+        <div class="dash-float f1">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--teal)"></span> אימון נשמר +25 דק׳
+        </div>
+        <div class="dash-top">
+          <div class="dash-user">
+            <div class="avatar"></div>
+            <div>
+              <div class="dash-user-name">אורח / Demo User</div>
+              <div class="dash-user-sub">נגן גיטרה · 5 ימים איתנו</div>
+            </div>
+          </div>
+          <div class="streak-pill">
+            <svg class="streak-flame pulse" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1-.3-2-1-3 2 1 3 3.5 3 6a7 7 0 0 1-14 0c0-4.5 3-6.5 6-10z"/></svg>
+            <span class="streak-num">5</span>
+          </div>
+        </div>
+
+        <div class="dash-panel">
+          <div class="dash-panel-head">
+            <span class="dash-panel-title">מהירות מטרונום · השבוע</span>
+            <span class="dash-bpm">92 <span>BPM</span></span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 300 70" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#4C8CFF"/>
+                <stop offset="100%" stop-color="#1BE8B2"/>
+              </linearGradient>
+              <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1BE8B2" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#1BE8B2" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path class="chart-area" d="M0,55 L45,50 L90,44 L135,46 L180,32 L225,26 L270,14 L300,10 L300,70 L0,70 Z"/>
+            <path id="heroChartPath" class="chart-path" d="M0,55 L45,50 L90,44 L135,46 L180,32 L225,26 L270,14 L300,10"/>
+          </svg>
+        </div>
+
+        <div class="dash-panel">
+          <div class="dash-panel-head"><span class="dash-panel-title">היעדים שלי</span></div>
+          <div class="goal-row done"><span class="goal-check done"><svg viewBox="0 0 24 24" fill="none" stroke="#04140f" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span><span>סולם פנטטוני — 100 BPM</span></div>
+          <div class="goal-row"><span class="goal-check"></span><span>ללמוד את הפתיח של השיר</span></div>
+        </div>
+
+        <div class="dash-float f2">🔥 רצף אישי חדש!</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="divider-row"><div class="section-divider blue-teal"></div></div>
+
+<!-- PROBLEM -->
+<section class="section" id="problem">
+  <div class="wrap">
+    <div class="problem-grid">
+      <div class="problem-text reveal">
+        <div class="eyebrow">הבעיה האמיתית</div>
+        <h2 class="section-title">השיפור לא נעלם.<br>הוא פשוט בלתי נראה.</h2>
+        <p>הבעיה של נגנים מתחילים היא לא חוסר במדריכים — היא <strong>התחושה שדורכים במקום</strong>. השיפור בנגינה הדרגתי וכמעט בלתי מורגש מיום ליום, וקשה לדעת אם המאמץ בכלל נושא פרי.</p>
+        <p>בלי דרך ברורה לראות התקדמות אמיתית — עלייה במהירות המטרונום, שליטה במעברי אקורדים, זמן אימון גדל — הספק והתסכול מצטברים מהר. הנגינה הופכת ממקור הנאה למטלה מעייפת, וזו הדרך הקצרה לפרישה.</p>
+      </div>
+      <div class="problem-visual reveal">
+        <div class="compare-lines">
+          <div class="compare-line-row">
+            <div class="compare-line-label"><span>ללא מדידה</span><b>נראה כמו לא קורה כלום</b></div>
+            <svg viewBox="0 0 300 40" width="100%" height="40">
+              <path d="M0,22 L50,20 L100,24 L150,19 L200,23 L250,20 L300,22" fill="none" stroke="var(--text-faint)" stroke-width="2" stroke-dasharray="3 5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="compare-line-row">
+            <div class="compare-line-label"><span>עם Music Track</span><b style="color:var(--teal)">שיפור מדיד יום־יום</b></div>
+            <svg viewBox="0 0 300 40" width="100%" height="40">
+              <path d="M0,34 L50,29 L100,26 L150,20 L200,15 L250,9 L300,4" fill="none" stroke="url(#chartGrad)" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-row"><div class="section-divider teal-red"></div></div>
+
+<!-- COMPARE -->
+<section class="section" id="compare">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">מה כבר ניסית</div>
+      <h2 class="section-title">שלושה פתרונות שלא באמת עובדים</h2>
+      <p class="section-desc">כל הדרכים הקיימות פותרות רק חצי מהבעיה.</p>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card reveal">
+        <span class="compare-card-label">אפליקציות לימוד</span>
+        <span class="compare-card-title">כמו Yousician</span>
+        <p class="compare-card-desc">מסלול נוקשה שמרגיש כמו משחק מחשב — לא כמו נגינה עצמאית אמיתית.</p>
+      </div>
+      <div class="compare-card reveal">
+        <span class="compare-card-label">מעקב הרגלים כללי</span>
+        <span class="compare-card-title">אפליקציות סטריק</span>
+        <p class="compare-card-desc">בודקות רק אם התאמנת — לא מנגישות מדדים מוזיקליים כמו BPM.</p>
+      </div>
+      <div class="compare-card reveal">
+        <span class="compare-card-label">רישום ידני</span>
+        <span class="compare-card-title">מחברת תרגול</span>
+        <p class="compare-card-desc">גמישה, אבל מרגישה כמו מטלה — אפס תגמול ויזואלי לשיפור.</p>
+      </div>
+      <div class="compare-card highlight reveal">
+        <span class="compare-card-label">הפתרון</span>
+        <span class="compare-card-title">Music Track</span>
+        <p class="compare-card-desc">גמיש כמו מחברת, ומדויק כמו נתונים — כל אימון הופך להוכחה ויזואלית לשיפור.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-row"><div class="section-divider red-blue"></div></div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">בתוך הדשבורד</div>
+      <h2 class="section-title">ארבעה כלים. מוטיבציה אחת.</h2>
+      <p class="section-desc">מחברים את שיטת הלימוד שלכם — יוטיוב, מורה או ספר — והדשבורד עושה את שאר העבודה.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg></div>
+        <div>
+          <div class="feature-title">טיימר אימון ויומן תרגול</div>
+          <p class="feature-desc">בוחרים על מה מתאמנים — סולם, מעבר אקורדים או שיר שבועי — ולוחצים "התחל אימון". הזמן נכנס אוטומטית ליומן היומי ולסך השבועי.</p>
+        </div>
+        <div class="feature-mini mini-timer">
+          <span class="mini-timer-time">18:42</span>
+          <span class="mini-timer-tag">מעברי אקורדים</span>
+        </div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 9-11"/><path d="M15 4h6v6"/></svg></div>
+        <div>
+          <div class="feature-title">מד מהירות — BPM Tracker</div>
+          <p class="feature-desc">אחרי כל תרגיל מזינים את מהירות המטרונום שהגעתם אליה. גרף חי מציג את מגמת השיפור לאורך הימים — הוכחה ויזואלית שהטכניקה משתפרת.</p>
+        </div>
+        <div class="feature-mini">
+          <svg viewBox="0 0 260 50" width="100%" height="44">
+            <path d="M0,40 L40,36 L80,30 L120,32 L160,20 L200,16 L260,6" fill="none" stroke="url(#chartGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1-.3-2-1-3 2 1 3 3.5 3 6a7 7 0 0 1-14 0c0-4.5 3-6.5 6-10z"/></svg></div>
+        <div>
+          <div class="feature-title">מד רצף ימים</div>
+          <p class="feature-desc">מד רצף בולט בראש הדשבורד. מתאמנים היום או אתמול — הרצף גדל. פספסתם יום — הוא מתאפס. בדיוק מה שצריך כדי לשמור על שגרה.</p>
+        </div>
+        <div class="feature-mini mini-flame-row">
+          <div class="mini-flame-circle">5</div>
+          <div class="mini-flame-label">ימים ברצף — השיא האישי שלך עד כה</div>
+        </div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10M7 17h6"/></svg></div>
+        <div>
+          <div class="feature-title">יעדים אישיים</div>
+          <p class="feature-desc">רושמים שירים או משימות שרוצים לכבוש. סימון תיבה מעביר את היעד ל"הושלם" עם אפקט ויזואלי מתגמל — אפשר להוסיף או למחוק בכל רגע.</p>
+        </div>
+        <div class="feature-mini mini-goals">
+          <div class="goal-row done"><span class="goal-check done"><svg viewBox="0 0 24 24" fill="none" stroke="#04140f" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span><span>Warm up — סולם מייג׳ור</span></div>
+          <div class="goal-row"><span class="goal-check"></span><span>ללמוד פתיח שיר חדש</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-row"><div class="section-divider blue-teal"></div></div>
+
+<!-- ONBOARDING -->
+<section class="section" style="padding-top:0">
+  <div class="wrap reveal">
+    <div class="onboard">
+      <div>
+        <div class="eyebrow" style="margin-bottom:8px">בלי חיכוך</div>
+        <h3 style="font-family:var(--font-display);font-weight:700;font-size:1.3rem">מתחילים תוך פחות מ־10 שניות</h3>
+      </div>
+      <div class="onboard-steps">
+        <div class="onboard-step">
+          <span class="onboard-step-mark"></span>
+          <div class="onboard-step-text"><b>לוחצים התחברות / הרשמה</b><span>משאירים אימייל או שם משתמש — בלי סיסמה, תוך שניות</span></div>
+        </div>
+        <div class="onboard-step">
+          <span class="onboard-step-mark"></span>
+          <div class="onboard-step-text"><b>מתחילים מדף נקי</b><span>בלי נתוני דמו מזויפים — הרצף, המהירות והיומן נבנים מהאימון הראשון שלכם</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-row"><div class="section-divider teal-red"></div></div>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">מודל עסקי</div>
+      <h2 class="section-title">בלי פרסומות. בלי חסמי כניסה.</h2>
+      <p class="section-desc" style="margin-inline:auto">מתחילים בחינם ומתקדמים כשמרגישים שהערך שם.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div>
+          <div class="price-name">מתחילים</div>
+          <div class="price-tag">חינם</div>
+        </div>
+        <div class="price-amount">₪0<span> / לתמיד</span></div>
+        <div class="price-features">
+          <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>יומן אימונים וטיימר</div>
+          <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>מד רצף ימים</div>
+          <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>יעד פעיל אחד</div>
+          <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>היסטוריה של 7 ימים</div>
+        </div>
+        <a href="#" class="btn btn-outline btn-block js-open-dashboard" data-auth="signup">להתחיל בחינם</a>
+      </div>
+
+      <div class="price-card featured reveal">
+        <div>
+          <div class="price-name">Plus</div>
+          <div class="price-tag">למי שרציני עם התרגול</div>
+        </div>
+        <div class="price-amount">₪9<span> / לחודש</span></div>
+        <div class="price-features">
+          <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>גרפי BPM והיסטוריה בלתי מוגבלת</div>
+          <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>יעדים ללא הגבלה</div>
+          <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>ייצוא נתוני אימון</div>
+          <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>תמיכה מועדפת</div>
+        </div>
+        <a href="#" class="btn btn-primary btn-block js-open-dashboard" data-auth="payment">שדרוג ל-Plus</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-row"><div class="section-divider red-blue"></div></div>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="cta">
+  <div class="wrap reveal">
+    <h2 class="final-cta-title">מוכנים לראות<br>את ההתקדמות שלכם?</h2>
+    <p class="final-cta-sub">הצטרפו לנגנים שכבר לא מנחשים אם הם משתפרים — הם רואים את זה, כל יום.</p>
+    <a href="#" class="btn btn-primary btn-lg js-open-dashboard" data-auth="signup">התחל בחינם עכשיו</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <a href="#top" class="logo">
+          <span class="logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#04140f" stroke-width="2.2" stroke-linecap="round"><path d="M4 14 L4 20 M9 9 L9 20 M14 15 L14 20 M19 6 L19 20"/></svg>
+          </span>
+          Music Track
+        </a>
+        <p class="footer-brand-sub">המלווה הדיגיטלי לנגנים עצמאיים — תרגול שרואים, לא רק מרגישים.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <b>המוצר</b>
+          <a href="#features">תכונות</a>
+          <a href="#pricing">מחירים</a>
+          <a href="#compare">למה אנחנו</a>
+        </div>
+        <div class="footer-col">
+          <b>קהילה</b>
+          <a href="#">אינסטגרם</a>
+          <a href="#">טיקטוק</a>
+          <a href="#">קבוצת וואטסאפ</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Music Track. כל הזכויות שמורות.</span>
+      <span>נבנה לנגנים, על ידי נגנים.</span>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=music-track" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+</div><!-- /landingRoot -->
+
+<!-- ================= DASHBOARD / PERSONAL AREA ================= -->
+<div id="dashboardRoot" style="display:none;">
+  <nav class="dash-navbar">
+    <div class="wrap dash-navbar-inner">
+      <a href="#" class="logo" id="dashLogo">
+        <span class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#04140f" stroke-width="2.2" stroke-linecap="round"><path d="M4 14 L4 20 M9 9 L9 20 M14 15 L14 20 M19 6 L19 20"/></svg>
+        </span>
+        Music Track
+      </a>
+      <button class="btn btn-ghost" id="exitDashboard">חזרה לעמוד הבית ⟶</button>
+    </div>
+  </nav>
+
+  <div class="wrap dashboard-body">
+    <div class="dashboard-header">
+      <div>
+        <h1 id="dashGreeting">שלום, אורח 👋</h1>
+        <p class="text-dim">הנה סיכום ההתקדמות שלך</p>
+      </div>
+      <div class="dashboard-header-actions">
+        <div class="streak-pill large">
+          <svg class="streak-flame pulse" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1-.3-2-1-3 2 1 3 3.5 3 6a7 7 0 0 1-14 0c0-4.5 3-6.5 6-10z"/></svg>
+          <span><span id="streakCountDash">5</span> ימים ברצף!</span>
+        </div>
+        <button class="btn btn-outline" id="daySummaryBtn">סיכום יום</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="stat-label">דקות אימון השבוע</span>
+        <span class="stat-value" id="weeklyMinutes">—</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">מהירות אחרונה</span>
+        <span class="stat-value" id="latestBpmStat">—</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">סה״כ אימונים</span>
+        <span class="stat-value" id="sessionsCount">—</span>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="dashboard-col-main">
+
+        <div class="panel-card">
+          <h3>טיימר אימון ויומן תרגול</h3>
+          <select class="select-input" id="topicSelect">
+            <option>סולם פנטטוני</option>
+            <option>מעברי אקורדים</option>
+            <option>שיר שבועי</option>
+            <option>חימום כללי</option>
+          </select>
+          <div class="timer-display" id="timerDisplay">00:00</div>
+          <button class="btn btn-primary btn-block" id="timerToggleBtn">▶ התחל אימון</button>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-head-row">
+            <h3>מהירות מטרונום — BPM Tracker</h3>
+            <div class="metronome" aria-hidden="true">
+              <svg class="metronome-body" viewBox="0 0 60 74">
+                <path d="M11 70 L23 8 L37 8 L49 70 Z" fill="rgba(0,0,0,0.25)" stroke="var(--panel-border)" stroke-width="1.5"/>
+                <line x1="15" y1="52" x2="45" y2="52" stroke="var(--panel-border)" stroke-width="1"/>
+                <g id="metronomeArm" class="metronome-arm-pivot">
+                  <line x1="30" y1="14" x2="30" y2="62" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle cx="30" cy="40" r="4.5" fill="var(--teal)"/>
+                </g>
+                <circle cx="30" cy="14" r="3" fill="var(--text-dim)"/>
+              </svg>
+              <span class="metronome-bpm-label" id="metronomeBpmLabel">— BPM</span>
+            </div>
+          </div>
+          <svg id="bpmChartDash" viewBox="0 0 300 90" preserveAspectRatio="none" style="width:100%;height:90px;"></svg>
+          <p class="text-dim" id="bpmSummary" style="font-size:0.82rem;margin-top:8px;"></p>
+          <div class="bpm-input-row">
+            <input type="number" class="text-input" id="bpmInput" placeholder="מהירות מקסימלית שהגעת אליה (BPM)" min="20" max="300">
+            <button class="btn btn-outline" id="saveBpmBtn">שמור מהירות</button>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <h3>יומן אימונים</h3>
+          <ul id="trainingLogList"></ul>
+        </div>
+
+      </div>
+
+      <div class="dashboard-col-side">
+        <div class="panel-card">
+          <h3>היעדים שלי</h3>
+          <div class="goal-add-row">
+            <input type="text" class="text-input" id="goalInput" placeholder="הוסף יעד חדש...">
+            <button class="btn btn-primary" id="addGoalBtn">+</button>
+          </div>
+          <ul id="goalsListDash"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= DAY SUMMARY MODAL ================= -->
+<div class="summary-modal-overlay" id="summaryModalOverlay">
+  <div class="summary-modal-wrap">
+    <button class="auth-modal-close summary-modal-close" id="summaryModalClose" aria-label="סגירה">✕</button>
+    <div class="dash-card">
+      <div class="dash-top">
+        <div class="dash-user">
+          <div class="avatar"></div>
+          <div>
+            <div class="dash-user-name" id="summaryUserName">אורח</div>
+            <div class="dash-user-sub">Music Track · סיכום יומי</div>
+          </div>
+        </div>
+        <div class="streak-pill">
+          <svg class="streak-flame" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1-.3-2-1-3 2 1 3 3.5 3 6a7 7 0 0 1-14 0c0-4.5 3-6.5 6-10z"/></svg>
+          <span class="streak-num" id="summaryStreak">0</span>
+        </div>
+      </div>
+
+      <div class="dash-panel">
+        <div class="dash-panel-head">
+          <span class="dash-panel-title">מהירות מטרונום · השבוע</span>
+          <span class="dash-bpm" id="summaryBpmValue">— <span>BPM</span></span>
+        </div>
+        <svg class="chart-svg" id="summaryChartSvg" viewBox="0 0 300 70" preserveAspectRatio="none"></svg>
+      </div>
+
+      <div class="dash-panel">
+        <div class="dash-panel-head"><span class="dash-panel-title">היעדים שלי</span></div>
+        <div id="summaryGoalsList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= AUTH MODAL ================= -->
+<div class="auth-modal-overlay" id="authModalOverlay">
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <button class="auth-modal-close" id="authModalClose" aria-label="סגירה">✕</button>
+
+    <div class="auth-modal-logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#04140f" stroke-width="2.2" stroke-linecap="round"><path d="M4 14 L4 20 M9 9 L9 20 M14 15 L14 20 M19 6 L19 20"/></svg>
+      </span>
+    </div>
+
+    <h3 class="auth-modal-title" id="authModalTitle">הרשמה ל-Music Track</h3>
+    <p class="auth-modal-sub" id="authModalSub">משאירים אימייל ואנחנו מכניסים אתכם ישר לדשבורד שלכם.</p>
+
+    <form id="authModalForm">
+      <div class="auth-field" id="fieldEmail">
+        <label for="authEmail">אימייל</label>
+        <input type="email" id="authEmail" class="text-input" placeholder="you@example.com">
+      </div>
+
+      <div class="auth-field" id="fieldUsername">
+        <label for="authUsername">שם משתמש</label>
+        <input type="text" id="authUsername" class="text-input" placeholder="שם המשתמש שלך">
+      </div>
+
+      <div class="auth-field" id="fieldCard">
+        <label for="authCardNumber">פרטי כרטיס אשראי</label>
+        <input type="text" id="authCardNumber" class="text-input" placeholder="0000 0000 0000 0000" inputmode="numeric" maxlength="19">
+        <div class="auth-field-row">
+          <input type="text" id="authCardExpiry" class="text-input" placeholder="MM/YY" inputmode="numeric" maxlength="5">
+          <input type="text" id="authCardCvc" class="text-input" placeholder="CVC" inputmode="numeric" maxlength="3">
+        </div>
+        <p class="auth-demo-note">זהו דמו בלבד — לא יתבצע שום חיוב אמיתי, והפרטים לא נשמרים בשום מקום.</p>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block btn-lg" id="authModalSubmit">המשך לדשבורד</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // measure sticky nav height + real viewport height (robust across iPhone/DevTools) so the hero always fills the rest of the screen
+  function setViewportVars(){
+    const nav = document.querySelector('.navbar');
+    if (nav) document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+    document.documentElement.style.setProperty('--vh', window.innerHeight + 'px');
+  }
+  setViewportVars();
+  window.addEventListener('resize', setViewportVars);
+  window.addEventListener('orientationchange', setViewportVars);
+
+  // full-screen hamburger menu
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+  function setMenuOpen(open){
+    mobileMenuOverlay.classList.toggle('open', open);
+    hamburgerBtn.classList.toggle('active', open);
+    hamburgerBtn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('menu-open', open);
+  }
+  hamburgerBtn.addEventListener('click', () => setMenuOpen(!mobileMenuOverlay.classList.contains('open')));
+  mobileMenuOverlay.addEventListener('click', e => { if (e.target.closest('a')) setMenuOpen(false); });
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // animate hero chart draw-in
+  const heroPath = document.getElementById('heroChartPath');
+  if (heroPath && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const len = heroPath.getTotalLength();
+    heroPath.style.strokeDasharray = len;
+    heroPath.style.strokeDashoffset = len;
+    requestAnimationFrame(() => {
+      heroPath.style.transition = 'stroke-dashoffset 1.6s ease-out';
+      heroPath.style.strokeDashoffset = '0';
+    });
+  }
+
+  /* ================= DASHBOARD / PERSONAL AREA ================= */
+  // All state lives in memory only, for this session — nothing is saved between visits.
+  const dash = {
+    trainingLog: [],   // { date: Date, topic, minutes }
+    bpmData: [],       // { date: Date, value }
+    goals: [],
+    streak: 0,
+    lastPracticeKey: null,
+    userName: '',
+    timerRunning: false,
+    elapsedSeconds: 0,
+    timerInterval: null,
+    initialized: false,
+  };
+
+  function dateKey(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  function addDays(d, delta){ const nd = new Date(d); nd.setDate(nd.getDate()+delta); return nd; }
+  function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  function initFreshState(){
+    dash.trainingLog = [];
+    dash.bpmData = [];
+    dash.streak = 0;
+    dash.lastPracticeKey = null;
+    dash.goals = [];
+  }
+
+  function updateStreakForToday(){
+    const todayKey = dateKey(new Date());
+    const yestKey = dateKey(addDays(new Date(), -1));
+    if (dash.lastPracticeKey === todayKey){
+      // already logged a session today — streak doesn't change again
+    } else if (dash.lastPracticeKey === yestKey){
+      dash.streak += 1;
+      dash.lastPracticeKey = todayKey;
+    } else {
+      dash.streak = 1;
+      dash.lastPracticeKey = todayKey;
+    }
+  }
+
+  function formatDateLabel(d){
+    const todayKey = dateKey(new Date());
+    const yestKey = dateKey(addDays(new Date(), -1));
+    const k = dateKey(d);
+    if (k === todayKey) return 'היום';
+    if (k === yestKey) return 'אתמול';
+    return d.toLocaleDateString('he-IL', { weekday:'short', day:'numeric', month:'numeric' });
+  }
+
+  function renderStreak(){
+    document.getElementById('streakCountDash').textContent = dash.streak;
+  }
+
+  function renderGreeting(){
+    document.getElementById('dashGreeting').textContent = `שלום, ${dash.userName || 'אורח'} 👋`;
+  }
+
+  function renderStats(){
+    const today = new Date();
+    const weekStart = addDays(today, -6);
+    const weekStartMidnight = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate());
+    const weeklyMinutes = dash.trainingLog
+      .filter(e => e.date >= weekStartMidnight)
+      .reduce((sum, e) => sum + e.minutes, 0);
+    document.getElementById('weeklyMinutes').textContent = weeklyMinutes + " דק'";
+    document.getElementById('sessionsCount').textContent = dash.trainingLog.length;
+    const latest = dash.bpmData[dash.bpmData.length - 1];
+    document.getElementById('latestBpmStat').textContent = latest ? latest.value + ' BPM' : '—';
+  }
+
+  function renderTrainingLog(){
+    const ul = document.getElementById('trainingLogList');
+    const sorted = [...dash.trainingLog].sort((a,b) => b.date - a.date);
+    if (sorted.length === 0){
+      ul.innerHTML = '<li class="empty-state">עדיין אין אימונים רשומים</li>';
+      return;
+    }
+    ul.innerHTML = sorted.slice(0, 8).map(entry => `
+      <li class="log-item">
+        <div>
+          <div class="log-item-topic">${escapeHtml(entry.topic)}</div>
+          <div class="log-item-date">${formatDateLabel(entry.date)}</div>
+        </div>
+        <div class="log-item-minutes">${entry.minutes} דק'</div>
+      </li>
+    `).join('');
+  }
+
+  function renderBpmChart(){
+    const svg = document.getElementById('bpmChartDash');
+    const data = dash.bpmData;
+    const summary = document.getElementById('bpmSummary');
+    if (data.length === 0){ svg.innerHTML = ''; summary.textContent = ''; return; }
+
+    const w = 300, h = 90, pad = 10;
+    const values = data.map(d => d.value);
+    const min = Math.min(...values), max = Math.max(...values);
+    const range = (max - min) || 1;
+    const stepX = data.length > 1 ? (w - 2*pad) / (data.length - 1) : 0;
+    const points = data.map((d, i) => {
+      const x = pad + i * stepX;
+      const y = h - pad - ((d.value - min) / range) * (h - 2*pad);
+      return [x, y];
+    });
+    const pathD = points.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+    const last = points[points.length - 1];
+    const first = points[0];
+    const areaD = pathD + ` L${last[0].toFixed(1)},${h} L${first[0].toFixed(1)},${h} Z`;
+
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="dashChartGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#4C8CFF"/>
+          <stop offset="100%" stop-color="#1BE8B2"/>
+        </linearGradient>
+        <linearGradient id="dashChartFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1BE8B2" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#1BE8B2" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="${areaD}" fill="url(#dashChartFill)"></path>
+      <path d="${pathD}" fill="none" stroke="url(#dashChartGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4" fill="#1BE8B2"></circle>
+    `;
+    summary.textContent = `נוכחי: ${values[values.length-1]} BPM · שיא אישי: ${max} BPM`;
+    updateMetronomeSpeed(values[values.length - 1]);
+  }
+
+  function updateMetronomeSpeed(bpm){
+    const arm = document.getElementById('metronomeArm');
+    const label = document.getElementById('metronomeBpmLabel');
+    if (!bpm) return;
+    const seconds = Math.max(0.28, (120 / bpm)).toFixed(2);
+    if (arm) arm.style.animationDuration = seconds + 's';
+    if (label) label.textContent = bpm + ' BPM';
+  }
+
+  function renderGoals(){
+    const ul = document.getElementById('goalsListDash');
+    if (dash.goals.length === 0){
+      ul.innerHTML = '<li class="empty-state">אין יעדים עדיין — הוסיפו את הראשון למעלה</li>';
+      return;
+    }
+    ul.innerHTML = dash.goals.map(g => `
+      <li class="goal-row${g.done ? ' done' : ''}" data-id="${g.id}">
+        <span class="goal-check${g.done ? ' done' : ''}" data-action="toggle">${g.done ? '<svg viewBox="0 0 24 24" fill="none" stroke="#04140f" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg>' : ''}</span>
+        <span class="goal-item-text" data-action="toggle">${escapeHtml(g.text)}</span>
+        <button class="goal-del" data-action="delete" aria-label="מחק יעד">✕</button>
+      </li>
+    `).join('');
+  }
+
+  function renderDashboardAll(){
+    renderGreeting();
+    renderStreak();
+    renderStats();
+    renderTrainingLog();
+    renderBpmChart();
+    renderGoals();
+  }
+
+  function renderDaySummary(){
+    document.getElementById('summaryUserName').textContent = dash.userName || 'אורח';
+    document.getElementById('summaryStreak').textContent = dash.streak;
+
+    const data = dash.bpmData;
+    const bpmValueEl = document.getElementById('summaryBpmValue');
+    const svg = document.getElementById('summaryChartSvg');
+    if (data.length === 0){
+      bpmValueEl.innerHTML = '— <span>BPM</span>';
+      svg.innerHTML = '';
+    } else {
+      const w = 300, h = 70, pad = 8;
+      const values = data.map(d => d.value);
+      const min = Math.min(...values), max = Math.max(...values);
+      const range = (max - min) || 1;
+      const stepX = data.length > 1 ? (w - 2*pad) / (data.length - 1) : 0;
+      const points = data.map((d, i) => [pad + i*stepX, h - pad - ((d.value-min)/range)*(h-2*pad)]);
+      const pathD = points.map((p,i) => (i===0?'M':'L')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+      const last = points[points.length-1], first = points[0];
+      const areaD = pathD + ` L${last[0].toFixed(1)},${h} L${first[0].toFixed(1)},${h} Z`;
+      bpmValueEl.innerHTML = `${values[values.length-1]} <span>BPM</span>`;
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="summaryChartGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#4C8CFF"/>
+            <stop offset="100%" stop-color="#1BE8B2"/>
+          </linearGradient>
+          <linearGradient id="summaryChartFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1BE8B2" stop-opacity="0.45"/>
+            <stop offset="100%" stop-color="#1BE8B2" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="${areaD}" fill="url(#summaryChartFill)" opacity="0.6"></path>
+        <path d="${pathD}" fill="none" stroke="url(#summaryChartGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+      `;
+    }
+
+    const goalsEl = document.getElementById('summaryGoalsList');
+    if (dash.goals.length === 0){
+      goalsEl.innerHTML = '<div class="empty-state">אין יעדים עדיין</div>';
+    } else {
+      goalsEl.innerHTML = dash.goals.map(g => `
+        <div class="goal-row${g.done ? ' done' : ''}">
+          <span class="goal-check${g.done ? ' done' : ''}">${g.done ? '<svg viewBox="0 0 24 24" fill="none" stroke="#04140f" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg>' : ''}</span>
+          <span>${escapeHtml(g.text)}</span>
+        </div>
+      `).join('');
+    }
+  }
+
+  function openDaySummary(){
+    renderDaySummary();
+    document.getElementById('summaryModalOverlay').classList.add('open');
+    document.body.classList.add('modal-open');
+  }
+  function closeDaySummary(){
+    document.getElementById('summaryModalOverlay').classList.remove('open');
+    document.body.classList.remove('modal-open');
+  }
+
+  function updateTimerDisplay(){
+    const m = String(Math.floor(dash.elapsedSeconds / 60)).padStart(2, '0');
+    const s = String(dash.elapsedSeconds % 60).padStart(2, '0');
+    document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+  }
+
+  function showToast(msg){
+    let toast = document.getElementById('toastEl');
+    if (!toast){
+      toast = document.createElement('div');
+      toast.id = 'toastEl';
+      toast.className = 'toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  // Timer: start / stop & save
+  const timerBtn = document.getElementById('timerToggleBtn');
+  timerBtn.addEventListener('click', () => {
+    if (!dash.timerRunning){
+      dash.timerRunning = true;
+      dash.elapsedSeconds = 0;
+      updateTimerDisplay();
+      timerBtn.textContent = '⏸ סיום ושמירה';
+      dash.timerInterval = setInterval(() => {
+        dash.elapsedSeconds++;
+        updateTimerDisplay();
+      }, 1000);
+    } else {
+      clearInterval(dash.timerInterval);
+      dash.timerRunning = false;
+      const minutes = Math.max(1, Math.round(dash.elapsedSeconds / 60));
+      const topic = document.getElementById('topicSelect').value;
+      dash.trainingLog.unshift({ date: new Date(), topic, minutes });
+      updateStreakForToday();
+      dash.elapsedSeconds = 0;
+      updateTimerDisplay();
+      timerBtn.textContent = '▶ התחל אימון';
+      renderDashboardAll();
+      showToast(`נשמר: ${minutes} דק' · ${topic}`);
+    }
+  });
+
+  // BPM save
+  document.getElementById('saveBpmBtn').addEventListener('click', () => {
+    const input = document.getElementById('bpmInput');
+    const val = parseInt(input.value, 10);
+    if (!val || val < 20 || val > 300){ input.focus(); return; }
+    dash.bpmData.push({ date: new Date(), value: val });
+    if (dash.bpmData.length > 10) dash.bpmData.shift();
+    input.value = '';
+    renderBpmChart();
+    renderStats();
+    showToast(`מהירות ${val} BPM נשמרה`);
+  });
+
+  // Goals: add / toggle / delete
+  document.getElementById('addGoalBtn').addEventListener('click', addGoalFromInput);
+  document.getElementById('goalInput').addEventListener('keydown', e => { if (e.key === 'Enter') addGoalFromInput(); });
+  function addGoalFromInput(){
+    const input = document.getElementById('goalInput');
+    const text = input.value.trim();
+    if (!text) return;
+    dash.goals.push({ id: Date.now(), text, done: false });
+    input.value = '';
+    renderGoals();
+  }
+  document.getElementById('goalsListDash').addEventListener('click', e => {
+    const li = e.target.closest('.goal-row');
+    if (!li) return;
+    const id = Number(li.dataset.id);
+    const actionEl = e.target.closest('[data-action]');
+    const action = actionEl ? actionEl.dataset.action : null;
+    if (action === 'toggle'){
+      const g = dash.goals.find(x => x.id === id);
+      if (g){ g.done = !g.done; renderGoals(); }
+    } else if (action === 'delete'){
+      dash.goals = dash.goals.filter(x => x.id !== id);
+      renderGoals();
+    }
+  });
+
+  // Open / close the dashboard — transparent transition, no page reload
+  function openDashboard(){
+    if (!dash.initialized){ initFreshState(); dash.initialized = true; }
+    document.getElementById('landingRoot').style.display = 'none';
+    document.getElementById('dashboardRoot').style.display = 'block';
+    window.scrollTo(0, 0);
+    renderDashboardAll();
+  }
+  function closeDashboard(){
+    document.getElementById('dashboardRoot').style.display = 'none';
+    document.getElementById('landingRoot').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  // Auth modal — asks for the right fields depending on what the person clicked:
+  // login = username only · signup/free = email only · payment (Plus) = email + username + card
+  const authModalOverlay = document.getElementById('authModalOverlay');
+  const authModalTitle = document.getElementById('authModalTitle');
+  const authModalSub = document.getElementById('authModalSub');
+  const authModalSubmit = document.getElementById('authModalSubmit');
+  const fieldEmail = document.getElementById('fieldEmail');
+  const fieldUsername = document.getElementById('fieldUsername');
+  const fieldCard = document.getElementById('fieldCard');
+
+  const authCopy = {
+    login: {
+      title: 'התחברות ל-Music Track',
+      sub: 'מזינים שם משתמש וממשיכים ישר לדשבורד.',
+      cta: 'התחברות',
+      fields: ['username']
+    },
+    signup: {
+      title: 'הרשמה ל-Music Track',
+      sub: 'משאירים אימייל ואנחנו מכניסים אתכם ישר לדשבורד שלכם.',
+      cta: 'המשך לדשבורד',
+      fields: ['email']
+    },
+    payment: {
+      title: 'שדרוג ל-Plus',
+      sub: 'פרטי חשבון ותשלום כדי לפתוח את כל התכונות של Plus.',
+      cta: 'שדרוג ל-Plus',
+      fields: ['email', 'username', 'card']
+    }
+  };
+
+  function openAuthModal(type){
+    const copy = authCopy[type] || authCopy.signup;
+    authModalOverlay.dataset.type = type;
+    authModalTitle.textContent = copy.title;
+    authModalSub.textContent = copy.sub;
+    authModalSubmit.textContent = copy.cta;
+
+    fieldEmail.classList.toggle('active', copy.fields.includes('email'));
+    fieldUsername.classList.toggle('active', copy.fields.includes('username'));
+    fieldCard.classList.toggle('active', copy.fields.includes('card'));
+    document.getElementById('authEmail').required = copy.fields.includes('email');
+    document.getElementById('authUsername').required = copy.fields.includes('username');
+
+    authModalOverlay.classList.add('open');
+    document.body.classList.add('modal-open');
+  }
+  function closeAuthModal(){
+    authModalOverlay.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    document.getElementById('authModalForm').reset();
+  }
+
+  document.querySelectorAll('.js-open-dashboard').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      openAuthModal(el.dataset.auth || 'signup');
+    });
+  });
+
+  authModalOverlay.addEventListener('click', e => {
+    if (e.target === authModalOverlay) closeAuthModal();
+  });
+  document.getElementById('authModalClose').addEventListener('click', closeAuthModal);
+
+  // light client-side card number formatting for a nicer demo feel (no real validation/processing)
+  const authCardNumber = document.getElementById('authCardNumber');
+  authCardNumber.addEventListener('input', () => {
+    authCardNumber.value = authCardNumber.value.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ');
+  });
+  const authCardExpiry = document.getElementById('authCardExpiry');
+  authCardExpiry.addEventListener('input', () => {
+    const digits = authCardExpiry.value.replace(/\D/g, '').slice(0, 4);
+    authCardExpiry.value = digits.length > 2 ? digits.slice(0,2) + '/' + digits.slice(2) : digits;
+  });
+  const authCardCvc = document.getElementById('authCardCvc');
+  authCardCvc.addEventListener('input', () => { authCardCvc.value = authCardCvc.value.replace(/\D/g, '').slice(0, 3); });
+
+  document.getElementById('authModalForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('authEmail').value.trim();
+    const username = document.getElementById('authUsername').value.trim();
+    dash.userName = username || (email ? email.split('@')[0] : '') || dash.userName;
+    closeAuthModal();
+    openDashboard();
+  });
+
+  document.getElementById('exitDashboard').addEventListener('click', closeDashboard);
+  document.getElementById('dashLogo').addEventListener('click', e => { e.preventDefault(); closeDashboard(); });
+
+  document.getElementById('daySummaryBtn').addEventListener('click', openDaySummary);
+  document.getElementById('summaryModalClose').addEventListener('click', closeDaySummary);
+  document.getElementById('summaryModalOverlay').addEventListener('click', e => {
+    if (e.target.id === 'summaryModalOverlay') closeDaySummary();
+  });
+</script>
+
+</body>
+</html>
