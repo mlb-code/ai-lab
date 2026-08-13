@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>המגרש הביתי — לומדים כדורסל, לא רק צופים בו</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange-500:#FF6A13;
+    --orange-600:#E85D04;
+    --orange-100:#FFE7D2;
+    --black-900:#0A0A0B;
+    --black-800:#161616;
+    --black-700:#232323;
+    --white:#FFFFFF;
+    --ink:#121212;
+    --line:rgba(255,255,255,0.12);
+    --green:#22C55E;
+    --red:#EF4444;
+    --font-display:'Rubik', sans-serif;
+    --font-body:'Heebo', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--white);
+    color:var(--ink);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-display); font-weight:700; font-size:13px;
+    letter-spacing:0.04em; color:var(--orange-500);
+    text-transform:uppercase;
+  }
+  .eyebrow::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--orange-500); box-shadow:0 0 0 4px var(--orange-100);}
+  h1,h2,h3{font-family:var(--font-display); font-weight:900; letter-spacing:-0.01em;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--font-display); font-weight:800; font-size:16px;
+    padding:16px 30px; border-radius:100px; border:2px solid transparent;
+    cursor:pointer; transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:var(--orange-500); color:var(--black-900); box-shadow:0 8px 24px -8px rgba(255,106,19,0.7);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 30px -8px rgba(255,106,19,0.85);}
+  .btn-ghost{background:transparent; color:var(--white); border-color:rgba(255,255,255,0.25);}
+  .btn-ghost:hover{border-color:var(--orange-500); color:var(--orange-500);}
+  .btn-dark{background:var(--black-900); color:var(--white);}
+  .btn-dark:hover{background:var(--orange-600); transform:translateY(-2px);}
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:300;
+    background:rgba(10,10,11,0.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between; height:76px;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:900; font-size:19px; color:var(--white);}
+  .logo .ball{width:30px; height:30px; border-radius:50%; background:radial-gradient(circle at 32% 28%, #FF9A54, var(--orange-500) 55%, var(--orange-600) 100%); position:relative; animation:bounce 2.2s ease-in-out infinite;}
+  .logo .ball::before, .logo .ball::after{content:""; position:absolute; background:var(--black-900); opacity:.55;}
+  .logo .ball::before{width:100%; height:1.5px; top:50%; left:0;}
+  .logo .ball::after{width:1.5px; height:100%; top:0; left:50%;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+  .navlinks{display:flex; gap:32px; font-size:14.5px; font-weight:500; color:rgba(255,255,255,0.75);}
+  .navlinks a:hover{color:var(--orange-500);}
+  .nav-right{display:flex; align-items:center; gap:14px;}
+
+  /* Hamburger button */
+  .hamburger{
+    display:none; flex-direction:column; justify-content:center; align-items:center; gap:5px;
+    width:42px; height:42px; background:transparent; border:1px solid rgba(255,255,255,0.18);
+    border-radius:10px; cursor:pointer; padding:0; position:relative;
+  }
+  .hamburger span{display:block; width:18px; height:2px; background:var(--white); border-radius:2px; transition:transform .25s ease, opacity .2s ease, background .2s ease;}
+  .hamburger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg); background:var(--orange-500);}
+  .hamburger.is-open span:nth-child(2){opacity:0;}
+  .hamburger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg); background:var(--orange-500);}
+
+  /* Mobile menu panel */
+  .mobile-menu{
+    position:fixed; inset:0; z-index:250; background:var(--black-900);
+    display:flex; flex-direction:column; padding:96px 28px 40px;
+    transform:translateY(-100%); transition:transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .mobile-menu.is-open{transform:translateY(0);}
+  .mobile-menu-links{display:flex; flex-direction:column; gap:2px;}
+  .mobile-menu-links a{
+    font-family:var(--font-display); font-weight:700; font-size:22px; color:var(--white);
+    padding:18px 4px; border-bottom:1px solid var(--line);
+  }
+  .mobile-menu-links a:hover, .mobile-menu-links a:active{color:var(--orange-500);}
+  .mobile-menu-links .mobile-cta{
+    margin-top:26px; text-align:center; justify-content:center; border-bottom:none; padding:16px; font-size:16px;
+  }
+  .mobile-menu-foot{margin-top:auto; padding-top:28px; font-size:13px; color:rgba(255,255,255,0.4); text-align:center;}
+  body.menu-open{overflow:hidden;}
+
+  @media(max-width:760px){
+    .navlinks{display:none;}
+    .nav-right .btn-ghost{display:none;}
+    .hamburger{display:flex;}
+    .logo{order:2;}
+    .nav-right{order:1;}
+  }
+
+  /* HERO */
+  .hero{
+    position:relative; background:var(--black-900); color:var(--white);
+    padding:96px 0 120px; overflow:hidden;
+  }
+  .hero-court{position:absolute; inset:0; opacity:0.5; pointer-events:none;}
+  .hero-inner{position:relative; z-index:2; text-align:center; max-width:780px; margin:0 auto;}
+  .hero h1{
+    font-size:clamp(42px, 7vw, 78px); line-height:1.04; margin:22px 0 20px;
+  }
+  .hero h1 .hl{
+    background:linear-gradient(95deg, var(--orange-500), #FFB067);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.sub{font-size:19px; color:rgba(255,255,255,0.72); max-width:560px; margin:0 auto 38px; font-weight:400;}
+  .hero-ctas{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .hero-stats{display:flex; justify-content:center; gap:48px; margin-top:72px; flex-wrap:wrap;}
+  .hero-stats div{text-align:center;}
+  .hero-stats .num{font-family:var(--font-display); font-weight:900; font-size:34px; color:var(--orange-500);}
+  .hero-stats .lbl{font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;}
+
+  /* SECTION generic */
+  section{padding:100px 0;}
+  .section-head{text-align:center; max-width:640px; margin:0 auto 56px;}
+  .section-head h2{font-size:clamp(30px,4vw,44px); margin-top:16px; line-height:1.15;}
+  .section-head p{font-size:17px; color:#555; margin-top:14px;}
+
+  /* PROBLEMS - foul cards */
+  .problems{background:var(--white);}
+  .foul-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .swipe-hint{display:none; align-items:center; gap:6px; justify-content:center; font-size:13px; font-weight:600; color:var(--orange-500); margin-bottom:16px; animation:nudge 1.6s ease-in-out infinite;}
+  @keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(-6px);}}
+  @media(max-width:900px){.swipe-hint{display:flex;}}
+  @media(max-width:860px){
+    .foul-grid{
+      display:flex; grid-template-columns:none;
+      overflow-x:auto; scroll-snap-type:x mandatory;
+      scroll-padding-inline:16px; gap:14px; padding-bottom:14px;
+      -webkit-overflow-scrolling:touch; scrollbar-width:none;
+    }
+    .foul-grid::-webkit-scrollbar{display:none;}
+    .foul-card{flex:0 0 74%; scroll-snap-align:start;}
+  }
+  @media(max-width:420px){
+    .foul-card{flex-basis:80%;}
+  }
+  .foul-card{
+    background:var(--black-900); color:var(--white); border-radius:20px; padding:32px 28px;
+    position:relative; overflow:hidden; border:1px solid var(--black-700);
+  }
+  .foul-card .tag{
+    display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800;
+    font-size:12px; letter-spacing:0.05em; color:var(--black-900); background:var(--orange-500);
+    padding:6px 12px; border-radius:100px; margin-bottom:20px;
+  }
+  .foul-card h3{font-size:21px; margin-bottom:12px; color:var(--white);}
+  .foul-card p{font-size:14.5px; color:rgba(255,255,255,0.68);}
+  .foul-card .whistle{position:absolute; left:-10px; bottom:-18px; font-size:90px; opacity:0.06; font-family:var(--font-display); font-weight:900;}
+
+  /* SOLUTION FEATURES */
+  .features{background:var(--black-900); color:var(--white); position:relative;}
+  .features .section-head p{color:rgba(255,255,255,0.65);}
+  .features .section-head .eyebrow{color:var(--orange-500);}
+  .feat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  @media(max-width:900px){
+    .feat-grid{
+      display:flex; grid-template-columns:none;
+      overflow-x:auto; scroll-snap-type:x mandatory;
+      scroll-padding-inline:16px; gap:14px; padding-bottom:14px;
+      -webkit-overflow-scrolling:touch; scrollbar-width:none;
+    }
+    .feat-grid::-webkit-scrollbar{display:none;}
+    .feat-card{flex:0 0 74%; scroll-snap-align:start;}
+  }
+  @media(max-width:420px){
+    .feat-card{flex-basis:80%;}
+  }
+  .feat-card{
+    background:var(--black-800); border:1px solid var(--black-700); border-radius:20px; padding:30px 26px;
+    transition:transform .2s ease, border-color .2s ease;
+  }
+  .feat-card:hover{transform:translateY(-6px); border-color:var(--orange-500);}
+  .feat-num{font-family:var(--font-display); font-weight:900; font-size:14px; color:var(--orange-500); margin-bottom:18px;}
+  .feat-card h3{font-size:20px; margin-bottom:10px;}
+  .feat-card p{font-size:14.5px; color:rgba(255,255,255,0.62);}
+
+  /* flip card demo inside feature 2 */
+  .flip-demo{margin-top:20px; perspective:1000px; height:130px;}
+  .flip-demo input{display:none;}
+  .flip-inner{
+    position:relative; width:100%; height:100%; transition:transform .6s;
+    transform-style:preserve-3d; cursor:pointer; border-radius:14px;
+  }
+  .flip-demo input:checked ~ .flip-inner{transform:rotateY(180deg);}
+  .flip-face{
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:14px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:12px;
+  }
+  .flip-front{background:var(--orange-500); color:var(--black-900);}
+  .flip-back{background:var(--white); color:var(--ink); transform:rotateY(180deg);}
+  .flip-face strong{font-family:var(--font-display); font-weight:800; font-size:15px;}
+  .flip-face span{font-size:12.5px; margin-top:6px; opacity:0.85;}
+  .flip-hint{font-size:11px; margin-top:6px; opacity:0.6;}
+
+  /* AUDIENCE */
+  .audience{background:var(--white);}
+  .aud-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  @media(max-width:860px){.aud-grid{grid-template-columns:1fr;}}
+  .aud-card{border:1px solid #ECECEC; border-radius:20px; padding:30px 26px; background:#FAFAFA;}
+  .aud-icon{
+    width:52px; height:52px; border-radius:14px; background:var(--orange-100); color:var(--orange-600);
+    display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:18px;
+  }
+  .aud-card h3{font-size:19px; margin-bottom:8px;}
+  .aud-card p{font-size:14.5px; color:#555;}
+
+  /* QUIZ DEMO - signature */
+  .demo{background:var(--black-900); color:var(--white); position:relative;}
+  .demo-board{
+    max-width:640px; margin:0 auto; background:var(--black-800); border:1px solid var(--black-700);
+    border-radius:24px; padding:36px; position:relative;
+  }
+  .scoreboard{
+    display:flex; justify-content:space-between; align-items:center; margin-bottom:26px;
+    font-family:var(--font-display);
+  }
+  .scoreboard .label{font-size:12px; letter-spacing:0.08em; color:rgba(255,255,255,0.5); text-transform:uppercase;}
+  .scoreboard .score{font-size:30px; font-weight:900; color:var(--orange-500);}
+  .q-title{font-size:19px; font-weight:700; margin-bottom:20px; min-height:52px;}
+  .options{display:grid; gap:12px;}
+  .opt{
+    text-align:right; padding:15px 18px; border-radius:12px; border:1.5px solid var(--black-700);
+    background:var(--black-900); color:var(--white); font-size:15px; font-weight:500;
+    cursor:pointer; transition:border-color .15s ease, background .15s ease;
+  }
+  .opt:hover{border-color:var(--orange-500);}
+  .opt.correct{background:rgba(34,197,94,0.15); border-color:var(--green); color:#7CF3A6;}
+  .opt.wrong{background:rgba(239,68,68,0.15); border-color:var(--red); color:#FCA5A5;}
+  .opt[disabled]{cursor:default; pointer-events:none;}
+  .explain{
+    margin-top:16px; font-size:13.5px; color:rgba(255,255,255,0.72); background:var(--black-900);
+    border-radius:12px; padding:14px 16px; display:none; border-right:3px solid var(--orange-500);
+  }
+  .explain.show{display:block;}
+  .demo-next{margin-top:22px; text-align:left;}
+  .result{display:none; text-align:center;}
+  .result.show{display:block;}
+  .result .rank{
+    font-family:var(--font-display); font-weight:900; font-size:36px; color:var(--orange-500); margin:14px 0 8px;
+  }
+  .result p{color:rgba(255,255,255,0.68); font-size:14.5px; margin-bottom:22px;}
+  .demo-live{display:block;}
+  .demo-live.hide{display:none;}
+
+  /* MERCH */
+  .merch{background:var(--white);}
+  .merch-inner{
+    display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center;
+    background:var(--orange-100); border-radius:28px; padding:56px; overflow:hidden; position:relative;
+  }
+  @media(max-width:860px){.merch-inner{grid-template-columns:1fr; padding:36px 26px;}}
+  .merch h2{font-size:clamp(26px,3.6vw,36px); color:var(--black-900); margin-bottom:14px;}
+  .merch p{color:#5b4636; font-size:15.5px; margin-bottom:22px;}
+  .merch-tags{display:flex; gap:10px; flex-wrap:wrap;}
+  .merch-tags span{
+    background:var(--white); padding:8px 14px; border-radius:100px; font-size:13px; font-weight:600; color:var(--orange-600);
+  }
+  .merch-visual{display:flex; justify-content:center; gap:14px;}
+  .merch-visual .item{
+    width:78px; height:96px; border-radius:16px; background:var(--black-900);
+    display:flex; align-items:center; justify-content:center; font-size:28px; box-shadow:0 12px 30px -12px rgba(0,0,0,0.4);
+    transform:rotate(-6deg);
+  }
+  .merch-visual .item:nth-child(2){transform:translateY(-14px) rotate(3deg); background:var(--orange-500);}
+  .merch-visual .item:nth-child(3){transform:rotate(8deg);}
+
+  /* FOOTER CTA */
+  .final-cta{background:var(--black-900); color:var(--white); text-align:center;}
+  .final-cta h2{font-size:clamp(32px,5vw,52px); margin-bottom:18px;}
+  .final-cta p{color:rgba(255,255,255,0.65); font-size:16.5px; margin-bottom:34px;}
+
+  footer{background:var(--black-900); border-top:1px solid var(--line); padding:36px 0; color:rgba(255,255,255,0.45); font-size:13px;}
+  .foot-inner{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+
+  @media (prefers-reduced-motion: reduce){
+    .logo .ball{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ===== RESPONSIVE: TABLET (≤900px) ===== */
+  @media(max-width:900px){
+    .wrap{padding:0 20px;}
+    section{padding:76px 0;}
+    .hero{padding:70px 0 90px;}
+    .section-head{margin-bottom:44px;}
+    .demo-board{max-width:100%; padding:28px;}
+  }
+
+  /* ===== RESPONSIVE: MOBILE (≤600px) ===== */
+  @media(max-width:600px){
+    .wrap{padding:0 16px;}
+    nav{height:66px;}
+    .logo{font-size:16px; gap:8px;}
+    .logo .ball{width:24px; height:24px;}
+    .btn{padding:13px 22px; font-size:14.5px;}
+    header .btn-ghost{padding:10px 16px; font-size:13px;}
+
+    .hero{padding:52px 0 64px;}
+    .hero h1{margin:16px 0 14px;}
+    .hero p.sub{font-size:16px; margin-bottom:28px;}
+    .hero-ctas{flex-direction:column; align-items:stretch; gap:12px;}
+    .hero-ctas .btn{width:100%; justify-content:center;}
+    .hero-stats{gap:28px; margin-top:48px;}
+    .hero-stats .num{font-size:26px;}
+    .hero-stats .lbl{font-size:11.5px;}
+
+    section{padding:56px 0;}
+    .section-head{margin-bottom:32px;}
+    .section-head p{font-size:15.5px;}
+
+    .feat-grid, .aud-grid{gap:16px;}
+    .foul-card, .feat-card, .aud-card{padding:24px 20px; border-radius:16px;}
+    .foul-card h3, .feat-card h3, .aud-card h3{font-size:18px;}
+    .foul-card .whistle{font-size:60px;}
+    .flip-demo{height:112px;}
+
+    .demo-board{padding:20px; border-radius:18px;}
+    .scoreboard{margin-bottom:18px;}
+    .scoreboard .score{font-size:22px;}
+    .q-title{font-size:16.5px; min-height:0;}
+    .opt{padding:13px 14px; font-size:14px;}
+    .explain{font-size:13px; padding:12px 14px;}
+    .demo-next{text-align:center;}
+    .demo-next .btn{width:100%; justify-content:center;}
+    .result .rank{font-size:28px;}
+    .result .btn{width:100%; justify-content:center;}
+
+    .merch-inner{border-radius:20px; text-align:center;}
+    .merch-tags{justify-content:center;}
+    .merch-visual{margin-top:8px;}
+    .merch-visual .item{width:62px; height:78px; font-size:22px;}
+
+    .final-cta .btn{width:100%; justify-content:center;}
+    .final-cta h2 br{display:none;}
+
+    .foot-inner{flex-direction:column; text-align:center;}
+  }
+
+  /* ===== RESPONSIVE: SMALL PHONES (≤380px) ===== */
+  @media(max-width:380px){
+    .hero h1{font-size:34px;}
+    .hero-stats{gap:20px;}
+    .btn{font-size:13.5px; padding:12px 18px;}
+    .demo-board{padding:16px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo"><span class="ball"></span> המגרש הביתי</div>
+      <div class="navlinks">
+        <a href="#problem">הבעיה</a>
+        <a href="#solution">הפתרון</a>
+        <a href="#demo">נסו חידון</a>
+        <a href="#merch">חנות</a>
+      </div>
+      <div class="nav-right">
+        <a href="#demo" class="btn btn-ghost">נסו עכשיו</a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="פתח תפריט" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-menu-links">
+    <a href="#problem">הבעיה</a>
+    <a href="#solution">הפתרון</a>
+    <a href="#demo">נסו חידון</a>
+    <a href="#merch">חנות</a>
+    <a href="#demo" class="btn btn-primary mobile-cta">🏀 נסו עכשיו</a>
+  </nav>
+  <div class="mobile-menu-foot">המגרש הביתי — MVP</div>
+</div>
+
+<section class="hero">
+  <svg class="hero-court" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="600" cy="300" r="140" fill="none" stroke="#FF6A13" stroke-opacity="0.18" stroke-width="2"/>
+    <circle cx="600" cy="300" r="4" fill="#FF6A13" fill-opacity="0.3"/>
+    <line x1="600" y1="0" x2="600" y2="600" stroke="#FF6A13" stroke-opacity="0.12" stroke-width="2"/>
+    <path d="M -50 100 A 400 400 0 0 1 -50 500" fill="none" stroke="#FF6A13" stroke-opacity="0.12" stroke-width="2"/>
+    <path d="M 1250 100 A 400 400 0 0 0 1250 500" fill="none" stroke="#FF6A13" stroke-opacity="0.12" stroke-width="2"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <span class="eyebrow">MVP • למידה תוך כדי משחק</span>
+    <h1>לומדים כדורסל <span class="hl">לפני</span> שעולים למגרש</h1>
+    <p class="sub">חידונים, כרטיסיות ודירוג "IQ כדורסל" אישי — הופכים את זמן המסך של הילד לביטחון אמיתי במגרש, בלי מבוכה ובלי הרצאות.</p>
+    <div class="hero-ctas">
+      <a href="#demo" class="btn btn-primary">🏀 נסו חידון עכשיו</a>
+      <a href="#solution" class="btn btn-ghost">איך זה עובד</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="num">3</div><div class="lbl">פיצ'רים עיקריים</div></div>
+      <div><div class="num">0₪</div><div class="lbl">בלי דאטה בייס, בלי חשבון</div></div>
+      <div><div class="num">MVP</div><div class="lbl">הדרגה הכי גבוהה שאפשר</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="problems" id="problem">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" style="color:var(--orange-600)">מה קורה היום במגרש</span>
+      <h2>שלוש עבירות שכל אחד מכיר</h2>
+      <p>לפני שמגיעים למגרש, רוב הילדים כבר "נפסלים" מהמשחק בדרך אחת מהשלוש הבאות.</p>
+    </div>
+    <div class="swipe-hint">👉 גררו כדי לראות עוד</div>
+    <div class="foul-grid">
+      <div class="foul-card">
+        <span class="whistle">🏀</span>
+        <span class="tag">עבירה 1</span>
+        <h3>מתביישים לשאול</h3>
+        <p>אחד לא מבין "צעדים" או "עבירה" — ובמקום לשאול מול כולם, הוא פשוט מפסיק לנסות.</p>
+      </div>
+      <div class="foul-card">
+        <span class="whistle">📺</span>
+        <span class="tag">עבירה 2</span>
+        <h3>למידה פסיבית</h3>
+        <p>סרטוני יוטיוב וטיקטוק נצפים בשקט — אבל אף אחד לא באמת יודע אם הידע נקלט.</p>
+      </div>
+      <div class="foul-card">
+        <span class="whistle">⏱️</span>
+        <span class="tag">עבירה 3</span>
+        <h3>זמן אימון יקר</h3>
+        <p>המאמן עוצר הכל כדי להסביר על הלוח — ולוקח מהילדים זמן משחק אמיתי במקום להוסיף לו.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="solution">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">הפתרון</span>
+      <h2>3 כלים. אפס טקסט משעמם.</h2>
+      <p>כל התוכן רץ בדפדפן, בלי חיבור לשרת ובלי שמירת מידע — פשוט לומדים ומשחקים.</p>
+    </div>
+    <div class="swipe-hint">👉 גררו כדי לראות עוד</div>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-num">01 / חידון</div>
+        <h3>חידון אמריקאי עם משוב מיידי</h3>
+        <p>כל שאלה מקבלת תשובה בצבע — ירוק לנכון, אדום לטעות — עם הסבר קצר וברור שמלמד תוך כדי תנועה.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-num">02 / כרטיסיות</div>
+        <h3>כרטיסיות הברקה שמתהפכות</h3>
+        <p>לומדים מונח, לוחצים, והמונח הופך להסבר. בקצב של הילד, לפני שהוא בכלל ניגש לחידון.</p>
+        <div class="flip-demo">
+          <input type="checkbox" id="flipcheck">
+          <label for="flipcheck" style="display:block; height:100%;">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <strong>טראבל (צעדים)</strong>
+                <span class="flip-hint">לחצו כדי להפוך</span>
+              </div>
+              <div class="flip-face flip-back">
+                <strong>הזזת רגל הציר בלי לדרבל</strong>
+                <span>עבירה שמעבירה את הכדור ליריב</span>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-num">03 / דירוג</div>
+        <h3>מחשבון "IQ כדורסל"</h3>
+        <p>בסוף החידון, הילד מקבל דרגה משעשעת — מ"שחקן ספסל" ועד "MVP" — שמעודדת אותו לנסות שוב.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="audience">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" style="color:var(--orange-600)">למי זה בנוי</span>
+      <h2>מגרש אחד, שלושה תפקידים</h2>
+    </div>
+    <div class="aud-grid">
+      <div class="aud-card">
+        <div class="aud-icon">🧒</div>
+        <h3>לילדים</h3>
+        <p>מקום בטוח ללמוד את המשחק בלי מבוכה מול חברים — בקצב שלכם, בלי לחץ.</p>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">👨‍👩‍👧</div>
+        <h3>להורים</h3>
+        <p>סוף סוף זמן מסך שמוביל לספה — לא רחוק ממנה. תוכן שבטוחים בו, ושמעודד לצאת החוצה.</p>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🏆</div>
+        <h3>למאמנים</h3>
+        <p>בדיקת ידע מהירה וכיפית לפני האימון, בלי לגזול דקה אחת מהזמן על המגרש.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" id="demo">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">נסו את זה</span>
+      <h2>זה בדיוק החידון שהילד שלכם יראה</h2>
+      <p>10 שאלות אמיתיות בכל סבב, משוב מיידי, ודרגת IQ כדורסל בסוף — ובכל פעם שמסיימים מחכה סט שאלות חדש. בלי הרשמה.</p>
+    </div>
+
+    <div class="demo-board">
+      <div class="scoreboard">
+        <span class="label">התקדמות</span>
+        <span class="score" id="progressLabel">שאלה 1/10 · סט 1/4</span>
+      </div>
+
+      <div class="demo-live" id="demoLive">
+        <div class="q-title" id="qTitle"></div>
+        <div class="options" id="qOptions"></div>
+        <div class="explain" id="qExplain"></div>
+        <div class="demo-next">
+          <button class="btn btn-primary" id="nextBtn" style="display:none;">השאלה הבאה →</button>
+        </div>
+      </div>
+
+      <div class="result" id="resultBox">
+        <div class="label" style="font-family:var(--font-display); font-size:12px; letter-spacing:0.08em; color:rgba(255,255,255,0.5); text-transform:uppercase;">ה-IQ הכדורסלי שלך</div>
+        <div class="rank" id="rankText"></div>
+        <p id="rankSub"></p>
+        <button class="btn btn-dark" id="restartBtn">לנסות שוב</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="merch" id="merch">
+  <div class="wrap">
+    <div class="merch-inner">
+      <div>
+        <span class="eyebrow" style="color:var(--orange-600)">בקרוב</span>
+        <h2>חנות "המגרש הביתי"</h2>
+        <p>חולצות, כובעים, מדבקות לבקבוק וצמידי סיליקון — למי שכבר עלה מ"שחקן ספסל" ל-MVP.</p>
+        <div class="merch-tags">
+          <span>חולצות</span>
+          <span>כובעים</span>
+          <span>מדבקות</span>
+          <span>צמידי סיליקון</span>
+        </div>
+      </div>
+      <div class="merch-visual">
+        <div class="item">👕</div>
+        <div class="item">🧢</div>
+        <div class="item">💧</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="wrap">
+    <h2>המגרש מחכה. <br> אתם כבר מוכנים?</h2>
+    <p>שיעמום זו לא סיבה להישאר בבית. תתחילו בחידון, תסיימו במגרש.</p>
+    <a href="#demo" class="btn btn-primary">🏀 לחידון הראשון שלי</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 המגרש הביתי — MVP</span>
+    <span>שיווק מפה לאוזן, ילד אחד בכל פעם 🏀</span>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=hamigrash-habeiti" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<script>
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  function setMenu(open){
+    mobileMenu.classList.toggle('is-open', open);
+    hamburgerBtn.classList.toggle('is-open', open);
+    hamburgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.classList.toggle('menu-open', open);
+  }
+
+  hamburgerBtn.addEventListener('click', () => {
+    setMenu(!mobileMenu.classList.contains('is-open'));
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMenu(false));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') setMenu(false);
+  });
+</script>
+
+<script>
+  const quizSets = [
+    // ===== סט 1: יסודות =====
+    [
+      { q: "כמה שניות יש לקבוצה להעביר את הכדור מהמגרש האחורי לקדמי?", options: ["4 שניות", "8 שניות", "10 שניות", "24 שניות"], correct: 1,
+        explain: "בכדורסל בוגרים יש לקבוצה 8 שניות להעביר את הכדור מהצד האחורי לקדמי — אחרת זו נחשבת עבירת זמן והכדור עובר ליריבה." },
+      { q: "איך נקראת העבירה כששחקן עם הכדור מזיז את רגל הציר בלי לדרבל?", options: ["הפרעה", "עבירה טכנית", "צעדים", "החזקת כדור"], correct: 2,
+        explain: "כשמזיזים את רגל הציר בלי לדרבל את הכדור, זו עבירת 'צעדים' (טראבל) — וההחזקה עוברת מיד ליריבה." },
+      { q: "כמה נקודות שווה זריקה שנזרקת מחוץ לקשת השלוש נקודות?", options: ["1", "2", "3", "4"], correct: 2,
+        explain: "זריקה שנזרקת מרחוק, מעבר לקשת המסומנת על הרצפה, שווה 3 נקודות במקום 2." },
+      { q: "כמה נקודות שווה זריקת עונשין שנכנסת?", options: ["1", "2", "3", "אפס"], correct: 0,
+        explain: "כל זריקת עונשין שנכנסת שווה נקודה אחת, וזורקים אותה בלי הפרעה מקו מיוחד." },
+      { q: "כמה שחקנים מכל קבוצה נמצאים על המגרש במקביל?", options: ["4", "5", "6", "7"], correct: 1,
+        explain: "בכל רגע נתון יש 5 שחקנים מכל קבוצה על המגרש, והשאר יושבים בספסל." },
+      { q: "איך נקראת ההתקדמות עם הכדור תוך כדי הקפצתו ברצפה?", options: ["מסירה", "דריבל", "בלוק", "סריקה"], correct: 1,
+        explain: "דריבל הוא הדרך היחידה להתקדם עם הכדור בלי לבצע 'צעדים' — כל נגיעה חוזרת ברצפה חייבת." },
+      { q: "כמה עבירות אישיות מוציאות שחקן בוגר מהמשחק?", options: ["4", "5", "6", "אין הגבלה"], correct: 1,
+        explain: "אחרי 5 עבירות אישיות שחקן חייב לרדת מהמגרש ולא יכול לחזור באותו משחק." },
+      { q: "איזה קו מפריד בין המגרש ההתקפי להגנתי?", options: ["קו האמצע", "קו העונשין", "קו השלוש", "קו הסל"], correct: 0,
+        explain: "קו האמצע מחלק את המגרש לשני חצאים — צד ההתקפה וצד ההגנה של כל קבוצה." },
+      { q: "מה קורה אם שחקן נוגע בכדור כשהוא בדרכו למטה ישירות מעל הסל?", options: ["הסל תמיד נספר", "זו עבירת הפרעה והסל נספר ליריבה", "זה חוקי לגמרי", "המשחק נעצר בלי תוצאה"], correct: 1,
+        explain: "זו עבירת 'הפרעה' — נוגעים בכדור בדרכו למטה, וההגנה מפסידה: הסל נספר אוטומטית ליריבה." },
+      { q: "מה התפקיד העיקרי של הגארד (Point Guard) בקבוצה?", options: ["לתפוס ריבאונדים בעיקר", "לארגן את המשחק ולתת מסירות", "לשמור על הסל", "לשפוט את המשחק"], correct: 1,
+        explain: "הגארד הוא בדרך כלל השחקן שמוביל את הכדור, מארגן את ההתקפה ומחליט על המסירה או הזריקה הבאה." }
+    ],
+    // ===== סט 2: עבירות וטכניקה =====
+    [
+      { q: "איך נקרא מצב שבו שני יריבים אוחזים בכדור בו-זמנית וקשה להכריע?", options: ["כדור מוחזק", "עבירה כפולה", "זמן קפוא", "הפרעה"], correct: 0,
+        explain: "זה נקרא 'כדור מוחזק', ולרוב פותרים את זה בקפיצת כדור או לפי חוק החץ המתחלף." },
+      { q: "מה נקרא כשההגנה נוגעת בשחקן המתקיף בצורה לא חוקית?", options: ["בלוק", "עבירה אישית", "ריבאונד", "מסירה"], correct: 1,
+        explain: "מגע לא חוקי מצד המגן נחשב 'עבירה אישית', וההתקפה מקבלת זריקות עונשין או את הכדור." },
+      { q: "על מה בעיקר ניתנת 'עבירה טכנית'?", options: ["על התנהגות לא ספורטיבית", "על עבירת צעדים", "על עבירת החזקת כדור", "על סוג של סל"], correct: 0,
+        explain: "עבירה טכנית ניתנת בעיקר על התנהגות לא ספורטיבית, ולא על מגע פיזי רגיל במגרש." },
+      { q: "איך נקרא מצב שבו שחקן תופס את הכדור אחרי זריקה שפספסה?", options: ["חטיפה", "ריבאונד", "בלוק", "סריקה"], correct: 1,
+        explain: "כשתופסים את הכדור אחרי זריקה שלא נכנסה, זה נקרא 'ריבאונד' — הגנתי או התקפי." },
+      { q: "מה קורה כשהכדור או השחקן שאוחז בו יוצאים מקווי המגרש?", options: ["הכדור עובר מיד ליריבה", "זו עבירת צעדים", "זו עבירה טכנית", "זו עבירת החזקת כדור"], correct: 0,
+        explain: "כשהכדור או השחקן שאוחז בו נוגעים מחוץ לקווי המגרש, הכדור עובר מיד לקבוצה היריבה." },
+      { q: "איך נקראת חסימה חוקית של זריקה על ידי המגן?", options: ["פאול", "בלוק", "ריבאונד", "החזקת כדור"], correct: 1,
+        explain: "בלוק הוא חסימה חוקית של הכדור בזמן זריקה, כל עוד המגן לא נוגע בשחקן היריב." },
+      { q: "כמה זמן בערך יש לשחקן לבצע זריקת עונשין אחרי שקיבל אותה?", options: ["כ-5 שניות", "10 דקות", "אין הגבלה", "דקה שלמה"], correct: 0,
+        explain: "יש לשחקן זמן קצר בלבד (בדרך כלל כ-5 שניות) לבצע כל זריקת עונשין, אחרת נספרת עבירה." },
+      { q: "מה קורה כשקבוצה מחזיקה בכדור יותר מדי זמן בלי לזרוק (עבירת שעון קוצבים)?", options: ["הכדור עובר ליריבה", "מקבלים נקודה נוספת", "אין שום השפעה", "מוסיפים עוד זמן"], correct: 0,
+        explain: "אם קבוצה לא זורקת לפני שנגמר שעון הקוצבים, הכדור עובר אוטומטית לקבוצה היריבה." },
+      { q: "איזו עבירה קורית כששחקן דוחף או מכה יריב בכוונה?", options: ["עבירה לא ספורטיבית", "בלוק", "ריבאונד", "החזקת כדור"], correct: 0,
+        explain: "מגע אלים או מכוון נחשב 'עבירה לא ספורטיבית' וגורר עונש חמור יותר מעבירה רגילה." },
+      { q: "מה זו עבירת 'דאבל דריבל'?", options: ["לזרוק פעמיים לסל", "לעצור את הדריבל (לתפוס את הכדור) ואז לדרבל שוב", "לדרבל בשתי ידיים יחד תמיד", "אין דבר כזה"], correct: 1,
+        explain: "'דאבל דריבל' היא עבירה שקורית כששחקן עוצר את הדריבל, תופס את הכדור בידיים, ואז מנסה לדרבל שוב." }
+    ],
+    // ===== סט 3: טקטיקה ומיקומים =====
+    [
+      { q: "איזה תפקיד אחראי בדרך כלל על הגנה מתחת לסל ותפיסת ריבאונדים?", options: ["הגארד", "הצנטר", "השוער", "הקפטן"], correct: 1,
+        explain: "הצנטר הוא בדרך כלל השחקן הגבוה בקבוצה, ותפקידו לשלוט באזור שמתחת לסל — הגנה, ריבאונדים וחסימות." },
+      { q: "איך נקראת הגנה שבה כל שחקן שומר על אזור מסוים ולא על שחקן ספציפי?", options: ["הגנת איש איש", "הגנת אזור", "הגנת לחץ", "הגנה כפולה"], correct: 1,
+        explain: "בהגנת אזור כל שחקן אחראי על חלק מסוים במגרש, ולא עוקב אחרי שחקן יריב ספציפי." },
+      { q: "איך נקראת הגנה שבה כל שחקן שומר צמוד לשחקן יריב ספציפי?", options: ["הגנת אזור", "הגנת איש איש", "הגנת לחץ מלא", "הגנת פרסה"], correct: 1,
+        explain: "בהגנת איש-איש כל מגן אחראי אישית על שחקן יריב אחד ועוקב אחריו לאורך המגרש." },
+      { q: "מה נקרא מהלך התקפי שבו שחקן חוסם את המגן כדי לשחרר חבר לקבוצה?", options: ["בלוק הגנתי", "חסימה (סקרין)", "ריבאונד", "החלפה"], correct: 1,
+        explain: "'חסימה' (סקרין) היא כשחקן תופס עמדה קבועה כדי לחסום את המגן ולתת לחבר שלו מרחב לזרוק או לחדור." },
+      { q: "מה נקרא מעבר מהיר מהגנה להתקפה לפני שהיריבה מתארגנת?", options: ["התקפת ברק", "הגנת אזור", "זריקת עונשין", "החלפה"], correct: 0,
+        explain: "'התקפת ברק' היא כשעוברים במהירות מהגנה להתקפה, לפני שההגנה היריבה מספיקה להתארגן." },
+      { q: "מה נקרא מצב שבו קבוצה שולחת שחקן חדש למגרש במקום שחקן שכבר משחק?", options: ["עבירה", "החלפה", "ריבאונד", "זמן קפוא"], correct: 1,
+        explain: "'החלפה' היא כשמאמן מכניס שחקן מהספסל במקום שחקן שכבר על המגרש — אפשר לעשות זאת רק כשהמשחק עצור." },
+      { q: "איזה מונח מתאר מסירה מדויקת שמובילה ישירות לסל?", options: ["אסיסט", "בלוק", "ריבאונד", "פאול"], correct: 0,
+        explain: "'אסיסט' היא מסירה שמובילה ישירות לסל של חבר הקבוצה שקיבל אותה." },
+      { q: "למה מאמן קורא ל'זמן קפוא' באמצע המשחק?", options: ["כדי לעצור את השעון ולתדרך את הקבוצה", "כדי לשנות את חוקי המשחק", "כדי להחליף מגרש", "כדי לספור נקודות מחדש"], correct: 0,
+        explain: "זמן קפוא עוצר את המשחק לזמן קצר, כדי שהמאמן יוכל לתדרך את השחקנים או לתת להם לנוח." },
+      { q: "מה נקרא כשקבוצה מתגוננת אגרסיבית על פני כל המגרש, כולל בצד ההתקפה של היריבה?", options: ["הגנת לחץ מלא", "הגנת אזור רגילה", "הגנה פסיבית", "הגנת פרסה"], correct: 0,
+        explain: "'הגנת לחץ מלא' היא כשקבוצה מתגוננת אגרסיבית על פני כל המגרש, כדי להכביד על היריבה כבר מרגע ההעברה." },
+      { q: "מה חשוב לזכור לפני שזורקים לסל מרחוק כשיש עדיין הרבה זמן על השעון?", options: ["לזרוק תמיד מהר", "לחפש זריקה פתוחה ומדויקת יותר", "לא לזרוק בכלל", "למסור תמיד ליריבה"], correct: 1,
+        explain: "כשיש מספיק זמן, עדיף לחפש זריקה פתוחה ומדויקת יותר במקום לזרוק מהר בלחץ." }
+    ],
+    // ===== סט 4: שיפוט וחוקים מתקדמים =====
+    [
+      { q: "איך נקראת עבירה שנעשית מתוך כוונה רעה ולא רק מגע רגיל במהלך המשחק?", options: ["עבירה רגילה", "עבירה לא ספורטיבית", "עבירה טכנית", "החזקת כדור"], correct: 1,
+        explain: "עבירה שנעשית בכוונה או בלי ניסיון אמיתי לשחק בכדור נחשבת 'לא ספורטיבית' וגוררת עונש חמור יותר." },
+      { q: "שחקן זורק שלוש נקודות, מקבל עבירה תוך כדי הזריקה, והסל נכנס. מה קורה?", options: ["הסל לא נספר בכלל", "הסל נספר + זריקת עונשין אחת", "הסל נספר + 3 זריקות עונשין", "מתחילים את הרבע מחדש"], correct: 1,
+        explain: "אם הסל נכנס למרות העבירה, הוא נספר במלואו (3 נקודות), ובנוסף מקבלים זריקת עונשין אחת." },
+      { q: "איך נקרא הקו שממנו זורקים זריקות עונשין?", options: ["קו האמצע", "קו העונשין", "קו השלוש", "קו הצד"], correct: 1,
+        explain: "קו העונשין הוא הקו שממנו זורקים את כל זריקות העונשין, במרחק קבוע מהסל." },
+      { q: "כמה שופטים בדרך כלל שולטים במשחק רשמי?", options: ["אף פעם לא יותר משופט אחד", "בדרך כלל כמה שופטים שמתחלקים במגרש", "אין שופטים בכלל", "רק המאמנים שופטים"], correct: 1,
+        explain: "במשחקים רשמיים יש בדרך כלל כמה שופטים על המגרש, וכל אחד אחראי על אזור מסוים." },
+      { q: "מה קורה כשקבוצה עוברת את מכסת עבירות הקבוצה המותרת ברבע?", options: ["לא קורה כלום מיוחד", "היריבה מקבלת זריקות עונשין גם על עבירות רגילות ('בונוס')", "הקבוצה מפסידה אוטומטית", "מוסיפים רבע נוסף"], correct: 1,
+        explain: "כשקבוצה עוברת את מכסת העבירות ברבע, היא נכנסת ל'בונוס' — כל עבירה נוספת מזכה את היריבה בזריקות עונשין." },
+      { q: "הכדור יוצא מהמגרש ולא ברור איזו קבוצה נגעה בו אחרונה. מה קורה?", options: ["קפיצת כדור / כדור חלופי", "עבירה כפולה", "זמן קפוא", "עבירה טכנית"], correct: 0,
+        explain: "כשלא ברור מי נגע אחרון, פותרים את זה בקפיצת כדור, או לפי חוק החץ המתחלף בין הקבוצות." },
+      { q: "איך נקרא רבע שמתווסף אם התוצאה שווה בסוף הזמן הרגיל?", options: ["רבע נוסף רגיל", "הארכה", "זמן קפוא", "רבע עונשין"], correct: 1,
+        explain: "כשהתוצאה שווה בתום הזמן הרגיל, מוסיפים 'הארכה' — רבע קצר נוסף כדי להכריע מנצח." },
+      { q: "מגן שם יד על שחקן שמנסה לזרוק, גם בלי לגעת בכדור. מה קורה?", options: ["זה תמיד לא נחשב עבירה", "זה יכול להיחשב עבירת מגע אישית", "זה תמיד ריבאונד", "זה תמיד חסימה חוקית"], correct: 1,
+        explain: "אם המגע מפריע לזריקה של היריב, זה יכול להיחשב עבירת מגע אישית — גם אם לא נגעו בכדור עצמו." },
+      { q: "אתם לא בטוחים לגבי חוק מסוים במשחק חופשי עם חברים. מה הכי נכון לעשות?", options: ["לריב על זה", "לשאול בנימוס או לבדוק את החוק אחר כך", "להפסיק לשחק לגמרי", "להעמיד פנים שיודעים"], correct: 1,
+        explain: "הכי טוב לשאול בנימוס או לבדוק את החוק אחר כך — כך לומדים נכון ונשארים חברים." },
+      { q: "מה המטרה העיקרית של לימוד חוקי המשחק לפני שעולים למגרש?", options: ["כדי לזכות בכל משחק", "כדי להרגיש בטוחים ולשחק בלי פחד מטעויות", "כדי להיות שופטים", "אין באמת חשיבות"], correct: 1,
+        explain: "ידיעת החוקים נותנת ביטחון לשחק בלי פחד מטעויות — וזה בדיוק מה ש'המגרש הביתי' נותן." }
+    ]
+  ];
+
+  let setIndex = 0;
+  let quiz = quizSets[setIndex];
+  let current = 0;
+  let correctCount = 0;
+
+  const qTitle = document.getElementById('qTitle');
+  const qOptions = document.getElementById('qOptions');
+  const qExplain = document.getElementById('qExplain');
+  const nextBtn = document.getElementById('nextBtn');
+  const progressLabel = document.getElementById('progressLabel');
+  const demoLive = document.getElementById('demoLive');
+  const resultBox = document.getElementById('resultBox');
+  const rankText = document.getElementById('rankText');
+  const rankSub = document.getElementById('rankSub');
+  const restartBtn = document.getElementById('restartBtn');
+
+  function renderQuestion(){
+    const item = quiz[current];
+    progressLabel.textContent = `שאלה ${current+1}/${quiz.length} · סט ${setIndex+1}/${quizSets.length}`;
+    qTitle.textContent = item.q;
+    qOptions.innerHTML = '';
+    qExplain.classList.remove('show');
+    qExplain.textContent = '';
+    nextBtn.style.display = 'none';
+
+    item.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.textContent = opt;
+      btn.addEventListener('click', () => handleAnswer(i, btn));
+      qOptions.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(i, btnEl){
+    const item = quiz[current];
+    const allOpts = qOptions.querySelectorAll('.opt');
+    allOpts.forEach(o => o.setAttribute('disabled', 'true'));
+
+    if(i === item.correct){
+      btnEl.classList.add('correct');
+      correctCount++;
+    } else {
+      btnEl.classList.add('wrong');
+      allOpts[item.correct].classList.add('correct');
+    }
+
+    qExplain.textContent = item.explain;
+    qExplain.classList.add('show');
+    nextBtn.style.display = 'inline-flex';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    current++;
+    if(current < quiz.length){
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  });
+
+  function showResult(){
+    demoLive.classList.add('hide');
+    resultBox.classList.add('show');
+    let rank, sub;
+    if(correctCount <= 2){
+      rank = 'שחקן ספסל 🪑';
+      sub = 'לא נורא — כל MVP התחיל מהספסל. נסו את הסט הבא ותראו את ההסברים שוב.';
+    } else if(correctCount <= 5){
+      rank = 'שחקן מתפתח 📈';
+      sub = 'כבר בדרך הנכונה! עוד סבב אחד ותהיו קרובים ל-MVP.';
+    } else if(correctCount <= 8){
+      rank = 'שחקן פותח 🔥';
+      sub = 'ידע מוצק! אתם כבר מבינים את רוב כללי המשחק.';
+    } else {
+      rank = 'MVP של המגרש 🏆';
+      sub = 'ידע כמעט מושלם! עכשיו תורכם — יציאה למגרש האמיתי.';
+    }
+    rankText.textContent = `${rank} (${correctCount}/${quiz.length})`;
+    rankSub.textContent = sub;
+  }
+
+  restartBtn.addEventListener('click', () => {
+    setIndex = (setIndex + 1) % quizSets.length;
+    quiz = quizSets[setIndex];
+    current = 0;
+    correctCount = 0;
+    resultBox.classList.remove('show');
+    demoLive.classList.remove('hide');
+    renderQuestion();
+  });
+
+  renderQuestion();
+</script>
+
+</body>
+</html>
