@@ -1,0 +1,2914 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>RelicReel — מסע בזמן לילדים</title>
+<meta name="description" content="RelicReel הופך את ההיסטוריה למפת תקופות: פרהיסטוריה, מצרים העתיקה ויוון העתיקה — סיפורים קצרים, חידונים משחקיים והמלצות סרטים לילדים בגילאי 8–13.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     RelicReel — light theme
+     Perf notes: animations limited to transform/opacity/background-color.
+     No backdrop-filter, no infinite animations, no box-shadow transitions
+     on large surfaces. All transitions <= 180ms.
+     ============================================================ */
+  :root{
+    --white:#FFFFFF;
+    --ink:#1A2B4C;
+    --ink-soft:#5A6B85;
+    --ink-faint:#8A99B0;
+    --surface:#F0F4F8;
+    --surface-2:#E3EAF2;
+    --line:#DCE4EE;
+    --primary:#4361EE;
+    --primary-dark:#3450D4;
+    --primary-tint:#E8EDFD;
+    --success:#06D6A0;
+    --header:#06D6A0;
+    --header-ink:#0E3A2E;
+    --header-line:#05BF8E;
+    --success-dark:#05B98A;
+    --success-tint:#DFF9F1;
+    --r-lg:18px;
+    --r-md:12px;
+    --r-sm:8px;
+    --shadow-sm:0 2px 6px rgba(26,43,76,.06);
+    --shadow-md:0 6px 18px rgba(26,43,76,.10);
+    --container:1140px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  [hidden]{display:none !important;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;direction:rtl;background:var(--white);color:var(--ink);
+    font-family:'Heebo',system-ui,sans-serif;line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  button{font-family:inherit;color:inherit;cursor:pointer;}
+  h1,h2,h3,h4{font-family:'Baloo 2',system-ui,sans-serif;font-weight:700;margin:0;line-height:1.25;}
+  :focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:4px;}
+  svg{display:block;}
+
+  .container{max-width:var(--container);margin:0 auto;padding:0 clamp(1.1rem,4vw,2.4rem);}
+  .container.narrow{max-width:740px;}
+  .section{padding:clamp(3rem,7vw,5.5rem) 0;}
+  .section--tint{background:var(--surface);}
+  .eyebrow{
+    font-weight:700;font-size:.8rem;letter-spacing:.05em;color:var(--primary);
+    margin:0 0 .7rem;display:inline-block;
+  }
+  .section-head{max-width:620px;margin-bottom:clamp(1.7rem,4vw,2.6rem);}
+  .section-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);}
+  .section-head p{color:var(--ink-soft);margin-top:.7rem;}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+
+  /* one-shot reveal; unobserved after firing */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .35s ease,transform .35s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
+    font-weight:700;font-size:.95rem;padding:.78rem 1.5rem;border-radius:999px;
+    border:2px solid transparent;transition:background-color .15s ease,transform .15s ease,border-color .15s ease;
+    will-change:transform;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);transform:translateY(-2px);}
+  .btn-success{background:var(--success);color:#04382B;}
+  .btn-success:hover{background:var(--success-dark);transform:translateY(-2px);}
+  .btn-ghost{background:var(--white);color:var(--ink);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px);}
+  .btn-block{width:100%;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:var(--header);border-bottom:1px solid var(--header-line);}
+  .nav .logo{color:var(--header-ink);}
+  .nav .nav-links a{color:var(--header-ink);opacity:.82;}
+  .nav .nav-links a:hover{color:var(--header-ink);opacity:1;}
+  .nav .nav-toggle span{background:var(--header-ink);}
+  .nav .btn-ghost{background:rgba(255,255,255,.92);color:var(--ink);border-color:transparent;}
+  .nav .btn-ghost:hover{background:#fff;color:var(--primary);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:var(--container);margin:0 auto;padding:.7rem clamp(1.1rem,4vw,2.4rem);}
+  .logo{display:flex;align-items:center;gap:.5rem;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.3rem;background:none;border:none;padding:0;color:var(--ink);}
+  .logo svg{width:30px;height:30px;flex:none;}
+  .nav-links{display:flex;align-items:center;gap:1.6rem;font-weight:500;font-size:.93rem;}
+  .nav-links a{color:var(--ink-soft);transition:color .15s ease;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-cta{display:flex;align-items:center;gap:.6rem;}
+  .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:8px;}
+  .nav-toggle span{width:22px;height:2.5px;background:var(--ink);border-radius:2px;transition:transform .18s ease,opacity .18s ease;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+  .nav-menu-cta{display:none;}
+
+  @media (max-width:900px){
+    /* logo on the left, hamburger on the right */
+    .nav-inner{flex-direction:row-reverse;}
+
+    /* full-screen menu; the bar itself stays on top so the X is always reachable */
+    .nav{z-index:80;}
+    .nav-links{
+      position:fixed;inset:0;z-index:70;background:var(--header);flex-direction:column;
+      align-items:stretch;justify-content:flex-start;
+      padding:calc(var(--nav-h,58px) + 1.4rem) clamp(1.2rem,6vw,2.4rem) calc(2rem + env(safe-area-inset-bottom));
+      gap:.15rem;overflow-y:auto;-webkit-overflow-scrolling:touch;
+      opacity:0;pointer-events:none;transform:translateY(-10px);
+      transition:opacity .2s ease,transform .2s ease;
+    }
+    .nav-links.open{opacity:1;pointer-events:auto;transform:none;}
+    .nav-links li{border-bottom:1px solid var(--header-line);}
+    .nav-links li:last-child,.nav-links .nav-menu-cta{border-bottom:none;}
+    .nav-links a:not(.btn){
+      display:block;padding:1rem .2rem;font-size:1.12rem;font-weight:600;
+      font-family:'Baloo 2',sans-serif;
+    }
+    .nav-toggle{display:flex;position:relative;z-index:90;}
+
+    /* the inline CTAs now live inside the menu */
+    .nav-cta .btn{display:none;}
+    .nav-menu-cta{display:block;}
+    .nav-menu-cta:first-of-type{margin-top:1.4rem;}
+    .nav-menu-cta .btn{font-size:1rem;padding:.95rem 1.4rem;}
+    .nav-menu-cta .btn-ghost{background:rgba(255,255,255,.92);border-color:transparent;}
+  }
+
+  body.nav-open{overflow:hidden;}
+
+  /* ---------- hero ---------- */
+  .hero{padding:clamp(2.6rem,7vw,4.5rem) 0 0;background:linear-gradient(180deg,var(--success-tint),var(--white) 72%);}
+  .hero-inner{display:grid;gap:1.2rem;justify-items:center;text-align:center;}
+  .hero h1{font-size:clamp(2rem,5.2vw,3.4rem);max-width:17ch;}
+  .hero h1 em{font-style:normal;color:var(--primary);}
+  .hero .lead{max-width:54ch;color:var(--ink-soft);font-size:clamp(1rem,1.6vw,1.15rem);}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;}
+  .hero-trust{font-size:.85rem;color:var(--ink-faint);}
+  .hero-trust a{color:var(--primary);font-weight:600;}
+
+  /* static era strip (no animation — perf) */
+  .era-strip{margin-top:clamp(2rem,5vw,3rem);padding-bottom:clamp(2rem,5vw,3rem);}
+  .strip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;}
+  .strip-tile{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:1rem .7rem;display:grid;justify-items:center;gap:.45rem;text-align:center;
+    box-shadow:var(--shadow-sm);
+  }
+  .strip-tile svg{width:34px;height:34px;color:var(--primary);}
+  .strip-tile span{font-size:.75rem;color:var(--ink-soft);font-weight:500;}
+
+  /* ---------- problem ---------- */
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.5rem,4vw,2.8rem);align-items:center;}
+  @media (max-width:880px){.split{grid-template-columns:1fr;}}
+  .split p{color:var(--ink-soft);max-width:52ch;}
+  .contrast{background:var(--surface);border-radius:var(--r-lg);padding:1.4rem 1.5rem;}
+  .contrast-row{display:flex;align-items:center;gap:.85rem;padding:.7rem 0;border-bottom:1px solid var(--line);}
+  .contrast-row:last-child{border-bottom:none;}
+  .tag{flex:none;width:88px;text-align:center;font-weight:700;font-size:.74rem;padding:.28rem .5rem;border-radius:999px;}
+  .tag.old{background:var(--surface-2);color:var(--ink-faint);}
+  .tag.new{background:var(--success);color:#04382B;}
+  .contrast-row .txt{font-size:.92rem;color:var(--ink-soft);}
+
+  /* ---------- table ---------- */
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-lg);}
+  table.compare{border-collapse:collapse;width:100%;min-width:660px;background:var(--white);}
+  table.compare th,table.compare td{padding:.9rem 1rem;text-align:center;border-bottom:1px solid var(--line);font-size:.9rem;color:var(--ink-soft);}
+  table.compare thead th{font-weight:700;color:var(--ink);background:var(--surface);font-size:.85rem;}
+  table.compare td:first-child,table.compare th:first-child{text-align:start;color:var(--ink);font-weight:500;position:sticky;inset-inline-start:0;background:var(--white);}
+  table.compare thead th:first-child{background:var(--surface);}
+  tr.row-hero td,tr.row-hero td:first-child{background:var(--primary-tint);color:var(--ink);font-weight:700;}
+  .yes{color:var(--success-dark);font-weight:700;}
+  .no{color:var(--ink-faint);}
+  .mid{color:var(--ink-soft);}
+
+  /* ---------- era preview ---------- */
+  .era-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1rem;}
+  .era-chip{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:1.3rem;display:grid;gap:.55rem;box-shadow:var(--shadow-sm);}
+  .era-chip svg{width:42px;height:42px;color:var(--primary);}
+  .era-chip h3{font-size:1.05rem;}
+  .era-chip p{margin:0;font-size:.85rem;color:var(--ink-soft);}
+  .era-chip .state{font-size:.75rem;font-weight:600;color:var(--ink-faint);}
+
+  /* ---------- demo ---------- */
+  .frames{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
+  @media (max-width:920px){.frames{grid-template-columns:1fr;}}
+  .frame{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:1.4rem;display:flex;flex-direction:column;gap:.8rem;box-shadow:var(--shadow-sm);}
+  .frame-num{font-weight:700;font-size:.78rem;color:var(--primary);}
+  .frame h3{font-size:1.1rem;}
+  .story-preview{background:var(--surface);border-radius:var(--r-md);padding:.9rem 1rem;font-size:.92rem;color:var(--ink-soft);min-height:90px;}
+  .story-meta{font-size:.76rem;color:var(--ink-faint);}
+
+  /* quiz (shared by demo + app) */
+  .quiz-q{font-size:.95rem;font-weight:600;margin:0 0 .6rem;}
+  .quiz-answers{display:grid;gap:.5rem;}
+  .quiz-answer{
+    text-align:start;padding:.7rem .9rem;border-radius:var(--r-sm);border:2px solid var(--line);
+    background:var(--white);font-size:.9rem;font-weight:500;
+    transition:border-color .15s ease,background-color .15s ease;
+  }
+  .quiz-answer:hover:not(:disabled){border-color:var(--primary);}
+  .quiz-answer.correct{background:var(--success);border-color:var(--success);color:#04382B;font-weight:700;}
+  .quiz-answer.wrong{border-color:#E8A0A0;background:#FDF0F0;}
+  .quiz-answer:disabled{cursor:default;opacity:.55;}
+  .quiz-answer.correct:disabled{opacity:1;}
+  .quiz-feedback{font-size:.83rem;font-weight:600;color:var(--success-dark);min-height:1.2em;margin:.5rem 0 0;}
+  .quiz-feedback.miss{color:var(--ink-faint);}
+
+  .rank-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap;}
+  .rank-badge{font-weight:600;font-size:.78rem;background:var(--surface-2);color:var(--ink-soft);padding:.3rem .75rem;border-radius:999px;}
+  .points{font-weight:700;color:var(--primary);}
+  .progress{height:9px;border-radius:999px;background:var(--surface-2);overflow:hidden;}
+  .progress-fill{height:100%;background:var(--primary);border-radius:999px;transform-origin:right center;transition:width .35s ease;}
+  .progress-fill.win{background:var(--success);}
+  .progress-caption{font-size:.77rem;color:var(--ink-faint);margin:0;}
+  .mini-eras{display:flex;gap:.5rem;}
+  .mini-era{flex:1;background:var(--surface);border-radius:var(--r-md);padding:.65rem .35rem;display:grid;justify-items:center;gap:.3rem;font-size:.68rem;font-weight:600;color:var(--ink-soft);text-align:center;transition:background-color .18s ease;}
+  .mini-era svg{width:22px;height:22px;color:var(--primary);}
+  .mini-era.locked{color:var(--ink-faint);}
+  .mini-era.locked svg{color:var(--ink-faint);}
+  .mini-era.open{background:var(--success-tint);color:var(--success-dark);}
+  .mini-era.open svg{color:var(--success-dark);}
+  .reset-demo{display:block;margin:1.4rem auto 0;background:none;border:none;font-size:.84rem;color:var(--ink-faint);text-decoration:underline;text-underline-offset:3px;}
+  .demo-cta{margin-top:2rem;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:1.6rem;display:grid;gap:.9rem;justify-items:center;text-align:center;}
+  .demo-cta p{margin:0;max-width:46ch;color:var(--ink-soft);font-size:.95rem;}
+
+  /* ---------- cards / pricing ---------- */
+  .cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.05rem;}
+  @media (max-width:820px){.cards-3{grid-template-columns:1fr;}}
+  .info-card{background:var(--white);border:1px solid var(--line);border-top:4px solid var(--primary);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-sm);}
+  .info-card:nth-child(2){border-top-color:var(--success);}
+  .info-card h3{font-size:1.05rem;margin-bottom:.45rem;}
+  .info-card p{margin:0;color:var(--ink-soft);font-size:.91rem;}
+  .pricing{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;}
+  @media (max-width:780px){.pricing{grid-template-columns:1fr;}}
+  .plan{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:1.8rem;display:flex;flex-direction:column;gap:.9rem;box-shadow:var(--shadow-sm);}
+  .plan.featured{border:2px solid var(--primary);}
+  .plan-title{display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
+  .plan-price{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.4rem;color:var(--primary);}
+  .plan li{position:relative;padding-inline-start:1.4rem;font-size:.92rem;margin-bottom:.45rem;color:var(--ink-soft);}
+  .plan li::before{content:"✓";position:absolute;inset-inline-start:0;color:var(--success-dark);font-weight:700;}
+  .schools{margin-top:1.6rem;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:1.6rem clamp(1.2rem,4vw,2.2rem);display:flex;align-items:center;justify-content:space-between;gap:1.3rem;flex-wrap:wrap;}
+  .schools h3{font-size:1.08rem;margin-bottom:.2rem;}
+  .schools p{margin:0;color:var(--ink-soft);font-size:.91rem;max-width:46ch;}
+
+  /* ---------- waitlist / footer ---------- */
+  .final-cta{background:var(--surface);border-radius:var(--r-lg);padding:clamp(2rem,5vw,3.2rem);text-align:center;}
+  .final-cta h2{font-size:clamp(1.5rem,3.2vw,2.1rem);}
+  .final-cta p{color:var(--ink-soft);max-width:46ch;margin:.7rem auto 1.4rem;}
+  .waitlist-form{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;max-width:460px;margin:0 auto;}
+  .waitlist-form input{flex:1;min-width:205px;padding:.8rem 1rem;border-radius:999px;border:2px solid var(--line);background:var(--white);color:var(--ink);font-family:inherit;font-size:.94rem;}
+  .waitlist-form input:focus-visible{border-color:var(--primary);outline:none;}
+  .waitlist-success{display:none;font-weight:700;color:var(--success-dark);margin-top:.9rem;}
+  .waitlist-success.show{display:block;}
+  footer{background:var(--surface);border-top:1px solid var(--line);padding:2.8rem 0 1.5rem;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:1.9rem;}
+  @media (max-width:720px){.footer-grid{grid-template-columns:1fr;}}
+  .footer-logo{display:flex;align-items:center;gap:.45rem;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.18rem;margin-bottom:.4rem;}
+  .footer-logo svg{width:26px;height:26px;}
+  .footer-tag{font-size:.87rem;color:var(--ink-faint);max-width:32ch;}
+  .footer-col h4{font-size:.85rem;margin-bottom:.75rem;}
+  .footer-col li{margin-bottom:.45rem;font-size:.87rem;}
+  .footer-col a{color:var(--ink-soft);transition:color .15s ease;}
+  .footer-col a:hover{color:var(--primary);}
+  .footer-bottom{margin-top:2.1rem;padding-top:1.3rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem;font-size:.79rem;color:var(--ink-faint);}
+
+  /* ================= APP ================= */
+  #appRoot{min-height:100vh;min-height:100dvh;background:var(--white);}
+  .app-nav{position:sticky;top:0;z-index:60;background:var(--header);border-bottom:1px solid var(--header-line);}
+  .app-nav .logo{color:var(--header-ink);}
+  .app-nav-inner{max-width:var(--container);margin:0 auto;padding:.6rem clamp(1.1rem,4vw,2.4rem);display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
+  .app-tabs{display:flex;gap:.25rem;background:rgba(255,255,255,.55);padding:.25rem;border-radius:999px;}
+  .app-tab{font-weight:700;font-size:.85rem;color:var(--header-ink);background:none;border:none;padding:.45rem 1rem;border-radius:999px;transition:background-color .15s ease,color .15s ease;}
+  .app-tab:hover{background:rgba(255,255,255,.6);}
+  .app-tab[aria-current="page"]{background:var(--ink);color:#fff;}
+  .app-user{position:relative;}
+  .app-user-pill{display:flex;align-items:center;gap:.5rem;background:#fff;border:1px solid transparent;border-radius:999px;padding:.25rem .8rem .25rem .25rem;transition:border-color .15s ease;}
+  .app-user-pill:hover{border-color:var(--ink);}
+  .app-avatar{width:31px;height:31px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none;font-size:.9rem;}
+  .app-user-info{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;}
+  .app-user-info strong{font-size:.83rem;}
+  .app-user-info small{font-size:.71rem;color:var(--ink-faint);}
+  .app-user-menu{position:absolute;inset-inline-end:0;top:calc(100% + 8px);background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:.35rem;display:grid;min-width:180px;z-index:70;box-shadow:var(--shadow-md);}
+  .app-user-menu button{text-align:start;background:none;border:none;padding:.55rem .75rem;border-radius:var(--r-sm);font-size:.85rem;font-weight:500;color:var(--ink-soft);transition:background-color .15s ease;}
+  .app-user-menu button:hover{background:var(--surface);color:var(--ink);}
+  @media (max-width:760px){.app-tabs{order:3;width:100%;justify-content:center;}}
+  .app-main{padding:clamp(1.5rem,4vw,2.5rem) 0 3.5rem;}
+
+  .back-link{background:none;border:none;font-size:.86rem;font-weight:600;color:var(--ink-faint);margin-bottom:1rem;padding:0;transition:color .15s ease;}
+  .back-link:hover{color:var(--primary);}
+
+  .view-head{margin-bottom:1.6rem;}
+  .view-head h2{font-size:clamp(1.4rem,3vw,2rem);}
+  .view-head p{color:var(--ink-soft);margin:.4rem 0 0;}
+
+  /* ---- era map ---- */
+  .era-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:1.05rem;}
+  .era-card{
+    text-align:start;width:100%;padding:0;overflow:hidden;background:var(--white);
+    border:1px solid var(--line);border-radius:var(--r-lg);display:grid;
+    box-shadow:var(--shadow-sm);transition:transform .15s ease,border-color .15s ease;
+  }
+  .era-card.open:hover{transform:translateY(-4px);border-color:var(--primary);}
+  .era-banner{height:104px;display:flex;align-items:center;justify-content:center;background:var(--surface);}
+  .era-banner svg{width:52px;height:52px;color:var(--primary);}
+  .era-card.done .era-banner{background:var(--success-tint);}
+  .era-card.done .era-banner svg{color:var(--success-dark);}
+  .era-card.locked .era-banner svg{color:var(--ink-faint);}
+  .era-body{padding:1.1rem 1.2rem 1.3rem;display:grid;gap:.5rem;}
+  .era-years{font-size:.74rem;color:var(--ink-faint);font-weight:600;}
+  .era-body h3{font-size:1.1rem;}
+  .era-body p{margin:0;font-size:.86rem;color:var(--ink-soft);}
+  .pill{font-size:.74rem;font-weight:700;padding:.26rem .68rem;border-radius:999px;width:fit-content;}
+  .pill.open{background:var(--primary-tint);color:var(--primary);}
+  .pill.done{background:var(--success);color:#04382B;}
+  .pill.locked{background:var(--surface-2);color:var(--ink-faint);}
+  .era-card.locked{opacity:.8;}
+  .lock-note{font-size:.78rem;color:var(--ink-faint);margin:0;}
+  .bar{height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden;}
+  .bar i{display:block;height:100%;background:var(--primary);border-radius:999px;}
+  .era-card.done .bar i{background:var(--success);}
+
+  /* ---- era detail ---- */
+  .era-hero{background:var(--surface);border-radius:var(--r-lg);padding:1.5rem;margin-bottom:1.6rem;display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap;}
+  .era-hero > svg{width:56px;height:56px;flex:none;color:var(--primary);}
+  .era-hero h2{font-size:clamp(1.35rem,2.8vw,1.8rem);}
+  .era-hero p{margin:.3rem 0 0;color:var(--ink-soft);font-size:.92rem;max-width:52ch;}
+  .era-stat{margin-inline-start:auto;text-align:center;}
+  .era-stat strong{display:block;font-family:'Baloo 2',sans-serif;font-size:1.5rem;color:var(--primary);line-height:1.1;}
+  .era-stat span{font-size:.74rem;color:var(--ink-faint);}
+  .sub-head{font-weight:700;font-size:.82rem;letter-spacing:.05em;color:var(--ink-faint);margin:1.8rem 0 .9rem;}
+
+  .capsule-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:1rem;}
+  .capsule-card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:1.2rem;
+    display:grid;gap:.6rem;text-align:start;width:100%;box-shadow:var(--shadow-sm);
+    transition:transform .15s ease,border-color .15s ease;
+  }
+  .capsule-card.open:hover{transform:translateY(-3px);border-color:var(--primary);}
+  .capsule-icon{width:44px;height:44px;border-radius:11px;background:var(--surface);display:flex;align-items:center;justify-content:center;}
+  .capsule-icon svg{width:25px;height:25px;color:var(--primary);}
+  .capsule-card.done .capsule-icon{background:var(--success-tint);}
+  .capsule-card.done .capsule-icon svg{color:var(--success-dark);}
+  .capsule-card.locked{opacity:.72;}
+  .capsule-card.locked .capsule-icon svg{color:var(--ink-faint);}
+  .capsule-card h4{font-family:'Baloo 2',sans-serif;font-size:1rem;}
+  .capsule-card p{margin:0;font-size:.85rem;color:var(--ink-soft);}
+
+  /* ---- step 4: movie recommendation (revealed after the quiz) ---- */
+  .movie-rec{
+    display:flex;gap:1rem;align-items:flex-start;background:var(--white);
+    border:2px solid var(--success);border-radius:var(--r-md);padding:1.1rem 1.2rem;
+  }
+  .movie-rec .poster{
+    flex:none;width:64px;height:64px;border-radius:var(--r-md);background:var(--success-tint);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .movie-rec .poster svg{width:34px;height:34px;color:var(--success-dark);}
+  .movie-rec .rec-body{flex:1;min-width:0;}
+  .movie-rec .rec-label{font-size:.74rem;font-weight:700;color:var(--success-dark);margin:0 0 .15rem;}
+  .movie-rec h4{font-family:'Baloo 2',sans-serif;font-size:1.08rem;margin:0 0 .4rem;}
+  .movie-rec .rec-why{margin:0;font-size:.87rem;color:var(--ink-soft);}
+  .rec-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 .5rem;}
+  .chip{font-size:.71rem;font-weight:600;background:var(--surface);color:var(--ink-soft);padding:.2rem .6rem;border-radius:999px;}
+  .chip.age{background:var(--primary-tint);color:var(--primary);}
+  .movie-rec.locked{border-color:var(--line);border-style:dashed;}
+  .movie-rec.locked .poster{background:var(--surface);}
+  .movie-rec.locked .poster svg{color:var(--ink-faint);}
+  .movie-rec.locked .rec-label{color:var(--ink-faint);}
+  .movie-rec.locked h4{color:var(--ink-faint);}
+  .note{font-size:.75rem;color:var(--ink-faint);margin-top:.5rem;}
+
+  /* ---- reader ---- */
+  .reader{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(1.4rem,4vw,2.3rem);box-shadow:var(--shadow-sm);}
+  .reader-head{display:flex;align-items:center;gap:.9rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+  .reader-head .capsule-icon{width:52px;height:52px;}
+  .reader-head .capsule-icon svg{width:29px;height:29px;}
+  .reader-head h2{font-size:1.4rem;}
+  .reader-era{font-size:.77rem;color:var(--primary);font-weight:700;}
+  .story p{color:var(--ink-soft);font-size:1rem;margin:0 0 .95rem;}
+  .story p:first-child::first-letter{font-family:'Baloo 2',sans-serif;font-size:2.4rem;float:inline-start;line-height:1;margin-inline-end:.35rem;color:var(--primary);}
+  .quiz-section{margin-top:1.8rem;padding-top:1.5rem;border-top:1px solid var(--line);}
+  .quiz-section h3{font-size:1.08rem;margin-bottom:1.1rem;}
+  .quiz-block{margin-bottom:1.4rem;}
+  .complete-box{margin-top:1.4rem;background:var(--success-tint);border:2px solid var(--success);border-radius:var(--r-md);padding:1.2rem 1.4rem;display:none;gap:.55rem;}
+  .complete-box.show{display:grid;}
+  .complete-box h3{font-size:1.02rem;color:var(--success-dark);}
+  .complete-box p{margin:0;color:var(--ink-soft);font-size:.9rem;}
+  .complete-actions{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.25rem;}
+
+  /* ---- dashboard ---- */
+  .name-card{background:var(--surface);border-inline-start:4px solid var(--primary);border-radius:var(--r-lg);padding:1.1rem 1.4rem;margin-top:1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+  .name-card h3{font-size:.98rem;margin-bottom:.15rem;}
+  .name-card p{margin:0;font-size:.84rem;color:var(--ink-soft);max-width:40ch;}
+  .name-card form{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
+  .name-card input,.modal-card input{padding:.65rem .85rem;border-radius:var(--r-sm);border:2px solid var(--line);background:var(--white);color:var(--ink);font-family:inherit;font-size:.92rem;min-width:145px;}
+  .name-card input:focus-visible,.modal-card input:focus-visible{border-color:var(--primary);outline:none;}
+  .btn-skip{background:none;border:none;font-size:.83rem;color:var(--ink-faint);text-decoration:underline;text-underline-offset:3px;}
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.9rem;margin:1.3rem 0;}
+  .stat{background:var(--surface);border-radius:var(--r-lg);padding:1.1rem 1.2rem;}
+  .stat strong{display:block;font-family:'Baloo 2',sans-serif;font-size:1.6rem;color:var(--primary);line-height:1.15;}
+  .stat span{font-size:.78rem;color:var(--ink-faint);font-weight:500;}
+  .stat.win strong{color:var(--success-dark);}
+  .rank-card{background:var(--surface);border-radius:var(--r-lg);padding:1.2rem 1.4rem;display:grid;gap:.65rem;margin-bottom:1.8rem;}
+  .worlds{display:grid;gap:.7rem;}
+  .world-row{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:.85rem 1.05rem;display:flex;align-items:center;gap:.85rem;text-align:start;width:100%;box-shadow:var(--shadow-sm);transition:border-color .15s ease;}
+  .world-row.open:hover{border-color:var(--primary);}
+  .world-row > svg{width:32px;height:32px;flex:none;color:var(--primary);}
+  .world-row.locked > svg{color:var(--ink-faint);}
+  .world-row.done > svg{color:var(--success-dark);}
+  .world-main{flex:1;min-width:130px;}
+  .world-main h4{font-family:'Baloo 2',sans-serif;font-size:.96rem;margin-bottom:.15rem;}
+  .world-main small{font-size:.76rem;color:var(--ink-faint);}
+  .world-row.locked{opacity:.75;}
+
+  /* ================= MUSEUM & SHOP ================= */
+  .vault{background:var(--surface);border-radius:var(--r-lg);padding:clamp(1.2rem,3vw,2rem);}
+  .vault-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+  .balance{display:flex;align-items:center;gap:.5rem;background:var(--white);border-radius:999px;padding:.45rem 1rem;box-shadow:var(--shadow-sm);}
+  .balance svg{width:22px;height:22px;color:var(--primary);}
+  .balance b{font-family:'Baloo 2',sans-serif;font-size:1.15rem;color:var(--primary);}
+  .balance span{font-size:.78rem;color:var(--ink-faint);}
+  .balance.pulse{animation:balancePulse .5s ease;}
+  @keyframes balancePulse{0%{background:var(--white);}35%{background:var(--success-tint);}100%{background:var(--white);}}
+
+  .era-filter{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.1rem;}
+  .filter-btn{font-size:.8rem;font-weight:600;background:var(--white);border:1px solid var(--line);color:var(--ink-soft);padding:.35rem .85rem;border-radius:999px;transition:background-color .15s ease,color .15s ease,border-color .15s ease;}
+  .filter-btn:hover{border-color:var(--primary);color:var(--primary);}
+  .filter-btn[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+  /* display cases (shared by shop + museum) */
+  .case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.1rem;}
+  .case{
+    position:relative;background:var(--white);border-radius:var(--r-lg);padding:1.1rem;
+    display:grid;gap:.55rem;justify-items:center;text-align:center;
+    box-shadow:var(--shadow-sm);
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .case .plinth{
+    width:78px;height:78px;border-radius:50%;background:var(--surface);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .case .plinth svg{width:42px;height:42px;color:var(--primary);}
+  .case .a-name{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.95rem;line-height:1.3;}
+  .era-tag{background:var(--primary);color:#fff;font-size:.7rem;font-weight:600;padding:.2rem .6rem;border-radius:999px;}
+  .price{display:inline-flex;align-items:center;gap:.3rem;font-weight:700;font-size:.86rem;color:var(--primary);}
+
+  /* museum case: mint glow + lift */
+  .case.owned{cursor:pointer;}
+  .case.owned:hover,.case.owned.open{
+    transform:translateY(-6px);
+    box-shadow:0 0 0 2px var(--success), 0 12px 24px rgba(6,214,160,.28);
+    z-index:5;
+  }
+  .case.owned .plinth{background:var(--success-tint);}
+  .case.owned .plinth svg{color:var(--success-dark);}
+
+  /* shop: not-yet-owned is muted + locked */
+  .case.locked .plinth{background:var(--surface);}
+  .case.locked .plinth svg{color:var(--ink-faint);opacity:.75;}
+  .case.locked .a-name{color:var(--ink-soft);}
+  .lock-badge{
+    position:absolute;top:.6rem;inset-inline-start:.6rem;width:24px;height:24px;border-radius:50%;
+    background:var(--surface-2);display:flex;align-items:center;justify-content:center;
+  }
+  .lock-badge svg{width:13px;height:13px;color:var(--ink-faint);}
+  .owned-badge{
+    position:absolute;top:.6rem;inset-inline-start:.6rem;background:var(--success);color:#04382B;
+    font-size:.68rem;font-weight:700;padding:.15rem .55rem;border-radius:999px;
+  }
+  .buy-btn{
+    width:100%;font-weight:700;font-size:.84rem;padding:.55rem .9rem;border-radius:999px;
+    border:none;background:var(--primary);color:#fff;
+    transition:background-color .15s ease,transform .15s ease;
+  }
+  .buy-btn:hover:not(:disabled){background:var(--primary-dark);transform:translateY(-1px);}
+  .buy-btn:disabled{background:var(--surface-2);color:var(--ink-faint);cursor:not-allowed;}
+  .buy-btn.bought{background:var(--success);color:#04382B;}
+  .case.just-bought{animation:casePulse .55s ease;}
+  @keyframes casePulse{
+    0%{box-shadow:var(--shadow-sm);}
+    40%{box-shadow:0 0 0 3px var(--success),0 10px 22px rgba(6,214,160,.35);transform:translateY(-5px);}
+    100%{box-shadow:var(--shadow-sm);}
+  }
+
+  /* shop: artwork sizing + sealed-era teaser */
+  .case .plinth svg,.case .plinth img{width:54px;height:64px;object-fit:contain;}
+  .case.locked .plinth svg,.case.locked .plinth img{filter:grayscale(.9);opacity:.5;}
+  .filter-btn.era-locked{opacity:.5;cursor:not-allowed;}
+
+  .sealed-wrap{
+    margin-top:1.6rem;padding:1.1rem 1.2rem;border-radius:var(--r-md);
+    background:var(--surface);border:1px dashed var(--line);
+  }
+  .sealed-title{margin:0 0 .7rem;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.95rem;color:var(--ink);}
+  .sealed-row{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .sealed-chip{
+    display:inline-flex;align-items:center;gap:.4rem;background:var(--white);
+    border-radius:999px;padding:.35rem .8rem;font-size:.8rem;font-weight:600;color:var(--ink-soft);
+  }
+  .sealed-chip svg{width:14px;height:14px;color:var(--ink-faint);}
+  .sealed-note{margin:.75rem 0 0;font-size:.78rem;color:var(--ink-faint);}
+
+  /* ================= MUSEUM ROOM (isometric, pure CSS) ================= */
+  .room{
+    position:relative;border-radius:var(--r-lg);overflow:hidden;
+    padding:clamp(1.4rem,4vw,2.4rem) clamp(.8rem,3vw,1.8rem) clamp(2.2rem,5vw,3.2rem);
+    /* wall -> floor split at 44% creates the horizon line */
+    background:linear-gradient(180deg,#F7FAFC 0%,#EDF2F7 30%,#F0F4F8 43.8%,#DCE4EE 44.2%,#CBD6E3 100%);
+    isolation:isolate;
+  }
+  /* wall wash: soft spotlight from above */
+  .room::before{
+    content:"";position:absolute;inset:0 0 56% 0;pointer-events:none;
+    background:radial-gradient(70% 90% at 50% -10%,rgba(255,255,255,.95),rgba(255,255,255,0) 70%);
+  }
+  /* floor: receding perspective grid */
+  .room::after{
+    content:"";position:absolute;left:-30%;right:-30%;bottom:0;height:56%;pointer-events:none;
+    background:
+      repeating-linear-gradient(90deg,rgba(26,43,76,.055) 0 1px,transparent 1px 70px),
+      repeating-linear-gradient(0deg,rgba(26,43,76,.045) 0 1px,transparent 1px 70px);
+    transform:perspective(340px) rotateX(64deg);
+    transform-origin:top center;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55),transparent 72%);
+            mask-image:linear-gradient(180deg,rgba(0,0,0,.55),transparent 72%);
+  }
+  .room-inner{position:relative;z-index:2;}
+
+  /* wall plaque per era */
+  .plaque{
+    display:inline-flex;align-items:center;gap:.5rem;background:var(--white);
+    border-radius:999px;padding:.4rem 1rem;margin:0 auto 1.6rem;
+    font-weight:700;font-size:.83rem;color:var(--ink);
+    box-shadow:0 4px 14px rgba(26,43,76,.10);
+  }
+  .plaque em{font-style:normal;font-weight:500;color:var(--ink-faint);}
+  .plaque-wrap{display:flex;justify-content:center;}
+  .plaque-wrap:not(:first-child){margin-top:2.6rem;}
+
+  /* row of pedestals */
+  .ped-row{
+    display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:center;
+    gap:clamp(1rem,4vw,2.8rem);
+  }
+
+  .exhibit{
+    position:relative;background:none;border:none;padding:0;
+    display:grid;justify-items:center;width:132px;
+  }
+  /* contact shadow on the floor */
+  .exhibit::after{
+    content:"";position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    width:104px;height:16px;border-radius:50%;
+    background:radial-gradient(ellipse,rgba(26,43,76,.32),transparent 70%);
+    filter:blur(3px);z-index:0;transition:transform .22s ease,opacity .22s ease;
+  }
+  .exhibit:hover::after{transform:translateX(-50%) scale(.86);opacity:.75;}
+
+  /* the object itself */
+  .ex-art{
+    position:relative;z-index:3;width:92px;height:104px;margin-bottom:-8px;
+    display:flex;align-items:flex-end;justify-content:center;
+    filter:drop-shadow(0 12px 8px rgba(26,43,76,.30));
+    transition:transform .22s ease,filter .22s ease;
+    will-change:transform;
+  }
+  .ex-art svg,.ex-art img{width:100%;height:100%;object-fit:contain;display:block;}
+  .exhibit:hover .ex-art,.exhibit:focus-visible .ex-art{
+    transform:translateY(-13px);
+    filter:drop-shadow(0 24px 14px rgba(26,43,76,.28)) drop-shadow(0 0 12px rgba(6,214,160,.75));
+  }
+
+  /* pedestal: cap ellipse + tapered column + base + mint light strip */
+  .ped{position:relative;z-index:2;width:112px;height:78px;}
+  .ped-col{
+    position:absolute;top:14px;left:50%;transform:translateX(-50%);
+    width:86px;height:56px;
+    background:linear-gradient(90deg,#c8d3e0 0%,#ffffff 22%,#ffffff 58%,#dbe3ed 78%,#b9c6d6 100%);
+    box-shadow:0 16px 22px -12px rgba(26,43,76,.5);
+  }
+  .ped-top{
+    position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:112px;height:28px;border-radius:50%;
+    background:linear-gradient(180deg,#ffffff 0%,#f2f6fa 55%,#e4ebf3 100%);
+    box-shadow:inset 0 -4px 7px rgba(26,43,76,.10),0 2px 4px rgba(26,43,76,.08);
+    z-index:3;
+  }
+  .ped-base{
+    position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
+    width:86px;height:20px;border-radius:50%;
+    background:linear-gradient(180deg,#e8eef5,#c6d2e0);
+    z-index:2;
+  }
+  .ped-light{
+    position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+    width:66px;height:3px;border-radius:999px;z-index:4;
+    background:var(--success);
+    box-shadow:0 0 10px 2px rgba(6,214,160,.65);
+    opacity:.75;transition:opacity .22s ease;
+  }
+  .exhibit:hover .ped-light,.exhibit:focus-visible .ped-light{opacity:1;}
+
+  .ex-label{
+    margin-top:.5rem;font-family:'Baloo 2',sans-serif;font-weight:700;
+    font-size:.85rem;color:var(--ink);line-height:1.3;text-align:center;
+  }
+  .ex-hint{font-size:.7rem;color:var(--ink-faint);font-weight:500;}
+
+  @media (max-width:520px){
+    .exhibit{width:112px;}
+    .ex-art{width:78px;height:88px;}
+    .ped{width:96px;height:68px;}
+    .ped-top{width:96px;height:24px;}
+    .ped-col{width:74px;height:48px;}
+    .ped-base{width:74px;}
+    .ped-light{width:56px;}
+    .exhibit::after{width:88px;}
+  }
+
+  /* ---------- cinematic lightbox ---------- */
+  .lightbox{
+    position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;
+    padding:1.2rem;opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s;
+  }
+  .lightbox.show{opacity:1;visibility:visible;}
+  .lb-scrim{position:absolute;inset:0;background:rgba(15,26,46,.62);}
+  .lb-panel{
+    position:relative;display:flex;align-items:center;gap:clamp(1rem,3vw,2.2rem);
+    background:var(--white);border-radius:var(--r-lg);padding:clamp(1.4rem,3vw,2.2rem);
+    max-width:640px;width:100%;box-shadow:0 30px 70px rgba(15,26,46,.4);
+    transform:scale(.92) translateY(10px);transition:transform .24s cubic-bezier(.2,.9,.3,1.1);
+    flex-wrap:wrap;
+  }
+  .lightbox.show .lb-panel{transform:none;}
+  .lb-stage{
+    flex:none;width:180px;height:200px;border-radius:var(--r-md);
+    background:linear-gradient(180deg,#F7FAFC 0%,#F0F4F8 62%,#DCE4EE 62.4%,#CBD6E3 100%);
+    display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+  }
+  .lb-stage::after{
+    content:"";position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    width:110px;height:16px;border-radius:50%;
+    background:radial-gradient(ellipse,rgba(26,43,76,.3),transparent 70%);filter:blur(3px);
+  }
+  .lb-stage svg,.lb-stage img{
+    position:relative;z-index:2;width:132px;height:150px;object-fit:contain;
+    filter:drop-shadow(0 16px 12px rgba(26,43,76,.32));
+  }
+  .lb-body{flex:1;min-width:210px;}
+  .lb-body h3{font-size:1.45rem;color:var(--ink);margin:.5rem 0 .7rem;}
+  .lb-body .era-tag{font-size:.75rem;}
+  .lb-fact{margin:0;font-size:.97rem;line-height:1.75;color:var(--ink);}
+  .lb-meta{margin:.9rem 0 0;font-size:.78rem;color:var(--ink-faint);font-weight:600;}
+  .lb-close{
+    position:absolute;top:.6rem;inset-inline-end:.7rem;background:var(--surface);border:none;
+    width:32px;height:32px;border-radius:50%;font-size:1.3rem;line-height:1;color:var(--ink-soft);
+    display:flex;align-items:center;justify-content:center;transition:background-color .15s ease;
+  }
+  .lb-close:hover{background:var(--surface-2);color:var(--ink);}
+
+  @media (prefers-reduced-motion:reduce){
+    .ex-art,.exhibit::after,.lb-panel,.lightbox,.ped-light{transition:none;}
+    .exhibit:hover .ex-art{transform:none;}
+  }
+
+  /* context card (hover on desktop / click on mobile) */
+  .ctx{
+    position:absolute;bottom:calc(100% + 10px);inset-inline-start:50%;transform:translateX(50%) translateY(6px);
+    width:230px;background:var(--white);border-radius:var(--r-md);padding:.85rem .95rem;text-align:start;
+    box-shadow:0 10px 28px rgba(26,43,76,.18);border:1px solid var(--line);
+    opacity:0;visibility:hidden;pointer-events:none;z-index:20;
+    transition:opacity .16s ease,transform .16s ease,visibility .16s;
+  }
+  .case.owned:hover .ctx,.case.owned.open .ctx{opacity:1;visibility:visible;transform:translateX(50%) translateY(0);}
+  .ctx::after{
+    content:"";position:absolute;top:100%;inset-inline-start:50%;transform:translateX(50%);
+    border:7px solid transparent;border-top-color:var(--white);
+  }
+  .ctx h4{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.95rem;color:var(--ink);margin:0 0 .35rem;}
+  .ctx .era-tag{display:inline-block;margin-bottom:.45rem;}
+  .ctx p{margin:0;font-size:.81rem;line-height:1.55;color:var(--ink);}
+
+  .empty-vault{background:var(--white);border-radius:var(--r-lg);padding:2.2rem 1.5rem;text-align:center;display:grid;gap:.7rem;justify-items:center;}
+  .empty-vault svg{width:48px;height:48px;color:var(--ink-faint);}
+  .empty-vault h3{font-size:1.1rem;}
+  .empty-vault p{margin:0;color:var(--ink-soft);font-size:.9rem;max-width:40ch;}
+  .shelf-label{font-weight:700;font-size:.82rem;letter-spacing:.04em;color:var(--ink-faint);margin:1.6rem 0 .8rem;}
+  .shelf-label:first-of-type{margin-top:0;}
+
+  /* ---- toast + modal ---- */
+  .toast{
+    position:fixed;bottom:20px;inset-inline-end:20px;z-index:120;background:var(--success);color:#04382B;
+    font-weight:700;font-size:.88rem;padding:.65rem 1.1rem;border-radius:999px;box-shadow:var(--shadow-md);
+    opacity:0;transform:translateY(10px);transition:opacity .18s ease,transform .18s ease;pointer-events:none;max-width:80vw;
+  }
+  .toast.show{opacity:1;transform:none;}
+  .modal-backdrop{position:fixed;inset:0;background:rgba(26,43,76,.42);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem;}
+  .modal-card{position:relative;background:var(--white);border-radius:var(--r-lg);padding:1.9rem clamp(1.3rem,5vw,2.1rem);max-width:390px;width:100%;text-align:center;box-shadow:var(--shadow-md);}
+  .modal-card h2{font-size:1.25rem;margin:.25rem 0 .45rem;}
+  .modal-sub{color:var(--ink-soft);font-size:.89rem;margin:0 0 1.1rem;}
+  .modal-card form{display:grid;gap:.7rem;}
+  .modal-card input{text-align:center;}
+  .modal-close{position:absolute;inset-inline-end:10px;top:8px;background:none;border:none;font-size:1.45rem;line-height:1;color:var(--ink-faint);padding:.15rem .4rem;transition:color .15s ease;}
+  .modal-close:hover{color:var(--ink);}
+
+  /* =========================================================================
+     RESPONSIVE LAYER — loaded last so it wins over the base rules.
+     Ladder: >=1600 / 1024 / 860 / 700 / 560 / 430 / 360 + touch + landscape.
+     ========================================================================= */
+
+  /* never let a stray fixed width scroll the page sideways */
+  html,body{max-width:100%;overflow-x:hidden;}
+  svg,img,video{max-width:100%;}
+  .story p,.era-body p,.reader,.lb-fact,.movie-rec .rec-why{overflow-wrap:anywhere;}
+
+  /* notch / rounded-corner safe areas */
+  .nav-inner,.app-nav-inner{
+    padding-inline:max(clamp(1.1rem,4vw,2.4rem),env(safe-area-inset-right),env(safe-area-inset-left));
+  }
+  .app-main{padding-bottom:calc(3.5rem + env(safe-area-inset-bottom));}
+  .container{padding-inline:max(clamp(1.1rem,4vw,2.4rem),env(safe-area-inset-right),env(safe-area-inset-left));}
+
+  /* ---------- very large screens: use the extra room ---------- */
+  @media (min-width:1600px){
+    :root{--container:1320px;}
+    .case-grid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));}
+    .era-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+  }
+
+  /* ---------- tablet landscape ---------- */
+  @media (max-width:1024px){
+    .era-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}
+    .capsule-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}
+    .case-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));}
+  }
+
+  /* ---------- tablet portrait ---------- */
+  @media (max-width:860px){
+    .era-hero{padding:1.2rem;gap:.9rem;}
+    .era-hero > svg{width:46px;height:46px;}
+    .era-stat{margin-inline-start:0;text-align:start;}
+    .lb-panel{max-width:520px;}
+  }
+
+  /* ---------- phones (the main pass) ---------- */
+  @media (max-width:700px){
+    /* iOS zooms the page when a focused input is under 16px */
+    input,select,textarea{font-size:16px !important;}
+
+    /* app tabs become one swipeable row instead of wrapping into a wall */
+    .app-nav-inner{gap:.5rem;padding-block:.5rem;}
+    .app-tabs{
+      order:3;width:100%;justify-content:flex-start;flex-wrap:nowrap;
+      overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;
+    }
+    .app-tabs::-webkit-scrollbar{display:none;}
+    .app-tab{flex:none;padding:.6rem 1rem;font-size:.84rem;}
+
+    /* era filters: same treatment, one row that scrolls */
+    .era-filter{
+      flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
+      padding-bottom:.25rem;margin-inline:-.2rem;padding-inline:.2rem;
+    }
+    .era-filter::-webkit-scrollbar{display:none;}
+    .filter-btn{flex:none;padding:.5rem .95rem;}
+
+    /* comfortable tap targets */
+    .btn{padding:.85rem 1.4rem;}
+    .buy-btn{padding:.7rem .9rem;}
+    .back-link{padding:.4rem 0;display:inline-block;}
+    .app-user-menu button{padding:.75rem .8rem;}
+
+    .vault-head{gap:.7rem;}
+    .balance{width:100%;justify-content:center;}
+    .name-card{flex-direction:column;align-items:stretch;}
+    .name-card form{width:100%;}
+    .name-card input{flex:1;}
+    .movie-rec{padding:.95rem 1rem;gap:.8rem;}
+    .movie-rec .poster{width:52px;height:52px;}
+    .movie-rec .poster svg{width:28px;height:28px;}
+    .reader-head h2{font-size:1.2rem;}
+    .story p:first-child::first-letter{font-size:2rem;}
+    .complete-actions .btn{flex:1;}
+
+    /* lightbox stacks: art on top, text below, panel scrolls if it must */
+    .lightbox{padding:.9rem;}
+    .lb-panel{flex-direction:column;gap:1rem;max-height:88vh;max-height:88dvh;overflow-y:auto;padding:1.3rem;}
+    .lb-stage{width:100%;height:180px;}
+    .lb-body{min-width:0;width:100%;}
+    .lb-body h3{font-size:1.25rem;}
+    .lb-close{width:40px;height:40px;font-size:1.5rem;}
+  }
+
+  /* ---------- narrow phones ---------- */
+  @media (max-width:560px){
+    /* two artifact cards per row reads better than one giant card */
+    .case-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;}
+    .case{padding:.85rem .6rem;gap:.4rem;}
+    .case .plinth{width:62px;height:62px;}
+    .case .plinth svg,.case .plinth img{width:42px;height:50px;}
+    .case .a-name{font-size:.85rem;}
+    .era-tag{font-size:.65rem;padding:.15rem .5rem;}
+    .buy-btn{font-size:.78rem;padding:.6rem .5rem;}
+    .owned-badge{font-size:.62rem;padding:.1rem .45rem;}
+
+    .era-grid,.capsule-grid{grid-template-columns:1fr;}
+    .stat-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;}
+    .stat{padding:.9rem .8rem;}
+    .stat strong{font-size:1.35rem;}
+    .stat span{font-size:.72rem;}
+    .world-row{padding:.75rem .85rem;gap:.65rem;}
+    .world-main{min-width:0;}
+    .vault{padding:1rem .8rem;}
+
+    /* the room shrinks but keeps its depth */
+    .room{padding:1.2rem .6rem 1.8rem;}
+    .ped-row{gap:.9rem;}
+  }
+
+  /* ---------- small phones (iPhone SE and down) ---------- */
+  @media (max-width:430px){
+    .exhibit{width:96px;}
+    .ex-art{width:70px;height:80px;}
+    .ped{width:84px;height:60px;}
+    .ped-top{width:84px;height:22px;}
+    .ped-col{width:64px;height:42px;top:11px;}
+    .ped-base{width:64px;height:16px;}
+    .ped-light{width:48px;bottom:10px;}
+    .exhibit::after{width:76px;height:13px;bottom:22px;}
+    .ex-label{font-size:.76rem;}
+    .ex-hint{font-size:.64rem;}
+    .plaque{font-size:.76rem;padding:.35rem .8rem;}
+
+    .app-user-info small{display:none;}
+    .app-user-pill{padding:.25rem .6rem .25rem .25rem;}
+    .view-head h2{font-size:1.25rem;}
+    .lb-stage{height:150px;}
+    .sealed-wrap{padding:.9rem;}
+  }
+
+  /* ---------- 320px-class devices ---------- */
+  @media (max-width:360px){
+    /* two columns still beat one oversized card at 320px */
+    .case-grid{gap:.55rem;}
+    .case{padding:.7rem .45rem;}
+    .case .plinth{width:54px;height:54px;}
+    .case .plinth svg,.case .plinth img{width:36px;height:44px;}
+    .case .a-name{font-size:.79rem;}
+    .stat-row{grid-template-columns:1fr;}
+    .app-user-info{display:none;}
+    .logo{font-size:1.12rem;}
+    .logo svg{width:26px;height:26px;}
+    .ped-row{gap:.6rem;}
+  }
+
+  /* ---------- short landscape screens ---------- */
+  @media (max-height:520px) and (orientation:landscape){
+    .lb-panel{flex-direction:row;max-height:94vh;max-height:94dvh;overflow-y:auto;}
+    .lb-stage{width:150px;height:150px;flex:none;}
+  }
+
+  /* ---------- touch devices: hover lifts are misleading, tap feedback isn't ---------- */
+  @media (hover:none){
+    .era-card.open:hover,.capsule-card.open:hover,.case.owned:hover,
+    .btn-primary:hover,.btn-success:hover,.btn-ghost:hover,.buy-btn:hover:not(:disabled){
+      transform:none;
+    }
+    .exhibit:hover .ex-art{transform:none;filter:drop-shadow(0 12px 8px rgba(26,43,76,.30));}
+    .exhibit:active .ex-art{transform:translateY(-8px);filter:drop-shadow(0 20px 12px rgba(26,43,76,.28)) drop-shadow(0 0 10px rgba(6,214,160,.7));}
+    .case.owned:active,.era-card.open:active,.capsule-card.open:active{transform:scale(.98);}
+    button,a{-webkit-tap-highlight-color:transparent;}
+    /* every interactive control clears the 44px touch-target floor */
+    .app-tab,.filter-btn,.buy-btn,.btn,.quiz-answer,.lb-close,.app-user-menu button{min-height:44px;}
+    .quiz-answer{padding:.85rem .9rem;}
+  }
+
+  /* ---------- mobile hero fills the first screen ---------- */
+  .hero-scroll{display:none;}
+
+  @media (max-width:700px){
+    .hero{padding-top:0;}
+    .hero-inner{
+      /* dvh keeps it honest when the browser chrome slides away */
+      min-height:calc(100vh - var(--nav-h,58px));
+      min-height:calc(100dvh - var(--nav-h,58px));
+      align-content:center;
+      padding-top:1.6rem;
+      padding-bottom:calc(1.4rem + env(safe-area-inset-bottom));
+      gap:1.05rem;
+    }
+    .hero h1{font-size:clamp(2rem,7.6vw,2.75rem);max-width:15ch;}
+    .hero .lead{font-size:1.02rem;max-width:38ch;}
+    .hero-ctas{width:100%;max-width:340px;}
+    .hero-ctas .btn{flex:1 1 100%;}
+    .hero-trust{font-size:.8rem;}
+
+    .hero-scroll{
+      display:flex;flex-direction:column;align-items:center;gap:.15rem;
+      margin-top:.5rem;font-size:.76rem;font-weight:600;color:var(--ink-faint);
+    }
+    .hero-scroll svg{width:22px;height:22px;animation:heroNudge 1.8s ease-in-out infinite;}
+    @keyframes heroNudge{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+
+    .era-strip{margin-top:0;padding-top:clamp(1.6rem,5vw,2.4rem);}
+  }
+
+  /* very short screens: let the hero shrink instead of forcing a scroll */
+  @media (max-width:700px) and (max-height:560px){
+    .hero-inner{min-height:0;padding-top:2rem;padding-bottom:2rem;}
+    .hero-scroll{display:none;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .hero-scroll svg{animation:none;}
+  }
+
+  /* horizontal scrollers get momentum + a nudge that they scroll */
+  .table-scroll{-webkit-overflow-scrolling:touch;}
+
+</style>
+</head>
+<body>
+<div id="marketingRoot">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#4361EE" stroke-width="2.5"/><circle cx="16" cy="16" r="7.5" fill="#06D6A0"/><circle cx="16" cy="16" r="3" fill="#4361EE"/></svg>
+      RelicReel
+    </a>
+    <ul class="nav-links" id="navMenu">
+      <li><a href="#problem">הבעיה</a></li>
+      <li><a href="#eras">התקופות</a></li>
+      <li><a href="#landscape">המצב היום</a></li>
+      <li><a href="#demo">איך זה עובד</a></li>
+      <li><a href="#schools">לבתי ספר</a></li>
+      <li class="nav-menu-cta"><a href="#waitlist" class="btn btn-primary btn-block">רשימת המתנה</a></li>
+      <li class="nav-menu-cta"><button class="btn btn-ghost btn-block" data-open-app>אזור אישי</button></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="btn btn-ghost" data-open-app>אזור אישי</button>
+      <a href="#waitlist" class="btn btn-primary">רשימת המתנה</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="תפריט"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container hero-inner">
+    <p class="eyebrow">מסע בזמן לילדים · MVP</p>
+    <h1>ההיסטוריה היא לא מקצוע.<br>היא <em>מפה שאפשר לכבוש</em>.</h1>
+    <p class="lead">RelicReel פותח לילדים בגילאי 8–13 מפת תקופות שלמה. כל תקופה היא עולם עם סיפורים קצרים, חידונים משחקיים והמלצות צפייה — ונפתחת רק אחרי שכובשים את זו שלפניה.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-primary" data-open-app>התחברות לאזור האישי</button>
+      <a href="#eras" class="btn btn-ghost">גלו את התקופות</a>
+    </div>
+    <p class="hero-trust">גרסת חינם להתחלה · בלי כרטיס אשראי · <a href="#schools">מורים ובתי ספר ←</a></p>
+    <a class="hero-scroll" href="#eras" aria-label="גללו לתקופות">
+      <span>גללו לתקופות</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <div class="container era-strip">
+    <div class="strip-grid" id="stripGrid"></div>
+  </div>
+</header>
+
+<section class="section" id="problem">
+  <div class="container split">
+    <div class="reveal">
+      <p class="eyebrow">הבעיה</p>
+      <h2>היסטוריה לא משעממת.<br>הדרך שבה מלמדים אותה — כן.</h2>
+      <p>כשההיסטוריה מוגשת כטקסט יבש בספר לימוד, ילדים מתנתקים כמעט מיד. RelicReel לא מוותר על הדיוק ההיסטורי — הוא עוטף אותו בעלילה, בדמויות ובמתח, ומחלק אותו לתקופות שאפשר לכבוש אחת אחרי השנייה.</p>
+    </div>
+    <div class="contrast reveal">
+      <div class="contrast-row"><span class="tag old">היום</span><span class="txt">פרקים ארוכים בלי הקשר או דמות להזדהות איתה</span></div>
+      <div class="contrast-row"><span class="tag new">RelicReel</span><span class="txt">סיפור קצר עם גיבור, סכנה והחלטה לקבל</span></div>
+      <div class="contrast-row"><span class="tag old">היום</span><span class="txt">חידון מנותק מהתוכן, בלי קשר לעלילה</span></div>
+      <div class="contrast-row"><span class="tag new">RelicReel</span><span class="txt">חידון שממשיך את הסיפור ופותח את התקופה הבאה</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tint" id="eras">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">מפת התקופות</p>
+      <h2>עולמות שנפתחים אחד אחרי השני</h2>
+      <p>כל תקופה היא עולם תוכן עצמאי — סיפורים, חידונים וגלריית סרטים משלה. מסיימים תקופה, פותחים את הבאה.</p>
+    </div>
+    <div class="era-preview" id="eraPreview"></div>
+  </div>
+</section>
+
+<section class="section" id="landscape">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">המצב היום</p>
+      <h2>כל פתרון קיים פותר רק חצי מהבעיה</h2>
+      <p>מספרי לימוד ועד משחקי וידאו כבדים — אף פתרון לא מחבר עלילה, אינטראקטיביות והתאמה לגיל בו זמנית.</p>
+    </div>
+    <div class="table-scroll reveal">
+      <table class="compare">
+        <thead><tr><th>פתרון</th><th>עלילה מרתקת</th><th>אינטראקטיביות</th><th>מתאים לגיל 8–13</th><th>ידע מדויק</th></tr></thead>
+        <tbody>
+          <tr><td>ספרי לימוד וויקיפדיה</td><td class="no">✗</td><td class="no">✗</td><td class="mid">חלקי</td><td class="yes">✓</td></tr>
+          <tr><td>סרטוני יוטיוב חינוכיים</td><td class="mid">חלקי</td><td class="no">✗</td><td class="yes">✓</td><td class="mid">חלקי</td></tr>
+          <tr><td>חידונים דיגיטליים (כמו Kahoot)</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="mid">חלקי</td></tr>
+          <tr><td>משחקי וידאו היסטוריים</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">✗ כבד מדי</td><td class="mid">חלקי</td></tr>
+          <tr class="row-hero"><td>RelicReel</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tint" id="demo">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">איך זה עובד</p>
+      <h2>קוראים, עונים, פותחים תקופה — נסו כאן</h2>
+      <p>ענו נכון בשלב 2 וראו איך התקופה הנעולה בשלב 3 נפתחת בפועל.</p>
+    </div>
+    <div class="frames">
+      <article class="frame reveal">
+        <span class="frame-num">01 · קפסולת תוכן</span>
+        <h3>הלפיד שכמעט כבה</h3>
+        <div class="story-preview">"האש שבמערה נחלשה עד לגחלת בודדת. בחוץ, קור הלילה נושף בין הסלעים, ויא־רה יודעת שאם לא תמצא אבן צור עד עלות השחר — איש לא ישרוד את הלילה..."</div>
+        <p class="story-meta">קפסולה מלאה · כ-3 דקות קריאה</p>
+      </article>
+      <article class="frame reveal">
+        <span class="frame-num">02 · חידון סוף-סיפור</span>
+        <h3>מה עוזר ליא־רה לשרוד?</h3>
+        <p class="quiz-q">איזה גילוי שינה הכי הרבה את חיי האדם הקדמון?</p>
+        <div class="quiz-answers" id="miniQuiz">
+          <button class="quiz-answer" data-c="1">שליטה באש</button>
+          <button class="quiz-answer" data-c="0">גלגל ענק</button>
+          <button class="quiz-answer" data-c="0">טלפון נייד</button>
+        </div>
+        <p class="quiz-feedback" id="miniFeedback" aria-live="polite"></p>
+      </article>
+      <article class="frame reveal">
+        <span class="frame-num">03 · פותחים תקופה</span>
+        <h3>ההתקדמות שלכם</h3>
+        <div class="rank-row"><span class="rank-badge" id="miniRank">חוקר תקופות</span><span class="points"><span id="miniPoints">100</span> נק'</span></div>
+        <div class="progress"><div class="progress-fill" id="miniFill" style="width:83%"></div></div>
+        <p class="progress-caption" id="miniCaption">20 נקודות לפתיחת מצרים העתיקה</p>
+        <div class="mini-eras" id="miniEras"></div>
+      </article>
+    </div>
+    <button class="reset-demo" id="resetDemo">התחילו את ההדגמה מחדש</button>
+    <div class="demo-cta reveal">
+      <p>זו טעימה אחת. באזור האישי מחכות 4 תקופות, 12 קפסולות תוכן, חידונים וגלריות סרטים — עם התקדמות שנשמרת.</p>
+      <button class="btn btn-primary" data-open-app>התחברות לאזור האישי</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">למי זה בנוי</p>
+      <h2>שלושה קהלים, סיבה אחת לחזור</h2>
+    </div>
+    <div class="cards-3">
+      <div class="info-card reveal"><h3>ילדים בגילאי 8–13</h3><p>רוצים היסטוריה שלא מרגישה כמו שיעור — עלילה, ניצחונות ותקופה חדשה שנפתחת בסוף הדרך.</p></div>
+      <div class="info-card reveal"><h3>הורים</h3><p>תוכן שמהנה וגם מחנך, כדי שזמן המסך יהפוך לזמן איכות עם ערך אמיתי.</p></div>
+      <div class="info-card reveal"><h3>מורים ובתי ספר</h3><p>כלי העשרה שמתלבש על תוכנית הלימודים בהיסטוריה, בלי הכנה נוספת מהמורה.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tint" id="schools">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">המודל שלנו</p>
+      <h2>מתחילים בחינם, מעמיקים בפרימיום</h2>
+    </div>
+    <div class="pricing">
+      <div class="plan reveal">
+        <div class="plan-title"><h3>חינמי</h3><span class="plan-price">₪0</span></div>
+        <ul><li>התקופה הפרהיסטורית פתוחה במלואה</li><li>חידוני סוף-סיפור ונקודות</li><li>גלריה קולנועית לכל תקופה שנפתחת</li><li>דשבורד אישי ודרגות</li></ul>
+      </div>
+      <div class="plan featured reveal">
+        <div class="plan-title"><h3>פרימיום</h3><span class="plan-price">בקרוב</span></div>
+        <ul><li>כל התקופות פתוחות מיד</li><li>תקופות חדשות מדי חודש</li><li>דרגות ותגים מתקדמים</li><li>בעתיד: מסלול ייעודי לכיתה</li></ul>
+      </div>
+    </div>
+    <div class="schools reveal">
+      <div><h3>בית ספר או מורה להיסטוריה?</h3><p>נשמח לבנות יחד תוכנית העשרה שמשלבת את RelicReel בכיתה.</p></div>
+      <a href="#waitlist" class="btn btn-ghost">דברו איתנו</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="waitlist">
+  <div class="container">
+    <div class="final-cta reveal">
+      <h2>המסע בזמן מתחיל בקרוב</h2>
+      <p>השאירו מייל ותהיו הראשונים לדעת כשנפתח את השערים — כולל גישה מוקדמת לתקופות החדשות.</p>
+      <form class="waitlist-form" id="waitlistForm">
+        <label for="waitlistEmail" class="sr-only">כתובת מייל</label>
+        <input type="email" id="waitlistEmail" required placeholder="כתובת המייל שלכם">
+        <button type="submit" class="btn btn-primary">הצטרפו עכשיו</button>
+      </form>
+      <p class="waitlist-success" id="waitlistSuccess">אתם ברשימה! ניצור קשר לפני כולם.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#4361EE" stroke-width="2.5"/><circle cx="16" cy="16" r="7.5" fill="#06D6A0"/><circle cx="16" cy="16" r="3" fill="#4361EE"/></svg>
+          RelicReel
+        </div>
+        <p class="footer-tag">מסע בזמן שרוצים לחזור אליו.</p>
+      </div>
+      <div class="footer-col"><h4>מוצר</h4><ul><li><a href="#eras">מפת התקופות</a></li><li><a href="#demo">איך זה עובד</a></li><li><a href="#problem">הבעיה</a></li></ul></div>
+      <div class="footer-col"><h4>עבורכם</h4><ul><li><a href="#schools">מורים ובתי ספר</a></li><li><a href="#waitlist">רשימת המתנה</a></li><li><a href="#" data-open-app>אזור אישי</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 RelicReel · גרסת MVP</span><span>נבנה באהבה להיסטוריה</span></div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=relicreel" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+</div><!-- /marketingRoot -->
+
+<div id="appRoot" hidden>
+  <header class="app-nav">
+    <div class="app-nav-inner">
+      <button class="logo" data-close-app>
+        <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#4361EE" stroke-width="2.5"/><circle cx="16" cy="16" r="7.5" fill="#06D6A0"/><circle cx="16" cy="16" r="3" fill="#4361EE"/></svg>
+        RelicReel
+      </button>
+      <nav class="app-tabs">
+        <button class="app-tab" data-tab="eras" aria-current="page">מפת התקופות</button>
+        <button class="app-tab" data-tab="museum">המוזיאון שלי</button>
+        <button class="app-tab" data-tab="shop">חנות הממצאים</button>
+        <button class="app-tab" data-tab="dashboard">דשבורד</button>
+      </nav>
+      <div class="app-user">
+        <button class="app-user-pill" id="userPill" aria-haspopup="true" aria-expanded="false">
+          <span class="app-avatar" id="userAvatar">א</span>
+          <span class="app-user-info"><strong id="userName">אורח/ת</strong><small id="userMeta">0 נק׳</small></span>
+        </button>
+        <div class="app-user-menu" id="userMenu" hidden>
+          <button data-act="rename">שינוי שם</button>
+          <button data-act="reset">איפוס התקדמות</button>
+          <button data-close-app>חזרה לאתר</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="app-view" data-view="eras">
+      <div class="container">
+        <div class="view-head">
+          <p class="eyebrow">מפת התקופות</p>
+          <h2 id="erasGreeting">לאיזו תקופה צוללים היום?</h2>
+          <p>בחרו עולם כדי להתחיל. תקופה נעולה נפתחת אחרי שמסיימים את זו שלפניה וצוברים מספיק נקודות.</p>
+        </div>
+        <div class="era-grid" id="eraGrid"></div>
+      </div>
+    </section>
+
+    <section class="app-view" data-view="era" hidden><div class="container" id="eraView"></div></section>
+    <section class="app-view" data-view="capsule" hidden><div class="container narrow" id="capsuleView"></div></section>
+
+    <section class="app-view" data-view="museum" hidden>
+      <div class="container">
+        <div class="view-head">
+          <p class="eyebrow">האוסף שלי</p>
+          <h2 id="museumGreeting">המוזיאון האישי</h2>
+          <p>כל ממצא שרכשתם מוצג כאן. רחפו מעל פריט (או לחצו עליו) כדי לגלות את הסיפור שמאחוריו.</p>
+        </div>
+        <div class="vault">
+          <div class="vault-head">
+            <div class="balance" id="museumBalance"></div>
+            <div class="era-filter" id="museumFilter"></div>
+          </div>
+          <div id="museumBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-view" data-view="shop" hidden>
+      <div class="container">
+        <div class="view-head">
+          <p class="eyebrow">חנות הממצאים</p>
+          <h2>המירו נקודות בממצאים</h2>
+          <p>כל ממצא שתרכשו עובר ישירות למוזיאון האישי שלכם. רכישה לא משפיעה על הדרגה או על התקופות שפתחתם.</p>
+        </div>
+        <div class="vault">
+          <div class="vault-head">
+            <div class="balance" id="shopBalance"></div>
+            <div class="era-filter" id="shopFilter"></div>
+          </div>
+          <div class="case-grid" id="shopGrid"></div>
+          <div class="sealed-wrap" id="shopSealed" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-view" data-view="dashboard" hidden>
+      <div class="container">
+        <div class="view-head">
+          <p class="eyebrow">דשבורד אישי</p>
+          <h2 id="dashGreeting">שלום, חוקר/ת זמן!</h2>
+          <p>כל ההתקדמות שלכם על פני התקופות, במקום אחד.</p>
+        </div>
+        <div class="name-card" id="nameCard" hidden>
+          <div><h3>רוצים שנקרא לכם בשם?</h3><p>השם יופיע בדשבורד ויישמר במכשיר הזה. אפשר גם לדלג ולהתחיל לקרוא.</p></div>
+          <form id="nameCardForm">
+            <input type="text" id="nameCardInput" placeholder="השם שלך" maxlength="24" aria-label="השם שלך">
+            <button type="submit" class="btn btn-primary">שמירה</button>
+            <button type="button" class="btn-skip" id="skipNameBtn">דילוג</button>
+          </form>
+        </div>
+        <div class="stat-row" id="statRow"></div>
+        <div class="rank-card">
+          <div class="rank-row"><span class="rank-badge" id="dashRank">נווד זמן מתחיל</span><span class="points"><span id="dashPoints">0</span> נק'</span></div>
+          <div class="progress"><div class="progress-fill" id="dashFill" style="width:0%"></div></div>
+          <p class="progress-caption" id="dashCaption"></p>
+        </div>
+        <p class="sub-head">העולמות שלכם</p>
+        <div class="worlds" id="worlds"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- cinematic artifact viewer -->
+<div class="lightbox" id="artLightbox" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="lb-scrim"></div>
+  <div class="lb-panel">
+    <button class="lb-close" aria-label="סגירה">&times;</button>
+    <div class="lb-stage"></div>
+    <div class="lb-body">
+      <span class="era-tag lb-era"></span>
+      <h3 class="lb-title"></h3>
+      <p class="lb-fact"></p>
+      <p class="lb-meta"></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="nameModal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="סגירה">&times;</button>
+    <p class="eyebrow">שינוי שם</p>
+    <h2 id="modalTitle">איך נקרא לך?</h2>
+    <p class="modal-sub">השם שלך יופיע בדשבורד האישי ויישמר במכשיר הזה.</p>
+    <form id="nameForm">
+      <label for="nameInput" class="sr-only">השם שלך</label>
+      <input type="text" id="nameInput" placeholder="השם שלך" maxlength="24" required>
+      <button type="submit" class="btn btn-primary btn-block">שמירה</button>
+    </form>
+  </div>
+</div>
+
+<script>
+
+/* =========================================================================
+   RelicReel — Mock Database (static JSON-style object, no backend)
+   To add an era: push a new object into RELICREEL_DB.eras.
+   To add a story: push a new object into <era>.capsules.
+   Capsule unlock inside an era = finish the previous capsule.
+   Era unlock = finish the required era AND reach minPoints.
+   ========================================================================= */
+window.RELICREEL_DB = {
+
+  config: {
+    pointsPerAnswer: 20,
+    ranks: [
+      { min: 0,   label: "נווד זמן מתחיל" },
+      { min: 120, label: "חוקר עידנים" },
+      { min: 300, label: "שומר הזמן" },
+      { min: 480, label: "מסע-זמן מנוסה" },
+      { min: 720, label: "אדון העידנים" }
+    ]
+  },
+
+  icons: {
+    mammoth: '<svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="24" rx="12.5" ry="7" fill="currentColor"/><path d="M8.5 22c-3-1-4 2-3 4" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="M12.5 18l-3-4M27.5 18l3-4" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>',
+    flame: '<svg viewBox="0 0 40 40" fill="none"><path d="M8 27c2-9.5 8-15.5 12-15.5s10 6 12 15.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="10" r="3.4" fill="currentColor"/></svg>',
+    handprint: '<svg viewBox="0 0 40 40" fill="none"><circle cx="13" cy="15" r="2.6" fill="currentColor"/><circle cx="20" cy="12" r="2.6" fill="currentColor"/><circle cx="27" cy="15" r="2.6" fill="currentColor"/><circle cx="16" cy="24" r="2.6" fill="currentColor"/><circle cx="24" cy="24" r="2.6" fill="currentColor"/><circle cx="20" cy="31" r="2.6" fill="currentColor"/></svg>',
+    snow: '<svg viewBox="0 0 40 40" fill="none"><path d="M20 7v26M9 13l22 14M31 13L9 27" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>',
+    pyramid: '<svg viewBox="0 0 40 40" fill="none"><path d="M20 7l13 24H7z" fill="currentColor"/><path d="M20 7v24" stroke="#FFFFFF" stroke-width="1.6" opacity=".45"/></svg>',
+    scroll: '<svg viewBox="0 0 40 40" fill="none"><rect x="10" y="8" width="20" height="24" rx="3" stroke="currentColor" stroke-width="2.3"/><path d="M15 15h10M15 20h10M15 25h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    river: '<svg viewBox="0 0 40 40" fill="none"><path d="M6 15c5-4 9 4 14 0s9-4 14 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M6 23c5-4 9 4 14 0s9-4 14 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M6 31c5-4 9 4 14 0s9-4 14 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    column: '<svg viewBox="0 0 40 40" fill="none"><rect x="8" y="7" width="24" height="4" rx="1.5" fill="currentColor"/><rect x="8" y="30" width="24" height="4" rx="1.5" fill="currentColor"/><rect x="13" y="11" width="4" height="19" fill="currentColor"/><rect x="23" y="11" width="4" height="19" fill="currentColor"/></svg>',
+    wreath: '<svg viewBox="0 0 40 40" fill="none"><path d="M12 30a12 12 0 1116 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="9" r="2.6" fill="currentColor"/><circle cx="12" cy="30" r="2.2" fill="currentColor"/><circle cx="28" cy="30" r="2.2" fill="currentColor"/></svg>',
+    runner: '<svg viewBox="0 0 40 40" fill="none"><circle cx="24" cy="9" r="3.2" fill="currentColor"/><path d="M25 14l-5 6 4 5-2 7M20 20l-7 2M24 25l6 3" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>',
+    arch: '<svg viewBox="0 0 40 40" fill="none"><path d="M8 32V19a12 12 0 0124 0v13" stroke="currentColor" stroke-width="2.4"/><path d="M15 32V21a5 5 0 0110 0v11" stroke="currentColor" stroke-width="2.2"/></svg>',
+    aqueduct: '<svg viewBox="0 0 40 40" fill="none"><rect x="5" y="10" width="30" height="4" rx="1.5" fill="currentColor"/><path d="M10 32V19a4 4 0 018 0v13M22 32V19a4 4 0 018 0v13" stroke="currentColor" stroke-width="2.2"/></svg>',
+    volcano: '<svg viewBox="0 0 40 40" fill="none"><path d="M6 32l9-16h10l9 16z" fill="currentColor"/><path d="M20 12V6M14 10L11 6M26 10l3-4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    sword: '<svg viewBox="0 0 40 40" fill="none"><path d="M25 8l7 7-14 14-7-7z" fill="currentColor"/><path d="M11 22l-4 4 7 7 4-4" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>',
+    film: '<svg viewBox="0 0 40 40" fill="none"><rect x="7" y="11" width="26" height="18" rx="3" stroke="currentColor" stroke-width="2.2"/><circle cx="13" cy="16" r="1.6" fill="currentColor"/><circle cx="13" cy="24" r="1.6" fill="currentColor"/><circle cx="27" cy="16" r="1.6" fill="currentColor"/><circle cx="27" cy="24" r="1.6" fill="currentColor"/></svg>',
+    lock: '<svg viewBox="0 0 40 40" fill="none"><rect x="11" y="18" width="18" height="13" rx="3" fill="currentColor"/><path d="M15 18v-4a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>',
+
+    flint: '<svg viewBox="0 0 40 40" fill="none"><path d="M20 6l9 11-4 17-11-3-6-13z" fill="currentColor"/><path d="M20 6l-3 25" stroke="#fff" stroke-width="1.5" opacity=".5"/></svg>',
+    lamp: '<svg viewBox="0 0 40 40" fill="none"><path d="M9 24h22a4 4 0 01-4 5H13a4 4 0 01-4-5z" fill="currentColor"/><path d="M31 24l6-3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M37 21c1-3-2-5-3-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    beads: '<svg viewBox="0 0 40 40" fill="none"><path d="M8 12c0 10 5 16 12 16s12-6 12-16" stroke="currentColor" stroke-width="2.2" fill="none"/><circle cx="12" cy="20" r="2.4" fill="currentColor"/><circle cx="20" cy="26" r="2.8" fill="currentColor"/><circle cx="28" cy="20" r="2.4" fill="currentColor"/></svg>',
+    scarab: '<svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="23" rx="8" ry="10" fill="currentColor"/><circle cx="20" cy="11" r="3.4" fill="currentColor"/><path d="M12 18l-5-3M28 18l5-3M12 28l-5 3M28 28l5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    palette: '<svg viewBox="0 0 40 40" fill="none"><rect x="8" y="9" width="15" height="24" rx="2.5" stroke="currentColor" stroke-width="2.2"/><circle cx="15.5" cy="15" r="2.6" fill="currentColor"/><circle cx="15.5" cy="24" r="2.6" fill="currentColor"/><path d="M28 9l4 2-6 22-3-1z" fill="currentColor"/></svg>',
+    mask: '<svg viewBox="0 0 40 40" fill="none"><path d="M13 8h14l2 14c0 7-4 11-9 11s-9-4-9-11z" fill="currentColor"/><circle cx="16" cy="19" r="1.9" fill="#fff"/><circle cx="24" cy="19" r="1.9" fill="#fff"/></svg>',
+    helmet: '<svg viewBox="0 0 40 40" fill="none"><path d="M10 26V19a10 10 0 0120 0v7l-4 6H14z" fill="currentColor"/><path d="M20 15v17" stroke="#fff" stroke-width="2" opacity=".65"/><path d="M20 9V4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    amphora: '<svg viewBox="0 0 40 40" fill="none"><path d="M16 8h8v3c4 2 6 6 6 11s-4 11-10 11-10-6-10-11 2-9 6-11z" fill="currentColor"/><path d="M14 13c-3 0-4 4-1 5M26 13c3 0 4 4 1 5" stroke="currentColor" stroke-width="2" fill="none"/></svg>',
+    coin: '<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="2.5"/><circle cx="20" cy="16" r="3.4" fill="currentColor"/><path d="M13 27c1.5-4 11.5-4 14 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    mosaic: '<svg viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="7" height="7" rx="1.4" fill="currentColor"/><rect x="17" y="8" width="7" height="7" rx="1.4" fill="currentColor" opacity=".5"/><rect x="26" y="8" width="6" height="7" rx="1.4" fill="currentColor"/><rect x="8" y="17" width="7" height="7" rx="1.4" fill="currentColor" opacity=".5"/><rect x="17" y="17" width="7" height="7" rx="1.4" fill="currentColor"/><rect x="26" y="17" width="6" height="7" rx="1.4" fill="currentColor" opacity=".5"/><rect x="8" y="26" width="7" height="6" rx="1.4" fill="currentColor"/><rect x="17" y="26" width="7" height="6" rx="1.4" fill="currentColor" opacity=".5"/><rect x="26" y="26" width="6" height="6" rx="1.4" fill="currentColor"/></svg>'
+  },
+
+  eras: [
+    /* ================= ERA 1 ================= */
+    {
+      id: "prehistory",
+      title: "התקופה הפרהיסטורית",
+      years: "לפני 300,000 – 5,000 שנה",
+      tagline: "אש, מערות והישרדות",
+      description: "העידן שבו האדם למד לשרוד: להצית אש, ליצור כלים, לצייר על קירות ולנדוד אחרי העדרים.",
+      icon: "mammoth",
+      banner: "var(--surface)",
+      unlock: { points: 0, afterEra: null },
+      capsules: [
+        {
+          id: "fire",
+          title: "האש הראשונה",
+          icon: "flame",
+          blurb: "לילה קר, גחלת בודדת, ושבט שתלוי בלהבה קטנה.",
+          movie: { title: "משפחת קרודס", year: "2013", kind: "אנימציה", age: "מגיל 6+", why: "משפחה פרהיסטורית שנאלצת לצאת מהמערה ולגלות עולם חדש — בדיוק כמו יא־רה, שגילתה שאש היא ההבדל בין פחד לביטחון." },
+          story: [
+            "האש שבמערה נחלשה עד לגחלת בודדת. בחוץ, קור הלילה נושף בין הסלעים, וכל השבט תלוי בלהבה הקטנה הזאת כדי לשרוד עד הבוקר.",
+            "יא־רה לא מוותרת. היא אוספת עלים יבשים, מקרבת שתי אבני צור זו לזו ומכה בהן שוב ושוב, עד שניצוץ קטן קופץ אל תוך ערמת העלים.",
+            "הניצוץ הופך ללהבה, הלהבה מחממת את המערה, וכל השבט נושם לרווחה. מאותו לילה, יא־רה מלמדת את כולם לשמור על האש בתורנות — כדי שלעולם לא תיכבה שוב."
+          ],
+          quiz: [
+            { q: "למה האש כל כך חשובה לשבט הקדום?", answers: [
+              { t: "מחממת, מאירה ומרחיקה חיות טורפות", c: true },
+              { t: "משמשת לצפייה בסרטים בערב", c: false },
+              { t: "עוזרת לשלוח הודעות לשבט השכן", c: false } ] },
+            { q: "איך יא־רה מצליחה להצית מחדש את האש?", answers: [
+              { t: "מכה שתי אבני צור זו בזו ליצירת ניצוץ", c: true },
+              { t: "לוחצת על מתג באמצע הסלע", c: false },
+              { t: "מבקשת גפרור משבט אחר", c: false } ] },
+            { q: "מה השבט לומד לעשות כדי שהאש לא תיכבה שוב?", answers: [
+              { t: "לשמור עליה בתורנות קבועה", c: true },
+              { t: "להשאיר אותה לבד כל הלילה", c: false },
+              { t: "לכבות אותה כל בוקר בכוונה", c: false } ] }
+          ]
+        },
+        {
+          id: "cave-art",
+          title: "ציירי המערה",
+          icon: "handprint",
+          blurb: "צבע אוכרה, קנה חלול, וסימן יד שנשאר לדורות.",
+          movie: { title: "עידן האבן", year: "2018", kind: "אנימציה בפלסטלינה", age: "מגיל 6+", why: "שבט קדום שנאבק על ביתו בעולם שמשתנה. שימו לב לציורי המערה שמופיעים בפתיחת הסרט — בדיוק כמו אלה שנור ציירה." },
+          story: [
+            "נור אוהבת לשבת עמוק במערה, שם הקירות חלקים וקרים. היא מערבבת אדמת חרסית אדומה עם מים, עד שנוצרת משחה סמיכה בגוון אוכרה.",
+            "היא מניחה את היד על הקיר, לוקחת קנה חלול, ונושפת דרכו את הצבע סביב האצבעות. כשהיא מרימה את היד — נשאר עליו סימן ידיים, ממש כמו חתימה.",
+            "לצד היד, נור מציירת עדר ביזונים שהשבט צד באותו שבוע. עוד לפני שהומצא הכתב, הציורים על קיר המערה מספרים לדורות הבאים בדיוק מה קרה כאן."
+          ],
+          quiz: [
+            { q: "מאיזה חומר נור מכינה את הצבע האדום?", answers: [
+              { t: "אדמת חרסית מעורבבת עם מים", c: true },
+              { t: "עלי עץ טחונים", c: false },
+              { t: "פירות אדומים סחוטים", c: false } ] },
+            { q: "איך נור יוצרת את סימן היד על הקיר?", answers: [
+              { t: "נושפת צבע דרך קנה חלול סביב היד", c: true },
+              { t: "טובלת את כל היד בצבע ומדפיסה", c: false },
+              { t: "מציירת אותה עם אצבע רטובה", c: false } ] },
+            { q: "מה התפקיד של ציורי המערה, לפי הסיפור?", answers: [
+              { t: "לתעד ולספר סיפורים לדורות הבאים", c: true },
+              { t: "לקשט את המערה בלבד", c: false },
+              { t: "להפחיד חיות טורפות", c: false } ] }
+          ]
+        },
+        {
+          id: "ice-age",
+          title: "עידן הענק הקרחוני",
+          icon: "snow",
+          blurb: "עדר מאמותים, תכנון קפדני, ומזון לכל החורף.",
+          movie: { title: "עידן הקרח", year: "2002", kind: "אנימציה", age: "מגיל 6+", why: "מאמות, עצלן ונמר בעידן הקרחוני. הסרט מראה עד כמה קשה היה לשרוד בכפור — ולמה חיות ואנשים נעו יחד בקבוצות." },
+          story: [
+            "עדר מאמותים חוצה את המישור הקפוא, וענני אד עולים מנחיריהם הענקיים. השבט עוקב מרחוק, בשקט, ומחכה לרגע הנכון.",
+            "לבד, איש לא יכול להתמודד עם חיה כה גדולה. אבל השבט פועל כצוות: חלק מרעישים בקריאות ובתופים, וחלק מכוונים את העדר אל בור עמוק שהוכן מראש.",
+            "בזכות התכנון והעבודה המשותפת, השבט משיג מזון שיספיק לכל החורף — וגם עצמות לכלים ועור לחימום. שום דבר לא הולך לאיבוד."
+          ],
+          quiz: [
+            { q: "איך השבט מצליח להתמודד עם מאמות ענק?", answers: [
+              { t: "בעבודת צוות ובתכנון משותף", c: true },
+              { t: "כל אחד נלחם לבד", c: false },
+              { t: "בורחים ומוותרים על הציד", c: false } ] },
+            { q: "מה תפקידם של האנשים שמרעישים בתופים?", answers: [
+              { t: "לכוון את העדר לכיוון הרצוי", c: true },
+              { t: "לשעשע את שאר השבט", c: false },
+              { t: "להפחיד את העננים", c: false } ] },
+            { q: "מה השבט עושה עם חלקי המאמות אחרי הציד?", answers: [
+              { t: "משתמש בהכל — בשר, עצמות ועור", c: true },
+              { t: "משתמש רק בבשר וזורק את השאר", c: false },
+              { t: "משאיר הכל במקום", c: false } ] }
+          ]
+        }
+      ],
+      capstone: { title: "משפחת קרודס: עידן חדש", year: "2020", kind: "אנימציה", age: "מגיל 6+", why: "סיום מושלם לתקופה: שתי משפחות פרהיסטוריות לומדות לחיות יחד — שיתוף פעולה, בדיוק מה ששמר על השבט בחיים." }
+    },
+
+    /* ================= ERA 2 ================= */
+    {
+      id: "egypt",
+      title: "מצרים העתיקה",
+      years: "3100 – 30 לפנה״ס",
+      tagline: "נילוס, פירמידות והירוגליפים",
+      description: "ממלכה שנבנתה סביב נהר אחד: פירמידות ענק, כתב מסתורי וחקלאות שהזינה מיליונים.",
+      icon: "pyramid",
+      banner: "var(--surface)",
+      unlock: { points: 120, afterEra: "prehistory" },
+      capsules: [
+        {
+          id: "pyramid",
+          title: "בוני הפירמידה",
+          icon: "pyramid",
+          blurb: "אלפי פועלים, מפרש אחד, ואבן ששוקלת כמו פיל.",
+          movie: { title: "אסטריקס וקליאופטרה", year: "1968", kind: "אנימציה", age: "מגיל 7+", why: "העלילה כולה סובבת סביב בנייה ענקית במצרים בזמן קצר — בדיוק האתגר ההנדסי שחנופר ראה בגיזה." },
+          story: [
+            "השמש עולה מעל גיזה, וכבר עכשיו אלפי פועלים ניצבים ליד גוש אבן ענק. חנופר, נער בן שתים־עשרה, נושא כדי מים לפועלים — תפקיד קטן במפעל עצום.",
+            "בניגוד למה שרבים חושבים, הבונים אינם עבדים אלא פועלים שמקבלים מזון, בירה ומקום לינה. הם עובדים במשמרות מסודרות, וכל קבוצה מתגאה בשם משלה.",
+            "האבן נגררת על מזחלת עץ, ולפניה פועל שופך מים על החול כדי להקטין את החיכוך. חנופר מבין שהסוד אינו כוח בלבד — אלא ידע, ארגון וסבלנות של שנים."
+          ],
+          quiz: [
+            { q: "מי בנה בפועל את הפירמידות, לפי הסיפור?", answers: [
+              { t: "פועלים מאורגנים שקיבלו מזון ושכר", c: true },
+              { t: "רק עבדים בכפייה מוחלטת", c: false },
+              { t: "חיילים זרים שנשבו בקרב", c: false } ] },
+            { q: "למה שופכים מים על החול לפני המזחלת?", answers: [
+              { t: "כדי להקטין את החיכוך ולהקל על הגרירה", c: true },
+              { t: "כדי לנקות את האבן מאבק", c: false },
+              { t: "כדי לקרר את הפועלים", c: false } ] },
+            { q: "מה מסמלת הפירמידה עבור המצרים?", answers: [
+              { t: "קבר מפואר שנועד להנציח את הפרעה", c: true },
+              { t: "מחסן לאחסון תבואה", c: false },
+              { t: "מגדל תצפית על האויב", c: false } ] }
+          ]
+        },
+        {
+          id: "hieroglyphs",
+          title: "סוד הכתב ההירוגליפי",
+          icon: "scroll",
+          blurb: "ציפור, עין וגל מים — אותיות שנראות כמו תמונות.",
+          movie: { title: "מר פיבודי ושרמן", year: "2014", kind: "אנימציה", age: "מגיל 7+", why: "מסע בזמן שעובר גם במצרים העתיקה, עם הצצה לכתב, לקברים ולחיי החצר שאיסת למדה עליהם." },
+          story: [
+            "בבית הספר לסופרים, איסת לומדת לכתוב על לוח חרס. מולה מאות סימנים: ציפור, עין, גל מים, רגל אדם — כל אחד מהם אות או מילה שלמה.",
+            "המורה מסביר שסופר הוא אחד המקצועות המכובדים במצרים. סופר יודע לרשום מיסים, לתעד יבולים ולכתוב תפילות — ולכן אינו נדרש לעבוד בשדה תחת השמש הקופחת.",
+            "איסת מתאמנת שעות על קנה סוף וטובלת אותו בדיו. כשהיא כותבת נכון לראשונה את שם משפחתה, היא מבינה שהיא מחזיקה בכוח אמיתי: היכולת לשמור מילים לנצח."
+          ],
+          quiz: [
+            { q: "איך נראים הסימנים בכתב ההירוגליפי?", answers: [
+              { t: "כמו ציורים של חפצים, חיות ואיברי גוף", c: true },
+              { t: "כמו קווים ישרים בלבד", c: false },
+              { t: "כמו מספרים מודרניים", c: false } ] },
+            { q: "למה מקצוע הסופר נחשב מכובד במצרים?", answers: [
+              { t: "הסופר תיעד מיסים ויבולים ולא עבד בשדה", c: true },
+              { t: "הסופר היה גם מפקד צבא", c: false },
+              { t: "הסופר קיבל פירמידה משלו", c: false } ] },
+            { q: "במה משתמשת איסת כדי לכתוב?", answers: [
+              { t: "בקנה סוף שטובלים בדיו", c: true },
+              { t: "בעיפרון מעץ ארז", c: false },
+              { t: "בנוצת אווז ודבש", c: false } ] }
+          ]
+        },
+        {
+          id: "nile",
+          title: "מתנת הנילוס",
+          icon: "river",
+          blurb: "שיטפון שנתי שהופך מדבר לשדה פורח.",
+          movie: { title: "נסיך מצרים", year: "1998", kind: "אנימציה", age: "מגיל 8+", why: "מצרים העתיקה על גדות הנילוס בעיצוב מרהיב. יש בו כמה רגעים דרמטיים, אז שווה לצפות יחד עם מבוגר." },
+          story: [
+            "פעם בשנה, הנילוס עולה על גדותיו ומציף את השדות. במקום להיבהל, האיכרים מחכים לרגע הזה בקוצר רוח — הם יודעים בדיוק מה עומד לקרות.",
+            "כשהמים נסוגים, הם משאירים אחריהם שכבת בוץ שחור ועשיר. האדמה הזאת פורייה כל כך, שהמצרים קוראים לארצם הארץ השחורה, בניגוד למדבר הצהוב שסביבה.",
+            "הכוהנים מודדים את גובה המים במד מיוחד שנקרא נילומטר, וכך יודעים מראש אם השנה תהיה שנת שפע או שנת רעב. הנהר אינו רק מים — הוא לוח השנה של כל הממלכה."
+          ],
+          quiz: [
+            { q: "למה האיכרים מחכים לשיטפון הנילוס?", answers: [
+              { t: "כי הוא משאיר בוץ פורה שמזין את השדות", c: true },
+              { t: "כי הוא מביא דגים לחצר הבית", c: false },
+              { t: "כי הוא מקרר את מזג האוויר", c: false } ] },
+            { q: "למה המצרים קראו לארצם הארץ השחורה?", answers: [
+              { t: "בגלל צבע האדמה הפורייה שהנהר משאיר", c: true },
+              { t: "בגלל האבן השחורה של הפירמידות", c: false },
+              { t: "בגלל הלילות החשוכים במדבר", c: false } ] },
+            { q: "מה תפקידו של הנילומטר?", answers: [
+              { t: "למדוד את גובה המים ולחזות שפע או רעב", c: true },
+              { t: "למדוד את גובה הפירמידות", c: false },
+              { t: "לספור את מספר הסירות בנהר", c: false } ] }
+          ]
+        }
+      ],
+      capstone: { title: "יוסף: מלך החלומות", year: "2000", kind: "אנימציה", age: "מגיל 8+", why: "מצרים העתיקה במלוא הדרה — ארמונות, שדות, אסמי תבואה ושנות שפע ורעב שתלויות בנילוס." }
+    },
+
+    /* ================= ERA 3 ================= */
+    {
+      id: "greece",
+      title: "יוון העתיקה",
+      years: "800 – 146 לפנה״ס",
+      tagline: "אולימפיאדה, פילוסופיה ודמוקרטיה",
+      description: "ערי מדינה שהמציאו את המשחקים האולימפיים, את הדמוקרטיה ואת האמנות לשאול שאלות.",
+      icon: "column",
+      banner: "var(--surface)",
+      unlock: { points: 300, afterEra: "egypt" },
+      capsules: [
+        {
+          id: "olympia",
+          title: "המשחקים הראשונים",
+          icon: "wreath",
+          blurb: "זר עלי זית אחד — והפסקת אש בכל יוון.",
+          movie: { title: "אסטריקס במשחקים האולימפיים", year: "2008", kind: "הרפתקה קומית", age: "מגיל 8+", why: "הסרט מתרחש באולימפיאדה העתיקה עצמה ומראה את האימונים, התחרות והכבוד שבזכייה." },
+          story: [
+            "כל ארבע שנים, אלפי אנשים צועדים אל העיר אולימפיה. גם ערים שנלחמות זו בזו מכריזות על הפסקת אש מיוחדת, כדי שהספורטאים יוכלו להגיע בשלום.",
+            "תיאון, רץ צעיר מקורינתוס, מתאמן כבר עשרה חודשים. הוא יודע שאין כאן מדליית כסף או ארד — רק המנצח זוכה, ומקבל זר עלי זית פשוט.",
+            "הזר נראה צנוע, אבל ערכו עצום: המנצח יזכה לכבוד בעירו לכל חייו, ולעיתים גם לפסל משלו. הניצחון אינו של הספורטאי בלבד — הוא של כל העיר."
+          ],
+          quiz: [
+            { q: "מה קרה בין הערים היריבות בזמן המשחקים?", answers: [
+              { t: "הוכרזה הפסקת אש כדי לאפשר הגעה בשלום", c: true },
+              { t: "המלחמות התגברו דווקא אז", c: false },
+              { t: "הערים סגרו את שעריהן", c: false } ] },
+            { q: "מה קיבל המנצח באולימפיאדה העתיקה?", answers: [
+              { t: "זר עלי זית וכבוד רב בעירו", c: true },
+              { t: "מדליית זהב ומטבעות", c: false },
+              { t: "בית חדש בעיר אולימפיה", c: false } ] },
+            { q: "כמה מקומות זכייה היו בכל תחרות?", answers: [
+              { t: "רק מקום ראשון", c: true },
+              { t: "שלושה מקומות: זהב, כסף וארד", c: false },
+              { t: "חמישה מקומות", c: false } ] }
+          ]
+        },
+        {
+          id: "agora",
+          title: "השוק ששינה את העולם",
+          icon: "column",
+          blurb: "כיכר עיר אחת שבה כל אזרח יכול להצביע.",
+          movie: { title: "הרקולס", year: "1997", kind: "אנימציה", age: "מגיל 6+", why: "יוון העתיקה של דיסני — האלים, המקדשים והעיר שבהם האמינו האתונאים שדמטריוס פגש באגורה." },
+          story: [
+            "באגורה, כיכר השוק של אתונה, נמכרים דגים, בדים וכדים — אבל גם רעיונות. כאן נפגשים אנשים, מתווכחים על החוק ומחליטים יחד מה ייעשה בעיר.",
+            "דמטריוס, בן שלוש־עשרה, מלווה את אביו לאסיפת האזרחים. הוא רואה איך כל אזרח, גם עני, רשאי לעלות ולנאום. השיטה הזו נקראת דמוקרטיה — שלטון העם.",
+            "עם זאת, דמטריוס שם לב מי לא נמצא שם: נשים, עבדים וזרים אינם רשאים להצביע. הדמוקרטיה האתונאית היא התחלה מהפכנית, אבל היא עדיין רחוקה מלהיות שוויונית."
+          ],
+          quiz: [
+            { q: "מה פירוש המילה דמוקרטיה?", answers: [
+              { t: "שלטון העם", c: true },
+              { t: "שלטון המלך", c: false },
+              { t: "שלטון הכוהנים", c: false } ] },
+            { q: "מה היה תפקידה של האגורה באתונה?", answers: [
+              { t: "כיכר שוק שבה גם דנו והחליטו על ענייני העיר", c: true },
+              { t: "מגרש אימונים לצבא בלבד", c: false },
+              { t: "מקדש סגור לכוהנים", c: false } ] },
+            { q: "מי לא היה רשאי להצביע באתונה?", answers: [
+              { t: "נשים, עבדים וזרים", c: true },
+              { t: "רק בעלי הקרקעות", c: false },
+              { t: "כולם היו רשאים להצביע", c: false } ] }
+          ]
+        },
+        {
+          id: "marathon",
+          title: "הריצה ממרתון",
+          icon: "runner",
+          blurb: "42 קילומטרים, בשורה אחת, ואגדה שנשארה לנצח.",
+          movie: { title: "היסטוריה נוראית: היוונים הנפלאים", year: "סדרה", kind: "דוקו-קומדיה", age: "מגיל 8+", why: "סדרה בריטית מצחיקה ומדויקת שמספרת על הקרבות, הצבא והחיים ביוון — כולל הסיפור של מרתון." },
+          story: [
+            "בשנת 490 לפנה״ס נוחת צבא פרסי ענק במישור מרתון. הצבא האתונאי קטן בהרבה, אבל הוא מכיר את השטח ובוחר בתכסיס חכם: להחליש את המרכז ולתקוף חזק בשני האגפים.",
+            "התוכנית עובדת, והפרסים נסוגים אל הים. על פי האגדה, שליח בשם פידיפידס רץ את כל הדרך מהמישור אל אתונה כדי לבשר על הניצחון.",
+            "האגדה מספרת שהוא הספיק לומר מילה אחת של ניצחון ואז קרס. ההיסטוריונים חלוקים אם הסיפור אמיתי — אבל ממנו נולד שם המרוץ המפורסם בעולם: המרתון."
+          ],
+          quiz: [
+            { q: "באיזה תכסיס בחר הצבא האתונאי בקרב מרתון?", answers: [
+              { t: "החלשת המרכז ותקיפה חזקה בשני האגפים", c: true },
+              { t: "התקפה חזיתית מלאה במרכז", c: false },
+              { t: "נסיגה מלאה אל תוך העיר", c: false } ] },
+            { q: "מה, לפי האגדה, עשה פידיפידס אחרי הקרב?", answers: [
+              { t: "רץ לאתונה כדי לבשר על הניצחון", c: true },
+              { t: "נשאר לשמור על שבויים", c: false },
+              { t: "הפליג בספינה אל האיים", c: false } ] },
+            { q: "מה קיבל את שמו בעקבות הסיפור הזה?", answers: [
+              { t: "מרוץ המרתון", c: true },
+              { t: "המשחקים האולימפיים", c: false },
+              { t: "העיר אתונה", c: false } ] }
+          ]
+        }
+      ],
+      capstone: { title: "פרסי ג׳קסון: גנב הברק", year: "2010", kind: "הרפתקה", age: "מגיל 10+", why: "המיתולוגיה היוונית שפגשתם בתקופה הזאת, מועברת לימינו במסע הרפתקאות." }
+    },
+
+    /* ================= ERA 4 ================= */
+    {
+      id: "rome",
+      title: "האימפריה הרומית",
+      years: "753 לפנה״ס – 476 לספירה",
+      tagline: "כבישים, קולוסיאום ואפר וזוב",
+      description: "אימפריה שהשתרעה על שלוש יבשות, בנתה אמות מים וכבישים — והשאירה עיר שלמה קפואה תחת אפר.",
+      icon: "arch",
+      banner: "var(--surface)",
+      unlock: { points: 480, afterEra: "greece" },
+      capsules: [
+        {
+          id: "aqueduct",
+          title: "המים שהלכו לבד",
+          icon: "aqueduct",
+          blurb: "שיפוע של סנטימטרים בודדים — ומים לעיר שלמה.",
+          movie: { title: "אסטריקס: האחוזה של האלים", year: "2014", kind: "אנימציה", age: "מגיל 7+", why: "הסרט עוסק כולו בהנדסה ובבנייה רומית — מדידות, תכנון ופועלים, בדיוק כמו באמות המים." },
+          story: [
+            "רומא צמאה. מאות אלפי תושבים זקוקים למים, והמעיינות הקרובים אינם מספיקים. הפתרון הרומי מגיע מרחוק: אמות מים שמובילות מים ממרחק עשרות קילומטרים.",
+            "הסוד אינו במשאבות — הוא בכוח המשיכה. המהנדסים בונים תעלה עם שיפוע עדין ביותר, לפעמים כמה סנטימטרים בלבד לכל קילומטר, כדי שהמים יזרמו לאט ובביטחון.",
+            "כשהתעלה מגיעה לעמק, נבנות קשתות אבן זו על גבי זו כדי לשמור על הגובה. המים מגיעים למזרקות ולבתי המרחץ הציבוריים — וכל אזרח, עשיר או עני, יכול לשתות."
+          ],
+          quiz: [
+            { q: "מה גורם למים לזרום באמת המים?", answers: [
+              { t: "כוח המשיכה ושיפוע עדין ומדויק", c: true },
+              { t: "משאבות שמופעלות בידי עבדים", c: false },
+              { t: "רוח שדוחפת את המים קדימה", c: false } ] },
+            { q: "למה בונים קשתות אבן גבוהות בעמקים?", answers: [
+              { t: "כדי לשמור על גובה קבוע של התעלה", c: true },
+              { t: "כדי לקשט את הנוף בלבד", c: false },
+              { t: "כדי לשמש כגשר לחיילים", c: false } ] },
+            { q: "לאן הגיעו המים בסוף המסלול?", answers: [
+              { t: "למזרקות ולבתי מרחץ ציבוריים", c: true },
+              { t: "רק לארמון הקיסר", c: false },
+              { t: "לשדות שמחוץ לעיר", c: false } ] }
+          ]
+        },
+        {
+          id: "colosseum",
+          title: "יום בקולוסיאום",
+          icon: "sword",
+          blurb: "חמישים אלף צופים, ובמה שנעלמת מתחת לרצפה.",
+          movie: { title: "היסטוריה נוראית: הרומאים המסריחים", year: "2019", kind: "הרפתקה קומית", age: "מגיל 8+", why: "מבט מצחיק אך מדויק על רומא, הצבא והזירה — מושלם אחרי הסיפור על הקולוסיאום." },
+          story: [
+            "הקולוסיאום מתמלא. כחמישים אלף צופים מוצאים את מקומם לפי מספר החקוק על שבר חרס — כרטיס כניסה מהעולם העתיק.",
+            "מתחת לזירה מסתתר ההיפוגיאום: מבוך של מסדרונות, כלובים ומעליות עץ. חיות ולוחמים עולים משם אל הזירה דרך דלתות סתר, ונדמה לקהל שהם מופיעים משום מקום.",
+            "לוקיוס, ילד בן עשר, יושב ביציע העליון. הוא נדהם מהמכונה האנושית שמפעילה את כל זה — אבל גם מבין שהמופע הזה בנוי על סבלם של אנשים שנאלצו להילחם בעל כורחם."
+          ],
+          quiz: [
+            { q: "איך ידעו הרומאים היכן לשבת בקולוסיאום?", answers: [
+              { t: "לפי מספר שנחקק על שבר חרס", c: true },
+              { t: "לפי צבע הבגדים שלבשו", c: false },
+              { t: "כל אחד ישב היכן שרצה", c: false } ] },
+            { q: "מה היה ההיפוגיאום?", answers: [
+              { t: "מערכת מסדרונות ומעליות מתחת לזירה", c: true },
+              { t: "היציע העליון של הקהל", c: false },
+              { t: "מקדש שנבנה ליד האצטדיון", c: false } ] },
+            { q: "מה מבין לוקיוס לגבי המופע?", answers: [
+              { t: "שהוא מרשים אך בנוי על סבלם של אנשים", c: true },
+              { t: "שכל הלוחמים השתתפו מרצונם", c: false },
+              { t: "שהמופע נועד רק לילדים", c: false } ] }
+          ]
+        },
+        {
+          id: "pompeii",
+          title: "היום שבו ירד האפר",
+          icon: "volcano",
+          blurb: "עיר שלמה שנעצרה באמצע יום רגיל.",
+          movie: { title: "פומפיי: היום האחרון", year: "2003", kind: "דוקו-דרמה", age: "מגיל 10+", why: "שחזור מדויק של שעות ההתפרצות על בסיס ממצאים ארכיאולוגיים. עוצמתי מאוד — מומלץ בליווי מבוגר." },
+          story: [
+            "בבוקר של שנת 79 לספירה, פומפיי מתנהלת כרגיל: מאפיות מוציאות לחם, ילדים משחקים ברחוב, וסוחרים פותחים דוכנים. איש אינו יודע שזהו יומה האחרון של העיר.",
+            "הר הווזוב מתפרץ ופולט עמוד אפר ואבן אל השמיים. במשך שעות יורד גשם של אפר שמכסה גגות ורחובות, ורבים מהתושבים מספיקים להימלט בעוד אחרים נלכדים.",
+            "דווקא האפר, שהיה אסון, שימר את פומפיי כמעט בשלמותה. כשארכיאולוגים חשפו אותה מחדש, הם מצאו לחם בתנור וכתובות על הקירות — צילום מדויק של יום אחד בחיי העיר."
+          ],
+          quiz: [
+            { q: "מה קרה בפומפיי בשנת 79 לספירה?", answers: [
+              { t: "הר הווזוב התפרץ וכיסה את העיר באפר", c: true },
+              { t: "רעידת אדמה הטביעה אותה בים", c: false },
+              { t: "צבא זר שרף אותה עד היסוד", c: false } ] },
+            { q: "למה דווקא האפר עזר לארכיאולוגים?", answers: [
+              { t: "הוא שימר את העיר כמעט בשלמותה", c: true },
+              { t: "הוא סימן את מיקומה על המפה", c: false },
+              { t: "הוא הפך את האבנים לזהב", c: false } ] },
+            { q: "מה מצאו החוקרים בעיר?", answers: [
+              { t: "לחם בתנור וכתובות על הקירות", c: true },
+              { t: "רק אבנים ריקות בלי סימני חיים", c: false },
+              { t: "ספינות שנקברו בחול", c: false } ] }
+          ]
+        }
+      ],
+      capstone: { title: "אסטריקס ואובליקס נגד קיסר", year: "1999", kind: "הרפתקה קומית", age: "מגיל 8+", why: "האימפריה הרומית על הצבא, הכבישים והזירה שלה — סיכום מצחיק לכל מה שלמדתם." }
+    }
+  ],
+
+
+  /* =========================================================================
+     ARTWORK — volumetric vector art for the museum pedestals, keyed by
+     artifact id. Each piece uses gradients + highlights + occlusion shading
+     so it reads as a solid object, not a flat icon.
+     TO USE REAL PHOTOS INSTEAD: add an `img` field to an artifact in
+     artifacts[] (e.g. img: "https://.../helmet.png") and it overrides this.
+     Transparent PNGs work best - the drop-shadow is applied by CSS.
+     ========================================================================= */
+  artwork: {
+    "flint-blade": '<svg viewBox="0 0 100 120"><defs><linearGradient id="fla" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a8b0ba"/><stop offset=".45" stop-color="#6d7783"/><stop offset="1" stop-color="#3f464f"/></linearGradient><linearGradient id="flb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e2e8ee" stop-opacity=".85"/><stop offset="1" stop-color="#e2e8ee" stop-opacity="0"/></linearGradient></defs><path d="M50 10 L73 54 L64 106 L36 106 L27 54Z" fill="url(#fla)"/><path d="M50 10 L50 106 L36 106 L27 54Z" fill="url(#flb)" opacity=".5"/><path d="M50 10 L73 54 L50 62Z" fill="#fff" opacity=".2"/><path d="M27 54 L50 62 L36 106Z" fill="#000" opacity=".14"/><path d="M50 10 L73 54 L64 106 L36 106 L27 54Z" fill="none" stroke="#2c323a" stroke-width="1.6" stroke-linejoin="round"/><path d="M42 30 L47 46 M58 34 L54 48" stroke="#fff" stroke-width="1.4" opacity=".3" stroke-linecap="round"/></svg>',
+
+    "stone-lamp": '<svg viewBox="0 0 100 120"><defs><linearGradient id="lpa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ded3c2"/><stop offset="1" stop-color="#8b8071"/></linearGradient><radialGradient id="lpb" cx=".5" cy=".75" r=".75"><stop offset="0" stop-color="#fff3c4"/><stop offset=".45" stop-color="#ffb327"/><stop offset="1" stop-color="#ff6a00" stop-opacity=".15"/></radialGradient></defs><path d="M14 86 Q50 112 86 86 Q82 70 50 70 Q18 70 14 86Z" fill="url(#lpa)"/><ellipse cx="50" cy="72" rx="33" ry="9" fill="#6e6558"/><ellipse cx="50" cy="73" rx="26" ry="6" fill="#443d34"/><path d="M50 26 Q62 52 50 70 Q38 52 50 26Z" fill="url(#lpb)"/><path d="M50 42 Q56 55 50 67 Q44 55 50 42Z" fill="#fff8d8" opacity=".9"/><path d="M18 84 Q50 104 82 84" fill="none" stroke="#fff" stroke-width="2" opacity=".28"/></svg>',
+
+    "tooth-necklace": '<svg viewBox="0 0 100 120"><defs><linearGradient id="nka" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf6"/><stop offset="1" stop-color="#c3b69c"/></linearGradient></defs><path d="M20 30 Q50 106 80 30" fill="none" stroke="#5f5140" stroke-width="4" stroke-linecap="round"/><path d="M20 30 Q50 106 80 30" fill="none" stroke="#8a7860" stroke-width="1.6" stroke-linecap="round"/><g><path d="M31 62 l7 2 -2 20 -7-4Z" fill="url(#nka)" stroke="#9c8f76" stroke-width="1"/><path d="M45 82 l8 1 -1 22 -7-2Z" fill="url(#nka)" stroke="#9c8f76" stroke-width="1"/><path d="M60 78 l7-2 3 21 -7 3Z" fill="url(#nka)" stroke="#9c8f76" stroke-width="1"/><circle cx="26" cy="48" r="5" fill="#9d6b4a"/><circle cx="74" cy="48" r="5" fill="#9d6b4a"/><circle cx="24.5" cy="46.5" r="1.8" fill="#fff" opacity=".55"/></g></svg>',
+
+    "scarab": '<svg viewBox="0 0 100 120"><defs><radialGradient id="sca" cx=".38" cy=".28" r=".85"><stop offset="0" stop-color="#6fe0da"/><stop offset=".55" stop-color="#1c99a1"/><stop offset="1" stop-color="#0a505a"/></radialGradient><linearGradient id="scb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe293"/><stop offset="1" stop-color="#bf912a"/></linearGradient></defs><path d="M22 60 L8 44 M22 74 L6 80 M78 60 L92 44 M78 74 L94 80" stroke="url(#scb)" stroke-width="5" stroke-linecap="round"/><ellipse cx="50" cy="72" rx="29" ry="33" fill="url(#sca)"/><path d="M50 40 V104" stroke="#08404a" stroke-width="2.6"/><path d="M28 56 Q50 48 72 56" fill="none" stroke="#08404a" stroke-width="2.2"/><ellipse cx="50" cy="44" rx="13" ry="11" fill="url(#scb)"/><ellipse cx="43" cy="58" rx="9" ry="13" fill="#fff" opacity=".18"/><circle cx="45" cy="42" r="2.4" fill="#fff" opacity=".6"/></svg>',
+
+    "scribe-kit": '<svg viewBox="0 0 100 120"><defs><linearGradient id="ska" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8d9bb"/><stop offset="1" stop-color="#a68d63"/></linearGradient></defs><rect x="16" y="34" width="44" height="66" rx="5" fill="url(#ska)" stroke="#7d6742" stroke-width="1.6"/><rect x="20" y="38" width="36" height="58" rx="3" fill="#000" opacity=".05"/><circle cx="30" cy="52" r="7.5" fill="#1d1d1d"/><circle cx="30" cy="52" r="7.5" fill="none" stroke="#7d6742" stroke-width="1.4"/><circle cx="30" cy="76" r="7.5" fill="#b83227"/><circle cx="30" cy="76" r="7.5" fill="none" stroke="#7d6742" stroke-width="1.4"/><circle cx="27.5" cy="49.5" r="2" fill="#fff" opacity=".35"/><path d="M46 46 h9 M46 56 h9 M46 66 h9 M46 76 h6" stroke="#7d6742" stroke-width="1.8" stroke-linecap="round" opacity=".7"/><path d="M74 26 L84 30 L70 100 L63 97Z" fill="#d8c48f" stroke="#8d7748" stroke-width="1.5"/><path d="M74 26 L79 28 L66 98 L63 97Z" fill="#fff" opacity=".25"/><path d="M63 97 L70 100 L66 108Z" fill="#1d1d1d"/></svg>',
+
+    "gold-mask": '<svg viewBox="0 0 100 120"><defs><linearGradient id="gma" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffeaa0"/><stop offset=".45" stop-color="#e9b829"/><stop offset="1" stop-color="#9c7310"/></linearGradient><linearGradient id="gmb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f6fb5"/><stop offset="1" stop-color="#17406e"/></linearGradient></defs><path d="M26 22 Q50 12 74 22 L79 54 Q79 92 50 106 Q21 92 21 54Z" fill="url(#gma)"/><path d="M26 22 Q50 12 74 22 L76 34 Q50 26 24 34Z" fill="url(#gmb)"/><path d="M22 40 h10 v9 h-10Z M68 40 h10 v9 h-10Z" fill="url(#gmb)"/><path d="M26 22 Q50 12 74 22 L79 54 Q79 92 50 106 Q21 92 21 54Z" fill="#fff" opacity=".12" clip-path="inset(0 50% 0 0)"/><ellipse cx="39" cy="58" rx="7" ry="4.6" fill="#f5f3ea"/><ellipse cx="61" cy="58" rx="7" ry="4.6" fill="#f5f3ea"/><ellipse cx="39" cy="58" rx="3" ry="3" fill="#12233b"/><ellipse cx="61" cy="58" rx="3" ry="3" fill="#12233b"/><path d="M30 52 q9-6 18 0 M52 52 q9-6 18 0" stroke="#12233b" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M43 82 q7 4 14 0" stroke="#8a6410" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M50 94 q-6-4 0-10 q6 6 0 10Z" fill="url(#gmb)"/></svg>',
+
+    "spartan-helm": '<svg viewBox="0 0 100 120"><defs><linearGradient id="hla" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e0b46a"/><stop offset=".42" stop-color="#a9762c"/><stop offset="1" stop-color="#5f4212"/></linearGradient><linearGradient id="hlb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2574c"/><stop offset="1" stop-color="#8e1f18"/></linearGradient></defs><path d="M28 22 Q50 4 72 22 Q86 34 84 46 Q70 40 50 40 Q30 40 16 46 Q14 34 28 22Z" fill="url(#hlb)"/><path d="M22 46 Q22 22 50 22 Q78 22 78 46 L78 74 Q78 96 50 108 Q22 96 22 74Z" fill="url(#hla)"/><path d="M22 46 Q22 22 50 22 L50 108 Q22 96 22 74Z" fill="#fff" opacity=".16"/><path d="M50 40 V108" stroke="#4d340c" stroke-width="2.4"/><path d="M34 58 q-8 2-8 10 q0 8 8 10 q4-10 0-20Z" fill="#3a2708"/><path d="M66 58 q8 2 8 10 q0 8-8 10 q-4-10 0-20Z" fill="#3a2708"/><path d="M43 70 q7-4 14 0 l0 26 q-7 8-14 0Z" fill="#3a2708"/><path d="M28 34 q22-10 44 0" fill="none" stroke="#f0d9a8" stroke-width="2" opacity=".55"/></svg>',
+
+    "black-vase": '<svg viewBox="0 0 100 120"><defs><linearGradient id="vsa" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a3a3c"/><stop offset=".3" stop-color="#191919"/><stop offset=".62" stop-color="#2b2b2d"/><stop offset="1" stop-color="#0d0d0e"/></linearGradient><linearGradient id="vsb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d2703c"/><stop offset=".5" stop-color="#b8552a"/><stop offset="1" stop-color="#8c3d1c"/></linearGradient></defs><path d="M38 16 h24 v8 q16 12 16 34 q0 30-28 44 q-28-14-28-44 q0-22 16-34Z" fill="url(#vsa)"/><path d="M26 34 q-12 4-10 16 q2 10 12 10" fill="none" stroke="url(#vsa)" stroke-width="6"/><path d="M74 34 q12 4 10 16 q-2 10-12 10" fill="none" stroke="url(#vsa)" stroke-width="6"/><path d="M30 52 h40 v22 h-40Z" fill="url(#vsb)"/><circle cx="42" cy="63" r="5" fill="#191919"/><path d="M50 58 l7 5 -7 5Z" fill="#191919"/><circle cx="64" cy="63" r="4" fill="#191919"/><path d="M38 16 h24 v8 h-24Z" fill="url(#vsb)"/><path d="M40 30 q-8 10-8 28 q0 22 12 34" fill="none" stroke="#fff" stroke-width="4" opacity=".13"/></svg>',
+
+    "olive-wreath": '<svg viewBox="0 0 100 120"><defs><linearGradient id="ola" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fc96b"/><stop offset="1" stop-color="#3f7a33"/></linearGradient></defs><path d="M50 100 Q14 88 16 54 Q18 24 50 18 Q82 24 84 54 Q86 88 50 100" fill="none" stroke="#5d4a2a" stroke-width="4" stroke-linecap="round"/><g fill="url(#ola)"><ellipse cx="22" cy="42" rx="10" ry="5.5" transform="rotate(-52 22 42)"/><ellipse cx="20" cy="62" rx="10" ry="5.5" transform="rotate(-78 20 62)"/><ellipse cx="28" cy="82" rx="10" ry="5.5" transform="rotate(-118 28 82)"/><ellipse cx="34" cy="26" rx="10" ry="5.5" transform="rotate(-28 34 26)"/><ellipse cx="78" cy="42" rx="10" ry="5.5" transform="rotate(52 78 42)"/><ellipse cx="80" cy="62" rx="10" ry="5.5" transform="rotate(78 80 62)"/><ellipse cx="72" cy="82" rx="10" ry="5.5" transform="rotate(118 72 82)"/><ellipse cx="66" cy="26" rx="10" ry="5.5" transform="rotate(28 66 26)"/><ellipse cx="50" cy="18" rx="10" ry="5.5"/></g><circle cx="38" cy="34" r="3.4" fill="#2f5d26"/><circle cx="62" cy="34" r="3.4" fill="#2f5d26"/><circle cx="26" cy="52" r="3.4" fill="#2f5d26"/></svg>',
+
+    "denarius": '<svg viewBox="0 0 100 120"><defs><radialGradient id="cna" cx=".36" cy=".3" r=".85"><stop offset="0" stop-color="#f4f6f8"/><stop offset=".5" stop-color="#b9c2cc"/><stop offset="1" stop-color="#79838f"/></radialGradient></defs><ellipse cx="50" cy="63" rx="37" ry="37" fill="url(#cna)"/><ellipse cx="50" cy="63" rx="37" ry="37" fill="none" stroke="#69737f" stroke-width="2"/><ellipse cx="50" cy="63" rx="30" ry="30" fill="none" stroke="#8b949f" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M40 82 q4-20 2-28 q10-12 22-2 q4 14-2 30Z" fill="#8f98a3"/><circle cx="49" cy="52" r="9" fill="#9aa3ae"/><path d="M40 50 q10-12 20-2" fill="none" stroke="#6d7783" stroke-width="2.4"/><ellipse cx="38" cy="44" rx="10" ry="7" fill="#fff" opacity=".4" transform="rotate(-28 38 44)"/></svg>',
+
+    "gladius": '<svg viewBox="0 0 100 120"><defs><linearGradient id="gla" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9aa5b1"/><stop offset=".38" stop-color="#eef2f6"/><stop offset=".55" stop-color="#c3ccd6"/><stop offset="1" stop-color="#78828e"/></linearGradient><linearGradient id="glb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c08b3e"/><stop offset=".45" stop-color="#8a5c22"/><stop offset="1" stop-color="#5e3c12"/></linearGradient></defs><path d="M50 6 L59 22 L59 74 L41 74 L41 22Z" fill="url(#gla)"/><path d="M50 6 L50 74 L41 74 L41 22Z" fill="#fff" opacity=".3"/><rect x="30" y="74" width="40" height="8" rx="3" fill="url(#glb)"/><rect x="44" y="82" width="12" height="20" rx="3" fill="#6b4a1c"/><path d="M46 84 h2 v16 h-2Z" fill="#fff" opacity=".2"/><ellipse cx="50" cy="106" rx="10" ry="6" fill="url(#glb)"/><ellipse cx="47" cy="104" rx="3" ry="2" fill="#fff" opacity=".3"/></svg>',
+
+    "floor-mosaic": '<svg viewBox="0 0 100 120"><defs><linearGradient id="msa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3ede0"/><stop offset="1" stop-color="#cfc4ae"/></linearGradient></defs><g transform="translate(50 66) scale(1 .58) rotate(45) translate(-32 -32)"><rect x="0" y="0" width="64" height="64" rx="3" fill="url(#msa)" stroke="#a1937a" stroke-width="1.6"/><rect x="6" y="6" width="12" height="12" fill="#3f6fa8"/><rect x="22" y="6" width="12" height="12" fill="#c96b3a"/><rect x="38" y="6" width="12" height="12" fill="#3f6fa8"/><rect x="6" y="22" width="12" height="12" fill="#c96b3a"/><rect x="22" y="22" width="12" height="12" fill="#2e4a63"/><rect x="38" y="22" width="12" height="12" fill="#c96b3a"/><rect x="6" y="38" width="12" height="12" fill="#3f6fa8"/><rect x="22" y="38" width="12" height="12" fill="#c96b3a"/><rect x="38" y="38" width="12" height="12" fill="#3f6fa8"/></g><ellipse cx="50" cy="66" rx="34" ry="20" fill="#fff" opacity=".12"/></svg>',
+
+    "hand-axe": '<svg viewBox="0 0 100 120"><defs><linearGradient id="haa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b6ada0"/><stop offset=".45" stop-color="#8a8175"/><stop offset="1" stop-color="#57514a"/></linearGradient></defs><path d="M50 8 Q76 40 74 74 Q72 104 50 112 Q28 104 26 74 Q24 40 50 8Z" fill="url(#haa)"/><path d="M50 8 Q28 40 26 74 Q28 104 50 112Z" fill="#fff" opacity=".18"/><path d="M50 8 Q76 40 74 74 Q72 104 50 112" fill="none" stroke="#413c36" stroke-width="1.6"/><path d="M38 34 l10 14 -8 12 M62 44 l-8 12 9 12 M44 76 l8 10" stroke="#4b453e" stroke-width="1.5" fill="none" opacity=".55"/><path d="M50 8 Q64 30 62 52" stroke="#fff" stroke-width="2" fill="none" opacity=".35"/></svg>',
+
+    "cave-ochre": '<svg viewBox="0 0 100 120"><defs><linearGradient id="coa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfc6b6"/><stop offset="1" stop-color="#8d8578"/></linearGradient></defs><path d="M14 42 Q50 30 88 44 Q94 78 84 98 Q50 110 16 96 Q8 72 14 42Z" fill="url(#coa)" stroke="#6e675c" stroke-width="1.6"/><path d="M14 42 Q50 30 88 44 Q66 46 50 56 Q30 48 14 42Z" fill="#fff" opacity=".25"/><ellipse cx="34" cy="70" rx="12" ry="10" fill="#b3452a"/><ellipse cx="34" cy="70" rx="7" ry="5.5" fill="#8a2f1c"/><ellipse cx="64" cy="66" rx="10" ry="8" fill="#c9822c"/><ellipse cx="58" cy="90" rx="9" ry="6" fill="#6b4a2f"/><path d="M74 82 v12 M70 84 v9 M78 84 v9 M74 82 q-6 2-6 8" stroke="#8a2f1c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+
+    "bone-flute": '<svg viewBox="0 0 100 120"><defs><linearGradient id="bfa" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fffdf4"/><stop offset=".4" stop-color="#eee5cf"/><stop offset="1" stop-color="#b8ab8c"/></linearGradient></defs><path d="M40 10 q10-6 20 0 q6 6 2 14 l-2 78 q0 10-10 10 q-10 0-10-10 l-2-78 q-4-8 2-14Z" fill="url(#bfa)" stroke="#9d906f" stroke-width="1.5"/><path d="M44 12 q6-4 8 0 l2 92 q-4 6-8 0Z" fill="#fff" opacity=".45"/><ellipse cx="50" cy="42" rx="4.5" ry="3.6" fill="#6f6449"/><ellipse cx="50" cy="60" rx="4.5" ry="3.6" fill="#6f6449"/><ellipse cx="50" cy="78" rx="4.5" ry="3.6" fill="#6f6449"/><ellipse cx="50" cy="96" rx="4.5" ry="3.6" fill="#6f6449"/><ellipse cx="50" cy="20" rx="6" ry="4" fill="#57503c"/></svg>',
+
+    "ankh": '<svg viewBox="0 0 100 120"><defs><linearGradient id="aka" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe79f"/><stop offset=".45" stop-color="#e5b52c"/><stop offset="1" stop-color="#96700f"/></linearGradient></defs><path d="M50 8 q20 0 20 20 q0 14-12 20 q12 2 12 2 v10 h-14 v52 q0 6-6 6 q-6 0-6-6 V60 H30 V50 s0 0 12-2 q-12-6-12-20 q0-20 20-20Z" fill="url(#aka)" stroke="#8a650c" stroke-width="1.6" stroke-linejoin="round"/><ellipse cx="50" cy="28" rx="10" ry="12" fill="#2f8fa0"/><ellipse cx="50" cy="28" rx="5.5" ry="7" fill="#1d5f6e"/><path d="M42 14 q-6 6-6 14 q0 8 6 12" stroke="#fff" stroke-width="2.4" fill="none" opacity=".45"/><path d="M46 62 h3 v46 h-3Z" fill="#fff" opacity=".28"/></svg>',
+
+    "canopic-jar": '<svg viewBox="0 0 100 120"><defs><linearGradient id="cja" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e6dcc6"/><stop offset=".32" stop-color="#fbf6e9"/><stop offset="1" stop-color="#ada384"/></linearGradient><linearGradient id="cjb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e6dcc6"/><stop offset=".32" stop-color="#fbf6e9"/><stop offset="1" stop-color="#ada384"/></linearGradient><linearGradient id="cjc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a86c4"/><stop offset="1" stop-color="#1c4d78"/></linearGradient></defs><path d="M28 52 q-4 30 2 44 q20 8 40 0 q6-14 2-44Z" fill="url(#cjb)" stroke="#8f866c" stroke-width="1.5"/><path d="M32 54 q-4 28 0 40 q6 3 8 3 q-6-20-2-43Z" fill="#fff" opacity=".5"/><path d="M26 46 q24-8 48 0 v8 q-24 7-48 0Z" fill="url(#cjc)"/><path d="M36 44 q6-30 14-30 q8 0 14 30Z" fill="url(#cjb)" stroke="#8f866c" stroke-width="1.4"/><path d="M36 44 q6-30 14-30 v30Z" fill="#fff" opacity=".4"/><path d="M40 26 q10-4 20 0" stroke="url(#cjc)" stroke-width="3" fill="none"/><circle cx="45" cy="34" r="2" fill="#1c4d78"/><circle cx="55" cy="34" r="2" fill="#1c4d78"/><path d="M32 70 h36 M32 80 h36" stroke="#b6432c" stroke-width="1.6" opacity=".5"/></svg>',
+
+    "papyrus-scroll": '<svg viewBox="0 0 100 120"><defs><linearGradient id="psa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6ecd0"/><stop offset=".5" stop-color="#e6d5ab"/><stop offset="1" stop-color="#c2ab7c"/></linearGradient></defs><rect x="18" y="30" width="64" height="62" rx="3" fill="url(#psa)" stroke="#a8925f" stroke-width="1.5"/><rect x="22" y="30" width="10" height="62" fill="#fff" opacity=".35"/><path d="M28 44 h44 M28 54 h44 M28 64 h32 M28 74 h44" stroke="#8a6f3a" stroke-width="1.8" opacity=".55"/><circle cx="36" cy="44" r="3" fill="#b6432c" opacity=".8"/><circle cx="60" cy="64" r="3" fill="#b6432c" opacity=".8"/><ellipse cx="50" cy="28" rx="34" ry="9" fill="#d9c393" stroke="#a8925f" stroke-width="1.5"/><ellipse cx="50" cy="28" rx="26" ry="5" fill="#b89c66"/><ellipse cx="50" cy="94" rx="34" ry="9" fill="#d9c393" stroke="#a8925f" stroke-width="1.5"/><ellipse cx="50" cy="94" rx="26" ry="5" fill="#b89c66"/><ellipse cx="40" cy="26" rx="10" ry="3" fill="#fff" opacity=".4"/></svg>',
+
+    "discus": '<svg viewBox="0 0 100 120"><defs><radialGradient id="dsa" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#e6c78a"/><stop offset=".5" stop-color="#b98d3f"/><stop offset="1" stop-color="#6f4f16"/></radialGradient></defs><ellipse cx="50" cy="72" rx="40" ry="26" fill="url(#dsa)" transform="rotate(-18 50 72)"/><ellipse cx="50" cy="72" rx="40" ry="26" fill="none" stroke="#5c4111" stroke-width="1.8" transform="rotate(-18 50 72)"/><ellipse cx="50" cy="72" rx="28" ry="17" fill="none" stroke="#7d5a1c" stroke-width="2" transform="rotate(-18 50 72)"/><ellipse cx="50" cy="72" rx="15" ry="9" fill="#8a6522" transform="rotate(-18 50 72)"/><ellipse cx="38" cy="60" rx="16" ry="7" fill="#fff" opacity=".33" transform="rotate(-18 38 60)"/><path d="M34 88 q16 8 34 2" stroke="#4d360d" stroke-width="1.6" fill="none" opacity=".5"/></svg>',
+
+    "theater-mask": '<svg viewBox="0 0 100 120"><defs><linearGradient id="tma" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdf6e6"/><stop offset=".5" stop-color="#e6d9bd"/><stop offset="1" stop-color="#ab9b78"/></linearGradient></defs><path d="M50 12 q26 0 30 22 q4 26-6 48 q-9 20-24 26 q-15-6-24-26 q-10-22-6-48 q4-22 30-22Z" fill="url(#tma)" stroke="#8f8161" stroke-width="1.6"/><path d="M50 12 q-26 0-30 22 q-4 26 6 48 q9 20 24 26Z" fill="#fff" opacity=".3"/><path d="M20 30 q12-14 30-14 q18 0 30 14 q-8 8-30 8 q-22 0-30-8Z" fill="#9a7d45"/><path d="M24 26 q6-4 8 2 M40 22 q6-5 9 1 M58 22 q6-5 9 2 M72 28 q5-4 6 2" stroke="#6f5722" stroke-width="2.6" fill="none" stroke-linecap="round"/><ellipse cx="37" cy="54" rx="8" ry="9" fill="#3a3229"/><ellipse cx="63" cy="54" rx="8" ry="9" fill="#3a3229"/><path d="M30 44 q8-7 16-1 M54 43 q8-6 16 1" stroke="#6f6047" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M34 84 q16 16 32 0 q-16 10-32 0Z" fill="#3a3229"/><path d="M34 84 q16-8 32 0" stroke="#6f6047" stroke-width="2" fill="none"/></svg>',
+
+    "owl-coin": '<svg viewBox="0 0 100 120"><defs><radialGradient id="oca" cx=".34" cy=".3" r=".85"><stop offset="0" stop-color="#f7f9fb"/><stop offset=".5" stop-color="#c0c9d3"/><stop offset="1" stop-color="#7c8794"/></radialGradient></defs><ellipse cx="50" cy="63" rx="38" ry="38" fill="url(#oca)"/><ellipse cx="50" cy="63" rx="38" ry="38" fill="none" stroke="#68727e" stroke-width="2"/><ellipse cx="50" cy="63" rx="31" ry="31" fill="none" stroke="#8d96a1" stroke-width="1.4"/><path d="M50 40 q16 0 16 18 q0 20-16 26 q-16-6-16-26 q0-18 16-18Z" fill="#98a1ac"/><circle cx="43" cy="54" r="6" fill="#f2f5f8"/><circle cx="57" cy="54" r="6" fill="#f2f5f8"/><circle cx="43" cy="54" r="2.6" fill="#5b6570"/><circle cx="57" cy="54" r="2.6" fill="#5b6570"/><path d="M50 58 l-4 6 h8Z" fill="#5b6570"/><path d="M38 70 q12 6 24 0 M38 78 q12 6 24 0" stroke="#6d7783" stroke-width="1.6" fill="none"/><ellipse cx="36" cy="44" rx="10" ry="6" fill="#fff" opacity=".42" transform="rotate(-30 36 44)"/></svg>',
+
+    "strigil": '<svg viewBox="0 0 100 120"><defs><linearGradient id="sga" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e3c07f"/><stop offset=".38" stop-color="#c49640"/><stop offset="1" stop-color="#7a5817"/></linearGradient></defs><path d="M60 14 q26 24 20 56 q-5 26-30 36 q-8-6-4-12 q20-10 24-30 q5-26-18-44 q3-8 8-6Z" fill="url(#sga)" stroke="#6a4b12" stroke-width="1.5"/><path d="M60 14 q22 22 18 52" fill="none" stroke="#fff" stroke-width="2.4" opacity=".38"/><rect x="30" y="14" width="16" height="42" rx="7" fill="url(#sga)" stroke="#6a4b12" stroke-width="1.5"/><path d="M34 18 h4 v34 h-4Z" fill="#fff" opacity=".35"/><path d="M30 26 h16 M30 34 h16 M30 42 h16" stroke="#6a4b12" stroke-width="1.5" opacity=".6"/></svg>',
+
+    "signet-ring": '<svg viewBox="0 0 100 120"><defs><linearGradient id="sra" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a6"/><stop offset=".45" stop-color="#dfae2b"/><stop offset="1" stop-color="#8e6a0d"/></linearGradient><radialGradient id="srb" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#e0705a"/><stop offset=".6" stop-color="#a83323"/><stop offset="1" stop-color="#661a11"/></radialGradient></defs><ellipse cx="50" cy="76" rx="30" ry="30" fill="none" stroke="url(#sra)" stroke-width="13"/><ellipse cx="50" cy="76" rx="30" ry="30" fill="none" stroke="#7d5c0b" stroke-width="1.2"/><path d="M28 58 q8-12 22-14" fill="none" stroke="#fff" stroke-width="3.4" opacity=".45"/><ellipse cx="50" cy="34" rx="21" ry="17" fill="url(#sra)" stroke="#7d5c0b" stroke-width="1.5"/><ellipse cx="50" cy="34" rx="14" ry="11" fill="url(#srb)"/><path d="M44 28 q6-4 12 0" stroke="#fff" stroke-width="2" fill="none" opacity=".45"/><path d="M46 32 l4 8 4-8" stroke="#f2c9a0" stroke-width="1.8" fill="none"/></svg>',
+
+    "legion-eagle": '<svg viewBox="0 0 100 120"><defs><linearGradient id="lea" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".45" stop-color="#e0b12b"/><stop offset="1" stop-color="#8d6709"/></linearGradient><linearGradient id="leb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c2372a"/><stop offset="1" stop-color="#7d1a13"/></linearGradient></defs><rect x="46" y="30" width="8" height="82" rx="3" fill="url(#lea)"/><rect x="47.5" y="32" width="2.5" height="78" fill="#fff" opacity=".35"/><path d="M50 6 q7 0 8 8 q10-4 18 4 q-10 2-14 8 q8 2 12 10 q-14-4-24 2 q-10-6-24-2 q4-8 12-10 q-4-6-14-8 q8-8 18-4 q1-8 8-8Z" fill="url(#lea)" stroke="#7d5c0b" stroke-width="1.3" stroke-linejoin="round"/><circle cx="47" cy="12" r="1.8" fill="#5c430a"/><path d="M50 6 q-7 0-8 8 q-10-4-18 4 q10 2 14 8 q-8 2-12 10 q14-4 24 2Z" fill="#fff" opacity=".2"/><path d="M32 46 h36 v22 l-18 8 -18-8Z" fill="url(#leb)"/><path d="M32 46 h10 v26 l-10-4Z" fill="#fff" opacity=".18"/><text x="50" y="62" font-size="13" font-weight="700" text-anchor="middle" fill="#ffe9a0" font-family="Georgia,serif">SPQR</text></svg>'
+  },
+
+  /* =========================================================================
+     ARTIFACTS — shop inventory / museum collectibles.
+     Bought with the spendable balance; `era` matches an id in eras[].
+     Add an item by pushing an object here — the shop and museum pick it up.
+     ========================================================================= */
+  artifacts: [
+    { id: "flint-blade",   name: "להב צור מלוטש",       era: "prehistory", cost: 30,  icon: "flint",
+      fact: "אבן צור נשברת לשברים חדים כתער. בגלל זה היא הייתה חומר הגלם החשוב ביותר של האדם הקדמון — הסכין, הגרזן והחץ הראשונים." },
+    { id: "stone-lamp",    name: "מנורת שומן מאבן",      era: "prehistory", cost: 45,  icon: "lamp",
+      fact: "כדי לצייר עמוק במערה החשוכה, השתמשו במנורת אבן קטנה עם שומן חיות ופתילה מאזוב. בלעדיה לא היו נוצרים ציורי המערה." },
+    { id: "tooth-necklace",name: "שרשרת שיני חיות",      era: "prehistory", cost: 60,  icon: "beads",
+      fact: "שיניים וקונכיות מנוקבות הן התכשיטים הראשונים בהיסטוריה. הן סימנו מי צד חיה גדולה — סוג של מדליה פרהיסטורית." },
+
+    { id: "scarab",        name: "קמע חרפושית",          era: "egypt",      cost: 40,  icon: "scarab",
+      fact: "חיפושית הזבל דוחפת כדור לפניה, והמצרים ראו בכך את השמש שנדחפת בשמיים. לכן ענדו חרפושית כקמע להגנה ולמזל." },
+    { id: "scribe-kit",    name: "ערכת סופר וקולמוס",    era: "egypt",      cost: 55,  icon: "palette",
+      fact: "לסופר היו שני צבעי דיו: שחור לטקסט הרגיל ואדום לכותרות ולתאריכים. זו ההדגשה הראשונה בהיסטוריה — הרבה לפני הטוש." },
+    { id: "gold-mask",     name: "מסכת מומיה מוזהבת",    era: "egypt",      cost: 90,  icon: "mask",
+      fact: "המסכה הונחה על פני המומיה כדי שהנשמה תזהה את בעליה כשתחזור אליו. לכן חרתו עליה את הפנים בדיוק רב." },
+
+    { id: "spartan-helm",  name: "קסדה ספרטנית",         era: "greece",     cost: 50,  icon: "helmet",
+      fact: "קסדת הברונזה כיסתה כמעט את כל הפנים והגנה מצוין — אבל הקשתה מאוד לשמוע ולראות. לכן הספרטנים למדו להילחם לפי תנועות, לא לפי צעקות." },
+    { id: "black-vase",    name: "אגרטל דמויות שחורות",  era: "greece",     cost: 70,  icon: "amphora",
+      fact: "על האגרטלים ציירו סצנות ספורט ומיתולוגיה. הם היו גם כלי אחסון ליין ושמן וגם 'ספר תמונות' — כך אנחנו יודעים היום איך היוונים נראו." },
+    { id: "olive-wreath",  name: "זר עלי זית",           era: "greece",     cost: 85,  icon: "wreath",
+      fact: "הזר נקטף מעץ זית קדוש באולימפיה, ולא היה שווה כסף כלל. אבל הכבוד שהוא העניק למנצח נשמר לכל חייו." },
+
+    { id: "denarius",      name: "מטבע דנריוס",          era: "rome",       cost: 55,  icon: "coin",
+      fact: "על כל מטבע הוטבע דיוקן הקיסר. כך הכירו את פניו גם אנשים שגרו אלפי קילומטרים מרומא ולא ראו אותו מעולם." },
+    { id: "gladius",       name: "גלדיוס — חרב קצרה",    era: "rome",       cost: 75,  icon: "sword",
+      fact: "החרב הרומית הייתה קצרה בכוונה: בקרב צפוף, מאחורי חומת מגנים, דקירה קצרה ומהירה יעילה יותר מהנפה רחבה." },
+    { id: "floor-mosaic",  name: "פסיפס רצפה",           era: "rome",       cost: 95,  icon: "mosaic",
+      fact: "רצפות פסיפס הורכבו מאלפי אבנים זעירות. בכניסה לבתים ברומא נהגו להרכיב כתובת אזהרה: 'היזהר מהכלב'." },
+
+    { id: "hand-axe",      name: "אבן יד מסותתת",        era: "prehistory", cost: 25,  icon: "flint",
+      fact: "אבן היד היא הכלי שהאדם ייצר הכי הרבה זמן בהיסטוריה — יותר ממיליון שנה. אותה צורה בדיוק נמצאה באפריקה, באסיה ובאירופה." },
+    { id: "cave-ochre",    name: "לוח אוכרה אדומה",      era: "prehistory", cost: 35,  icon: "palette",
+      fact: "האוכרה היא אבן שנטחנה לאבקה אדומה. ערבבו אותה עם שומן או רוק — וכך נוצר הצבע הראשון, שנשמר על קירות מערות 40,000 שנה." },
+    { id: "bone-flute",    name: "חליל עצם",             era: "prehistory", cost: 50,  icon: "beads",
+      fact: "החליל העתיק בעולם נוצר מעצם כנף של נשר. הוא מוכיח שהאדם הקדמון לא רק שרד — הוא גם ניגן ועשה מוזיקה יחד." },
+
+    { id: "ankh",          name: "קמע ענח'",             era: "egypt",      cost: 45,  icon: "scarab",
+      fact: "הענח' הוא סימן החיים. בציורים האלים מחזיקים אותו מול אף המלך — כאילו הם נותנים לו נשימה ומעניקים לו חיים." },
+    { id: "canopic-jar",   name: "כד קנופי",             era: "egypt",      cost: 65,  icon: "amphora",
+      fact: "בזמן החניטה הוציאו את האיברים הפנימיים ושמרו אותם בארבעה כדים. הלב לבדו הושאר בגוף — המצרים האמינו שבו נמצאת המחשבה." },
+    { id: "papyrus-scroll",name: "מגילת פפירוס",         era: "egypt",      cost: 80,  icon: "palette",
+      fact: "הפפירוס נעשה מקנה שגדל בנילוס: חותכים לרצועות, מצליבים שתי שכבות ומכים בפטיש עד שהן נדבקות. זה הנייר הראשון בעולם." },
+
+    { id: "discus",        name: "דיסקוס אולימפי",       era: "greece",     cost: 55,  icon: "coin",
+      fact: "דיסקוס הברונזה שקל עד 6 קילו — הרבה יותר מהדיסקוס של היום. הוא היה אחד מחמשת המקצועות של הפנטתלון האולימפי." },
+    { id: "theater-mask",  name: "מסכת תיאטרון",         era: "greece",     cost: 60,  icon: "mask",
+      fact: "בתיאטרון היווני שיחקו רק גברים, וכל שחקן גילם כמה דמויות — פשוט על ידי החלפת מסכה. הפה הפתוח גם הגביר את הקול." },
+    { id: "owl-coin",      name: "מטבע ינשוף אתונאי",    era: "greece",     cost: 90,  icon: "coin",
+      fact: "הינשוף הוא ציפורה של אתנה, אלת החוכמה. המטבע היה כה אמין שסוחרים בכל הים התיכון קיבלו אותו — כמו דולר של העולם העתיק." },
+
+    { id: "strigil",       name: "מגרדת מרחץ",           era: "rome",       cost: 60,  icon: "sword",
+      fact: "לרומאים לא היה סבון. הם משחו את הגוף בשמן זית ואז גירדו אותו עם המגרדת — והלכלוך יצא יחד עם השמן." },
+    { id: "signet-ring",   name: "טבעת חותם",            era: "rome",       cost: 70,  icon: "coin",
+      fact: "כל אדם חשוב נשא טבעת עם סמל אישי. הוא הטביע אותה בשעווה חמה על מכתב — וכך ידעו שהמכתב אמיתי ואיש לא פתח אותו." },
+    { id: "legion-eagle",  name: "נשר הלגיון",           era: "rome",       cost: 110, icon: "helmet",
+      fact: "לכל לגיון היה נשר זהב אחד. אובדנו נחשב לבושה נוראית, וחיילים היו יוצאים למסע ארוך שנים רק כדי להחזיר אותו." }
+  ]
+};
+</script>
+
+<script>
+/* =========================================================================
+   RelicReel — application engine
+   PERFORMANCE ARCHITECTURE
+   1. localStorage is read ONCE at boot into an in-memory Store.
+      Reads afterwards never touch localStorage. Writes happen only when a
+      value actually changes (Store.save is a no-op when nothing is dirty).
+   2. Progress for all eras is computed in ONE pass and memoized. The memo is
+      invalidated only when the answered-set changes, so re-rendering a view
+      costs zero recomputation if nothing happened.
+   3. Views render via a single innerHTML assignment from a joined array.
+      Answering a question does NOT re-render any list: it patches the two or
+      three nodes that actually changed.
+   4. Event handling is delegated - one listener on the app root, not one per
+      card. Rendering a grid attaches zero listeners.
+   ========================================================================= */
+(function(){
+  "use strict";
+
+  var DB = window.RELICREEL_DB;
+  var PPA = DB.config.pointsPerAnswer;
+  var K_NAME = 'relicreel_name', K_POINTS = 'relicreel_points', K_ANSWERED = 'relicreel_answered';
+  var K_SPENT = 'relicreel_spent', K_ARTIFACTS = 'relicreel_artifacts';
+
+  /* Artifact lookup built once */
+  var ART_MAP = {};
+  DB.artifacts.forEach(function(a){ ART_MAP[a.id] = a; });
+
+  /* ---------------- Store: single source of truth, in memory ------------- */
+  /* TWO separate counters, deliberately:
+       earned  - lifetime XP. Never decreases. Drives ranks AND era unlocks,
+                 so buying an artifact can never re-lock an era or demote you.
+       spent   - total spent in the shop.
+       balance = earned - spent  ->  the currency shown in the shop. */
+  var Store = {
+    name: '',
+    earned: 0,
+    spent: 0,
+    answered: null,     // Set of "era:capsule:qi" - O(1) lookups, no JSON.parse
+    artifacts: null,    // Set of artifact ids
+    _dirty: false,
+
+    load: function(){
+      this.name = localStorage.getItem(K_NAME) || '';
+      this.earned = parseInt(localStorage.getItem(K_POINTS) || '0', 10) || 0;
+      this.spent = parseInt(localStorage.getItem(K_SPENT) || '0', 10) || 0;
+      this.answered = new Set(readArray(K_ANSWERED));
+      this.artifacts = new Set(readArray(K_ARTIFACTS).filter(function(id){ return !!ART_MAP[id]; }));
+      // self-heal: spent can never exceed earned
+      if (this.spent > this.earned) this.spent = this.earned;
+    },
+    save: function(){
+      if (!this._dirty) return;          // never write without a real change
+      localStorage.setItem(K_POINTS, String(this.earned));
+      localStorage.setItem(K_SPENT, String(this.spent));
+      localStorage.setItem(K_ANSWERED, JSON.stringify(Array.from(this.answered)));
+      localStorage.setItem(K_ARTIFACTS, JSON.stringify(Array.from(this.artifacts)));
+      this._dirty = false;
+    },
+    balance: function(){ return this.earned - this.spent; },
+    setName: function(v){
+      if (v === this.name) return false;
+      this.name = v;
+      localStorage.setItem(K_NAME, v);
+      return true;
+    },
+    has: function(key){ return this.answered.has(key); },
+    owns: function(id){ return this.artifacts.has(id); },
+    addAnswer: function(key){
+      if (this.answered.has(key)) return false;
+      this.answered.add(key);
+      this.earned += PPA;
+      this._dirty = true;
+      Progress.invalidate();
+      this.save();
+      return true;
+    },
+    buy: function(id){
+      var art = ART_MAP[id];
+      if (!art || this.artifacts.has(id)) return false;
+      if (this.balance() < art.cost) return false;
+      this.artifacts.add(id);
+      this.spent += art.cost;
+      this._dirty = true;
+      this.save();
+      return true;
+    },
+    resetProgress: function(){
+      this.answered.clear();
+      this.artifacts.clear();
+      this.earned = 0;
+      this.spent = 0;
+      this._dirty = true;
+      Progress.invalidate();
+      this.save();
+    }
+  };
+
+  function readArray(k){
+    try {
+      var parsed = JSON.parse(localStorage.getItem(k) || '[]');
+      return Array.isArray(parsed) ? parsed : [];
+    } catch(e){ return []; }
+  }
+
+  function key(eraId, capId, qi){ return eraId + ':' + capId + ':' + qi; }
+
+  /* ---------------- Progress: computed once, memoized -------------------- */
+  var Progress = {
+    _cache: null,
+    invalidate: function(){ this._cache = null; },
+
+    get: function(){
+      if (this._cache) return this._cache;   // no recompute unless state changed
+
+      var byEra = {}, order = [], pts = Store.earned;   // unlocks use lifetime XP
+      var capsDone = 0, capsTotal = 0, erasOpen = 0, erasDone = 0;
+
+      // single pass over the whole DB
+      for (var i = 0; i < DB.eras.length; i++){
+        var era = DB.eras[i];
+        var caps = [], eDone = 0, eAnswered = 0, eTotal = 0, prevComplete = true;
+
+        for (var j = 0; j < era.capsules.length; j++){
+          var cap = era.capsules[j], done = 0;
+          for (var q = 0; q < cap.quiz.length; q++){
+            if (Store.has(key(era.id, cap.id, q))) done++;
+          }
+          var complete = done === cap.quiz.length;
+          caps.push({ id: cap.id, done: done, total: cap.quiz.length, complete: complete, unlocked: j === 0 ? true : prevComplete });
+          prevComplete = complete;
+          eAnswered += done; eTotal += cap.quiz.length;
+          if (complete) eDone++;
+        }
+
+        var prereqOk = true, reasons = [];
+        if (era.unlock.afterEra){
+          var prior = byEra[era.unlock.afterEra];
+          if (!prior || !prior.complete){
+            prereqOk = false;
+            reasons.push('סיימו את ' + (eraTitle(era.unlock.afterEra) || ''));
+          }
+        }
+        if (pts < era.unlock.points){
+          prereqOk = false;
+          reasons.push('צברו עוד ' + (era.unlock.points - pts) + ' נקודות');
+        }
+
+        var complete_ = prereqOk && eDone === era.capsules.length;
+        byEra[era.id] = {
+          id: era.id, unlocked: prereqOk, reasons: reasons, capsules: caps,
+          capsulesDone: eDone, totalCapsules: era.capsules.length,
+          answered: eAnswered, totalQuestions: eTotal,
+          percent: eTotal ? Math.round((eAnswered / eTotal) * 100) : 0,
+          complete: complete_
+        };
+        order.push(byEra[era.id]);
+        if (prereqOk) erasOpen++;
+        if (complete_) erasDone++;
+        capsDone += eDone; capsTotal += era.capsules.length;
+      }
+
+      this._cache = {
+        eras: byEra, list: order,
+        erasOpen: erasOpen, erasDone: erasDone, erasTotal: DB.eras.length,
+        capsDone: capsDone, capsTotal: capsTotal
+      };
+      return this._cache;
+    },
+
+    era: function(id){ return this.get().eras[id]; },
+    capsule: function(eraId, capId){
+      var e = this.era(eraId);
+      if (!e) return null;
+      for (var i = 0; i < e.capsules.length; i++) if (e.capsules[i].id === capId) return e.capsules[i];
+      return null;
+    }
+  };
+
+  /* ---------------- static lookup maps (built once) ---------------------- */
+  var ERA_MAP = {}, CAP_MAP = {};
+  DB.eras.forEach(function(era){
+    ERA_MAP[era.id] = era;
+    CAP_MAP[era.id] = {};
+    era.capsules.forEach(function(cap, i){ CAP_MAP[era.id][cap.id] = { cap: cap, index: i }; });
+  });
+  function eraTitle(id){ return ERA_MAP[id] ? ERA_MAP[id].title : ''; }
+  function getCap(eraId, capId){ return CAP_MAP[eraId] && CAP_MAP[eraId][capId] ? CAP_MAP[eraId][capId].cap : null; }
+  function capIndex(eraId, capId){ return CAP_MAP[eraId] && CAP_MAP[eraId][capId] ? CAP_MAP[eraId][capId].index : -1; }
+
+  function rankFor(points){
+    var r = DB.config.ranks, cur = r[0], next = null;
+    for (var i = 0; i < r.length; i++){
+      if (points >= r[i].min) cur = r[i];
+      else { next = r[i]; break; }
+    }
+    return { current: cur, next: next };
+  }
+  function svg(name){ return DB.icons[name] || ''; }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  /* ---------------- DOM handles (queried once) --------------------------- */
+  var D = {
+    app: document.getElementById('appRoot'),
+    marketing: document.getElementById('marketingRoot'),
+    eraGrid: document.getElementById('eraGrid'),
+    eraView: document.getElementById('eraView'),
+    capsuleView: document.getElementById('capsuleView'),
+    erasGreeting: document.getElementById('erasGreeting'),
+    userAvatar: document.getElementById('userAvatar'),
+    userName: document.getElementById('userName'),
+    userMeta: document.getElementById('userMeta'),
+    userPill: document.getElementById('userPill'),
+    userMenu: document.getElementById('userMenu'),
+    dashGreeting: document.getElementById('dashGreeting'),
+    dashRank: document.getElementById('dashRank'),
+    dashPoints: document.getElementById('dashPoints'),
+    dashFill: document.getElementById('dashFill'),
+    dashCaption: document.getElementById('dashCaption'),
+    statRow: document.getElementById('statRow'),
+    worlds: document.getElementById('worlds'),
+    nameCard: document.getElementById('nameCard'),
+    nameModal: document.getElementById('nameModal'),
+    nameInput: document.getElementById('nameInput'),
+    views: document.querySelectorAll('.app-view'),
+    tabs: document.querySelectorAll('.app-tab')
+  };
+
+  /* ---------------- toast (single reused node) --------------------------- */
+  var toastNode = null, toastTimer = 0;
+  function toast(msg){
+    if (!toastNode){
+      toastNode = document.createElement('div');
+      toastNode.className = 'toast';
+      document.body.appendChild(toastNode);
+    }
+    toastNode.textContent = msg;
+    toastNode.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastNode.classList.remove('show'); }, 2400);
+  }
+
+  /* ---------------- header: text-node patch only ------------------------- */
+  function paintHeader(){
+    var n = Store.name || 'אורח/ת';
+    D.userAvatar.textContent = n.charAt(0);
+    D.userName.textContent = n;
+    D.userMeta.textContent = Store.balance() + ' נק׳ זמינות · ' + rankFor(Store.earned).current.label;
+  }
+
+  /* ---------------- step 4: movie recommendation card -------------------- */
+  function movieCard(mv, label, unlocked, lockedText){
+    if (!unlocked){
+      return '<div class="movie-rec locked"><span class="poster">' + svg('film') + '</span>' +
+        '<span class="rec-body"><p class="rec-label">' + esc(label) + '</p>' +
+        '<h4>עדיין נעול 🔒</h4><p class="rec-why">' + esc(lockedText) + '</p></span></div>';
+    }
+    return '<div class="movie-rec"><span class="poster">' + svg('film') + '</span>' +
+      '<span class="rec-body">' +
+        '<p class="rec-label">' + esc(label) + '</p>' +
+        '<h4>' + esc(mv.title) + '</h4>' +
+        '<p class="rec-chips"><span class="chip">' + esc(mv.year) + '</span>' +
+        '<span class="chip">' + esc(mv.kind) + '</span>' +
+        '<span class="chip age">' + esc(mv.age) + '</span></p>' +
+        '<p class="rec-why">' + esc(mv.why) + '</p>' +
+      '</span></div>';
+  }
+
+  /* ---------------- view: era map ---------------------------------------- */
+  var renderedEras = -1;   // guards against redundant re-render
+  function renderEraMap(force){
+    var stamp = Store.earned + ':' + Store.answered.size;
+    if (!force && renderedEras === stamp) { paintErasGreeting(); return; }
+    renderedEras = stamp;
+
+    var P = Progress.get(), out = [];
+    for (var i = 0; i < DB.eras.length; i++){
+      var era = DB.eras[i], p = P.eras[era.id];
+      var cls = !p.unlocked ? 'locked' : (p.complete ? 'done' : 'open');
+      var pill = !p.unlocked ? 'נעול 🔒' : (p.complete ? 'הושלם ✓' : (p.answered ? 'בתהליך' : 'פתוח'));
+      var body = !p.unlocked
+        ? '<p class="lock-note">' + esc(p.reasons.join(' · ')) + '</p>'
+        : '<div class="bar"><i style="width:' + p.percent + '%"></i></div>' +
+          '<p class="lock-note">' + p.capsulesDone + ' מתוך ' + p.totalCapsules + ' קפסולות הושלמו</p>';
+
+      out.push(
+        '<button class="era-card ' + cls + '" data-act="era" data-era="' + era.id + '">',
+          '<span class="era-banner" style="background:' + era.banner + '">', svg(era.icon), '</span>',
+          '<span class="era-body">',
+            '<span class="era-years">', esc(era.years), '</span>',
+            '<h3>', esc(era.title), '</h3>',
+            '<p>', esc(era.description), '</p>',
+            '<span class="pill ', cls, '">', pill, '</span>',
+            body,
+          '</span>',
+        '</button>'
+      );
+    }
+    D.eraGrid.innerHTML = out.join('');   // one DOM write
+    paintErasGreeting();
+  }
+  function paintErasGreeting(){
+    D.erasGreeting.textContent = Store.name
+      ? (Store.name + ', לאיזו תקופה צוללים היום?')
+      : 'לאיזו תקופה צוללים היום?';
+  }
+
+  /* ---------------- view: single era ------------------------------------- */
+  var currentEra = null;
+  function renderEra(eraId){
+    var era = ERA_MAP[eraId];
+    if (!era) return;
+    var p = Progress.era(eraId);
+    if (!p.unlocked){ toast('תקופה נעולה — ' + p.reasons.join(' · ')); return; }
+    currentEra = eraId;
+
+    var out = [
+      '<button class="back-link" data-act="goEras">→ חזרה למפת התקופות</button>',
+      '<div class="era-hero">', svg(era.icon),
+        '<div><span class="era-years">', esc(era.years), '</span><h2>', esc(era.title), '</h2><p>', esc(era.description), '</p></div>',
+        '<div class="era-stat"><strong>', p.percent, '%</strong><span>הושלם</span></div>',
+      '</div>',
+      '<p class="sub-head">קפסולות תוכן</p><div class="capsule-grid">'
+    ];
+
+    for (var i = 0; i < era.capsules.length; i++){
+      var cap = era.capsules[i], cp = p.capsules[i];
+      var cls = !cp.unlocked ? 'locked' : (cp.complete ? 'done' : 'open');
+      var pill = !cp.unlocked ? 'נעול 🔒' : (cp.complete ? 'הושלם ✓' : (cp.done ? ('בתהליך · ' + cp.done + '/' + cp.total) : 'פתוח לקריאה'));
+      out.push(
+        '<button class="capsule-card ', cls, '" data-act="capsule" data-era="', era.id, '" data-cap="', cap.id, '">',
+          '<span class="capsule-icon">', svg(cap.icon), '</span>',
+          '<h4>', esc(cap.title), '</h4>',
+          '<p>', esc(cap.blurb), '</p>',
+          '<span class="pill ', cls, '">', pill, '</span>',
+          (!cp.unlocked ? '<p class="lock-note">סיימו את הקפסולה הקודמת</p>' : ''),
+        '</button>'
+      );
+    }
+    out.push('</div>');
+    // capstone recommendation: only after the whole era is finished
+    out.push(
+      '<p class="sub-head">המלצת הצפייה של התקופה</p>',
+      movieCard(era.capstone, 'לסיום התקופה', p.complete,
+                'סיימו את כל ' + p.totalCapsules + ' הקפסולות של התקופה כדי לפתוח את המלצת הצפייה המסכמת.'),
+      '<p class="note">* ההמלצות נבחרו לגילאי 8–13. מומלץ לוודא התאמה עם מבוגר לפני צפייה.</p>'
+    );
+
+    D.eraView.innerHTML = out.join('');
+    show('era');
+    setHash('era-' + era.id);
+  }
+
+  /* ---------------- view: capsule reader --------------------------------- */
+  var reading = null;   // {eraId, capId}
+  function renderCapsule(eraId, capId){
+    var era = ERA_MAP[eraId], cap = getCap(eraId, capId);
+    if (!era || !cap) return;
+    var cp = Progress.capsule(eraId, capId);
+    if (!cp.unlocked){ toast('סיימו קודם את הקפסולה שלפניה'); return; }
+    reading = { eraId: eraId, capId: capId };
+
+    var out = [
+      '<button class="back-link" data-act="era" data-era="', era.id, '">→ חזרה ל', esc(era.title), '</button>',
+      '<div class="reader">',
+        '<div class="reader-head"><span class="capsule-icon">', svg(cap.icon), '</span>',
+        '<div><span class="reader-era">', esc(era.title), '</span><h2>', esc(cap.title), '</h2></div></div>',
+        '<div class="story">'
+    ];
+    for (var s = 0; s < cap.story.length; s++) out.push('<p>', esc(cap.story[s]), '</p>');
+    out.push('</div><div class="quiz-section"><h3>חידון סוף-סיפור</h3>');
+
+    for (var q = 0; q < cap.quiz.length; q++){
+      var question = cap.quiz[q], done = Store.has(key(eraId, capId, q));
+      out.push('<div class="quiz-block" data-qi="', q, '"><p class="quiz-q">', (q+1), '. ', esc(question.q), '</p><div class="quiz-answers">');
+      for (var a = 0; a < question.answers.length; a++){
+        var ans = question.answers[a];
+        out.push(
+          '<button class="quiz-answer', (done && ans.c ? ' correct' : ''), '" data-act="answer" data-c="', (ans.c ? '1' : '0'), '"',
+          (done ? ' disabled' : ''), '>', esc(ans.t), '</button>'
+        );
+      }
+      out.push('</div><p class="quiz-feedback" aria-live="polite">', (done ? 'כבר ענית נכון על שאלה זו.' : ''), '</p></div>');
+    }
+
+    out.push(
+      '</div><div class="complete-box" id="completeBox"><h3>🎉 השלמתם את הקפסולה!</h3>',
+      '<p id="completeText"></p><div id="recSlot"></div><div class="complete-actions">',
+      '<button class="btn btn-ghost" data-act="era" data-era="', era.id, '">חזרה לתקופה</button>',
+      '<button class="btn btn-success" data-act="goEras">מפת התקופות</button>',
+      '</div></div></div>'
+    );
+
+    D.capsuleView.innerHTML = out.join('');
+    if (Progress.capsule(eraId, capId).complete) paintComplete(true);
+    show('capsule');
+    setHash('capsule-' + era.id + '-' + cap.id);
+  }
+
+  /* answering: patches only the nodes that changed - no list re-render */
+  function handleAnswer(btn){
+    if (!reading || btn.disabled) return;
+    var block = btn.closest('.quiz-block');
+    var feedback = block.querySelector('.quiz-feedback');
+
+    if (btn.getAttribute('data-c') !== '1'){
+      btn.classList.add('wrong');
+      feedback.textContent = 'כמעט! נסו תשובה אחרת.';
+      feedback.classList.add('miss');
+      setTimeout(function(){ btn.classList.remove('wrong'); }, 400);
+      return;
+    }
+
+    var qi = parseInt(block.getAttribute('data-qi'), 10);
+    var added = Store.addAnswer(key(reading.eraId, reading.capId, qi));
+    if (!added) return;
+
+    var siblings = block.querySelectorAll('.quiz-answer');
+    for (var i = 0; i < siblings.length; i++) siblings[i].disabled = true;
+    btn.classList.add('correct');
+    feedback.classList.remove('miss');
+    feedback.textContent = 'כל הכבוד! +' + PPA + ' נקודות.';
+
+    paintHeader();               // two text nodes
+    toast('+' + PPA + ' נקודות!');
+    renderedEras = -1;           // mark map stale; it re-renders on next visit
+    shopStamp = -1; renderedDash = -1;
+    paintComplete(false);
+  }
+
+  function paintComplete(silent){
+    var box = document.getElementById('completeBox');
+    if (!box || !reading) return;
+    var cp = Progress.capsule(reading.eraId, reading.capId);
+    if (!cp.complete){ box.classList.remove('show'); return; }
+
+    var era = ERA_MAP[reading.eraId];
+    var idx = capIndex(reading.eraId, reading.capId);
+    var next = era.capsules[idx + 1];
+    var msg = 'ענית נכון על כל ' + cp.total + ' השאלות.';
+
+    if (next){
+      msg += ' הקפסולה הבאה נפתחה: ' + next.title + '.';
+    } else if (Progress.era(reading.eraId).complete){
+      var opened = null;
+      for (var i = 0; i < DB.eras.length; i++){
+        var e = DB.eras[i];
+        if (e.unlock.afterEra === reading.eraId && Progress.era(e.id).unlocked){ opened = e; break; }
+      }
+      msg += opened
+        ? (' סיימתם את ' + era.title + ' ופתחתם תקופה חדשה: ' + opened.title + '!')
+        : (' סיימתם את כל ' + era.title + '! צברו עוד נקודות כדי לפתוח את התקופה הבאה.');
+      if (opened && !silent) toast('תקופה חדשה נפתחה: ' + opened.title);
+    }
+    document.getElementById('completeText').textContent = msg;
+
+    // step 4 - reveal the movie tied to THIS story, rendered once only
+    var slot = document.getElementById('recSlot');
+    var cap = getCap(reading.eraId, reading.capId);
+    if (slot && !slot.firstChild && cap.movie){
+      slot.innerHTML = movieCard(cap.movie, 'המלצת צפייה בהמשך לסיפור', true, '') +
+        '<p class="note">* מומלץ לוודא התאמה עם מבוגר לפני צפייה.</p>';
+    }
+    box.classList.add('show');
+  }
+
+  /* ---------------- view: dashboard -------------------------------------- */
+  var renderedDash = -1;
+  function renderDashboard(force){
+    var stamp = Store.earned + ':' + Store.spent + ':' + Store.answered.size + ':' + Store.artifacts.size + ':' + Store.name;
+    if (!force && renderedDash === stamp) return;
+    renderedDash = stamp;
+
+    var P = Progress.get(), pts = Store.earned, rank = rankFor(pts);
+
+    D.dashGreeting.textContent = Store.name ? ('שלום, ' + Store.name + '!') : 'שלום, חוקר/ת זמן!';
+    D.nameCard.hidden = !!Store.name || sessionStorage.getItem('relicreel_skip') === '1';
+
+    D.statRow.innerHTML =
+      '<div class="stat"><strong>' + Store.balance() + '</strong><span>נקודות זמינות</span></div>' +
+      '<div class="stat"><strong>' + pts + '</strong><span>נקודות שנצברו בסך הכל</span></div>' +
+      '<div class="stat"><strong>' + P.erasOpen + '/' + P.erasTotal + '</strong><span>תקופות פתוחות</span></div>' +
+      '<div class="stat"><strong>' + P.capsDone + '/' + P.capsTotal + '</strong><span>קפסולות שהושלמו</span></div>' +
+      '<div class="stat win"><strong>' + Store.artifacts.size + '/' + DB.artifacts.length + '</strong><span>ממצאים במוזיאון</span></div>';
+
+    D.dashRank.textContent = rank.current.label;
+    D.dashPoints.textContent = pts;
+    if (rank.next){
+      var span = rank.next.min - rank.current.min;
+      D.dashFill.style.width = Math.min(100, ((pts - rank.current.min) / span) * 100) + '%';
+      D.dashFill.classList.remove('win');
+      D.dashCaption.textContent = (rank.next.min - pts) + ' נקודות לדרגה הבאה: ' + rank.next.label;
+    } else {
+      D.dashFill.style.width = '100%';
+      D.dashFill.classList.add('win');
+      D.dashCaption.textContent = 'הגעתם לדרגה הגבוהה ביותר! 🏆';
+    }
+
+    var out = [];
+    for (var i = 0; i < DB.eras.length; i++){
+      var era = DB.eras[i], p = P.eras[era.id];
+      var cls = !p.unlocked ? 'locked' : (p.complete ? 'done' : 'open');
+      var sub = !p.unlocked ? p.reasons.join(' · ')
+              : (p.complete ? ('הושלם · ' + p.totalCapsules + ' קפסולות')
+              : (p.capsulesDone + '/' + p.totalCapsules + ' קפסולות · ' + p.percent + '%'));
+      out.push(
+        '<button class="world-row ', cls, '" data-act="era" data-era="', era.id, '">',
+          svg(era.icon),
+          '<span class="world-main"><h4>', esc(era.title), '</h4><small>', esc(sub), '</small></span>',
+          '<span class="pill ', cls, '">', (!p.unlocked ? 'נעול' : (p.complete ? 'הושלם ✓' : 'פתוח')), '</span>',
+        '</button>'
+      );
+    }
+    D.worlds.innerHTML = out.join('');
+  }
+
+  /* ---------------- museum + shop ---------------------------------------- */
+  var shopFilter = 'all', museumFilter = 'all';
+
+  function coinIcon(){ return svg('coin'); }
+
+  function balanceHtml(){
+    return coinIcon() + '<b>' + Store.balance() + '</b><span>נקודות זמינות · מתוך ' + Store.earned + ' שנצברו</span>';
+  }
+  function paintBalances(pulse){
+    var nodes = [document.getElementById('shopBalance'), document.getElementById('museumBalance')];
+    for (var i = 0; i < nodes.length; i++){
+      if (!nodes[i]) continue;
+      nodes[i].innerHTML = balanceHtml();
+      if (pulse){
+        nodes[i].classList.remove('pulse');
+        void nodes[i].offsetWidth;          // restart the animation
+        nodes[i].classList.add('pulse');
+      }
+    }
+  }
+
+  function eraOpen(id){ var pr = Progress.era(id); return !!(pr && pr.unlocked); }
+
+  function filterBar(scope, active){
+    var out = ['<button class="filter-btn" data-filter="' + scope + '" data-era="all" aria-pressed="' + (active === 'all') + '">הכל</button>'];
+    for (var i = 0; i < DB.eras.length; i++){
+      var e = DB.eras[i];
+      var open = (scope !== 'shop') || eraOpen(e.id);
+      out.push('<button class="filter-btn', (open ? '' : ' era-locked'), '" data-filter="' + scope + '" data-era="' + e.id + '"',
+               ' aria-pressed="' + (active === e.id) + '"', (open ? '' : ' aria-disabled="true"'), '>',
+               esc(e.title), (open ? '' : ' 🔒'), '</button>');
+    }
+    return out.join('');
+  }
+
+  /* volumetric artwork for an artifact; an `img` field in the DB overrides it */
+  function artHtml(art){
+    if (art.img) return '<img src="' + art.img + '" alt="" loading="lazy">';
+    return DB.artwork[art.id] || svg(art.icon);
+  }
+
+  /* one shop display case (the museum uses the room renderer instead) */
+  function caseHtml(art, owned){
+    var out = ['<div class="case ', (owned ? 'owned' : 'locked'), '" data-act="art" data-art="', art.id, '">'];
+
+    if (owned) out.push('<span class="owned-badge">בבעלותך</span>');
+    else       out.push('<span class="lock-badge">', svg('lock'), '</span>');
+
+    out.push(
+      '<span class="plinth">', artHtml(art), '</span>',
+      '<span class="a-name">', esc(art.name), '</span>',
+      '<span class="era-tag">', esc(eraTitle(art.era)), '</span>'
+    );
+
+    if (owned){
+      out.push('<button class="buy-btn bought" disabled>נרכש ✓</button>');
+    } else {
+      var afford = Store.balance() >= art.cost;
+      out.push('<span class="price">', coinIcon(), art.cost, ' נק׳</span>');
+      out.push('<button class="buy-btn" data-act="buy" data-art="', art.id, '"', (afford ? '' : ' disabled'), '>',
+               (afford ? 'רכישה' : 'חסרות ' + (art.cost - Store.balance()) + ' נק׳'), '</button>');
+    }
+    out.push('</div>');
+    return out.join('');
+  }
+
+  var shopStamp = -1;
+  function shopSignature(){
+    var open = 0;
+    for (var i = 0; i < DB.eras.length; i++) if (eraOpen(DB.eras[i].id)) open++;
+    return Store.balance() + ':' + Store.artifacts.size + ':' + shopFilter + ':' + open;
+  }
+
+  function renderShop(force){
+    var stamp = shopSignature();
+    if (!force && shopStamp === stamp) return;
+    shopStamp = stamp;
+
+    /* a filter pointing at an era that is not open yet falls back to "all" */
+    if (shopFilter !== 'all' && !eraOpen(shopFilter)) shopFilter = 'all';
+
+    document.getElementById('shopFilter').innerHTML = filterBar('shop', shopFilter);
+    paintBalances(false);
+
+    var out = [], sealed = [];
+    for (var i = 0; i < DB.eras.length; i++){
+      var era = DB.eras[i];
+      var mine = [];
+      for (var j = 0; j < DB.artifacts.length; j++){
+        if (DB.artifacts[j].era === era.id) mine.push(DB.artifacts[j]);
+      }
+      if (!eraOpen(era.id)){ sealed.push({ title: era.title, n: mine.length }); continue; }
+      if (shopFilter !== 'all' && era.id !== shopFilter) continue;
+      for (var k = 0; k < mine.length; k++) out.push(caseHtml(mine[k], Store.owns(mine[k].id)));
+    }
+
+    var html = out.length
+      ? out.join('')
+      : '<div class="empty-vault"><h3>אין ממצאים בתקופה הזאת</h3></div>';
+
+    document.getElementById('shopGrid').innerHTML = html;
+
+    /* teaser: what arrives in the shop once the next era opens */
+    var tease = document.getElementById('shopSealed');
+    if (sealed.length){
+      var parts = [];
+      for (var s = 0; s < sealed.length; s++){
+        parts.push('<span class="sealed-chip">' + svg('lock') + esc(sealed[s].title) + ' · ' + sealed[s].n + ' ממצאים</span>');
+      }
+      tease.innerHTML = '<p class="sealed-title">ממצאים שממתינים לכם</p><div class="sealed-row">' + parts.join('') +
+                        '</div><p class="sealed-note">פתחו את התקופה במפת התקופות והממצאים שלה ייכנסו אוטומטית לחנות.</p>';
+      tease.hidden = false;
+    } else {
+      tease.hidden = true;
+    }
+  }
+
+  var museumStamp = -1;
+  function renderMuseum(force){
+    var stamp = Store.artifacts.size + ':' + museumFilter + ':' + Store.name;
+    if (!force && museumStamp === stamp) return;
+    museumStamp = stamp;
+
+    document.getElementById('museumGreeting').textContent =
+      Store.name ? ('המוזיאון של ' + Store.name) : 'המוזיאון האישי';
+    document.getElementById('museumFilter').innerHTML = filterBar('museum', museumFilter);
+    paintBalances(false);
+
+    var body = document.getElementById('museumBody');
+    if (Store.artifacts.size === 0){
+      body.innerHTML =
+        '<div class="empty-vault">' + svg('amphora') +
+        '<h3>המוזיאון עדיין ריק</h3>' +
+        '<p>ענו על חידונים כדי לצבור נקודות, ואז המירו אותן בממצאים היסטוריים אמיתיים בחנות.</p>' +
+        '<button class="btn btn-primary" data-act="goShop">לחנות הממצאים</button></div>';
+      return;
+    }
+
+    /* build the room: one wall plaque + one pedestal row per era */
+    var out = ['<div class="room"><div class="room-inner">'];
+    var any = false;
+
+    for (var i = 0; i < DB.eras.length; i++){
+      var era = DB.eras[i];
+      if (museumFilter !== 'all' && era.id !== museumFilter) continue;
+
+      var row = [];
+      for (var j = 0; j < DB.artifacts.length; j++){
+        var art = DB.artifacts[j];
+        if (art.era !== era.id || !Store.owns(art.id)) continue;
+        row.push(
+          '<button class="exhibit" data-act="art" data-art="', art.id, '" ',
+            'aria-label="', esc(art.name), ' — לחצו לפרטים">',
+            '<span class="ex-art">', artHtml(art), '</span>',
+            '<span class="ped">',
+              '<span class="ped-col"></span>',
+              '<span class="ped-top"></span>',
+              '<span class="ped-base"></span>',
+              '<span class="ped-light"></span>',
+            '</span>',
+            '<span class="ex-label">', esc(art.name), '<br><span class="ex-hint">לחצו לפרטים</span></span>',
+          '</button>'
+        );
+      }
+      if (!row.length) continue;
+      any = true;
+      out.push(
+        '<div class="plaque-wrap"><span class="plaque">', esc(era.title),
+        ' <em>· ', row.length, ' ממצאים</em></span></div>',
+        '<div class="ped-row">', row.join(''), '</div>'
+      );
+    }
+    out.push('</div></div>');
+
+    body.innerHTML = any
+      ? out.join('')
+      : '<div class="empty-vault"><h3>עדיין אין ממצאים מהתקופה הזאת</h3><p>בקרו בחנות כדי להוסיף ממצאים לחדר.</p></div>';
+  }
+
+  /* ---------- cinematic lightbox: one node, content swapped on open ---------- */
+  var LB = null;
+  function lightbox(){
+    if (LB) return LB;
+    LB = document.getElementById('artLightbox');
+    LB.addEventListener('click', function(e){
+      if (e.target === LB || e.target.classList.contains('lb-scrim') || e.target.closest('.lb-close')) closeLightbox();
+    });
+    return LB;
+  }
+  function openLightbox(id){
+    var art = ART_MAP[id];
+    if (!art || !Store.owns(id)) return;
+    var box = lightbox();
+    box.querySelector('.lb-stage').innerHTML = artHtml(art);
+    box.querySelector('.lb-era').textContent = eraTitle(art.era);
+    box.querySelector('.lb-title').textContent = art.name;
+    box.querySelector('.lb-fact').textContent = art.fact;
+    box.querySelector('.lb-meta').textContent = 'נרכש תמורת ' + art.cost + ' נקודות';
+    box.classList.add('show');
+    box.setAttribute('aria-hidden', 'false');
+    var cl = box.querySelector('.lb-close');
+    if (cl) setTimeout(function(){ cl.focus(); }, 40);
+  }
+  function closeLightbox(){
+    if (!LB || !LB.classList.contains('show')) return;
+    LB.classList.remove('show');
+    LB.setAttribute('aria-hidden', 'true');
+  }
+
+  /* purchase: patches ONLY the bought card - never re-renders the grid */
+  function handleBuy(btn){
+    var id = btn.getAttribute('data-art');
+    var art = ART_MAP[id];
+    if (!art || !Store.buy(id)) return;
+
+    var card = btn.closest('.case');
+    btn.textContent = 'נרכש! ✓';
+    btn.classList.add('bought');
+    btn.disabled = true;
+    card.classList.add('just-bought');
+
+    paintHeader();                 // balance in the top bar, instantly
+    paintBalances(true);           // balance chips pulse green
+    toast(art.name + ' נוסף למוזיאון!');
+
+    museumStamp = -1;              // museum is stale; re-renders on next visit
+    renderedDash = -1;
+
+    setTimeout(function(){
+      if (!card.isConnected) return;
+      card.classList.remove('just-bought', 'locked');
+      card.classList.add('owned');
+      var lock = card.querySelector('.lock-badge');
+      if (lock){
+        var badge = document.createElement('span');
+        badge.className = 'owned-badge';
+        badge.textContent = 'בבעלותך';
+        lock.replaceWith(badge);
+      }
+      var price = card.querySelector('.price');
+      if (price) price.remove();
+      // any card the user can no longer afford must update its button
+      refreshAffordability();
+    }, 560);
+  }
+
+  /* after spending, other shop buttons may need to switch to "חסרות X" */
+  function refreshAffordability(){
+    var grid = document.getElementById('shopGrid');
+    if (!grid) return;
+    var btns = grid.querySelectorAll('.buy-btn[data-act="buy"]');
+    for (var i = 0; i < btns.length; i++){
+      var b = btns[i], a = ART_MAP[b.getAttribute('data-art')];
+      if (!a || Store.owns(a.id)) continue;
+      var afford = Store.balance() >= a.cost;
+      b.disabled = !afford;
+      b.textContent = afford ? 'רכישה' : 'חסרות ' + (a.cost - Store.balance()) + ' נק׳';
+    }
+    shopStamp = Store.balance() + ':' + Store.artifacts.size + ':' + shopFilter;
+  }
+
+  /* ---------------- routing ---------------------------------------------- */
+  function show(view){
+    for (var i = 0; i < D.views.length; i++){
+      D.views[i].hidden = D.views[i].getAttribute('data-view') !== view;
+    }
+    var mapped = (view === 'era' || view === 'capsule') ? 'eras' : view;
+    for (var t = 0; t < D.tabs.length; t++){
+      if (D.tabs[t].getAttribute('data-tab') === mapped) D.tabs[t].setAttribute('aria-current','page');
+      else D.tabs[t].removeAttribute('aria-current');
+    }
+    window.scrollTo(0, 0);
+  }
+  function setHash(h){ history.replaceState(null, '', '#' + h); }
+  function goEras(){ renderEraMap(); show('eras'); setHash('eras'); }
+  function goDashboard(){ renderDashboard(); show('dashboard'); setHash('dashboard'); }
+  function goMuseum(){ renderMuseum(); show('museum'); setHash('museum'); }
+  function goShop(){ renderShop(); show('shop'); setHash('shop'); }
+  var TAB_GO = { eras: goEras, dashboard: goDashboard, museum: goMuseum, shop: goShop };
+
+  /* ---------------- delegated events: ONE listener for the whole app ----- */
+  D.app.addEventListener('click', function(e){
+    var t = e.target.closest('[data-act],[data-tab],[data-close-app]');
+    if (!t) return;
+
+    if (t.hasAttribute('data-tab')){
+      var go = TAB_GO[t.getAttribute('data-tab')];
+      if (go) go();
+      return;
+    }
+    if (t.hasAttribute('data-close-app')){ e.preventDefault(); closeApp(); return; }
+
+    if (t.hasAttribute('data-filter')){
+      var which = t.getAttribute('data-filter'), era = t.getAttribute('data-era');
+      if (which === 'shop'){
+        if (era !== 'all' && !eraOpen(era)){ toast('התקופה הזאת עדיין נעולה — פתחו אותה במפת התקופות'); return; }
+        shopFilter = era; renderShop(true);
+      }
+      else { museumFilter = era; renderMuseum(true); }
+      return;
+    }
+
+    switch (t.getAttribute('data-act')){
+      case 'era': {
+        var id = t.getAttribute('data-era');
+        var p = Progress.era(id);
+        if (!p.unlocked){ toast('תקופה נעולה — ' + p.reasons.join(' · ')); return; }
+        renderEra(id);
+        break;
+      }
+      case 'capsule': renderCapsule(t.getAttribute('data-era'), t.getAttribute('data-cap')); break;
+      case 'answer':  handleAnswer(t); break;
+      case 'goEras':  goEras(); break;
+      case 'goShop':  goShop(); break;
+      case 'buy':     handleBuy(t); break;
+      case 'art': openLightbox(t.getAttribute('data-art')); break;
+      case 'rename':
+        D.userMenu.hidden = true;
+        D.nameInput.value = Store.name;
+        D.nameModal.hidden = false;
+        setTimeout(function(){ D.nameInput.focus(); }, 40);
+        break;
+      case 'reset':
+        D.userMenu.hidden = true;
+        if (!confirm('לאפס את כל ההתקדמות? כל הנקודות והתקופות שנפתחו יתאפסו. השם שלכם יישאר.')) return;
+        Store.resetProgress();
+        renderedEras = -1; renderedDash = -1; shopStamp = -1; museumStamp = -1;
+        paintHeader(); goEras(); toast('ההתקדמות אופסה');
+        break;
+    }
+  });
+
+  /* user menu */
+  D.userPill.addEventListener('click', function(){
+    var open = D.userMenu.hidden;
+    D.userMenu.hidden = !open;
+    D.userPill.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function(e){
+    if (!e.target.closest('.case')){
+      var open = D.app.querySelectorAll('.case.open');
+      for (var i = 0; i < open.length; i++) open[i].classList.remove('open');
+    }
+    if (!D.userMenu.hidden && !e.target.closest('.app-user')){
+      D.userMenu.hidden = true;
+      D.userPill.setAttribute('aria-expanded','false');
+    }
+  });
+
+  /* name entry */
+  function applyName(v){
+    if (!v || !Store.setName(v)) return;
+    paintHeader();
+    renderedEras = -1; renderedDash = -1;
+    paintErasGreeting();
+    renderDashboard(true);
+  }
+  document.getElementById('nameForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    applyName(D.nameInput.value.trim());
+    D.nameModal.hidden = true;
+  });
+  document.getElementById('nameCardForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = document.getElementById('nameCardInput').value.trim();
+    if (!v) return;
+    applyName(v);
+    toast('נעים להכיר, ' + v + '!');
+  });
+  document.getElementById('skipNameBtn').addEventListener('click', function(){
+    sessionStorage.setItem('relicreel_skip','1');
+    D.nameCard.hidden = true;
+  });
+  document.getElementById('modalClose').addEventListener('click', function(){ D.nameModal.hidden = true; });
+  D.nameModal.addEventListener('click', function(e){ if (e.target === D.nameModal) D.nameModal.hidden = true; });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    if (LB && LB.classList.contains('show')){ closeLightbox(); return; }
+    if (!D.nameModal.hidden) D.nameModal.hidden = true;
+  });
+
+  /* ---------------- open / close ----------------------------------------- */
+  function openApp(){
+    D.marketing.hidden = true;
+    D.app.hidden = false;
+    paintHeader();
+
+    var h = location.hash.slice(1);
+    if (h.indexOf('capsule-') === 0){
+      var parts = h.slice(8).split('-'), eId = parts.shift(), cId = parts.join('-');
+      if (ERA_MAP[eId] && getCap(eId, cId) && Progress.era(eId).unlocked && Progress.capsule(eId, cId).unlocked){
+        renderCapsule(eId, cId); return;
+      }
+    }
+    if (h.indexOf('era-') === 0){
+      var id = h.slice(4);
+      if (ERA_MAP[id] && Progress.era(id).unlocked){ renderEra(id); return; }
+    }
+    if (h === 'dashboard'){ goDashboard(); return; }
+    if (h === 'museum'){ goMuseum(); return; }
+    if (h === 'shop'){ goShop(); return; }
+    goEras();
+  }
+  function closeApp(){
+    D.app.hidden = true;
+    D.marketing.hidden = false;
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+  document.addEventListener('click', function(e){
+    var opener = e.target.closest('[data-open-app]');
+    if (opener){ e.preventDefault(); openApp(); }
+  });
+
+  /* ---------------- boot -------------------------------------------------- */
+  Store.load();                       // the only localStorage read of the session
+  if (/^#(eras|dashboard|museum|shop|era-|capsule-)/.test(location.hash)) openApp();
+  window.addEventListener('beforeunload', function(){ Store.save(); });
+})();
+
+
+/* ================= MARKETING PAGE (lightweight) ================= */
+(function(){
+  "use strict";
+  var DB = window.RELICREEL_DB;
+
+  /* mobile nav */
+  var toggle = document.getElementById('navToggle'), menu = document.getElementById('navMenu');
+  var navBar = document.querySelector('.nav');
+
+  /* the full-screen panel starts below the real bar height, whatever it renders as */
+  function measureNav(){
+    if (navBar) document.documentElement.style.setProperty('--nav-h', navBar.offsetHeight + 'px');
+  }
+  measureNav();
+  window.addEventListener('resize', function(){
+    clearTimeout(measureNav._t);
+    measureNav._t = setTimeout(function(){
+      measureNav();
+      /* rotating or resizing past the breakpoint must not leave the page scroll-locked */
+      if (window.innerWidth > 900 && menu.classList.contains('open')) setMenu(false);
+    }, 120);
+  }, { passive: true });
+
+  function setMenu(open){
+    menu.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.classList.toggle('nav-open', open);
+  }
+  toggle.addEventListener('click', function(){
+    if (!menu.classList.contains('open')) measureNav();
+    setMenu(!menu.classList.contains('open'));
+  });
+  menu.addEventListener('click', function(e){
+    if (e.target.closest('a, button')) setMenu(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false);
+  });
+
+  /* static strip - one write, no animation loop */
+  var tiles = [];
+  DB.eras.forEach(function(era){
+    era.capsules.forEach(function(cap){
+      tiles.push('<div class="strip-tile">' + DB.icons[cap.icon] + '<span>' + cap.title + '</span></div>');
+    });
+  });
+  document.getElementById('stripGrid').innerHTML = tiles.slice(0, 6).join('');
+
+  /* era preview */
+  document.getElementById('eraPreview').innerHTML = DB.eras.map(function(era, i){
+    var state = i === 0 ? 'פתוח מההתחלה' : 'נפתח אחרי ' + DB.eras[i-1].title;
+    return '<article class="era-chip reveal">' + DB.icons[era.icon] +
+      '<h3>' + era.title + '</h3><p>' + era.tagline + '</p>' +
+      '<span class="state">' + state + '</span></article>';
+  }).join('');
+
+  /* reveal-on-scroll: one-shot, unobserved after firing */
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      for (var i = 0; i < entries.length; i++){
+        if (entries[i].isIntersecting){
+          entries[i].target.classList.add('in');
+          io.unobserve(entries[i].target);
+        }
+      }
+    }, { threshold: .12 });
+    for (var i = 0; i < items.length; i++) io.observe(items[i]);
+  } else {
+    for (var j = 0; j < items.length; j++) items[j].classList.add('in');
+  }
+
+  /* mini demo - purely local state, never touches localStorage */
+  var START = 100, TARGET = 120, REWARD = 20, locked = true;
+  var miniEras = document.getElementById('miniEras');
+  var feedback = document.getElementById('miniFeedback');
+  var pointsEl = document.getElementById('miniPoints');
+  var fill = document.getElementById('miniFill');
+  var caption = document.getElementById('miniCaption');
+  var quiz = document.getElementById('miniQuiz');
+
+  function paintMini(openCount){
+    miniEras.innerHTML = DB.eras.slice(0, 3).map(function(era, i){
+      return '<div class="mini-era ' + (i < openCount ? 'open' : 'locked') + '">' +
+        DB.icons[era.icon] + era.title + '</div>';
+    }).join('');
+  }
+  paintMini(1);
+
+  quiz.addEventListener('click', function(e){
+    var btn = e.target.closest('.quiz-answer');
+    if (!btn || btn.disabled || !locked) return;
+    if (btn.getAttribute('data-c') !== '1'){
+      btn.classList.add('wrong');
+      feedback.textContent = 'כמעט! נסו תשובה אחרת.';
+      feedback.classList.add('miss');
+      setTimeout(function(){ btn.classList.remove('wrong'); }, 400);
+      return;
+    }
+    locked = false;
+    var all = quiz.querySelectorAll('.quiz-answer');
+    for (var i = 0; i < all.length; i++) all[i].disabled = true;
+    btn.classList.add('correct');
+    feedback.classList.remove('miss');
+    feedback.textContent = 'כל הכבוד! +' + REWARD + ' נקודות.';
+    pointsEl.textContent = START + REWARD;
+    fill.style.width = '100%';
+    fill.classList.add('win');
+    caption.textContent = 'מצרים העתיקה נפתחה!';
+    paintMini(2);
+  });
+
+  document.getElementById('resetDemo').addEventListener('click', function(){
+    locked = true;
+    var all = quiz.querySelectorAll('.quiz-answer');
+    for (var i = 0; i < all.length; i++){ all[i].disabled = false; all[i].classList.remove('correct','wrong'); }
+    feedback.textContent = ''; feedback.classList.remove('miss');
+    pointsEl.textContent = START;
+    fill.style.width = '83%';
+    fill.classList.remove('win');
+    caption.textContent = '20 נקודות לפתיחת מצרים העתיקה';
+    paintMini(1);
+  });
+
+  /* waitlist (front-end only) */
+  var form = document.getElementById('waitlistForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.style.display = 'none';
+    document.getElementById('waitlistSuccess').classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
