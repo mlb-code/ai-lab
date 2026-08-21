@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>BookMatch — מוצאים לך את הספר המושלם</title>
+<meta name="description" content="שאלון קצר וכיפי שמוצא לילדים ולבני נוער את הספר הבא שהם באמת ירצו לקרוא.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Secular+One&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --beige:#EDE0C8;
+    --beige-deep:#DCC89C;
+    --paper:#FFFBF2;
+    --ink:#2B2013;
+    --ink-soft:#5B4E3A;
+    --ink-faint:#8A7A5C;
+    --blue:#204A73;
+    --blue-mid:#3E7CAE;
+    --blue-light:#A9CBE0;
+    --blue-pale:#E4EEF5;
+    --orange:#DD7A28;
+    --orange-deep:#B65D16;
+    --orange-light:#F5C99A;
+    --orange-pale:#FBEADA;
+    --shadow: 0 10px 30px rgba(43,32,19,0.12);
+    --shadow-sm: 0 4px 14px rgba(43,32,19,0.10);
+    --radius-lg: 26px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+    --ff-display: 'Secular One','Heebo',sans-serif;
+    --ff-body: 'Heebo','Assistant',sans-serif;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{
+    margin:0;
+    background:var(--beige);
+    color:var(--ink);
+    font-family:var(--ff-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    max-width:100vw;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+  h1,h2,h3,h4{font-family:var(--ff-display);font-weight:400;margin:0;line-height:1.15;}
+  p{margin:0;}
+  ul{margin:0;padding:0;list-style:none;}
+
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:6px;}
+
+  .container{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .section{padding:88px 0;}
+  .section-tight{padding:56px 0;}
+  .eyebrow{
+    display:inline-block;
+    font-weight:700;
+    font-size:0.82rem;
+    letter-spacing:0.02em;
+    color:var(--orange-deep);
+    background:var(--orange-pale);
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:16px;
+  }
+  .section-title{font-size:clamp(1.7rem,3.2vw,2.5rem);color:var(--blue);margin-bottom:14px;}
+  .section-lede{font-size:1.08rem;color:var(--ink-soft);max-width:640px;}
+  .center{text-align:center;margin-inline:auto;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-family:var(--ff-body);font-weight:700;font-size:1rem;
+    padding:15px 30px;border-radius:999px;border:none;cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    text-decoration:none;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--orange);color:var(--paper);box-shadow:var(--shadow-sm);}
+  .btn-primary:hover{background:var(--orange-deep);box-shadow:var(--shadow);}
+  .btn-secondary{background:transparent;color:var(--blue);border:2px solid var(--blue);}
+  .btn-secondary:hover{background:var(--blue);color:var(--paper);}
+  .btn-ghost{background:var(--paper);color:var(--blue);border:2px solid var(--beige-deep);}
+  .btn-ghost:hover{border-color:var(--blue-mid);}
+  .btn-sm{padding:10px 18px;font-size:0.9rem;}
+  .btn[disabled]{opacity:.55;cursor:not-allowed;}
+
+  .icon{width:1em;height:1em;fill:currentColor;stroke:currentColor;}
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky;top:0;z-index:60;
+    border-bottom:1px solid var(--beige-deep);
+  }
+  .header-bg{
+    position:absolute;inset:0;z-index:0;
+    background:rgba(227,236,242,0.88);
+    backdrop-filter:blur(10px);
+  }
+  .nav-row{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;gap:10px;flex-wrap:nowrap;}
+  .logo{display:flex;align-items:center;gap:8px;font-family:var(--ff-display);font-size:1.4rem;color:var(--blue);text-decoration:none;flex:none;min-width:0;position:relative;z-index:3;}
+  .logo .logo-text{white-space:nowrap;}
+  .logo .mark{width:34px;height:34px;background:linear-gradient(135deg,var(--blue) 0%,var(--orange) 100%);border-radius:9px;display:flex;align-items:center;justify-content:center;}
+  .logo .mark svg{width:19px;height:19px;color:var(--paper);}
+  .nav-links{display:flex;align-items:center;gap:28px;list-style:none;margin:0;padding:0;font-weight:600;color:var(--ink-soft);}
+  .nav-links a{text-decoration:none;transition:color .15s;}
+  .nav-links a:hover{color:var(--blue);}
+  .nav-actions{display:flex;align-items:center;gap:12px;position:relative;z-index:3;}
+  .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--blue);}
+  .hamburger svg{width:26px;height:26px;}
+
+  @media (max-width:860px){
+    .nav-row{gap:8px;}
+    .nav-actions{order:1;gap:8px;}
+    #hamburgerBtn{order:-1;}
+    nav{order:2;width:0;flex:0 0 0;}
+    .logo{order:3;flex-direction:row-reverse;}
+    .nav-links{
+      position:fixed;inset:0;
+      flex-direction:column;align-items:center;justify-content:center;
+      background:var(--paper);
+      padding:96px 28px 40px;gap:2px;
+      display:none;
+      z-index:1;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{
+      display:block;width:100%;max-width:320px;
+      padding:16px 8px;text-align:center;font-size:1.2rem;
+      border-bottom:1px solid var(--beige);
+    }
+    .hamburger{display:block;flex:none;}
+  }
+  @media (max-width:420px){
+    .nav-row{gap:6px;padding:12px 14px;}
+    .nav-actions{gap:4px;}
+    .logo{font-size:1.12rem;gap:6px;}
+    .logo .mark{width:28px;height:28px;border-radius:8px;}
+    .logo .mark svg{width:16px;height:16px;}
+    .hamburger{padding:5px;}
+    .hamburger svg{width:23px;height:23px;}
+  }
+  @media (max-width:330px){
+    .logo{font-size:1rem;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;overflow:hidden;padding:70px 0 60px;background:var(--beige);}
+  .sec-problem{background:#F7DFC0;}
+  #how{background:#DCE9F2;}
+  #quiz{background:#E9D9BB;}
+  #surprise{background:#FBEADA;}
+  #dashboard{background:#CFE2EF;}
+  .sec-testimonials{background:#F2E6CE;}
+  #pricing{background:#F5EEDD;}
+  .hero-blob{position:absolute;border-radius:50%;filter:blur(38px);opacity:.35;z-index:0;}
+  .hero-blob.b1{width:340px;height:340px;background:var(--blue-light);top:-120px;inset-inline-end:-90px;}
+  .hero-blob.b2{width:260px;height:260px;background:var(--orange-light);bottom:-90px;inset-inline-start:-70px;}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;}
+  .hero-grid > div{min-width:0;}
+  @media (max-width:920px){.hero-grid{grid-template-columns:1fr;}}
+
+  .hero h1{font-size:clamp(2.1rem,4.4vw,3.4rem);color:var(--blue);margin-bottom:20px;}
+  .hero h1 span{color:var(--orange);}
+  .hero p.lede{font-size:1.15rem;color:var(--ink-soft);max-width:520px;margin-bottom:32px;}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:28px;}
+  .hero-trust{display:flex;gap:22px;flex-wrap:wrap;font-size:0.88rem;color:var(--ink-faint);font-weight:600;}
+  .hero-trust span{display:flex;align-items:center;gap:6px;}
+  .hero-trust .icon{color:var(--orange);width:16px;height:16px;}
+
+  .book-fan{position:relative;height:360px;}
+  .spine{
+    position:absolute;top:50%;left:50%;
+    width:104px;height:172px;border-radius:10px;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    padding:14px 10px;color:var(--paper);
+    opacity:0;transform:translate(-50%,-50%) rotate(0deg) scale(.7);
+    animation:spineIn .7s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  html[dir="rtl"] .spine{transform-origin:bottom center;}
+  .spine .spine-icon{width:30px;height:30px;opacity:.95;}
+  .spine .spine-title{font-family:var(--ff-display);font-size:0.78rem;line-height:1.3;text-align:center;}
+  .spine:nth-child(1){background:linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%);animation-delay:.05s;--rot:-20deg;--tx:-126px;}
+  .spine:nth-child(2){background:linear-gradient(135deg,var(--orange) 0%,var(--orange-deep) 100%);animation-delay:.18s;--rot:-7deg;--tx:-42px;}
+  .spine:nth-child(3){background:linear-gradient(135deg,var(--blue-mid) 0%,var(--orange-deep) 100%);animation-delay:.30s;--rot:6deg;--tx:42px;z-index:2;width:114px;height:190px;}
+  .spine:nth-child(4){background:linear-gradient(135deg,#4F86B3 0%,#6FA5C9 100%);animation-delay:.42s;--rot:19deg;--tx:126px;}
+  @keyframes spineIn{
+    to{opacity:1;transform:translate(calc(-50% + var(--tx)),-50%) rotate(var(--rot)) scale(1);}
+  }
+  .spine:hover{transform:translate(calc(-50% + var(--tx)),-54%) rotate(var(--rot)) scale(1.04);transition:transform .2s ease;}
+
+  @media (max-width:920px){
+    .book-fan{height:300px;}
+    .spine{width:88px;height:146px;padding:12px 8px;gap:9px;}
+    .spine .spine-icon{width:24px;height:24px;}
+    .spine .spine-title{font-size:0.68rem;}
+    .spine:nth-child(1){--tx:-105px;}
+    .spine:nth-child(2){--tx:-35px;}
+    .spine:nth-child(3){--tx:35px;width:96px;height:160px;}
+    .spine:nth-child(4){--tx:105px;}
+  }
+  @media (max-width:520px){
+    .book-fan{height:250px;}
+    .spine{width:70px;height:118px;padding:9px 6px;gap:7px;border-radius:8px;}
+    .spine .spine-icon{width:19px;height:19px;}
+    .spine .spine-title{font-size:0.56rem;line-height:1.25;}
+    .spine:nth-child(1){--tx:-81px;--rot:-17deg;}
+    .spine:nth-child(2){--tx:-27px;--rot:-6deg;}
+    .spine:nth-child(3){--tx:27px;--rot:5deg;width:77px;height:130px;}
+    .spine:nth-child(4){--tx:81px;--rot:16deg;}
+  }
+  @media (max-width:360px){
+    .book-fan{height:220px;}
+    .spine{width:60px;height:102px;padding:7px 5px;gap:6px;}
+    .spine .spine-icon{width:16px;height:16px;}
+    .spine .spine-title{font-size:0.5rem;}
+    .spine:nth-child(1){--tx:-69px;}
+    .spine:nth-child(2){--tx:-23px;}
+    .spine:nth-child(3){--tx:23px;width:66px;height:112px;}
+    .spine:nth-child(4){--tx:69px;}
+  }
+
+  /* ---------- Problem / Solution ---------- */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  .split > div{min-width:0;}
+  .split-dots{display:none;}
+  @media (max-width:820px){
+    .split{
+      display:flex;
+      grid-template-columns:none;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      gap:16px;
+      /* bleed to the screen edges so cards can center nicely */
+      margin-inline:-24px;
+      padding:4px 24px 14px;
+      scrollbar-width:none;
+    }
+    .split::-webkit-scrollbar{display:none;}
+    .split > div{
+      flex:0 0 88%;
+      scroll-snap-align:center;
+      scroll-snap-stop:always;
+    }
+    .split-card{height:100%;}
+    .split-dots{
+      display:flex;justify-content:center;gap:8px;margin-top:4px;
+    }
+    .split-dots button{
+      width:9px;height:9px;padding:0;border-radius:50%;border:none;cursor:pointer;
+      background:var(--beige-deep);transition:background .2s, transform .2s;
+    }
+    .split-dots button[aria-selected="true"]{background:var(--orange);transform:scale(1.25);}
+  }
+  @media (max-width:420px){
+    .split{margin-inline:-14px;padding-inline:14px;}
+    .split > div{flex:0 0 90%;}
+  }
+  .split-card{background:var(--paper);border-radius:var(--radius-lg);padding:34px 32px;box-shadow:var(--shadow-sm);}
+  .split-card.problem{border-top:6px solid var(--beige-deep);}
+  .split-card.solution{border-top:6px solid var(--orange);}
+  .split-card h3{font-size:1.3rem;color:var(--blue);margin-bottom:14px;}
+  .split-card p{color:var(--ink-soft);}
+  .split-card ul{margin-top:16px;display:flex;flex-direction:column;gap:10px;}
+  .split-card li{display:flex;gap:10px;color:var(--ink-soft);font-size:0.96rem;}
+  .split-card li .dot{flex:none;width:8px;height:8px;border-radius:50%;margin-top:8px;}
+  .problem li .dot{background:var(--ink-faint);}
+  .solution li .dot{background:var(--orange);}
+
+  /* ---------- How it works ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .steps > div{min-width:0;}
+  .steps-dots{display:none;}
+  @media (max-width:820px){
+    .steps{
+      display:flex;
+      grid-template-columns:none;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      gap:16px;
+      margin-inline:-24px;
+      /* top padding leaves room for the number badge that overhangs each card */
+      padding:28px 24px 14px;
+      scrollbar-width:none;
+    }
+    .steps::-webkit-scrollbar{display:none;}
+    .steps > div{
+      flex:0 0 82%;
+      scroll-snap-align:center;
+      scroll-snap-stop:always;
+    }
+    .step{height:100%;}
+    .steps-dots{
+      display:flex;justify-content:center;gap:8px;margin-top:4px;
+    }
+    .steps-dots button{
+      width:9px;height:9px;padding:0;border-radius:50%;border:none;cursor:pointer;
+      background:var(--beige-deep);transition:background .2s, transform .2s;
+    }
+    .steps-dots button[aria-selected="true"]{background:var(--orange);transform:scale(1.25);}
+  }
+  @media (max-width:420px){
+    .steps{margin-inline:-14px;padding-inline:14px;}
+    .steps > div{flex:0 0 86%;}
+  }
+  .step{position:relative;background:var(--paper);border-radius:var(--radius-lg);padding:38px 26px 28px;box-shadow:var(--shadow-sm);text-align:center;}
+  .step-tab{
+    position:absolute;top:-20px;inset-inline-start:50%;transform:translateX(50%);
+    width:52px;height:60px;
+    clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%);
+    display:flex;align-items:flex-start;justify-content:center;padding-top:10px;
+    font-family:var(--ff-display);color:var(--paper);font-size:1.15rem;
+  }
+  html[dir="rtl"] .step-tab{transform:translateX(50%);}
+  .step:nth-child(1) .step-tab{background:var(--blue);}
+  .step:nth-child(2) .step-tab{background:var(--orange);}
+  .step:nth-child(3) .step-tab{background:var(--blue-mid);}
+  .step h3{margin-top:14px;font-size:1.15rem;color:var(--blue);margin-bottom:10px;}
+  .step p{color:var(--ink-soft);font-size:0.95rem;}
+
+  /* ---------- Quiz ---------- */
+  .quiz-wrap{
+    background:var(--paper);border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);padding:38px;max-width:660px;margin:0 auto;
+  }
+  @media (max-width:600px){.quiz-wrap{padding:26px 20px;}}
+  .quiz-progress{margin-bottom:26px;}
+  .quiz-step-label{font-size:0.85rem;font-weight:700;color:var(--ink-faint);margin-bottom:10px;}
+  .quiz-progress-track{height:8px;border-radius:999px;background:var(--beige-deep);overflow:hidden;}
+  .quiz-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue-mid),var(--orange));transition:width .3s ease;width:0%;}
+
+  .quiz-question{font-size:1.32rem;color:var(--blue);margin-bottom:22px;font-family:var(--ff-display);}
+  .quiz-options{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+  .quiz-option{
+    text-align:start;padding:16px 18px;border-radius:var(--radius-md);
+    border:2px solid var(--beige-deep);background:var(--beige);
+    font-weight:600;color:var(--ink);cursor:pointer;font-size:1rem;
+    transition:border-color .15s, background .15s, transform .1s;
+  }
+  .quiz-option:hover{border-color:var(--blue-mid);}
+  .quiz-option[aria-pressed="true"]{
+    background:var(--blue);border-color:var(--blue);color:var(--paper);
+  }
+  .quiz-nav{display:flex;justify-content:space-between;gap:12px;}
+  .quiz-nav .spacer{flex:1;}
+
+  .result-card{display:none;}
+  .result-card.show{display:block;animation:fadeUp .4s ease both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  .result-top{display:flex;gap:22px;align-items:flex-start;}
+  @media (max-width:520px){.result-top{flex-direction:column;align-items:center;text-align:center;}}
+  .book-cover{
+    flex:none;width:150px;height:214px;border-radius:6px 10px 10px 6px;
+    box-shadow:var(--shadow);color:var(--paper);position:relative;overflow:hidden;text-align:center;
+  }
+  .book-cover::before{
+    content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:12px;z-index:3;
+    background:linear-gradient(90deg, rgba(0,0,0,0.28), rgba(0,0,0,0));pointer-events:none;
+  }
+  .book-cover::after{
+    content:'';position:absolute;inset:0;border-radius:inherit;z-index:3;
+    background:linear-gradient(155deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 40%);pointer-events:none;
+  }
+  .cover-scene{position:absolute;inset:0;z-index:0;}
+  .cover-scene svg{width:100%;height:100%;display:block;}
+  .cover-scrim{
+    position:absolute;inset-inline:0;bottom:0;height:62%;z-index:1;pointer-events:none;
+    background:linear-gradient(to top, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.12) 55%, rgba(0,0,0,0) 100%);
+  }
+  .cover-content{
+    position:relative;z-index:2;height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    padding:16px 12px 14px;gap:10px;
+  }
+  .book-cover .cover-icon-wrap{
+    flex:none;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.25);
+    display:flex;align-items:center;justify-content:center;margin-top:2px;
+    backdrop-filter:blur(1px);
+  }
+  .book-cover .icon{width:20px;height:20px;opacity:.95;}
+  .book-cover .cover-title{
+    font-family:var(--ff-display);font-size:1.02rem;line-height:1.28;
+    display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
+    text-shadow:0 1px 4px rgba(0,0,0,0.35);
+  }
+  .book-cover .cover-author{
+    margin-top:auto;font-size:0.7rem;font-weight:700;letter-spacing:0.01em;opacity:0.95;
+    padding-top:8px;border-top:1px solid rgba(255,255,255,0.4);width:100%;
+    text-shadow:0 1px 3px rgba(0,0,0,0.3);
+  }
+  .cover-a{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%);}
+  .cover-b{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-deep) 100%);}
+  .cover-c{background:linear-gradient(135deg,var(--blue-mid) 0%,var(--orange) 100%);}
+  .cover-d{background:linear-gradient(135deg,var(--orange-deep) 0%,var(--blue) 100%);}
+  .cover-e{background:linear-gradient(135deg,#4F86B3 0%,#6FA5C9 100%);}
+  .cover-f{background:linear-gradient(135deg,#E8952F 0%,#F0B15C 100%);}
+
+  .result-info h3{font-size:1.4rem;color:var(--blue);margin-bottom:4px;}
+  .result-info .author{color:var(--ink-faint);font-weight:600;font-size:0.92rem;margin-bottom:10px;}
+  .age-badge{display:inline-block;background:var(--orange-pale);color:var(--orange-deep);font-weight:700;font-size:0.8rem;padding:4px 12px;border-radius:999px;margin-bottom:12px;}
+  .result-info p.blurb{color:var(--ink-soft);font-size:0.98rem;margin-bottom:16px;}
+  .result-actions{display:flex;gap:10px;flex-wrap:wrap;}
+
+  .fav-btn{
+    display:inline-flex;align-items:center;gap:7px;
+    background:var(--beige);border:2px solid var(--beige-deep);
+    padding:10px 16px;border-radius:999px;font-weight:700;font-size:0.9rem;cursor:pointer;color:var(--ink);
+  }
+  .fav-btn .icon{width:16px;height:16px;color:var(--orange);}
+  .fav-btn[aria-pressed="true"]{background:var(--orange-pale);border-color:var(--orange);color:var(--orange-deep);}
+
+  .found-heading{font-family:var(--ff-display);color:var(--blue);font-size:1.15rem;margin-bottom:16px;}
+
+  /* ---------- Surprise ---------- */
+  .surprise-band{
+    background:linear-gradient(120deg,var(--blue) 0%,var(--blue-mid) 100%);
+    border-radius:var(--radius-lg);padding:44px 36px;color:var(--paper);
+    display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  }
+  .surprise-band h3{font-size:1.5rem;margin-bottom:8px;}
+  .surprise-band p{color:var(--blue-pale);max-width:440px;}
+  .surprise-band .btn-primary{flex:none;}
+  .dice{width:20px;height:20px;}
+  .dice.spin{animation:spin .55s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .surprise-result{max-width:660px;margin:26px auto 0;background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:30px;color:var(--ink);}
+
+  /* ---------- Dashboard ---------- */
+  .dash-shell{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;}
+  .dash-open{display:block;padding:36px;}
+  .dash-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:30px;}
+  .dash-grid > div{min-width:0;}
+  @media (max-width:820px){.dash-grid{grid-template-columns:1fr;}}
+  .dash-block h4{font-size:1.05rem;color:var(--blue);margin-bottom:14px;}
+  .fav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;}
+  .fav-item{background:var(--beige);border-radius:var(--radius-md);padding:12px;text-align:center;position:relative;}
+  .fav-item .mini-cover{width:100%;height:74px;border-radius:8px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;color:var(--paper);}
+  .fav-item .mini-cover .icon{width:20px;height:20px;}
+  .fav-item .mini-title{font-size:0.82rem;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:6px;}
+  .fav-remove{background:none;border:none;color:var(--orange-deep);font-size:0.76rem;font-weight:700;cursor:pointer;padding:2px;}
+  .empty-msg{color:var(--ink-faint);font-size:0.92rem;background:var(--beige);padding:18px;border-radius:var(--radius-md);}
+
+  .tracker-box{background:var(--beige);border-radius:var(--radius-md);padding:22px;}
+  .tracker-count-row{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:16px;}
+  .count-btn{
+    width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;
+    font-size:1.3rem;font-weight:700;color:var(--paper);display:flex;align-items:center;justify-content:center;
+  }
+  .count-btn.minus{background:var(--ink-faint);}
+  .count-btn.plus{background:var(--orange);}
+  .count-btn[disabled]{opacity:.4;cursor:not-allowed;}
+  .tracker-number{font-family:var(--ff-display);font-size:2.4rem;color:var(--blue);min-width:64px;text-align:center;}
+  .tracker-goal{text-align:center;color:var(--ink-faint);font-size:0.85rem;margin-bottom:10px;}
+  .progress-bar{height:14px;background:var(--paper);border-radius:999px;overflow:hidden;margin-bottom:12px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue-mid),var(--orange));border-radius:999px;transition:width .4s ease;width:0%;}
+  .tracker-msg{text-align:center;font-weight:700;color:var(--blue);font-size:0.95rem;}
+
+  /* ---------- Testimonials ---------- */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .testi-grid > div{min-width:0;}
+  .testi-dots{display:none;}
+  @media (max-width:900px){
+    .testi-grid{
+      display:flex;
+      grid-template-columns:none;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      gap:16px;
+      margin-inline:-24px;
+      padding:4px 24px 14px;
+      scrollbar-width:none;
+    }
+    .testi-grid::-webkit-scrollbar{display:none;}
+    .testi-grid > div{
+      flex:0 0 84%;
+      scroll-snap-align:center;
+      scroll-snap-stop:always;
+    }
+    .testi-card{height:100%;}
+    .testi-dots{
+      display:flex;justify-content:center;gap:8px;margin-top:4px;
+    }
+    .testi-dots button{
+      width:9px;height:9px;padding:0;border-radius:50%;border:none;cursor:pointer;
+      background:var(--beige-deep);transition:background .2s, transform .2s;
+    }
+    .testi-dots button[aria-selected="true"]{background:var(--orange);transform:scale(1.25);}
+  }
+  @media (max-width:420px){
+    .testi-grid{margin-inline:-14px;padding-inline:14px;}
+    .testi-grid > div{flex:0 0 88%;}
+  }
+  .testi-card{background:var(--paper);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-sm);}
+  .testi-card .stars{color:var(--orange);margin-bottom:12px;display:flex;gap:3px;}
+  .testi-card .stars .icon{width:15px;height:15px;}
+  .testi-card p.quote{color:var(--ink-soft);margin-bottom:16px;font-size:0.98rem;}
+  .testi-card .who{font-weight:700;color:var(--blue);font-size:0.9rem;}
+
+  /* ---------- Pricing ---------- */
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:840px;margin:0 auto;}
+  .price-grid > div{min-width:0;}
+  .price-dots{display:none;}
+  @media (max-width:760px){
+    .price-grid{
+      display:flex;
+      grid-template-columns:none;
+      max-width:none;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      gap:16px;
+      margin-inline:-24px;
+      /* top padding leaves room for the badge that overhangs the card */
+      padding:22px 24px 14px;
+      scrollbar-width:none;
+    }
+    .price-grid::-webkit-scrollbar{display:none;}
+    .price-grid > div{
+      flex:0 0 86%;
+      scroll-snap-align:center;
+      scroll-snap-stop:always;
+    }
+    .price-card{height:100%;padding:28px 24px;}
+    .price-dots{
+      display:flex;justify-content:center;gap:8px;margin-top:4px;
+    }
+    .price-dots button{
+      width:9px;height:9px;padding:0;border-radius:50%;border:none;cursor:pointer;
+      background:var(--beige-deep);transition:background .2s, transform .2s;
+    }
+    .price-dots button[aria-selected="true"]{background:var(--orange);transform:scale(1.25);}
+  }
+  @media (max-width:420px){
+    .price-grid{margin-inline:-14px;padding-inline:14px;}
+    .price-grid > div{flex:0 0 90%;}
+  }
+  .price-card{background:var(--paper);border-radius:var(--radius-lg);padding:34px;box-shadow:var(--shadow-sm);position:relative;}
+  .price-card.premium{border:2px solid var(--orange);}
+  .price-badge{position:absolute;top:-14px;inset-inline-end:26px;background:var(--orange);color:var(--paper);font-size:0.76rem;font-weight:700;padding:5px 14px;border-radius:999px;}
+  .price-card h3{color:var(--blue);font-size:1.3rem;margin-bottom:6px;}
+  .price-card .price-line{color:var(--ink-faint);font-weight:600;margin-bottom:18px;}
+  .price-card ul{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .price-card li{display:flex;gap:8px;color:var(--ink-soft);font-size:0.94rem;}
+  .price-card li .icon{width:16px;height:16px;color:var(--orange);flex:none;margin-top:3px;}
+
+  /* ---------- Footer ---------- */
+  footer.site{background:var(--blue);color:var(--blue-pale);padding:52px 0 26px;margin-top:20px;}
+  .footer-row{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:34px;}
+  .footer-brand .logo{color:var(--paper);}
+  .footer-brand p{color:var(--blue-light);max-width:320px;margin-top:12px;font-size:0.92rem;}
+  .footer-links{display:flex;gap:52px;flex-wrap:wrap;}
+  .footer-col h5{font-size:0.9rem;color:var(--paper);margin-bottom:12px;}
+  .footer-col ul{display:flex;flex-direction:column;gap:9px;}
+  .footer-col a{text-decoration:none;color:var(--blue-light);font-size:0.9rem;}
+  .footer-col a:hover{color:var(--paper);}
+  .wa-btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--paper);padding:11px 20px;border-radius:999px;font-weight:700;font-size:0.9rem;text-decoration:none;margin-top:6px;}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.15);padding-top:20px;font-size:0.82rem;color:var(--blue-light);text-align:center;}
+
+  /* ---------- Toast ---------- */
+  .toast{
+    position:fixed;bottom:24px;inset-inline-start:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--blue);color:var(--paper);padding:14px 24px;border-radius:999px;
+    font-weight:700;font-size:0.92rem;box-shadow:var(--shadow);
+    opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;z-index:200;
+  }
+  html[dir="rtl"] .toast{transform:translateX(50%) translateY(20px);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  html[dir="rtl"] .toast.show{transform:translateX(50%) translateY(0);}
+
+  section[id]{scroll-margin-top:88px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Icon symbols -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3 L13.8 9.2 L20 11 L13.8 12.8 L12 19 L10.2 12.8 L4 11 L10.2 9.2 Z"/><circle cx="18.5" cy="5" r="1.2"/></symbol>
+  <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="7" cy="8" r="1.7"/><circle cx="12" cy="5.7" r="1.7"/><circle cx="17" cy="8" r="1.7"/><ellipse cx="12" cy="14.5" rx="5" ry="4"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 2 4 6 4 9 0 2-1 4-2 5l-2 2-2-2c-1-1-2-3-2-5 0-3 1-7 4-9Z" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r="1.5" fill="var(--paper)" stroke="none"/><path d="M9 15l-3 4M15 15l3 4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8" width="12" height="10" rx="3"/><circle cx="9.5" cy="13" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="13" r="1.1" fill="currentColor" stroke="none"/><line x1="12" y1="8" x2="12" y2="4"/><circle cx="12" cy="3" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M15 9l-2 5-4 1 2-5 4-1Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.5 5.6 6.1.6-4.6 4.1 1.3 6-5.3-3.2-5.3 3.2 1.3-6-4.6-4.1 6.1-.6L12 3Z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H12v16H5.5c-.8 0-1.5-.7-1.5-1.5v-13Z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H12v16h6.5c.8 0 1.5-.7 1.5-1.5v-13Z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></symbol>
+  <symbol id="i-dice" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.5V12l3 2"/></symbol>
+</svg>
+
+<header class="site">
+  <div class="header-bg"></div>
+  <div class="container nav-row">
+    <a href="#top" class="logo">
+      <span class="mark"><svg class="icon"><use href="#i-book"/></svg></span>
+      <span class="logo-text">BookMatch</span>
+    </a>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#how">איך זה עובד</a></li>
+        <li><a href="#quiz">השאלון</a></li>
+        <li><a href="#dashboard">האזור שלי</a></li>
+        <li><a href="#pricing">מחירים</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <button class="hamburger" id="hamburgerBtn" aria-label="פתיחת תפריט" aria-expanded="false">
+        <svg class="icon"><use id="hamburgerIcon" href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-blob b1"></div>
+    <div class="hero-blob b2"></div>
+    <div class="container hero-grid">
+      <div>
+        <h1>לכל ילד יש ספר מושלם. <span>בואו נמצא אותו.</span></h1>
+        <p class="lede">שאלון קצר של דקה, כיפי כמו משחק — ובלחיצת כפתור אחת אנחנו מתאימים לכם בדיוק את הספר הבא שתרצו לקרוא. בלי לגלול בין עשרות תקצירים ארוכים.</p>
+        <div class="hero-ctas">
+          <a href="#quiz" class="btn btn-primary">
+            <svg class="icon"><use href="#i-sparkle"/></svg>
+            התחילו את השאלון
+          </a>
+          <a href="#surprise" class="btn btn-secondary">אין לי כוח לשאלון — תפתיעו אותי 🎲</a>
+        </div>
+        <div class="hero-trust">
+          <span><svg class="icon"><use href="#i-check"/></svg> חינמי לגמרי להתחיל</span>
+          <span><svg class="icon"><use href="#i-check"/></svg> בלי הרשמה כדי לנסות</span>
+          <span><svg class="icon"><use href="#i-check"/></svg> בטוח ומתאים לילדים</span>
+        </div>
+      </div>
+      <div class="book-fan" aria-hidden="true">
+        <div class="spine"><svg class="icon spine-icon"><use href="#i-search"/></svg><div class="spine-title">סוד הגן הנעלם</div></div>
+        <div class="spine"><svg class="icon spine-icon"><use href="#i-rocket"/></svg><div class="spine-title">ג'ורג' והיקום</div></div>
+        <div class="spine"><svg class="icon spine-icon"><use href="#i-sparkle"/></svg><div class="spine-title">הארי פוטר ואבן החכמים</div></div>
+        <div class="spine"><svg class="icon spine-icon"><use href="#i-paw"/></svg><div class="spine-title">גבעת ווטרשיפ</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM / SOLUTION -->
+  <section class="section-tight sec-problem">
+    <div class="container">
+      <div class="split" id="splitCarousel">
+        <div class="split-card problem">
+          <h3>למה כל כך קשה למצוא ספר טוב?</h3>
+          <p>מדף בספרייה או בחנות מלא במאות אפשרויות, וכדי לדעת מה מתאים צריך לקרוא עשרות תקצירים ארוכים. חברים ממליצים על מה שהם אהבו — לא בהכרח על מה שיתאים לכם.</p>
+          <ul>
+            <li><span class="dot"></span>עומס אפשרויות שגורם לבלבול</li>
+            <li><span class="dot"></span>תקצירים ארוכים שגוזלים זמן</li>
+            <li><span class="dot"></span>המלצות שלא תמיד מתאימות אישית</li>
+          </ul>
+        </div>
+        <div class="split-card solution">
+          <h3>הפתרון: התאמה אישית בלחיצת כפתור</h3>
+          <p>במקום לחפש, עונים על כמה שאלות קצרות וכיפיות על מה שבאמת מעניין אתכם — והמערכת מוצאת את הספר שהכי מתאים לכם, מיד.</p>
+          <ul>
+            <li><span class="dot"></span>שאלון של פחות מדקה</li>
+            <li><span class="dot"></span>התאמה מדויקת לפי תחומי עניין</li>
+            <li><span class="dot"></span>גם אופציית "תפתיעו אותי" למי שממהר</li>
+          </ul>
+        </div>
+      </div>
+      <div class="split-dots" id="splitDots" role="tablist" aria-label="ניווט בין הכרטיסים">
+        <button type="button" role="tab" aria-label="הבעיה" aria-selected="true"></button>
+        <button type="button" role="tab" aria-label="הפתרון" aria-selected="false"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="center" style="margin-bottom:48px;">
+        <span class="eyebrow">איך זה עובד</span>
+        <h2 class="section-title">שלושה צעדים לספר הבא שלכם</h2>
+        <p class="section-lede center">בלי הרשמה, בלי מאמץ — רק כמה קליקים בין השאלה לספר.</p>
+      </div>
+      <div class="steps" id="stepsCarousel">
+        <div class="step">
+          <div class="step-tab">01</div>
+          <h3>עונים על השאלון</h3>
+          <p>ארבע שאלות קצרות על הז'אנר, האורך והמצב רוח שאתם מחפשים בספר.</p>
+        </div>
+        <div class="step">
+          <div class="step-tab">02</div>
+          <h3>מוצאים התאמה</h3>
+          <p>המערכת בודקת את התשובות ומציגה את הספר שהכי מתאים לכם מתוך המאגר.</p>
+        </div>
+        <div class="step">
+          <div class="step-tab">03</div>
+          <h3>שומרים ומתחילים לקרוא</h3>
+          <p>אוהבים את ההמלצה? שומרים אותה במועדפים באזור האישי שלכם, לתמיד.</p>
+        </div>
+      </div>
+      <div class="steps-dots" id="stepsDots" role="tablist" aria-label="ניווט בין השלבים">
+        <button type="button" role="tab" aria-label="שלב 1" aria-selected="true"></button>
+        <button type="button" role="tab" aria-label="שלב 2" aria-selected="false"></button>
+        <button type="button" role="tab" aria-label="שלב 3" aria-selected="false"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz">
+    <div class="container">
+      <div class="center" style="margin-bottom:40px;">
+        <span class="eyebrow">מצא לי ספר</span>
+        <h2 class="section-title">בואו נכיר את טעם הקריאה שלכם</h2>
+        <p class="section-lede center">ענו בכנות — אין תשובות נכונות או לא נכונות, רק ספר שמתאים בדיוק לכם.</p>
+      </div>
+
+      <div class="quiz-wrap">
+        <!-- question view -->
+        <div id="quizQuestionView">
+          <div class="quiz-progress" id="quizProgress"></div>
+          <h3 class="quiz-question" id="quizQuestionText"></h3>
+          <div class="quiz-options" id="quizOptions" role="group"></div>
+          <div class="quiz-nav">
+            <button class="btn btn-ghost btn-sm" id="quizBackBtn">חזרה</button>
+            <span class="spacer"></span>
+            <button class="btn btn-primary" id="quizNextBtn" disabled>הבא</button>
+          </div>
+        </div>
+
+        <!-- result view -->
+        <div class="result-card" id="quizResultView">
+          <p class="found-heading">מצאנו לך את הספר! 🎉</p>
+          <div class="result-top">
+            <div class="book-cover" id="quizCover">
+              <div class="cover-scene" id="quizCoverScene"></div>
+              <div class="cover-scrim"></div>
+              <div class="cover-content">
+                <span class="cover-icon-wrap"><svg class="icon"><use id="quizCoverIcon" href="#i-book"/></svg></span>
+                <p class="cover-title" id="quizCoverTitle"></p>
+                <p class="cover-author" id="quizCoverAuthor"></p>
+              </div>
+            </div>
+            <div class="result-info">
+              <h3 id="quizTitle"></h3>
+              <p class="author" id="quizAuthor"></p>
+              <span class="age-badge" id="quizAge"></span>
+              <p class="blurb" id="quizBlurb"></p>
+              <div class="result-actions">
+                <button class="fav-btn" id="quizFavBtn" aria-pressed="false">
+                  <svg class="icon"><use href="#i-star"/></svg>
+                  שמור במועדפים
+                </button>
+                <button class="btn btn-ghost btn-sm" id="quizRetakeBtn">עשו את השאלון שוב</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SURPRISE ME -->
+  <section class="section-tight" id="surprise">
+    <div class="container">
+      <div class="surprise-band">
+        <div>
+          <h3>אין כוח לשאלון? תנו לנו להפתיע אתכם.</h3>
+          <p>לחיצה אחת — וקיבלתם ספר אקראי מתוך המאגר שלנו. לפעמים ההפתעות הכי טובות הן אלה שלא תכננו.</p>
+        </div>
+        <button class="btn btn-primary" id="surpriseBtn">
+          <svg class="icon dice" id="diceIcon"><use href="#i-dice"/></svg>
+          תפתיעו אותי
+        </button>
+      </div>
+      <div class="surprise-result result-card" id="surpriseResultView">
+        <p class="found-heading">הספר שהפתיע אותך! 🎲</p>
+        <div class="result-top">
+          <div class="book-cover" id="surpriseCover">
+            <div class="cover-scene" id="surpriseCoverScene"></div>
+            <div class="cover-scrim"></div>
+            <div class="cover-content">
+              <span class="cover-icon-wrap"><svg class="icon"><use id="surpriseCoverIcon" href="#i-book"/></svg></span>
+              <p class="cover-title" id="surpriseCoverTitle"></p>
+              <p class="cover-author" id="surpriseCoverAuthor"></p>
+            </div>
+          </div>
+          <div class="result-info">
+            <h3 id="surpriseTitle"></h3>
+            <p class="author" id="surpriseAuthor"></p>
+            <span class="age-badge" id="surpriseAge"></span>
+            <p class="blurb" id="surpriseBlurb"></p>
+            <div class="result-actions">
+              <button class="fav-btn" id="surpriseFavBtn" aria-pressed="false">
+                <svg class="icon"><use href="#i-star"/></svg>
+                שמור במועדפים
+              </button>
+              <button class="btn btn-ghost btn-sm" id="surpriseAgainBtn">עוד הפתעה</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="section" id="dashboard">
+    <div class="container">
+      <div class="center" style="margin-bottom:40px;">
+        <span class="eyebrow">האזור האישי</span>
+        <h2 class="section-title">הספרים שלך, במקום אחד</h2>
+        <p class="section-lede center">כל הספרים ששמרתם, ומעקב פשוט אחרי כמה קראתם החודש.</p>
+      </div>
+
+      <div class="dash-shell">
+        <div class="dash-open">
+          <div class="dash-grid">
+            <div class="dash-block">
+              <h4>הספרים השמורים שלי ⭐</h4>
+              <div id="favContainer"></div>
+            </div>
+            <div class="dash-block">
+              <h4>כמה ספרים קראתי החודש?</h4>
+              <div class="tracker-box">
+                <div class="tracker-count-row">
+                  <button class="count-btn minus" id="minusBtn" aria-label="הפחתת ספר">−</button>
+                  <span class="tracker-number" id="trackerNumber">0</span>
+                  <button class="count-btn plus" id="plusBtn" aria-label="הוספת ספר">+</button>
+                </div>
+                <p class="tracker-goal">יעד חודשי: 6 ספרים</p>
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <p class="tracker-msg" id="trackerMsg"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section-tight sec-testimonials">
+    <div class="container">
+      <div class="center" style="margin-bottom:40px;">
+        <span class="eyebrow">מה אומרים עלינו</span>
+        <h2 class="section-title">ילדים, הורים ומורים כבר מצאו את הספר שלהם</h2>
+      </div>
+      <div class="testi-grid" id="testiCarousel">
+        <div class="testi-card">
+          <div class="stars"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></div>
+          <p class="quote">עשיתי את השאלון וקיבלתי ספר שממש מתאים לי. סוף סוף לא בזבזתי זמן על ספרים שלא מעניינים אותי.</p>
+          <p class="who">איתי, בן 11</p>
+        </div>
+        <div class="testi-card">
+          <div class="stars"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></div>
+          <p class="quote">הבנות שלי סוף סוף מבקשות ספר במקום שאני צריכה לחפש להן. השאלון מדויק ומהיר, וזה חוסך לי המון זמן.</p>
+          <p class="who">מיכל, אמא לשתי ילדות</p>
+        </div>
+        <div class="testi-card">
+          <div class="stars"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></div>
+          <p class="quote">אני ממליצה על BookMatch לכל הכיתה שלי. זה עוזר גם לתלמידים שממש מתקשים למצוא ספר שמתאים להם.</p>
+          <p class="who">רונית, מורה לספרות בכיתה ו׳</p>
+        </div>
+      </div>
+      <div class="testi-dots" id="testiDots" role="tablist" aria-label="ניווט בין ההמלצות">
+        <button type="button" role="tab" aria-label="המלצה 1" aria-selected="true"></button>
+        <button type="button" role="tab" aria-label="המלצה 2" aria-selected="false"></button>
+        <button type="button" role="tab" aria-label="המלצה 3" aria-selected="false"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="center" style="margin-bottom:44px;">
+        <span class="eyebrow">מחירים</span>
+        <h2 class="section-title">חינמי לילדים, פרימיום להורים ולמורים</h2>
+        <p class="section-lede center">הליבה של BookMatch תמיד תישאר חינמית. הפרימיום מוסיף כלים למי שרוצה ללוות את הקריאה מקרוב.</p>
+      </div>
+      <div class="price-grid" id="priceCarousel">
+        <div class="price-card">
+          <h3>חינמי — לתמיד</h3>
+          <p class="price-line">₪0 / לחודש</p>
+          <ul>
+            <li><svg class="icon"><use href="#i-check"/></svg>שאלון "מצא לי ספר" ללא הגבלה</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>מנוע "תפתיעו אותי"</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>שמירת ספרים במועדפים</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>מד התקדמות קריאה חודשי</li>
+          </ul>
+          <a href="#quiz" class="btn btn-secondary" style="width:100%;">התחילו עכשיו</a>
+        </div>
+        <div class="price-card premium">
+          <span class="price-badge">בקרוב</span>
+          <h3>פרימיום להורים ומורים</h3>
+          <p class="price-line">מחיר סמלי חודשי</p>
+          <ul>
+            <li><svg class="icon"><use href="#i-check"/></svg>דוחות מעקב קריאה מפורטים</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>רשימות ספרים מותאמות לכל ילד</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>ניהול כמה פרופילים — בבית או בכיתה</li>
+          </ul>
+          <button class="btn btn-primary" id="waitlistBtn" style="width:100%;">הצטרפו לרשימת ההמתנה</button>
+        </div>
+      </div>
+      <div class="price-dots" id="priceDots" role="tablist" aria-label="ניווט בין המסלולים">
+        <button type="button" role="tab" aria-label="מסלול חינמי" aria-selected="true"></button>
+        <button type="button" role="tab" aria-label="מסלול פרימיום" aria-selected="false"></button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <div class="footer-row">
+      <div class="footer-brand">
+        <a href="#top" class="logo">
+          <span class="mark"><svg class="icon"><use href="#i-book"/></svg></span>
+          BookMatch
+        </a>
+        <p>עוזרים לכל ילד למצוא את הספר הבא שהוא באמת ירצה לקרוא — בלי בזבוז זמן ובלי בלבול.</p>
+        <a class="wa-btn" id="whatsappShare" target="_blank" rel="noopener">
+          שתפו בווטסאפ המשפחתי 💬
+        </a>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>ניווט</h5>
+          <ul>
+            <li><a href="#how">איך זה עובד</a></li>
+            <li><a href="#quiz">השאלון</a></li>
+            <li><a href="#dashboard">האזור שלי</a></li>
+            <li><a href="#pricing">מחירים</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>קהל יעד</h5>
+          <ul>
+            <li>ילדים ובני נוער 8–14</li>
+            <li>הורים</li>
+            <li>מורים וספרנים</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">גרסת MVP להדגמה. כל הנתונים באתר זה מדומים ונשמרים בדפדפן בלבד. © BookMatch</div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=bookmatch" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------------- Data ---------------- */
+  var BOOKS = [
+    {id:1,title:'איתמר מטפס על קירות',author:'דויד גרוסמן',genre:['פנטזיה'],length:'קצר',mood:['מרגש','מצחיק'],interest:'קסם ופנטזיה',age:'5–8',icon:'i-sparkle',cover:'cover-a',blurb:'ילד מגלה שאם רק רוצים מספיק, אפשר לטפס מעבר לקירות החדר ולפגוש חיות פרא מכל העולם.'},
+    {id:2,title:'אנונימי ברכבת',author:'שלומית כהן-אסיף',genre:['פנטזיה'],length:'קצר',mood:['מרגש'],interest:'קסם ופנטזיה',age:'5–8',icon:'i-sparkle',cover:'cover-b',blurb:'מסע דמיוני וקסום שמתרחש כולו בתוך קרונותיה של רכבת פלאית שלא כמו כל רכבת אחרת.'},
+    {id:3,title:'בלי סודות',author:'נורית זרחי',genre:['קומדיה','דרמה'],length:'קצר',mood:['מלמד','מרגש'],interest:'חברים ובעלי חיים',age:'5–8',icon:'i-star',cover:'cover-c',blurb:'סיפור רגיש על ילד שמגלה בהדרגה את הכוח שיש בשיתוף ובפתיחות עם אחרים.'},
+    {id:4,title:'בת הים הקטנה',author:'הנס כריסטיאן אנדרסן',genre:['פנטזיה','דרמה'],length:'בינוני',mood:['מרגש'],interest:'קסם ופנטזיה',age:'6–10',icon:'i-sparkle',cover:'cover-d',blurb:'אגדת עם מרגשת על בת ים שמוכנה להקריב הכול למען אהבה ועולם חדש.'},
+    {id:5,title:'דירה להשכיר',author:'לאה גולדברג',genre:['קומדיה'],length:'קצר',mood:['מצחיק','מלמד'],interest:'חברים ובעלי חיים',age:'4–8',icon:'i-paw',cover:'cover-e',blurb:'בעלי חיים שונים מחפשים דייר חדש לבניין, ומגלים בדרך כמה חשובה שכנות טובה.'},
+    {id:6,title:'הביצה שהתחפשה',author:'דן צלקה',genre:['קומדיה'],length:'קצר',mood:['מצחיק','מרגש'],interest:'חברים ובעלי חיים',age:'5–8',icon:'i-star',cover:'cover-f',blurb:'ביצה אחת שמרגישה שונה יוצאת למסע מצחיק ומרגש כדי לגלות מי היא באמת.'},
+    {id:7,title:'הגמד שרצה להיות ענק',author:'יהונתן גפן',genre:['קומדיה'],length:'קצר',mood:['מצחיק','מלמד'],interest:'קסם ופנטזיה',age:'5–8',icon:'i-sparkle',cover:'cover-a',blurb:'מעשייה שובבה על גמד שחולם להיות ענק, ומגלה בדרך את הגודל האמיתי של הלב.'},
+    {id:8,title:'הכלב השובב שלי',author:'רחל שפירא',genre:['קומדיה'],length:'קצר',mood:['מצחיק'],interest:'חברים ובעלי חיים',age:'5–8',icon:'i-paw',cover:'cover-b',blurb:'הרפתקאותיו של כלב ביתי שובב שגורם למהומה מצחיקה אחת אחרי השנייה בחצר.'},
+    {id:9,title:'הקוסם מארץ עוץ',author:'ליימן פרנק באום',genre:['פנטזיה','הרפתקאות'],length:'בינוני',mood:['מרגש','מצחיק'],interest:'קסם ופנטזיה',age:'6–10',icon:'i-sparkle',cover:'cover-c',blurb:'דורותי וכלבלבה טוטו יוצאים למסע קסום בארץ רחוקה כדי למצוא את הדרך הביתה.'},
+    {id:10,title:'זזה הפרה',author:'מאיר שלו',genre:['קומדיה'],length:'קצר',mood:['מצחיק'],interest:'חברים ובעלי חיים',age:'5–8',icon:'i-paw',cover:'cover-d',blurb:'פרה סקרנית אחת מחליטה שהגיע הזמן לצאת ולראות מה יש מעבר לגדר הרפת.'},
+    {id:11,title:'ספר הג\'ונגל',author:'רודיארד קיפלינג',genre:['הרפתקאות'],length:'בינוני',mood:['מרגש','מלמד'],interest:'חברים ובעלי חיים',age:'7–11',icon:'i-paw',cover:'cover-e',blurb:'מוגלי, ילד שגדל בין זאבים, לומד את חוקי הג\'ונגל לצד באלו הדוב ופאנתר פאגירה.'},
+    {id:12,title:'עלי באבא וארבעים השודדים',author:'אגדה קלאסית',genre:['פנטזיה','הרפתקאות'],length:'קצר',mood:['מרגש','מצחיק'],interest:'קסם ופנטזיה',age:'6–10',icon:'i-sparkle',cover:'cover-f',blurb:'מערת אוצרות קסומה נפתחת רק למי שיודע להגיד את מילת הקסם הנכונה.'},
+    {id:13,title:'פטר והזאב',author:'סרגיי פרוקופייב',genre:['הרפתקאות'],length:'קצר',mood:['מותח','מרגש'],interest:'חברים ובעלי חיים',age:'5–9',icon:'i-paw',cover:'cover-a',blurb:'ילד אמיץ יוצא בעצמו להציל את חבריו מזאב מאיים שמסתובב ביער השלג.'},
+    {id:14,title:'מעשה בחמישה בלונים',author:'מרים רות',genre:['קומדיה','דרמה'],length:'קצר',mood:['מרגש','מלמד'],interest:'חברים ובעלי חיים',age:'4–7',icon:'i-star',cover:'cover-b',blurb:'חמישה בלונים צבעוניים מתפזרים לכל עבר, ונותנים לילדים שיעור ראשון על פרידות.'},
+    {id:15,title:'משה והתיבה',author:'סיפור מקראי מעובד',genre:['הרפתקאות'],length:'קצר',mood:['מרגש','מלמד'],interest:'הרפתקאות ותעלומות',age:'6–10',icon:'i-compass',cover:'cover-c',blurb:'תינוק שניצל מנהר הנילוס בתוך תיבת גומא קטנה גדל ובסופו של דבר הופך למנהיג גדול.'},
+    {id:16,title:'כספיון הדג הקטן',author:'פאול קור',genre:['הרפתקאות'],length:'קצר',mood:['מרגש','מותח'],interest:'חברים ובעלי חיים',age:'5–9',icon:'i-compass',cover:'cover-d',blurb:'דג כסף קטן ואמיץ יוצא למסע מרגש במצולות הים כדי למצוא את הוריו.'},
+    {id:17,title:'אי המטמון',author:'רוברט לואי סטיבנסון',genre:['הרפתקאות','מתח'],length:'ארוך',mood:['מרגש','מותח'],interest:'הרפתקאות ותעלומות',age:'9–13',icon:'i-compass',cover:'cover-e',blurb:'ג\'ים הוקינס מוצא מפת אוצר ויוצא להפלגה מסוכנת מול פיראטים ערמומיים בים הפתוח.'},
+    {id:18,title:'אליס בארץ הפלאות',author:'לואיס קרול',genre:['פנטזיה','קומדיה'],length:'בינוני',mood:['מצחיק','מרגש'],interest:'קסם ופנטזיה',age:'8–12',icon:'i-sparkle',cover:'cover-f',blurb:'אליס נופלת במאורת ארנב אל עולם הפוך שבו כלום לא הגיוני — וכל דבר יכול לקרות.'},
+    {id:19,title:'עליסה בארץ המראות',author:'לואיס קרול',genre:['פנטזיה','קומדיה'],length:'בינוני',mood:['מצחיק'],interest:'קסם ופנטזיה',age:'8–12',icon:'i-sparkle',cover:'cover-a',blurb:'הפעם אליס עוברת דרך המראה אל עולם שחמט חי, ומתקדמת משבצת אחר משבצת כדי להפוך למלכה.'},
+    {id:20,title:'אנה מן הגבעות',author:'לוסי מוד מונטגומרי',genre:['קומדיה','דרמה'],length:'ארוך',mood:['מצחיק','מרגש'],interest:'חברים ובעלי חיים',age:'9–13',icon:'i-star',cover:'cover-b',blurb:'ילדה יתומה, פטפטנית ובעלת דמיון פרוע, מגיעה למשפחה מאמצת וכובשת בהדרגה את לב הכפר.'},
+    {id:21,title:'במבי',author:'פליקס זאלטן',genre:['הרפתקאות','דרמה'],length:'בינוני',mood:['מרגש'],interest:'חברים ובעלי חיים',age:'8–11',icon:'i-paw',cover:'cover-c',blurb:'עופר צבי קטן גדל ביער, לומד את חוקי הטבע ואת הסכנות שמחכות לו בדרך אל הבגרות.'},
+    {id:22,title:'גבעת ווטרשיפ',author:'ריצ\'רד אדמס',genre:['הרפתקאות','מתח'],length:'ארוך',mood:['מרגש','מותח'],interest:'חברים ובעלי חיים',age:'10–14',icon:'i-paw',cover:'cover-d',blurb:'להקת ארנבים עוזבת את מאורתה ההרוסה ויוצאת למסע מסוכן למציאת בית חדש ובטוח.'},
+    {id:23,title:'ג\'ורג\' והיקום',author:'לוסי וסטיבן הוקינג',genre:['הרפתקאות'],length:'בינוני',mood:['מלמד','מרגש'],interest:'מדע ועתיד',age:'9–13',icon:'i-rocket',cover:'cover-e',blurb:'ילד סקרן מקבל גישה למחשב-על שיכול לפתוח שער אל כוכבי הלכת הרחוקים ביותר ביקום.'},
+    {id:24,title:'הארי פוטר ואבן החכמים',author:'ג\'יי.קיי. רולינג',genre:['פנטזיה','הרפתקאות'],length:'ארוך',mood:['מרגש','מותח'],interest:'קסם ופנטזיה',age:'9–13',icon:'i-sparkle',cover:'cover-f',blurb:'ביום הולדתו ה-11 מגלה הארי שהוא קוסם, ומתחיל ללמוד בבית ספר לכישוף מלא הפתעות.'},
+    {id:25,title:'ההוביט',author:'ג\'ון רונלד רואל טולקין',genre:['פנטזיה','הרפתקאות'],length:'ארוך',mood:['מרגש','מותח'],interest:'קסם ופנטזיה',age:'10–14',icon:'i-sparkle',cover:'cover-a',blurb:'בילבו בגינס השקט יוצא בעל כורחו למסע עם קוסם וגמדים כדי להשיב אוצר גנוב מדרקון.'},
+    {id:26,title:'החמישייה הסודית',author:'אניד בלייטון',genre:['מתח','הרפתקאות'],length:'בינוני',mood:['מותח','מצחיק'],interest:'הרפתקאות ותעלומות',age:'8–12',icon:'i-search',cover:'cover-b',blurb:'ארבעה בני דודים וכלב נאמן חוקרים תעלומה מסתורית חדשה בכל פעם שמגיעה חופשה.'},
+    {id:27,title:'השביעייה הסודית',author:'אניד בלייטון',genre:['מתח'],length:'קצר',mood:['מותח'],interest:'הרפתקאות ותעלומות',age:'8–11',icon:'i-search',cover:'cover-c',blurb:'חבורת ילדים מקימה מועדון סודי משלה ומוצאת את עצמה מפענחת תעלומות ממש ליד הבית.'},
+    {id:28,title:'הנסיך הקטן',author:'אנטואן דה סנט־אקזופרי',genre:['פנטזיה','דרמה'],length:'קצר',mood:['מרגש','מלמד'],interest:'קסם ופנטזיה',age:'8–13',icon:'i-sparkle',cover:'cover-d',blurb:'טייס שמתרסק במדבר פוגש נסיך קטן מכוכב רחוק, שמלמד אותו להסתכל על העולם אחרת.'},
+    {id:29,title:'הרפתקאות תום סויר',author:'מארק טוויין',genre:['הרפתקאות','קומדיה'],length:'ארוך',mood:['מצחיק','מרגש'],interest:'הרפתקאות ותעלומות',age:'9–13',icon:'i-compass',cover:'cover-e',blurb:'ילד שובב וממציא תירוצים נקלע להרפתקה אחר הרפתקה על גדות נהר המיסיסיפי.'},
+    {id:30,title:'טארה דאנקן',author:'סופי אודו־אומה',genre:['פנטזיה','הרפתקאות'],length:'ארוך',mood:['מרגש','מותח'],interest:'קסם ופנטזיה',age:'10–14',icon:'i-sparkle',cover:'cover-f',blurb:'נערה מגלה שיש בה כוחות קסם עצומים, ונשאבת לעולם מקביל מלא סכנות ותככים.'},
+    {id:31,title:'למצוא את נמו',author:'דיסני / פיקסר',genre:['הרפתקאות','קומדיה'],length:'קצר',mood:['מרגש','מצחיק'],interest:'חברים ובעלי חיים',age:'8–10',icon:'i-paw',cover:'cover-a',blurb:'אבא־דג חרד יוצא למסע ארוך וחוצה אוקיינוס שלם כדי למצוא ולהציל את בנו האהוב.'},
+    {id:32,title:'מרי פופינס',author:'פ. ל. טראוורס',genre:['פנטזיה','קומדיה'],length:'בינוני',mood:['מצחיק','מרגש'],interest:'קסם ופנטזיה',age:'8–11',icon:'i-sparkle',cover:'cover-b',blurb:'אומנת בלתי רגילה נוחתת עם מטרייה פתוחה ומביאה קסם לכל פינה בבית משפחת בנקס.'},
+    {id:33,title:'מסע אל בטן האדמה',author:'ז\'ול ורן',genre:['הרפתקאות','מתח'],length:'ארוך',mood:['מותח','מלמד'],interest:'מדע ועתיד',age:'10–14',icon:'i-rocket',cover:'cover-c',blurb:'פרופסור ואחיינו יורדים דרך הר געש כבוי אל עולם נשכח במעמקי כדור הארץ.'},
+    {id:34,title:'סוד הגן הנעלם',author:'פרנסס הודג\'סון ברנט',genre:['מתח','דרמה'],length:'בינוני',mood:['מרגש'],interest:'הרפתקאות ותעלומות',age:'9–13',icon:'i-search',cover:'cover-d',blurb:'ילדה יתומה מגלה גן נעול ומוזנח מאחורי דלת נסתרת, ומחליטה להחזיר לו את פריחתו.'},
+    {id:35,title:'פיטר פן',author:'ג\'יימס מתיו בארי',genre:['פנטזיה','הרפתקאות'],length:'בינוני',mood:['מרגש'],interest:'קסם ופנטזיה',age:'8–12',icon:'i-sparkle',cover:'cover-e',blurb:'ילד שמסרב לגדול לוקח את וונדי ואחיה בטיסה קסומה אל האי שבו לעולם לא מתבגרים.'},
+    {id:36,title:'פוליאנה',author:'אלינור פורטר',genre:['קומדיה','דרמה'],length:'בינוני',mood:['מרגש','מלמד'],interest:'חברים ובעלי חיים',age:'9–13',icon:'i-star',cover:'cover-f',blurb:'ילדה אופטימית במיוחד מלמדת עיירה שלמה למצוא סיבה לשמוח גם ברגעים הכי קשים.'},
+    {id:37,title:'פרסי ג\'קסון וגנב הברק',author:'ריק רורדן',genre:['פנטזיה','הרפתקאות'],length:'ארוך',mood:['מרגש','מצחיק'],interest:'קסם ופנטזיה',age:'10–14',icon:'i-sparkle',cover:'cover-a',blurb:'נער מגלה שהוא בנו של פוסידון ונשלח למחנה מיוחד לגיבורים למחצה, מוקף באלי יוון עתיקים.'},
+    {id:38,title:'המלך ארתור ואבירי השולחן העגול',author:'תומאס מלורי',genre:['הרפתקאות','פנטזיה'],length:'ארוך',mood:['מרגש'],interest:'קסם ופנטזיה',age:'10–14',icon:'i-compass',cover:'cover-b',blurb:'סיפורי גבורה על חרב קסומה, אבירים אמיצים ומסע חיפוש אחרי הגביע הקדוש.'},
+    {id:39,title:'המקרה המוזר של הכלב בשעת לילה',author:'מארק האדון',genre:['מתח'],length:'בינוני',mood:['מלמד','מותח'],interest:'הרפתקאות ותעלומות',age:'11–14',icon:'i-search',cover:'cover-c',blurb:'נער חכם ומיוחד יוצא לפענח מי פגע בכלב השכן, ומגלה בדרך סוד משפחתי גדול יותר.'},
+    {id:40,title:'שלושה בסירה אחת',author:'ג\'רום ק. ג\'רום',genre:['קומדיה'],length:'בינוני',mood:['מצחיק'],interest:'חברים ובעלי חיים',age:'10–14',icon:'i-paw',cover:'cover-d',blurb:'שלושה חברים (וכלב אחד) יוצאים לשיט רגוע בנהר שהופך ברגע לשרשרת תקלות מצחיקה.'},
+    {id:41,title:'משחקי הרעב',author:'סוזן קולינס',genre:['מתח','הרפתקאות'],length:'ארוך',mood:['מותח','מרגש'],interest:'מדע ועתיד',age:'12–14',icon:'i-rocket',cover:'cover-e',blurb:'קטניס מתנדבת להחליף את אחותה בתחרות הישרדות ארצית מסוכנת, ונאבקת לשרוד ולהישאר עצמה.'},
+    {id:42,title:'חולית',author:'פרנק הרברט',genre:['הרפתקאות','מתח'],length:'ארוך',mood:['מלמד','מרגש'],interest:'מדע ועתיד',age:'12–14',icon:'i-rocket',cover:'cover-f',blurb:'פול, בן אציל צעיר, מגיע לכוכב מדברי ומגלה שגורלו קשור בסוד עתיק וביקום שתלוי בו.'},
+    {id:43,title:'אורה הגיבורה',author:'דבורה עומר',genre:['הרפתקאות','דרמה'],length:'ארוך',mood:['מרגש','מלמד'],interest:'הרפתקאות ותעלומות',age:'10–13',icon:'i-compass',cover:'cover-a',blurb:'סיפורה המרגש של נערה שמסייעת למאבק העם היהודי בתקופה שלפני הקמת המדינה.'},
+    {id:44,title:'אדם, חווה והנחש',author:'מאיר שלו',genre:['קומדיה'],length:'בינוני',mood:['מצחיק','מלמד'],interest:'הרפתקאות ותעלומות',age:'9–13',icon:'i-star',cover:'cover-b',blurb:'סיפורי הבריאה המוכרים מסופרים מחדש בשפה שנונה ומצחיקה במיוחד.'},
+    {id:45,title:'האיש שלא נגמר',author:'יצחק נוי',genre:['הרפתקאות','פנטזיה'],length:'בינוני',mood:['מרגש','מלמד'],interest:'הרפתקאות ותעלומות',age:'10–13',icon:'i-compass',cover:'cover-c',blurb:'מסע פנטסטי בזמן אל תקופות עתיקות ומרתקות בהיסטוריה האנושית.'},
+    {id:46,title:'הביטלס ואני',author:'אילן שפלר',genre:['קומדיה'],length:'בינוני',mood:['מרגש','מלמד'],interest:'חברים ובעלי חיים',age:'10–13',icon:'i-star',cover:'cover-d',blurb:'סיפורה של להקת הרוק הכי מפורסמת בהיסטוריה, מסופר במיוחד לקוראים צעירים.'},
+    {id:47,title:'המטליות הסודיות',author:'עמליה כהנא-כרמון',genre:['קומדיה','דרמה'],length:'קצר',mood:['מרגש','מלמד'],interest:'חברים ובעלי חיים',age:'9–12',icon:'i-star',cover:'cover-e',blurb:'קובץ סיפורים קצרים ועדינים שנכנסים ישר אל העולם הרגשי של ילדים.'},
+    {id:48,title:'ירושלים של סודות',author:'מרדכי נאור',genre:['מתח'],length:'בינוני',mood:['מותח','מלמד'],interest:'הרפתקאות ותעלומות',age:'10–13',icon:'i-search',cover:'cover-f',blurb:'תעלומות היסטוריות מרתקות מתגלות בסמטאות הצרות של העיר העתיקה.'},
+    {id:49,title:'כפיות של כסף',author:'יהודה אטלס',genre:['קומדיה'],length:'קצר',mood:['מצחיק','מלמד'],interest:'חברים ובעלי חיים',age:'8–11',icon:'i-star',cover:'cover-a',blurb:'ילד אחד מספר בגובה העיניים על הפחדים, ההצלחות והשמחות הקטנות של הילדות.'},
+    {id:50,title:'כשהסבים היו קטנים',author:'אפרים סידון',genre:['קומדיה'],length:'בינוני',mood:['מצחיק'],interest:'חברים ובעלי חיים',age:'8–11',icon:'i-star',cover:'cover-b',blurb:'מסע מצחיק אל ימי הילדות של הסבים והסבתות, כשגם הם היו שובבים כמונו.'},
+    {id:51,title:'לובנגולו מלך זולו',author:'נחום גוטמן',genre:['הרפתקאות','קומדיה'],length:'ארוך',mood:['מצחיק','מרגש'],interest:'הרפתקאות ותעלומות',age:'10–13',icon:'i-compass',cover:'cover-c',blurb:'מסע הרפתקני ומצחיק מארץ ישראל ועד לאפריקה הרחוקה, בעקבות יהלומים אבודים.'},
+    {id:52,title:'מתחת לעץ האשל',author:'שולמית לפיד',genre:['הרפתקאות','דרמה'],length:'בינוני',mood:['מרגש'],interest:'הרפתקאות ותעלומות',age:'9–12',icon:'i-compass',cover:'cover-d',blurb:'עלילות קיץ של חבורת ילדים במושבה ישראלית ותיקה, מלאה בסודות קטנים משלה.'},
+    {id:53,title:'נפוליאון או למות',author:'יגאל מוסינזון',genre:['הרפתקאות','מתח'],length:'ארוך',mood:['מותח','מרגש'],interest:'הרפתקאות ותעלומות',age:'10–13',icon:'i-search',cover:'cover-e',blurb:'חבורת חסמב״ה יוצאת למבצע מסוכן נגד פושעים שמאיימים על המדינה הצעירה.'},
+    {id:54,title:'צוות לעניין',author:'שלמה אבס',genre:['הרפתקאות','קומדיה'],length:'בינוני',mood:['מצחיק','מלמד'],interest:'הרפתקאות ותעלומות',age:'8–12',icon:'i-sparkle',cover:'cover-f',blurb:'לקט סיפורי עם ואגדות מרתקות מרחבי העולם, מותאמים במיוחד לקוראים צעירים.'},
+    {id:55,title:'שמונה בעקבות אחד',author:'מיכאל אהבן',genre:['מתח','הרפתקאות'],length:'בינוני',mood:['מותח','מרגש'],interest:'הרפתקאות ותעלומות',age:'10–13',icon:'i-search',cover:'cover-a',blurb:'חבורת ילדים ירושלמית יוצאת לחפש חבר שנעלם בתקופה הסוערת של קום המדינה.'},
+    {id:56,title:'שלום לך מולדת',author:'גלילה רון-פדר-עמית',genre:['הרפתקאות','דרמה'],length:'בינוני',mood:['מרגש','מלמד'],interest:'הרפתקאות ותעלומות',age:'9–12',icon:'i-compass',cover:'cover-b',blurb:'סיפורי עלייה והתיישבות מסופרים מנקודת המבט האמיצה של ילדים בעצמם.'},
+    {id:57,title:'הקוסם מארץ עוץ – הגרסה המלאה',author:'ליימן פרנק באום',genre:['פנטזיה','הרפתקאות'],length:'ארוך',mood:['מרגש'],interest:'קסם ופנטזיה',age:'10–13',icon:'i-sparkle',cover:'cover-c',blurb:'הגרסה המלאה והעמוקה יותר של מסעה של דורותי אל מאחורי הקלעים של הקסם.'},
+    {id:58,title:'אנה פרנק: היומן',author:'אנה פרנק',genre:['מתח','דרמה'],length:'ארוך',mood:['מלמד','מרגש'],interest:'הרפתקאות ותעלומות',age:'12–14',icon:'i-star',cover:'cover-d',blurb:'יומנה האישי והמטלטל של נערה יהודייה שהתחבאה מפני הנאצים באמסטרדם.'},
+    {id:59,title:'גנבת הספרים',author:'מרקוס זוסאק',genre:['מתח','דרמה'],length:'ארוך',mood:['מרגש','מלמד'],interest:'הרפתקאות ותעלומות',age:'12–14',icon:'i-search',cover:'cover-e',blurb:'נערה גרמנייה שמאמצת משפחה חדשה בתקופת מלחמה מוצאת נחמה בגניבת ספרים ובמילים.'},
+    {id:60,title:'הנער מן הגבעות',author:'סטיבן קול',genre:['הרפתקאות','מתח','דרמה'],length:'ארוך',mood:['מותח','מרגש'],interest:'הרפתקאות ותעלומות',age:'11–14',icon:'i-compass',cover:'cover-f',blurb:'סיפור הישרדות ובגרות מרתק בתנאי טבע קשים שדורשים אומץ וכוח רצון.'},
+    {id:61,title:'החיים הסודיים של הנערות',author:'ג\'ודי בלום',genre:['קומדיה','דרמה'],length:'בינוני',mood:['מרגש','מלמד'],interest:'חברים ובעלי חיים',age:'11–14',icon:'i-star',cover:'cover-a',blurb:'קלאסיקה על גיל ההתבגרות ועל כל השאלות המטרידות שכל נערה שואלת את עצמה.'},
+    {id:62,title:'הנערים ברחוב פאל',author:'פרנץ מולנר',genre:['הרפתקאות','דרמה'],length:'בינוני',mood:['מרגש','מותח'],interest:'חברים ובעלי חיים',age:'10–13',icon:'i-compass',cover:'cover-b',blurb:'חבורת ילדים נלחמת בגבורה ובתושייה כדי להגן על מגרש המשחקים האהוב עליה.'},
+    {id:63,title:'הרפתקאותיו של האקלברי פין',author:'מארק טוויין',genre:['הרפתקאות','קומדיה'],length:'ארוך',mood:['מצחיק','מרגש'],interest:'הרפתקאות ותעלומות',age:'10–14',icon:'i-compass',cover:'cover-c',blurb:'נער סורר ועבד נמלט יוצאים יחד למסע בלתי נשכח על רפסודה בנהר המיסיסיפי.'},
+    {id:64,title:'מלכת השלג',author:'קלאסיקה מעובדת לנוער',genre:['פנטזיה','הרפתקאות','דרמה'],length:'בינוני',mood:['מרגש','מותח'],interest:'קסם ופנטזיה',age:'9–13',icon:'i-sparkle',cover:'cover-d',blurb:'נערה אמיצה יוצאת למסע מסוכן כדי להציל את חברה הטוב מלפיתתה הקפואה של מלכת השלג.'},
+    {id:65,title:'ספר הגיבורים',author:'עפרה אליגון',genre:['הרפתקאות'],length:'בינוני',mood:['מלמד','מרגש'],interest:'הרפתקאות ותעלומות',age:'10–14',icon:'i-star',cover:'cover-e',blurb:'סיפורי גבורה אמיתיים ומרגשים על דמויות מופת בהיסטוריה היהודית והישראלית.'}
+  ];
+
+  var QUESTIONS = [
+    {key:'age', text:'מה הגיל שלך?', options:[
+      {label:'עד גיל 8', val:'0-8'},
+      {label:'\u20669–10\u2069', val:'9-10'},
+      {label:'\u206611–12\u2069', val:'11-12'},
+      {label:'13 ומעלה', val:'13-99'}
+    ]},
+    {key:'interest', text:'מה הכי מסקרן אותך בסיפור טוב?', options:[
+      {label:'פענוח תעלומות והרפתקאות', val:'הרפתקאות ותעלומות'},
+      {label:'חברים (ובעלי חיים) שאי אפשר בלעדיהם', val:'חברים ובעלי חיים'},
+      {label:'עולמות קסומים ומלאי פלא', val:'קסם ופנטזיה'},
+      {label:'עתיד, טכנולוגיה וחלל', val:'מדע ועתיד'},
+      {label:'דרמה על אנשים אמיתיים ורגשות גדולים', val:'דרמה', key:'genre'}
+    ]},
+    {key:'genre', text:'איזה סוג סיפור הכי מדבר אליך?', options:[
+      {label:'פנטזיה', val:'פנטזיה'},
+      {label:'מתח ותעלומה', val:'מתח'},
+      {label:'הרפתקה גדולה', val:'הרפתקאות'},
+      {label:'קומדיה שמצחיקה עד דמעות', val:'קומדיה'},
+      {label:'דרמה שנוגעת ללב', val:'דרמה'}
+    ]},
+    {key:'length', text:'כמה זמן יש לך לקרוא עכשיו?', options:[
+      {label:'מעט זמן — בא לי משהו קצר וקליל', val:'קצר'},
+      {label:'זמן סביר — ספר באורך בינוני מתאים', val:'בינוני'},
+      {label:'יש לי הרבה זמן — בא לי לשקוע בסיפור ארוך', val:'ארוך'}
+    ]},
+    {key:'mood', text:'איך אתה הכי אוהב להרגיש כשאתה קורא?', options:[
+      {label:'מתוח, עם רצון עז לדעת מה יקרה', val:'מותח'},
+      {label:'צוחק בקול, גם כשאני קורא לבד', val:'מצחיק'},
+      {label:'מתרגש ומתחבר לדמויות', val:'מרגש'},
+      {label:'לומד משהו חדש ומעניין', val:'מלמד'},
+      {label:'שקוע בדרמה ובמה שהדמויות עוברות', val:'דרמה', key:'genre'}
+    ]},
+    {key:'interest', text:'אם היית יכול לבחור הרפתקה אחת, מה היא הייתה?', options:[
+      {label:'לפענח תעלומה מסתורית', val:'הרפתקאות ותעלומות'},
+      {label:'לצאת למסע עם חבר הכי טוב (או חיה מיוחדת)', val:'חברים ובעלי חיים'},
+      {label:'להיכנס לעולם קסום עם יצורים פנטסטיים', val:'קסם ופנטזיה'},
+      {label:'לטוס לחלל או לפגוש טכנולוגיה עתידנית', val:'מדע ועתיד'},
+      {label:'לחוות סיפור חיים דרמטי שמשנה אותי', val:'דרמה', key:'genre'}
+    ]},
+    {key:'genre', text:'מה היית בוחר לצפות בו בערב גשום?', options:[
+      {label:'סרט קסמים ופלאים', val:'פנטזיה'},
+      {label:'סרט מתח שגורם לך לנחש', val:'מתח'},
+      {label:'סרט הרפתקאות מטורף', val:'הרפתקאות'},
+      {label:'קומדיה שגורמת לצחוק בלי סוף', val:'קומדיה'},
+      {label:'דרמה מרגשת עם סיפור חזק', val:'דרמה'}
+    ]},
+    {key:'mood', text:'מה גורם לך לרצות להמשיך לקרוא עוד עמוד?', options:[
+      {label:'לב שדופק מהר ורוצה לדעת מה קורה', val:'מותח'},
+      {label:'חיוך על הפנים', val:'מצחיק'},
+      {label:'דמעה קטנה של התרגשות', val:'מרגש'},
+      {label:'תחושה שלמדתי משהו חדש', val:'מלמד'},
+      {label:'דרמה שאי אפשר להפסיק באמצע', val:'דרמה', key:'genre'}
+    ]},
+    {key:'length', text:'איך ספר טוב "שואב" אותך פנימה?', options:[
+      {label:'אני אוהב להספיק לסיים מהר', val:'קצר'},
+      {label:'בסדר גמור עם כמה ישיבות קריאה', val:'בינוני'},
+      {label:'אני אוהב להישאר בעולם הסיפור הרבה זמן', val:'ארוך'}
+    ]},
+    {key:'mood', text:'מה היית רוצה שיגידו על הספר שסיימת?', options:[
+      {label:'וואו, זה היה כל כך מתוח!', val:'מותח'},
+      {label:'צחקתי עד שכאבה לי הבטן', val:'מצחיק'},
+      {label:'ממש נגעתי בלב', val:'מרגש'},
+      {label:'גיליתי דברים שלא ידעתי', val:'מלמד'},
+      {label:'איזו דרמה — עוד חושב על הסיפור', val:'דרמה', key:'genre'}
+    ]}
+  ];
+
+  var READ_GOAL = 6;
+
+  /* ---------------- State ---------------- */
+  var state = {favorites:[], booksRead:0};
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem('bookmatch_state_v1');
+      if(raw){
+        var parsed = JSON.parse(raw);
+        state.favorites = Array.isArray(parsed.favorites) ? parsed.favorites : [];
+        state.booksRead = typeof parsed.booksRead === 'number' ? parsed.booksRead : 0;
+      }
+    }catch(e){ /* ignore corrupt storage */ }
+  }
+  function saveState(){
+    try{ localStorage.setItem('bookmatch_state_v1', JSON.stringify(state)); }catch(e){ /* storage unavailable */ }
+  }
+
+  function reducedMotion(){
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  /* ---------------- DOM refs ---------------- */
+  var $ = function(id){ return document.getElementById(id); };
+
+  var favContainer = $('favContainer');
+  var minusBtn = $('minusBtn'), plusBtn = $('plusBtn'), trackerNumber = $('trackerNumber'), progressFill = $('progressFill'), trackerMsg = $('trackerMsg');
+  var toastEl = $('toast');
+  var hamburgerBtn = $('hamburgerBtn'), hamburgerIcon = $('hamburgerIcon'), navLinks = $('navLinks');
+
+  /* ---------------- Toast ---------------- */
+  var toastTimer = null;
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2800);
+  }
+
+  /* ---------------- Mobile nav ---------------- */
+  function setNavOpen(open){
+    navLinks.classList.toggle('open', open);
+    hamburgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    hamburgerBtn.setAttribute('aria-label', open ? 'סגירת תפריט' : 'פתיחת תפריט');
+    hamburgerIcon.setAttribute('href', open ? '#i-close' : '#i-menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hamburgerBtn.addEventListener('click', function(){
+    setNavOpen(!navLinks.classList.contains('open'));
+  });
+  navLinks.addEventListener('click', function(e){
+    if(e.target.tagName === 'A'){
+      setNavOpen(false);
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && navLinks.classList.contains('open')) setNavOpen(false);
+  });
+
+  /* ---------------- Book rendering helpers ---------------- */
+  /* ---------------- Illustrated cover scenes ---------------- */
+  var SCENES = {
+    adventure:
+      '<svg viewBox="0 0 100 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' +
+      '<polygon points="0,100 22,55 38,78 55,40 72,75 88,58 100,95 100,140 0,140" fill="rgba(255,255,255,0.22)"/>' +
+      '<polygon points="0,115 20,85 34,102 50,72 66,102 82,82 100,112 100,140 0,140" fill="rgba(255,255,255,0.36)"/>' +
+      '<circle cx="78" cy="26" r="13" fill="rgba(255,255,255,0.92)"/>' +
+      '<polygon points="78,17 82,26 78,35 74,26" fill="#DD7A28"/>' +
+      '<polygon points="69,26 78,23 87,26 78,29" fill="#204A73"/>' +
+      '<circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.5)"/>' +
+      '<circle cx="30" cy="12" r="1.3" fill="rgba(255,255,255,0.5)"/>' +
+      '</svg>',
+    meadow:
+      '<svg viewBox="0 0 100 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' +
+      '<circle cx="76" cy="24" r="13" fill="rgba(255,255,255,0.9)"/>' +
+      '<g stroke="rgba(255,255,255,0.55)" stroke-width="2" stroke-linecap="round">' +
+      '<line x1="76" y1="2" x2="76" y2="9"/><line x1="76" y1="39" x2="76" y2="46"/>' +
+      '<line x1="55" y1="24" x2="62" y2="24"/><line x1="90" y1="24" x2="97" y2="24"/>' +
+      '<line x1="61" y1="9" x2="66" y2="14"/><line x1="86" y1="34" x2="91" y2="39"/></g>' +
+      '<path d="M0 118 Q50 90 100 116 L100 140 L0 140 Z" fill="rgba(255,255,255,0.25)"/>' +
+      '<path d="M0 128 Q50 104 100 126 L100 140 L0 140 Z" fill="rgba(255,255,255,0.4)"/>' +
+      '<ellipse cx="26" cy="112" rx="9" ry="7" fill="rgba(255,255,255,0.9)"/>' +
+      '<ellipse cx="21" cy="100" rx="2.4" ry="8" fill="rgba(255,255,255,0.9)" transform="rotate(-14 21 100)"/>' +
+      '<ellipse cx="31" cy="100" rx="2.4" ry="8" fill="rgba(255,255,255,0.9)" transform="rotate(14 31 100)"/>' +
+      '</svg>',
+    castle:
+      '<svg viewBox="0 0 100 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' +
+      '<circle cx="78" cy="22" r="10" fill="rgba(255,255,255,0.85)"/>' +
+      '<use href="#i-sparkle" x="18" y="6" width="10" height="10" fill="rgba(255,255,255,0.7)"/>' +
+      '<use href="#i-sparkle" x="42" y="16" width="7" height="7" fill="rgba(255,255,255,0.55)"/>' +
+      '<use href="#i-sparkle" x="10" y="32" width="6" height="6" fill="rgba(255,255,255,0.5)"/>' +
+      '<rect x="14" y="92" width="16" height="34" fill="rgba(255,255,255,0.3)"/>' +
+      '<polygon points="14,92 22,78 30,92" fill="rgba(255,255,255,0.3)"/>' +
+      '<rect x="70" y="86" width="16" height="40" fill="rgba(255,255,255,0.3)"/>' +
+      '<polygon points="70,86 78,72 86,86" fill="rgba(255,255,255,0.3)"/>' +
+      '<rect x="30" y="106" width="40" height="20" fill="rgba(255,255,255,0.22)"/>' +
+      '<rect x="17" y="86" width="3" height="4" fill="rgba(255,255,255,0.3)"/>' +
+      '<rect x="24" y="86" width="3" height="4" fill="rgba(255,255,255,0.3)"/>' +
+      '</svg>',
+    space:
+      '<svg viewBox="0 0 100 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' +
+      '<use href="#i-sparkle" x="14" y="10" width="8" height="8" fill="rgba(255,255,255,0.7)"/>' +
+      '<use href="#i-sparkle" x="60" y="4" width="6" height="6" fill="rgba(255,255,255,0.55)"/>' +
+      '<use href="#i-sparkle" x="82" y="28" width="7" height="7" fill="rgba(255,255,255,0.6)"/>' +
+      '<use href="#i-sparkle" x="10" y="46" width="5" height="5" fill="rgba(255,255,255,0.45)"/>' +
+      '<circle cx="30" cy="90" r="17" fill="rgba(255,255,255,0.85)"/>' +
+      '<ellipse cx="30" cy="90" rx="27" ry="6" fill="none" stroke="#DD7A28" stroke-width="2.4" opacity="0.85" transform="rotate(-18 30 90)"/>' +
+      '<g transform="translate(70,60) rotate(35)"><use href="#i-rocket" x="-9" y="-12" width="18" height="24" fill="rgba(255,255,255,0.9)"/></g>' +
+      '</svg>'
+  };
+
+  function sceneKeyForBook(book){
+    if(book.interest === 'קסם ופנטזיה') return 'castle';
+    if(book.interest === 'מדע ועתיד') return 'space';
+    if(book.interest === 'חברים ובעלי חיים') return 'meadow';
+    return 'adventure';
+  }
+
+  function renderResultInto(book, refs){
+    refs.coverWrap.className = 'book-cover ' + book.cover;
+    refs.coverIcon.setAttribute('href', '#' + book.icon);
+    refs.coverScene.innerHTML = SCENES[sceneKeyForBook(book)];
+    refs.coverTitle.textContent = book.title;
+    refs.coverAuthor.textContent = book.author;
+    refs.title.textContent = book.title;
+    refs.author.textContent = 'מאת ' + book.author;
+    refs.age.textContent = 'מגילאי ' + book.age;
+    refs.blurb.textContent = book.blurb;
+    refs.favBtn.setAttribute('data-book-id', book.id);
+    var isFav = state.favorites.indexOf(book.id) !== -1;
+    refs.favBtn.setAttribute('aria-pressed', isFav ? 'true' : 'false');
+    refs.view.classList.add('show');
+  }
+
+  function refreshFavButtons(bookId){
+    var isFav = state.favorites.indexOf(bookId) !== -1;
+    document.querySelectorAll('.fav-btn[data-book-id="' + bookId + '"]').forEach(function(btn){
+      btn.setAttribute('aria-pressed', isFav ? 'true' : 'false');
+    });
+  }
+
+  function toggleFavorite(bookId){
+    var idx = state.favorites.indexOf(bookId);
+    if(idx === -1){
+      state.favorites.push(bookId);
+      showToast('הספר נשמר במועדפים ⭐');
+    } else {
+      state.favorites.splice(idx, 1);
+      showToast('הספר הוסר מהמועדפים');
+    }
+    saveState();
+    refreshFavButtons(bookId);
+    renderFavorites();
+  }
+
+  function renderFavorites(){
+    if(state.favorites.length === 0){
+      favContainer.innerHTML = '<p class="empty-msg">עדיין לא שמרתם ספרים. מצאו ספר בשאלון ולחצו על הכוכב ⭐ כדי לשמור אותו כאן.</p>';
+      return;
+    }
+    var html = '<div class="fav-grid">';
+    state.favorites.forEach(function(id){
+      var book = BOOKS.filter(function(b){ return b.id === id; })[0];
+      if(!book) return;
+      html += '<div class="fav-item">' +
+        '<div class="mini-cover ' + book.cover + '"><svg class="icon"><use href="#' + book.icon + '"/></svg></div>' +
+        '<div class="mini-title">' + book.title + '</div>' +
+        '<button class="fav-remove" data-remove-id="' + book.id + '">הסרה</button>' +
+      '</div>';
+    });
+    html += '</div>';
+    favContainer.innerHTML = html;
+    favContainer.querySelectorAll('[data-remove-id]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        toggleFavorite(parseInt(btn.getAttribute('data-remove-id'), 10));
+      });
+    });
+  }
+
+  /* ---------------- Quiz ---------------- */
+  var quizIndex = 0;
+  var quizAnswers = new Array(QUESTIONS.length).fill(null);
+
+  var quizProgress = $('quizProgress');
+  var quizQuestionText = $('quizQuestionText');
+  var quizOptions = $('quizOptions');
+  var quizBackBtn = $('quizBackBtn');
+  var quizNextBtn = $('quizNextBtn');
+  var quizQuestionView = $('quizQuestionView');
+  var quizResultView = $('quizResultView');
+
+  function buildProgressBar(){
+    quizProgress.innerHTML = '<p class="quiz-step-label" id="quizStepLabel"></p><div class="quiz-progress-track"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>';
+  }
+
+  function updateProgressBar(){
+    var label = $('quizStepLabel');
+    var fill = $('quizProgressFill');
+    label.textContent = 'שאלה ' + (quizIndex + 1) + ' מתוך ' + QUESTIONS.length;
+    var pct = QUESTIONS.length > 1 ? (quizIndex / (QUESTIONS.length - 1)) * 100 : 100;
+    fill.style.width = pct + '%';
+  }
+
+  function renderQuizQuestion(){
+    quizResultView.classList.remove('show');
+    quizQuestionView.style.display = '';
+    var q = QUESTIONS[quizIndex];
+    quizQuestionText.textContent = q.text;
+    quizOptions.setAttribute('aria-label', q.text);
+    quizOptions.innerHTML = '';
+    q.options.forEach(function(opt){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'quiz-option';
+      btn.textContent = opt.label;
+      btn.setAttribute('aria-pressed', quizAnswers[quizIndex] === opt ? 'true' : 'false');
+      btn.addEventListener('click', function(){
+        quizAnswers[quizIndex] = opt;
+        Array.from(quizOptions.children).forEach(function(c){ c.setAttribute('aria-pressed','false'); });
+        btn.setAttribute('aria-pressed','true');
+        quizNextBtn.disabled = false;
+      });
+      quizOptions.appendChild(btn);
+    });
+    quizNextBtn.disabled = !quizAnswers[quizIndex];
+    quizNextBtn.textContent = (quizIndex === QUESTIONS.length - 1) ? 'מצא לי ספר!' : 'הבא';
+    quizBackBtn.style.visibility = quizIndex === 0 ? 'hidden' : 'visible';
+    updateProgressBar();
+  }
+
+  function aggregateAnswers(){
+    var agg = {interest:[], genre:[], length:[], mood:[], age:[]};
+    QUESTIONS.forEach(function(q, i){
+      if(quizAnswers[i]){
+        var opt = quizAnswers[i];
+        var bucket = opt.key || q.key;
+        if(agg[bucket]) agg[bucket].push(opt.val);
+      }
+    });
+    return agg;
+  }
+
+  function parseRange(str){
+    var nums = String(str).match(/\d+/g).map(Number);
+    var min = nums[0];
+    var max = nums.length > 1 ? nums[1] : min;
+    return [min, max];
+  }
+
+  function ageOverlap(book, selectedRangeStr){
+    var b = parseRange(book.age);
+    var s = parseRange(selectedRangeStr);
+    return s[0] <= b[1] && s[1] >= b[0];
+  }
+
+  function scoreBook(book, agg){
+    var s = 0;
+    agg.interest.forEach(function(v){ if(book.interest === v) s += 2; });
+    agg.genre.forEach(function(v){ if(book.genre.indexOf(v) !== -1) s += 2; });
+    agg.length.forEach(function(v){ if(book.length === v) s += 2; });
+    agg.mood.forEach(function(v){ if(book.mood.indexOf(v) !== -1) s += 2; });
+    return s;
+  }
+
+  function matchBook(agg){
+    var pool = BOOKS;
+    if(agg.age.length){
+      var ageFiltered = BOOKS.filter(function(book){
+        return agg.age.every(function(v){ return ageOverlap(book, v); });
+      });
+      if(ageFiltered.length) pool = ageFiltered;
+    }
+    var best = -1, candidates = [];
+    pool.forEach(function(book){
+      var s = scoreBook(book, agg);
+      if(s > best){ best = s; candidates = [book]; }
+      else if(s === best){ candidates.push(book); }
+    });
+    return candidates[Math.floor(Math.random() * candidates.length)];
+  }
+
+  function submitQuiz(){
+    var book = matchBook(aggregateAnswers());
+    quizQuestionView.style.display = 'none';
+    renderResultInto(book, {
+      view: quizResultView,
+      coverWrap: $('quizCover'),
+      coverIcon: $('quizCoverIcon'),
+      coverScene: $('quizCoverScene'),
+      coverTitle: $('quizCoverTitle'),
+      coverAuthor: $('quizCoverAuthor'),
+      title: $('quizTitle'),
+      author: $('quizAuthor'),
+      age: $('quizAge'),
+      blurb: $('quizBlurb'),
+      favBtn: $('quizFavBtn')
+    });
+  }
+
+  quizNextBtn.addEventListener('click', function(){
+    if(quizIndex === QUESTIONS.length - 1){
+      submitQuiz();
+    } else {
+      quizIndex++;
+      renderQuizQuestion();
+    }
+  });
+  quizBackBtn.addEventListener('click', function(){
+    if(quizIndex > 0){
+      quizIndex--;
+      renderQuizQuestion();
+    }
+  });
+  $('quizRetakeBtn').addEventListener('click', function(){
+    quizIndex = 0;
+    quizAnswers = new Array(QUESTIONS.length).fill(null);
+    renderQuizQuestion();
+  });
+  $('quizFavBtn').addEventListener('click', function(){
+    var id = parseInt($('quizFavBtn').getAttribute('data-book-id'), 10);
+    toggleFavorite(id);
+  });
+
+  buildProgressBar();
+  renderQuizQuestion();
+
+  /* ---------------- Surprise Me ---------------- */
+  var surpriseBtn = $('surpriseBtn');
+  var diceIcon = $('diceIcon');
+  var surpriseResultView = $('surpriseResultView');
+
+  surpriseBtn.addEventListener('click', function(){
+    var delay = reducedMotion() ? 0 : 550;
+    if(delay > 0) diceIcon.classList.add('spin');
+    setTimeout(function(){
+      diceIcon.classList.remove('spin');
+      var book = BOOKS[Math.floor(Math.random() * BOOKS.length)];
+      renderResultInto(book, {
+        view: surpriseResultView,
+        coverWrap: $('surpriseCover'),
+        coverIcon: $('surpriseCoverIcon'),
+        coverScene: $('surpriseCoverScene'),
+        coverTitle: $('surpriseCoverTitle'),
+        coverAuthor: $('surpriseCoverAuthor'),
+        title: $('surpriseTitle'),
+        author: $('surpriseAuthor'),
+        age: $('surpriseAge'),
+        blurb: $('surpriseBlurb'),
+        favBtn: $('surpriseFavBtn')
+      });
+    }, delay);
+  });
+  $('surpriseAgainBtn').addEventListener('click', function(){ surpriseBtn.click(); });
+  $('surpriseFavBtn').addEventListener('click', function(){
+    var id = parseInt($('surpriseFavBtn').getAttribute('data-book-id'), 10);
+    toggleFavorite(id);
+  });
+
+  /* ---------------- Reading tracker ---------------- */
+  function renderTracker(){
+    trackerNumber.textContent = state.booksRead;
+    var pct = Math.max(0, Math.min(100, (state.booksRead / READ_GOAL) * 100));
+    progressFill.style.width = pct + '%';
+    minusBtn.disabled = state.booksRead <= 0;
+    var msg;
+    if(state.booksRead <= 0) msg = 'בואו נתחיל לקרוא! 📖';
+    else if(state.booksRead < 3) msg = 'התחלה מצוינת, תמשיכו ככה!';
+    else if(state.booksRead < 5) msg = 'אתם באמצע הדרך, כל הכבוד!';
+    else if(state.booksRead < READ_GOAL) msg = 'כמעט הגעתם ליעד החודשי!';
+    else msg = 'וואו! עברתם את היעד החודשי! 🎉';
+    trackerMsg.textContent = msg;
+  }
+  plusBtn.addEventListener('click', function(){
+    state.booksRead += 1;
+    saveState();
+    renderTracker();
+  });
+  minusBtn.addEventListener('click', function(){
+    state.booksRead = Math.max(0, state.booksRead - 1);
+    saveState();
+    renderTracker();
+  });
+
+  /* ---------------- Waitlist (premium teaser) ---------------- */
+  $('waitlistBtn').addEventListener('click', function(){
+    showToast('תודה! נעדכן אתכם כשהתכונה תושק 💌');
+  });
+
+  /* ---------------- WhatsApp share ---------------- */
+  var waLink = $('whatsappShare');
+  var shareText = 'גלו את BookMatch — שאלון קצר וכיפי שמוצא לילדים שלכם את הספר הבא שהם ירצו לקרוא! 📚';
+  waLink.href = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+
+  /* ---------------- Swipeable card carousels (mobile) ---------------- */
+  function initCarousel(trackId, dotsId){
+    var track = $(trackId);
+    var dotsWrap = $(dotsId);
+    if(!track || !dotsWrap) return;
+    var cards = Array.prototype.slice.call(track.children);
+    var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('button'));
+
+    function activeIndex(){
+      // pick the card whose centre is closest to the track's visible centre
+      var trackRect = track.getBoundingClientRect();
+      var centre = trackRect.left + trackRect.width / 2;
+      var best = 0, bestDist = Infinity;
+      cards.forEach(function(card, i){
+        var r = card.getBoundingClientRect();
+        var d = Math.abs((r.left + r.width / 2) - centre);
+        if(d < bestDist){ bestDist = d; best = i; }
+      });
+      return best;
+    }
+
+    function syncDots(){
+      var idx = activeIndex();
+      dots.forEach(function(dot, i){
+        dot.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+      });
+    }
+
+    var ticking = false;
+    track.addEventListener('scroll', function(){
+      if(ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function(){
+        syncDots();
+        ticking = false;
+      });
+    });
+
+    dots.forEach(function(dot, i){
+      dot.addEventListener('click', function(){
+        var card = cards[i];
+        if(!card) return;
+        var offset = card.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
+        if(track.scrollTo){
+          track.scrollTo({left: offset, behavior: reducedMotion() ? 'auto' : 'smooth'});
+        } else {
+          track.scrollLeft = offset;
+        }
+      });
+    });
+
+    window.addEventListener('resize', syncDots);
+    syncDots();
+  }
+
+  initCarousel('splitCarousel', 'splitDots');
+  initCarousel('stepsCarousel', 'stepsDots');
+  initCarousel('testiCarousel', 'testiDots');
+  initCarousel('priceCarousel', 'priceDots');
+
+  /* ---------------- Init ---------------- */
+  loadState();
+  renderFavorites();
+  renderTracker();
+
+})();
+</script>
+
+</body>
+</html>
