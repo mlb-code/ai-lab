@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, follow">
+<title>המצפן לגיימר — המשחק הבא שלך, בעשר שאלות</title>
+<meta name="description" content="עונים על עשר שאלות קצרות ומקבלים המלצות משחקים שמתאימות למצב הרוח, לזמן ולמחשב שלכם. בלי הרשמה ובלי סיסמה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&family=Secular+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-1:#5CC8F5; --sky-2:#0EA5E9; --sky-3:#0284C7;
+  --green-1:#34D77E; --green-2:#16A34A;
+  --deep:#07253C; --deep-2:#0E3B5C;
+  --ink:#0B2437; --ink-2:#4B6A80; --ink-3:#7A93A6;
+  --page:#F5FBFF; --white:#fff;
+  --line:#DDEEF9;
+  --grad:linear-gradient(135deg,var(--sky-3) 0%,var(--sky-1) 48%,var(--green-1) 100%);
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --r:20px;
+  --shadow:0 18px 44px -24px rgba(11,36,55,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--page); color:var(--ink);
+  font-family:"Assistant",system-ui,sans-serif; font-size:17px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{font-family:"Secular One",system-ui,sans-serif; font-weight:400; line-height:1.15; letter-spacing:-.01em; margin:0}
+p{margin:0}
+a{color:inherit}
+button{font-family:inherit}
+.wrap{width:min(1140px,92vw); margin-inline:auto}
+.sec{padding:clamp(68px,9vw,120px) 0}
+.grad-text{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+:focus-visible{outline:3px solid var(--sky-2); outline-offset:3px; border-radius:8px}
+
+/* ================= LANDING PAGE ================= */
+
+/* nav */
+.nav{position:sticky; top:0; z-index:50; background:rgba(245,251,255,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--line)}
+.nav-in{display:flex; align-items:center; gap:12px; min-height:70px; padding-block:8px; flex-wrap:wrap}
+.brand{display:flex; align-items:center; gap:10px; font-family:"Secular One",sans-serif; font-size:19px; text-decoration:none; background:none; border:0; cursor:pointer; padding:0; color:inherit}
+.brand svg{width:30px; height:30px; flex:none}
+.nav-links{display:flex; gap:26px; margin-inline-start:auto; font-size:15.5px; color:var(--ink-2)}
+.nav-links a{text-decoration:none; transition:color .2s}
+.nav-links a:hover{color:var(--sky-3)}
+
+.nav-toggle{display:none; align-items:center; justify-content:center; width:44px; height:44px; flex:none;
+  margin-inline-start:auto;
+  background:var(--white); border:1px solid var(--line); border-radius:12px; cursor:pointer; color:var(--ink); padding:0}
+.nav-toggle svg{width:22px; height:22px}
+
+/* slide-in drawer (outside .nav, because backdrop-filter would trap fixed children) */
+.drawer-backdrop{position:fixed; inset:0; background:rgba(7,37,60,.55); z-index:60;
+  opacity:0; visibility:hidden; transition:opacity .28s ease, visibility .28s ease}
+.drawer-backdrop.open{opacity:1; visibility:visible}
+.drawer{position:fixed; top:0; bottom:0; right:0; width:min(330px,84vw); z-index:61;
+  background:var(--white); box-shadow:0 0 60px -10px rgba(7,37,60,.45);
+  display:flex; flex-direction:column; padding:20px 20px calc(24px + env(safe-area-inset-bottom));
+  transform:translateX(100%); visibility:hidden;
+  transition:transform .32s cubic-bezier(.3,.8,.3,1), visibility .32s}
+.drawer.open{transform:none; visibility:visible}
+.drawer-head{display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding-bottom:16px; margin-bottom:8px; border-bottom:1px solid var(--line)}
+.drawer-title{font-family:"Secular One",sans-serif; font-size:17px; color:var(--ink)}
+.drawer-close{width:38px; height:38px; flex:none; display:grid; place-items:center; cursor:pointer;
+  background:var(--white); border:1px solid var(--line); border-radius:11px; color:var(--ink-2)}
+.drawer-close:hover{border-color:var(--sky-1); color:var(--sky-3)}
+.drawer-close svg{width:18px; height:18px}
+.drawer-links{display:flex; flex-direction:column; gap:2px; margin-bottom:auto}
+.drawer-links a{display:flex; align-items:center; gap:11px; padding:14px 12px; border-radius:12px;
+  text-decoration:none; color:var(--ink); font-weight:600; font-size:16.5px; transition:background .15s, color .15s}
+.drawer-links a::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--grad); flex:none; opacity:.55}
+.drawer-links a:hover, .drawer-links a:active{background:#EEF7FC; color:var(--sky-3)}
+.drawer .btn{width:100%; margin-top:18px}
+.drawer-note{margin-top:12px; text-align:center; font-size:13.5px; color:var(--ink-3)}
+body.menu-open{overflow:hidden}
+
+/* buttons */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:9px; border:0; cursor:pointer;
+  font-family:"Assistant",sans-serif; font-weight:700; font-size:17px; text-decoration:none;
+  padding:15px 28px; border-radius:999px; transition:transform .18s, box-shadow .25s, background .2s}
+.btn svg{width:18px;height:18px}
+.btn--primary{background:var(--grad); color:#fff; box-shadow:0 12px 30px -10px rgba(14,165,233,.65)}
+.btn--primary:hover{transform:translateY(-2px); box-shadow:0 18px 38px -12px rgba(22,163,74,.6)}
+.btn--ghost{background:var(--white); color:var(--ink); border:1px solid var(--line)}
+.btn--ghost:hover{border-color:var(--sky-1); color:var(--sky-3)}
+.btn--sm{padding:11px 20px; font-size:15.5px}
+.btn--light{background:#fff; color:var(--sky-3); box-shadow:0 14px 30px -14px rgba(0,0,0,.45)}
+.btn--light:hover{transform:translateY(-2px)}
+.btn[disabled]{opacity:.45; cursor:not-allowed; transform:none}
+
+/* eyebrow */
+.eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:700; letter-spacing:.09em;
+  color:var(--sky-3); text-transform:uppercase; margin-bottom:14px}
+.eyebrow::before{content:""; width:26px; height:2px; border-radius:2px; background:var(--grad)}
+
+/* hero */
+.hero{position:relative; overflow:hidden; padding:clamp(46px,7vw,86px) 0 clamp(58px,8vw,96px)}
+.hero::before,.hero::after{content:""; position:absolute; border-radius:50%; filter:blur(70px); z-index:0; pointer-events:none}
+.hero::before{width:520px; height:520px; background:rgba(92,200,245,.34); top:-190px; inset-inline-start:-140px}
+.hero::after{width:440px; height:440px; background:rgba(52,215,126,.26); bottom:-210px; inset-inline-end:-120px}
+.hero-in{position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,64px); align-items:center}
+h1{font-size:clamp(38px,5.6vw,68px)}
+.hero p.lead{margin-top:20px; font-size:clamp(17px,1.9vw,20px); color:var(--ink-2); max-width:33ch}
+.hero-cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:32px}
+.trust{display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:24px; font-size:14.5px; color:var(--ink-3)}
+.trust span{display:inline-flex; align-items:center; gap:7px}
+.trust svg{width:15px; height:15px; color:var(--green-2)}
+
+/* compass */
+.stage{direction:ltr; display:grid; grid-template-columns:1fr auto 1fr; grid-template-rows:auto auto auto;
+  grid-template-areas:". n ." "w c e" ". s ."; gap:10px; align-items:center; justify-items:center}
+.disc{grid-area:c; position:relative; width:min(100%,410px); aspect-ratio:1}
+.disc::before{content:""; position:absolute; inset:6%; border-radius:50%; background:var(--grad); filter:blur(38px); opacity:.42; z-index:0}
+.compass{position:relative; z-index:1; width:100%; height:100%; display:block}
+.readout{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2px; z-index:2; direction:rtl; pointer-events:none; text-align:center; padding:0 14%}
+.readout .deg{font-family:var(--mono); font-size:12.5px; letter-spacing:.18em; color:var(--sky-1); opacity:.85}
+.readout .name{font-family:"Secular One",sans-serif; font-size:clamp(24px,3.4vw,32px); color:#fff}
+.readout .note{font-size:13px; color:#9FC8E2; line-height:1.4}
+.mood{direction:rtl; background:var(--white); border:1px solid var(--line); border-radius:16px; cursor:pointer;
+  padding:11px 16px; font-family:"Assistant",sans-serif; text-align:center; min-width:132px;
+  box-shadow:0 8px 22px -18px rgba(11,36,55,.6); transition:.22s}
+.mood .m-deg{display:block; font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--ink-3)}
+.mood .m-name{display:block; font-weight:700; font-size:16.5px; color:var(--ink)}
+.mood:hover{border-color:var(--sky-1); transform:translateY(-2px)}
+.mood[aria-pressed="true"]{background:var(--grad); border-color:transparent; box-shadow:0 12px 26px -14px rgba(14,165,233,.75)}
+.mood[aria-pressed="true"] .m-name,.mood[aria-pressed="true"] .m-deg{color:#fff}
+.mood[aria-pressed="true"] .m-deg{opacity:.8}
+.m-n{grid-area:n} .m-e{grid-area:e} .m-s{grid-area:s} .m-w{grid-area:w}
+.needle{transform-origin:200px 200px; transition:transform 1.05s cubic-bezier(.34,1.32,.5,1)}
+.sample{direction:rtl; margin-top:20px; display:flex; align-items:center; gap:11px; justify-content:center;
+  font-size:14.5px; color:var(--ink-2); background:var(--white); border:1px solid var(--line);
+  border-radius:999px; padding:10px 20px; box-shadow:var(--shadow)}
+.sample b{color:var(--ink); font-weight:700}
+.sdot{width:8px; height:8px; border-radius:50%; background:var(--grad); flex:none}
+
+/* strip */
+.strip{background:var(--grad); color:#fff}
+.strip-in{display:flex; flex-wrap:wrap; justify-content:center; gap:14px 46px; padding:22px 0; text-align:center}
+.strip b{font-family:"Secular One",sans-serif; font-size:22px; display:block; line-height:1.2}
+.strip small{font-size:14px; opacity:.9}
+
+/* problem */
+.split{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:44px}
+.panel{border-radius:var(--r); padding:32px; border:1px solid var(--line); background:var(--white)}
+.panel--now{background:#EEF3F7; border-color:#E0E8EE}
+.panel--new{background:linear-gradient(150deg,#EAF8FF,#EAFBF1); border-color:#CFEEFB}
+.panel h3{font-size:20px; margin-bottom:18px}
+.panel ul{list-style:none; margin:0; padding:0; display:grid; gap:13px}
+.panel li{display:flex; gap:11px; align-items:flex-start; font-size:16px; color:var(--ink-2)}
+.mark{width:22px; height:22px; border-radius:50%; flex:none; display:grid; place-items:center; margin-top:2px; font-size:12px; font-weight:700}
+.mark--x{background:#DFE7ED; color:#7A93A6}
+.mark--v{background:var(--grad); color:#fff}
+
+/* feature cards */
+.cards{display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:44px}
+.card{background:var(--white); border:1px solid var(--line); border-radius:var(--r); padding:30px; transition:.25s; position:relative; overflow:hidden}
+.card:hover{transform:translateY(-4px); box-shadow:var(--shadow); border-color:#CDE9F8}
+.icon{width:48px; height:48px; border-radius:14px; background:var(--grad); display:grid; place-items:center; margin-bottom:18px}
+.icon svg{width:24px; height:24px; color:#fff}
+.card .tag{font-size:13px; font-weight:700; color:var(--sky-3); letter-spacing:.02em}
+.card h3{font-size:21px; margin:4px 0 10px}
+.card p{color:var(--ink-2); font-size:16px}
+
+/* steps */
+.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:44px; position:relative}
+.steps::before{content:""; position:absolute; top:26px; inset-inline:12%; height:2px;
+  background:repeating-linear-gradient(90deg,var(--sky-1) 0 8px,transparent 8px 18px); opacity:.5}
+.step{position:relative; text-align:center; padding:0 8px}
+.step .num{width:54px; height:54px; margin:0 auto 18px; border-radius:50%; background:var(--white);
+  border:2px solid transparent; background-image:linear-gradient(#fff,#fff),var(--grad);
+  background-origin:border-box; background-clip:padding-box,border-box;
+  display:grid; place-items:center; font-family:var(--mono); font-size:15px; font-weight:700; color:var(--sky-3); position:relative; z-index:1}
+.step h3{font-size:19px; margin-bottom:8px}
+.step p{color:var(--ink-2); font-size:15.5px}
+
+/* audience */
+.who{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:44px}
+.who-card{background:var(--white); border:1px solid var(--line); border-radius:var(--r); padding:26px; border-top:3px solid transparent;
+  background-image:linear-gradient(#fff,#fff),var(--grad); background-origin:border-box; background-clip:padding-box,border-box}
+.who-card h3{font-size:18px; margin-bottom:8px}
+.who-card p{color:var(--ink-2); font-size:15.5px}
+
+/* final cta */
+.final{background:var(--grad); border-radius:28px; padding:clamp(40px,6vw,68px); text-align:center; color:#fff; position:relative; overflow:hidden}
+.final h2{font-size:clamp(28px,4.2vw,44px); color:#fff}
+.final p{margin:16px auto 30px; max-width:46ch; opacity:.95; font-size:17.5px}
+.final .mini2{margin-top:18px; font-size:14px; opacity:.9}
+
+/* footer */
+.foot{border-top:1px solid var(--line); padding:30px 0 40px; color:var(--ink-3); font-size:14.5px}
+.foot-in{display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center}
+
+/* reveal */
+.rise{opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1)}
+.rise.in{opacity:1; transform:none}
+
+@media (max-width:960px){
+  .hero-in{grid-template-columns:1fr}
+  .hero p.lead{max-width:none}
+  .cards,.split,.who,.steps{grid-template-columns:1fr}
+  .steps::before{display:none}
+  .nav-links{display:none}
+}
+@media (max-width:760px){
+  .stage{display:flex; flex-wrap:wrap; justify-content:center; gap:11px}
+  .disc{order:-1; flex:0 0 100%; max-width:330px; margin-bottom:6px}
+  .mood{flex:1 1 calc(50% - 11px); max-width:210px}
+}
+@media (max-width:480px){
+  .wrap{width:94vw}
+  .sec{padding:44px 0}
+  h1{font-size:clamp(30px,9vw,40px)}
+  .hero p.lead{font-size:16px}
+  .hero-cta{flex-direction:column; align-items:stretch}
+  .hero-cta .btn{width:100%}
+  .trust{flex-direction:column; gap:8px}
+  .mood{min-width:0; padding:9px 8px}
+  .mood .m-name{font-size:14.5px}
+  .strip-in{gap:10px 26px; padding:18px 0}
+  .strip b{font-size:19px}
+  .panel{padding:22px}
+  .card{padding:22px}
+  .final{padding:30px 18px; border-radius:20px}
+  .final .btn{width:100%}
+  .foot-in{flex-direction:column; align-items:flex-start; gap:6px}
+  .brand{font-size:16px}
+  .brand svg{width:26px;height:26px}
+}
+
+
+/* ================= DASHBOARD ================= */
+#app-landing, #app-dash{display:none}
+#app-landing.active, #app-dash.active{display:block}
+
+.d-top{background:rgba(245,251,255,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
+.d-top-in{display:flex;align-items:center;gap:12px;min-height:68px;padding-block:8px;flex-wrap:wrap}
+.d-right{margin-inline-start:auto;display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--ink-3);flex-wrap:wrap}
+.chip-live{display:inline-flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13.5px;color:var(--ink-2);white-space:nowrap}
+
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:16px 0 0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;background:transparent;border:1px solid transparent;border-radius:999px;padding:10px 18px;cursor:pointer;font-size:15.5px;font-weight:600;color:var(--ink-2);transition:.2s}
+.tab:hover{color:var(--sky-3)}
+.tab[aria-selected="true"]{background:var(--grad);color:#fff;box-shadow:0 12px 26px -16px rgba(14,165,233,.9)}
+.tab small{display:block;font-weight:400;font-size:12px;opacity:.8}
+
+.d-main{padding:26px 0 90px}
+.dcard{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,3.4vw,34px);box-shadow:var(--shadow)}
+.dcard + .dcard{margin-top:18px}
+.muted{color:var(--ink-2)}
+.tiny{font-size:14px;color:var(--ink-3)}
+
+.mini{border:1px solid var(--line);background:var(--white);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.mini:hover{border-color:var(--sky-1);color:var(--sky-3)}
+.mini.on{background:var(--grad);border-color:transparent;color:#fff}
+.mini.on--red{background:#FDECEC;border-color:#F7C9C9;color:#C0392B}
+
+.progress{height:6px;background:#E8F4FB;border-radius:99px;overflow:hidden;margin-bottom:8px}
+.progress i{display:block;height:100%;background:var(--grad);border-radius:99px;width:0;transition:width .45s cubic-bezier(.3,.8,.3,1)}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:12.5px;color:var(--ink-3);letter-spacing:.12em;margin-bottom:18px}
+.qtitle{font-size:clamp(23px,3.3vw,32px);margin-bottom:6px}
+.opts{display:grid;gap:11px;margin-top:22px}
+@media(min-width:620px){.opts{grid-template-columns:1fr 1fr}}
+.opt{text-align:right;background:var(--white);border:1.5px solid var(--line);border-radius:16px;padding:16px 18px;cursor:pointer;font-size:16.5px;font-weight:600;color:var(--ink);transition:.18s;display:flex;align-items:center;gap:12px}
+.opt:hover{border-color:var(--sky-1);transform:translateY(-2px);box-shadow:0 14px 28px -22px rgba(11,36,55,.8)}
+.opt[aria-pressed="true"]{background:linear-gradient(150deg,#EAF8FF,#EAFBF1);border-color:var(--sky-1)}
+.opt .bx{width:20px;height:20px;border-radius:6px;border:2px solid #C9E4F3;flex:none;display:grid;place-items:center;font-size:12px;color:#fff}
+.opt[aria-pressed="true"] .bx{background:var(--grad);border-color:transparent}
+.qfoot{display:flex;gap:10px;align-items:center;margin-top:24px;flex-wrap:wrap}
+
+.game{display:flex;gap:16px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)}
+.game:last-child{border-bottom:0;padding-bottom:0}
+.match{width:62px;flex:none;text-align:center}
+.match b{display:block;font-family:"Secular One",sans-serif;font-size:21px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.match small{font-size:11px;color:var(--ink-3);letter-spacing:.06em}
+.game-body{flex:1;min-width:0}
+.game h4{font-size:19px;margin-bottom:4px;font-family:"Secular One",sans-serif;font-weight:400}
+.game .why{color:var(--ink-2);font-size:15.5px}
+.gtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.gtag{font-size:12.5px;background:#EDF7FD;color:var(--sky-3);border-radius:999px;padding:3px 11px;font-weight:600}
+.gtag--free{background:#E8FBF0;color:var(--green-2)}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+
+.hrow{border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:12px;background:var(--white)}
+.hrow summary{cursor:pointer;display:flex;gap:12px;align-items:center;list-style:none;font-weight:700}
+.hrow summary::-webkit-details-marker{display:none}
+.hrow summary .date{font-family:var(--mono);font-size:12.5px;color:var(--ink-3);margin-inline-start:auto;font-weight:400}
+.pill{background:#EDF7FD;color:var(--sky-3);border-radius:999px;padding:2px 10px;font-size:13px}
+.hbody{margin-top:14px;border-top:1px solid var(--line);padding-top:14px;display:grid;gap:14px}
+.kv{display:flex;flex-wrap:wrap;gap:7px}
+.kv span{font-size:13.5px;background:#F3F8FC;border-radius:8px;padding:4px 10px;color:var(--ink-2)}
+.kv b{color:var(--ink)}
+
+.field{margin-top:22px}
+.field > label{display:block;font-weight:700;margin-bottom:4px}
+.field .hint{font-size:14px;color:var(--ink-3);margin-bottom:10px}
+.choices{display:flex;flex-wrap:wrap;gap:9px}
+.choice{border:1.5px solid var(--line);background:var(--white);border-radius:14px;padding:11px 18px;cursor:pointer;font-weight:600;font-size:15.5px;color:var(--ink-2);transition:.18s}
+.choice:hover{border-color:var(--sky-1)}
+.choice[aria-pressed="true"]{background:var(--grad);border-color:transparent;color:#fff}
+
+.empty{text-align:center;padding:34px 10px}
+.empty svg{width:46px;height:46px;color:#B7D9EC;margin-bottom:12px}
+.empty h3{font-size:20px;margin-bottom:6px}
+.empty p{color:var(--ink-2);margin-bottom:18px}
+
+.grid2{display:grid;gap:18px}
+@media(min-width:860px){.grid2{grid-template-columns:1.15fr .85fr}}
+.savebar{margin-top:24px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.toast{position:fixed;inset-inline:0;bottom:calc(22px + env(safe-area-inset-bottom));margin-inline:auto;width:max-content;max-width:90vw;background:var(--deep);color:#fff;
+  padding:12px 22px;border-radius:999px;font-size:15px;box-shadow:0 20px 40px -18px rgba(0,0,0,.6);opacity:0;transform:translateY(14px);
+  transition:.3s;pointer-events:none;z-index:80}
+.toast.on{opacity:1;transform:none}
+
+@media (max-width:600px){
+  .tab{padding:9px 14px; font-size:14.5px}
+  .tab small{font-size:11px}
+  .dcard{padding:20px 16px; border-radius:16px}
+  .qtitle{font-size:22px}
+  .opts{grid-template-columns:1fr}
+  .opt{padding:14px 15px; font-size:15.5px}
+  .qfoot{flex-direction:column; align-items:stretch}
+  .qfoot .btn{width:100%}
+  .qfoot .tiny{order:99; text-align:center}
+  .game{flex-direction:column; gap:8px}
+  .match{width:auto; text-align:right; display:flex; align-items:baseline; gap:8px}
+  .match small{font-size:11px}
+  .acts{gap:7px}
+  .mini{font-size:13.5px; padding:8px 12px}
+  .hrow summary{flex-wrap:wrap}
+  .hrow summary .date{margin-inline-start:0; flex-basis:100%; order:99}
+  .choice{padding:10px 15px; font-size:14.5px}
+  .d-right{width:100%; justify-content:space-between}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important; transition:none!important}
+  html{scroll-behavior:auto}
+  .rise{opacity:1; transform:none}
+}
+
+/* ===== features carousel on mobile (swipe right-to-left) ===== */
+.cards-dots{display:none}
+@media (max-width:760px){
+  .cards{
+    display:flex !important;
+    grid-template-columns:none !important;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    gap:14px;
+    margin-inline:-4vw;
+    padding-inline:4vw;
+    scroll-padding-inline:4vw;
+    padding-bottom:6px;
+  }
+  .cards::-webkit-scrollbar{display:none}
+  .cards .card{
+    flex:0 0 84%;
+    scroll-snap-align:start;
+    transform:none !important;
+  }
+  .cards .card:hover{transform:none !important}
+  .cards-dots{display:flex; justify-content:center; gap:8px; margin-top:18px}
+  .cdot{width:8px; height:8px; padding:0; border:0; border-radius:50%; background:#CBE4F3; cursor:pointer;
+    transition:width .25s ease, background .25s ease}
+  .cdot.on{width:24px; border-radius:99px; background:var(--grad)}
+}
+
+/* ===== mobile nav — kept last so nothing later can override it ===== */
+@media (min-width:961px){
+  .nav-toggle, .drawer, .drawer-backdrop{display:none !important}
+}
+@media (max-width:960px){
+  .nav-in{display:flex !important; flex-direction:row !important; flex-wrap:nowrap !important;
+    justify-content:space-between !important; align-items:center; gap:12px}
+  .nav-toggle{display:inline-flex !important; order:1; margin:0 !important}
+  .brand{order:2; margin:0 !important}
+  .nav-cta{display:none !important}
+  .nav-links{display:none !important}
+}
+
+/* ── responsive fix (AI Lab): off-canvas drawer must not widen the page ── */
+html,body{max-width:100%;overflow-x:clip;}
+@supports not (overflow:clip){ html,body{overflow-x:hidden;} }
+img,svg,video,canvas{max-width:100%;height:auto;}
+</style>
+</head>
+<body>
+
+<!-- ============ LANDING PAGE (view 1) ============ -->
+<div id="app-landing" class="active">
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <circle cx="20" cy="20" r="18" fill="#07253C"/>
+        <circle cx="20" cy="20" r="18" stroke="url(#ng)" stroke-width="2"/>
+        <path d="M20 8 L24 22 L20 25 L16 22 Z" fill="url(#ng)"/>
+        <circle cx="20" cy="20" r="2.4" fill="#fff"/>
+        <defs><linearGradient id="ng" x1="0" y1="0" x2="40" y2="40">
+          <stop stop-color="#5CC8F5"/><stop offset="1" stop-color="#34D77E"/></linearGradient></defs>
+      </svg>
+      המצפן לגיימר
+    </a>
+    <div class="nav-links">
+      <a href="#why">למה זה קיים</a>
+      <a href="#features">מה יש בפנים</a>
+      <a href="#how">איך זה עובד</a>
+      <a href="#who">למי זה מתאים</a>
+    </div>
+    <button class="btn btn--primary btn--sm nav-cta" data-enter>כניסה לאזור האישי שלי</button>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="drawer" aria-label="פתיחת תפריט">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer" aria-label="תפריט ניווט">
+  <div class="drawer-head">
+    <span class="drawer-title">תפריט</span>
+    <button class="drawer-close" id="drawerClose" aria-label="סגירת תפריט">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  <nav class="drawer-links">
+    <a href="#why">למה זה קיים</a>
+    <a href="#features">מה יש בפנים</a>
+    <a href="#how">איך זה עובד</a>
+    <a href="#who">למי זה מתאים</a>
+  </nav>
+  <button class="btn btn--primary" data-enter>כניסה לאזור האישי שלי</button>
+  <p class="drawer-note">בלי הרשמה ובלי סיסמה</p>
+</aside>
+
+<header class="hero" id="top">
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow">המצפן לגיימר</span>
+      <h1>מאות משחקים.<br><span class="grad-text">מצפן אחד.</span></h1>
+      <p class="lead">עשר שאלות קצרות על מצב הרוח, הזמן והמחשב שלכם — ובסוף רשימת משחקים שמתאימה בדיוק לערב הזה. בלי לגלול שעה בחנות ובלי לשלם על משחק שלא מתאים.</p>
+      <div class="hero-cta">
+        <button class="btn btn--primary" data-enter>
+          כניסה לאזור האישי שלי
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        </button>
+        <a href="#how" class="btn btn--ghost">איך זה עובד</a>
+      </div>
+      <div class="trust">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> בלי הרשמה ובלי סיסמה</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 10 שאלות, פחות מדקה</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> הכול נשמר בדפדפן שלכם</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="stage" id="stage">
+        <button class="mood m-n" data-i="0" aria-pressed="true"><span class="m-deg">000°</span><span class="m-name">רגוע</span></button>
+        <button class="mood m-e" data-i="1" aria-pressed="false"><span class="m-deg">090°</span><span class="m-name">אקשן</span></button>
+        <button class="mood m-s" data-i="2" aria-pressed="false"><span class="m-deg">180°</span><span class="m-name">חשיבה</span></button>
+        <button class="mood m-w" data-i="3" aria-pressed="false"><span class="m-deg">270°</span><span class="m-name">חברתי</span></button>
+
+        <div class="disc">
+          <svg class="compass" viewBox="0 0 400 400" aria-hidden="true">
+            <defs>
+              <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#5CC8F5"/><stop offset=".55" stop-color="#0EA5E9"/><stop offset="1" stop-color="#34D77E"/>
+              </linearGradient>
+              <linearGradient id="beam" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#0EA5E9" stop-opacity=".2"/><stop offset="1" stop-color="#34D77E"/>
+              </linearGradient>
+              <radialGradient id="face" cx=".5" cy=".32" r=".85">
+                <stop offset="0" stop-color="#0E3B5C"/><stop offset="1" stop-color="#06203A"/>
+              </radialGradient>
+              <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="5" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <circle cx="200" cy="200" r="178" fill="none" stroke="url(#rim)" stroke-width="1.5" opacity=".5"/>
+            <circle cx="200" cy="200" r="168" fill="url(#face)"/>
+            <g id="ticks"></g>
+            <circle cx="200" cy="200" r="120" fill="none" stroke="#14568A" stroke-width="1" stroke-dasharray="2 9"/>
+            <g class="needle" id="needle">
+              <path d="M200 58 L212 152 L200 163 L188 152 Z" fill="url(#beam)" filter="url(#glow)"/>
+              <path d="M200 306 L207 236 L200 229 L193 236 Z" fill="#2E6B92" opacity=".45"/>
+            </g>
+            <circle cx="200" cy="200" r="80" fill="#07253C" stroke="#14568A" stroke-width="1"/>
+          </svg>
+          <div class="readout">
+            <span class="deg" id="rDeg">000°</span>
+            <span class="name" id="rName">רגוע</span>
+            <span class="note" id="rNote">משהו שקט לסוף היום</span>
+          </div>
+        </div>
+      </div>
+      <div class="sample"><span class="sdot"></span><span>לדוגמה: <b id="rSample">משחקי בנייה ופאזלים אווירתיים, 30–60 דקות</b></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap strip-in">
+    <div><b>10</b><small>שאלות בשאלון</small></div>
+    <div><b>0</b><small>שדות הרשמה</small></div>
+    <div><b>~60</b><small>שניות עד ההמלצה</small></div>
+    <div><b>∞</b><small>שאלונים שנשמרים לכם</small></div>
+  </div>
+</div>
+
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="rise">
+      <span class="eyebrow">למה זה קיים</span>
+      <h2 style="font-size:clamp(27px,3.6vw,40px); max-width:20ch">לחפש משחק זה כיף. לגלול שעה בחנות — הרבה פחות.</h2>
+    </div>
+    <div class="split rise">
+      <div class="panel panel--now">
+        <h3>ככה מחפשים היום</h3>
+        <ul>
+          <li><span class="mark mark--x">✕</span> גוללים אלפי כותרים בחנות בלי לדעת מה באמת מתאים</li>
+          <li><span class="mark mark--x">✕</span> דירוג ממוצע לא מספר אם יש לכם 20 דקות או שלוש שעות</li>
+          <li><span class="mark mark--x">✕</span> משלמים על משחק ומגלים שהמחשב לא עומד בו</li>
+          <li><span class="mark mark--x">✕</span> שואלים חבר ומקבלים המלצה שמתאימה לו, לא לכם</li>
+        </ul>
+      </div>
+      <div class="panel panel--new">
+        <h3>ככה זה עם המצפן</h3>
+        <ul>
+          <li><span class="mark mark--v">✓</span> עשר שאלות על מצב הרוח, הזמן הפנוי והמחשב שלכם</li>
+          <li><span class="mark mark--v">✓</span> המלצות לרגע הזה, לא לממוצע של כולם</li>
+          <li><span class="mark mark--v">✓</span> המערכת זוכרת את המחשב והתקציב ולא שואלת שוב</li>
+          <li><span class="mark mark--v">✓</span> כל תוצאה נשמרת, אפשר לחזור אליה מחר</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="features" style="background:var(--white); border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rise">
+      <span class="eyebrow">מה יש בפנים</span>
+      <h2 style="font-size:clamp(27px,3.6vw,40px)">ארבעה כלים, אזור אישי אחד</h2>
+    </div>
+    <div class="cards">
+      <article class="card rise">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></div>
+        <span class="tag">"מצפן בזמן אמת"</span>
+        <h3>שאלון ההתאמה</h3>
+        <p>עשר שאלות קצרות על מצב הרוח, הזמן הפנוי והסגנון שבא לכם עכשיו. בסוף השאלון מקבלים רשימת המלצות מדויקת, מיד.</p>
+      </article>
+      <article class="card rise">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 8v4l3 2"/></svg></div>
+        <span class="tag">"המצפן שלי"</span>
+        <h3>היסטוריית התאמות</h3>
+        <p>כל שאלון שמילאתם נשמר עם התאריך ועם התשובות שבחרתם. אפשר לחזור להמלצה מלפני שבוע בלי למלא הכול מחדש.</p>
+      </article>
+      <article class="card rise">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg></div>
+        <span class="tag">"המשחקים שלי"</span>
+        <h3>רשימות מעקב ודירוג</h3>
+        <p>שומרים משחק למאוחר יותר בלחיצה, מסמנים "שיחקתי בזה" ונותנים לייק או דיסלייק — וההמלצות הבאות מכוונות טוב יותר.</p>
+      </article>
+      <article class="card rise">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <span class="tag">"פרופיל השחקן"</span>
+        <h3>הגדרות גיימר</h3>
+        <p>סוג המחשב (חזק או בסיסי), הפלטפורמות שלכם (Steam, Epic ועוד) והתקציב — נשמרים פעם אחת. השאלון מתקצר ושואל רק על החוויה שאתם מחפשים.</p>
+      </article>
+    </div>
+    <div class="cards-dots" id="cardsDots"></div>
+  </div>
+</section>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="rise">
+      <span class="eyebrow">איך זה עובד</span>
+      <h2 style="font-size:clamp(27px,3.6vw,40px)">מהכפתור להמלצה, בשלושה צעדים</h2>
+    </div>
+    <div class="steps rise">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>נכנסים בלחיצה</h3>
+        <p>כפתור אחד בעמוד הראשי מעביר ישר לאזור האישי, באותו עמוד ממש. בלי שם משתמש, בלי מייל, בלי לחכות לאימות.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>עונים על עשר שאלות</h3>
+        <p>מה מצב הרוח, כמה זמן יש לכם ואיזו חוויה מתחשקת עכשיו. השאלון אינטראקטיבי ולוקח פחות מדקה.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>מקבלים המלצות</h3>
+        <p>רשימה מותאמת שמופיעה מיד בסיום, עם אפשרות לשמור למאוחר יותר ולדרג אחרי ששיחקתם.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="who" style="background:var(--white); border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rise">
+      <span class="eyebrow">למי זה מתאים</span>
+      <h2 style="font-size:clamp(27px,3.6vw,40px)">לכל מי שרוצה לשחק, לא לחפש</h2>
+    </div>
+    <div class="who rise">
+      <div class="who-card">
+        <h3>גיימרים ותיקים</h3>
+        <p>סיימתם את כל מה שהיה בספרייה ומחפשים את הלהיט הבא — כזה שבאמת דומה למה שאהבתם.</p>
+      </div>
+      <div class="who-card">
+        <h3>מתחילים ומזדמנים</h3>
+        <p>בלי מושגים מסובכים ובלי ז'רגון. שאלות בעברית פשוטה, ובסוף המלצה ברורה אחת שאפשר להתחיל ממנה.</p>
+      </div>
+      <div class="who-card">
+        <h3>הורים וחברים</h3>
+        <p>מחפשים מתנה או משחק לילדים ולא רוצים ללכת לאיבוד בין אלפי אפשרויות ודירוגים.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="final rise">
+      <h2>אז במה משחקים הערב?</h2>
+      <p>עשר שאלות מפרידות בינכם לבין המשחק הבא שלכם. אפשר להתחיל עכשיו ולסיים לפני שהקפה מתקרר.</p>
+      <button class="btn btn--light" data-enter>כניסה לאזור האישי שלי</button>
+      <div class="mini2">לחיצה אחת ואתם בפנים. הנתונים נשמרים בדפדפן שלכם בלבד.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span>המצפן לגיימר — מוצאים משחק בעשר שאלות</span>
+    <span>ללא הרשמה · הנתונים נשמרים אצלכם בדפדפן</span>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=gamer-compass" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+</div>
+<!-- ============ /LANDING PAGE ============ -->
+
+
+<!-- ============ DASHBOARD (view 2) ============ -->
+<div id="app-dash">
+  <div class="d-top">
+    <div class="wrap d-top-in">
+      <button class="brand" data-exit style="cursor:pointer">
+        <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" fill="#07253C"/><circle cx="20" cy="20" r="18" stroke="url(#g2)" stroke-width="2"/>
+          <path d="M20 8 L24 22 L20 25 L16 22 Z" fill="url(#g2)"/><circle cx="20" cy="20" r="2.4" fill="#fff"/>
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#5CC8F5"/><stop offset="1" stop-color="#34D77E"/></linearGradient></defs>
+        </svg>
+        המצפן לגיימר
+      </button>
+      <div class="d-right">
+        <span class="chip-live"><span class="sdot"></span> האזור האישי שלך</span>
+        <button class="mini" data-exit>יציאה לעמוד הראשי</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-view="quiz" aria-selected="true">מצפן בזמן אמת<small>שאלון ההתאמה</small></button>
+      <button class="tab" role="tab" data-view="history" aria-selected="false">המצפן שלי<small>היסטוריית התאמות</small></button>
+      <button class="tab" role="tab" data-view="games" aria-selected="false">המשחקים שלי<small>שמורים ודירוגים</small></button>
+      <button class="tab" role="tab" data-view="profile" aria-selected="false">פרופיל השחקן<small>הגדרות גיימר</small></button>
+    </div>
+  </div>
+
+  <main class="wrap d-main"><div id="dview"></div></main>
+</div>
+<!-- ============ /DASHBOARD ============ -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ================= view switcher ================= */
+var landing=document.getElementById('app-landing'), dash=document.getElementById('app-dash');
+function enterDash(){
+  landing.classList.remove('active'); dash.classList.add('active');
+  window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+  renderDash();
+}
+function exitDash(){
+  dash.classList.remove('active'); landing.classList.add('active');
+  window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+}
+document.addEventListener('click',function(e){
+  if(e.target.closest('[data-enter]')){ enterDash(); closeMobileMenu(); }
+  if(e.target.closest('[data-exit]')){ exitDash(); }
+});
+
+/* ================= features carousel dots (mobile) ================= */
+(function(){
+  var track=document.querySelector('#features .cards'), dotsEl=document.getElementById('cardsDots');
+  if(!track||!dotsEl) return;
+  var cards=[].slice.call(track.querySelectorAll('.card'));
+  if(!cards.length) return;
+  cards.forEach(function(card,i){
+    var b=document.createElement('button');
+    b.className='cdot'; b.type='button';
+    b.setAttribute('aria-label','מעבר לכרטיס '+(i+1));
+    b.addEventListener('click',function(){
+      card.scrollIntoView({inline:'start', block:'nearest', behavior:reduce?'auto':'smooth'});
+    });
+    dotsEl.appendChild(b);
+  });
+  var dots=[].slice.call(dotsEl.children), ticking=false;
+  function sync(){
+    ticking=false;
+    var r=track.getBoundingClientRect(), mid=r.left+r.width/2, best=0, bestD=Infinity;
+    cards.forEach(function(el,i){
+      var er=el.getBoundingClientRect(), d=Math.abs(er.left+er.width/2-mid);
+      if(d<bestD){ bestD=d; best=i; }
+    });
+    dots.forEach(function(d,i){ d.classList.toggle('on', i===best); });
+  }
+  track.addEventListener('scroll',function(){
+    if(!ticking){ ticking=true; window.requestAnimationFrame(sync); }
+  },{passive:true});
+  window.addEventListener('resize',sync);
+  sync();
+})();
+
+/* ================= mobile drawer menu ================= */
+var navToggle=document.getElementById('navToggle'),
+    drawer=document.getElementById('drawer'),
+    drawerBackdrop=document.getElementById('drawerBackdrop'),
+    drawerClose=document.getElementById('drawerClose');
+
+function openMobileMenu(){
+  if(!drawer) return;
+  drawer.classList.add('open'); drawerBackdrop.classList.add('open');
+  navToggle.setAttribute('aria-expanded','true');
+  document.body.classList.add('menu-open');
+}
+function closeMobileMenu(){
+  if(!drawer) return;
+  drawer.classList.remove('open'); drawerBackdrop.classList.remove('open');
+  navToggle.setAttribute('aria-expanded','false');
+  document.body.classList.remove('menu-open');
+}
+if(navToggle&&drawer){
+  navToggle.addEventListener('click',function(){
+    drawer.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+  });
+  drawerClose.addEventListener('click', closeMobileMenu);
+  drawerBackdrop.addEventListener('click', closeMobileMenu);
+  drawer.addEventListener('click',function(e){ if(e.target.closest('a,button')) closeMobileMenu(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeMobileMenu(); });
+  window.addEventListener('resize',function(){ if(window.innerWidth>960) closeMobileMenu(); });
+}
+
+/* ================= landing: compass hero ================= */
+(function(){
+  var ticks = document.getElementById('ticks'), out='';
+  for(var i=0;i<72;i++){
+    var a=i*5, major=(i%9===0), rad=(a-90)*Math.PI/180, r1=152, r2=major?134:145;
+    var x1=200+Math.cos(rad)*r1, y1=200+Math.sin(rad)*r1, x2=200+Math.cos(rad)*r2, y2=200+Math.sin(rad)*r2;
+    out+='<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+
+         '" stroke="'+(major?'#3E9BD1':'#1E6796')+'" stroke-width="'+(major?2:1)+'" opacity="'+(major?.9:.45)+'"/>';
+  }
+  ticks.insertAdjacentHTML('beforeend', out);
+
+  var moods=[
+    {deg:0,   name:'רגוע',  note:'משהו שקט לסוף היום',      sample:'משחקי בנייה ופאזלים אווירתיים, 30–60 דקות'},
+    {deg:90,  name:'אקשן',  note:'אדרנלין בלי התחייבות',    sample:'סיבובים מהירים של 15–20 דקות, גם לבד'},
+    {deg:180, name:'חשיבה', note:'לשבור קצת את הראש',        sample:'חידות, אסטרטגיה ומשחקי לוגיקה בקצב שלכם'},
+    {deg:270, name:'חברתי', note:'לשחק עם חברים',            sample:'מולטיפלייר קליל שרץ גם על מחשב בסיסי'}
+  ];
+  var needle=document.getElementById('needle'),
+      rDeg=document.getElementById('rDeg'), rName=document.getElementById('rName'),
+      rNote=document.getElementById('rNote'), rSample=document.getElementById('rSample'),
+      btns=[].slice.call(document.querySelectorAll('.mood')),
+      cur=0, rot=0, timer=null, touched=false;
+
+  function pad(n){ return ('00'+n).slice(-3)+'°'; }
+  function set(i){
+    var m=moods[i], delta=((m.deg - (rot%360)) + 540)%360 - 180;
+    rot+=delta; cur=i;
+    needle.style.transform='rotate('+rot+'deg)';
+    rDeg.textContent=pad(m.deg); rName.textContent=m.name;
+    rNote.textContent=m.note; rSample.textContent=m.sample;
+    btns.forEach(function(b){ b.setAttribute('aria-pressed', (+b.dataset.i===i)?'true':'false'); });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){ touched=true; clearInterval(timer); set(+b.dataset.i); });
+  });
+  if(!reduce){ timer=setInterval(function(){ if(!touched) set((cur+1)%moods.length); }, 3400); }
+
+  var els=[].slice.call(document.querySelectorAll('.rise'));
+  if(reduce || !('IntersectionObserver' in window)){
+    els.forEach(function(e){ e.classList.add('in'); });
+  } else {
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    },{threshold:.12, rootMargin:'0px 0px -60px 0px'});
+    els.forEach(function(e){ io.observe(e); });
+  }
+})();
+
+/* ================= dashboard app ================= */
+var KEY='matzpen_v1', mem=null;
+function load(){
+  if(mem) return mem;
+  try{ var raw=localStorage.getItem(KEY); mem = raw?JSON.parse(raw):null; }catch(e){ mem=null; }
+  if(!mem) mem={profile:{pc:null,budget:null,platforms:[]},history:[],saved:[],played:{}};
+  if(!mem.profile) mem.profile={pc:null,budget:null,platforms:[]};
+  if(!mem.profile.platforms) mem.profile.platforms=[];
+  return mem;
+}
+function saveState(){ try{ localStorage.setItem(KEY, JSON.stringify(mem)); }catch(e){} }
+var S=load();
+
+var GAMES=[
+ {id:'stardew',n:'Stardew Valley',mood:['calm','social'],time:['mid','long'],players:['solo','online'],world:'cozy',diff:'easy',story:'both',len:'endless',specs:'basic',price:'cheap',plat:['steam','console','mobile'],why:'חווה קטנה שאתם בונים בקצב שלכם. אין לחץ, אין טיימר, אפשר לשחק חצי שעה או חמש שעות.'},
+ {id:'minecraft',n:'Minecraft',mood:['calm','social'],time:['mid','long'],players:['solo','online','couch'],world:'cozy',diff:'easy',story:'gameplay',len:'endless',specs:'basic',price:'cheap',plat:['steam','console','mobile'],why:'בונים כל מה שרוצים, לבד או עם חברים. רץ כמעט על כל מחשב וכולם כבר יודעים לשחק.'},
+ {id:'fortnite',n:'Fortnite',mood:['action','social'],time:['short'],players:['online'],world:'cozy',diff:'mid',story:'gameplay',len:'endless',specs:'basic',price:'free',plat:['epic','console','mobile'],why:'סיבוב לוקח בערך 20 דקות, חינם לגמרי, וקל למצוא חברים ששיחקו בזה.'},
+ {id:'portal2',n:'Portal 2',mood:['think'],time:['mid'],players:['solo','couch'],world:'scifi',diff:'mid',story:'story',len:'quick',specs:'basic',price:'cheap',plat:['steam'],why:'חידות שמלמדות אתכם לחשוב אחרת, עם הומור מצוין ומצב שני שחקנים על אותו מסך.'},
+ {id:'rocket',n:'Rocket League',mood:['action','social'],time:['short'],players:['online','couch'],world:'real',diff:'mid',story:'gameplay',len:'endless',specs:'basic',price:'free',plat:['epic','console'],why:'כדורגל עם מכוניות. חמש דקות למשחק, חינם, וכיף גם אם לא שיחקתם מעולם.'},
+ {id:'amongus',n:'Among Us',mood:['social'],time:['short'],players:['online'],world:'cozy',diff:'easy',story:'gameplay',len:'quick',specs:'basic',price:'cheap',plat:['steam','mobile','console'],why:'משחק בלשים קצר לחבורה. הכללים מוסברים בדקה והוא רץ גם מהטלפון.'},
+ {id:'ittakes2',n:'It Takes Two',mood:['social'],time:['long'],players:['couch','online'],world:'fantasy',diff:'mid',story:'story',len:'quick',specs:'strong',price:'paid',plat:['steam','console'],why:'הרפתקה לשני שחקנים מההתחלה ועד הסוף, ומספיק לקנות עותק אחד לשניכם.'},
+ {id:'hades',n:'Hades',mood:['action'],time:['short','mid'],players:['solo'],world:'fantasy',diff:'hard',story:'story',len:'endless',specs:'basic',price:'cheap',plat:['steam','console'],why:'כל ריצה נמשכת 20–30 דקות, ובכל פעם שנופלים הסיפור מתקדם. מושלם לסשן קצר.'},
+ {id:'witcher3',n:'The Witcher 3',mood:['calm','action'],time:['long'],players:['solo'],world:'fantasy',diff:'mid',story:'story',len:'endless',specs:'strong',price:'cheap',plat:['steam','epic','console'],why:'עולם ענק עם סיפור ברמה של סדרה טובה. יש בו יותר תוכן ממה שתספיקו בחודשים.'},
+ {id:'celeste',n:'Celeste',mood:['action','think'],time:['short'],players:['solo'],world:'cozy',diff:'hard',story:'story',len:'quick',specs:'basic',price:'cheap',plat:['steam','console'],why:'קשה בכוונה, אבל כל ניסיון לוקח שניות וסיפור ההתמודדות שמאחורי המשחק נוגע.'},
+ {id:'minimetro',n:'Mini Metro',mood:['calm','think'],time:['short'],players:['solo'],world:'real',diff:'easy',story:'gameplay',len:'quick',specs:'basic',price:'cheap',plat:['steam','mobile'],why:'מתכננים קווי רכבת בעיר. שקט, יפה, ואפשר לשחק סיבוב תוך כדי המתנה.'},
+ {id:'valorant',n:'Valorant',mood:['action','social'],time:['short','mid'],players:['online'],world:'scifi',diff:'hard',story:'gameplay',len:'endless',specs:'basic',price:'free',plat:['steam'],why:'יריות תחרותיות עם דרישות מחשב נמוכות. חינם, אבל דורש רצינות כדי להשתפר.'},
+ {id:'terraria',n:'Terraria',mood:['calm','social'],time:['long'],players:['solo','online'],world:'fantasy',diff:'mid',story:'gameplay',len:'endless',specs:'basic',price:'cheap',plat:['steam','console','mobile'],why:'חופרים, בונים ונלחמים בעולם דו־ממדי אינסופי. עולה מעט ומחזיק המון שעות.'},
+ {id:'spire',n:'Slay the Spire',mood:['think'],time:['short','mid'],players:['solo'],world:'fantasy',diff:'hard',story:'gameplay',len:'endless',specs:'basic',price:'cheap',plat:['steam','mobile','console'],why:'משחק קלפים שכל החלטה בו חשובה. סיבוב קצר, אבל תמצאו את עצמכם מתחילים עוד אחד.'},
+ {id:'cities',n:'Cities: Skylines',mood:['calm','think'],time:['long'],players:['solo'],world:'real',diff:'mid',story:'gameplay',len:'endless',specs:'strong',price:'cheap',plat:['steam','console'],why:'בונים עיר שלמה ומנהלים אותה. שעות שעוברות בלי שתשימו לב.'},
+ {id:'overcooked',n:'Overcooked 2',mood:['social','action'],time:['short'],players:['couch','online'],world:'cozy',diff:'mid',story:'gameplay',len:'quick',specs:'basic',price:'cheap',plat:['steam','console'],why:'מטבח משוגע לשניים עד ארבעה. צעקות מובטחות, גם עם מי שלא גיימר.'},
+ {id:'genshin',n:'Genshin Impact',mood:['calm','action'],time:['mid','long'],players:['solo','online'],world:'fantasy',diff:'easy',story:'story',len:'endless',specs:'basic',price:'free',plat:['mobile','console','epic'],why:'עולם פתוח יפהפה בחינם, ואותו חשבון עובד גם בטלפון וגם במחשב.'},
+ {id:'forza',n:'Forza Horizon 5',mood:['action'],time:['short','mid'],players:['solo','online'],world:'real',diff:'easy',story:'gameplay',len:'endless',specs:'strong',price:'paid',plat:['steam','console'],why:'מרוצים במקסיקו שנראים מדהים. אפשר להיכנס לעשר דקות של נהיגה ולצאת.'},
+ {id:'unpacking',n:'Unpacking',mood:['calm'],time:['short'],players:['solo'],world:'cozy',diff:'easy',story:'story',len:'quick',specs:'basic',price:'cheap',plat:['steam','mobile','console'],why:'מוציאים חפצים מקרטונים ומסדרים בית. מרגיע להפליא, ומספר סיפור בלי מילה אחת.'},
+ {id:'baba',n:'Baba Is You',mood:['think'],time:['short'],players:['solo'],world:'cozy',diff:'hard',story:'gameplay',len:'quick',specs:'basic',price:'cheap',plat:['steam','mobile','console'],why:'חידות שבהן משנים את חוקי המשחק עצמו. שובר את הראש בדרך הכי טובה.'},
+ {id:'hollow',n:'Hollow Knight',mood:['action'],time:['long'],players:['solo'],world:'fantasy',diff:'hard',story:'story',len:'endless',specs:'basic',price:'cheap',plat:['steam','console'],why:'עולם תת־קרקעי עצום ואטמוספרי. מאתגר, זול, ורץ על כל מחשב.'},
+ {id:'vampire',n:'Vampire Survivors',mood:['action'],time:['short'],players:['solo'],world:'fantasy',diff:'easy',story:'gameplay',len:'quick',specs:'basic',price:'cheap',plat:['steam','mobile','console'],why:'סיבוב של 15 דקות, כמעט בלי כפתורים, וממכר בצורה מסוכנת. עולה כמו כוס קפה.'},
+ {id:'fallguys',n:'Fall Guys',mood:['social'],time:['short'],players:['online'],world:'cozy',diff:'easy',story:'gameplay',len:'quick',specs:'basic',price:'free',plat:['epic','console','steam'],why:'מכשולים צבעוניים עם 40 שחקנים. חינם, קליל, ומצוין לילדים ולמשחק משפחתי.'},
+ {id:'shorthike',n:'A Short Hike',mood:['calm'],time:['short'],players:['solo'],world:'cozy',diff:'easy',story:'story',len:'quick',specs:'basic',price:'cheap',plat:['steam','console'],why:'טיול קצר בהר, שעה וחצי מהתחלה לסוף. בדיוק בשביל ערב אחד רגוע.'},
+ {id:'deadcells',n:'Dead Cells',mood:['action'],time:['short','mid'],players:['solo'],world:'fantasy',diff:'hard',story:'gameplay',len:'endless',specs:'basic',price:'cheap',plat:['steam','mobile','console'],why:'קרבות מהירים ומדויקים בריצות קצרות. משתפרים בכל פעם מחדש.'},
+ {id:'subnautica',n:'Subnautica',mood:['calm','think'],time:['long'],players:['solo'],world:'scifi',diff:'mid',story:'story',len:'endless',specs:'strong',price:'cheap',plat:['steam','epic','console'],why:'הישרדות מתחת למים בכוכב זר. מרתק, קצת מפחיד, וסיפור שמתגלה לאט.'},
+ {id:'monument',n:'Monument Valley 2',mood:['calm','think'],time:['short'],players:['solo'],world:'cozy',diff:'easy',story:'story',len:'quick',specs:'basic',price:'cheap',plat:['mobile'],why:'חידות ארכיטקטורה יפות בטלפון. מתאים לכל גיל וגם למי שלא שיחק מעולם.'},
+ {id:'skychildren',n:'Sky: Children of the Light',mood:['calm','social'],time:['short','mid'],players:['online','solo'],world:'fantasy',diff:'easy',story:'story',len:'endless',specs:'basic',price:'free',plat:['mobile','console'],why:'עולם עדין שבו עפים ופוגשים אנשים בלי תחרות ובלי אלימות. חינם, ומעולה לילדים.'},
+ {id:'stray',n:'Stray',mood:['calm','think'],time:['short','mid'],players:['solo'],world:'scifi',diff:'easy',story:'story',len:'quick',specs:'basic',price:'cheap',plat:['steam','console'],why:'מסע קצר ומרגש בעור חתול בעיר עתידנית תת־קרקעית. סיפור יפהפה שנגמר תוך כמה שעות.'},
+ {id:'cuphead',n:'Cuphead',mood:['action'],time:['short'],players:['solo','couch'],world:'fantasy',diff:'hard',story:'gameplay',len:'quick',specs:'basic',price:'cheap',plat:['steam','console'],why:'קרבות בוסים מצוירים ביד ברמת קושי גבוהה. כל ניסיון קצר, וכיף כפול בשני שחקנים.'},
+ {id:'acnh',n:'Animal Crossing: New Horizons',mood:['calm','social'],time:['short','mid'],players:['solo','online'],world:'cozy',diff:'easy',story:'gameplay',len:'endless',specs:'basic',price:'paid',plat:['console'],why:'בונים אי משלכם בקצב יומיומי רגוע. מתאים לביקור קצר של רבע שעה כל יום.'},
+ {id:'humanfall',n:'Human: Fall Flat',mood:['social','action'],time:['short'],players:['couch','online'],world:'cozy',diff:'easy',story:'gameplay',len:'quick',specs:'basic',price:'cheap',plat:['steam','console','mobile'],why:'בובות מגושמות שמנסות לפתור חידות פיזיקה. צחוקים מובטחים עם חברים.'},
+ {id:'rust',n:'Rust',mood:['action','social'],time:['long'],players:['online'],world:'real',diff:'hard',story:'gameplay',len:'endless',specs:'strong',price:'cheap',plat:['steam'],why:'הישרדות תחרותית קשוחה מול שחקנים אחרים. דורש זמן ומחשב חזק, אבל מתגמל מאוד.'},
+ {id:'apex',n:'Apex Legends',mood:['action','social'],time:['short','mid'],players:['online'],world:'scifi',diff:'hard',story:'gameplay',len:'endless',specs:'basic',price:'free',plat:['steam','console'],why:'באטל רויאל מהיר בקבוצות שלוש. חינם לגמרי וסיבוב לוקח כעשרים דקות.'},
+ {id:'journey',n:'Journey',mood:['calm'],time:['short'],players:['online'],world:'real',diff:'easy',story:'story',len:'quick',specs:'basic',price:'cheap',plat:['steam','console'],why:'מסע שקט וויזואלי בין דיונות חול, עם זר אנונימי שפוגשים בדרך. נגמר תוך שעתיים.'},
+ {id:'ori',n:'Ori and the Blind Forest',mood:['calm','action'],time:['mid'],players:['solo'],world:'fantasy',diff:'mid',story:'story',len:'quick',specs:'basic',price:'cheap',plat:['steam','console'],why:'פלטפורמות מדויקות בעולם מצויר ומרגש, עם סיפור נוגע ללב על אובדן ותקווה.'},
+ {id:'stumble',n:'Stumble Guys',mood:['social'],time:['short'],players:['online'],world:'cozy',diff:'easy',story:'gameplay',len:'quick',specs:'basic',price:'free',plat:['mobile','steam'],why:'מרוץ מכשולים המוני וקליל, בדיוק כמו Fall Guys אבל בטלפון. חינם לחלוטין.'},
+ {id:'brawlstars',n:'Brawl Stars',mood:['action','social'],time:['short'],players:['online'],world:'cozy',diff:'easy',story:'gameplay',len:'endless',specs:'basic',price:'free',plat:['mobile'],why:'קרבות של שלוש דקות בטלפון, עם חברים או לבד. קל להתחיל וקשה להפסיק.'},
+ {id:'sims4',n:'The Sims 4',mood:['calm','think'],time:['mid','long'],players:['solo'],world:'real',diff:'easy',story:'gameplay',len:'endless',specs:'basic',price:'free',plat:['steam','console'],why:'בונים בית ומנהלים חיים שלמים של דמויות. הגרסה הבסיסית חינמית לגמרי.'},
+ {id:'gtav',n:'Grand Theft Auto V',mood:['action'],time:['mid','long'],players:['solo','online'],world:'real',diff:'mid',story:'both',len:'endless',specs:'strong',price:'cheap',plat:['steam','epic','console'],why:'עיר פתוחה ענקית עם סיפור קולנועי ומצב מקוון עמוס תוכן. מחזיק שנים.'},
+ {id:'eldenring',n:'Elden Ring',mood:['action','think'],time:['long'],players:['solo'],world:'fantasy',diff:'hard',story:'story',len:'endless',specs:'strong',price:'paid',plat:['steam','console'],why:'עולם פתוח קשה ומהמם ויזואלית. לא לרגע קל, אבל תגמול הניצחון עצום.'},
+ {id:'pvz',n:'Plants vs. Zombies',mood:['calm','think'],time:['short'],players:['solo'],world:'cozy',diff:'easy',story:'gameplay',len:'quick',specs:'basic',price:'cheap',plat:['steam','mobile'],why:'מגן מגדל חמוד וממכר. סיבובים קצרים, מתאים גם לילדים וגם למבוגרים.'},
+ {id:'geometrydash',n:'Geometry Dash',mood:['action'],time:['short'],players:['solo'],world:'scifi',diff:'hard',story:'gameplay',len:'endless',specs:'basic',price:'cheap',plat:['mobile','steam'],why:'קפיצות בקצב מוזיקה במסלול מהיר. קשה מאוד, אבל כל ניסיון לוקח שניות בודדות.'},
+ {id:'roblox',n:'Roblox',mood:['social','calm','action'],time:['short','mid'],players:['online','solo'],world:'cozy',diff:'easy',story:'gameplay',len:'endless',specs:'basic',price:'free',plat:['steam','console','mobile'],why:'אלפי משחקים קטנים בתוך פלטפורמה אחת, כל אחד בסגנון אחר. חינמי, קל להתחיל, ומעולה לשחק עם חברים.'}
+];
+var BY={}; GAMES.forEach(function(g){ BY[g.id]=g; });
+
+var Q=[
+ {id:'mood',q:'מה בא לך לשחק עכשיו?',sub:'התשובה הזאת משפיעה הכי הרבה על ההמלצות.',opts:[['calm','משהו רגוע'],['action','אקשן ואדרנלין'],['think','לשבור את הראש'],['social','לשחק עם אנשים']]},
+ {id:'time',q:'כמה זמן יש לך?',opts:[['short','עד 20 דקות'],['mid','שעה בערך'],['long','כמה שעות, בלי לחץ']]},
+ {id:'players',q:'עם מי משחקים?',opts:[['solo','לבד'],['online','עם חברים אונליין'],['couch','עם מישהו לידי, אותו מסך']]},
+ {id:'world',q:'איזה עולם מושך אותך?',opts:[['fantasy','פנטזיה וקסם'],['scifi','עתידני וחלל'],['real','מציאותי'],['cozy','צבעוני וקליל']]},
+ {id:'diff',q:'כמה אתגר בא לך?',opts:[['easy','קליל, בלי לעצבן'],['mid','בינוני'],['hard','קשה, שיהיה מה לנצח']]},
+ {id:'story',q:'סיפור או משחקיות?',opts:[['story','סיפור שסוחף'],['gameplay','רק לשחק, בלי דיבורים'],['both','לא משנה לי']]},
+ {id:'len',q:'משחק לסיים או להתמכר?',opts:[['quick','לסיים ולהמשיך הלאה'],['endless','משהו שיחזיק אותי חודשים']]},
+ {id:'pc',pk:'pc',q:'איזה מחשב יש לך?',sub:'נשמר בפרופיל ולא נשאל שוב.',opts:[['strong','חזק, מריץ הכול'],['basic','בסיסי או לפטופ רגיל'],['mobile','בעיקר טלפון']]},
+ {id:'budget',pk:'budget',q:'מה התקציב?',sub:'נשמר בפרופיל ולא נשאל שוב.',opts:[['free','רק משחקים חינמיים'],['cheap','עד 50 ש״ח'],['any','גם מלא, אם זה שווה']]},
+ {id:'platforms',pk:'platforms',multi:true,q:'איפה אתה משחק?',sub:'אפשר לבחור כמה. נשמר בפרופיל.',opts:[['steam','Steam'],['epic','Epic Games'],['console','קונסולה'],['mobile','טלפון']]}
+];
+var LBL={};
+Q.forEach(function(q){ q.opts.forEach(function(o){ LBL[q.id+':'+o[0]]=o[1]; }); });
+
+function recommend(a){
+  var liked={},disliked={};
+  Object.keys(S.played).forEach(function(id){
+    if(S.played[id]==='like'&&BY[id]) BY[id].mood.forEach(function(m){ liked[m]=(liked[m]||0)+1; });
+    if(S.played[id]==='dislike') disliked[id]=1;
+  });
+  var out=[];
+  GAMES.forEach(function(g){
+    if(disliked[g.id]) return;
+    var s=0;
+    if(g.mood.indexOf(a.mood)>-1) s+=6;
+    if(g.time.indexOf(a.time)>-1) s+=3;
+    if(g.players.indexOf(a.players)>-1) s+=4;
+    if(g.world===a.world) s+=3;
+    if(g.diff===a.diff) s+=2;
+    if(a.story==='both'||g.story===a.story||g.story==='both') s+=2;
+    if(g.len===a.len) s+=2;
+    if(a.pc==='basic'&&g.specs==='strong') s-=12;
+    if(a.pc==='mobile'&&g.plat.indexOf('mobile')<0) s-=25;
+    if(a.budget==='free'&&g.price!=='free') s-=25;
+    if(a.budget==='cheap'&&g.price==='paid') s-=8;
+    var pl=a.platforms||[];
+    if(pl.length){ s += pl.some(function(p){ return g.plat.indexOf(p)>-1; }) ? 3 : -9; }
+    g.mood.forEach(function(m){ if(liked[m]) s+=Math.min(liked[m],3); });
+    if(s>0) out.push({g:g,s:s});
+  });
+  out.sort(function(x,y){ return y.s-x.s; });
+  var top=out.slice(0,5), best=top.length?top[0].s:1;
+  return top.map(function(r){ return {id:r.g.id, pct:Math.max(52,Math.min(98,Math.round(r.s/Math.max(best,1)*94)))}; });
+}
+
+var dview=document.getElementById('dview'), toastEl=document.getElementById('toast'), tShow;
+function toast(t){ toastEl.textContent=t; toastEl.classList.add('on'); clearTimeout(tShow); tShow=setTimeout(function(){ toastEl.classList.remove('on'); },2100); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function priceTag(p){ return p==='free'?'<span class="gtag gtag--free">חינם</span>':(p==='cheap'?'<span class="gtag">מחיר נמוך</span>':'<span class="gtag">בתשלום</span>'); }
+function platNames(g){ var m={steam:'Steam',epic:'Epic',console:'קונסולה',mobile:'טלפון'}; return g.plat.map(function(p){ return m[p]; }).join(' · '); }
+function fmtDate(ts){ var d=new Date(ts); return d.toLocaleDateString('he-IL')+' · '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); }
+
+function storeUrl(g){
+  var q=encodeURIComponent(g.n);
+  if(g.plat.indexOf('steam')>-1) return 'https://store.steampowered.com/search/?term='+q;
+  if(g.plat.indexOf('epic')>-1) return 'https://store.epicgames.com/en-US/browse?q='+q;
+  if(g.plat.indexOf('mobile')>-1) return 'https://play.google.com/store/search?q='+q+'&c=apps';
+  return 'https://www.google.com/search?q='+q;
+}
+function storeLabel(g){
+  if(g.price==='free') return 'כניסה למשחק';
+  if(g.plat.indexOf('steam')>-1) return 'לרכישה ב-Steam';
+  if(g.plat.indexOf('epic')>-1) return 'לרכישה ב-Epic';
+  if(g.plat.indexOf('mobile')>-1) return 'להורדה בחנות האפליקציות';
+  return 'איפה קונים';
+}
+function gameCard(id,pct){
+  var g=BY[id]; if(!g) return '';
+  var saved=S.saved.indexOf(id)>-1, r=S.played[id];
+  return '<div class="game">'+
+    (pct?'<div class="match"><b>'+pct+'%</b><small>התאמה</small></div>':'')+
+    '<div class="game-body"><h4>'+esc(g.n)+'</h4><p class="why">'+esc(g.why)+'</p>'+
+    '<div class="gtags">'+priceTag(g.price)+'<span class="gtag">'+platNames(g)+'</span>'+
+      (g.specs==='basic'?'<span class="gtag gtag--free">רץ על מחשב בסיסי</span>':'<span class="gtag">דורש מחשב חזק</span>')+'</div>'+
+    '<div class="acts">'+
+      '<a class="mini on" href="'+storeUrl(g)+'" target="_blank" rel="noopener noreferrer">'+esc(storeLabel(g))+
+        ' <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a>'+
+      '<button class="mini '+(saved?'on':'')+'" data-act="save" data-id="'+id+'">'+(saved?'✓ שמור ברשימה':'שמור למאוחר יותר')+'</button>'+
+      '<button class="mini '+(r==='like'?'on':'')+'" data-act="like" data-id="'+id+'">👍 שיחקתי ואהבתי</button>'+
+      '<button class="mini '+(r==='dislike'?'on--red on':'')+'" data-act="dislike" data-id="'+id+'">👎 לא בשבילי</button>'+
+    '</div></div></div>';
+}
+
+var quiz=null;
+function activeQuestions(){
+  return Q.filter(function(q){
+    if(!q.pk) return true;
+    var v=S.profile[q.pk];
+    return q.multi ? !(v&&v.length) : !v;
+  });
+}
+function startQuiz(){ quiz={list:activeQuestions(),i:0,ans:{},multi:[]}; renderDash(); }
+function answer(val){
+  var q=quiz.list[quiz.i];
+  if(q.multi){
+    var k=quiz.multi.indexOf(val);
+    if(k>-1) quiz.multi.splice(k,1); else quiz.multi.push(val);
+    renderDash(); return;
+  }
+  quiz.ans[q.id]=val;
+  if(q.pk){ S.profile[q.pk]=val; saveState(); }
+  nextQ();
+}
+function nextQ(){
+  var q=quiz.list[quiz.i];
+  if(q.multi){ quiz.ans[q.id]=quiz.multi.slice(); if(q.pk){ S.profile[q.pk]=quiz.multi.slice(); saveState(); } quiz.multi=[]; }
+  if(quiz.i < quiz.list.length-1){ quiz.i++; renderDash(); } else finishQuiz();
+}
+function backQ(){ if(quiz.i>0){ quiz.i--; quiz.multi=[]; renderDash(); } }
+function finishQuiz(){
+  var a={};
+  Q.forEach(function(q){ a[q.id] = (q.id in quiz.ans) ? quiz.ans[q.id] : (q.pk ? S.profile[q.pk] : null); });
+  a.platforms = S.profile.platforms || [];
+  var res=recommend(a);
+  S.history.unshift({t:Date.now(),a:a,res:res});
+  S.history=S.history.slice(0,40);
+  saveState();
+  quiz={done:true,res:res,a:a};
+  renderDash();
+}
+
+var view='quiz';
+
+function vQuiz(){
+  if(!quiz){
+    var known=[];
+    if(S.profile.pc) known.push('מחשב: '+LBL['pc:'+S.profile.pc]);
+    if(S.profile.budget) known.push('תקציב: '+LBL['budget:'+S.profile.budget]);
+    if(S.profile.platforms.length) known.push('פלטפורמות: '+S.profile.platforms.map(function(p){ return LBL['platforms:'+p]; }).join(', '));
+    var n=activeQuestions().length;
+    return '<div class="dcard"><span class="eyebrow">מצפן בזמן אמת</span>'+
+      '<h2 style="font-size:clamp(26px,3.6vw,38px)">איפה המצפן מכוון הערב?</h2>'+
+      '<p class="muted" style="margin-top:12px;max-width:52ch">'+n+' שאלות קצרות על מצב הרוח, הזמן והסגנון שבא לכם עכשיו. בסוף מקבלים חמש המלצות מדורגות, מיד.</p>'+
+      (known.length?'<p class="tiny" style="margin-top:14px">✓ המערכת כבר יודעת: '+esc(known.join(' · '))+' — לכן השאלון קוצר ל־'+n+' שאלות.</p>':
+        '<p class="tiny" style="margin-top:14px">טיפ: מילוי פרופיל השחקן יקצר את השאלון ל־7 שאלות בפעם הבאה.</p>')+
+      '<div style="margin-top:26px"><button class="btn btn--primary" data-act="start">התחלת השאלון</button></div></div>';
+  }
+  if(quiz.done){
+    var list=quiz.res.map(function(r){ return gameCard(r.id,r.pct); }).join('');
+    return '<div class="dcard"><span class="eyebrow">התוצאות שלך</span>'+
+      '<h2 style="font-size:clamp(24px,3.4vw,34px)">'+(quiz.res.length?'זה מה שמתאים לכם עכשיו':'לא נמצאה התאמה')+'</h2>'+
+      (quiz.res.length?'<p class="muted" style="margin-top:10px">מדורג לפי מידת ההתאמה לתשובות שלכם. התוצאות נשמרו ב"המצפן שלי".</p>'+
+        '<div style="margin-top:18px">'+list+'</div>':
+        '<p class="muted" style="margin-top:10px">הצירוף שבחרתם מצומצם מדי — נסו לפתוח את התקציב או להוסיף פלטפורמה בפרופיל השחקן.</p>')+
+      '<div class="qfoot"><button class="btn btn--primary" data-act="start">שאלון חדש</button>'+
+      '<button class="btn btn--ghost" data-act="go" data-view="games">למשחקים שלי</button></div></div>';
+  }
+  var q=quiz.list[quiz.i], pct=Math.round(quiz.i/quiz.list.length*100);
+  var opts=q.opts.map(function(o){
+    var on = q.multi ? quiz.multi.indexOf(o[0])>-1 : quiz.ans[q.id]===o[0];
+    return '<button class="opt" aria-pressed="'+(on?'true':'false')+'" data-act="ans" data-val="'+o[0]+'">'+
+      (q.multi?'<span class="bx">✓</span>':'')+esc(o[1])+'</button>';
+  }).join('');
+  return '<div class="dcard"><div class="progress"><i style="width:'+pct+'%"></i></div>'+
+    '<div class="qhead"><span>שאלה '+(quiz.i+1)+' מתוך '+quiz.list.length+'</span><span>'+pct+'%</span></div>'+
+    '<h2 class="qtitle">'+esc(q.q)+'</h2>'+(q.sub?'<p class="tiny">'+esc(q.sub)+'</p>':'')+
+    '<div class="opts">'+opts+'</div>'+
+    '<div class="qfoot">'+
+      (q.multi?'<button class="btn btn--primary" data-act="next" '+(quiz.multi.length?'':'disabled')+'>המשך</button>':'')+
+      (quiz.i>0?'<button class="btn btn--ghost btn--sm" data-act="back">חזרה</button>':'')+
+      '<span class="tiny">התשובות נשמרות בדפדפן שלכם בלבד</span>'+
+    '</div></div>';
+}
+
+function vHistory(){
+  if(!S.history.length) return '<div class="dcard"><div class="empty">'+
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 8v4l3 2"/></svg>'+
+    '<h3>עוד לא מילאתם שאלון</h3><p>כל שאלון שתמלאו יישמר כאן עם התאריך, התשובות וההמלצות.</p>'+
+    '<button class="btn btn--primary" data-act="go" data-view="quiz">למילוי השאלון</button></div></div>';
+  var rows=S.history.map(function(h,idx){
+    var kv=Q.filter(function(q){ return !q.multi && h.a[q.id]; }).map(function(q){
+      return '<span>'+esc(q.q.replace('?',''))+': <b>'+esc(LBL[q.id+':'+h.a[q.id]]||h.a[q.id])+'</b></span>';
+    }).join('');
+    var games=h.res.map(function(r){ return gameCard(r.id,r.pct); }).join('');
+    return '<details class="hrow"'+(idx===0?' open':'')+'><summary>'+
+      '<span class="pill">'+esc(LBL['mood:'+h.a.mood]||'התאמה')+'</span>'+
+      esc(h.res.length?BY[h.res[0].id].n+' ועוד '+(h.res.length-1):'ללא תוצאות')+
+      '<span class="date">'+fmtDate(h.t)+'</span></summary>'+
+      '<div class="hbody"><div class="kv">'+kv+'</div><div>'+games+'</div></div></details>';
+  }).join('');
+  return '<div class="dcard"><span class="eyebrow">המצפן שלי</span><h2 style="font-size:clamp(24px,3.4vw,32px)">היסטוריית ההתאמות</h2>'+
+    '<p class="muted" style="margin-top:10px">'+S.history.length+' שאלונים שמורים. לחצו על שורה כדי לראות את התשובות וההמלצות, בלי למלא שוב.</p>'+rows+'</div>';
+}
+
+function vGames(){
+  var saved=S.saved.filter(function(id){ return BY[id]; });
+  var played=Object.keys(S.played).filter(function(id){ return BY[id]&&S.played[id]; });
+  var savedHtml = saved.length ? saved.map(function(id){ return gameCard(id,null); }).join('')
+    : '<div class="empty"><h3>הרשימה ריקה</h3><p>כל משחק שתשמרו מההמלצות יופיע כאן.</p><button class="btn btn--primary" data-act="go" data-view="quiz">למילוי השאלון</button></div>';
+  var playedHtml = played.length ? played.map(function(id){
+      return '<div style="display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)">'+
+        '<span style="font-size:19px">'+(S.played[id]==='like'?'👍':'👎')+'</span>'+
+        '<b>'+esc(BY[id].n)+'</b><span class="tiny" style="margin-inline-start:auto">'+(S.played[id]==='like'?'נשקלל בהמלצות הבאות':'לא יומלץ שוב')+'</span></div>';
+    }).join('')
+    : '<p class="muted">עוד לא דירגתם משחקים. סמנו "שיחקתי ואהבתי" ליד המלצה, וההמלצות הבאות יתכווננו לטעם שלכם.</p>';
+  return '<div class="grid2"><div class="dcard"><span class="eyebrow">המשחקים שלי</span>'+
+      '<h2 style="font-size:clamp(24px,3.4vw,32px)">שמורים למאוחר יותר</h2>'+
+      '<div style="margin-top:14px">'+savedHtml+'</div></div>'+
+    '<div class="dcard"><span class="eyebrow">דירוגים</span><h2 style="font-size:22px">מה כבר שיחקתם</h2>'+
+      '<div style="margin-top:12px">'+playedHtml+'</div></div></div>';
+}
+
+function vProfile(){
+  var p=S.profile;
+  function row(key,label,hint,opts,multi){
+    var cur=p[key];
+    var ch=opts.map(function(o){
+      var on = multi ? (cur||[]).indexOf(o[0])>-1 : cur===o[0];
+      return '<button class="choice" aria-pressed="'+(on?'true':'false')+'" data-act="pset" data-key="'+key+'" data-val="'+o[0]+'" data-multi="'+(multi?1:0)+'">'+esc(o[1])+'</button>';
+    }).join('');
+    return '<div class="field"><label>'+label+'</label><p class="hint">'+hint+'</p><div class="choices">'+ch+'</div></div>';
+  }
+  var saved=(p.pc?1:0)+(p.budget?1:0)+(p.platforms.length?1:0);
+  return '<div class="dcard"><span class="eyebrow">פרופיל השחקן</span>'+
+    '<h2 style="font-size:clamp(24px,3.4vw,32px)">הגדרות שנשמרות פעם אחת</h2>'+
+    '<p class="muted" style="margin-top:10px;max-width:56ch">כל מה שתגדירו כאן לא יישאל בשאלון. עם פרופיל מלא השאלון מתקצר מ־10 שאלות ל־7 ושואל רק על החוויה שאתם מחפשים.</p>'+
+    row('pc','סוג המחשב','משמש כדי לא להמליץ על משחק שלא ירוץ אצלכם.',Q[7].opts,false)+
+    row('budget','העדפת תקציב','אפשר להגביל להמלצות חינמיות בלבד.',Q[8].opts,false)+
+    row('platforms','פלטפורמות','בחרו כל מה שרלוונטי.',Q[9].opts,true)+
+    '<div class="savebar"><span class="tiny">'+saved+' מתוך 3 הגדרות מולאו · השאלון הבא: '+activeQuestions().length+' שאלות</span></div>'+
+    '<div style="margin-top:26px;border-top:1px solid var(--line);padding-top:20px">'+
+      '<button class="mini" data-act="reset">מחיקת כל הנתונים מהדפדפן</button>'+
+      '<p class="tiny" style="margin-top:8px">אין חשבון ואין שרת — הנתונים שמורים רק בדפדפן הזה, ומחיקה היא סופית.</p></div></div>';
+}
+
+function renderDash(){
+  dview.innerHTML = view==='quiz'?vQuiz() : view==='history'?vHistory() : view==='games'?vGames() : vProfile();
+  [].forEach.call(document.querySelectorAll('.tab'),function(t){ t.setAttribute('aria-selected', t.dataset.view===view?'true':'false'); });
+}
+
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-act], .tab');
+  if(!t) return;
+  if(t.classList.contains('tab')){ view=t.dataset.view; if(view!=='quiz'&&quiz&&quiz.done) quiz=null; renderDash(); return; }
+  var act=t.dataset.act;
+  if(act==='start'){ startQuiz(); }
+  else if(act==='ans'){ answer(t.dataset.val); }
+  else if(act==='next'){ nextQ(); }
+  else if(act==='back'){ backQ(); }
+  else if(act==='go'){ view=t.dataset.view; if(view==='quiz') quiz=null; renderDash(); }
+  else if(act==='save'){
+    var id=t.dataset.id, k=S.saved.indexOf(id);
+    if(k>-1){ S.saved.splice(k,1); toast('הוסר מהרשימה'); } else { S.saved.push(id); toast('נשמר ל"המשחקים שלי"'); }
+    saveState(); renderDash();
+  }
+  else if(act==='like'||act==='dislike'){
+    var gid=t.dataset.id;
+    S.played[gid] = S.played[gid]===act ? null : act;
+    saveState(); toast(S.played[gid]==='like'?'נשמר — נשקלל בהמלצות הבאות':S.played[gid]==='dislike'?'לא נמליץ על זה שוב':'הדירוג הוסר');
+    renderDash();
+  }
+  else if(act==='pset'){
+    var key=t.dataset.key, val=t.dataset.val;
+    if(t.dataset.multi==='1'){
+      var arr=S.profile.platforms, i=arr.indexOf(val);
+      if(i>-1) arr.splice(i,1); else arr.push(val);
+    } else {
+      S.profile[key] = S.profile[key]===val ? null : val;
+    }
+    saveState(); renderDash();
+  }
+  else if(act==='reset'){
+    if(confirm('למחוק את כל השאלונים, המשחקים השמורים והפרופיל מהדפדפן הזה?')){
+      mem={profile:{pc:null,budget:null,platforms:[]},history:[],saved:[],played:{}}; S=mem; saveState();
+      quiz=null; view='quiz'; renderDash(); toast('הנתונים נמחקו');
+    }
+  }
+});
+
+})();
+</script>
+</body>
+</html>
