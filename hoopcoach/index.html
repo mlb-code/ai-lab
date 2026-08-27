@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>HoopCoach — מאמן כדורסל אישי מבוסס AI</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Rubik+Mono+One&display=swap');
+
+:root{
+  --ink:#0A0A0A;
+  --ink-2:#161615;
+  --ink-3:#232320;
+  --line:rgba(255,255,255,.16);
+  --line-soft:rgba(255,255,255,.08);
+  --orange:#FF6B14;
+  --orange-deep:#C74B00;
+  --orange-light:#FFAE73;
+  --white:#FFFFFF;
+  --white-soft:#F2F1ED;
+  --dim-on-dark:#B9B7B1;
+  --dim-on-white:#57554E;
+  --radius-card:10px;
+  --radius-pill:999px;
+  --maxw:1180px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);
+  color:var(--white);
+  font-family:'Heebo',sans-serif;
+  font-weight:400;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+.num{font-family:'Rubik Mono One',monospace;font-weight:400;}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font-family:inherit;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:clamp(20px,5vw,48px);position:relative;z-index:1;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:700;letter-spacing:.4px;
+  color:var(--orange);
+  margin-bottom:14px;
+}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--orange);display:inline-block;}
+h1,h2,h3{font-weight:900;line-height:1.12;}
+h2{font-size:clamp(1.9rem,3.4vw + .6rem,2.9rem);margin-bottom:16px;}
+.section{padding-block:clamp(64px,10vw,120px);position:relative;}
+
+/* floating basketball background decor, used across sections */
+.bball-float{
+  position:absolute;z-index:0;pointer-events:none;
+  opacity:.5;
+  filter:drop-shadow(0 6px 16px rgba(255,107,20,.35));
+  animation:floatBall ease-in-out infinite;
+}
+.bball-float svg{display:block;width:100%;height:100%;}
+@keyframes floatBall{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-20px) rotate(10deg);}
+}
+@media (max-width:640px){.bball-float{opacity:.4;}}
+.lede{font-size:clamp(1.02rem,1vw + .8rem,1.2rem);color:var(--dim-on-dark);max-width:640px;}
+.section--white .lede{color:var(--dim-on-white);}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border-radius:var(--radius-pill);
+  font-weight:700;font-size:15.5px;
+  transition:transform .15s ease, box-shadow .15s ease;
+  white-space:nowrap;
+}
+.btn:active{transform:scale(.97);}
+.btn:focus-visible{outline:2px solid var(--orange);outline-offset:3px;}
+.btn-solid{background:linear-gradient(135deg,var(--orange),var(--orange-deep));color:#160900;position:relative;overflow:hidden;}
+.btn-solid::after{
+  content:"";position:absolute;inset-block:0;inset-inline-start:-60%;width:40%;
+  background:linear-gradient(115deg,transparent,rgba(255,255,255,.4),transparent);
+  transform:skewX(-20deg);transition:inset-inline-start .6s ease;
+}
+.btn-solid:hover::after{inset-inline-start:130%;}
+.btn-solid:hover{box-shadow:0 10px 28px -8px rgba(255,107,20,.55);}
+.btn-ghost{border:1.5px solid var(--line);color:var(--white);}
+.btn-ghost:hover{border-color:var(--orange);color:var(--orange-light);}
+.btn-ghost-onwhite{border:1.5px solid rgba(0,0,0,.18);color:var(--ink);}
+.btn-ghost-onwhite:hover{border-color:var(--orange);color:var(--orange-deep);}
+.btn-block{width:100%;}
+
+/* nav */
+.nav{
+  position:fixed;inset-inline:0;top:0;z-index:50;
+  background:rgba(10,10,10,.78);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-soft);
+  transition:background .25s ease, box-shadow .25s ease;
+}
+.nav.scrolled{background:rgba(10,10,10,.94);box-shadow:0 10px 26px -16px rgba(0,0,0,.7);}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;letter-spacing:.2px;}
+.logo .mark{width:30px;height:30px;flex:none;transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
+.logo:hover .mark{transform:rotate(-14deg) scale(1.1);}
+.nav-links{display:flex;align-items:center;gap:32px;font-size:14.5px;font-weight:500;color:var(--dim-on-dark);}
+.nav-links a:hover{color:var(--white);}
+.nav-links .bball-float{display:none;}
+.nav-cta-mobile{display:none;}
+.menu-close{display:none;}
+.nav-right{display:flex;align-items:center;gap:18px;}
+.nav-toggle{display:none;width:38px;height:38px;place-items:center;border-radius:8px;}
+.nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{
+  content:"";display:block;width:20px;height:2px;background:var(--white);position:relative;transition:.2s;
+}
+.nav-toggle span::before{position:absolute;top:-6px;}
+.nav-toggle span::after{position:absolute;top:6px;}
+
+/* hero */
+.hero{position:relative;padding-top:calc(72px + clamp(48px,9vw,96px));padding-bottom:clamp(56px,9vw,96px);overflow:hidden;}
+.hero-glow{
+  position:absolute;inset-inline-end:-10%;top:-10%;width:60%;aspect-ratio:1/1;
+  background:radial-gradient(circle,rgba(255,107,20,.28),transparent 65%);
+  pointer-events:none;z-index:0;
+}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;}
+.hero h1{font-size:clamp(2.5rem,4.4vw + 1rem,4.6rem);margin-bottom:20px;}
+.hero h1 .accent{color:var(--orange);}
+.hero .lede{margin-bottom:32px;}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:28px;}
+.hero-note{font-size:13.5px;color:var(--dim-on-dark);display:flex;align-items:center;gap:8px;}
+.hero-note .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);flex:none;animation:pulse 1.8s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.scroll-cue{grid-column:1 / -1;justify-self:center;display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:clamp(18px,4vw,40px);animation:bob 1.7s ease-in-out infinite;}
+.scroll-cue:hover{opacity:.8;}
+.scroll-cue span{font-size:11px;color:var(--dim-on-dark);}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(9px);}}
+
+.court-wrap{position:relative;}
+.court-svg{width:100%;height:auto;}
+.court-line{fill:none;stroke:rgba(255,255,255,.28);stroke-width:2.2;stroke-linecap:round;}
+.court-line-anim{stroke-dasharray:900;stroke-dashoffset:900;animation:draw 2.4s ease forwards .3s;}
+@keyframes draw{to{stroke-dashoffset:0;}}
+.shot-trail{fill:none;stroke:var(--orange);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:6 8;
+  stroke-dashoffset:400;animation:trail 1.6s ease forwards 1.1s;}
+@keyframes trail{to{stroke-dashoffset:0;}}
+.ball{opacity:0;animation:ballshow .1s forwards 1.1s;}
+@keyframes ballshow{to{opacity:1;}}
+.swish{opacity:0;transform-origin:center;animation:swish .6s ease forwards 2.6s;}
+@keyframes swish{0%{opacity:.9;transform:scale(.3);}100%{opacity:0;transform:scale(2.6);}}
+
+/* problem (light) section */
+.section--white{background:var(--white);color:var(--ink);}
+.chaos{position:relative;min-height:340px;display:flex;align-items:center;}
+.chaos-copy{position:relative;z-index:2;max-width:560px;}
+.chaos-copy h2{color:var(--ink);}
+.chip{
+  position:absolute;width:128px;height:78px;border-radius:8px;
+  background:linear-gradient(150deg,#DAD8D0,#B9B7AE);
+  border:1px solid rgba(0,0,0,.08);
+  display:flex;align-items:flex-end;justify-content:flex-start;padding:8px;
+  box-shadow:0 14px 28px -14px rgba(0,0,0,.25);
+}
+.chip span{font-family:'Rubik Mono One',monospace;font-size:10.5px;color:rgba(0,0,0,.4);}
+.chip::before{
+  content:"";position:absolute;inset:0;margin:auto;width:0;height:0;
+  border-inline-start:12px solid rgba(0,0,0,.28);border-block-start:8px solid transparent;border-block-end:8px solid transparent;
+}
+.chip1{inset-inline-end:2%;top:0;transform:rotate(-7deg);}
+.chip2{inset-inline-end:26%;top:52%;transform:rotate(5deg);}
+.chip3{inset-inline-end:2%;top:68%;transform:rotate(4deg);width:104px;height:64px;}
+.chip4{inset-inline-end:44%;top:6%;transform:rotate(-4deg);width:96px;height:60px;}
+@media (max-width:820px){.chip{display:none;}}
+
+.pain-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+.pain{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:var(--radius-pill);
+  background:var(--ink);color:var(--white);font-size:13.5px;font-weight:600;
+}
+.pain::before{content:"✕";color:var(--orange);font-weight:900;}
+
+/* solution divider */
+.divider{position:relative;height:64px;}
+.divider svg{width:100%;height:100%;}
+
+/* feature cards */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;align-items:stretch;}
+.features-grid .f-card:nth-child(1){transition-delay:0s;}
+.features-grid .f-card:nth-child(2){transition-delay:.1s;}
+.features-grid .f-card:nth-child(3){transition-delay:.2s;}
+@media (max-width:980px){
+  .features-grid{
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding-bottom:6px;
+  }
+  .features-grid::-webkit-scrollbar{display:none;}
+  .f-card{flex:0 0 82%;scroll-snap-align:start;}
+}
+@media (max-width:480px){
+  .f-card{flex-basis:88%;}
+}
+.swipe-hint{display:none;font-size:12.5px;color:var(--dim-on-dark);margin-top:10px;}
+@media (max-width:980px){.swipe-hint{display:block;}}
+.f-card{
+  background:var(--ink-2);border:1px solid var(--line-soft);border-radius:var(--radius-card);
+  padding:26px 24px 28px;display:flex;flex-direction:column;
+  container-type:inline-size;container-name:fcard;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.f-card:hover{transform:translateY(-6px);border-color:rgba(255,107,20,.4);box-shadow:0 18px 40px -20px rgba(255,107,20,.35);}
+.f-card:active{transform:translateY(-2px) scale(.99);}
+/* stacks the timer widget whenever ITS OWN column gets narrow — whether that's
+   from a small phone or from the 3-column grid squeezing it on mid-size screens */
+@container fcard (max-width:280px){
+  .timer-face{flex-direction:column;align-items:center;text-align:center;}
+  .timer-controls{width:100%;}
+}
+.f-icon{width:44px;height:44px;border-radius:10px;background:rgba(255,107,20,.14);display:grid;place-items:center;margin-bottom:18px;transition:transform .35s cubic-bezier(.34,1.56,.64,1), background .25s ease;}
+.f-card:hover .f-icon{transform:scale(1.12) rotate(-6deg);background:rgba(255,107,20,.22);}
+.f-card h3{font-size:1.2rem;margin-bottom:8px;}
+.f-card p{color:var(--dim-on-dark);font-size:14.5px;margin-bottom:20px;}
+.f-demo{margin-top:auto;background:var(--ink);border:1px solid var(--line-soft);border-radius:8px;padding:16px;}
+
+.chips-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+.chip-btn{
+  padding:7px 13px;border-radius:var(--radius-pill);font-size:12.5px;font-weight:600;
+  border:1px solid var(--line);color:var(--dim-on-dark);
+}
+.chip-btn.active{background:var(--orange);border-color:var(--orange);color:#160900;}
+.gen-btn{width:100%;margin-top:6px;padding:11px;border-radius:8px;background:var(--white);color:var(--ink);font-weight:700;font-size:13.5px;}
+.gen-btn:active{transform:scale(.98);}
+.gen-result{margin-top:12px;font-size:13px;}
+.gen-result li{list-style:none;display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--line-soft);opacity:0;animation:rise .35s ease forwards;}
+@keyframes rise{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.gen-result span:last-child{color:var(--orange-light);font-family:'Rubik Mono One',monospace;font-size:11px;white-space:nowrap;}
+.gen-status{font-size:12.5px;color:var(--dim-on-dark);min-height:16px;transition:color .3s ease;}
+.gen-status.ready{color:var(--orange-light);}
+
+.timer-face{display:flex;align-items:center;gap:16px;}
+.timer-ring{position:relative;width:84px;height:84px;flex:none;}
+.timer-ring svg{transform:rotate(-90deg);}
+#timerArc.running{animation:ringGlow 1s ease-in-out infinite;}
+@keyframes ringGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(255,107,20,0));}50%{filter:drop-shadow(0 0 5px rgba(255,107,20,.85));}}
+.timer-ring text{font-family:'Rubik Mono One',monospace;transform:rotate(90deg);transform-origin:center;transform-box:fill-box;}
+.timer-controls{display:flex;flex-direction:column;gap:8px;flex:1;}
+.timer-presets{display:flex;gap:6px;}
+.timer-btns{display:flex;gap:6px;}
+.mini-btn{flex:1;padding:8px 4px;border-radius:6px;border:1px solid var(--line);font-size:12px;font-weight:600;text-align:center;}
+.mini-btn.active{background:var(--orange);border-color:var(--orange);color:#160900;}
+
+.calc-row{display:flex;gap:10px;margin-bottom:14px;}
+.calc-field{flex:1;}
+.calc-field label{display:block;font-size:11.5px;color:var(--dim-on-dark);margin-bottom:6px;}
+.calc-field input{
+  width:100%;background:var(--ink-2);border:1px solid var(--line);border-radius:6px;
+  padding:9px 10px;color:var(--white);font-size:14px;
+}
+.calc-field input:focus{outline:none;border-color:var(--orange);}
+.calc-pct{display:flex;align-items:baseline;gap:6px;margin-bottom:8px;}
+.calc-pct .num{font-size:clamp(1.5rem,7vw,2.1rem);color:var(--orange);}
+.calc-bar{height:8px;border-radius:99px;background:var(--ink-3);overflow:hidden;}
+.calc-bar-fill{height:100%;background:linear-gradient(90deg,var(--orange-deep),var(--orange));width:0%;transition:width .35s ease;}
+
+/* progress/chart section */
+.chart-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:36px;}
+@media (max-width:860px){.chart-wrap{grid-template-columns:1fr;}}
+.chart-card{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:var(--radius-card);padding:26px;transition:transform .25s ease, box-shadow .25s ease;}
+.chart-card:hover{transform:translateY(-4px);box-shadow:0 16px 34px -18px rgba(0,0,0,.55);}
+.chart-caption{font-size:12px;color:var(--dim-on-dark);margin-top:12px;text-align:center;}
+.chart-line{stroke-dasharray:520;stroke-dashoffset:520;}
+.reveal.in-view .chart-line{animation:chartDraw 1.3s ease forwards .1s;}
+@keyframes chartDraw{to{stroke-dashoffset:0;}}
+.chart-dot{opacity:0;transform:scale(.3);transform-origin:center;transform-box:fill-box;}
+.reveal.in-view .chart-dot{animation:dotPop .4s ease forwards;}
+@keyframes dotPop{to{opacity:1;transform:scale(1);}}
+.progress-points{display:flex;flex-direction:column;gap:14px;}
+.pp{display:flex;align-items:center;gap:14px;}
+.pp-dot{width:10px;height:10px;border-radius:50%;background:var(--orange);flex:none;}
+.pp-line{flex:1;height:1px;background:var(--line-soft);}
+.pp-txt{font-size:14px;color:var(--dim-on-dark);}
+.pp-txt b{color:var(--white);}
+
+/* pricing */
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:44px;}
+.price-grid .price-card:nth-child(1){transition-delay:0s;}
+.price-grid .price-card:nth-child(2){transition-delay:.12s;}
+@media (max-width:820px){.price-grid{grid-template-columns:1fr;}}
+.price-card{border-radius:14px;padding:30px 28px;border:1px solid var(--line-soft);background:var(--ink-2);transition:transform .25s ease, box-shadow .25s ease;}
+.price-card:hover{transform:translateY(-6px);}
+.price-card:not(.hi):hover{box-shadow:0 18px 40px -20px rgba(0,0,0,.5);}
+.price-card.hi{border:1.5px solid var(--orange);background:linear-gradient(165deg,rgba(255,107,20,.10),var(--ink-2) 55%);position:relative;animation:priceGlow 3s ease-in-out infinite;}
+.price-card.hi:hover{animation-play-state:paused;box-shadow:0 20px 46px -18px rgba(255,107,20,.5);}
+@keyframes priceGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,107,20,0);}50%{box-shadow:0 0 32px 4px rgba(255,107,20,.18);}}
+.price-tag{display:inline-block;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:99px;background:var(--orange);color:#160900;margin-bottom:16px;}
+.price-card h3{font-size:1.3rem;margin-bottom:6px;}
+.price-amt{display:flex;align-items:baseline;gap:6px;margin:14px 0 22px;flex-wrap:wrap;}
+.price-amt .num{font-size:clamp(1.8rem,6vw,2.6rem);}
+.price-amt .per{color:var(--dim-on-dark);font-size:13.5px;}
+.price-feats{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:26px;}
+.price-feats li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--dim-on-dark);}
+.price-feats li::before{content:"✓";color:var(--orange);font-weight:900;flex:none;}
+
+/* final cta */
+.final-cta{text-align:center;position:relative;}
+.final-cta h2{max-width:720px;margin-inline:auto;}
+.final-cta .lede{margin-inline:auto;}
+.final-cta-btns{display:flex;justify-content:center;gap:14px;margin-top:30px;flex-wrap:wrap;}
+
+/* footer */
+footer{border-top:1px solid var(--line-soft);padding-block:56px 28px;position:relative;}
+.foot-top{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;padding-bottom:32px;border-bottom:1px solid var(--line-soft);}
+.foot-brand p{color:var(--dim-on-dark);font-size:13.5px;line-height:1.6;margin:14px 0 18px;max-width:260px;}
+.foot-social{display:flex;gap:16px;font-size:13px;color:var(--dim-on-dark);}
+.foot-social a:hover{color:var(--orange-light);}
+.foot-col h4{font-size:12.5px;font-weight:700;color:var(--white);letter-spacing:.3px;margin-bottom:14px;}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.foot-col a{font-size:13.5px;color:var(--dim-on-dark);}
+.foot-col a:hover{color:var(--orange-light);}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:22px;}
+.foot-copy{font-size:12.5px;color:#6b6a65;}
+.foot-email:hover{color:var(--orange-light);}
+@media (max-width:820px){
+  .foot-top{grid-template-columns:1fr 1fr;row-gap:32px;}
+  .foot-brand{grid-column:1 / -1;}
+}
+@media (max-width:560px){
+  .foot-top{grid-template-columns:1fr;text-align:center;}
+  .foot-brand p{margin-inline:auto;}
+  .foot-social{justify-content:center;}
+  .foot-bottom{flex-direction:column;text-align:center;}
+}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+.reveal.in-view{opacity:1;transform:translateY(0);}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001s !important;animation-delay:0s !important;transition-duration:.001s !important;}
+  html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;}
+}
+
+@media (max-width:900px){
+  .nav-links{display:none;}
+  .nav-toggle{display:grid;}
+  .hero-grid{grid-template-columns:1fr;}
+  .court-wrap{order:-1;max-width:420px;margin-inline:auto;}
+  .nav-right{order:-1;}
+  .logo{order:1;}
+  .nav-cta-desktop{display:none;}
+  .nav-cta-mobile{display:inline-flex;width:100%;margin-top:12px;padding-top:20px;border-top:1px solid var(--line-soft);}
+  .nav-links.open{
+    display:flex;flex-direction:column;
+    position:fixed;inset:0;
+    z-index:60;
+    background:var(--ink);
+    padding:calc(72px + 28px) 24px 28px;
+    gap:4px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    justify-content:flex-start;
+    width:100%;max-width:100vw;
+    box-sizing:border-box;
+  }
+  .nav-links.open > *{max-width:100%;box-sizing:border-box;}
+  .nav-links.open .nav-cta-mobile{width:100%;justify-content:center;}
+  .nav-links.open .bball-float{max-width:40vw;pointer-events:none;}
+  .nav-links.open a:not(.nav-cta-mobile){
+    font-size:21px;font-weight:700;color:var(--white);
+    padding-block:16px;border-bottom:1px solid var(--line-soft);
+  }
+  .nav-links.open .menu-close{
+    display:flex;align-items:center;justify-content:center;
+    position:absolute;top:18px;right:18px;
+    width:42px;height:42px;border-radius:8px;
+    background:var(--ink-2);border:1px solid var(--line-soft);
+    z-index:1;
+  }
+  .nav-links.open .menu-close:hover{border-color:var(--orange);}
+  .nav-links.open .bball-float{display:block;}
+  .nav-links.open a{position:relative;z-index:1;}
+  .nav-toggle.open span{background:transparent;}
+  .nav-toggle.open span::before{transform:translateY(6px) rotate(45deg);}
+  .nav-toggle.open span::after{transform:translateY(-6px) rotate(-45deg);}
+}
+body.menu-open .nav{background:var(--ink);backdrop-filter:none;}
+
+@media (max-width:820px){
+  .chaos{min-height:auto;padding-block:28px;}
+}
+
+@media (max-width:480px){
+  .wrap{padding-inline:16px;}
+  .nav-right{gap:10px;}
+  .nav-right .btn{padding:8px 14px;font-size:12.5px;}
+  .logo{font-size:16px;}
+  .logo .mark{width:24px;height:24px;}
+  .hero h1{font-size:clamp(2rem,10vw,2.6rem);}
+  .hero-ctas{flex-direction:column;align-items:stretch;}
+  .hero-ctas .btn{width:100%;}
+  .timer-face{flex-direction:column;align-items:center;text-align:center;}
+  .timer-controls{width:100%;}
+  .calc-row{flex-direction:column;}
+  .price-card{padding:24px 18px;}
+  .f-card{padding:22px 18px 24px;}
+}
+
+@media (max-width:360px){
+  .chip-btn{font-size:11.5px;padding:6px 11px;}
+  .price-amt .num{font-size:1.6rem;}
+}
+
+/* ── responsive safety net (added by AI Lab: fixes only, no layout/position changes) ── */
+html,body{max-width:100%;overflow-x:hidden;}
+img,svg,video,canvas{max-width:100%;height:auto;}
+@media (max-width:900px){
+  /* decorative floating balls must never widen the page */
+  .bball-float{max-width:38vw;max-height:38vw;pointer-events:none;}
+}
+@media (max-width:640px){
+  /* keep wide content inside the viewport instead of pushing the page sideways */
+  table,pre,.chart-wrap{max-width:100%;overflow-x:auto;}
+  .btn{max-width:100%;}
+  .wrap{box-sizing:border-box;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <svg class="mark" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#FF6B14" stroke-width="2"/><path d="M2 16h28M16 2v28M6 6c4 4 4 16 0 20M26 6c-4 4-4 16 0 20" stroke="#FF6B14" stroke-width="1.4"/></svg>
+      HoopCoach
+    </a>
+    <div class="nav-links">
+      <div class="bball-float" style="width:110px;height:110px;top:16%;left:-6%;animation-duration:8.5s;animation-delay:.2s;">
+        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+      </div>
+      <div class="bball-float" style="width:80px;height:80px;bottom:14%;right:-4%;animation-duration:9.5s;animation-delay:1s;">
+        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+      </div>
+      <button class="menu-close" id="menuClose" aria-label="סגור תפריט" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+      <a href="#problem">הבעיה</a>
+      <a href="#features">פיצ'רים</a>
+      <a href="#pricing">מחירים</a>
+      <a href="#features" class="btn btn-solid nav-cta-mobile">התחברות לדשבורד</a>
+    </div>
+    <div class="nav-right">
+      <a href="#features" class="btn btn-solid nav-cta-desktop" style="padding:10px 22px;font-size:14px;">התחברות לדשבורד</a>
+      <button class="nav-toggle" id="navToggle" aria-label="תפריט" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">מאמן כדורסל אישי מבוסס AI</div>
+      <h1>תפסיק לגלול.<br>תתחיל <span class="accent">לזרוק.</span></h1>
+      <p class="lede">האימון האישי שלך מותאם לגיל, לרמה וליעד שאתה רוצה לשפר — מוכן תוך כמה שניות. בלי חיפושים אינסופיים, בלי מאמן צמוד יקר, ישר למגרש השכונתי.</p>
+      <div class="hero-ctas">
+        <a href="#features" class="btn btn-solid">התחברות לדשבורד</a>
+        <a href="#solution" class="btn btn-ghost">ככה זה עובד</a>
+      </div>
+      <div class="hero-note"><span class="dot"></span> בלי שם משתמש, בלי סיסמה — כניסה ישירה לדשבורד</div>
+    </div>
+    <div class="court-wrap">
+      <svg class="court-svg" viewBox="0 0 500 500" role="img" aria-label="שרטוט חצי מגרש כדורסל עם קו זריקה מצויר">
+        <line x1="20" y1="30" x2="480" y2="30" class="court-line court-line-anim"/>
+        <rect x="185" y="300" width="130" height="160" class="court-line court-line-anim"/>
+        <path d="M190,300 A60,60 0 0 1 310,300" class="court-line court-line-anim" stroke-dasharray="4 7"/>
+        <path d="M190,300 A60,60 0 0 0 310,300" class="court-line court-line-anim"/>
+        <path d="M30,460 L30,395 A220,220 0 0 1 470,395 L470,460" class="court-line court-line-anim"/>
+        <rect x="222" y="432" width="56" height="7" class="court-line court-line-anim"/>
+        <circle cx="250" cy="452" r="10" class="court-line court-line-anim"/>
+        <path d="M95,215 Q250,55 250,452" class="shot-trail"/>
+        <circle class="ball" cx="95" cy="215" r="7" fill="#FF6B14">
+          <animateMotion dur="1.5s" begin="1.1s" fill="freeze" path="M95,215 Q250,55 250,452"/>
+        </circle>
+        <circle class="swish" cx="250" cy="452" r="14" fill="none" stroke="#FF6B14" stroke-width="2"/>
+      </svg>
+    </div>
+    <a href="#problem" class="scroll-cue" aria-label="גלול למטה לגלות עוד">
+      <svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#FF6B14"/><path d="M2 12h20M12 2v20M5 5c3 3 3 11 0 14M19 5c-3 3-3 11 0 14" stroke="#160900" stroke-width="1.1" fill="none"/></svg>
+      <span>גלול למטה</span>
+    </a>
+  </div>
+</section>
+
+<section class="section section--white" id="problem">
+  <div class="bball-float" style="width:80px;height:80px;top:8%;left:5%;animation-duration:8s;animation-delay:0s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="bball-float" style="width:44px;height:44px;bottom:10%;left:16%;animation-duration:6.5s;animation-delay:1.2s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="wrap chaos">
+    <div class="chaos-copy reveal">
+      <div class="eyebrow">המצב היום</div>
+      <h2>אלפי סרטונים. אף תוכנית אחת שמתאימה לך.</h2>
+      <p class="lede">אתה מחפש מה להתאמן היום — ומקבל אלפי סרטוני מאמנים וכוכבים שלא מותאמים לגיל, לרמה או לזמן שיש לך. התוכן אקראי, הגלילה אינסופית, ובזמן הזה יכולת כבר להיות במגרש.</p>
+      <div class="pain-list">
+        <span class="pain">לא יודע מה להתאמן היום</span>
+        <span class="pain">מבזבז זמן בחיפושים</span>
+        <span class="pain">אין מאמן צמוד — ותשלום עליו יקר</span>
+      </div>
+    </div>
+    <div class="chip chip1"><span>00:47</span></div>
+    <div class="chip chip2"><span>00:12</span></div>
+    <div class="chip chip3"><span>01:03</span></div>
+    <div class="chip chip4"><span>00:29</span></div>
+  </div>
+</section>
+
+<div class="divider">
+  <svg viewBox="0 0 1200 64" preserveAspectRatio="none"><path d="M0,32 Q300,-10 600,32 T1200,32" fill="none" stroke="#232320" stroke-width="1"/></svg>
+</div>
+
+<section class="section" id="solution">
+  <div class="bball-float" style="width:110px;height:110px;top:0;left:-3%;animation-duration:9s;animation-delay:.4s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="wrap reveal">
+    <div class="eyebrow">הפתרון</div>
+    <h2 style="max-width:640px;">מאמן ה-AI שלך, תמיד במגרש איתך</h2>
+    <p class="lede">HoopCoach בונה עבורך תוכנית אימון אישית תוך שניות — לפי הגיל, הרמה והיכולת שאתה רוצה לשפר, כמו זריקות או שליטה בכדור. בינה מלאכותית שמחליפה את החיפוש הארוך בהתאמה מיידית, בלי הרשמה מסובכת.</p>
+  </div>
+</section>
+
+<section class="section" id="features" style="padding-top:0;">
+  <div class="bball-float" style="width:130px;height:130px;top:6%;left:-4%;animation-duration:10s;animation-delay:0s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="bball-float" style="width:70px;height:70px;bottom:4%;right:2%;animation-duration:7.5s;animation-delay:1.4s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">בדשבורד שלך</div>
+      <h2>שלושה כלים, ישר מהמגרש</h2>
+      <p class="lede">נסה עכשיו איך זה עובד — כל התצוגות למטה חיות.</p>
+      <p class="swipe-hint">← החלק כדי לראות את כל הכלים</p>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="f-card reveal">
+        <div class="f-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#FF6B14" stroke-width="1.6"/><circle cx="12" cy="12" r="4.5" stroke="#FF6B14" stroke-width="1.6"/><circle cx="12" cy="12" r="1" fill="#FF6B14"/></svg></div>
+        <h3>מחולל אימונים חכם</h3>
+        <p>בחר מה לשפר והזמן שיש לך — וה-AI בונה לך תוכנית מדויקת בלחיצה אחת.</p>
+        <div class="f-demo">
+          <div class="chips-row" id="topicChips">
+            <button class="chip-btn active" data-topic="shots">זריקות</button>
+            <button class="chip-btn" data-topic="handle">שליטה בכדור</button>
+            <button class="chip-btn" data-topic="fitness">כושר</button>
+          </div>
+          <div class="chips-row" id="timeChips">
+            <button class="chip-btn active" data-time="15">15 דק׳</button>
+            <button class="chip-btn" data-time="30">30 דק׳</button>
+          </div>
+          <button class="gen-btn" id="genBtn">צור אימון</button>
+          <div class="gen-status" id="genStatus"></div>
+          <ul class="gen-result" id="genResult"></ul>
+        </div>
+      </div>
+
+      <div class="f-card reveal">
+        <div class="f-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="#FF6B14" stroke-width="1.6"/><path d="M12 9v4l3 2" stroke="#FF6B14" stroke-width="1.6" stroke-linecap="round"/><path d="M9 2h6M12 5V2" stroke="#FF6B14" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <h3>טיימר אימון למגרש</h3>
+        <p>טיימר וסטופר מובנים שעוזרים לשמור על הקצב, בלי לצאת מהמגרש.</p>
+        <div class="f-demo">
+          <div class="timer-face">
+            <div class="timer-ring">
+              <svg width="84" height="84" viewBox="0 0 84 84">
+                <circle cx="42" cy="42" r="36" fill="none" stroke="#232320" stroke-width="6"/>
+                <circle id="timerArc" cx="42" cy="42" r="36" fill="none" stroke="#FF6B14" stroke-width="6" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="0"/>
+              </svg>
+              <text id="timerText" x="42" y="46" text-anchor="middle" font-size="13" fill="#fff"></text>
+            </div>
+            <div class="timer-controls">
+              <div class="timer-presets">
+                <button class="mini-btn active" data-sec="60">1:00</button>
+                <button class="mini-btn" data-sec="120">2:00</button>
+                <button class="mini-btn" data-sec="300">5:00</button>
+              </div>
+              <div class="timer-btns">
+                <button class="mini-btn" id="tStart">התחל</button>
+                <button class="mini-btn" id="tReset">איפוס</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="f-card reveal" id="calcCard">
+        <div class="f-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M12 20V4M20 20v-7" stroke="#FF6B14" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>יומן קליעה וסטטיסטיקה</h3>
+        <p>תעד כמה קלעת מתוך כמה ניסית, ותראה את אחוז הקליעה שלך בזמן אמת.</p>
+        <div class="f-demo">
+          <div class="calc-row">
+            <div class="calc-field"><label>קלעת</label><input type="number" id="madeInput" value="35" min="0"></div>
+            <div class="calc-field"><label>ניסית</label><input type="number" id="attInput" value="50" min="0"></div>
+          </div>
+          <div class="calc-pct"><span class="num" id="pctOut">0</span><span>% קליעה</span></div>
+          <div class="calc-bar"><div class="calc-bar-fill" id="pctBar"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="progress">
+  <div class="bball-float" style="width:90px;height:90px;top:4%;right:-2%;animation-duration:8.5s;animation-delay:.7s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">התוצאות</div>
+      <h2 style="max-width:640px;">כך תיראה ההתקדמות שלך</h2>
+      <p class="lede">היומן והסטטיסטיקות בדשבורד עוקבים אחרי אחוז הקליעה שלך משבוע לשבוע — כך שאתה רואה בדיוק לאן זה הולך.</p>
+    </div>
+    <div class="chart-wrap reveal">
+      <div class="chart-card">
+        <svg viewBox="0 0 340 160" width="100%" height="auto">
+          <line x1="0" y1="140" x2="340" y2="140" stroke="#232320" stroke-width="1"/>
+          <polyline class="chart-line" points="10,120 90,105 170,80 250,55 330,30" fill="none" stroke="#FF6B14" stroke-width="2.5" stroke-linecap="round"/>
+          <circle class="chart-dot" cx="10" cy="120" r="4" fill="#FF6B14" style="animation-delay:.7s"/>
+          <circle class="chart-dot" cx="90" cy="105" r="4" fill="#FF6B14" style="animation-delay:.9s"/>
+          <circle class="chart-dot" cx="170" cy="80" r="4" fill="#FF6B14" style="animation-delay:1.1s"/>
+          <circle class="chart-dot" cx="250" cy="55" r="4" fill="#FF6B14" style="animation-delay:1.3s"/>
+          <circle class="chart-dot" cx="330" cy="30" r="4" fill="#FF6B14" style="animation-delay:1.5s"/>
+          <text x="10" y="155" font-size="10" fill="#B9B7B1">שבוע 1</text>
+          <text x="300" y="155" font-size="10" fill="#B9B7B1">שבוע 5</text>
+        </svg>
+        <div class="chart-caption">אחוז קליעה לאורך זמן — לדוגמה בלבד</div>
+      </div>
+      <div class="progress-points">
+        <div class="pp"><span class="pp-dot"></span><span class="pp-line"></span><span class="pp-txt"><b>שבוע 1:</b> תוכנית ראשונה מותאמת לרמה שלך</span></div>
+        <div class="pp"><span class="pp-dot"></span><span class="pp-line"></span><span class="pp-txt"><b>שבוע 3:</b> מעקב אחוזי קליעה מתחיל להראות שיפור</span></div>
+        <div class="pp"><span class="pp-dot"></span><span class="pp-line"></span><span class="pp-txt"><b>שבוע 5:</b> תוכניות מתקדמות יותר, לפי היעד שבחרת</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="bball-float" style="width:80px;height:80px;top:8%;left:4%;animation-duration:7.8s;animation-delay:.2s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="bball-float" style="width:56px;height:56px;bottom:6%;right:6%;animation-duration:6.8s;animation-delay:1.6s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">המסלולים</div>
+      <h2>תבחר את הגרסה שלך</h2>
+      <p class="lede" style="margin-inline:auto;">מתחילים בחינם, משדרגים כשמוכנים.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card reveal">
+        <h3>שחקן חופשי</h3>
+        <p class="lede" style="font-size:14px;">כל מה שצריך כדי להתחיל להתאמן נכון.</p>
+        <div class="price-amt"><span class="num">₪0</span><span class="per">לחודש</span></div>
+        <ul class="price-feats">
+          <li>גישה לתרגילי בסיס</li>
+          <li>תוכנית אימון אחת ביום מה-AI</li>
+          <li>טיימר וסטופר מלאים</li>
+        </ul>
+        <a href="#features" class="btn btn-ghost btn-block">התחל בחינם</a>
+      </div>
+      <div class="price-card hi reveal">
+        <span class="price-tag">פותח הכל</span>
+        <h3>שחקן עילית</h3>
+        <p class="lede" style="font-size:14px;">לשחקנים שרוצים להתקדם מהר יותר.</p>
+        <div class="price-amt"><span class="num">₪15–20</span><span class="per">לחודש</span></div>
+        <ul class="price-feats">
+          <li>תוכניות אימון חכמות ללא הגבלה</li>
+          <li>מעקב סטטיסטיקות והתקדמות מלא</li>
+          <li>סרטוני מאמנים בלעדיים</li>
+        </ul>
+        <a href="#features" class="btn btn-solid btn-block">שדרג לפרימיום</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section final-cta">
+  <div class="bball-float" style="width:100px;height:100px;top:10%;left:8%;animation-duration:8.2s;animation-delay:.3s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="bball-float" style="width:100px;height:100px;bottom:10%;right:8%;animation-duration:9.4s;animation-delay:1s;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="wrap reveal">
+    <h2>המגרש מחכה. ה-AI כבר מוכן.</h2>
+    <p class="lede">תוכנית אימון אישית תוך כמה שניות — בלי הרשמה, בלי חיפושים.</p>
+    <div class="final-cta-btns">
+      <a href="#features" class="btn btn-solid">התחברות לדשבורד</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="bball-float" style="width:60px;height:60px;top:14%;left:2%;animation-duration:9s;animation-delay:.5s;opacity:.6;">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FF6B14"/><path d="M2 20h36M20 2v36M7 7c5 5 5 21 0 26M33 7c-5 5-5 21 0 26" stroke="#0A0A0A" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="13" cy="12" rx="5" ry="2.8" fill="rgba(255,255,255,.24)" transform="rotate(-28 13 12)"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="logo" href="#top" style="font-size:16px;">
+          <svg class="mark" width="24" height="24" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#FF6B14" stroke-width="2"/><path d="M2 16h28M16 2v28M6 6c4 4 4 16 0 20M26 6c-4 4-4 16 0 20" stroke="#FF6B14" stroke-width="1.4"/></svg>
+          HoopCoach
+        </a>
+        <p>מאמן כדורסל אישי מבוסס AI — תוכנית אימונים מותאמת אישית לכל שחקן צעיר, תוך שניות.</p>
+        <div class="foot-social">
+          <a href="#">TikTok</a>
+          <a href="#">Instagram</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>ניווט</h4>
+        <ul>
+          <li><a href="#problem">הבעיה</a></li>
+          <li><a href="#solution">איך זה עובד</a></li>
+          <li><a href="#features">פיצ'רים</a></li>
+          <li><a href="#pricing">מחירים</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>החברה</h4>
+        <ul>
+          <li><a href="#">אודות</a></li>
+          <li><a href="#">צור קשר</a></li>
+          <li><a href="#">שאלות נפוצות</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>משפטי</h4>
+        <ul>
+          <li><a href="#">תנאי שימוש</a></li>
+          <li><a href="#">מדיניות פרטיות</a></li>
+          <li><a href="#">מדיניות עוגיות</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-copy">HoopCoach © 2026 · כל הזכויות שמורות</div>
+      <a href="mailto:hello@hoopcoach.app" class="foot-copy foot-email">hello@hoopcoach.app</a>
+    </div>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=hoopcoach" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<script>
+const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.documentElement.classList.toggle('reduced-motion', reducedMotion);
+if(reducedMotion){document.querySelectorAll('animateMotion').forEach(a=>{a.setAttribute('dur','0.01s');a.setAttribute('begin','0s');});}
+
+// mobile nav
+const navToggle=document.getElementById('navToggle');
+const navLinks=document.querySelector('.nav-links');
+function setMenu(open){
+  navLinks.classList.toggle('open',open);
+  navToggle.classList.toggle('open',open);
+  navToggle.setAttribute('aria-expanded',String(open));
+  document.body.classList.toggle('menu-open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+navToggle.addEventListener('click',()=>{
+  setMenu(!navLinks.classList.contains('open'));
+});
+document.getElementById('menuClose').addEventListener('click',()=>setMenu(false));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>900){setMenu(false);}
+});
+
+// scroll reveal
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target);}});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// nav shadow on scroll
+const navEl=document.querySelector('.nav');
+window.addEventListener('scroll',()=>{
+  navEl.classList.toggle('scrolled',window.scrollY>10);
+},{passive:true});
+
+// workout generator demo
+const drills={
+  shots:{
+    15:[["חימום זריקות קרוב לסל","3 דק׳"],["5 סטים של 10 זריקות חופש","6 דק׳"],["זריקות מ-3 נקודות עוגן","4 דק׳"],["2 סטים זריקות עונשין לריכוז","2 דק׳"]],
+    30:[["חימום זריקות קרוב לסל","4 דק׳"],["8 סטים של 10 זריקות חופש","10 דק׳"],["זריקות קאץ' אנד שוט מ-4 פינות","8 דק׳"],["זריקות אחרי דריבל בודד","5 דק׳"],["זריקות עונשין לסיום","3 דק׳"]]
+  },
+  handle:{
+    15:[["דריבל בסיס – יד ימין ושמאל","3 דק׳"],["קרוסאובר בעמידה","4 דק׳"],["דריבל בין הרגליים בהליכה","4 דק׳"],["דריבל מהיר בקו ישר","4 דק׳"]],
+    30:[["חימום דריבל דו-כדורי","4 דק׳"],["קרוסאובר בתנועה","6 דק׳"],["דריבל בין הרגליים ומאחורי הגב","7 דק׳"],["דריבל תחת לחץ (קונוסים)","8 דק׳"],["דריבל מהיר בריצה","5 דק׳"]]
+  },
+  fitness:{
+    15:[["חימום – קפיצות סרעפת","3 דק׳"],["גלישות הגנתיות (Defensive slides)","4 דק׳"],["ריצות סולם / קונוסים","5 דק׳"],["פלאנק לסיום","3 דק׳"]],
+    30:[["חימום דינמי מלא","5 דק׳"],["ריצות מגרש (Suicides)","8 דק׳"],["גלישות הגנתיות + קפיצות","7 דק׳"],["אימון כוח פונקציונלי קליל","7 דק׳"],["מתיחות לסיום","3 דק׳"]]
+  }
+};
+let curTopic='shots',curTime='15';
+document.getElementById('topicChips').addEventListener('click',e=>{
+  const b=e.target.closest('[data-topic]');if(!b)return;
+  document.querySelectorAll('#topicChips .chip-btn').forEach(c=>c.classList.remove('active'));
+  b.classList.add('active');curTopic=b.dataset.topic;
+});
+document.getElementById('timeChips').addEventListener('click',e=>{
+  const b=e.target.closest('[data-time]');if(!b)return;
+  document.querySelectorAll('#timeChips .chip-btn').forEach(c=>c.classList.remove('active'));
+  b.classList.add('active');curTime=b.dataset.time;
+});
+const genStatus=document.getElementById('genStatus');
+const genResult=document.getElementById('genResult');
+document.getElementById('genBtn').addEventListener('click',()=>{
+  genResult.innerHTML='';
+  genStatus.classList.remove('ready');
+  genStatus.textContent='ה-AI בונה תוכנית...';
+  setTimeout(()=>{
+    genStatus.textContent='התוכנית שלך מוכנה:';
+    genStatus.classList.add('ready');
+    setTimeout(()=>genStatus.classList.remove('ready'),900);
+    const list=drills[curTopic][curTime];
+    list.forEach((item,i)=>{
+      const li=document.createElement('li');
+      li.style.animationDelay=(i*0.07)+'s';
+      li.innerHTML='<span>'+item[0]+'</span><span>'+item[1]+'</span>';
+      genResult.appendChild(li);
+    });
+  },550);
+});
+
+// timer demo
+let timerTotal=60,timerLeft=60,timerRunning=false,timerInt=null;
+const ring=document.getElementById('timerArc');
+const txt=document.getElementById('timerText');
+const CIRC=226;
+function renderTimer(){
+  const m=Math.floor(timerLeft/60),s=timerLeft%60;
+  txt.textContent=m+':'+String(s).padStart(2,'0');
+  ring.style.strokeDashoffset=CIRC*(1-timerLeft/timerTotal);
+}
+renderTimer();
+document.querySelectorAll('.timer-presets .mini-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.timer-presets .mini-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    clearInterval(timerInt);timerRunning=false;
+    document.getElementById('tStart').textContent='התחל';
+    timerTotal=parseInt(b.dataset.sec);timerLeft=timerTotal;renderTimer();
+  });
+});
+document.getElementById('tStart').addEventListener('click',(e)=>{
+  if(timerRunning){
+    clearInterval(timerInt);timerRunning=false;e.target.textContent='המשך';ring.classList.remove('running');
+  }else{
+    if(timerLeft<=0)timerLeft=timerTotal;
+    timerRunning=true;e.target.textContent='השהה';ring.classList.add('running');
+    timerInt=setInterval(()=>{
+      timerLeft--;
+      if(timerLeft<=0){timerLeft=0;clearInterval(timerInt);timerRunning=false;document.getElementById('tStart').textContent='התחל';ring.classList.remove('running');}
+      renderTimer();
+    },1000);
+  }
+});
+document.getElementById('tReset').addEventListener('click',()=>{
+  clearInterval(timerInt);timerRunning=false;ring.classList.remove('running');
+  document.getElementById('tStart').textContent='התחל';
+  timerLeft=timerTotal;renderTimer();
+});
+
+// shot calculator demo
+const madeInput=document.getElementById('madeInput');
+const attInput=document.getElementById('attInput');
+const pctOut=document.getElementById('pctOut');
+const pctBar=document.getElementById('pctBar');
+function calcPct(){
+  let made=Math.max(0,parseInt(madeInput.value)||0);
+  let att=Math.max(0,parseInt(attInput.value)||0);
+  if(made>att){made=att;madeInput.value=made;}
+  const pct=att>0?Math.round((made/att)*100):0;
+  pctOut.textContent=pct;
+  pctBar.style.width=pct+'%';
+}
+madeInput.addEventListener('input',calcPct);
+attInput.addEventListener('input',calcPct);
+
+// count the shot-% up from 0 the first time the calculator card scrolls into view
+const calcObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    calcObserver.unobserve(e.target);
+    const made=Math.max(0,parseInt(madeInput.value)||0);
+    const att=Math.max(0,parseInt(attInput.value)||0);
+    const target=att>0?Math.round((made/att)*100):0;
+    if(reducedMotion){pctOut.textContent=target;pctBar.style.width=target+'%';return;}
+    const duration=800;let start=null;
+    function step(ts){
+      if(!start)start=ts;
+      const progress=Math.min((ts-start)/duration,1);
+      const val=Math.round(progress*target);
+      pctOut.textContent=val;
+      pctBar.style.width=val+'%';
+      if(progress<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+},{threshold:.4});
+calcObserver.observe(document.getElementById('calcCard'));
+</script>
+</body>
+</html>
