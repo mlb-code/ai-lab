@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, follow">
+<title>BloxIL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Rubik:wght@400;500;600;700;800;900&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --nav-h: 72px;
+    --void: #0a0e1a;
+    --panel: #121a2e;
+    --panel-raised: #1a2440;
+    --panel-line: #26325a;
+    --ink: #f5f7fc;
+    --ink-dim: #97a2c4;
+    --ink-faint: #5d6a92;
+    --red: #ff3b4e;
+    --red-deep: #b81f34;
+    --red-glow: #ff7a5c;
+    --blue-glow: #4a72ff;
+    --blue-deep: #1c2f6b;
+    --font-display: 'Secular One', 'Rubik', 'Segoe UI', system-ui, sans-serif;
+    --font-body: 'Rubik', 'Segoe UI', system-ui, sans-serif;
+    --font-mono: 'Rubik Mono One', 'Rubik', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; overflow-x: hidden; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    direction: rtl;
+    margin: 0;
+    background: var(--void);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    width: 100%;
+  }
+
+  h1,h2,h3{ font-family: var(--font-display); font-weight: 400; text-wrap: balance; margin: 0; }
+  p{ margin: 0; color: var(--ink-dim); }
+  a{ color: inherit; }
+  img,svg{ display:block; max-width: 100%; }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 4vw, 3rem);
+  }
+
+  /* ambient world texture */
+  body::before{
+    content:'';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--panel-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--panel-line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.08;
+    mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, #000 40%, transparent 90%);
+  }
+
+  main, header, footer { position: relative; z-index: 1; }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: linear-gradient(135deg, rgba(255,59,78,0.92), rgba(184,31,52,0.92));
+    border-bottom: 1px solid rgba(255,122,92,0.5);
+    box-shadow: 0 4px 26px -4px rgba(255,59,78,0.55);
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 0.6rem;
+    padding: 1rem clamp(1.25rem, 4vw, 3rem);
+    max-width: 1180px;
+    margin: 0 auto;
+    gap: 1rem;
+  }
+  .logo{
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .logo .dot{
+    width: 10px; height: 10px;
+    background: linear-gradient(135deg, var(--blue-glow), var(--red));
+    display:inline-block;
+    border-radius: 2px;
+    transform: rotate(45deg);
+  }
+  .nav-links{
+    display:flex;
+    gap: 1.75rem;
+    list-style:none;
+    padding:0; margin:0;
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+  }
+  .nav-links a{ text-decoration:none; font-weight: 700; transition: color .2s ease; }
+  .nav-links a:hover, .nav-links a:focus-visible{ color: var(--ink); }
+  header.nav .nav-links{ color: rgba(255,255,255,0.85); }
+  header.nav .nav-links a:hover, header.nav .nav-links a:focus-visible{ color: #fff; }
+
+  .nav-guest{
+    display: flex; align-items:center; gap: 0.35rem;
+    font-size: 0.9rem; color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.25);
+    padding: 0.45rem 0.9rem; border-radius: 999px;
+  }
+  .nav-guest[hidden]{ display:none; }
+  .nav-guest b{ color:#fff; font-weight: 800; }
+
+  .nav-back-btn{
+    align-items:center; gap: 0.4rem;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+  }
+  .nav-back-btn:hover{ background: rgba(255,255,255,0.24); border-color: rgba(255,255,255,0.55); }
+  .nav-back-btn .arrow{ font-size: 1.1rem; line-height: 1; }
+  .nav-back-btn[hidden]{ display:none; }
+
+  .nav-actions{ display:flex; align-items:center; gap: 1.75rem; }
+
+  /* hamburger trigger — mobile only */
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    flex: none;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    cursor:pointer;
+    padding: 0;
+  }
+  .hamburger span{ display:block; width: 20px; height: 2px; background:#fff; border-radius: 2px; transition: transform .2s ease, opacity .2s ease; }
+  .hamburger[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .hamburger[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+  .hamburger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+  .hamburger:focus-visible{ outline: 2px solid #fff; outline-offset: 2px; }
+
+  .menu-close{ display:none; }
+
+  @media (max-width: 760px){
+    .hamburger{ display:flex; }
+    .nav-row > .logo:not(.logo-secondary){ display:none; }
+
+    .nav-actions{
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display:flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: 0;
+      background: linear-gradient(160deg, rgba(184,31,52,0.98), rgba(10,14,26,0.98));
+      padding: clamp(1.25rem, 4vw, 3rem);
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity .25s ease, transform .25s ease, visibility .25s;
+    }
+    .nav-actions.open{ opacity: 1; visibility: visible; transform: translateY(0); }
+
+    .menu-close{
+      display:flex;
+      position: absolute;
+      top: clamp(1rem, 3vw, 1.5rem);
+      right: clamp(1.25rem, 4vw, 3rem);
+      width: 44px; height: 44px;
+      align-items:center; justify-content:center;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor:pointer;
+    }
+    .menu-close:focus-visible{ outline: 2px solid #fff; outline-offset: 2px; }
+
+    .nav-links{ display:flex; flex-direction: column; align-items:stretch; gap: 0; }
+    .nav-links li{ width: 100%; }
+    .nav-links a{ display:block; padding: 1rem 0; font-size: 1.3rem; border-bottom: 1px solid rgba(255,255,255,0.14); }
+
+    .nav-guest{ align-self: flex-start; margin: 1.5rem 0 0; }
+    .nav-actions #nav-login{ width: 100%; justify-content:center; margin-top: 1.5rem; padding: 1rem 1.9rem; }
+  }
+  @media (max-width: 480px){
+    .nav-row{ gap: 0.6rem; }
+    .logo{ font-size: 1.25rem; }
+    .nav-back-btn .label{ display:none; }
+    .nav-back-btn{ padding: 0.6rem; }
+  }
+
+  body.menu-open{ overflow: hidden; }
+
+  .btn{
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0.85rem 1.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  .btn:focus-visible{ outline: 2px solid var(--blue-glow); outline-offset: 3px; }
+  .btn-primary{
+    color: #fff;
+    background: linear-gradient(135deg, var(--red-glow), var(--red) 55%, var(--red-deep));
+    box-shadow: 0 8px 24px -8px rgba(255,59,78,0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(255,59,78,0.7), inset 0 1px 0 rgba(255,255,255,0.3); }
+  .btn-primary:active{ transform: translateY(0); }
+  .btn-ghost{
+    color: var(--ink);
+    background: var(--panel-raised);
+    border: 1px solid var(--panel-line);
+  }
+  .btn-ghost:hover{ border-color: var(--blue-glow); }
+  .btn-sm{ padding: 0.6rem 1.3rem; font-size: 0.9rem; }
+
+  /* hero CTAs: bright glowing blue + glowing green, overriding the shared btn colors */
+  .btn-hero-cta{
+    color: #07182a;
+    background: linear-gradient(135deg, #8fe0ff, #38bdf8 55%, #0ea5e9);
+    box-shadow: 0 8px 26px -6px rgba(56,189,248,0.65), inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .btn-hero-cta:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px -6px rgba(56,189,248,0.8), inset 0 1px 0 rgba(255,255,255,0.45);
+  }
+  .btn-hero-secondary{
+    color: #06231a;
+    border-color: transparent;
+    background: linear-gradient(135deg, #8bffce, #22e07a 55%, #0fb768);
+    box-shadow: 0 8px 26px -6px rgba(34,224,122,0.6), inset 0 1px 0 rgba(255,255,255,0.35);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-hero-secondary:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px -6px rgba(34,224,122,0.75), inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+
+  @keyframes glow-pulse{
+    0%, 100%{ transform: scale(1); box-shadow: 0 8px 26px -6px rgba(56,189,248,0.65), inset 0 1px 0 rgba(255,255,255,0.4); }
+    50%{ transform: scale(1.05); box-shadow: 0 8px 36px -4px rgba(56,189,248,1), inset 0 1px 0 rgba(255,255,255,0.5); }
+  }
+  .btn-pulse{ animation: glow-pulse 2.2s ease-in-out infinite; }
+  .btn-pulse:hover{ animation-play-state: paused; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    padding: clamp(4rem, 10vw, 7.5rem) 0 clamp(3rem, 8vw, 5rem);
+    overflow: hidden;
+  }
+  .hero-glow{
+    position:absolute; inset: -10% -10% auto -10%;
+    height: 130%;
+    z-index: -1;
+    background:
+      radial-gradient(46rem 30rem at 78% 8%, rgba(74,114,255,0.30), transparent 60%),
+      radial-gradient(40rem 26rem at 14% 22%, rgba(34,224,122,0.26), transparent 60%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--red-glow);
+    background: rgba(255,59,78,0.1);
+    border: 1px solid rgba(255,59,78,0.35);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-grid{
+    max-width: 46rem;
+  }
+
+  .hero h1{
+    font-size: clamp(2.3rem, 5.4vw, 4.1rem);
+    line-height: 1.08;
+  }
+  .hero h1 .accent{
+    background: linear-gradient(90deg, var(--red-glow), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-sub{
+    margin-top: 1.5rem;
+    font-size: 1.15rem;
+    max-width: 46ch;
+    color: var(--ink-dim);
+  }
+  .hero-actions{
+    margin-top: 2.25rem;
+    display:flex;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  @media (max-width: 600px){
+    .hero .hero-actions{
+      flex-direction: column;
+      align-items: stretch;
+      flex-wrap: nowrap;
+    }
+    .hero .hero-actions .btn{
+      justify-content: center;
+      width: 100%;
+    }
+  }
+  .hero-note{
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+  }
+
+  /* floating cube decorations — split across both sides of the hero */
+  .hero-visual{ position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .float-cube{ position:absolute; width: 84px; animation: drift 7s ease-in-out infinite; filter: drop-shadow(0 12px 22px rgba(0,0,0,0.5)); }
+  .float-cube.c1{ top: 10%; right: 4%; width: 104px; animation-delay: 0s; }
+  .float-cube.c2{ top: 58%; right: 15%; width: 58px; animation-delay: 1.2s; }
+  .float-cube.c3{ top: 16%; left: 5%; width: 66px; animation-delay: 2.4s; }
+  .float-cube.c4{ top: 60%; left: 9%; width: 88px; animation-delay: 0.6s; }
+  @media (max-width: 900px){ .hero-visual{ display:none; } }
+  @keyframes drift{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-16px); } }
+
+  /* full-screen first impression on mobile */
+  @media (max-width: 760px){
+    .hero{
+      display:flex;
+      align-items:center;
+      min-height: calc(100vh - var(--nav-h));
+      min-height: calc(100svh - var(--nav-h));
+      padding-top: clamp(2rem, 8vw, 3rem);
+      padding-bottom: clamp(2rem, 8vw, 3rem);
+    }
+    .hero-grid{ width: 100%; }
+    .eyebrow{ font-size: 0.9rem; padding: 0.5rem 1rem; }
+    .hero h1{ font-size: clamp(2.6rem, 10vw, 3.6rem); line-height: 1.12; }
+    .hero-sub{ font-size: 1.25rem; margin-top: 1.25rem; }
+    .hero-note{ font-size: 1rem; }
+  }
+
+  /* ---------- SECTIONS (shared) ---------- */
+  section{ padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
+  .section-head{ max-width: 62ch; margin-bottom: clamp(2rem, 5vw, 3.25rem); }
+  .section-head h2{ font-size: clamp(1.8rem, 3.6vw, 2.6rem); margin-top: 0.6rem; }
+  .kicker{ font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; color: var(--blue-glow); }
+  .section-head p{ margin-top: 0.9rem; font-size: 1.05rem; }
+
+  .divider{
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--panel-line), transparent);
+    border: none;
+    margin: 0;
+  }
+
+  /* ---------- PROBLEM ---------- */
+  .problem-body{ font-size: 1.08rem; max-width: 68ch; color: var(--ink-dim); }
+  .pain-row{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 800px){ .pain-row{ grid-template-columns: 1fr; } }
+  .pain-card{
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    border-radius: 14px;
+    padding: 1.4rem 1.5rem;
+  }
+  .pain-card .num{ font-family: var(--font-mono); font-size: 0.75rem; color: var(--red-glow); display:block; margin-bottom: 0.6rem; }
+  .pain-card p{ color: var(--ink); font-size: 0.98rem; margin:0; }
+
+  /* ---------- SOLUTION ---------- */
+  .solution{
+    background: var(--void);
+    border-top: 1px solid var(--panel-line);
+    border-bottom: 1px solid var(--panel-line);
+  }
+  .solution-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (max-width: 860px){ .solution-grid{ grid-template-columns: 1fr; } }
+  .solution h2{ font-size: clamp(1.8rem, 3.6vw, 2.5rem); }
+  .solution-copy{ margin-top: 1.1rem; font-size: 1.05rem; }
+  .check-list{ list-style:none; padding:0; margin: 1.75rem 0 0; display:flex; flex-direction:column; gap: 0.9rem; }
+  .check-list li{ display:flex; align-items:flex-start; gap: 0.7rem; color: var(--ink); font-size: 0.98rem; }
+  .check-list .mark{
+    flex: none; width: 22px; height: 22px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--blue-glow), var(--red));
+    display:flex; align-items:center; justify-content:center;
+    margin-top: 2px;
+  }
+  .check-list .mark svg{ width: 12px; height: 12px; }
+
+  .solution-card{
+    background: rgba(10,14,26,0.55);
+    border: 1px solid var(--panel-line);
+    border-radius: 18px;
+    padding: 2rem;
+    text-align: center;
+  }
+  .solution-card .big-stat{ font-family: var(--font-mono); font-size: clamp(2.2rem, 5vw, 3rem); background: linear-gradient(90deg, var(--red-glow), var(--blue-glow)); -webkit-background-clip:text; background-clip:text; color:transparent; font-variant-numeric: tabular-nums; }
+  .solution-card .stat-label{ margin-top: 0.5rem; font-size: 0.9rem; color: var(--ink-dim); }
+
+  /* ---------- FEATURES ---------- */
+  .feature-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 900px){ .feature-grid{ grid-template-columns: 1fr; } }
+  .feature-card{
+    background:
+      linear-gradient(135deg, rgba(255,59,78,0.28), rgba(168,85,247,0.24)),
+      var(--panel);
+    border: 1px solid rgba(168,85,247,0.35);
+    border-radius: 18px;
+    padding: 2rem 1.75rem;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .feature-card:hover{ transform: translateY(-4px); border-color: var(--panel-line); }
+  .cube-icon{ width: 58px; margin-bottom: 1.3rem; }
+  .feature-card h3{ font-size: 1.2rem; font-family: var(--font-body); font-weight: 800; margin-bottom: 0.6rem; }
+  .feature-card p{ font-size: 0.96rem; }
+  .feature-tag{
+    display:inline-block; margin-top: 1rem; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.05em; color: var(--ink-faint); border: 1px solid var(--panel-line);
+    padding: 0.25rem 0.6rem; border-radius: 6px;
+  }
+
+  /* ---------- DASHBOARD PREVIEW ---------- */
+  .preview-panel{
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .preview-topbar{
+    display:flex; align-items:center; gap: 0.5rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--panel-raised);
+    border-bottom: 1px solid var(--panel-line);
+  }
+  .preview-topbar .tdot{ flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--panel-line); }
+  .preview-topbar .tdot:first-child{ background: var(--red); }
+  .preview-topbar .plabel{
+    margin-inline-start: 0.75rem; font-size: 0.82rem; color: var(--ink-faint);
+    min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .preview-body{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--panel-line);
+  }
+  @media (max-width: 800px){ .preview-body{ grid-template-columns: 1fr; } }
+  .preview-col{ background: var(--panel); padding: 1.5rem; }
+  .preview-col h4{ margin:0 0 1rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; color: var(--blue-glow); }
+  .squad-post{ background: var(--panel-raised); border: 1px solid var(--panel-line); border-radius: 12px; padding: 0.9rem; display:flex; gap: 0.7rem; align-items:flex-start; }
+  .avatar{ flex:none; width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--blue-glow), var(--red)); }
+  .squad-post .who{ font-size: 0.82rem; font-weight: 700; color: var(--ink); }
+  .squad-post .status{ font-size: 0.88rem; color: var(--ink-dim); margin-top: 0.2rem; }
+  .live-tag{ display:inline-block; margin-top: 0.5rem; font-size: 0.68rem; color: var(--red-glow); border: 1px solid rgba(255,59,78,0.35); background: rgba(255,59,78,0.08); padding: 0.15rem 0.5rem; border-radius: 999px; }
+
+  .fav-chip{ display:flex; align-items:center; justify-content: space-between; background: var(--panel-raised); border: 1px solid var(--panel-line); border-radius: 10px; padding: 0.6rem 0.85rem; font-size: 0.88rem; color: var(--ink); margin-bottom: 0.6rem; }
+  .fav-chip .heart{ color: var(--red-glow); font-family: var(--font-mono); font-size: 0.7rem; }
+
+  .note-item{ background: var(--panel-raised); border: 1px solid var(--panel-line); border-radius: 10px; padding: 0.75rem 0.9rem; font-size: 0.86rem; color: var(--ink-dim); margin-bottom: 0.6rem; }
+  .note-item b{ color: var(--ink); }
+
+  /* ---------- COMMUNITY GOAL ---------- */
+  .goal-panel{
+    background: linear-gradient(120deg, var(--panel-raised), var(--panel));
+    border: 1px solid var(--panel-line);
+    border-radius: 22px;
+    padding: clamp(2rem, 5vw, 3.25rem);
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2.5rem;
+    align-items:center;
+  }
+  @media (max-width: 860px){ .goal-panel{ grid-template-columns: 1fr; } }
+  .goal-panel h2{ font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
+  .goal-panel .lead{ margin-top: 0.9rem; font-size: 1.02rem; }
+  .meter{ margin-top: 1.75rem; }
+  .meter-labels{ display:flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-faint); margin-bottom: 0.5rem; }
+  .meter-track{ height: 12px; border-radius: 999px; background: var(--void); border: 1px solid var(--panel-line); overflow:hidden; }
+  .meter-fill{ height: 100%; width: 6%; border-radius: 999px; background: linear-gradient(90deg, var(--blue-glow), var(--red-glow)); }
+  .meter-caption{ margin-top: 0.7rem; font-size: 0.85rem; color: var(--ink-faint); }
+
+  .goal-side{ background: rgba(10,14,26,0.5); border: 1px solid var(--panel-line); border-radius: 16px; padding: 1.6rem; }
+  .goal-side ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 0.9rem; }
+  .goal-side li{ display:flex; align-items:center; gap: 0.7rem; font-size: 0.92rem; color: var(--ink); }
+  .goal-side li .ico{ width: 8px; height: 8px; border-radius: 2px; background: var(--red); transform: rotate(45deg); flex:none; }
+
+  /* ---------- CTA ---------- */
+  .cta-final{ text-align:center; }
+  .cta-panel{
+    position: relative;
+    border-radius: 24px;
+    padding: clamp(2.5rem, 7vw, 4.5rem) clamp(1.5rem, 5vw, 3rem);
+    background: radial-gradient(ellipse 80% 100% at 50% 0%, rgba(255,59,78,0.16), transparent 70%), var(--panel);
+    border: 1px solid var(--panel-line);
+    overflow: hidden;
+  }
+  .cta-panel h2{ font-size: clamp(1.9rem, 4vw, 2.8rem); max-width: 20ch; margin: 0 auto; }
+  .cta-panel p{ margin: 1rem auto 0; max-width: 46ch; font-size: 1.05rem; }
+  .cta-panel .hero-actions{ justify-content: center; margin-top: 2rem; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ border-top: 1px solid var(--panel-line); padding: 2.75rem 0; margin-top: 1rem; }
+  .footer-row{ display:flex; flex-wrap:wrap; align-items:center; justify-content: space-between; gap: 1.25rem; }
+  .footer-links{ display:flex; gap: 1.5rem; list-style:none; padding:0; margin:0; font-size: 0.9rem; color: var(--ink-dim); }
+  .footer-links a{ text-decoration:none; }
+  .footer-links a:hover{ color: var(--ink); }
+  .footer-fine{ font-size: 0.8rem; color: var(--ink-faint); margin-top: 1.25rem; }
+
+  /* ---------- DASHBOARD (logged-in view) ---------- */
+  #landing-view[hidden], #dashboard-view[hidden]{ display:none; }
+  header.nav.in-dashboard .nav-links{ display:none; }
+  header.nav.in-dashboard #nav-login{ display:none; }
+
+  .dash-wrap{ padding-top: clamp(2rem, 5vw, 3rem); padding-bottom: clamp(3rem, 8vw, 5rem); }
+  .dash-header{
+    display:flex; justify-content: space-between; align-items:flex-end;
+    flex-wrap: wrap; gap: 1.5rem; margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+  .dash-header h2{ font-size: clamp(1.6rem, 3.2vw, 2.3rem); margin-top: 0.5rem; }
+  .dash-header h2 #guest-name{ color: var(--red-glow); }
+  .dash-header p{ margin-top: 0.6rem; max-width: 44ch; }
+
+  .dash-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; align-items: start; }
+  @media (max-width: 980px){ .dash-grid{ grid-template-columns: 1fr; } }
+  .dash-card{
+    background: var(--panel); border: 1px solid var(--panel-line); border-radius: 18px;
+    padding: 1.75rem; display:flex; flex-direction:column;
+  }
+  .dash-card h3{ font-family: var(--font-body); font-weight: 800; font-size: 1.1rem; }
+  .dash-sub{ font-size: 0.88rem; margin-top: 0.35rem; margin-bottom: 1.3rem; }
+
+  .squad-form, .fav-form, .note-form{ display:flex; flex-direction:column; gap: 0.6rem; margin-bottom: 1.2rem; }
+  .squad-form input, .fav-form input, .note-form input{
+    background: var(--void); border: 1px solid var(--panel-line); border-radius: 10px;
+    padding: 0.7rem 0.9rem; color: var(--ink); font-family: var(--font-body); font-size: 0.92rem;
+  }
+  .squad-form input:focus, .fav-form input:focus, .note-form input:focus{
+    outline: 2px solid var(--blue-glow); outline-offset: 1px; border-color: var(--blue-glow);
+  }
+  .squad-form .btn, .fav-form .btn, .note-form .btn{ align-self: flex-start; }
+
+  .squad-feed{ display:flex; flex-direction:column; gap: 0.7rem; max-height: 320px; overflow-y: auto; }
+  .squad-post.is-example{ opacity: 0.7; }
+
+  .fav-list, .note-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap: 0.6rem; max-height: 320px; overflow-y:auto; }
+  .fav-chip{ margin-bottom: 0; }
+  .note-item{ margin-bottom: 0; display:flex; justify-content: space-between; align-items:flex-start; gap: 0.5rem; }
+
+  .chip-remove{
+    background:none; border: none; color: var(--ink-faint); cursor:pointer;
+    font-size: 0.8rem; padding: 0.15rem 0.4rem; border-radius: 6px; flex: none;
+  }
+  .chip-remove:hover{ color: var(--red-glow); background: rgba(255,59,78,0.1); }
+
+  .empty-hint{ font-size: 0.82rem; color: var(--ink-faint); margin-top: 0.6rem; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-row">
+    <button type="button" class="hamburger" id="hamburger-btn" aria-label="פתח תפריט" aria-expanded="false" aria-controls="nav-actions">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="logo"><span class="dot"></span>BloxIL</div>
+    <div class="nav-actions" id="nav-actions">
+      <button type="button" class="menu-close" id="menu-close-btn" aria-label="סגור תפריט">✕</button>
+      <ul class="nav-links">
+        <li><a href="#problem">הבעיה</a></li>
+        <li><a href="#features">הפיצ'רים</a></li>
+        <li><a href="#dashboard">הדשבורד</a></li>
+        <li><a href="#community">הקהילה</a></li>
+      </ul>
+      <span class="nav-guest" id="nav-guest" hidden>מחובר בתור <b id="nav-guest-name"></b></span>
+      <button type="button" class="btn btn-primary btn-sm login-trigger btn-hero-cta" id="nav-login">התחברות</button>
+    </div>
+    <button type="button" class="btn btn-ghost btn-sm nav-back-btn" id="nav-back-btn" hidden aria-label="חזרה לעמוד הבית">
+      <span class="arrow" aria-hidden="true">→</span><span class="label">חזרה לעמוד הבית</span>
+    </button>
+    <div class="logo logo-secondary"><span class="dot"></span>BloxIL</div>
+  </div>
+</header>
+
+<main>
+<div id="landing-view">
+  <section class="hero" id="home">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-visual" aria-hidden="true">
+      <svg class="float-cube c1" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a72ff"/><stop offset="1" stop-color="#1c2f6b"/></linearGradient></defs>
+        <polygon points="50,0 100,29 50,58 0,29" fill="#6f8fff"/>
+        <polygon points="0,29 50,58 50,116 0,87" fill="url(#g1)"/>
+        <polygon points="50,58 100,29 100,87 50,116" fill="#25336a"/>
+      </svg>
+      <svg class="float-cube c2" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7a5c"/><stop offset="1" stop-color="#b81f34"/></linearGradient></defs>
+        <polygon points="50,0 100,29 50,58 0,29" fill="#ff9a83"/>
+        <polygon points="0,29 50,58 50,116 0,87" fill="url(#g2)"/>
+        <polygon points="50,58 100,29 100,87 50,116" fill="#7c1826"/>
+      </svg>
+      <svg class="float-cube c3" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="50,0 100,29 50,58 0,29" fill="#3a4676"/>
+        <polygon points="0,29 50,58 50,116 0,87" fill="#222c52"/>
+        <polygon points="50,58 100,29 100,87 50,116" fill="#161d3a"/>
+      </svg>
+      <svg class="float-cube c4" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a72ff"/><stop offset="1" stop-color="#ff3b4e"/></linearGradient></defs>
+        <polygon points="50,0 100,29 50,58 0,29" fill="#8593e8"/>
+        <polygon points="0,29 50,58 50,116 0,87" fill="url(#g4)"/>
+        <polygon points="50,58 100,29 100,87 50,116" fill="#3a2350"/>
+      </svg>
+    </div>
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">קהילת הרובלוקס הישראלית · MVP חינמי</span>
+        <h1>הקהילה הזאת היא קהילה שפתוחה <span class="accent">במיוחד לכם</span>.</h1>
+        <p class="hero-sub">BloxIL מרכז במקום אחד, בעברית, את כל מה שצריך שחקן רובלוקס ישראלי: חברים לסקוואד, קודים מעודכנים, והמלצות על משחקי אינדי, אימה וסימולטורים ששווה לשחק בהם - לפני שהם יהפכו לפופולריים.</p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-primary login-trigger btn-hero-cta btn-pulse">התחבר עכשיו</button>
+          <a class="btn btn-ghost btn-hero-secondary" href="#features">הדברים בדשבורד</a>
+        </div>
+        <p class="hero-note">בלי שם משתמש, בלי סיסמה. לחיצה אחת - ואתה באזור האישי שלך.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">הבעיה</span>
+        <h2>ברובלוקס יש מיליוני משחקים. דף הבית מראה לך רק עשרה.</h2>
+      </div>
+      <p class="problem-body">כל פעם שנכנסים לרובלוקס, עמוד הבית מציג את אותם משחקי ענק. משחקי האינדי החדשים, משחקי האימה הטובים והסימולטורים שבאמת שווה לנסות - נשארים קבורים עמוק, בין ערימות של משחקי ספאם. אז במקום לשחק, מוצאים את עצמכם עסוקים בחיפוש: קופצים בין קבוצות וואטסאפ ושרתי דיסקורד בלי שום התאמה אישית, ומחפשים קודים ומדריכים בתוך סרטוני יוטיוב ארוכים באנגלית - רק כדי למצוא חבר אחד למשחק.</p>
+      <div class="pain-row">
+        <div class="pain-card">
+          <span class="num">01</span>
+          <p>עמוד הבית מציג תמיד את אותם משחקים ענקיים - משחקי אינדי, אימה וסימולטורים שווים נשארים בלתי נראים.</p>
+        </div>
+        <div class="pain-card">
+          <span class="num">02</span>
+          <p>קודים ומדריכים אפשר למצוא רק בסרטוני יוטיוב ארוכים באנגלית, לא תמיד מעודכנים.</p>
+        </div>
+        <div class="pain-card">
+          <span class="num">03</span>
+          <p>חברים וקבוצות משחק מתארגנים בקבוצות וואטסאפ ושרתי דיסקורד מפוזרים, בלי שום סדר.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="solution">
+    <div class="wrap solution-grid">
+      <div>
+        <span class="kicker">הפתרון</span>
+        <h2>קהילת הרובלוקס הישראלית, במקום אחד</h2>
+        <p class="solution-copy">BloxIL מרכז את כל מה ששחקן רובלוקס ישראלי צריך - בעברית, בלי בלגן ובלי חיפושים מיותרים.</p>
+        <ul class="check-list">
+          <li><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M4 12l6 6L20 6"/></svg></span>מוצאים חברים וקבוצות משחק בלחיצה, בלי לחפש בקבוצות מפוזרות.</li>
+          <li><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M4 12l6 6L20 6"/></svg></span>גישה מהירה לקודים מעודכנים ולמדריכים בעברית, בלי סרטוני יוטיוב ארוכים.</li>
+          <li><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M4 12l6 6L20 6"/></svg></span>המלצות על משחקים נסתרים ושווים, שלא מופיעים בעמוד הבית.</li>
+        </ul>
+      </div>
+      <div class="solution-card">
+        <div class="big-stat">1</div>
+        <p class="stat-label">אתר אחד בעברית, במקום כל הכלים המפוזרים - וואטסאפ, דיסקורד ויוטיוב יחד.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">בדשבורד האישי שלך</span>
+        <h2>שלושה כלים שמחכים לך אחרי ההתחברות</h2>
+        <p>לחיצה אחת על "התחברות" - וכל הכלים האלה כבר באזור האישי שלך, בלי צורך למלא פרטים.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <svg class="cube-icon" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="fi1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a72ff"/><stop offset="1" stop-color="#1c2f6b"/></linearGradient></defs>
+            <polygon points="50,0 100,29 50,58 0,29" fill="#7c96ff"/>
+            <polygon points="0,29 50,58 50,116 0,87" fill="url(#fi1)"/>
+            <polygon points="50,58 100,29 100,87 50,116" fill="#233067"/>
+          </svg>
+          <h3>סטטוס סקוואד</h3>
+          <p>כותבים במה משחקים עכשיו ומה המצב - "מחפש שחקנים ל-Blox Fruits" - ומפרסמים ללוח הכללי. כל הקהילה רואה ומצטרפת.</p>
+          <span class="feature-tag">Squad Status</span>
+        </article>
+        <article class="feature-card">
+          <svg class="cube-icon" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="fi2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7a5c"/><stop offset="1" stop-color="#b81f34"/></linearGradient></defs>
+            <polygon points="50,0 100,29 50,58 0,29" fill="#ff9a83"/>
+            <polygon points="0,29 50,58 50,116 0,87" fill="url(#fi2)"/>
+            <polygon points="50,58 100,29 100,87 50,116" fill="#7c1826"/>
+          </svg>
+          <h3>המועדפים שלי</h3>
+          <p>שומרים משחקים וקישורים אהובים במקום אחד, כדי שלא יתפספסו ולא יצטרכו לחפש אותם שוב.</p>
+          <span class="feature-tag">My Favorites</span>
+        </article>
+        <article class="feature-card">
+          <svg class="cube-icon" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="fi3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a72ff"/><stop offset="1" stop-color="#ff3b4e"/></linearGradient></defs>
+            <polygon points="50,0 100,29 50,58 0,29" fill="#a08cf5"/>
+            <polygon points="0,29 50,58 50,116 0,87" fill="url(#fi3)"/>
+            <polygon points="50,58 100,29 100,87 50,116" fill="#3a2350"/>
+          </svg>
+          <h3>פתקים מהירים</h3>
+          <p>פנקס אישי לקודים, רעיונות ומשימות ברובלוקס - כותבים לעצמכם תוך כדי גלישה, בלי להשתמש באפליקציה נפרדת.</p>
+          <span class="feature-tag">Quick Notes</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="dashboard">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">תצוגה מקדימה</span>
+        <h2>ככה זה נראה באזור האישי</h2>
+      </div>
+      <div class="preview-panel">
+        <div class="preview-topbar">
+          <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+          <span class="plabel">bloxil.co.il/dashboard</span>
+        </div>
+        <div class="preview-body">
+          <div class="preview-col">
+            <h4>סטטוס סקוואד</h4>
+            <div class="squad-post">
+              <span class="avatar"></span>
+              <div>
+                <div class="who">נועה_רובלוקס</div>
+                <div class="status">מחפשת שחקנים ל-Blox Fruits, סירבר 3</div>
+                <span class="live-tag">פורסם עכשיו</span>
+              </div>
+            </div>
+          </div>
+          <div class="preview-col">
+            <h4>המועדפים שלי</h4>
+            <div class="fav-chip"><span>Doors</span><span class="heart">שמור</span></div>
+            <div class="fav-chip"><span>Dress to Impress</span><span class="heart">שמור</span></div>
+            <div class="fav-chip"><span>92 - Zone Horror</span><span class="heart">שמור</span></div>
+          </div>
+          <div class="preview-col">
+            <h4>פתקים מהירים</h4>
+            <div class="note-item"><b>קוד:</b> SUMMER26 - לפני שפג תוקף</div>
+            <div class="note-item">לנסות את הסימולטור החדש שהקהילה המליצה עליו</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="community">
+    <div class="wrap">
+      <div class="goal-panel">
+        <div>
+          <span class="kicker">לאן אנחנו הולכים</span>
+          <h2>המטרה: קהילה של 100 חברים</h2>
+          <p class="lead">BloxIL נמצא בגרסת MVP ראשונה, חינמית לגמרי. אנחנו גדלים בעיקר דרך שיתופים ברשתות החברתיות - כל מי שמצטרף עכשיו הוא חלק מהגרעין הראשוני של הקהילה.</p>
+          <div class="meter">
+            <div class="meter-labels"><span>0</span><span>יעד: 100 חברים</span></div>
+            <div class="meter-track"><div class="meter-fill"></div></div>
+            <p class="meter-caption">מצטרפים ראשונים בונים את הקהילה מהיסוד - ונשארים בה מוכרים כוותיקים.</p>
+          </div>
+        </div>
+        <div class="goal-side">
+          <ul>
+            <li><span class="ico"></span>גרסה חינמית לחלוטין</li>
+            <li><span class="ico"></span>גדילה בשיתופים ברשתות החברתיות</li>
+            <li><span class="ico"></span>נבנה עבור שחקני רובלוקס בישראל, גילאי 11-13</li>
+            <li><span class="ico"></span>MVP חי - הקהילה מעצבת את מה שיבוא הלאה</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final" id="cta">
+    <div class="wrap">
+      <div class="cta-panel">
+        <h2>מוכנים להצטרף לקהילה?</h2>
+        <p>לחיצה אחת על "התחברות" - בלי שם משתמש, בלי סיסמה - ואתם באזור האישי שלכם.</p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-primary login-trigger btn-hero-cta">התחברות</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="dashboard-view" hidden>
+  <div class="wrap dash-wrap">
+    <div class="dash-header">
+      <div>
+        <span class="kicker">האזור האישי שלך</span>
+        <h2>ברוך הבא, <span id="guest-name">שחקן</span></h2>
+        <p>הכל במקום אחד: תפרסם סטטוס, תשמור מועדפים ותרשום פתק מהיר.</p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" id="logout-btn">חזרה לעמוד הבית</button>
+    </div>
+
+    <div class="dash-grid">
+      <div class="dash-card">
+        <h3>סטטוס סקוואד</h3>
+        <p class="dash-sub">ספר לקהילה במה אתה משחק עכשיו</p>
+        <form id="squad-form" class="squad-form">
+          <input type="text" id="squad-game" placeholder="באיזה משחק אתה משחק? (למשל Blox Fruits)" maxlength="60" required>
+          <input type="text" id="squad-status" placeholder="מה המצב? (למשל מחפש שחקנים לסירבר 3)" maxlength="80" required>
+          <button type="submit" class="btn btn-primary btn-sm">פרסם ללוח</button>
+        </form>
+        <div id="squad-feed" class="squad-feed"></div>
+        <p class="empty-hint">הפוסטים נשמרים בדפדפן שלך. שיתוף בזמן אמת עם כל הקהילה מתוכנן לגרסה הבאה.</p>
+      </div>
+
+      <div class="dash-card">
+        <h3>המועדפים שלי</h3>
+        <p class="dash-sub">שמור משחקים וקישורים שאתה אוהב</p>
+        <form id="fav-form" class="fav-form">
+          <input type="text" id="fav-name" placeholder="שם המשחק או קישור" maxlength="60" required>
+          <button type="submit" class="btn btn-ghost btn-sm">הוסף למועדפים</button>
+        </form>
+        <ul id="fav-list" class="fav-list"></ul>
+        <p class="empty-hint" id="fav-empty">עדיין לא הוספת מועדפים.</p>
+      </div>
+
+      <div class="dash-card">
+        <h3>פתקים מהירים</h3>
+        <p class="dash-sub">קודים, רעיונות ומשימות לרובלוקס</p>
+        <form id="note-form" class="note-form">
+          <input type="text" id="note-text" placeholder="כתוב פתק... (למשל קוד: SUMMER26)" maxlength="140" required>
+          <button type="submit" class="btn btn-ghost btn-sm">שמור פתק</button>
+        </form>
+        <ul id="note-list" class="note-list"></ul>
+        <p class="empty-hint" id="note-empty">אין עדיין פתקים.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <div class="logo"><span class="dot"></span>BloxIL</div>
+      <ul class="footer-links">
+        <li><a href="#problem">הבעיה</a></li>
+        <li><a href="#features">הפיצ'רים</a></li>
+        <li><a href="#dashboard">הדשבורד</a></li>
+        <li><a href="#community">הקהילה</a></li>
+      </ul>
+    </div>
+    <p class="footer-fine">BloxIL · גרסת MVP · נבנה עבור קהילת הרובלוקס הישראלית · שתפו עם חברים</p>
+  </div>
+<!-- ailab-credit -->
+<div style="text-align:center;padding:18px 16px;font-size:14px;line-height:1.7;font-family:inherit;border-top:1px solid rgba(128,128,128,0.2);margin-top:8px;">
+  <a href="https://ai-lab.co.il/register-kids?utm_source=student-project&utm_medium=footer&utm_campaign=bloxil" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:0.85;">
+    🚀 רוצים לבנות פרויקט כזה? <strong style="text-decoration:underline;">למדו ב-AI Lab</strong>
+  </a>
+</div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var PREFIX = "bloxil_";
+
+  function safeGet(key, fallback) {
+    try {
+      var raw = localStorage.getItem(PREFIX + key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (e) {
+      return fallback;
+    }
+  }
+  function safeSet(key, value) {
+    try {
+      localStorage.setItem(PREFIX + key, JSON.stringify(value));
+    } catch (e) {
+      /* storage unavailable — state just won't persist across reloads */
+    }
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  var GUEST_NOUN = ["בילדר", "קוביה", "סקאוט", "גיימר", "חוקר", "טייס", "נינג’ה", "אלוף", "ניצן"];
+  var GUEST_ADJ = ["מהיר", "חכם", "חד", "זריז", "אגדי", "שקט", "נועז"];
+
+  function getGuestName() {
+    var name = safeGet("guest_name", null);
+    if (!name) {
+      var noun = GUEST_NOUN[Math.floor(Math.random() * GUEST_NOUN.length)];
+      var adj = GUEST_ADJ[Math.floor(Math.random() * GUEST_ADJ.length)];
+      var num = Math.floor(100 + Math.random() * 900);
+      name = noun + "_" + adj + num;
+      safeSet("guest_name", name);
+    }
+    return name;
+  }
+
+  var SEED_POSTS = [
+    { who: "דוגמה · נועה", game: "Blox Fruits", status: "מחפשת שחקנים לסירבר 3", example: true },
+    { who: "דוגמה · יובל", game: "Doors", status: "מארגן קבוצה לרוץ את כל הקומות", example: true }
+  ];
+
+  var landingView = document.getElementById("landing-view");
+  var dashboardView = document.getElementById("dashboard-view");
+  var siteHeader = document.querySelector("header.nav");
+
+  var navGuest = document.getElementById("nav-guest");
+  var navGuestName = document.getElementById("nav-guest-name");
+  var navBackBtn = document.getElementById("nav-back-btn");
+
+  function goToDashboard() {
+    landingView.hidden = true;
+    dashboardView.hidden = false;
+    if (siteHeader) siteHeader.classList.add("in-dashboard");
+    var name = getGuestName();
+    var nameEl = document.getElementById("guest-name");
+    if (nameEl) nameEl.textContent = name;
+    if (navGuestName) navGuestName.textContent = name;
+    if (navGuest) navGuest.hidden = false;
+    if (navBackBtn) navBackBtn.hidden = false;
+    renderSquad();
+    renderFavorites();
+    renderNotes();
+    window.scrollTo(0, 0);
+  }
+  function goToLanding() {
+    dashboardView.hidden = true;
+    landingView.hidden = false;
+    if (siteHeader) siteHeader.classList.remove("in-dashboard");
+    if (navGuest) navGuest.hidden = true;
+    if (navBackBtn) navBackBtn.hidden = true;
+    window.scrollTo(0, 0);
+  }
+
+  document.querySelectorAll(".login-trigger").forEach(function (btn) {
+    btn.addEventListener("click", goToDashboard);
+  });
+  if (navBackBtn) navBackBtn.addEventListener("click", goToLanding);
+  var logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) logoutBtn.addEventListener("click", goToLanding);
+
+  /* ---------- mobile hamburger menu ---------- */
+  var hamburgerBtn = document.getElementById("hamburger-btn");
+  var navActions = document.getElementById("nav-actions");
+  var menuCloseBtn = document.getElementById("menu-close-btn");
+
+  function closeMobileMenu() {
+    if (!navActions) return;
+    navActions.classList.remove("open");
+    document.body.classList.remove("menu-open");
+    if (hamburgerBtn) hamburgerBtn.setAttribute("aria-expanded", "false");
+  }
+  function openMobileMenu() {
+    if (!navActions) return;
+    navActions.classList.add("open");
+    document.body.classList.add("menu-open");
+    if (hamburgerBtn) hamburgerBtn.setAttribute("aria-expanded", "true");
+  }
+  if (hamburgerBtn && navActions) {
+    hamburgerBtn.addEventListener("click", function () {
+      if (navActions.classList.contains("open")) closeMobileMenu();
+      else openMobileMenu();
+    });
+    if (menuCloseBtn) menuCloseBtn.addEventListener("click", closeMobileMenu);
+    navActions.addEventListener("click", function (e) {
+      if (e.target.closest("a") || (e.target.closest("button") && e.target.closest("button") !== menuCloseBtn) ) {
+        closeMobileMenu();
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeMobileMenu();
+    });
+  }
+
+  /* keep the hero's mobile full-screen height in sync with the real sticky-nav height */
+  function syncNavHeight() {
+    if (siteHeader) {
+      document.documentElement.style.setProperty("--nav-h", siteHeader.offsetHeight + "px");
+    }
+  }
+  syncNavHeight();
+  window.addEventListener("resize", syncNavHeight);
+
+  /* ---------- squad status ---------- */
+  var squadFeed = document.getElementById("squad-feed");
+  var squadForm = document.getElementById("squad-form");
+
+  function renderSquad() {
+    var posts = safeGet("squad_posts", null);
+    if (!posts) {
+      posts = SEED_POSTS.slice();
+      safeSet("squad_posts", posts);
+    }
+    if (!posts.length) {
+      squadFeed.innerHTML = '<p class="empty-hint">עדיין אין פוסטים. תהיה הראשון!</p>';
+      return;
+    }
+    squadFeed.innerHTML = posts
+      .map(function (p) {
+        return (
+          '<div class="squad-post' + (p.example ? " is-example" : "") + '">' +
+          '<span class="avatar"></span>' +
+          "<div>" +
+          '<div class="who">' + escapeHtml(p.who) + "</div>" +
+          '<div class="status"><b>' + escapeHtml(p.game) + ":</b> " + escapeHtml(p.status) + "</div>" +
+          '<span class="live-tag">' + (p.example ? "פוסט לדוגמה" : "פורסם על ידך") + "</span>" +
+          "</div></div>"
+        );
+      })
+      .join("");
+  }
+
+  if (squadForm) {
+    squadForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var gameInput = document.getElementById("squad-game");
+      var statusInput = document.getElementById("squad-status");
+      var game = gameInput.value.trim();
+      var status = statusInput.value.trim();
+      if (!game || !status) return;
+      var posts = safeGet("squad_posts", SEED_POSTS.slice());
+      posts.unshift({ who: getGuestName(), game: game, status: status, example: false });
+      posts = posts.slice(0, 30);
+      safeSet("squad_posts", posts);
+      renderSquad();
+      squadForm.reset();
+      gameInput.focus();
+    });
+  }
+
+  /* ---------- favorites ---------- */
+  var favForm = document.getElementById("fav-form");
+  var favList = document.getElementById("fav-list");
+  var favEmpty = document.getElementById("fav-empty");
+
+  function renderFavorites() {
+    var favs = safeGet("favorites", []);
+    if (favEmpty) favEmpty.hidden = favs.length > 0;
+    favList.innerHTML = favs
+      .map(function (f, i) {
+        return (
+          '<li class="fav-chip"><span>' + escapeHtml(f) + "</span>" +
+          '<button type="button" class="chip-remove" data-idx="' + i + '" aria-label="הסר">✕</button></li>'
+        );
+      })
+      .join("");
+  }
+  if (favForm) {
+    favForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = document.getElementById("fav-name");
+      var val = input.value.trim();
+      if (!val) return;
+      var favs = safeGet("favorites", []);
+      favs.unshift(val);
+      safeSet("favorites", favs);
+      renderFavorites();
+      favForm.reset();
+      input.focus();
+    });
+    favList.addEventListener("click", function (e) {
+      var btn = e.target.closest(".chip-remove");
+      if (!btn) return;
+      var idx = parseInt(btn.getAttribute("data-idx"), 10);
+      var favs = safeGet("favorites", []);
+      favs.splice(idx, 1);
+      safeSet("favorites", favs);
+      renderFavorites();
+    });
+  }
+
+  /* ---------- quick notes ---------- */
+  var noteForm = document.getElementById("note-form");
+  var noteList = document.getElementById("note-list");
+  var noteEmpty = document.getElementById("note-empty");
+
+  function renderNotes() {
+    var notes = safeGet("notes", []);
+    if (noteEmpty) noteEmpty.hidden = notes.length > 0;
+    noteList.innerHTML = notes
+      .map(function (n, i) {
+        return (
+          '<li class="note-item"><span>' + escapeHtml(n) + "</span>" +
+          '<button type="button" class="chip-remove" data-idx="' + i + '" aria-label="מחק">✕</button></li>'
+        );
+      })
+      .join("");
+  }
+  if (noteForm) {
+    noteForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = document.getElementById("note-text");
+      var val = input.value.trim();
+      if (!val) return;
+      var notes = safeGet("notes", []);
+      notes.unshift(val);
+      safeSet("notes", notes);
+      renderNotes();
+      noteForm.reset();
+      input.focus();
+    });
+    noteList.addEventListener("click", function (e) {
+      var btn = e.target.closest(".chip-remove");
+      if (!btn) return;
+      var idx = parseInt(btn.getAttribute("data-idx"), 10);
+      var notes = safeGet("notes", []);
+      notes.splice(idx, 1);
+      safeSet("notes", notes);
+      renderNotes();
+    });
+  }
+})();
+</script>
+</body>
+</html>
