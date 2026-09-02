@@ -2073,9 +2073,26 @@ gtag('config', 'AW-18061574299');
         .ask-bar { -webkit-tap-highlight-color: transparent; }
         .ask-bar:focus, .ask-bar:focus-visible { outline: none; }
         .ask-bar:hover { background: none; border: 0; transform: none; }
-        .ask-ic, .ask-ph { display: none; }
+        .ask-ic { display: none; }
+        .ask-bar { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+        /* השאלות המתחלפות הן הכפתור עצמו — באותו עיצוב זכוכית בדיוק */
+        .ask-ph {
+            display: inline-flex; justify-content: center; align-items: center;
+            width: min(320px, 88vw); align-self: center;
+            font-size: .98rem; font-weight: 700; color: #fff;
+            padding: 13px 18px; border-radius: 50px; margin-top: 10px;
+            white-space: nowrap; overflow: hidden;
+            background: linear-gradient(163deg, rgba(214,220,248,.2), rgba(164,172,215,.12) 48%, rgba(140,148,198,.15));
+            border: 1px solid rgba(255,255,255,.36);
+            box-shadow:
+                inset 0 1.5px 0 rgba(255,255,255,.5),
+                inset 0 -1px 0 rgba(0,0,0,.2),
+                inset 0 0 22px rgba(77,214,232,.13),
+                0 12px 28px rgba(0,0,0,.3),
+                0 0 46px -8px rgba(77,214,232,.38);
+        }
         .ask-core {
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+            display: flex; flex-direction: column-reverse; align-items: center; justify-content: center; gap: 7px;
             position: relative;
         }
         .ask-core::before {
@@ -2146,7 +2163,7 @@ gtag('config', 'AW-18061574299');
         .ask-brand b { font-weight: normal; }
         @keyframes brandSweep { to { background-position: -230% 0; } }
         .ask-go {
-            display: inline-flex; justify-content: center; width: auto; align-self: center;
+            display: none; justify-content: center; width: auto; align-self: center;
             font-size: 1rem; padding: 13px 30px; border-radius: 50px;
             margin-top: 10px;
             color: #fff;
