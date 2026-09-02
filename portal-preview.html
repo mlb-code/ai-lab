@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Portal — Design Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #6C3CE1;
+  --primary-light: #8B5CF6;
+  --accent: #00D4AA;
+  --pink: #FF4D8D;
+  --gold: #F5C842;
+  --dark: #0f0f1e;
+  --dark-card: #181830;
+  --dark-lighter: #22224a;
+  --border: rgba(255,255,255,0.08);
+  --text: #f0eef5;
+  --text-muted: #b8b0d0;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-pill: 9999px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-brand: 0 8px 24px rgba(108, 60, 225, 0.35);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Heebo', sans-serif; background: var(--dark); color: var(--text); direction: rtl; min-height: 100vh; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
+.portal {
+  display: grid;
+  grid-template-columns: 240px 1fr;  /* RTL: first col (sidebar) = right */
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR — compact, grouped, switcher on top
+   ═══════════════════════════════════════════════════════════════ */
+.sidebar {
+  background: var(--dark-card);
+  border-left: 1px solid var(--border);  /* divider between sidebar (right) and main (left) in RTL */
+  padding: 1.3rem 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.sidebar-brand {
+  padding: 0 1.3rem;
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, var(--accent), var(--primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+  display: inline-block;
+  width: fit-content;
+}
+.sidebar-greeting {
+  padding: 0 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--text);
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 0.8rem 1rem calc(0.8rem + env(safe-area-inset-bottom, 0));
+  border-top: 1px solid var(--border);
+}
+.exit-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s, color 0.15s;
+}
+.exit-btn:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+/* Course switcher — FIRST thing, most prominent */
+.course-switcher {
+  margin: 0 1rem;
+  padding: 4px;
+  background: var(--dark);
+  border-radius: var(--radius-pill);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  border: 1px solid var(--border);
+}
+.course-switcher button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.course-switcher button.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Progress ring */
+.sidebar-progress {
+  padding: 0 1rem;
+}
+.progress-box {
+  background: linear-gradient(135deg, rgba(108,60,225,0.15), rgba(0,212,170,0.1));
+  border: 1px solid rgba(108,60,225,0.25);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem;
+}
+.progress-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600; }
+.progress-num { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.45rem; }
+.progress-num .total { color: var(--text-muted); font-weight: 500; font-size: 0.95rem; }
+.progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light));
+  border-radius: var(--radius-pill);
+  transition: width 0.4s cubic-bezier(.2,.8,.2,1);
+}
+
+/* Nav groups */
+.sidebar-nav { padding: 0 0.5rem; }
+.nav-group-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 700;
+  padding: 0.6rem 0.85rem 0.35rem;
+  opacity: 0.7;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  text-align: right;
+  width: 100%;
+  position: relative;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+.nav-item.active {
+  background: rgba(108, 60, 225, 0.14);
+  color: var(--text);
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 8px; bottom: 8px;
+  width: 3px;
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+}
+.nav-item-icon { font-size: 1.05rem; width: 20px; text-align: center; }
+.nav-item.has-badge { opacity: 0.55; cursor: not-allowed; }
+.nav-item.has-badge:hover { background: transparent; color: var(--text-muted); }
+.nav-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  background: rgba(245,200,66,0.18);
+  color: var(--gold);
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.04em;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--border);
+}
+.zoom-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: linear-gradient(135deg, #2D74F9, #1a5cd9);
+  color: #fff !important;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(45,116,249,0.35);
+  direction: rtl;
+}
+.zoom-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,116,249,0.5); }
+
+/* Floating AI assistant button — bottom-left of viewport */
+.ai-assistant-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(108,60,225,0.45);
+  z-index: 80;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.ai-assistant-btn:hover { transform: scale(1.08); box-shadow: 0 10px 28px rgba(108,60,225,0.6); }
+.ai-assistant-btn::after {
+  content: 'שאל את העוזר';
+  position: absolute;
+  bottom: 74px;
+  left: 0;
+  background: var(--dark-lighter);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  border: 1px solid var(--border);
+}
+.ai-assistant-btn:hover::after { opacity: 1; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════════════════════════════ */
+.main {
+  padding: 2rem 3rem 4rem;
+  max-width: 1100px;
+}
+
+/* Hero banner */
+.hero-banner {
+  background: linear-gradient(135deg, var(--dark-card), var(--dark-lighter));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.8rem;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: -60px;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(108,60,225,0.25), transparent 70%);
+  pointer-events: none;
+}
+.hero-left { position: relative; z-index: 2; }
+.hero-label {
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.hero-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 0.9rem;
+}
+.hero-progress { margin-bottom: 1.1rem; }
+.hero-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+.hero-progress-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.hero-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light));
+  border-radius: var(--radius-pill);
+  transition: width 0.4s cubic-bezier(.2,.8,.2,1);
+}
+.hero-cta-row {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.hero-cta {
+  background: linear-gradient(135deg, var(--accent), #00b894);
+  color: #000 !important;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.hero-meta {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Community widget (right side of hero) */
+.community-widget {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(108,60,225,0.25);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+.community-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.community-title .pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #25D366;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+.community-feed {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+.community-item {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  padding: 0.45rem 0.65rem;
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-sm);
+  border-right: 2px solid var(--accent);
+}
+.community-item strong { color: var(--text); font-weight: 700; }
+
+/* Daily tip card */
+.tip-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-right: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.85rem;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.tip-category { font-size: 0.72rem; color: var(--accent); font-weight: 700; letter-spacing: 0.04em; }
+.tip-text { font-size: 0.88rem; color: var(--text); line-height: 1.5; font-weight: 500; }
+.community-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: #fff !important;
+  padding: 0.6rem;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.community-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(37,211,102,0.4); }
+.community-btn svg { flex-shrink: 0; }
+
+/* Section header */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.1rem;
+}
+.section-head h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+.section-head .hint { font-size: 0.8rem; color: var(--text-muted); }
+
+/* Recommended next — BIG card */
+.recommended {
+  background: linear-gradient(135deg, rgba(0,212,170,0.12), rgba(108,60,225,0.08));
+  border: 1.5px solid rgba(0,212,170,0.35);
+  border-radius: var(--radius-md);
+  padding: 1.3rem 1.5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 1.2rem;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+.recommended::before {
+  content: 'השיעור שלך עכשיו';
+  position: absolute;
+  top: -10px;
+  right: 1.3rem;
+  background: var(--accent);
+  color: #000;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.recommended-num {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--accent), #00b894);
+  color: #000;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  font-weight: 900;
+}
+.recommended-info h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.25rem; }
+.recommended-info p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+.recommended-meta {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.recommended-meta span { display: inline-flex; align-items: center; gap: 3px; }
+.recommended-enter {
+  background: linear-gradient(135deg, var(--accent), #00b894);
+  color: #000 !important;
+  padding: 0.75rem 1.2rem;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  transition: transform 0.2s;
+  white-space: nowrap;
+}
+.recommended-enter:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+/* Sessions grid */
+.sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.session-card {
+  background: var(--dark-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.2rem;
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.session-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-md);
+}
+.session-card.done { opacity: 0.65; }
+.session-card.done .session-title { text-decoration: line-through; text-decoration-color: rgba(0,212,170,0.5); }
+.session-num {
+  width: 44px;
+  height: 44px;
+  background: var(--dark-lighter);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+.session-card.done .session-num { background: rgba(0,212,170,0.15); color: var(--accent); }
+.session-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+.session-topics { font-size: 0.78rem; color: var(--text-muted); }
+.session-status {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border);
+  color: var(--text-muted);
+  background: transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+.session-status:hover { border-color: var(--accent); color: var(--accent); }
+.session-card.done .session-status {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+
+/* Quick shortcuts section */
+.shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.shortcut {
+  background: var(--dark-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: transform 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.shortcut:hover { transform: translateY(-2px); border-color: var(--primary-light); }
+.shortcut-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--dark-lighter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+.shortcut-title { font-size: 0.95rem; font-weight: 700; }
+.shortcut-sub { font-size: 0.78rem; color: var(--text-muted); }
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1.3rem;
+}
+.breadcrumb span { color: var(--primary-light); }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE TOP BAR — visible only on mobile
+   ═══════════════════════════════════════════════════════════════ */
+.mobile-topbar {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(15,15,30,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.7rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+.mobile-topbar-brand {
+  font-weight: 900;
+  font-size: 1.2rem;
+  background: linear-gradient(135deg, var(--accent), var(--primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+/* Compact row under the mobile top bar — holds the course switcher */
+.mobile-switcher-row {
+  display: none;
+  position: sticky;
+  top: 57px; /* right below the top bar */
+  z-index: 49;
+  padding: 0.5rem 1rem;
+  background: rgba(10,10,20,0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  justify-content: center;
+}
+/* Mobile course switcher — compact pill in the top bar */
+.mobile-course-switch {
+  display: flex;
+  background: rgba(255,255,255,0.06);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  border: 1px solid var(--border);
+}
+.mobile-course-switch button {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.55);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 0;
+}
+.mobile-course-switch button.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.mobile-topbar-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+.mobile-topbar-btn:hover { background: rgba(255,255,255,0.1); }
+
+/* Text pill version of the Zoom button — more readable than a raw emoji */
+.mobile-topbar-zoom {
+  width: auto !important;
+  height: 38px;
+  padding: 0 1.1rem;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, #2D74F9, #1a5cd9);
+  border: none;
+  box-shadow: 0 4px 12px rgba(45,116,249,0.35);
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #fff !important;
+  min-width: 0;
+}
+
+/* Drawer overlay (backdrop) */
+.drawer-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 60;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.drawer-overlay.open { display: block; opacity: 1; }
+
+/* Instagram-style bottom nav (mobile only) with elevated AI center button */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  left: 0; right: 0;
+  bottom: 0;
+  z-index: 50;
+  background: rgba(10, 10, 20, 0.88);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0));
+}
+.mobile-bottom-nav-inner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0;
+}
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 4px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.55);
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+  min-height: 44px;
+  flex: 1;
+  min-width: 0;
+  border-radius: 12px;
+}
+.bottom-nav-icon {
+  font-size: 1.35rem;
+  transition: transform 0.2s ease;
+  line-height: 1;
+}
+.bottom-nav-item.active { color: #fff; }
+.bottom-nav-item.active .bottom-nav-icon { transform: scale(1.15); }
+
+/* ELEVATED AI button — center, pops above the bar */
+.bottom-nav-ai {
+  flex: 0 0 auto !important;
+  width: 58px;
+  height: 58px;
+  padding: 0 !important;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6C3CE1, #4A90E2);
+  color: #fff !important;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: -0.3px;
+  gap: 0 !important;
+  transform: translateY(-12px);
+  box-shadow: 0 8px 22px rgba(108, 60, 225, 0.6);
+  border: 3px solid rgba(10, 10, 20, 0.92);
+  line-height: 1;
+  animation: aiPulse 2.8s ease-in-out infinite;
+}
+.bottom-nav-ai span { display: block; line-height: 1; font-size: 0.68rem; font-weight: 900; }
+.bottom-nav-ai:active { transform: translateY(-10px) scale(0.95); }
+@keyframes aiPulse {
+  0%, 100% { box-shadow: 0 8px 22px rgba(108, 60, 225, 0.6); }
+  50%      { box-shadow: 0 8px 30px rgba(108, 60, 225, 0.9), 0 0 0 8px rgba(108, 60, 225, 0.08); }
+}
+
+/* Bottom Sheet — iOS/Android-style full-width sheet slides up from bottom */
+.more-sheet-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 59;
+}
+.more-sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+.more-sheet {
+  display: none;
+  position: fixed;
+  left: 0; right: 0;
+  bottom: 0;
+  background: rgba(20, 20, 35, 0.98);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px 20px 0 0;
+  padding: 0.8rem 1rem calc(1.2rem + env(safe-area-inset-bottom, 0));
+  z-index: 60;
+  transform: translateY(100%);
+  transition: transform 0.28s cubic-bezier(.22,.9,.3,1);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.more-sheet.open { transform: translateY(0); }
+.ms-handle {
+  width: 42px; height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.25);
+  margin: 0 auto 0.8rem;
+}
+.ms-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.9rem;
+  text-align: center;
+}
+.ms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+}
+.ms-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 0.9rem 0.4rem;
+  color: #fff;
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  min-height: 80px;
+}
+.ms-item:active { transform: scale(0.96); background: rgba(108,60,225,0.2); }
+.ms-emoji { font-size: 1.6rem; line-height: 1; }
+
+/* Sheet visible only on mobile */
+@media (max-width: 900px) {
+  .more-sheet { display: block; }
+  .more-sheet-backdrop { display: block; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE MEDIA
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .portal { grid-template-columns: 1fr; }
+
+  /* Sidebar becomes slide-in drawer from right */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    max-width: 85vw;
+    height: 100dvh;
+    z-index: 70;
+    transform: translateX(105%);
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+    box-shadow: -8px 0 28px rgba(0,0,0,0.35);
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  .mobile-topbar { display: flex; }
+  .mobile-switcher-row { display: flex; }
+  .mobile-bottom-nav { display: block; }
+
+  /* Extra bottom padding so content isn't hidden behind fixed bottom nav */
+  .main { padding: 1rem 1rem calc(6rem + env(safe-area-inset-bottom, 0)); }
+  .breadcrumb { display: none; }
+
+  /* Hide floating assistant button — it's in the bottom nav now */
+  .ai-assistant-btn { display: none; }
+
+  /* Hide demo note so it doesn't overlap UI on mobile */
+  .demo-note { display: none; }
+
+  .hero-banner {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.2rem 1.3rem;
+  }
+  .hero-title { font-size: 1.3rem; }
+
+  .shortcuts { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .shortcut { padding: 0.75rem 0.9rem; }
+  .shortcut-icon { width: 36px; height: 36px; font-size: 1.1rem; }
+  .shortcut-title { font-size: 0.88rem; }
+  .shortcut-sub { font-size: 0.72rem; }
+
+  .recommended {
+    grid-template-columns: 52px 1fr;
+    gap: 0.8rem;
+    padding: 1rem 1.1rem;
+  }
+  .recommended-num { width: 52px; height: 52px; font-size: 1.4rem; }
+  .recommended-info h3 { font-size: 1.05rem; }
+  .recommended-info p { font-size: 0.82rem; }
+  .recommended-meta { font-size: 0.72rem; gap: 0.5rem; flex-wrap: wrap; }
+  .recommended-enter {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 0.4rem;
+  }
+
+  .sessions-grid { grid-template-columns: 1fr; }
+  .session-card { padding: 0.9rem 1rem; grid-template-columns: 40px 1fr auto; }
+  .session-num { width: 40px; height: 40px; font-size: 1rem; }
+  .session-title { font-size: 0.95rem; }
+  .session-topics { font-size: 0.74rem; }
+
+}
+
+.demo-note {
+  position: fixed;
+  bottom: 14px;
+  left: 14px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+}
+.demo-note button {
+  margin-right: 8px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile top bar — only on small screens -->
+<header class="mobile-topbar">
+  <a href="https://zoom.us/j/YOUR_ROOM_ID" target="_blank" class="mobile-topbar-btn mobile-topbar-zoom" aria-label="כניסה לכיתה">כיתה</a>
+  <a href="/" class="mobile-topbar-brand" aria-label="דף הבית של AI Lab">AI Lab</a>
+</header>
+<!-- Course switcher row below the top bar -->
+<div class="mobile-switcher-row">
+  <div class="mobile-course-switch">
+    <button onclick="switchCourse('basic')" id="mbBtnBasic">בסיסי</button>
+    <button class="active" onclick="switchCourse('advanced')" id="mbBtnAdvanced">מתקדם</button>
+  </div>
+</div>
+
+<div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+
+<div class="portal">
+  <!-- SIDEBAR (RTL: on the right visually, first in HTML so grid places it in column 1 = right side in RTL) -->
+  <aside class="sidebar">
+    <a href="/" class="sidebar-brand" aria-label="דף הבית של AI Lab">AI Lab</a>
+
+    <div class="sidebar-greeting">
+      <span style="color:var(--text-muted); font-size:0.82rem;">שלום,</span>
+      <span id="studentName" style="font-weight:700; font-size:1rem; margin-right:4px;">דנה</span>
+      <span style="font-size:1.05rem;">👋</span>
+    </div>
+
+    <!-- Zoom button at the TOP (most accessible) -->
+    <div style="padding: 0 1rem;">
+      <a href="https://zoom.us/j/YOUR_ROOM_ID" target="_blank" class="zoom-btn">
+        <span style="font-size:1.3rem;">🎥</span>
+        <span style="flex:1; text-align:right;">הכנס לכיתה</span>
+      </a>
+    </div>
+
+    <div class="course-switcher">
+      <button onclick="switchCourse('basic')" id="btnBasic">בסיסי</button>
+      <button class="active" onclick="switchCourse('advanced')" id="btnAdvanced">מתקדם</button>
+    </div>
+
+    <div class="sidebar-progress">
+      <div class="progress-box">
+        <div class="progress-label">ההתקדמות שלי</div>
+        <div class="progress-num"><span id="sidebarDone">2</span><span class="total"> / 8 שיעורים</span></div>
+        <div class="progress-bar"><div class="progress-bar-fill" id="sidebarFill" style="width:25%"></div></div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+
+    <div class="sidebar-bottom">
+      <a href="/" class="exit-btn" aria-label="חזרה לאתר">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        <span>חזרה לאתר</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <div class="breadcrumb">
+      פורטל <span>›</span> <span>המפגשים שלי</span>
+    </div>
+
+    <!-- Hero: progress + community -->
+    <section class="hero-banner">
+      <div class="hero-left">
+        <div class="hero-label" id="heroLabel">שיעור 3 · הקורס המתקדם</div>
+        <h1 class="hero-title" id="heroTitle">Authentication — הרשמה והתחברות</h1>
+        <div class="hero-progress">
+          <div class="hero-progress-label">
+            <span id="heroPctLabel">2 מתוך 8 הושלמו</span>
+            <span id="heroPct">25%</span>
+          </div>
+          <div class="hero-progress-bar"><div class="hero-progress-fill" id="heroFill" style="width:25%"></div></div>
+        </div>
+        <div class="hero-cta-row">
+          <a href="#" class="hero-cta" id="heroCta">▶️ המשך לשיעור הנוכחי</a>
+        </div>
+      </div>
+
+      <div class="community-widget">
+        <div class="community-title"><span class="pulse"></span> 💡 טיפ היום</div>
+        <div class="tip-card" id="tipCard">
+          <div class="tip-category" id="tipCategory">🧠 AI & פרומפטים</div>
+          <div class="tip-text" id="tipText">טוען...</div>
+        </div>
+        <a href="#" class="community-btn">
+          <span>הצטרפו לקהילה</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Quick shortcuts -->
+    <div class="shortcuts">
+      <a href="#" class="shortcut">
+        <div class="shortcut-icon">🎤</div>
+        <div>
+          <div class="shortcut-title">מצגת השיעור</div>
+          <div class="shortcut-sub">רענון מהיר</div>
+        </div>
+      </a>
+      <a href="#" class="shortcut">
+        <div class="shortcut-icon">💡</div>
+        <div>
+          <div class="shortcut-title">פרומפטים מוכנים</div>
+          <div class="shortcut-sub">העתק-הדבק</div>
+        </div>
+      </a>
+      <a href="#" class="shortcut">
+        <div class="shortcut-icon">🤖</div>
+        <div>
+          <div class="shortcut-title">שאל את העוזר</div>
+          <div class="shortcut-sub">מומחה לשיעור הנוכחי</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Recommended next -->
+    <div class="section-head">
+      <h2>המשך מכאן</h2>
+      <span class="hint">הבא בתור</span>
+    </div>
+    <div class="recommended" id="recommendedCard">
+      <div class="recommended-num" id="recNum">3</div>
+      <div class="recommended-info">
+        <h3 id="recTitle">Authentication — הרשמה והתחברות</h3>
+        <p id="recDesc">מערכת הרשמה, התחברות ואזור אישי. האתר שלכם הופך לאפליקציה.</p>
+        <div class="recommended-meta">
+          <span>⏱️ ~45 דקות</span>
+          <span>📊 4 מושגים</span>
+          <span>🎤 מצגת זמינה</span>
+        </div>
+      </div>
+      <a href="#" class="recommended-enter">התחל →</a>
+    </div>
+
+    <!-- All sessions -->
+    <div class="section-head">
+      <h2>כל המפגשים</h2>
+      <span class="hint">לחצו על ✓ לסימון כהושלם</span>
+    </div>
+    <div class="sessions-grid" id="sessionsGrid"></div>
+  </main>
+</div>
+
+<!-- AI Assistant floating button — desktop only (mobile uses bottom nav tab) -->
+<button class="ai-assistant-btn" onclick="alert('חלון הצ\\'אט של העוזר ייפתח כאן — מחובר ל-Cloudflare Worker')" aria-label="שאל את העוזר">
+  🤖
+</button>
+
+<!-- Instagram-style bottom navigation — mobile only -->
+<nav class="mobile-bottom-nav" aria-label="ניווט">
+  <div class="mobile-bottom-nav-inner">
+    <button class="bottom-nav-item active" aria-current="page">
+      <span class="bottom-nav-icon">🏠</span>
+      <span>מפגשים</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">💡</span>
+      <span>פרומפטים</span>
+    </button>
+    <!-- Elevated AI assistant — the star of the bar -->
+    <button class="bottom-nav-ai" onclick="alert('חלון הצ\\'אט של העוזר ייפתח כאן')" aria-label="שאל את העוזר של הקורס">
+      <span>AI</span>
+      <span>Lab</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">📋</span>
+      <span>הפרויקט שלי</span>
+    </button>
+    <button class="bottom-nav-item" onclick="toggleMoreMenu(event)" id="moreBtn" aria-label="תפריט נוסף">
+      <span class="bottom-nav-icon">⋯</span>
+      <span>עוד</span>
+    </button>
+  </div>
+</nav>
+
+<!-- Bottom Sheet — full-width, slides up from bottom (mobile 'עוד' menu) -->
+<div class="more-sheet-backdrop" id="moreSheetBackdrop" onclick="toggleMoreSheet()"></div>
+<div class="more-sheet" id="moreSheet" role="dialog" aria-label="כל הסעיפים">
+  <div class="ms-handle"></div>
+  <div class="ms-title">כל הסעיפים</div>
+  <div class="ms-grid" id="msGrid"></div>
+</div>
+
+<!-- Demo reset button — for previewing progress states -->
+<div class="demo-note">
+  🧪 Demo: LocalStorage מופעל
+  <button onclick="resetProgress()">אפס התקדמות</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// Session data (advanced course)
+// ═══════════════════════════════════════════════════════════════
+const SESSIONS = [
+  { num: 1, title: 'חזרה ושדרוג', topics: 'MVP · Roadmap · Git · שדרוג', minutes: 40 },
+  { num: 2, title: 'Supabase — מאגר נתונים', topics: 'Database · Backend · טבלאות', minutes: 50 },
+  { num: 3, title: 'Authentication', topics: 'הרשמה · התחברות · אזור אישי', minutes: 45 },
+  { num: 4, title: 'חיבור ל-APIs', topics: 'REST · JSON · API Keys', minutes: 45 },
+  { num: 5, title: 'בניית עוזר AI', topics: 'System Prompt · Tools · Chat', minutes: 55 },
+  { num: 6, title: 'עיצוב + Railway', topics: 'Responsive · Deploy · Domain', minutes: 50 },
+  { num: 7, title: 'שיווק דיגיטלי', topics: 'SEO · Social · Landing', minutes: 40 },
+  { num: 8, title: 'יום ההצגה הגדול', topics: 'Pitch · Demo · Networking', minutes: 60 },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// Progress — LocalStorage
+// ═══════════════════════════════════════════════════════════════
+const STORAGE_KEY = 'ai-lab-progress-advanced';
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveProgress(p) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch {}
+}
+function toggleSession(num) {
+  const p = getProgress();
+  p[num] = !p[num];
+  saveProgress(p);
+  render();
+}
+function resetProgress() {
+  localStorage.removeItem(STORAGE_KEY);
+  render();
+}
+
+function completedCount() {
+  const p = getProgress();
+  return SESSIONS.filter(s => p[s.num]).length;
+}
+function nextSession() {
+  const p = getProgress();
+  return SESSIONS.find(s => !p[s.num]) || SESSIONS[SESSIONS.length - 1];
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Render
+// ═══════════════════════════════════════════════════════════════
+function render() {
+  const p = getProgress();
+  const done = completedCount();
+  const total = SESSIONS.length;
+  const pct = Math.round(done / total * 100);
+  const next = nextSession();
+
+  // Hero
+  document.getElementById('heroLabel').textContent = `שיעור ${next.num} · הקורס המתקדם`;
+  document.getElementById('heroTitle').textContent = next.title;
+  document.getElementById('heroPct').textContent = pct + '%';
+  document.getElementById('heroPctLabel').textContent = `${done} מתוך ${total} הושלמו`;
+  document.getElementById('heroFill').style.width = pct + '%';
+
+  // Sidebar
+  document.getElementById('sidebarDone').textContent = done;
+  document.getElementById('sidebarFill').style.width = pct + '%';
+
+  // Recommended
+  document.getElementById('recNum').textContent = next.num;
+  document.getElementById('recTitle').textContent = next.title;
+  document.getElementById('recDesc').textContent = next.topics;
+  document.querySelector('.recommended-meta').innerHTML =
+    `<span>⏱️ ~${next.minutes} דקות</span><span>📊 4 מושגים</span><span>🎤 מצגת זמינה</span>`;
+
+  // Grid (excluding the recommended one for cleaner UX)
+  const grid = document.getElementById('sessionsGrid');
+  grid.innerHTML = SESSIONS.map(s => {
+    const isDone = !!p[s.num];
+    const isCurrent = s.num === next.num;
+    return `
+      <div class="session-card ${isDone ? 'done' : ''}" onclick="window.location.hash='session-${s.num}'">
+        <div class="session-num">${s.num}</div>
+        <div>
+          <div class="session-title">${s.title}${isCurrent ? ' <span style="color:var(--accent);font-size:0.7rem;">· עכשיו</span>' : ''}</div>
+          <div class="session-topics">${s.topics}</div>
+        </div>
+        <button class="session-status" onclick="event.stopPropagation(); toggleSession(${s.num})" title="${isDone ? 'בוטל סימון' : 'סמן כהושלם'}">
+          ${isDone ? '✓' : ''}
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Sidebar nav — different items per course
+// ═══════════════════════════════════════════════════════════════
+const NAV_MENUS = {
+  basic: [
+    { group: '📚 הלמידה שלי', items: [
+      { icon: '🎯', label: 'מפגשים', active: true },
+      { icon: '📋', label: 'הפרויקט שלי' },
+    ]},
+    { group: '🛠️ כלים', items: [
+      { icon: '🤖', label: 'כלי AI' },
+      { icon: '📖', label: 'הדרכות' },
+      { icon: '⭐', label: 'המלצות' },
+    ]},
+    { group: '👥 קהילה', items: [
+      { icon: '💬', label: 'WhatsApp קבוצה' },
+      { icon: '🎮', label: 'דיסקורד', badge: 'בקרוב' },
+      { icon: '📥', label: 'הורדות' },
+      { icon: '❓', label: 'עזרה' },
+    ]},
+  ],
+  advanced: [
+    { group: '📚 הלמידה שלי', items: [
+      { icon: '🎯', label: 'מפגשים', active: true },
+      { icon: '✅', label: 'צ\'קליסט פרויקט' },
+    ]},
+    { group: '🛠️ כלים', items: [
+      { icon: '⚡', label: 'כלים לפיתוח' },
+      { icon: '💡', label: 'פרומפטים מוכנים' },
+      { icon: '📖', label: 'הדרכות' },
+    ]},
+    { group: '👥 קהילה', items: [
+      { icon: '💬', label: 'WhatsApp קבוצה' },
+      { icon: '🎮', label: 'דיסקורד', badge: 'בקרוב' },
+      { icon: '📥', label: 'הורדות' },
+      { icon: '❓', label: 'עזרה' },
+    ]},
+    // Admin-only — visible only when ?admin=1 in URL
+    { group: '🔒 אדמין', admin: true, items: [
+      { icon: '🎬', label: 'מצגת וובינר' },
+    ]},
+  ],
+};
+
+function renderSidebarNav(course) {
+  const nav = document.getElementById('sidebarNav');
+  const isAdmin = new URLSearchParams(location.search).get('admin') === '1';
+  const groups = NAV_MENUS[course] || NAV_MENUS.advanced;
+  nav.innerHTML = groups
+    .filter(g => !g.admin || isAdmin)
+    .map((g, gi) => `
+      <div class="nav-group-label" ${gi > 0 ? 'style="margin-top:0.7rem;"' : ''}>${g.group}</div>
+      ${g.items.map(it => `
+        <button class="nav-item ${it.active ? 'active' : ''} ${it.badge ? 'has-badge' : ''}" ${it.badge ? 'disabled' : ''}>
+          <span class="nav-item-icon">${it.icon}</span>
+          <span style="flex:1;">${it.label}</span>
+          ${it.badge ? `<span class="nav-badge">${it.badge}</span>` : ''}
+        </button>
+      `).join('')}
+    `).join('');
+}
+
+function switchCourse(c) {
+  document.getElementById('btnBasic').classList.toggle('active', c === 'basic');
+  document.getElementById('btnAdvanced').classList.toggle('active', c === 'advanced');
+  // Keep the mobile top-bar switcher in sync (if present)
+  const mbB = document.getElementById('mbBtnBasic');
+  const mbA = document.getElementById('mbBtnAdvanced');
+  if (mbB && mbA) {
+    mbB.classList.toggle('active', c === 'basic');
+    mbA.classList.toggle('active', c === 'advanced');
+  }
+  renderSidebarNav(c);
+  renderMoreSheet(c);
+}
+
+// Populate the bottom sheet grid based on the current course + optional admin flag
+function renderMoreSheet(course) {
+  const grid = document.getElementById('msGrid');
+  if (!grid) return;
+  const isAdmin = new URLSearchParams(location.search).get('admin') === '1';
+  const BASE_BASIC = [
+    { icon: '📋', label: 'הפרויקט שלי' },
+    { icon: '🤖', label: 'כלי AI' },
+    { icon: '📖', label: 'הדרכות' },
+    { icon: '⭐', label: 'המלצות' },
+    { icon: '💬', label: 'קהילה' },
+    { icon: '📥', label: 'הורדות' },
+    { icon: '❓', label: 'עזרה' },
+  ];
+  const BASE_ADV = [
+    { icon: '✅', label: 'צ\'קליסט פרויקט' },
+    { icon: '⚡', label: 'כלים לפיתוח' },
+    { icon: '📖', label: 'הדרכות' },
+    { icon: '⭐', label: 'המלצות' },
+    { icon: '💬', label: 'קהילה' },
+    { icon: '📥', label: 'הורדות' },
+    { icon: '❓', label: 'עזרה' },
+  ];
+  let items = (course === 'basic') ? BASE_BASIC : BASE_ADV;
+  if (isAdmin && course === 'advanced') items = items.concat([{ icon: '🎬', label: 'מצגת וובינר' }]);
+  // "חזרה לאתר" always last — exits the portal back to the main site
+  items = items.concat([{ icon: '🚪', label: 'חזרה לאתר', href: '/' }]);
+  grid.innerHTML = items.map(it => it.href
+    ? `<a class="ms-item" href="${it.href}"><span class="ms-emoji">${it.icon}</span><span>${it.label}</span></a>`
+    : `<button class="ms-item" onclick="toggleMoreSheet()"><span class="ms-emoji">${it.icon}</span><span>${it.label}</span></button>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Daily tip — 60 tips, rotates based on day of year (same for everyone on same day)
+// ═══════════════════════════════════════════════════════════════
+const TIPS = [
+  // AI & Prompts
+  { cat: 'AI ופרומפטים', text: 'פרומפט טוב מתחיל בתפקיד: "אתה מעצב מקצועי". התוצאות יהיו טובות פי שלוש.' },
+  { cat: 'AI ופרומפטים', text: 'תמיד תוסיף דוגמאות לפרומפט. AI לומד מהן מיד.' },
+  { cat: 'AI ופרומפטים', text: 'ב-Claude Code תבקש "תתכנן לפני שתעבוד". חוסך פעולות מיותרות.' },
+  { cat: 'AI ופרומפטים', text: 'פרומפט קצר לא תמיד עדיף על ארוך. תנסה כמה ותבדוק מה עובד.' },
+  { cat: 'AI ופרומפטים', text: 'תן ל-AI הקשר: מי אתה, מי הקהל, מה המטרה. הכל משנה.' },
+  { cat: 'AI ופרומפטים', text: 'ב-ChatGPT תבקש "שאל אותי שאלות לפני שתענה". משפר תוצאות בענק.' },
+  { cat: 'AI ופרומפטים', text: 'Temperature נמוך נותן תשובות עקביות. Temperature גבוה נותן תשובות יצירתיות.' },
+  { cat: 'AI ופרומפטים', text: 'אל תסמוך על AI במאה אחוז. תמיד תבדוק עובדות באינטרנט.' },
+  { cat: 'AI ופרומפטים', text: 'Chain of Thought: תבקש "תחשוב שלב אחר שלב". התשובה תהיה מדויקת יותר.' },
+  { cat: 'AI ופרומפטים', text: 'תבקש "תחקור ותן לי שלוש אפשרויות" במקום לבקש תשובה אחת.' },
+  { cat: 'AI ופרומפטים', text: 'System Prompt זה תפקיד קבוע לעוזר. User Prompt זו שאלה ספציפית.' },
+  { cat: 'AI ופרומפטים', text: 'הסוד: תשאל שאלות. אל תיתן פקודות יבשות.' },
+  { cat: 'AI ופרומפטים', text: 'אם תשובת AI לא טובה, תגיד לו מה שגוי. הוא ילמד.' },
+  { cat: 'AI ופרומפטים', text: 'פרומפט זה כמו הוראות לעובד חדש. ככל שהן ברורות יותר, הוא עובד טוב יותר.' },
+  { cat: 'AI ופרומפטים', text: 'תבקש מ-Claude לכתוב Artifact לקוד ארוך. נוח פי עשרה.' },
+
+  // Entrepreneurship
+  { cat: 'יזמות', text: 'MVP זה הדבר הכי פשוט שעובד. אל תבנה הכל מההתחלה.' },
+  { cat: 'יזמות', text: 'לקוח אחד מרוצה שווה יותר ממאה רעיונות תיאורטיים.' },
+  { cat: 'יזמות', text: 'תמיד תשאל "מי הלקוח שלי" לפני שתשאל "מה אני בונה".' },
+  { cat: 'יזמות', text: 'פיצ\'ר אחד שעובד מושלם עדיף על עשרה פיצ\'רים חצי-עובדים.' },
+  { cat: 'יזמות', text: 'יזם זה לא מי שיש לו רעיון. יזם זה מי שמבצע את הרעיון.' },
+  { cat: 'יזמות', text: 'רוצה לעשות משהו חדש? תשאל קודם איזו בעיה אמיתית זה פותר.' },
+  { cat: 'יזמות', text: 'תבדוק את הרעיון עם חמישה אנשים לפני שתתחיל לבנות.' },
+  { cat: 'יזמות', text: 'Pivot זה שינוי כיוון. זה לא כישלון, זו חוכמה.' },
+  { cat: 'יזמות', text: 'תעקוב אחרי המתחרים. מה הם עושים טוב ומה הם מפספסים?' },
+  { cat: 'יזמות', text: 'פיץ\' של דקה עדיף על מצגת של שעה. תלמד לדחוס את הערך.' },
+
+  // Dev
+  { cat: 'פיתוח', text: 'תעשה Commit קטן בכל פעם שמשהו עובד. קל לחזור אחורה.' },
+  { cat: 'פיתוח', text: 'קוד שעובד עדיף על קוד "יפה". קודם שיעבוד, אחר כך לסדר.' },
+  { cat: 'פיתוח', text: 'אפשר להעתיק ולהדביק, אבל תבין קודם מה שהדבקת.' },
+  { cat: 'פיתוח', text: 'תלמד קיצורי מקלדת. זה חוסך שעות בשבוע.' },
+  { cat: 'פיתוח', text: 'תחפש בגוגל לפני שאתה שואל. שמונים אחוז מהתשובות שם.' },
+  { cat: 'פיתוח', text: 'שם קובץ ברור עדיף על תיעוד רע. תיתן שמות מובנים.' },
+  { cat: 'פיתוח', text: 'Git Pull לפני Git Push. מונע בעיות.' },
+  { cat: 'פיתוח', text: 'console.log עוזר לך לראות מה קורה בקוד. תשתמש בו תמיד.' },
+  { cat: 'פיתוח', text: 'תכתוב קוד כאילו מישהו אחר יקרא אותו מחר.' },
+  { cat: 'פיתוח', text: 'ב-Claude Code תבקש "רפקטר את זה". הוא יסדר הכל אוטומטית.' },
+  { cat: 'פיתוח', text: 'תמיד תעשה גיבוי. פעם אחת תלמד למה.' },
+  { cat: 'פיתוח', text: 'Mobile First: תעצב קודם לטלפון, ואז למחשב.' },
+  { cat: 'פיתוח', text: 'אתר איטי מבריח גולשים. תכווץ תמונות.' },
+  { cat: 'פיתוח', text: 'משהו לא עובד? תסגור Tabs. הרעש מפריע לחשיבה.' },
+  { cat: 'פיתוח', text: 'תעבוד עם מסך נקי. גרפיקה פתוחה גורעת מהפוקוס.' },
+
+  // Design
+  { cat: 'עיצוב', text: 'עיצוב טוב לא מורגש. מה שמפריע זה עיצוב רע.' },
+  { cat: 'עיצוב', text: 'שלושה צבעים בלבד. יותר מזה הופך לבלגן.' },
+  { cat: 'עיצוב', text: 'רווחים הם חלק מהעיצוב. אל תעמיס על הדף.' },
+  { cat: 'עיצוב', text: 'פונט אחד לכותרות, פונט אחד לטקסט. זה הכל.' },
+  { cat: 'עיצוב', text: 'מה שבולט הוא מה שחשוב. תחליט מראש מה חשוב.' },
+  { cat: 'עיצוב', text: 'Mobile מדבר אמת. אם לא טוב בטלפון, זה לא טוב.' },
+  { cat: 'עיצוב', text: 'עיצוב סימטרי נוח לעין. Grid הוא חבר שלך.' },
+  { cat: 'עיצוב', text: 'תגנוב השראה מ-Linear, Stripe ו-Anthropic. הם הטובים ביותר.' },
+
+  // Marketing
+  { cat: 'שיווק', text: 'הכותרת הראשונה קובעת שמונים אחוז מההצלחה. תעבוד עליה הכי הרבה.' },
+  { cat: 'שיווק', text: 'SEO זה לענות על שאלה שאנשים שואלים בגוגל.' },
+  { cat: 'שיווק', text: 'תוכן שימושי עדיף על תוכן פרסומי. תיתן ערך קודם, תבקש אחר כך.' },
+  { cat: 'שיווק', text: 'עקביות ברשתות חברתיות עדיפה על ויראליות חד-פעמית.' },
+  { cat: 'שיווק', text: 'פוסט אחד טוב עדיף על עשרה פוסטים בינוניים.' },
+  { cat: 'שיווק', text: 'תספר סיפור. סיפור נזכר, עובדות נשכחות.' },
+  { cat: 'שיווק', text: 'סטוריז זו הזדמנות להכיר את הקהל. לא רק להצטלם.' },
+
+  // Mindset
+  { cat: 'מיינדסט', text: 'עשרים דקות ביום עדיפות על שלוש שעות בסופ"ש. עקביות עובדת.' },
+  { cat: 'מיינדסט', text: '"אני לא יודע" זו התחלה של ידע. אל תפחד להודות.' },
+  { cat: 'מיינדסט', text: 'נתקעת? תעשה Screenshot ותשאל. מהיר יותר מלנסות לבד.' },
+  { cat: 'מיינדסט', text: 'תלמד מהתוצאה, לא מהכוונה. מה באמת קרה?' },
+  { cat: 'מיינדסט', text: 'כל מומחה היה פעם מתחיל. המתחיל היום הוא המומחה של מחר.' },
+];
+
+function renderDailyTip() {
+  const day = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  const tip = TIPS[day % TIPS.length];
+  document.getElementById('tipCategory').textContent = tip.cat;
+  document.getElementById('tipText').textContent = tip.text;
+}
+
+function toggleDrawer() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('drawerOverlay');
+  const isOpen = sidebar.classList.toggle('open');
+  overlay.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+function toggleMoreSheet() {
+  const sheet = document.getElementById('moreSheet');
+  const bd = document.getElementById('moreSheetBackdrop');
+  if (!sheet || !bd) return;
+  const isOpen = sheet.classList.toggle('open');
+  bd.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+// Back-compat: the nav calls toggleMoreMenu — route it to the sheet
+function toggleMoreMenu(e) { if (e) e.stopPropagation(); toggleMoreSheet(); }
+
+renderSidebarNav('advanced');
+renderMoreSheet('advanced');
+renderDailyTip();
+render();
+</script>
+
+</body>
+</html>

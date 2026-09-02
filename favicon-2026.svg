@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366F1"/><stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".48" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bg)"/>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#sheen)"/>
+  <rect x="3" y="3" width="58" height="58" rx="15" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>
+  <text x="32" y="43" font-family="Georgia, 'Times New Roman', serif" font-size="27" font-weight="bold" fill="#fff" text-anchor="middle">AI</text>
+</svg>

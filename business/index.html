@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lab Business — Real One Man Show</title>
+    <meta name="description" content="6 מפגשי זום שבסופם יש לך אתר, בוט ואוטומציות — בלי מתכנת, בלי תלות. למבוגרים, יזמים ובעלי עסקים. מאיר לביא, יועץ עסקי 10+ שנים.">
+    <link rel="canonical" href="https://ai-lab.co.il/business/">
+    <meta property="og:title" content="AI Lab Business — Real One Man Show">
+    <meta property="og:description" content="קורס מעשי לבעלי עסקים — אתר, בוט ואוטומציות עם Claude Code. בלי מתכנת. 6 מפגשים בזום. מתחילים 11 במאי 2026.">
+    <meta property="og:url" content="https://ai-lab.co.il/business/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="he_IL">
+    <meta property="og:site_name" content="AI Lab">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        *,*::before,*::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #080808;
+            --bg-elev: #0f0f0f;
+            --bg-card: #131313;
+            --line: rgba(255,255,255,0.07);
+            --line-strong: rgba(255,255,255,0.14);
+            --text: #f4f4f4;
+            --text-muted: #888;
+            --text-faded: #444;
+            --accent: #10E593;
+            --accent-glow: #c1f0c1;
+            --warn: #FF4D4D;
+            --max-w: 1320px;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        ::selection { background: var(--accent); color: #000; }
+
+        a { color: inherit; text-decoration: none; }
+
+        .mono { font-family: 'Space Mono', monospace; letter-spacing: 0.02em; }
+        .accent { color: var(--accent); }
+        .warn { color: var(--warn); }
+        .muted { color: var(--text-muted); }
+        .faded { color: var(--text-faded); }
+
+        .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+        @media (max-width: 700px) { .container { padding: 0 20px; } }
+
+        /* === KICKER === Small label above sections, like editorial */
+        .kicker {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: inline-flex; align-items: center; gap: 12px;
+            margin-bottom: 28px;
+        }
+        .kicker::before {
+            content: ""; width: 28px; height: 1px;
+            background: var(--accent);
+        }
+
+        /* === DISPLAY TYPOGRAPHY === */
+        .display {
+            font-size: clamp(3.4rem, 11vw, 9rem);
+            font-weight: 900;
+            line-height: 0.92;
+            letter-spacing: -0.035em;
+        }
+        .h1 {
+            font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.025em;
+        }
+        .h2 {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.015em;
+        }
+        .lead {
+            font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* === NAV === */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 18px 32px;
+            background: rgba(8,8,8,0.7);
+            backdrop-filter: blur(20px) saturate(140%);
+            border-bottom: 1px solid var(--line);
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 16px;
+        }
+        .brand {
+            font-weight: 900; font-size: 1.05rem;
+            display: flex; align-items: baseline; gap: 8px;
+            letter-spacing: -0.01em;
+        }
+        .brand .biz {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem; font-weight: 700;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 3px 7px; border-radius: 2px;
+            letter-spacing: 0.15em;
+            transform: translateY(-2px);
+        }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a {
+            font-size: 0.85rem; color: var(--text-muted);
+            transition: color 0.15s;
+            font-weight: 500;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            padding: 10px 22px;
+            font-size: 0.82rem; font-weight: 700;
+            background: var(--accent); color: #000;
+            border-radius: 2px;
+            transition: background 0.15s;
+        }
+        .nav-cta:hover { background: var(--accent-glow); }
+        .menu-btn {
+            display: none; background: transparent; border: 0;
+            color: var(--text); font-size: 1.4rem; cursor: pointer;
+            padding: 4px 8px;
+        }
+        @media (max-width: 900px) {
+            .nav-links, .nav-cta { display: none; }
+            .menu-btn { display: block; }
+            nav { padding: 14px 20px; }
+        }
+
+        .mobile-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+            z-index: 999; display: none;
+        }
+        .mobile-overlay.open { display: block; }
+        .mobile-panel {
+            position: fixed; top: 0; right: -100%; width: 86%; max-width: 360px;
+            height: 100vh; background: var(--bg-elev);
+            border-left: 1px solid var(--line);
+            z-index: 1000; transition: right 0.3s ease;
+            padding: 80px 28px 28px;
+        }
+        .mobile-panel.open { right: 0; }
+        .mobile-panel ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+        .mobile-panel li a {
+            display: block; padding: 14px 0;
+            border-bottom: 1px solid var(--line);
+            font-weight: 500; font-size: 1rem;
+        }
+        .mobile-panel .mobile-cta {
+            display: block; margin-top: 20px;
+            background: var(--accent); color: #000;
+            padding: 14px; text-align: center;
+            font-weight: 700; border-radius: 2px;
+        }
+        .mobile-close {
+            position: absolute; top: 18px; left: 22px;
+            background: transparent; border: 0; color: var(--text);
+            font-size: 1.6rem; cursor: pointer;
+        }
+
+        /* === HERO === Asymmetric editorial split */
+        .hero {
+            min-height: 100vh;
+            padding: 140px 32px 80px;
+            display: flex; flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            background:
+                radial-gradient(ellipse at 90% 10%, rgba(16,229,147,0.12), transparent 50%),
+                radial-gradient(ellipse at 10% 80%, rgba(16,229,147,0.05), transparent 50%);
+        }
+
+        .hero-inner {
+            max-width: var(--max-w); margin: 0 auto; width: 100%;
+            display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px;
+            align-items: center; flex: 1;
+        }
+
+        .hero-left .display em {
+            font-style: normal;
+            color: var(--accent);
+        }
+        .hero-left .display .punch {
+            color: var(--text);
+            font-weight: 200;
+            letter-spacing: -0.02em;
+        }
+        .hero-tagline {
+            margin-top: 32px;
+            max-width: 540px;
+            font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+        .hero-tagline strong {
+            color: var(--text); font-weight: 600;
+        }
+        .hero-cta-row {
+            margin-top: 40px;
+            display: flex; gap: 14px; flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: inherit;
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 16px 28px;
+            font-size: 0.95rem; font-weight: 700;
+            border: 0; cursor: pointer;
+            border-radius: 2px;
+            transition: transform 0.15s, background 0.15s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary {
+            background: var(--accent); color: #000;
+        }
+        .btn-primary:hover { background: var(--accent-glow); }
+        .btn-ghost {
+            background: transparent; color: var(--text);
+            border: 1px solid var(--line-strong);
+        }
+        .btn-ghost:hover { border-color: var(--text); background: rgba(255,255,255,0.03); }
+        .btn .arrow { transition: transform 0.2s; }
+        .btn:hover .arrow { transform: translateX(-4px); }
+
+        /* Right column — credentials stack */
+        .creds-stack {
+            display: flex; flex-direction: column; gap: 0;
+            border-top: 1px solid var(--line);
+        }
+        .cred-row {
+            padding: 22px 0;
+            border-bottom: 1px solid var(--line);
+            display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: baseline;
+            transition: padding 0.2s;
+        }
+        .cred-row:hover { padding-right: 8px; }
+        .cred-num {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1;
+            color: var(--accent);
+            letter-spacing: -0.04em;
+        }
+        .cred-num small {
+            font-size: 0.5em; color: var(--accent-glow); margin-right: 2px;
+        }
+        .cred-label {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+        .cred-label strong {
+            display: block;
+            color: var(--text); font-weight: 600;
+            margin-bottom: 2px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 56px; }
+        }
+
+        /* === MARQUEE === Bottom of hero */
+        .marquee {
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            overflow: hidden;
+            padding: 18px 0;
+            position: relative;
+            margin-top: 80px;
+        }
+        .marquee-track {
+            display: inline-flex; gap: 56px;
+            animation: marquee 40s linear infinite;
+            white-space: nowrap;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+        }
+        .marquee-track span { display: inline-flex; align-items: center; gap: 56px; }
+        .marquee-track .dot { color: var(--accent); }
+        @keyframes marquee {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+
+        /* === SECTION === */
+        section.block {
+            padding: 120px 32px;
+            border-bottom: 1px solid var(--line);
+            position: relative;
+        }
+        @media (max-width: 700px) { section.block { padding: 80px 20px; } }
+
+        /* === STORY SECTION (המסע עד כאן) === */
+        .story {
+            max-width: var(--max-w); margin: 0 auto;
+            display: grid; grid-template-columns: 280px 1fr; gap: 80px;
+        }
+        .story-side { position: sticky; top: 100px; align-self: start; }
+        .story-side .h1 { line-height: 1; }
+        .story-body {
+            display: flex; flex-direction: column; gap: 64px;
+        }
+        .story-item {
+            padding-bottom: 64px;
+            border-bottom: 1px solid var(--line);
+            display: grid; grid-template-columns: 100px 1fr; gap: 32px; align-items: baseline;
+        }
+        .story-item:last-child { border-bottom: 0; padding-bottom: 0; }
+        .story-num {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+        .story-content h3 {
+            font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 14px;
+            letter-spacing: -0.02em;
+        }
+        .story-content p {
+            color: var(--text-muted);
+            font-size: 1.02rem; line-height: 1.7;
+            max-width: 640px;
+        }
+        .story-content p strong { color: var(--text); font-weight: 600; }
+
+        @media (max-width: 900px) {
+            .story { grid-template-columns: 1fr; gap: 48px; }
+            .story-side { position: static; }
+            .story-item { grid-template-columns: 1fr; gap: 16px; padding-bottom: 48px; }
+        }
+
+        /* === OFFERINGS === Three rows, alternating */
+        .offerings {
+            max-width: var(--max-w); margin: 0 auto;
+        }
+        .offering {
+            display: grid; grid-template-columns: 140px 1.2fr 1fr; gap: 48px;
+            padding: 56px 0;
+            border-top: 1px solid var(--line);
+            position: relative;
+            transition: background 0.2s;
+        }
+        .offering:hover { background: rgba(16,229,147,0.02); }
+        .offering:last-child { border-bottom: 1px solid var(--line); }
+        .offering-num {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            color: var(--text-faded);
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+        .offering-info .tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: inline-block;
+            margin-bottom: 14px;
+            border: 1px solid var(--accent);
+            padding: 4px 10px;
+            border-radius: 2px;
+        }
+        .offering-info h3 {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 14px;
+        }
+        .offering-info p {
+            color: var(--text-muted);
+            font-size: 1rem; line-height: 1.65;
+            max-width: 480px;
+        }
+        .offering-meta {
+            display: flex; flex-direction: column; gap: 16px;
+            justify-content: space-between;
+        }
+        .meta-row {
+            display: grid; grid-template-columns: 90px 1fr;
+            font-size: 0.92rem;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .meta-row:last-of-type { border-bottom: 0; }
+        .meta-row .k {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-faded);
+            align-self: center;
+        }
+        .meta-row .v { color: var(--text); font-weight: 600; }
+        .meta-row .v.price { color: var(--accent); font-size: 1.1rem; font-weight: 800; }
+        .offering-cta {
+            margin-top: 12px;
+            display: inline-flex; align-items: center; gap: 8px;
+            font-weight: 700; font-size: 0.92rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 4px;
+            width: fit-content;
+            transition: gap 0.2s;
+        }
+        .offering-cta:hover { gap: 14px; }
+
+        @media (max-width: 900px) {
+            .offering { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+            .offering-num { font-size: 3rem; }
+        }
+
+        /* === COURSE DEEP DIVE === Vertical timeline of sessions */
+        .course-deep {
+            max-width: 960px; margin: 0 auto;
+        }
+        .course-header {
+            display: grid; grid-template-columns: 1fr auto; gap: 48px;
+            align-items: end; margin-bottom: 80px;
+            padding-bottom: 32px; border-bottom: 1px solid var(--line);
+        }
+        .course-header-meta {
+            display: flex; flex-direction: column; gap: 8px;
+            text-align: left; direction: ltr;
+        }
+        .course-header-meta .key {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--text-faded);
+        }
+        .course-header-meta .val {
+            font-size: 0.95rem; color: var(--text); font-weight: 600;
+        }
+
+        .session-row {
+            display: grid; grid-template-columns: 80px 1fr 200px;
+            gap: 40px;
+            padding: 36px 0;
+            border-top: 1px solid var(--line);
+            position: relative;
+            transition: padding 0.2s;
+        }
+        .session-row:hover { padding-right: 16px; }
+        .session-row:last-child { border-bottom: 1px solid var(--line); }
+        .session-id {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-faded);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding-top: 8px;
+        }
+        .session-id .num {
+            display: block;
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-bottom: 4px;
+            letter-spacing: -0.04em;
+        }
+        .session-content h4 {
+            font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+        }
+        .session-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem; line-height: 1.6;
+            max-width: 560px;
+        }
+        .session-output {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--accent-glow);
+            letter-spacing: 0.04em;
+            padding-top: 8px;
+            line-height: 1.5;
+            border-right: 2px solid var(--accent);
+            padding-right: 14px;
+        }
+        .session-output .label {
+            color: var(--text-faded);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .session-row { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
+            .session-id { padding: 0; }
+            .session-id .num { display: inline; font-size: 1.4rem; margin-left: 12px; }
+            .session-output { border-right: 0; padding-right: 0; border-top: 1px solid var(--line); padding-top: 12px; }
+        }
+
+        /* === STUDENT WORK === */
+        .work-section {
+            background: var(--bg-elev);
+            border-top: 1px solid var(--line);
+            padding: 100px 32px;
+        }
+        .work-section .container { display: grid; grid-template-columns: 380px 1fr; gap: 80px; }
+        .work-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+        }
+        .work-tile {
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 24px;
+            background: var(--bg);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .work-tile:hover { border-color: var(--accent); transform: translateY(-4px); }
+        .work-tile .tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .work-tile h5 {
+            font-size: 1.05rem; font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .work-tile p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+        .work-tile .meta {
+            margin-top: 14px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-faded);
+        }
+
+        @media (max-width: 900px) {
+            .work-section .container { grid-template-columns: 1fr; gap: 40px; }
+            .work-grid { grid-template-columns: 1fr; gap: 16px; }
+        }
+
+        /* === AUDIENCE === Editorial bullet style */
+        .audience-list {
+            max-width: var(--max-w); margin: 0 auto;
+        }
+        .audience-line {
+            display: grid; grid-template-columns: 60px 1fr;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--line);
+            align-items: baseline;
+            gap: 32px;
+        }
+        .audience-line:first-child { border-top: 1px solid var(--line); }
+        .audience-line:hover .audience-prefix { color: var(--accent); }
+        .audience-prefix {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-faded);
+            letter-spacing: 0.1em;
+            transition: color 0.2s;
+        }
+        .audience-text {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--text);
+        }
+        .audience-text strong {
+            color: var(--accent); font-weight: 700;
+        }
+
+        /* === PRICING === Asymmetric, course featured */
+        .pricing-grid {
+            max-width: var(--max-w); margin: 0 auto;
+            display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 4px;
+            border: 1px solid var(--line);
+        }
+        .price-card {
+            padding: 40px 32px;
+            background: var(--bg-elev);
+            display: flex; flex-direction: column;
+            position: relative;
+            min-height: 460px;
+        }
+        .price-card.featured {
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            margin: -1px;
+        }
+        .price-card .ribbon {
+            position: absolute; top: 0; left: 0;
+            background: var(--accent); color: #000;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem; font-weight: 700;
+            padding: 6px 12px;
+            letter-spacing: 0.1em;
+        }
+        .price-card .pc-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin-bottom: 14px;
+        }
+        .price-card h3 {
+            font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 14px;
+            letter-spacing: -0.02em;
+        }
+        .price-card .pc-desc {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.55;
+            margin-bottom: 28px;
+            min-height: 60px;
+        }
+        .price-num {
+            font-family: 'Space Mono', monospace;
+            display: flex; align-items: baseline; gap: 4px;
+            margin-bottom: 6px;
+        }
+        .price-num .amt {
+            font-size: clamp(2.4rem, 4vw, 3.4rem);
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+        .price-card.featured .price-num .amt { color: var(--accent); }
+        .price-num .cur { color: var(--text-muted); font-size: 1rem; }
+        .price-sub {
+            font-size: 0.82rem;
+            color: var(--text-faded);
+            margin-bottom: 28px;
+            font-family: 'Space Mono', monospace;
+        }
+        .price-features {
+            list-style: none;
+            margin-bottom: 28px;
+            flex: 1;
+        }
+        .price-features li {
+            padding: 8px 0;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            display: flex; gap: 10px; align-items: flex-start;
+            border-bottom: 1px dashed var(--line);
+        }
+        .price-features li:last-child { border-bottom: 0; }
+        .price-features li::before {
+            content: "→"; color: var(--accent); flex-shrink: 0;
+            font-family: 'Space Mono', monospace;
+        }
+        .price-cta {
+            display: block; text-align: center;
+            padding: 14px;
+            font-size: 0.9rem; font-weight: 700;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            transition: all 0.15s;
+            cursor: pointer;
+            font-family: inherit;
+            width: 100%;
+        }
+        .price-cta:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+        .price-card.featured .price-cta {
+            background: var(--accent); color: #000; border-color: var(--accent);
+        }
+        .price-card.featured .price-cta:hover {
+            background: var(--accent-glow); border-color: var(--accent-glow);
+        }
+
+        @media (max-width: 900px) {
+            .pricing-grid { grid-template-columns: 1fr; }
+            .price-card { min-height: auto; }
+            .price-card.featured { margin: 0; }
+        }
+
+        /* === FAQ === Editorial Q&A, no accordion */
+        .faq-block {
+            max-width: 880px; margin: 0 auto;
+        }
+        .faq-row {
+            padding: 36px 0;
+            border-bottom: 1px solid var(--line);
+            display: grid; grid-template-columns: 60px 1fr;
+            gap: 32px; align-items: baseline;
+        }
+        .faq-row:first-child { border-top: 1px solid var(--line); }
+        .faq-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-faded);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        .faq-row .q {
+            font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            letter-spacing: -0.01em;
+        }
+        .faq-row .a {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            max-width: 640px;
+        }
+        @media (max-width: 700px) {
+            .faq-row { grid-template-columns: 1fr; gap: 8px; }
+        }
+
+        /* === FINAL CTA === */
+        .final {
+            padding: 120px 32px;
+            text-align: center;
+            background: linear-gradient(180deg, transparent, rgba(16,229,147,0.04));
+            position: relative;
+        }
+        .final-display {
+            font-size: clamp(2.4rem, 7vw, 5.4rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 32px;
+        }
+        .final-line {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            max-width: 560px;
+            margin-inline: auto;
+            line-height: 1.6;
+        }
+        .final-buttons { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+        .final-meta {
+            margin-top: 56px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-faded);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .final-meta .warn { color: var(--warn); }
+
+        /* === FOOTER === Single line minimal */
+        footer {
+            padding: 56px 32px 32px;
+            border-top: 1px solid var(--line);
+        }
+        .footer-grid {
+            max-width: var(--max-w); margin: 0 auto;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+            align-items: start;
+        }
+        .footer-brand {
+            font-weight: 900; font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+        .footer-tagline {
+            color: var(--text-muted); font-size: 0.88rem;
+            line-height: 1.6;
+            max-width: 320px;
+        }
+        .footer-col h6 {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        .footer-col a, .footer-col p {
+            display: block;
+            color: var(--text-muted); font-size: 0.88rem;
+            margin-bottom: 8px;
+            transition: color 0.15s;
+        }
+        .footer-col a:hover { color: var(--text); }
+        .footer-bottom {
+            max-width: var(--max-w); margin: 56px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid var(--line);
+            display: flex; justify-content: space-between;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-faded);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        @media (max-width: 700px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 8px; }
+        }
+
+        /* === POPUP === */
+        .popup-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000; display: none; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .popup-overlay.open { display: flex; }
+        .popup-box {
+            background: var(--bg-elev);
+            border: 1px solid var(--line-strong);
+            padding: 40px 32px;
+            max-width: 480px; width: 100%;
+            position: relative;
+            border-radius: 4px;
+        }
+        .popup-close {
+            position: absolute; top: 14px; left: 16px;
+            background: transparent; border: 0; color: var(--text-muted);
+            font-size: 1.6rem; cursor: pointer; line-height: 1;
+        }
+        .popup-box .kicker { margin-bottom: 16px; }
+        .popup-box h3 {
+            font-size: 1.6rem; font-weight: 800;
+            line-height: 1.2; letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+        .popup-box .lead { font-size: 0.92rem; margin-bottom: 24px; }
+        .form-group { margin-bottom: 14px; }
+        .form-group label {
+            display: block;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 6px;
+            color: var(--text-faded);
+        }
+        .form-group input, .form-group select {
+            width: 100%; padding: 12px 14px;
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            font-family: inherit; font-size: 0.95rem;
+            transition: border-color 0.15s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: 0; border-color: var(--accent);
+        }
+        .form-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .form-buttons button { flex: 1; }
+
+        /* === WHATSAPP FLOAT === */
+        .wa-float {
+            position: fixed; bottom: 24px; left: 24px;
+            width: 56px; height: 56px; border-radius: 50%;
+            background: #25D366;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 24px rgba(37,211,102,0.3);
+            z-index: 90;
+            transition: transform 0.2s;
+        }
+        .wa-float:hover { transform: scale(1.1); }
+
+        /* === SCROLL REVEAL === */
+        @media (prefers-reduced-motion: no-preference) {
+            .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+            .reveal.shown { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="/" class="brand">
+            <span>AI Lab</span>
+            <span class="biz">BUSINESS</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#story">המסע</a></li>
+            <li><a href="#offerings">הקורסים</a></li>
+            <li><a href="#audience">למי</a></li>
+            <li><a href="#faq">שאלות</a></li>
+        </ul>
+        <a href="#offerings" class="nav-cta">לקורסים</a>
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="תפריט">≡</button>
+    </nav>
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMenu()"></div>
+    <div class="mobile-panel" id="mobilePanel">
+        <button class="mobile-close" onclick="toggleMenu()" aria-label="סגור">×</button>
+        <ul>
+            <li><a href="#story" onclick="toggleMenu()">המסע עד כאן</a></li>
+            <li><a href="#offerings" onclick="toggleMenu()">4 הקורסים</a></li>
+            <li><a href="#audience" onclick="toggleMenu()">למי זה</a></li>
+            <li><a href="#faq" onclick="toggleMenu()">שאלות</a></li>
+        </ul>
+        <a href="#offerings" onclick="toggleMenu()" class="mobile-cta">הרשמה</a>
+        <a href="/" style="display:block; margin-top:14px; color:var(--text-muted); font-size:0.85rem;" onclick="toggleMenu()">← לאתר הראשי</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-left">
+                <div class="kicker">AI Lab Business / מחזור פתיחה — מאי 2026</div>
+                <h1 class="display">
+                    Real<br>
+                    <em>One Man</em><br>
+                    <span class="punch">Show.</span>
+                </h1>
+                <p class="hero-tagline">
+                    <strong>אתר עסקי חי. בוט WhatsApp פעיל. אוטומציות שחוסכות שעות. תוכן בקצב של מותג גדול.</strong>
+                    כל זה בידיים שלך — ארבעה קורסים בזום, כלי AI מובילים, ובלי מתכנת.
+                </p>
+                <div class="hero-cta-row">
+                    <a href="#offerings" class="btn btn-primary">
+                        <span>בחרו קורס</span>
+                        <span class="arrow">←</span>
+                    </a>
+                    <a href="#story" class="btn btn-ghost">
+                        <span>על הגישה שלנו</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="creds-stack">
+                    <div class="cred-row">
+                        <div class="cred-num">10<small>+</small></div>
+                        <div class="cred-label">
+                            <strong>שנות ייעוץ עסקי</strong>
+                            ליווי בעלי עסקים בצמיחה, אסטרטגיה, ושיפור תהליכים
+                        </div>
+                    </div>
+                    <div class="cred-row">
+                        <div class="cred-num">∞</div>
+                        <div class="cred-label">
+                            <strong>אוטומציות בעסקים בייצור</strong>
+                            בונה מערכות חיות לעסקים קטנים-בינוניים
+                        </div>
+                    </div>
+                    <div class="cred-row">
+                        <div class="cred-num">12—18</div>
+                        <div class="cred-label">
+                            <strong>גיל התלמידים שכבר בנו אתרים</strong>
+                            עשרות תלמידי חטיבת ביניים ותיכון, חלק כבר מרוויחים
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="marquee">
+            <div class="marquee-track">
+                <span>אתר עסקי באוויר<span class="dot"> · </span>בוט WhatsApp<span class="dot"> · </span>אוטומציות שחוסכות שעות<span class="dot"> · </span>10 תלמידים בכיתה<span class="dot"> · </span>הקלטות מלאות<span class="dot"> · </span>WhatsApp קבוצתי<span class="dot"> · </span>ליווי אישי<span class="dot"> · </span>30 פרומפטים עסקיים<span class="dot"> · </span></span>
+                <span>אתר עסקי באוויר<span class="dot"> · </span>בוט WhatsApp<span class="dot"> · </span>אוטומציות שחוסכות שעות<span class="dot"> · </span>10 תלמידים בכיתה<span class="dot"> · </span>הקלטות מלאות<span class="dot"> · </span>WhatsApp קבוצתי<span class="dot"> · </span>ליווי אישי<span class="dot"> · </span>30 פרומפטים עסקיים<span class="dot"> · </span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORY: המסע עד כאן -->
+    <section id="story" class="block">
+        <div class="story">
+            <div class="story-side">
+                <div class="kicker">המסע עד כאן</div>
+                <h2 class="h1">
+                    לא תיאוריה.<br>
+                    <span class="accent">פרקטיקה</span><br>
+                    מהשטח.
+                </h2>
+            </div>
+            <div class="story-body">
+
+                <div class="story-item reveal">
+                    <div class="story-num">01</div>
+                    <div class="story-content">
+                        <h3>10+ שנות ייעוץ עסקי</h3>
+                        <p>
+                            לפני שהתחלתי לבנות בעצמי — ליוויתי <strong>מאות בעלי עסקים</strong> בצמיחה ובאסטרטגיה.
+                            ראיתי ממקור ראשון איפה עסקים מבזבזים זמן וכסף. ראיתי איפה אוטומציה אחת חוסכת עובד שלם.
+                            ההבנה הזו היא הבסיס לכל מה שתלמדו בקורס.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="story-item reveal">
+                    <div class="story-num">02</div>
+                    <div class="story-content">
+                        <h3>לימדנו דור — תלמידי חטיבה ותיכון</h3>
+                        <p>
+                            ב-AI Lab הקמתי קורס שמלמד בני <strong>12—18</strong> לבנות אתרים, מוצרים דיגיטליים ובוטים — עם Claude Code.
+                            עשרות תלמידים בנו פרויקטים אמיתיים שעלו לאוויר. חלק כבר <strong>מרוויחים מהם</strong>.
+                            אם ילדים בכיתה ז' מצליחים — בעל עסק עם 20 שנה מאחוריו בוודאי יצליח.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="story-item reveal">
+                    <div class="story-num">03</div>
+                    <div class="story-content">
+                        <h3>אוטומציות חיות לעסקים בישראל</h3>
+                        <p>
+                            במקביל לקורס — אני מספק שירותי <strong>אוטומציה ופיתוח</strong> לעסקים קטנים ובינוניים.
+                            בוטים, אינטגרציות, תהליכי עבודה אוטומטיים. כל מה שאני מלמד —
+                            אני בעצמי מיישם בעסקים אמיתיים מדי יום. <strong>זה לא דמו, זה ייצור.</strong>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- OFFERINGS: 3 הקורסים שלנו -->
+    <section id="offerings" class="block">
+        <div style="max-width: var(--max-w); margin: 0 auto 64px;">
+            <div class="kicker">הקורסים שלנו</div>
+            <h2 class="h1">ארבעה קורסים.<br>ארבע <span class="accent">יכולות־על</span> לעסק.</h2>
+        </div>
+
+        <div class="offerings">
+
+            <div class="offering reveal">
+                <div class="offering-num">01</div>
+                <div class="offering-info">
+                    <span class="tag">קורס</span>
+                    <h3>בניית אתרים עם Claude Code</h3>
+                    <p>
+                        מ-0 לאתר חי באוויר. מתחילים עם רעיון העסק, יוצאים עם אתר מקצועי שמוכן לקבל לקוחות —
+                        כולל דומיין משלכם, אבטחה, אנליטיקס וטופס יצירת קשר. בלי מתכנת, בלי חודשים.
+                    </p>
+                </div>
+                <div class="offering-meta">
+                    <div>
+                        <div class="meta-row">
+                            <span class="k">פורמט</span>
+                            <span class="v">מפגשי זום חיים</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="k">תוצר</span>
+                            <span class="v">אתר עסקי באוויר</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="k">פתיחה</span>
+                            <span class="v">11.05.2026</span>
+                        </div>
+                    </div>
+                    <a href="#" onclick="event.preventDefault(); openRegister('websites');" class="offering-cta">פרטים והרשמה <span>←</span></a>
+                </div>
+            </div>
+
+            <div class="offering reveal">
+                <div class="offering-num">02</div>
+                <div class="offering-info">
+                    <span class="tag">קורס</span>
+                    <h3>אוטומציות לעסק</h3>
+                    <p>
+                        תהליכים שרצים לבד מאחורי הקלעים. ליד נכנס → CRM → מייל ראשון → תזכורת אחרי יומיים.
+                        חשבונית נשלחת אוטומטית. דוחות נבנים מעצמם. כל פעולה חוזרת בעסק — מאוטמטת.
+                        Make, n8n, Zapier, Google Sheets, חיבורים חכמים.
+                    </p>
+                </div>
+                <div class="offering-meta">
+                    <div>
+                        <div class="meta-row">
+                            <span class="k">פורמט</span>
+                            <span class="v">מפגשי זום חיים</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="k">תוצר</span>
+                            <span class="v">תהליכי עסק רצים לבד</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="k">פתיחה</span>
+                            <span class="v">בקרוב</span>
+                        </div>
+                    </div>
+                    <a href="#" onclick="event.preventDefault(); openRegister('automation');" class="offering-cta">פרטים והרשמה <span>←</span></a>
+                </div>
+            </div>
+
+            <div class="offering reveal">
+                <div class="offering-num">03</div>
+                <div class="offering-info">
+                    <span class="tag">קורס</span>
+                    <h3>עוזר אישי מבוסס AI</h3>
+                    <p>
+                        סוכן AI אישי שמנהל לכם את היום. מסכם מיילים בבוקר, מציע תשובות,
+                        מתזמן פגישות, רושם הערות, מנהל משימות, מחפש מידע. כמו עוזר אישי — רק שהוא ער 24/7
+                        ועולה גרושים. Claude + MCP + Notion + Google.
+                    </p>
+                </div>
+                <div class="offering-meta">
+                    <div>
+                        <div class="meta-row">
+                            <span class="k">פורמט</span>
+                            <span class="v">מפגשי זום חיים</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="k">תוצר</span>
+                            <span class="v">עוזר אישי שעובד עליכם</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="k">פתיחה</span>
+                            <span class="v">בקרוב</span>
+                        </div>
+                    </div>
+                    <a href="#" onclick="event.preventDefault(); openRegister('assistant');" class="offering-cta">פרטים והרשמה <span>←</span></a>
+                </div>
+            </div>
+
+            <div class="offering reveal">
+                <div class="offering-num">04</div>
+                <div class="offering-info">
+                    <span class="tag">קורס</span>
+                    <h3>יצירת תוכן עם בינה מלאכותית</h3>
+                    <p>
+                        תוכן בקצב שלא חשבתם שאפשרי — לסושיאל, לבלוג, למיילים.
+                        פוסטים, תמונות, סרטונים, קופי מכר.
+                        ChatGPT, Claude, Midjourney, Sora — איך לרתום אותם נכון לעסק שלכם בלי שזה ייראה גנרי.
+                    </p>
+                </div>
+                <div class="offering-meta">
+                    <div>
+                        <div class="meta-row">
+                            <span class="k">פורמט</span>
+                            <span class="v">מפגשי זום חיים</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="k">תוצר</span>
+                            <span class="v">ערכת תוכן מוכנה</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="k">פתיחה</span>
+                            <span class="v">בקרוב</span>
+                        </div>
+                    </div>
+                    <a href="#" onclick="event.preventDefault(); openRegister('content');" class="offering-cta">פרטים והרשמה <span>←</span></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- WORK SECTION: דוגמאות מתלמידי הקורס לנוער -->
+    <section class="work-section">
+        <div class="container">
+            <div>
+                <div class="kicker">קצת רקע</div>
+                <h2 class="h1" style="margin-bottom: 24px;">תלמידי חטיבה ותיכון<br>שכבר <span class="accent">בנו עסק</span>.</h2>
+                <p class="lead">
+                    אם בני 14 בנו את הדברים האלה ב-8 מפגשים — דמיינו מה אתם תוכלו לבנות
+                    כשיש לכם ניסיון עסקי, רעיון מבושל, ומוטיבציה אמיתית.
+                </p>
+            </div>
+            <div class="work-grid">
+                <div class="work-tile">
+                    <div class="tag">E-Commerce</div>
+                    <h5>Hair Match</h5>
+                    <p>אתר התאמת תספורות עם AI. כולל גלריית סגנונות וטופס התאמה אישי.</p>
+                    <div class="meta">— תלמיד גיל 16</div>
+                </div>
+                <div class="work-tile">
+                    <div class="tag">Education</div>
+                    <h5>Game Buddy</h5>
+                    <p>פלטפורמה ללימוד אנגלית דרך משחקים. מותאמת לילדים, נבנתה מחדש לפי קהל יעד.</p>
+                    <div class="meta">— תלמידה גיל 14</div>
+                </div>
+                <div class="work-tile">
+                    <div class="tag">Service</div>
+                    <h5>Drive Log</h5>
+                    <p>אפליקציית מעקב נסיעות לעצמאיים — חישוב הוצאות, מע"מ, ודוחות לרואה חשבון.</p>
+                    <div class="meta">— תלמיד גיל 17</div>
+                </div>
+                <div class="work-tile">
+                    <div class="tag">Niche</div>
+                    <h5>Horse Fashion</h5>
+                    <p>אתר בוטיק לאופנת רכיבה על סוסים. כולל קטלוג, סינון, וסיפור מותג.</p>
+                    <div class="meta">— תלמידה גיל 15</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUDIENCE: 4 lines -->
+    <section id="audience" class="block">
+        <div style="max-width: var(--max-w); margin: 0 auto 56px;">
+            <div class="kicker">למי זה</div>
+            <h2 class="h1">אם אתם מזהים את עצמכם כאן —<br><span class="accent">זה לכם.</span></h2>
+        </div>
+        <div class="audience-list">
+
+            <div class="audience-line">
+                <div class="audience-prefix">→ 01</div>
+                <div class="audience-text">
+                    בעל/ת <strong>עסק קטן או בינוני</strong> שעייף/ה משילוב של "לבד אני לא יכול/ה" ו"מתכנת לוקח לי 5,000₪ לכל שינוי קטן".
+                </div>
+            </div>
+            <div class="audience-line">
+                <div class="audience-prefix">→ 02</div>
+                <div class="audience-text">
+                    שכיר/ה ש<strong>כל יום עושה אותם הדברים שוב</strong> — ויודע/ת בלב שזה ניתן לאוטומציה, אבל אף אחד לא לימד אותך איך.
+                </div>
+            </div>
+            <div class="audience-line">
+                <div class="audience-prefix">→ 03</div>
+                <div class="audience-text">
+                    מנהל/ת ב<strong>חברה שרוצה להעצים את העובדים</strong> — לתת להם את הכלים להיות פרודוקטיביים פי 3 בלי להוסיף עוד עובדים.
+                </div>
+            </div>
+            <div class="audience-line">
+                <div class="audience-prefix">→ 04</div>
+                <div class="audience-text">
+                    יזם/ית עם <strong>רעיון בוער</strong> — שעייף/ה מלשמוע מהחברים "וואו רעיון מעולה" ולא להבין למה זה עדיין רעיון בלבד.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="block">
+        <div style="max-width: var(--max-w); margin: 0 auto 56px;">
+            <div class="kicker">שאלות נפוצות</div>
+            <h2 class="h1">תשובות <span class="accent">ישירות.</span></h2>
+        </div>
+
+        <div class="faq-block">
+
+            <div class="faq-row">
+                <div class="faq-num">Q.01</div>
+                <div>
+                    <div class="q">אני 0% טכני. באמת אצליח?</div>
+                    <div class="a">
+                        כן. הקורס בנוי במיוחד למי שאין לו ניסיון בתכנות. Claude Code עושה את העבודה הטכנית — אתם רק כותבים בעברית/אנגלית מה אתם רוצים. אם אתם יודעים להשתמש ב-WhatsApp, תסתדרו.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <div class="faq-num">Q.02</div>
+                <div>
+                    <div class="q">כמה זמן צריך להשקיע מעבר למפגשים?</div>
+                    <div class="a">
+                        ההמלצה: 1-2 שעות בשבוע על תרגול עצמאי בין המפגשים. זה לא חובה — אבל ככה תפיקו הכי הרבה. הכל מוקלט אז אפשר לחזור על מפגשים בקצב שלכם.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <div class="faq-num">Q.03</div>
+                <div>
+                    <div class="q">מה אם אפספס מפגש?</div>
+                    <div class="a">
+                        אין בעיה. כל המפגשים מוקלטים ועולים תוך 24 שעות לאזור האישי באתר. תוכלו לצפות מתי שנוח.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <div class="faq-num">Q.04</div>
+                <div>
+                    <div class="q">איזה מחשב צריך? יש עלויות נוספות?</div>
+                    <div class="a">
+                        Mac או Windows רגיל מספיק. Claude Code עצמו עולה ~20$/חודש (מנוי Pro של Anthropic). יש גם אפשרות חינמית למתחילים. כל שאר הכלים בקורס — חינמיים (GitHub, Netlify, Vercel, Twilio Sandbox).
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <div class="faq-num">Q.05</div>
+                <div>
+                    <div class="q">חייב לקחת את כל ארבעת הקורסים?</div>
+                    <div class="a">
+                        ממש לא. כל קורס הוא יחידה עצמאית. אפשר לקחת רק את הרלוונטי לכם — או לעשות מסע מלא ולקחת את כולם. אנחנו נמליץ לכם בשיחה הראשונית מה הכי מתאים לעסק שלכם.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <div class="faq-num">Q.06</div>
+                <div>
+                    <div class="q">מה אם אני לא מרוצה?</div>
+                    <div class="a">
+                        אם אחרי המפגש הראשון תרגישו שזה לא בשבילכם — החזר כספי מלא, בלי שאלות. הביטחון שלי בקורסים מאפשר לי לעמוד מאחורי זה.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final">
+        <div class="kicker" style="display:inline-flex; margin-bottom: 32px;">מחזור פתיחה</div>
+        <div class="final-display">
+            <span class="accent">בוחרים</span> את הקורס.<br>
+            <span class="punch" style="font-weight:200;">מתחילים לבנות.</span>
+        </div>
+        <p class="final-line">
+            ארבעה קורסים, יחידה אחת על השנייה או כל אחד בנפרד. מחזור הפתיחה של "בניית אתרים" מתחיל ב-11 במאי 2026.
+        </p>
+        <div class="final-buttons">
+            <a href="#offerings" class="btn btn-primary">
+                <span>בחרו קורס</span><span class="arrow">←</span>
+            </a>
+            <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%9C%D7%92%D7%91%D7%99%20AI%20Lab%20Business" target="_blank" class="btn btn-ghost">
+                <span>שאלות? WhatsApp</span>
+            </a>
+        </div>
+        <div class="final-meta">
+            FIRST COURSE · <span class="warn">11.05.2026</span> · 19:30 · ZOOM
+        </div>
+    </section>
+
+    <!-- POPUP -->
+    <div class="popup-overlay" id="registerPopup" onclick="if(event.target===this) closeRegister()">
+        <div class="popup-box">
+            <button class="popup-close" onclick="closeRegister()" aria-label="סגור">×</button>
+            <div class="kicker">הרשמה</div>
+            <h3 id="popupTitle">שריינו מקום בקורס</h3>
+            <p class="lead" id="popupSubtitle">10 מקומות בלבד · מתחילים 11 במאי 2026</p>
+            <form id="contactForm" onsubmit="return submitForm(event)">
+                <input type="hidden" name="access_key" value="9ba5abaf-d501-44db-a33d-d5028c89e0ef">
+                <input type="hidden" name="subject" id="formSubject" value="הרשמה — AI Lab Business">
+                <input type="hidden" name="product" id="formProduct" value="websites">
+                <div class="form-group">
+                    <label for="bizName">שם מלא</label>
+                    <input type="text" id="bizName" name="name" placeholder="השם שלכם" required>
+                </div>
+                <div class="form-group">
+                    <label for="bizPhone">טלפון</label>
+                    <input type="tel" id="bizPhone" name="phone" placeholder="050-1234567" required>
+                </div>
+                <div class="form-group">
+                    <label for="bizEmail">אימייל</label>
+                    <input type="email" id="bizEmail" name="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="bizType">תיאור</label>
+                    <select id="bizType" name="type">
+                        <option value="">— בחרו —</option>
+                        <option value="business_owner">בעל/ת עסק קטן-בינוני</option>
+                        <option value="employee">שכיר/ה שרוצה להתייעל</option>
+                        <option value="entrepreneur">יזם/ית בתחילת דרך</option>
+                        <option value="company">בעל/ת חברה — לעובדים</option>
+                        <option value="other">אחר</option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary" style="flex:1; justify-content:center;">שליחה</button>
+                    <button type="button" class="btn btn-ghost" onclick="sendWA()" style="flex:1; justify-content:center;">WhatsApp</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">AI Lab Business</div>
+                <p class="footer-tagline">
+                    קורס וסדנאות ל-One Man Show דיגיטלי. מאיר לביא — יועץ עסקי 10+ שנים, בונה אוטומציות לעסקים, מלמד בני נוער ומבוגרים.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h6>קשר</h6>
+                <a href="tel:054-6500795">054-6500795</a>
+                <a href="mailto:laviemb@gmail.com">laviemb@gmail.com</a>
+                <a href="https://wa.me/972546500795" target="_blank">WhatsApp</a>
+            </div>
+            <div class="footer-col">
+                <h6>תוכן</h6>
+                <a href="/">לילדים ונוער</a>
+                <a href="/webinar/">וובינר חינמי</a>
+                <a href="/portal/">אזור אישי</a>
+            </div>
+            <div class="footer-col">
+                <h6>מידע</h6>
+                <a href="/privacy.html">פרטיות</a>
+                <a href="/terms.html">תנאי שימוש</a>
+                <a href="/accessibility.html">נגישות</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 AI LAB · MEIR LAVI</span>
+            <span>AI-LAB.CO.IL/BUSINESS</span>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%9C%D7%92%D7%91%D7%99%20%D7%A7%D7%95%D7%A8%D7%A1%20Business" target="_blank" class="wa-float" aria-label="WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('mobilePanel').classList.toggle('open');
+            document.getElementById('mobileOverlay').classList.toggle('open');
+        }
+
+        const productLabels = {
+            websites: { title: 'הרשמה לקורס בניית אתרים', sub: 'מפגשי זום חיים · מחזור פתיחה: 11.05.2026', subj: 'הרשמה — קורס בניית אתרים' },
+            automation: { title: 'הרשמה לקורס אוטומציות לעסק', sub: 'מפגשי זום חיים · תהליכים שרצים לבד', subj: 'הרשמה — קורס אוטומציות לעסק' },
+            assistant: { title: 'הרשמה לקורס עוזר אישי AI', sub: 'מפגשי זום חיים · עוזר אישי שעובד עליכם', subj: 'הרשמה — קורס עוזר אישי AI' },
+            content: { title: 'הרשמה לקורס יצירת תוכן עם AI', sub: 'מפגשי זום חיים · ערכת תוכן מוכנה', subj: 'הרשמה — קורס יצירת תוכן עם AI' }
+        };
+
+        function openRegister(product) {
+            const cfg = productLabels[product] || productLabels.websites;
+            document.getElementById('popupTitle').textContent = cfg.title;
+            document.getElementById('popupSubtitle').textContent = cfg.sub;
+            document.getElementById('formSubject').value = cfg.subj;
+            document.getElementById('formProduct').value = product || 'websites';
+            document.getElementById('registerPopup').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeRegister() {
+            document.getElementById('registerPopup').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        async function submitForm(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
+            const btn = form.querySelector('button[type="submit"]');
+            const original = btn.textContent;
+            btn.textContent = 'שולח...';
+            btn.disabled = true;
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: data
+                });
+                const result = await res.json();
+                if (result.success) {
+                    btn.textContent = '✓ נשלח';
+                    setTimeout(() => {
+                        closeRegister();
+                        form.reset();
+                        btn.textContent = original;
+                        btn.disabled = false;
+                    }, 1400);
+                } else { throw new Error('failed'); }
+            } catch (err) {
+                btn.textContent = 'שגיאה — נסו שוב';
+                btn.disabled = false;
+                setTimeout(() => { btn.textContent = original; }, 2000);
+            }
+            return false;
+        }
+
+        function sendWA() {
+            const name = document.getElementById('bizName').value || '';
+            const product = document.getElementById('formProduct').value;
+            const labels = {
+                websites: 'בקורס בניית אתרים',
+                automation: 'בקורס אוטומציות לעסק',
+                assistant: 'בקורס עוזר אישי AI',
+                content: 'בקורס יצירת תוכן עם AI'
+            };
+            let msg = 'היי, מעוניין/ת ' + (labels[product] || 'באחד הקורסים של AI Lab Business');
+            if (name) msg += '\nשם: ' + name;
+            window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
+        }
+
+        // Scroll reveal
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('shown'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html, body {
+    width: 1200px; height: 630px;
+    overflow: hidden;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+  }
+
+  .card {
+    width: 1200px;
+    height: 630px;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    background: radial-gradient(ellipse at top, #1a0d3e 0%, #0a0717 45%, #03020b 100%);
+    padding: 22px 40px 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Cosmic stars */
+  .stars {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(1.2px 1.2px at 60px 80px, #fff, transparent),
+      radial-gradient(1px 1px at 180px 130px, rgba(255,255,255,.7), transparent),
+      radial-gradient(1.5px 1.5px at 320px 60px, #fff, transparent),
+      radial-gradient(1px 1px at 460px 110px, rgba(255,255,255,.8), transparent),
+      radial-gradient(1.2px 1.2px at 620px 50px, #fff, transparent),
+      radial-gradient(1px 1px at 760px 130px, rgba(255,255,255,.6), transparent),
+      radial-gradient(1.5px 1.5px at 900px 80px, #fff, transparent),
+      radial-gradient(1px 1px at 1050px 150px, rgba(255,255,255,.7), transparent),
+      radial-gradient(1.2px 1.2px at 1140px 60px, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 80px 540px, #fff, transparent),
+      radial-gradient(1px 1px at 240px 580px, rgba(255,255,255,.7), transparent),
+      radial-gradient(1.5px 1.5px at 420px 600px, #fff, transparent),
+      radial-gradient(1px 1px at 600px 540px, rgba(255,255,255,.8), transparent),
+      radial-gradient(1.2px 1.2px at 780px 590px, #fff, transparent),
+      radial-gradient(1px 1px at 960px 555px, rgba(255,255,255,.6), transparent),
+      radial-gradient(1.5px 1.5px at 1100px 605px, #fff, transparent);
+  }
+
+  /* Nebula glows */
+  .nebula {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 50% 60% at 18% 18%, rgba(108,60,225,.45), transparent 65%),
+      radial-gradient(ellipse 45% 50% at 82% 80%, rgba(0,212,170,.32), transparent 65%),
+      radial-gradient(ellipse 35% 30% at 50% 100%, rgba(255,179,71,.18), transparent 65%);
+  }
+
+  .container {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 10px;
+  }
+
+  /* HEADER ROW (logo + free badge) */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: .5px;
+    direction: ltr;
+  }
+  .logo .lab { color: #00D4AA; }
+  .badges {
+    display: flex; gap: 8px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 800;
+  }
+  .b-free   { background: rgba(0,212,170,.18);   border:1px solid rgba(0,212,170,.5);  color:#00D4AA; }
+  .b-online { background: rgba(108,60,225,.18);  border:1px solid rgba(108,60,225,.5); color:#b89ffa; }
+
+  /* BIG TITLE */
+  .title-block {
+    text-align: center;
+  }
+  .big-title {
+    font-size: 78px;
+    font-weight: 900;
+    line-height: 0.98;
+    letter-spacing: -2px;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #fff 0%, #fff 40%, #00D4AA 70%, #8B5CF6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 22px rgba(108,60,225,.3);
+  }
+  .big-subtitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(255,255,255,.85);
+    letter-spacing: .2px;
+  }
+  .big-subtitle .date  { color: #00D4AA; font-weight: 900; }
+  .big-subtitle .age   { color: #b89ffa; font-weight: 900; }
+
+  /* IMAGE CARD */
+  .img-zone {
+    flex: 1;
+    min-height: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .img-zone img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+  .img-zone::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(10,7,23,.45) 100%);
+    pointer-events: none;
+  }
+  .img-overlay {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,212,170,.22);
+    border: 1px solid rgba(0,212,170,.55);
+    padding: 7px 14px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 800;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .img-overlay strong { color: #00D4AA; font-weight: 900; }
+
+  /* PILLS BAR */
+  .pills {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 800;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.15);
+  }
+  .pill .icon { font-size: 17px; }
+  .pill-bonus { background: rgba(255,179,71,.16); border-color: rgba(255,179,71,.5);  color: #fff; }
+  .pill-bonus strong { color: #ffb347; font-weight: 900; }
+  .pill-date  { background: rgba(0,212,170,.16);  border-color: rgba(0,212,170,.5);  color: #fff; }
+  .pill-date  strong { color: #00D4AA; font-weight: 900; }
+  .pill-age   { background: rgba(139,92,246,.16); border-color: rgba(139,92,246,.5); color: #fff; }
+  .pill-age   strong { color: #b89ffa; font-weight: 900; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">AI <span class="lab">Lab</span></div>
+      <div class="badges">
+        <span class="badge-pill b-free">🆓 חינם</span>
+        <span class="badge-pill b-online">💻 בזום</span>
+      </div>
+    </div>
+
+    <!-- Big title -->
+    <div class="title-block">
+      <h1 class="big-title">וובינר להורים וילדים</h1>
+      <div class="big-subtitle">
+        <span class="date">📅 יום שלישי 28.4 · 20:30</span> &nbsp;·&nbsp;
+        <span class="age">גילאי 9-17</span>
+      </div>
+    </div>
+
+    <!-- Image card -->
+    <div class="img-zone">
+      <img src="webinar-bg.png" alt="">
+      <div class="img-overlay">
+        <span>👨‍👩‍👧</span>
+        <span><strong>צפייה משותפת</strong> להורים וילדים</span>
+      </div>
+    </div>
+
+    <!-- Pills -->
+    <div class="pills">
+      <span class="pill pill-bonus"><span class="icon">🎁</span> הטבה <strong>₪100</strong> למשתתפים</span>
+      <span class="pill pill-age"><span class="icon">🚀</span> AI · יזמות · בניית פרויקטים</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>קורס עוזר אישי AI — AI Lab Business</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <a href="/business/portal/" class="brand">
+            <span>AI Lab</span>
+            <span class="biz">BUSINESS</span>
+        </a>
+        <div class="topbar-nav">
+            <a href="/business/portal/">→ לוח קורסים</a>
+            <div class="topbar-user" id="topbarUser"></div>
+        </div>
+    </header>
+
+    <main class="course-page">
+        <div class="course-hero">
+            <div class="kicker">קורס 03 / עוזר אישי AI</div>
+            <h1>סוכן אישי שעובד <em>עליכם</em>.<br>לא להפך.</h1>
+            <p class="lead">
+                3 מפגשים, ובסוף יש לכם עוזר AI אישי שיודע מה יש לכם היום, סוגר פגישות, מסכם מיילים, מנהל משימות, ומחפש מידע — כמו עוזר אישי בשר ודם, רק שעולה גרושים ולא לוקח חופש.
+            </p>
+        </div>
+
+        <div class="session-toc">
+            <a href="#session-1" class="toc-link"><span class="toc-num">01</span><span>Claude Desktop + MCP — היסודות</span></a>
+            <a href="#session-2" class="toc-link"><span class="toc-num">02</span><span>חיבור ליומן + מיילים + משימות</span></a>
+            <a href="#session-3" class="toc-link"><span class="toc-num">03</span><span>עוזר חיפוש + ידע + flow מלא</span></a>
+        </div>
+
+        <!-- SESSION 01 -->
+        <section id="session-1" class="session">
+            <div class="session-head">
+                <div class="id">
+                    <span class="num">01</span>
+                    SESSION
+                    <div class="meta">90 MIN</div>
+                </div>
+                <div>
+                    <h2>Claude Desktop + MCP — היסודות</h2>
+                    <p class="summary">
+                        מבינים את ההבדל בין צ'אטבוט לסוכן AI. מתקינים Claude Desktop, מחברים את ה-MCP הראשון, ובונים עוזר שמסכם מיילים בבוקר.
+                    </p>
+                </div>
+            </div>
+
+            <div class="session-body">
+
+                <div>
+                    <h3>1. למה לא ChatGPT?</h3>
+                    <p>
+                        ChatGPT הוא צ'אטבוט. הוא יודע לדבר, אבל הוא <strong>לא יכול לעשות</strong>. הוא לא רואה את המיילים שלכם, לא ניגש ליומן שלכם, לא יכול ליצור משימה ב-Notion.
+                    </p>
+                    <p>
+                        עוזר AI אמיתי = <strong>סוכן</strong>. הוא יכול לבצע פעולות. לקרוא קבצים. לשלוח מיילים. לקבוע פגישות. לעדכן מסד נתונים. הוא <em>סוגר את הלולאה</em>.
+                    </p>
+                </div>
+
+                <div>
+                    <h3>2. Claude Desktop + MCP</h3>
+                    <p>
+                        <strong>Claude Desktop</strong> זו האפליקציה של Anthropic ל-Mac/Windows. ההבדל מהדפדפן: Claude Desktop יכול להתחבר ל-<strong>MCP servers</strong>.
+                    </p>
+                    <div class="session-block">
+                        <div class="block-label">MCP — Model Context Protocol</div>
+                        <p>
+                            פרוטוקול שאיתו Claude מתחבר לכל אפליקציה: Gmail, Calendar, Notion, Slack, Linear, GitHub, Google Drive — כל אחד מהם מציע MCP Server שאתם מחברים פעם אחת, ואז Claude יכול לעבוד עם הנתונים שם.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>3. התקנה</h3>
+                    <ol>
+                        <li>הורדה: <strong>claude.ai/download</strong></li>
+                        <li>התקנה רגילה (Mac: drag to Applications. Windows: next-next-finish)</li>
+                        <li>חיבור עם החשבון שלכם (אותו אחד מהקורס הראשון)</li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3>4. ה-MCP הראשון — Filesystem</h3>
+                    <p>
+                        נתחיל פשוט. נאפשר ל-Claude לראות את התיקיות שלכם:
+                    </p>
+                    <div class="code-block">
+                        <span class="comment"># בקובץ ההגדרות של Claude Desktop:</span><br>
+                        {<br>
+                        &nbsp;&nbsp;<span class="key">"mcpServers"</span>: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"filesystem"</span>: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"command"</span>: <span class="key">"npx"</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"args"</span>: [<span class="key">"-y"</span>, <span class="key">"@modelcontextprotocol/server-filesystem"</span>, <span class="key">"/Users/me/Documents"</span>]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                    <p>אחרי restart ל-Claude Desktop — תוכלו לכתוב לו "מה יש בתיקיית Documents שלי?" והוא יראה.</p>
+                </div>
+
+                <div>
+                    <h3>5. ה-MCP הראשון לעסק — Gmail</h3>
+                    <p>
+                        חיבור ל-Gmail דרך MCP. בקורס נעשה את זה יחד שלב-אחר-שלב. אחרי החיבור, אפשר לכתוב ל-Claude:
+                    </p>
+                    <ul>
+                        <li>"תסכם לי את כל המיילים מהבוקר"</li>
+                        <li>"אילו מיילים דחופים?"</li>
+                        <li>"תכתוב טיוטת תשובה למייל מ-יוסי"</li>
+                    </ul>
+                    <p>הוא קורא, מסכם, מציע. אתם מאשרים לפני שליחה.</p>
+                </div>
+
+                <div>
+                    <h3>6. בניית פרומפט סיכום בוקרי</h3>
+                    <p>פרומפט שתשמרו ותריצו כל בוקר:</p>
+                    <div class="session-block">
+                        <div class="block-label">Morning Brief</div>
+                        <p>
+                            "תקרא את כל המיילים מ-24 השעות האחרונות. סווג אותם ל: דחוף / לתשובה / FYI / זבל. תן לי סיכום של כל קטגוריה. למיילים הדחופים — תכתוב טיוטות תשובה. תן לי גם 3 משימות עיקריות להיום על בסיס מה שראית."
+                        </p>
+                    </div>
+                    <p>3 דקות בבוקר → תפעלו עם בהירות מלאה כל היום.</p>
+                </div>
+
+                <div class="deliverable">
+                    <div class="check">✓</div>
+                    <div>
+                        <span class="label">תוצר המפגש</span>
+                        <strong>Claude Desktop + MCP פעיל + סיכום בוקר אוטומטי</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SESSION 02 -->
+        <section id="session-2" class="session">
+            <div class="session-head">
+                <div class="id">
+                    <span class="num">02</span>
+                    SESSION
+                    <div class="meta">90 MIN</div>
+                </div>
+                <div>
+                    <h2>חיבור ליומן + מיילים + משימות</h2>
+                    <p class="summary">
+                        מרחיבים את העוזר. מחברים את Google Calendar ו-Notion (או Todoist), והופכים אותו לעוזר שיודע לקבוע פגישות, לרשום משימות, ולתזכר אתכם.
+                    </p>
+                </div>
+            </div>
+
+            <div class="session-body">
+
+                <div>
+                    <h3>1. חיבור Google Calendar</h3>
+                    <p>
+                        MCP Server לגוגל קלנדר. אחרי החיבור — אפשר לכתוב ל-Claude:
+                    </p>
+                    <ul>
+                        <li>"מה יש לי השבוע?"</li>
+                        <li>"תקבע פגישת זום עם דנה ביום שלישי בשעה 14:00, נושא: שיחת מכירה"</li>
+                        <li>"מצא לי שעה פנויה ביום הרביעי הקרוב"</li>
+                        <li>"בטל את הפגישה של ב-15:00 היום, ושלח התנצלות לכל המוזמנים"</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>2. חיבור Notion / Todoist</h3>
+                    <p>
+                        בוחרים אחד — איפה אתם מנהלים משימות. גם ל-Notion וגם ל-Todoist יש MCP Server.
+                    </p>
+                    <p>אחרי חיבור: "תוסיף משימה — להתקשר ליעקב מחר בבוקר. תיוג: לקוחות. דחיפות: גבוהה."</p>
+                </div>
+
+                <div>
+                    <h3>3. ה-Workflow היומי</h3>
+                    <p>הזרימה האידיאלית:</p>
+                    <ol>
+                        <li><strong>בבוקר</strong>: "סיכום מיילים + יומן + 3 משימות עיקריות"</li>
+                        <li><strong>בצהריים</strong>: "מה עשיתי הבוקר? מה נשאר? תעדכן את ה-status"</li>
+                        <li><strong>אחרי פגישה</strong>: "תרשום סיכום בנוטיון, תוסיף משימות שעלו, תזכר אותי לפעולות חוזרות"</li>
+                        <li><strong>בערב</strong>: "סיכום היום, מה תכננתי לעומת מה שעשיתי, מה לתכנן למחר"</li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3>4. תזכורות חכמות</h3>
+                    <p>
+                        Claude לא רק מקבל פקודות — הוא יכול לתזכר אתכם. בעזרת cron jobs ב-Mac/Windows, אפשר להריץ פרומפטים אוטומטית בזמנים מסוימים.
+                    </p>
+                    <p>דוגמה: כל יום ראשון ב-9 בבוקר — Claude שולח לכם אוטומטית את הסיכום השבועי לטלפון.</p>
+                </div>
+
+                <div>
+                    <h3>5. עוזר תיאור פגישות</h3>
+                    <p>
+                        משלבים את כל מה שלמדנו: לפני כל פגישה ב-Calendar, Claude מכין לכם <strong>brief</strong>: מי האדם, מה הקשר אליכם, מה דובר במייל האחרון, איך להיכנס לשיחה.
+                    </p>
+                </div>
+
+                <div class="deliverable">
+                    <div class="check">✓</div>
+                    <div>
+                        <span class="label">תוצר המפגש</span>
+                        <strong>עוזר שמנהל לכם יומן + משימות + תזכורות אוטומטיות</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SESSION 03 -->
+        <section id="session-3" class="session">
+            <div class="session-head">
+                <div class="id">
+                    <span class="num">03</span>
+                    SESSION
+                    <div class="meta">90 MIN</div>
+                </div>
+                <div>
+                    <h2>עוזר חיפוש + ידע + flow מלא</h2>
+                    <p class="summary">
+                        Claude לומד את העסק שלכם. מחברים אותו לכל המסמכים, המיילים ההיסטוריים, וה-CRM — והוא הופך לעוזר שיודע יותר עליכם מכל עובד אנושי.
+                    </p>
+                </div>
+            </div>
+
+            <div class="session-body">
+
+                <div>
+                    <h3>1. חיבור Google Drive / Dropbox</h3>
+                    <p>
+                        MCP ל-Drive — Claude קורא את כל המסמכים שלכם. הוא יכול לחפש בתוכם, לסכם אותם, להשוות גרסאות.
+                    </p>
+                    <ul>
+                        <li>"מצא לי את החוזה האחרון שחתמתי עם דיגיטל-X"</li>
+                        <li>"השווה בין הצעת המחיר הזו להצעה הקודמת"</li>
+                        <li>"תכתוב לי הצעת מחיר ללקוח X על בסיס התבנית הסטנדרטית שלי"</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>2. בניית "מוח" לעוזר — Knowledge Base</h3>
+                    <p>
+                        תיקייה מסודרת ב-Drive עם:
+                    </p>
+                    <ul>
+                        <li>הסיפור של העסק שלכם</li>
+                        <li>השירותים והמחירים</li>
+                        <li>תהליכי עבודה סטנדרטיים</li>
+                        <li>FAQ של לקוחות</li>
+                        <li>סגנון הכתיבה שלכם (3 דוגמאות מיילים)</li>
+                    </ul>
+                    <p>הוא יקרא את הכל, ויוכל לכתוב במקומכם בקול שלכם.</p>
+                </div>
+
+                <div>
+                    <h3>3. עוזר ב-Slack / WhatsApp</h3>
+                    <p>
+                        אם אתם רוצים לפנות לעוזר מהטלפון — אפשר לחבר אותו ל-WhatsApp או Slack. בונים בוט פשוט שכל הודעה אליו עוברת ל-Claude עם MCPs מחוברים.
+                    </p>
+                    <p>תוצאה: <strong>שולחים הודעה ב-WhatsApp לעצמכם — מקבלים תשובה מהעוזר תוך 3 שניות</strong>, גם כשאתם בנהיגה.</p>
+                </div>
+
+                <div>
+                    <h3>4. אוטומציה + עוזר = שילוב מנצח</h3>
+                    <p>
+                        משלבים את מה שלמדנו בקורס 2: Make מפעיל את Claude לפי triggers, Claude מבצע פעולות חכמות, ומחזיר תוצאה ל-Make לפעולה הבאה.
+                    </p>
+                    <p>דוגמה: ליד נכנס → Claude קורא את פרטי הליד + ההיסטוריה ב-CRM → כותב מייל מותאם → שולח. אתם רואים את התוצאה בגוגל שיט בלי להזיז אצבע.</p>
+                </div>
+
+                <div>
+                    <h3>5. הצגת פרויקט סיום</h3>
+                    <p>
+                        כל תלמיד מציג את העוזר שלו ואיך הוא משלב אותו בחיי היום-יום. מקבלים פידבק מהקבוצה, רעיונות לשיפור, ויש לכם רשימה של 5 דברים נוספים לבנות בעצמכם.
+                    </p>
+                </div>
+
+                <div class="callout">
+                    <span class="callout-label">🚀 בסוף הקורס</span>
+                    <p>
+                        העוזר שלכם <strong>חוסך לכם 1-2 שעות ביום</strong>. בחישוב שנתי — <strong>מעל 500 שעות</strong>. שעה של בעל עסק שווה 100-300₪. עשו חשבון. ואז עשו עוד חשבון.
+                    </p>
+                </div>
+
+                <div class="deliverable">
+                    <div class="check">✓</div>
+                    <div>
+                        <span class="label">תוצר הקורס</span>
+                        <strong>עוזר אישי AI מלא — יומן, מיילים, משימות, ידע, חיבור לטלפון</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="session-nav">
+                <a href="/business/portal/">→ חזרה ללוח הקורסים</a>
+                <a href="#" style="opacity:0.5; cursor:not-allowed; pointer-events:none;">קורס יצירת תוכן — בקרוב</a>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="portal.js"></script>
+    <script>
+        const auth = requireAuth();
+        if (auth) {
+            if (!hasCourseAccess(auth, 'assistant')) {
+                document.body.innerHTML = '<div style="padding:80px 32px; text-align:center;"><h1>אין לכם הרשאה לקורס זה</h1><p style="margin-top:16px; color:var(--text-muted);">לרכישת הקורס — <a href="/business/" style="color:var(--accent);">כאן</a></p></div>';
+            } else {
+                renderUserWidget(auth);
+            }
+        }
+    </script>
+</body>
+</html>

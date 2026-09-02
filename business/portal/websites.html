@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>קורס בניית אתרים — AI Lab Business</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portal.css">
+    <style>
+        .lesson-grid {
+            display: flex; flex-direction: column;
+            gap: 14px;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+        .lesson-card {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 28px;
+            align-items: center;
+            padding: 28px 32px;
+            background: var(--bg-elev);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--text);
+            transition: border-color 0.2s, transform 0.2s, padding 0.2s;
+        }
+        .lesson-card:hover {
+            border-color: var(--accent);
+            transform: translateX(-6px);
+        }
+        .lesson-card .l-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--text-faded);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            transition: color 0.2s;
+        }
+        .lesson-card:hover .l-num { color: var(--accent); }
+        .lesson-card .l-info h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+        .lesson-card .l-info p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+        .lesson-card .l-meta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-faded);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            text-align: left;
+            line-height: 1.7;
+        }
+        .lesson-card .l-meta .open {
+            color: var(--accent);
+            font-weight: 700;
+            display: block;
+            margin-top: 4px;
+        }
+        @media (max-width: 700px) {
+            .lesson-card { grid-template-columns: 60px 1fr; gap: 18px; padding: 22px 20px; }
+            .lesson-card .l-meta { grid-column: 1 / -1; text-align: right; padding-top: 12px; border-top: 1px dashed var(--line); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <a href="/business/portal/" class="brand">
+            <span>AI Lab</span>
+            <span class="biz">BUSINESS</span>
+        </a>
+        <div class="topbar-nav">
+            <a href="/business/portal/">→ לוח קורסים</a>
+            <div class="topbar-user" id="topbarUser"></div>
+        </div>
+    </header>
+
+    <main class="course-page">
+        <div class="course-hero">
+            <div class="kicker">קורס 01 / בניית אתרים</div>
+            <h1>מ-0 לאתר עסקי <em>חי באוויר</em>.</h1>
+            <p class="lead">
+                5 שיעורים. כל שיעור — מצגת עם חלק עיוני, חלק מעשי, ומשימה לפני המפגש הבא.
+                בסוף הקורס: אתר עסקי שלם, על דומיין משלכם, מאובטח, עם Analytics פעיל.
+            </p>
+        </div>
+
+        <div class="lesson-grid">
+
+            <a href="courses/websites/lesson-01.html" class="lesson-card">
+                <div class="l-num">01</div>
+                <div class="l-info">
+                    <h3>יסודות Claude Code + הפרומפט הראשון</h3>
+                    <p>איך הכלי עובד, מה הוא רואה, 3 עקרונות לפרומפט טוב, ופרומפט ראשון לעסק שלכם.</p>
+                </div>
+                <div class="l-meta">
+                    60 דק'<br>19 שקפים
+                    <span class="open">פתח ←</span>
+                </div>
+            </a>
+
+            <a href="courses/websites/lesson-02.html" class="lesson-card">
+                <div class="l-num">02</div>
+                <div class="l-info">
+                    <h3>דף נחיתה אסטרטגי</h3>
+                    <p>איך גולשים סורקים דף, מבנה 5-סקציות, אסטרטגיית CTA, ו-Copy שמדבר ללקוח.</p>
+                </div>
+                <div class="l-meta">
+                    60 דק'<br>19 שקפים
+                    <span class="open">פתח ←</span>
+                </div>
+            </a>
+
+            <a href="courses/websites/lesson-03.html" class="lesson-card">
+                <div class="l-num">03</div>
+                <div class="l-info">
+                    <h3>עיצוב ורספונסיביות</h3>
+                    <p>4 פרינציפים של עיצוב, בחירת פלטה ופונט, התאמה למובייל, ובדיקה ב-DevTools.</p>
+                </div>
+                <div class="l-meta">
+                    60 דק'<br>19 שקפים
+                    <span class="open">פתח ←</span>
+                </div>
+            </a>
+
+            <a href="courses/websites/lesson-04.html" class="lesson-card">
+                <div class="l-num">04</div>
+                <div class="l-info">
+                    <h3>תוכן ו-SEO</h3>
+                    <p>איך גוגל מוצא דפים, מילות מפתח, Meta Tags, OG Tags, sitemap ו-robots.txt.</p>
+                </div>
+                <div class="l-meta">
+                    60 דק'<br>19 שקפים
+                    <span class="open">פתח ←</span>
+                </div>
+            </a>
+
+            <a href="courses/websites/lesson-05.html" class="lesson-card">
+                <div class="l-num">05</div>
+                <div class="l-info">
+                    <h3>Deploy + דומיין + Analytics</h3>
+                    <p>GitHub, Netlify, חיבור דומיין משלכם, SSL, ו-Google Analytics. האתר עולה לאוויר.</p>
+                </div>
+                <div class="l-meta">
+                    60 דק'<br>19 שקפים
+                    <span class="open">פתח ←</span>
+                </div>
+            </a>
+
+        </div>
+
+        <div style="max-width: 880px; margin: 64px auto 0; padding: 28px 32px; background: var(--bg-elev); border: 1px solid var(--line); border-radius: 4px;">
+            <div class="kicker" style="margin-bottom: 14px;">איך עובדים עם הקורס</div>
+            <p style="color: var(--text); line-height: 1.75; font-size: 0.95rem;">
+                כל שיעור הוא מצגת מלאה — שני חלקים (עיוני + מעשי), עם משימה בסיומו. במפגש בזום נעבור על המצגת יחד, ואתם יוצאים עם משימה ספציפית לבצע לפני המפגש הבא.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.75; font-size: 0.92rem; margin-top: 12px;">
+                המצגות זמינות לכם כאן בכל זמן — לחזרה, להעמקה, או להכנה למפגש. לכל מצגת ניתן לנווט בחיצי המקלדת או בלחיצה על שקפים.
+            </p>
+        </div>
+    </main>
+
+    <script src="portal.js"></script>
+    <script>
+        const auth = requireAuth();
+        if (auth) {
+            if (!hasCourseAccess(auth, 'websites')) {
+                document.body.innerHTML = '<div style="padding:80px 32px; text-align:center;"><h1>אין לכם הרשאה לקורס זה</h1><p style="margin-top:16px; color:var(--text-muted);">לרכישת הקורס — <a href="/business/" style="color:var(--accent);">כאן</a></p></div>';
+            } else {
+                renderUserWidget(auth);
+            }
+        }
+    </script>
+</body>
+</html>

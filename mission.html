@@ -17,21 +17,21 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --primary: #6C3CE1;
+    --primary: #6366F1;
     --primary-light: #8B5CF6;
-    --primary-dark: #5228CC;
-    --accent: #00D4AA;
-    --accent-light: #34EABB;
-    --dark: #0f0f1e;
-    --dark-card: #181830;
-    --dark-lighter: #22224a;
+    --primary-dark: #4F52C9;
+    --accent: #8B8DFF;
+    --accent-light: #4DD6E8;
+    --dark: #0A0E27;
+    --dark-card: #171B45;
+    --dark-lighter: #1E2354;
     --border: rgba(255,255,255,0.08);
     --text: #f0eef5;
-    --text-muted: #b8b0d0;
+    --text-muted: rgba(226,229,255,.72);
     --gold: #F5C842;
     --pink: #FF4D8D;
     --blue: #4DA3FF;
@@ -47,7 +47,7 @@
   }
   html { scroll-behavior: smooth; }
   body {
-    font-family: 'Heebo', sans-serif;
+    font-family: 'Assistant', sans-serif;
     background: var(--dark);
     color: var(--text);
     overflow-x: hidden;
@@ -534,7 +534,7 @@
     color: var(--text);
     padding: 12px 14px;
     border-radius: var(--radius-sm);
-    font-family: 'Heebo', sans-serif;
+    font-family: 'Assistant', sans-serif;
     font-size: 1rem;
     transition: border-color 0.2s, background 0.2s;
     direction: rtl;
@@ -558,7 +558,7 @@
     padding: 16px 28px;
     border: none;
     border-radius: var(--radius-pill);
-    font-family: 'Heebo', sans-serif;
+    font-family: 'Assistant', sans-serif;
     font-size: 1.1rem;
     font-weight: 800;
     cursor: pointer;
@@ -660,21 +660,22 @@
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="navbar">
-    <a href="/" class="nav-logo">AI Lab</a>
-    <ul class="nav-links">
-      <li><a href="/">בית</a></li>
-      <li><a href="/webinar-general.html">וובינר חינמי</a></li>
-      <li><a href="/blog/">עולם ה-AI</a></li>
-      <li><a href="/mission.html" class="active">המשימה שלנו</a></li>
-    </ul>
-    <div class="nav-cta-group">
-      <a href="/" class="nav-cta home">חזרה לאתר</a>
-      <a href="#discord" class="nav-cta discord">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-        הצטרפו לקהילה
-      </a>
+  <!-- NAV — אי זכוכית צף (2026) -->
+  <link rel="stylesheet" href="/page-2026.css">
+  <style>
+    /* page-2026.css הוא שלד לדפים קטנים — כאן לוקחים ממנו רק את האי */
+    body { font-family: 'Assistant', sans-serif; }
+    h1, h2, h3 { font-family: 'Suez One', serif; font-weight: normal; }
+  </style>
+  <nav class="nav-2026" aria-label="ניווט ראשי">
+    <div class="ni">
+      <a href="/" class="nlogo">AI <b>Lab</b></a>
+      <div class="nlinks">
+        <a href="/#courses">הקורסים</a>
+        <a href="/blog/">עולם ה-AI</a>
+        <a href="/faq.html">שאלות</a>
+      </div>
+      <a class="ncta" href="https://my.ai-lab.co.il/courses">הרשמה</a>
     </div>
   </nav>
 
@@ -771,22 +772,22 @@
       </div>
       <div class="values-grid">
         <div class="value">
-          <div class="value-icon">🚀</div>
+          <div class="value-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
           <h3>בונים דברים אמיתיים</h3>
           <p>לא מצגות, לא תיאוריה. כל ילד מסיים את הקורס עם מוצר באוויר שאפשר לשתף, להשתמש בו, ולהתגאות בו.</p>
         </div>
         <div class="value">
-          <div class="value-icon">🧠</div>
+          <div class="value-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/></svg></div>
           <h3>חושבים כיזמים</h3>
           <p>מזהים בעיות שוות פתרון, בונים את הפתרון הכי פשוט, ומשפרים תוך כדי תנועה. בדיוק כמו הסטארטאפים הגדולים.</p>
         </div>
         <div class="value">
-          <div class="value-icon">⚡</div>
+          <div class="value-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
           <h3>כלים של מבוגרים</h3>
           <p>Claude Code, Cursor, ChatGPT, GitHub. אותם כלים שמפתחים מקצועיים עובדים איתם — מונגשים לילדים בגיל 10+.</p>
         </div>
         <div class="value">
-          <div class="value-icon">🌐</div>
+          <div class="value-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div>
           <h3>קהילה שבונה יחד</h3>
           <p>הילדים שלנו לא לומדים לבד. הם חלק מקהילה של יזמים צעירים בדיסקורד — שמשתפים, עוזרים, ומתקדמים ביחד.</p>
         </div>
@@ -806,12 +807,12 @@
         אנחנו פותחים קהילה ייחודית של ילדים, הורים ומנטורים — מקום לשתף פרויקטים, ללמוד ולבנות יחד. <strong>השאירו פרטים ותקבלו את ההזמנה הראשונה לפני כולם.</strong>
       </p>
       <div class="discord-channels">
-        <span class="discord-channel">💡 רעיונות לפרויקטים</span>
-        <span class="discord-channel">🛠️ עזרה טכנית</span>
-        <span class="discord-channel">🎓 טיפים וטריקים</span>
-        <span class="discord-channel">🚀 פרויקטים של חברי הקהילה</span>
-        <span class="discord-channel">💬 שיח יזמי</span>
-        <span class="discord-channel">🎥 סדנאות לייב</span>
+        <span class="discord-channel"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> רעיונות לפרויקטים</span>
+        <span class="discord-channel"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> עזרה טכנית</span>
+        <span class="discord-channel"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M21.42 10.92 12.83 15a2 2 0 0 1-1.66 0L2.58 10.92a1 1 0 0 1 0-1.84L11.17 5a2 2 0 0 1 1.66 0l8.59 4.08a1 1 0 0 1 0 1.84Z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg> טיפים וטריקים</span>
+        <span class="discord-channel"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg> פרויקטים של חברי הקהילה</span>
+        <span class="discord-channel"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> שיח יזמי</span>
+        <span class="discord-channel"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg> סדנאות לייב</span>
       </div>
 
       <form class="community-form" id="communityForm" onsubmit="return submitCommunityForm(event)">
@@ -850,7 +851,7 @@
       </form>
 
       <div class="form-thanks" id="formThanks">
-        <div class="icon">🎉</div>
+        <div class="icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M5.8 11.3 2 22l10.7-3.8"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17"/><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"/><path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/></svg></div>
         <h3>קיבלנו את הפרטים שלך!</h3>
         <p>נשלח לך הזמנה ברגע שהקהילה תיפתח. עד אז — נתראה בקורס.</p>
       </div>
@@ -894,5 +895,6 @@
       return false;
     }
   </script>
+<script src="/agent-widget.js" defer></script>
 </body>
 </html>

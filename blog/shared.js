@@ -12,45 +12,50 @@
     var path = window.location.pathname;
     var isBlogIndex = path === '/blog/' || path === '/blog/index.html';
 
-    // ---------- NAV HTML ----------
+    // ---------- NAV + תפריט מובייל 2026 ----------
+    // זהה לחלוטין לאתר הראשי (redesign-2026.html). העיצוב ב-/blog/menu-2026.css.
     var navHTML = ''
         + '<nav id="navbar">'
-        + '  <a href="/" class="nav-logo">AI Lab</a>'
+        + '<div class="nav-inner-2026">'
+        + '  <a href="/" class="nav-logo">AI <span>Lab</span></a>'
         + '  <ul class="nav-links nav-links-desktop">'
         + '    <li><a href="/blog/"' + (isBlogIndex ? ' class="active"' : '') + '>עולם ה-AI</a></li>'
-        + '    <li><a href="/#about">על הקורס</a></li>'
-        + '    <li><a href="/#program">תוכנית</a></li>'
-        + '    <li><a href="/#tools">כלי AI</a></li>'
-        + '    <li><a href="/#pricing">מחיר</a></li>'
+        + '    <li><a href="/#courses">הקורסים</a></li>'
+        + '    <li><a href="/#wall">הפרויקטים</a></li>'
+        + '    <li><a href="/faq.html">שאלות</a></li>'
         + '    <li><a href="/mission.html">המשימה שלנו</a></li>'
         + '  </ul>'
         + '  <div class="nav-cta-group">'
-        + '    <a href="#" onclick="event.preventDefault();openRegisterPopup();" class="nav-cta" style="background:linear-gradient(135deg,var(--accent),#00b894);">הרשמה</a>'
-        + '    <a href="/webinar-general.html" class="nav-cta" style="background:linear-gradient(135deg,var(--accent),#00b894);">וובינר חינמי</a>'
-        + '    <a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" class="nav-cta" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));" onclick="if(window.gtag)gtag(\'event\',\'whatsapp_community_click\',{event_category:\'community\',event_label:\'nav_join\'})">הצטרפו לקהילה</a>'
-        + '    <a href="/portal/" class="nav-cta" style="background:transparent;border:1.5px solid rgba(255,255,255,0.28);">אזור אישי</a>'
+        + '    <a href="https://my.ai-lab.co.il" class="nav-cta nav-ghost">אזור אישי</a>'
+        + '    <a href="https://my.ai-lab.co.il/join" class="nav-cta">הרשמה</a>'
         + '  </div>'
-        + '  <button class="mobile-menu-btn" id="menuBtn" aria-label="תפריט">&#9776;</button>'
-        + '</nav>'
-        + '<div class="mobile-menu-panel" id="mobileMenuPanel">'
-        + '  <div class="mobile-menu-header">'
-        + '    <span class="mobile-menu-logo">AI Lab</span>'
-        + '    <button class="mobile-close-btn" id="menuCloseBtn" aria-label="סגור תפריט">&times;</button>'
-        + '  </div>'
-        + '  <ul class="mobile-menu-links">'
-        + '    <li><a href="/blog/"><span class="menu-icon">&#x1F30D;</span> עולם ה-AI</a></li>'
-        + '    <li><a href="/#about"><span class="menu-icon">&#x1F4A1;</span> על הקורס</a></li>'
-        + '    <li><a href="/#program"><span class="menu-icon">&#x1F4D6;</span> תוכנית</a></li>'
-        + '    <li><a href="/#tools"><span class="menu-icon">&#x1F916;</span> כלי AI</a></li>'
-        + '    <li><a href="/#pricing"><span class="menu-icon">&#x1F4B0;</span> מחיר</a></li>'
-        + '    <li><a href="/mission.html"><span class="menu-icon">&#x2728;</span> המשימה שלנו</a></li>'
-        + '    <li class="mobile-cta mobile-cta-green"><a href="#" onclick="event.preventDefault();closeMobileMenu();openRegisterPopup();">הרשמה</a></li>'
-        + '    <li class="mobile-cta mobile-cta-green"><a href="/webinar-general.html">וובינר חינמי</a></li>'
-        + '    <li class="mobile-cta"><a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;" onclick="if(window.gtag)gtag(\'event\',\'whatsapp_community_click\',{event_category:\'community\',event_label:\'mobile_nav_join\'})">הצטרפו לקהילה</a></li>'
-        + '    <li class="mobile-cta"><a href="/portal/" style="background:transparent;border:1.5px solid rgba(255,255,255,0.28);color:#fff;">אזור אישי</a></li>'
-        + '  </ul>'
+        + '  <button class="burger" id="burger" aria-label="תפריט"><span></span><span></span><span></span></button>'
         + '</div>'
-        + '<div class="mobile-overlay" id="mobileOverlay"></div>';
+        + '</nav>'
+        + '<div class="mobile-menu" id="mobileMenu">'
+        + '  <button class="m-gem" id="menuAgentBtn" type="button" aria-label="דברו עם ה-AI שלנו">'
+        + '    <span class="m-gem-core"><img src="/logo-gem-96.png" alt="" width="64" height="64"></span>'
+        + '    <span class="m-gem-label">דברו עם ה-AI שלנו</span>'
+        + '  </button>'
+        + '  <div class="m-list">'
+        + '    <a class="mlink" href="/blog/">עולם ה-AI</a>'
+        + '    <a class="mlink" href="/#wall">הפרויקטים של התלמידים</a>'
+        + '    <a class="mlink" href="/#videos">סרטוני תלמידים</a>'
+        + '    <a class="mlink" href="/#courses">הקורסים והמחירים</a>'
+        + '    <a class="mlink" href="/#community">קהילה</a>'
+        + '    <a class="mlink" href="/faq.html">שאלות נפוצות</a>'
+        + '  </div>'
+        + '  <div class="m-actions">'
+        + '    <a href="https://my.ai-lab.co.il/join" class="btn btn-primary">הרשמה</a>'
+        + '    <a href="https://my.ai-lab.co.il" class="btn btn-ghost-dark">אזור אישי</a>'
+        + '    <a href="https://wa.me/972546500795" target="_blank" rel="noopener" class="btn btn-wa">וואטסאפ</a>'
+        + '  </div>'
+        + '  <div class="m-social">'
+        + '    <a href="https://www.instagram.com/ai.lab.il" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 2A76 76 0 0 0 7.3 4.3c-.9.1-1.3.2-1.6.3-.4.2-.7.3-1 .7-.3.3-.5.6-.7 1-.1.3-.3.8-.3 1.6-.1 1.2-.1 1.5-.1 4.6s0 3.4.1 4.6c.1.9.2 1.3.3 1.6.2.4.3.7.7 1 .3.3.6.5 1 .7.3.1.8.3 1.6.3 1.2.1 1.5.1 4.7.1s3.5 0 4.7-.1c.9-.1 1.3-.2 1.6-.3.4-.2.7-.3 1-.7.3-.3.5-.6.7-1 .1-.3.3-.8.3-1.6.1-1.2.1-1.5.1-4.6s0-3.4-.1-4.6c-.1-.9-.2-1.3-.3-1.6-.2-.4-.3-.7-.7-1-.3-.3-.6-.5-1-.7-.3-.1-.8-.3-1.6-.3-1.2-.1-1.5-.1-4.7-.1M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6m5.2-3.4a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4"/></svg></a>'
+        + '    <a href="https://www.tiktok.com/@ai.labisrael" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.6 7.3a5 5 0 0 1-3.5-1.4v6.6a6 6 0 1 1-6-6c.2 0 .5 0 .7.1v3a3 3 0 1 0 2.2 2.9V1.9h3a5 5 0 0 0 .1.9 5 5 0 0 0 2.2 3.2 5 5 0 0 0 2.8.9v3a8 8 0 0 1-1.5-.6"/></svg></a>'
+        + '    <a href="https://www.facebook.com/share/18CXmH7Zum/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg></a>'
+        + '  </div>'
+        + '</div>';
 
     // ---------- REGISTER POPUP HTML ----------
     var popupHTML = ''
@@ -58,7 +63,7 @@
         + '  <div class="scroll-popup-box">'
         + '    <button class="scroll-popup-close" onclick="closeRegisterPopup()" aria-label="סגור">&times;</button>'
         + '    <div class="scroll-popup-header">'
-        + '      <div class="scroll-popup-icon">🚀</div>'
+        + '      <div class="scroll-popup-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#B4C4FF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>'
         + '      <h3>שריינו מקום בקורס</h3>'
         + '      <p>השאירו פרטים ונחזור אליכם בהקדם</p>'
         + '    </div>'
@@ -92,13 +97,12 @@
         + '  <div class="footer-content">'
         + '    <div class="footer-section">'
         + '      <h4>AI Lab</h4>'
-        + '      <p>קורסי יזמות ובינה מלאכותית לילדים, נוער ומבוגרים</p>'
-        + '      <p>מאיר לביא</p>'
+        + '      <p>המרכז למיומנויות העתיד — יזמות, בינה מלאכותית ובנייה אמיתית לילדים, נוער ומבוגרים.</p>'
         + '    </div>'
         + '    <div class="footer-section">'
         + '      <h4>יצירת קשר</h4>'
         + '      <a href="tel:054-6500795">054-6500795</a>'
-        + '      <a href="mailto:laviemb@gmail.com">laviemb@gmail.com</a>'
+        + '      <a href="mailto:meir@ai-lab.co.il">meir@ai-lab.co.il</a>'
         + '      <a href="https://wa.me/972546500795" target="_blank" onclick="if(window.gtag)gtag(\'event\',\'whatsapp_click\',{event_category:\'contact\',event_label:\'footer_link\'})">WhatsApp</a>'
         + '    </div>'
         + '    <div class="footer-section">'
@@ -109,6 +113,8 @@
         + '    <div class="footer-section">'
         + '      <h4>מידע</h4>'
         + '      <a href="/blog/">עולם ה-AI</a>'
+        + '      <a href="/#courses">מפת הקורסים</a>'
+        + '      <a href="https://my.ai-lab.co.il">אזור אישי</a>'
         + '      <a href="/privacy.html">מדיניות פרטיות</a>'
         + '      <a href="/terms.html">תנאי שימוש</a>'
         + '      <a href="/accessibility.html">הצהרת נגישות</a>'
@@ -187,6 +193,29 @@
     }
 
     ready(function () {
+        // סקין 2026: גופנים (Suez One + Assistant) + ערכת הליקוויד-גלאס — נטענים לכל דפי הבלוג
+        if (!document.querySelector('link[href="/blog/theme-2026.css"]')) {
+            var fonts = document.createElement('link');
+            fonts.rel = 'stylesheet';
+            fonts.href = 'https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Suez+One&display=swap';
+            document.head.appendChild(fonts);
+            var theme = document.createElement('link');
+            theme.rel = 'stylesheet';
+            theme.href = '/blog/theme-2026.css';
+            document.head.appendChild(theme);
+            var menuCss = document.createElement('link');
+            menuCss.rel = 'stylesheet';
+            menuCss.href = '/blog/menu-2026.css';
+            document.head.appendChild(menuCss);
+        }
+        // הסוכן של AI Lab מלווה את כל דפי הבלוג
+        if (!document.querySelector('script[src="/agent-widget.js"]')) {
+            var agw = document.createElement('script');
+            agw.src = '/agent-widget.js';
+            agw.defer = true;
+            document.head.appendChild(agw);
+        }
+
         // Replace placeholders with real markup
         var navSlot = document.getElementById('shared-nav');
         if (navSlot) navSlot.outerHTML = navHTML + popupHTML;
@@ -200,20 +229,22 @@
             ctaSlot.outerHTML = leadFormHTML(slug);
         }
 
-        // Wire up mobile menu now that nav exists
-        var menuBtn = document.getElementById('menuBtn');
-        var mobilePanel = document.getElementById('mobileMenuPanel');
-        var mobileOverlay = document.getElementById('mobileOverlay');
-        var menuCloseBtn = document.getElementById('menuCloseBtn');
-
-        if (menuBtn && mobilePanel && mobileOverlay) {
-            menuBtn.addEventListener('click', function () {
-                mobilePanel.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+        // חיווט תפריט המובייל — זהה לאתר הראשי: מחלקה menu-open על ה-body
+        var burger = document.getElementById('burger');
+        var mobileMenu = document.getElementById('mobileMenu');
+        if (burger && mobileMenu) {
+            burger.addEventListener('click', function () {
+                document.body.classList.toggle('menu-open');
             });
-            if (menuCloseBtn) menuCloseBtn.addEventListener('click', closeMobileMenu);
-            mobileOverlay.addEventListener('click', closeMobileMenu);
-            document.querySelectorAll('.mobile-menu-links a').forEach(function (a) {
-                a.addEventListener('click', closeMobileMenu);
+            mobileMenu.querySelectorAll('a').forEach(function (a) {
+                a.addEventListener('click', function () { document.body.classList.remove('menu-open'); });
+            });
+            // היהלום בתפריט פותח את הסוכן (agent-widget.js) וסוגר את התפריט
+            var gemBtn = document.getElementById('menuAgentBtn');
+            if (gemBtn) gemBtn.addEventListener('click', function () {
+                document.body.classList.remove('menu-open');
+                var orb = document.getElementById('agwOrb');
+                if (orb) orb.click();
             });
         }
 
@@ -228,25 +259,9 @@
     });
 
     // ---------- GLOBAL HELPERS ----------
-    window.openMobileMenu = function () {
-        var p = document.getElementById('mobileMenuPanel');
-        var o = document.getElementById('mobileOverlay');
-        var b = document.getElementById('menuBtn');
-        if (p) p.classList.add('open');
-        if (o) o.classList.add('active');
-        if (b) b.innerHTML = '&times;';
-        document.body.style.overflow = 'hidden';
-    };
-
-    window.closeMobileMenu = function () {
-        var p = document.getElementById('mobileMenuPanel');
-        var o = document.getElementById('mobileOverlay');
-        var b = document.getElementById('menuBtn');
-        if (p) p.classList.remove('open');
-        if (o) o.classList.remove('active');
-        if (b) b.innerHTML = '&#9776;';
-        document.body.style.overflow = '';
-    };
+    // תאימות לאחור: דפים ישנים עדיין קוראים לפונקציות האלה
+    window.openMobileMenu  = function () { document.body.classList.add('menu-open'); };
+    window.closeMobileMenu = function () { document.body.classList.remove('menu-open'); };
 
     window.openRegisterPopup = function () {
         var p = document.getElementById('registerPopup');

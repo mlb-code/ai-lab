@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>שיעור 2 · דף נחיתה אסטרטגי | בניית אתרים | AI Lab Business</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../lesson.css">
+    <style>
+        .glossary { max-width: 900px; width: 100%; margin-top: 24px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 4px; background: var(--bg-elev); }
+        .gl-row { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 16px 24px; border-bottom: 1px solid var(--line); text-align: right; align-items: baseline; }
+        .gl-row:last-child { border-bottom: 0; }
+        .gl-term { font-family: 'Space Mono', monospace; font-weight: 700; color: var(--accent); font-size: 0.95rem; }
+        .gl-def { color: var(--text); font-size: 0.95rem; line-height: 1.55; }
+        .gl-def small { display: block; color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
+        @media (max-width: 700px) { .gl-row { grid-template-columns: 1fr; gap: 4px; } }
+        .why-how { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1100px; width: 100%; margin-top: 20px; text-align: right; }
+        .why-how > div { background: var(--bg-elev); border: 1px solid var(--line); border-radius: 4px; padding: 24px; }
+        .wh-tag { font-family: 'Space Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700; color: var(--blue); display: inline-block; margin-bottom: 10px; }
+        .why-how .how .wh-tag { color: var(--accent); }
+        .why-how p { color: var(--text); font-size: 0.95rem; line-height: 1.7; }
+        .why-how p strong { color: var(--accent); font-weight: 600; }
+        @media (max-width: 700px) { .why-how { grid-template-columns: 1fr; } }
+        .agenda { max-width: 720px; width: 100%; margin-top: 24px; text-align: right; }
+        .agenda-row { display: grid; grid-template-columns: 90px 1fr 80px; gap: 16px; padding: 14px 0; border-bottom: 1px dashed var(--line); align-items: baseline; }
+        .agenda-row:last-child { border-bottom: 0; }
+        .agenda-row .ag-time { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--text-faded); letter-spacing: 0.08em; }
+        .agenda-row .ag-text { font-size: 1rem; color: var(--text); }
+        .agenda-row .ag-tag { font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faded); text-align: left; }
+        h2.ralign, p.ralign, div.ralign { text-align: right; max-width: 1000px; align-self: flex-start; margin-right: max(80px, calc((100vw - 1000px) / 2)); }
+        h2.ralign-w, p.ralign-w, div.ralign-w { text-align: right; max-width: 1100px; align-self: flex-start; margin-right: max(80px, calc((100vw - 1100px) / 2)); }
+        .structure-row { display: grid; grid-template-columns: 60px 1fr; gap: 18px; align-items: baseline; padding: 18px 22px; background: var(--bg-elev); border: 1px solid var(--line); border-radius: 4px; text-align: right; margin-bottom: 10px; }
+        .structure-row .sr-num { font-family: 'Space Mono', monospace; font-size: 1.3rem; color: var(--accent); font-weight: 700; line-height: 1; }
+        .structure-row .sr-text strong { color: var(--text); font-weight: 700; display: block; margin-bottom: 4px; }
+        .structure-row .sr-text { color: var(--text-muted); font-size: 0.93rem; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="brand-label">AI Lab <span class="biz">BUSINESS</span></div>
+<div class="deck-meta"><a href="../../websites.html">→ חזרה לקורס</a></div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter" id="slideCounter"></div>
+<div class="nav-hint">← → חיצים לניווט · ESC חזרה</div>
+
+<div class="deck">
+
+    <!-- 01 — TITLE -->
+    <div class="slide bg-glow active">
+        <div class="kicker">קורס בניית אתרים · שיעור 02</div>
+        <h1>דף נחיתה <span class="gradient-text">אסטרטגי.</span></h1>
+        <p class="lead" style="margin-top: 16px;">
+            מבנה דף שמוכר, אסטרטגיית CTA, ו-Copy שמדבר ללקוח. הופכים את ה-Brief מהשיעור הקודם לדף שעובד.
+        </p>
+        <div style="display:flex; gap:32px; margin-top:48px; color:var(--text-muted); font-family: 'Space Mono', monospace; font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase;">
+            <span>60 דקות</span>
+            <span style="color:var(--text-faded);">·</span>
+            <span>20 עיוני</span>
+            <span style="color:var(--text-faded);">·</span>
+            <span>30 מעשי</span>
+            <span style="color:var(--text-faded);">·</span>
+            <span>10+ משימה</span>
+        </div>
+    </div>
+
+    <!-- 02 — AGENDA -->
+    <div class="slide bg-default">
+        <div class="kicker">מה נכסה היום</div>
+        <h2 class="ralign">סדר היום.</h2>
+        <div class="agenda">
+            <div class="agenda-row">
+                <span class="ag-time">00:00 — 00:05</span>
+                <span class="ag-text">סיכום מהשיעור הקודם ומילון מונחים חדשים</span>
+                <span class="ag-tag">recap</span>
+            </div>
+            <div class="agenda-row">
+                <span class="ag-time">00:05 — 00:25</span>
+                <span class="ag-text">חלק עיוני: מבנה דף נחיתה, אסטרטגיית CTA, ו-Copy שעובד</span>
+                <span class="ag-tag">theory</span>
+            </div>
+            <div class="agenda-row">
+                <span class="ag-time">00:25 — 00:55</span>
+                <span class="ag-text">חלק מעשי: בונים יחד דף נחיתה מ-0 — Hero, sections, CTA</span>
+                <span class="ag-tag">practice</span>
+            </div>
+            <div class="agenda-row">
+                <span class="ag-time">00:55 — 01:00</span>
+                <span class="ag-text">תבנית מורחבת, מלכודות, והמשימה לשיעור 3</span>
+                <span class="ag-tag">wrap-up</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 03 — RECAP -->
+    <div class="slide bg-default">
+        <div class="kicker">מהשיעור הקודם</div>
+        <h2 class="ralign">איפה <span class="accent">נשארנו.</span></h2>
+        <p class="lead ralign">
+            בשיעור 1 בנינו דף ראשוני לקליניקת השיניים — Hero, יתרונות, סיפור, עדויות, טופס. עכשיו ניקח את אותה תבנית קדימה: <strong>נשפר את המבנה, ה-CTA, וה-Copy</strong> כדי שהדף לא רק "יראה טוב" — אלא יגרום לאנשים לבצע פעולה.
+        </p>
+        <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+            <span class="kicker" style="margin: 0; font-size: 0.7rem;">בשיעור 1 למדנו</span>
+            <span style="color: var(--text-muted); font-size: 0.92rem;">3 עקרונות לפרומפט</span>
+            <span style="color: var(--text-faded);">·</span>
+            <span style="color: var(--text-muted); font-size: 0.92rem;">Brief 5 רכיבים</span>
+            <span style="color: var(--text-faded);">·</span>
+            <span style="color: var(--text-muted); font-size: 0.92rem;">איטרציות</span>
+            <span style="color: var(--text-faded);">·</span>
+            <span style="color: var(--text-muted); font-size: 0.92rem;">תבנית בסיסית</span>
+        </div>
+    </div>
+
+    <!-- 04 — GLOSSARY -->
+    <div class="slide bg-default">
+        <div class="kicker">לפני שמתחילים</div>
+        <h2 class="ralign">מונחים <span class="accent">חדשים בשיעור.</span></h2>
+        <div class="glossary">
+            <div class="gl-row">
+                <span class="gl-term">דף נחיתה · landing page</span>
+                <span class="gl-def">דף יחיד שמטרתו אחת — לגרום למבקר לבצע פעולה ספציפית. אין ניווט מסיח, אין יציאות.<small>בניגוד לאתר רגיל שמכיל הרבה דפים.</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">Hero</span>
+                <span class="gl-def">החלק הראשון שרואים בכניסה לדף — כותרת + סלוגן + CTA. נקרא Hero כי "מציל" את האתר.<small>3 השניות הראשונות מחליטות אם הגולש נשאר או יוצא.</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">CTA · Call to Action</span>
+                <span class="gl-def">הכפתור שמבקש מהמבקר לבצע פעולה — "הזמינו עכשיו", "השאירו פרטים", "הצטרפו לוובינר".<small>כל דף נחיתה צריך CTA אחד ראשי.</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">Copy</span>
+                <span class="gl-def">הטקסט עצמו של הדף. "Copy שמוכר" = טקסט שגורם לאדם לרצות לפעול.<small>טוב Copy = פחות מילים, יותר השפעה.</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">Conversion</span>
+                <span class="gl-def">המרה — מבקר שהפך לליד או ללקוח. אחוז ההמרה = כמה מהגולשים בצעו את הפעולה.<small>דף נחיתה טוב = 5-10% המרה. רגיל = 1-2%.</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">USP · Unique Selling Proposition</span>
+                <span class="gl-def">הצעת המכר הייחודית — מה מבדל אתכם ממתחרים. <em>"הרופא שיניים עם הסבלנות הכי גבוהה לילדים בעיר"</em>.<small>אם אין USP ברור — הדף יישמע גנרי.</small></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 05 — THEORY HEADER -->
+    <div class="slide bg-theory">
+        <div class="kicker theory">חלק עיוני · 20 דקות</div>
+        <h1>איך דף <span class="gradient-text">מוכר.</span></h1>
+        <p class="lead">לפני שכותבים את הדף — צריך להבין מה גולשים עושים בפועל בעמוד. איפה העין נתפסת, מה גורם להם להישאר, ומה גורם לפעולה.</p>
+    </div>
+
+    <!-- 06 — F-PATTERN -->
+    <div class="slide bg-default">
+        <div class="kicker theory">חלק עיוני</div>
+        <h2 class="ralign">איך גולשים <span class="accent">קוראים</span> דף.</h2>
+        <p class="lead ralign">לא קוראים מילה במילה. הם <strong>סורקים</strong> את העמוד באופן מסוים — וזה מה שצריך לתכנן בהתאם.</p>
+        <div class="why-how">
+            <div>
+                <span class="wh-tag">המחקר</span>
+                <p>
+                    מחקרי eye-tracking הראו שגולשים קוראים דפי אינטרנט בצורת F — משווים מהר את 2 השורות הראשונות, מסתכלים על תחילת השורות, ויורדים למטה בעמודה אחת.
+                </p>
+                <p style="margin-top: 12px;">
+                    בעברית — נחפש את אותו דפוס מימין לשמאל.
+                </p>
+            </div>
+            <div class="how">
+                <span class="wh-tag">המסקנה לדף שלכם</span>
+                <p>
+                    <strong>ה-3 שניות הראשונות מחליטות.</strong> בכותרת ובתת-כותרת חייב להיות ברור מה אתם מציעים ולמה זה רלוונטי לקורא.
+                </p>
+                <p style="margin-top: 12px;">
+                    אם הגולש לא מבין ב-3 שניות — הוא לחץ "Back" ואיבדתם אותו לתמיד.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 07 — STRUCTURE -->
+    <div class="slide bg-default">
+        <div class="kicker theory">חלק עיוני</div>
+        <h2 class="ralign-w">מבנה דף נחיתה <span class="accent">שעובד.</span></h2>
+        <p class="lead ralign-w">5 חלקים, בסדר הזה. כל חלק עונה על שאלה אחרת בראש של הקורא.</p>
+        <div style="max-width: 880px; width: 100%; margin-top: 24px;">
+            <div class="structure-row">
+                <span class="sr-num">01</span>
+                <div class="sr-text">
+                    <strong>HERO — מה אני מקבל פה?</strong>
+                    כותרת ראשית ברורה + תת-כותרת שמסבירה את הערך + CTA ראשי.
+                </div>
+            </div>
+            <div class="structure-row">
+                <span class="sr-num">02</span>
+                <div class="sr-text">
+                    <strong>בעיה — האם זה רלוונטי לי?</strong>
+                    מתארים את הכאב של הקורא במילים שלו. "מתוסכלים מ...", "מחפשים פתרון ל...".
+                </div>
+            </div>
+            <div class="structure-row">
+                <span class="sr-num">03</span>
+                <div class="sr-text">
+                    <strong>פתרון / יתרונות — איך אתם פותרים?</strong>
+                    3-4 יתרונות עיקריים. לא תכונות — תוצאות. לא "ניסיון 12 שנה" אלא "ביטחון שאתם בידיים טובות".
+                </div>
+            </div>
+            <div class="structure-row">
+                <span class="sr-num">04</span>
+                <div class="sr-text">
+                    <strong>הוכחה חברתית — למה לסמוך?</strong>
+                    עדויות לקוחות, לוגואים של מי שעבדו איתכם, מספרים, פרסים.
+                </div>
+            </div>
+            <div class="structure-row">
+                <span class="sr-num">05</span>
+                <div class="sr-text">
+                    <strong>CTA נוסף + טופס — מה לעשות עכשיו?</strong>
+                    שורה ברורה: "מוכנים? השאירו פרטים." טופס פשוט עם 2-3 שדות בלבד.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 08 — CTA STRATEGY -->
+    <div class="slide bg-default">
+        <div class="kicker theory">חלק עיוני</div>
+        <h2 class="ralign">CTA — הכלל <span class="accent">היחיד.</span></h2>
+        <div class="callout-big" style="margin-top: 16px;">
+            <strong>פעולה אחת בדף.</strong> לא שתיים, לא שלוש. אחת.
+        </div>
+        <p class="lead ralign" style="margin-top: 32px;">
+            כל פעולה נוספת בדף = הסחה. אם יש "השאירו פרטים" וגם "הזמינו ספר חינם" וגם "פנו ב-WhatsApp" — חלק יבחרו את הקלה ביותר, חלק יתבלבלו ולא יבחרו כלום.
+        </p>
+        <div class="why-how" style="margin-top: 32px;">
+            <div>
+                <span class="wh-tag">מה לכלול</span>
+                <p><strong>1 CTA ראשי</strong> (Hero), <strong>1-2 חזרות</strong> (אחרי סקציות), <strong>1 בטופס בסוף</strong>. כולם מובילים לאותה פעולה.</p>
+            </div>
+            <div class="how">
+                <span class="wh-tag">איך לכתוב</span>
+                <p>פועל פעולה + תוצאה. <strong>"קבעו פגישה — חינם"</strong> טוב מ"שלחו הודעה". מספר במחיר אם יש (חינם, ללא התחייבות).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 09 — PRACTICE HEADER -->
+    <div class="slide bg-practice">
+        <div class="kicker practice">חלק מעשי · 30 דקות</div>
+        <h1>בונים דף נחיתה <span class="gradient-text">שלב אחר שלב.</span></h1>
+        <p class="lead">לוקחים את ה-Brief שלי, ובונים דף מלא יחד — Hero, סקציות, ועד הטופס.</p>
+    </div>
+
+    <!-- 10 — DEMO STEP 1: HERO -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 1 — Hero</div>
+        <h2 class="ralign">3 שניות. <span class="accent">3 שורות.</span></h2>
+        <p class="lead ralign">ה-Hero חייב לענות על 3 שאלות מיד: <strong>מה זה? למי זה? למה עכשיו?</strong></p>
+        <div class="prompt">
+            <span class="ptag">פרומפט · בניית Hero חזק</span>
+            תבנה Hero לדף נחיתה של [העסק שלי]. שלוש שורות בלבד:
+            <br>1. כותרת ראשית — מה הערך הגדול ביותר שאני נותן (לא מה שאני עושה — מה התוצאה ללקוח)
+            <br>2. תת-כותרת — למי זה מיועד ומדוע זה דחוף עכשיו
+            <br>3. כפתור CTA גדול — פעולה מדויקת + מחיר אם רלוונטי (חינם / ללא התחייבות)
+            <br><br>
+            הוסף Hero gradient רקע עדין, מרכז את הטקסט, וודא שזה נראה מצוין במובייל.
+        </div>
+    </div>
+
+    <!-- 11 — DEMO STEP 2: PROBLEM-SOLUTION -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 2 — בעיה ופתרון</div>
+        <h2 class="ralign">דבר על <span class="accent">הכאב שלהם.</span></h2>
+        <p class="lead ralign">לפני שמספרים מה אתם נותנים — מראים שאתם <strong>מבינים את הבעיה</strong>. זה מה שגורם לקורא להמשיך.</p>
+        <div class="prompt">
+            <span class="ptag">פרומפט · סקציית "הבעיה"</span>
+            תוסיף סקציה אחרי ה-Hero בשם "אם אתם מתוסכלים מ..." עם 3 כאבים נפוצים של הקהל שלי, כל אחד עם סמן ✕ ומשפט קצר.
+            <br><br>
+            ולאחריה סקציית "אנחנו פותרים את זה" עם 3 יתרונות שלי, כל אחד עם סמן ✓ — והם <strong>תוצאה</strong>, לא תכונה. במקום "ניסיון 12 שנה" → "ביטחון שאתם בידיים טובות".
+        </div>
+    </div>
+
+    <!-- 12 — DEMO STEP 3: SOCIAL PROOF -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 3 — הוכחה חברתית</div>
+        <h2 class="ralign">למה לסמוך <span class="accent">עליכם?</span></h2>
+        <p class="lead ralign">עדויות, מספרים, או לוגואים. זה מה שהופך הצהרה למציאות.</p>
+        <div class="prompt">
+            <span class="ptag">פרומפט · עדויות לקוחות</span>
+            תוסיף סקציית עדויות עם 2-3 ציטוטים. כל ציטוט בקופסה משלו, כולל:
+            <br>· הציטוט עצמו (משפט אחד עוצמתי, לא יותר)
+            <br>· שם הלקוח + תפקיד או עיר
+            <br>· אם אפשר, אבטר עיגול עם האות הראשונה של השם
+            <br><br>
+            סגנון נקי, רקע מעט שונה מהחלק הקודם כדי להבדיל ויזואלית.
+        </div>
+    </div>
+
+    <!-- 13 — DEMO STEP 4: FORM -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 4 — הטופס</div>
+        <h2 class="ralign">פחות שדות = <span class="accent">יותר המרות.</span></h2>
+        <p class="lead ralign">כל שדה נוסף בטופס מוריד את אחוז ההמרה. <strong>2-3 שדות בלבד</strong>: שם, טלפון, ולפעמים מייל. שאר המידע — בשיחה.</p>
+        <div class="prompt">
+            <span class="ptag">פרומפט · טופס המרה</span>
+            תוסיף בסוף הדף סקציית CTA סופית עם:
+            <br>· כותרת ברורה ("מוכנים? נדבר תוך 24 שעות")
+            <br>· טופס עם 2 שדות בלבד: שם + מספר טלפון
+            <br>· כפתור גדול בצבע מובחן עם הטקסט המדויק של ה-CTA
+            <br>· מתחת בשורה אחת — "ללא התחייבות · השיחה ארוכה כ-15 דקות"
+            <br><br>
+            הטופס יישלח אליי במייל דרך Web3Forms (אסביר את החיבור בקצרה).
+        </div>
+    </div>
+
+    <!-- 14 — VARIATIONS -->
+    <div class="slide bg-default">
+        <div class="kicker">וריאציות</div>
+        <h2 class="ralign-w">המבנה הזה <span class="accent">משתנה</span> לפי המטרה.</h2>
+        <p class="lead ralign-w">המסגרת היא קבועה. מה שמשתנה זה <strong>הדגש בכל סקציה</strong>.</p>
+        <div class="cards cols-3" style="max-width: 1100px; margin-top: 24px;">
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">דף לידים</span>
+                <h4>השארת פרטים</h4>
+                <p>הדגש על אמינות + הוכחה חברתית. CTA — "השאירו פרטים, נחזור אליכם". טופס בסוף + Hero.</p>
+            </div>
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">דף מכירה ישיר</span>
+                <h4>קנייה אונליין</h4>
+                <p>הדגש על תועלת מיידית + ערבות החזר. CTA — "הזמינו עכשיו". סקציית מחיר + FAQ.</p>
+            </div>
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">דף הרשמה</span>
+                <h4>וובינר / קורס</h4>
+                <p>הדגש על דחיפות (מקומות מוגבלים) + מה ילמדו. CTA — "שריינו מקום". טיימר ספירה לאחור.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 15 — TEMPLATE -->
+    <div class="slide bg-default">
+        <div class="kicker">תבנית מורחבת</div>
+        <h2 class="ralign">פרומפט מלא <span class="accent">לדף נחיתה.</span></h2>
+        <p class="lead ralign">השלמת התבנית הבסיסית מהשיעור הקודם — עם הוראות מבנה ספציפיות.</p>
+        <div class="prompt">
+            <span class="ptag">תבנית · דף נחיתה אסטרטגי</span>
+            אני [תפקיד] בחברת [שם].<br>
+            מטרת הדף: [פעולה אחת בלבד].<br>
+            הקהל: [פירוט].<br>
+            ההתנגדות העיקרית: [פחד / ספק].<br>
+            ה-USP שלי: [מה מבדל אותי].<br><br>
+
+            תבנה דף נחיתה עם 5 הסקציות:<br>
+            1. HERO — כותרת תוצאה ללקוח, תת-כותרת, CTA ראשי<br>
+            2. בעיה — 3 כאבים בשפת הלקוח (סמני ✕)<br>
+            3. פתרון — 3 יתרונות תוצאתיים (סמני ✓)<br>
+            4. הוכחה חברתית — 2-3 עדויות לקוחות בקופסות<br>
+            5. CTA סופי + טופס פשוט (שם + טלפון בלבד)<br><br>
+
+            עיצוב: [צבעים]. [סגנון]. רספונסיבי. CTA אחד בלבד חוזר על עצמו 3 פעמים.
+        </div>
+    </div>
+
+    <!-- 16 — PITFALLS -->
+    <div class="slide bg-warn">
+        <div class="kicker warn">מלכודות נפוצות</div>
+        <h2 class="ralign-w">3 שגיאות <span style="color:var(--warn);">קריטיות בדף נחיתה.</span></h2>
+        <div class="cards cols-3" style="max-width: 1100px;">
+            <div class="card" style="border-color: rgba(255,77,77,0.3);">
+                <div class="num" style="color: var(--warn);">01</div>
+                <h4>3 CTAs בעמוד אחד</h4>
+                <p>"השאירו פרטים", "הזמינו ספר", "פנו ב-WhatsApp" — בלבול = יציאה.</p>
+                <p style="margin-top: 8px; color: var(--accent);"><strong>פתרון:</strong> פעולה אחת. הכל מוביל אליה.</p>
+            </div>
+            <div class="card" style="border-color: rgba(255,77,77,0.3);">
+                <div class="num" style="color: var(--warn);">02</div>
+                <h4>תכונות במקום תוצאות</h4>
+                <p>"ניסיון 12 שנה" — את מי זה מעניין? תוצאה: "ביטחון שאתם בידיים טובות".</p>
+                <p style="margin-top: 8px; color: var(--accent);"><strong>פתרון:</strong> שאלו "אז מה?" אחרי כל יתרון.</p>
+            </div>
+            <div class="card" style="border-color: rgba(255,77,77,0.3);">
+                <div class="num" style="color: var(--warn);">03</div>
+                <h4>טופס עם 7 שדות</h4>
+                <p>שם, טלפון, מייל, כתובת, ת.ז., תאריך לידה, נושא — וההמרה צנחה ל-1%.</p>
+                <p style="margin-top: 8px; color: var(--accent);"><strong>פתרון:</strong> 2-3 שדות בלבד. שאר המידע בשיחה.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 17 — HOMEWORK -->
+    <div class="slide bg-homework">
+        <div class="kicker homework">משימה לפני המפגש הבא</div>
+        <h2 class="ralign">מה לעשות <span style="color:var(--gold);">השבוע.</span></h2>
+        <p class="lead ralign">מטרה: דף נחיתה אסטרטגי לעסק שלכם, מבנה 5-סקציות מלא.</p>
+        <div class="steps" style="max-width: 760px; margin-top: 24px;">
+            <div class="step" style="border-color: rgba(245,200,66,0.3);">
+                <div class="step-n" style="color: var(--gold);">1.</div>
+                <div class="step-text"><strong>קחו את הדף שבניתם בשיעור 1</strong><small>או התחילו דף חדש אם השיעור הקודם היה התנסות.</small></div>
+            </div>
+            <div class="step" style="border-color: rgba(245,200,66,0.3);">
+                <div class="step-n" style="color: var(--gold);">2.</div>
+                <div class="step-text"><strong>הריצו את התבנית המורחבת מהשיעור</strong><small>5 סקציות, CTA אחד שחוזר 3 פעמים, טופס 2 שדות.</small></div>
+            </div>
+            <div class="step" style="border-color: rgba(245,200,66,0.3);">
+                <div class="step-n" style="color: var(--gold);">3.</div>
+                <div class="step-text"><strong>בצעו 4-5 איטרציות שיפור</strong><small>שיפור הכותרת, ה-CTA, סדר הסקציות, ה-Copy. שינוי אחד בכל פרומפט.</small></div>
+            </div>
+            <div class="step" style="border-color: rgba(245,200,66,0.3);">
+                <div class="step-n" style="color: var(--gold);">4.</div>
+                <div class="step-text"><strong>שתפו בקבוצת ה-WhatsApp</strong><small>תקבלו פידבק מחברי הקורס — מה ברור, מה דורש שיפור, מה הם היו לוחצים.</small></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 18 — RECAP -->
+    <div class="slide bg-glow">
+        <div class="kicker">סיכום שיעור 2</div>
+        <h2 class="ralign">מה <span class="accent">למדנו היום.</span></h2>
+        <div class="steps" style="max-width: 820px;">
+            <div class="step"><div class="step-n">01</div><div class="step-text">איך גולשים סורקים דף — F-pattern ו-3 שניות הראשונות</div></div>
+            <div class="step"><div class="step-n">02</div><div class="step-text">מבנה 5-סקציות לדף נחיתה (Hero, בעיה, פתרון, עדויות, טופס)</div></div>
+            <div class="step"><div class="step-n">03</div><div class="step-text">אסטרטגיית CTA — פעולה אחת, 3 חזרות</div></div>
+            <div class="step"><div class="step-n">04</div><div class="step-text">תבנית מורחבת + 3 וריאציות לפי סוג הדף</div></div>
+        </div>
+        <p class="lead" style="margin-top: 32px;">בשיעור הבא: <strong>עיצוב מתקדם ורספונסיביות</strong> — איך הופכים דף תקין לדף שאי אפשר להתנתק ממנו.</p>
+        <div style="margin-top: 32px; display: flex; gap: 16px; align-items: center; color: var(--text-muted); font-size: 0.9rem;">
+            <a href="../../websites.html" style="color: var(--accent); border-bottom: 1px solid var(--accent);">→ חזרה לקורס</a>
+            <span style="color: var(--text-faded);">·</span>
+            <a href="lesson-01.html" style="color: var(--text-muted); border-bottom: 1px solid var(--line);">שיעור 1</a>
+            <span style="color: var(--text-faded);">·</span>
+            <a href="lesson-03.html" style="color: var(--accent); border-bottom: 1px solid var(--accent);">שיעור 3 ←</a>
+        </div>
+    </div>
+
+</div>
+
+<script src="../lesson.js"></script>
+</body>
+</html>

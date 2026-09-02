@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>האזור האישי שלי | AI Lab</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #080808;
+            --bg-elev: #101010;
+            --bg-card: #141414;
+            --bg-side: #0c0c0c;
+            --line: rgba(255,255,255,0.08);
+            --line-strong: rgba(255,255,255,0.16);
+            --text: #f4f4f4;
+            --text-soft: #c8c8c8;
+            --text-muted: #888;
+            --text-faded: #555;
+            --accent: #10E593;
+            --accent-glow: #c1f0c1;
+            --accent-dim: rgba(16,229,147,0.08);
+            --warn: #FF7849;
+            --gold: #F5C842;
+            --sw: 280px;
+        }
+
+        html { font-size: 18px; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            direction: rtl;
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(16,229,147,0.06), transparent 60%),
+                radial-gradient(ellipse 60% 40% at 100% 30%, rgba(16,229,147,0.03), transparent 60%);
+            background-attachment: fixed;
+        }
+
+        ::selection { background: var(--accent); color: #000; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ===== APP LAYOUT ===== */
+        .app-wrap {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: var(--sw);
+            background: var(--bg-side);
+            border-left: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            z-index: 50;
+            overflow-y: auto;
+        }
+
+        /* Sidebar header */
+        .sb-head {
+            padding: 28px 24px;
+            border-bottom: 1px solid var(--line);
+        }
+        .sb-brand {
+            font-weight: 900;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            letter-spacing: -0.01em;
+            margin-bottom: 24px;
+        }
+        .sb-brand .tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 3px 7px;
+            border-radius: 2px;
+            letter-spacing: 0.18em;
+            transform: translateY(-3px);
+        }
+        .sb-user {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .sb-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .sb-user-info .greet {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .sb-user-info .name {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-top: 2px;
+        }
+
+        /* Sidebar nav */
+        .sb-nav {
+            padding: 20px 14px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .sb-section {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-faded);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 18px 14px 10px;
+        }
+        .ni {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-soft);
+            transition: all 0.15s;
+            background: none;
+            border: 1px solid transparent;
+            width: 100%;
+            text-align: right;
+            font-family: inherit;
+            min-height: 52px;
+            text-decoration: none;
+        }
+        .ni:hover {
+            background: rgba(255,255,255,0.04);
+            color: var(--text);
+            border-color: var(--line);
+        }
+        .ni.active {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        .ni .ic {
+            font-size: 1.3rem;
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* Assistant button (prominent) */
+        .assistant-btn {
+            margin: 14px;
+            padding: 18px 18px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+            color: #000;
+            font-weight: 800;
+            font-size: 1.05rem;
+            font-family: inherit;
+            border: 0;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 60px;
+            box-shadow: 0 8px 24px rgba(16,229,147,0.3);
+            transition: transform 0.15s, box-shadow 0.15s;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .assistant-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent 50%);
+            pointer-events: none;
+        }
+        .assistant-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(16,229,147,0.4);
+        }
+        .assistant-btn:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 3px;
+        }
+        .assistant-btn .ic {
+            font-size: 1.5rem;
+            width: 28px;
+            text-align: center;
+        }
+        .assistant-btn .pulse {
+            position: absolute;
+            top: 12px;
+            left: 14px;
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+        .assistant-btn .pulse::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            border-radius: inherit;
+            animation: pulse 2s ease-out infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Sidebar foot */
+        .sb-foot {
+            padding: 16px 14px 24px;
+            border-top: 1px solid var(--line);
+        }
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: none;
+            border: 1px solid transparent;
+            width: 100%;
+            font-family: inherit;
+            transition: all 0.15s;
+            text-decoration: none;
+            min-height: 52px;
+        }
+        .logout-btn:hover {
+            background: rgba(255,77,77,0.08);
+            color: var(--warn);
+            border-color: rgba(255,120,73,0.3);
+        }
+        .logout-btn .ic { font-size: 1.2rem; }
+
+        /* ===== MAIN ===== */
+        .app-main {
+            margin-right: var(--sw);
+            flex: 1;
+            min-width: 0;
+            padding: 56px 48px 80px;
+            max-width: calc(1100px + var(--sw));
+        }
+
+        .mono { font-family: 'Space Mono', monospace; letter-spacing: 0.06em; }
+
+        .kicker {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .kicker::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        /* Page head */
+        .page-head {
+            margin-bottom: 48px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--line);
+        }
+        .page-head .kicker { margin-bottom: 22px; }
+        .page-title {
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -0.025em;
+            margin-bottom: 16px;
+        }
+        .page-title em {
+            font-style: normal;
+            color: var(--accent);
+        }
+        .page-lead {
+            font-size: 1.1rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        /* Hero card */
+        .hero-card {
+            position: relative;
+            background:
+                linear-gradient(135deg, rgba(16,229,147,0.08), rgba(16,229,147,0.02)),
+                var(--bg-elev);
+            border: 1px solid rgba(16,229,147,0.3);
+            border-radius: 4px;
+            padding: 44px 40px;
+            margin-bottom: 64px;
+            overflow: hidden;
+        }
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            top: 0; right: 0;
+            width: 4px; height: 100%;
+            background: var(--accent);
+        }
+        .hero-card .kicker { margin-bottom: 18px; }
+        .hero-card h2 {
+            font-size: clamp(1.7rem, 3vw, 2.4rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 14px;
+        }
+        .hero-card .meta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 32px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: 0;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: transform 0.15s, background 0.15s;
+            min-height: 60px;
+            text-decoration: none;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 8px 24px rgba(16,229,147,0.25);
+        }
+        .btn-primary:hover { background: var(--accent-glow); }
+        .btn-primary:focus-visible { outline-color: #fff; }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line-strong);
+        }
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+        .btn .arrow { transition: transform 0.2s; }
+        .btn:hover .arrow { transform: translateX(-4px); }
+
+        /* Section header */
+        .section-head {
+            margin-bottom: 28px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .section-head h3 {
+            font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .section-head .progress-stat {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+        }
+        .section-head .progress-stat strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Lessons list */
+        .lessons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 64px;
+        }
+        .lesson {
+            background: var(--bg-elev);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 22px 26px;
+            display: grid;
+            grid-template-columns: 56px 1fr auto;
+            gap: 22px;
+            align-items: center;
+            cursor: pointer;
+            transition: border-color 0.15s, transform 0.15s, background 0.15s;
+        }
+        .lesson:hover {
+            border-color: var(--accent);
+            transform: translateX(-4px);
+            background: var(--bg-card);
+        }
+        .lesson:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+        .lesson-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: var(--text-faded);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            text-align: center;
+        }
+        .lesson:hover .lesson-num { color: var(--accent); }
+        .lesson.current .lesson-num { color: var(--accent); }
+        .lesson.done .lesson-num { color: var(--accent); }
+        .lesson.done .lesson-num::after {
+            content: "✓";
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 2px;
+        }
+        .lesson-body { min-width: 0; }
+        .lesson-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+            letter-spacing: -0.01em;
+        }
+        .lesson-desc {
+            font-size: 0.98rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .lesson-status {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            padding: 8px 14px;
+            border-radius: 2px;
+            border: 1px solid var(--line-strong);
+            color: var(--text-faded);
+            white-space: nowrap;
+        }
+        .lesson.current .lesson-status {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+        .lesson.done .lesson-status {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Tools grid */
+        .tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 64px;
+        }
+        .tool {
+            background: var(--bg-elev);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: border-color 0.15s, transform 0.15s;
+            min-height: 180px;
+        }
+        .tool:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+        .tool:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+        .tool-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .tool h4 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
+        }
+        .tool p {
+            font-size: 0.98rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            flex: 1;
+        }
+        .tool-cta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* Help strip */
+        .help-strip {
+            background: var(--bg-elev);
+            border: 1px solid var(--line);
+            border-top: 2px solid var(--accent);
+            border-radius: 4px;
+            padding: 28px 36px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 26px;
+            align-items: center;
+        }
+        .help-icon {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .help-text .label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .help-text strong {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .help-text span {
+            font-size: 0.98rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== MOBILE ===== */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 60;
+            background: var(--bg-elev);
+            border: 1px solid var(--line-strong);
+            color: var(--text);
+            width: 48px;
+            height: 48px;
+            border-radius: 4px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .scrim {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 49;
+            backdrop-filter: blur(4px);
+        }
+        .scrim.show { display: block; }
+
+        @media (max-width: 900px) {
+            html { font-size: 17px; }
+            .menu-toggle { display: block; }
+            .sidebar {
+                transform: translateX(100%);
+                transition: transform 0.25s ease;
+                width: 280px;
+            }
+            .sidebar.open { transform: translateX(0); }
+            .app-main {
+                margin-right: 0;
+                padding: 80px 20px 64px;
+            }
+            .hero-card { padding: 32px 24px; }
+            .hero-card .meta { gap: 14px; }
+            .btn { width: 100%; justify-content: center; padding: 18px 24px; }
+            .lesson {
+                grid-template-columns: 44px 1fr;
+                padding: 18px;
+                gap: 16px;
+            }
+            .lesson-status {
+                grid-column: 1 / -1;
+                justify-self: start;
+                margin-top: 4px;
+            }
+            .lesson-num { font-size: 1.5rem; }
+            .lesson-title { font-size: 1.1rem; }
+            .help-strip {
+                grid-template-columns: 1fr;
+                padding: 24px;
+                gap: 16px;
+                text-align: center;
+            }
+            .help-icon { margin: 0 auto; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle" aria-label="פתח תפריט">☰</button>
+<div class="scrim" id="scrim"></div>
+
+<div class="app-wrap">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sb-head">
+            <a href="#" class="sb-brand">
+                <span>AI Lab</span>
+                <span class="tag">PORTAL</span>
+            </a>
+            <div class="sb-user">
+                <div class="sb-avatar">מ</div>
+                <div class="sb-user-info">
+                    <div class="greet">שלום</div>
+                    <div class="name">מאיר</div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sb-nav">
+            <div class="sb-section">תפריט</div>
+            <a href="#" class="ni active"><span class="ic">⌂</span> בית</a>
+            <a href="#" class="ni"><span class="ic">▶</span> השיעורים שלי</a>
+            <a href="#" class="ni"><span class="ic">★</span> כלים שימושיים</a>
+            <a href="#" class="ni"><span class="ic">◎</span> ההתקדמות שלי</a>
+
+            <div class="sb-section">קהילה</div>
+            <a href="#" class="ni"><span class="ic">○</span> WhatsApp</a>
+            <a href="#" class="ni"><span class="ic">⚙</span> הגדרות</a>
+        </nav>
+
+        <!-- ASSISTANT CTA -->
+        <a href="#" class="assistant-btn" id="assistantBtn">
+            <span class="pulse"></span>
+            <span class="ic">✦</span>
+            <span>העוזר האישי שלך</span>
+        </a>
+
+        <div class="sb-foot">
+            <a href="#" class="logout-btn">
+                <span class="ic">↩</span> יציאה
+            </a>
+        </div>
+
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="app-main">
+
+        <div class="page-head">
+            <div class="kicker">האזור האישי שלי</div>
+            <h1 class="page-title">שלום, <em>מאיר.</em></h1>
+            <p class="page-lead">
+                כל החומרים, השיעורים והכלים שלך — במקום אחד. כשתהיה מוכן, נמשיך מאיפה שעצרנו.
+            </p>
+        </div>
+
+        <!-- HERO -->
+        <section class="hero-card">
+            <div class="kicker">השיעור שלך עכשיו</div>
+            <h2>ברוכים הבאים לעולם ה-AI</h2>
+            <div class="meta">
+                <span>שיעור 01</span>
+                <span>·</span>
+                <span>~45 דקות</span>
+                <span>·</span>
+                <span>4 סרטונים</span>
+            </div>
+            <a href="#" class="btn btn-primary">
+                <span>להמשיך לשיעור</span>
+                <span class="arrow">←</span>
+            </a>
+        </section>
+
+        <!-- LESSONS -->
+        <div class="section-head">
+            <h3>כל השיעורים</h3>
+            <div class="progress-stat"><strong>0</strong> / 8 הושלמו</div>
+        </div>
+
+        <div class="lessons">
+            <div class="lesson current" tabindex="0">
+                <div class="lesson-num">01</div>
+                <div class="lesson-body">
+                    <div class="lesson-title">ברוכים הבאים לעולם ה-AI</div>
+                    <div class="lesson-desc">היכרות ראשונה עם בינה מלאכותית — מה זה ולמה זה חשוב</div>
+                </div>
+                <div class="lesson-status">השיעור הנוכחי</div>
+            </div>
+
+            <div class="lesson" tabindex="0">
+                <div class="lesson-num">02</div>
+                <div class="lesson-body">
+                    <div class="lesson-title">איך לכתוב הוראה ל-AI</div>
+                    <div class="lesson-desc">לומדים לדבר עם המחשב נכון, ולקבל בדיוק מה שרוצים</div>
+                </div>
+                <div class="lesson-status">לא התחלת</div>
+            </div>
+
+            <div class="lesson" tabindex="0">
+                <div class="lesson-num">03</div>
+                <div class="lesson-body">
+                    <div class="lesson-title">חשיבה יצירתית עם AI</div>
+                    <div class="lesson-desc">לפתור בעיות ולקבל רעיונות חדשים לכל מצב</div>
+                </div>
+                <div class="lesson-status">לא התחלת</div>
+            </div>
+
+            <div class="lesson" tabindex="0">
+                <div class="lesson-num">04</div>
+                <div class="lesson-body">
+                    <div class="lesson-title">רעיונות למוצר חדש</div>
+                    <div class="lesson-desc">איך להפוך רעיון לתוכנית פעולה ברורה</div>
+                </div>
+                <div class="lesson-status">לא התחלת</div>
+            </div>
+
+            <div class="lesson" tabindex="0">
+                <div class="lesson-num">05</div>
+                <div class="lesson-body">
+                    <div class="lesson-title">בונים אתר — חלק 1</div>
+                    <div class="lesson-desc">צעדים ראשונים בבניית אתר עם AI</div>
+                </div>
+                <div class="lesson-status">לא התחלת</div>
+            </div>
+
+            <div class="lesson" tabindex="0">
+                <div class="lesson-num">06</div>
+                <div class="lesson-body">
+                    <div class="lesson-title">בונים אתר — חלק 2</div>
+                    <div class="lesson-desc">משלימים את האתר ומעלים אותו לאוויר</div>
+                </div>
+                <div class="lesson-status">לא התחלת</div>
+            </div>
+
+            <div class="lesson" tabindex="0">
+                <div class="lesson-num">07</div>
+                <div class="lesson-body">
+                    <div class="lesson-title">מודל עסקי ושיווק</div>
+                    <div class="lesson-desc">איך מוכרים את מה שיצרנו, ומגיעים ללקוחות הראשונים</div>
+                </div>
+                <div class="lesson-status">לא התחלת</div>
+            </div>
+
+            <div class="lesson" tabindex="0">
+                <div class="lesson-num">08</div>
+                <div class="lesson-body">
+                    <div class="lesson-title">יום הפיץ'</div>
+                    <div class="lesson-desc">מציגים את הפרויקט ומקבלים פידבק</div>
+                </div>
+                <div class="lesson-status">לא התחלת</div>
+            </div>
+        </div>
+
+        <!-- TOOLS -->
+        <div class="section-head">
+            <h3>כלים שימושיים</h3>
+        </div>
+
+        <div class="tools">
+            <a href="#" class="tool">
+                <span class="tool-num">01 / כלים</span>
+                <h4>כלי AI מומלצים</h4>
+                <p>ChatGPT, Claude, Gemini — איך להתחיל ומה ההבדלים ביניהם.</p>
+                <span class="tool-cta">פתח <span>←</span></span>
+            </a>
+
+            <a href="#" class="tool">
+                <span class="tool-num">02 / מדריכים</span>
+                <h4>הדרכות וסרטונים</h4>
+                <p>סרטונים קצרים שמסבירים בפשטות, צעד אחר צעד.</p>
+                <span class="tool-cta">פתח <span>←</span></span>
+            </a>
+
+            <a href="#" class="tool">
+                <span class="tool-num">03 / קהילה</span>
+                <h4>קבוצת WhatsApp</h4>
+                <p>שאלות, עזרה הדדית ועדכונים מקבוצת התלמידים.</p>
+                <span class="tool-cta">הצטרף <span>←</span></span>
+            </a>
+        </div>
+
+        <!-- HELP -->
+        <div class="help-strip">
+            <div class="help-icon">📞</div>
+            <div class="help-text">
+                <div class="label">תמיכה אישית</div>
+                <strong>צריך עזרה? אנחנו כאן.</strong>
+                <span>טלפון, וואטסאפ או מייל — מה שנוח לך.</span>
+            </div>
+            <a href="tel:+972000000000" class="btn btn-ghost">
+                <span>צור קשר</span>
+                <span class="arrow">←</span>
+            </a>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    // Mobile sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const scrim = document.getElementById('scrim');
+    const menuToggle = document.getElementById('menuToggle');
+    function toggleSidebar() {
+        sidebar.classList.toggle('open');
+        scrim.classList.toggle('show');
+    }
+    menuToggle.addEventListener('click', toggleSidebar);
+    scrim.addEventListener('click', toggleSidebar);
+</script>
+
+</body>
+</html>

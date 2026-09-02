@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בחירת רקע להירו — 3 אפשרויות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #6C3CE1;
+    --primary-light: #8B5CF6;
+    --accent: #00D4AA;
+    --gold: #ffb347;
+    --dark: #0f0f1e;
+    --text: #eeeef5;
+    --muted: #9090b0;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+  }
+
+  /* -- Section label bar -- */
+  .label-bar {
+    background: #18182a;
+    color: var(--text);
+    padding: 14px 24px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    border-top: 3px solid var(--accent);
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .label-bar h2 { font-size: 1.1rem; font-weight: 900; }
+  .label-bar h2 .num { color: var(--accent); margin-left: 6px; }
+  .label-bar .desc { font-size: .85rem; color: var(--muted); flex:1; min-width: 220px; }
+
+  /* -- Hero common -- */
+  .hero {
+    padding: 60px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero > * { position: relative; z-index: 5; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 22px; }
+  .tag {
+    padding: 6px 14px; border-radius: 20px;
+    font-size: .82rem; font-weight: 700;
+  }
+  .tag-green { background: rgba(0,212,170,.14); border: 1px solid rgba(0,212,170,.35); color: var(--accent); }
+  .tag-purple { background: rgba(108,60,225,.14); border: 1px solid rgba(108,60,225,.35); color: #b89ffa; }
+
+  .hero h1 {
+    font-size: clamp(1.95rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.12;
+    margin-bottom: 18px;
+    letter-spacing: -.6px;
+  }
+  .hero h1 .g, .hero h1 .g2 {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 280% 280%;
+    animation: gradientShift 6s ease infinite;
+    display: inline-block;
+  }
+  .hero h1 .g  { background-image: linear-gradient(135deg, var(--accent), var(--primary-light), var(--accent)); }
+  .hero h1 .g2 { background-image: linear-gradient(135deg, var(--gold), var(--accent), var(--primary-light)); animation-delay: -2s; }
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+
+  .hero-lead {
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    color: var(--muted);
+    max-width: 580px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+  }
+  .date-row {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(0,212,170,.28);
+    border-radius: 50px;
+    padding: 10px 22px;
+    font-weight: 700;
+    margin-bottom: 28px;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); animation: livePulse 1.8s infinite; }
+  @keyframes livePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,170,.55); }
+    50%      { box-shadow: 0 0 0 9px rgba(0,212,170,0); }
+  }
+  .cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; font-weight: 800; font-size: 1.1rem;
+    padding: 16px 42px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 22px rgba(108,60,225,.35);
+    animation: ctaPulse 2.6s infinite;
+  }
+  @keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 4px 22px rgba(108,60,225,.35); }
+    50%      { box-shadow: 0 10px 38px rgba(108,60,225,.65), 0 0 0 7px rgba(108,60,225,.16); }
+  }
+
+  /* ════════════════════════════════════════════
+     OPTION 1 — Aurora / Mesh Gradient
+  ════════════════════════════════════════════ */
+  .bg-aurora {
+    background: #0a0e1a;
+  }
+  .bg-aurora .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: .55;
+    z-index: 1;
+    animation: floatBlob 18s ease-in-out infinite;
+  }
+  .bg-aurora .blob-1 {
+    width: 55%; height: 55%;
+    background: radial-gradient(circle, var(--primary-light), transparent 70%);
+    top: -15%; left: -10%;
+  }
+  .bg-aurora .blob-2 {
+    width: 50%; height: 50%;
+    background: radial-gradient(circle, var(--accent), transparent 70%);
+    bottom: -15%; right: -10%;
+    animation-delay: -6s;
+  }
+  .bg-aurora .blob-3 {
+    width: 35%; height: 35%;
+    background: radial-gradient(circle, var(--gold), transparent 70%);
+    top: 30%; left: 40%;
+    opacity: .35;
+    animation-delay: -12s;
+  }
+  @keyframes floatBlob {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(40px, -30px) scale(1.15); }
+    66%      { transform: translate(-30px, 40px) scale(.85); }
+  }
+  .bg-aurora .grid {
+    position: absolute; inset: 0; z-index: 2;
+    background-image:
+      linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  /* ════════════════════════════════════════════
+     OPTION 2 — Cosmic / Stars / Nebula
+  ════════════════════════════════════════════ */
+  .bg-cosmic {
+    background: radial-gradient(ellipse at top, #1a0d3e 0%, #0a0717 45%, #03020b 100%);
+  }
+  .bg-cosmic .nebula {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 25% 30%, rgba(108,60,225,.45), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 75% 60%, rgba(0,212,170,.30), transparent 70%),
+      radial-gradient(ellipse 40% 30% at 50% 90%, rgba(255,179,71,.18), transparent 70%);
+    z-index: 1;
+    animation: nebulaPulse 14s ease-in-out infinite;
+  }
+  @keyframes nebulaPulse {
+    0%, 100% { opacity: .85; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.05); }
+  }
+  .bg-cosmic .stars {
+    position: absolute; inset: 0; z-index: 2;
+    pointer-events: none;
+  }
+  .bg-cosmic .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: .25; transform: scale(.8); }
+    50%      { opacity: 1;   transform: scale(1.2); }
+  }
+  .bg-cosmic .shooting {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 6px 1px white;
+    z-index: 3;
+    animation: shoot 8s linear infinite;
+    opacity: 0;
+  }
+  .bg-cosmic .shooting::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 1px;
+    background: linear-gradient(to left, white, transparent);
+  }
+  @keyframes shoot {
+    0%       { transform: translate(-100px, -100px); opacity: 0; }
+    5%       { opacity: 1; }
+    20%      { transform: translate(50vw, 50vh); opacity: 0; }
+    100%     { opacity: 0; }
+  }
+
+  /* ════════════════════════════════════════════
+     OPTION 3 — Neural Network / Particles
+  ════════════════════════════════════════════ */
+  .bg-neural {
+    background: linear-gradient(170deg, #1a1a2e 0%, #0a0a1a 100%);
+  }
+  .bg-neural canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .bg-neural .glow {
+    position: absolute; inset: 0; z-index: 2;
+    background:
+      radial-gradient(circle 40% 50% at 50% 50%, rgba(0,212,170,.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ════════════════════════════════════════════
+     OPTION 4 — Cosmic + Neural ("הכוכבים מסתדרים")
+  ════════════════════════════════════════════ */
+  .bg-fate {
+    background: radial-gradient(ellipse at top, #1a0d3e 0%, #0a0717 45%, #03020b 100%);
+  }
+  .bg-fate .nebula {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      radial-gradient(ellipse 60% 50% at 25% 30%, rgba(108,60,225,.40), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 75% 65%, rgba(0,212,170,.28), transparent 70%),
+      radial-gradient(ellipse 40% 30% at 50% 90%, rgba(255,179,71,.15), transparent 70%);
+    animation: nebulaPulse 14s ease-in-out infinite;
+  }
+  .bg-fate canvas {
+    position: absolute; inset: 0; z-index: 2;
+  }
+
+  /* Footer note */
+  .pick-bar {
+    background: #11111e;
+    padding: 30px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .pick-bar p { color: var(--muted); margin-bottom: 6px; font-size: .95rem; }
+  .pick-bar strong { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ OPTION 1 — AURORA ═══════════════ -->
+<div class="label-bar">
+  <h2><span class="num">1.</span> Aurora — Mesh Gradient</h2>
+  <span class="desc">פרימיום, נקי, מודרני (Linear / Stripe vibe). כתמי צבע ענקיים זורמים אט.</span>
+</div>
+<section class="hero bg-aurora">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="grid"></div>
+
+  <div class="tags">
+    <span class="tag tag-green">🆓 חינם לחלוטין</span>
+    <span class="tag tag-purple">💻 זום — אונליין</span>
+    <span class="tag tag-purple">👨‍👩‍👧 וובינר להורים וילדים</span>
+  </div>
+  <h1>
+    הילדים של היום<br>
+    <span class="g">ישנו את המחר</span><br>
+    <span class="g2">באמצעות AI</span>
+  </h1>
+  <p class="hero-lead">
+    וובינר מיוחד להורים, ילדים ובני נוער<br>
+    נסביר איך לומדים יזמות ובינה מלאכותית בקורסים של <span style="white-space:nowrap">AI&nbsp;Lab</span>
+  </p>
+  <div class="date-row">
+    <span class="dot"></span>
+    יום שלישי, 28 באפריל 2026 &nbsp;|&nbsp; 20:30
+  </div>
+  <a href="#" class="cta">הירשמו חינם</a>
+</section>
+
+
+<!-- ═══════════════ OPTION 2 — COSMIC ═══════════════ -->
+<div class="label-bar">
+  <h2><span class="num">2.</span> Cosmic — Stars + Nebula</h2>
+  <span class="desc">חלל, כוכבים מנצנצים, ערפילית סגולה-ירוקה, כוכבים נופלים. תחושה של "אפשרויות אינסופיות".</span>
+</div>
+<section class="hero bg-cosmic">
+  <div class="nebula"></div>
+  <div class="stars" id="cosmicStars"></div>
+  <div class="shooting" style="top: 15%; left: 20%; animation-delay: 0s;"></div>
+  <div class="shooting" style="top: 40%; left: 60%; animation-delay: 4s;"></div>
+
+  <div class="tags">
+    <span class="tag tag-green">🆓 חינם לחלוטין</span>
+    <span class="tag tag-purple">💻 זום — אונליין</span>
+    <span class="tag tag-purple">👨‍👩‍👧 וובינר להורים וילדים</span>
+  </div>
+  <h1>
+    הילדים של היום<br>
+    <span class="g">ישנו את המחר</span><br>
+    <span class="g2">באמצעות AI</span>
+  </h1>
+  <p class="hero-lead">
+    וובינר מיוחד להורים, ילדים ובני נוער<br>
+    נסביר איך לומדים יזמות ובינה מלאכותית בקורסים של <span style="white-space:nowrap">AI&nbsp;Lab</span>
+  </p>
+  <div class="date-row">
+    <span class="dot"></span>
+    יום שלישי, 28 באפריל 2026 &nbsp;|&nbsp; 20:30
+  </div>
+  <a href="#" class="cta">הירשמו חינם</a>
+</section>
+
+
+<!-- ═══════════════ OPTION 3 — NEURAL ═══════════════ -->
+<div class="label-bar">
+  <h2><span class="num">3.</span> Neural Network — חיבורים מואררים</h2>
+  <span class="desc">נקודות מתחברות בקווים זוהרים, פעימות. מטפורה ל-AI ולחיבור אנושי-טכנולוגי.</span>
+</div>
+<section class="hero bg-neural">
+  <canvas id="neuralCanvas"></canvas>
+  <div class="glow"></div>
+
+  <div class="tags">
+    <span class="tag tag-green">🆓 חינם לחלוטין</span>
+    <span class="tag tag-purple">💻 זום — אונליין</span>
+    <span class="tag tag-purple">👨‍👩‍👧 וובינר להורים וילדים</span>
+  </div>
+  <h1>
+    הילדים של היום<br>
+    <span class="g">ישנו את המחר</span><br>
+    <span class="g2">באמצעות AI</span>
+  </h1>
+  <p class="hero-lead">
+    וובינר מיוחד להורים, ילדים ובני נוער<br>
+    נסביר איך לומדים יזמות ובינה מלאכותית בקורסים של <span style="white-space:nowrap">AI&nbsp;Lab</span>
+  </p>
+  <div class="date-row">
+    <span class="dot"></span>
+    יום שלישי, 28 באפריל 2026 &nbsp;|&nbsp; 20:30
+  </div>
+  <a href="#" class="cta">הירשמו חינם</a>
+</section>
+
+
+<!-- ═══════════════ OPTION 4 — COSMIC + NEURAL (FATE) ═══════════════ -->
+<div class="label-bar">
+  <h2><span class="num">4. ⭐</span> Cosmic + Neural — "הכוכבים מסתדרים"</h2>
+  <span class="desc">חלל + רשת ניורונים. כוכבים מתחברים בקווים זוהרים ומדי פעם מתרחש "אירוע גורל" — קונסטלציה נדלקת ברצף.</span>
+</div>
+<section class="hero bg-fate">
+  <div class="nebula"></div>
+  <canvas id="fateCanvas"></canvas>
+
+  <div class="tags">
+    <span class="tag tag-green">🆓 חינם לחלוטין</span>
+    <span class="tag tag-purple">💻 זום — אונליין</span>
+    <span class="tag tag-purple">👨‍👩‍👧 וובינר להורים וילדים</span>
+  </div>
+  <h1>
+    הילדים של היום<br>
+    <span class="g">ישנו את המחר</span><br>
+    <span class="g2">באמצעות AI</span>
+  </h1>
+  <p class="hero-lead">
+    וובינר מיוחד להורים, ילדים ובני נוער<br>
+    נסביר איך לומדים יזמות ובינה מלאכותית בקורסים של <span style="white-space:nowrap">AI&nbsp;Lab</span>
+  </p>
+  <div class="date-row">
+    <span class="dot"></span>
+    יום שלישי, 28 באפריל 2026 &nbsp;|&nbsp; 20:30
+  </div>
+  <a href="#" class="cta">הירשמו חינם</a>
+</section>
+
+
+<div class="pick-bar">
+  <p>גלול חזרה והשווה. כשתחליט — תגיד <strong>"אני בוחר 1/2/3/4"</strong> ואטמיע.</p>
+  <p style="font-size:.82rem; opacity:.6;">אפשר גם לשלב — לדוגמה: לקחת אופציה 4 ולשנות צבע/צפיפות/קצב.</p>
+</div>
+
+
+<script>
+  // ── OPTION 2: Generate twinkling stars ──
+  (function() {
+    const container = document.getElementById('cosmicStars');
+    if (!container) return;
+    const count = 110;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() < .85 ? Math.random() * 1.2 + .4 : Math.random() * 2 + 1.5;
+      s.style.width  = size + 'px';
+      s.style.height = size + 'px';
+      s.style.top    = (Math.random() * 100) + '%';
+      s.style.left   = (Math.random() * 100) + '%';
+      s.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      s.style.animationDelay    = (Math.random() * 5) + 's';
+      if (size > 2) s.style.boxShadow = '0 0 4px 1px rgba(255,255,255,.5)';
+      container.appendChild(s);
+    }
+  })();
+
+  // ── OPTION 3: Neural network canvas ──
+  (function() {
+    const canvas = document.getElementById('neuralCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, nodes = [];
+    const NODE_COUNT = 55;
+    const LINK_DIST = 140;
+
+    function resize() {
+      const r = canvas.parentElement.getBoundingClientRect();
+      W = canvas.width = r.width;
+      H = canvas.height = r.height;
+    }
+
+    function init() {
+      nodes = [];
+      for (let i = 0; i < NODE_COUNT; i++) {
+        nodes.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - .5) * .35,
+          vy: (Math.random() - .5) * .35,
+          r: Math.random() * 1.5 + 1,
+          pulse: Math.random() * Math.PI * 2,
+        });
+      }
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Update + draw nodes
+      nodes.forEach(n => {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+        n.pulse += .03;
+        const glow = (Math.sin(n.pulse) + 1) / 2;
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + glow * .5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0,212,170,${.5 + glow * .5})`;
+        ctx.fill();
+      });
+
+      // Draw links
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < LINK_DIST) {
+            const opacity = (1 - d / LINK_DIST) * .35;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(139,92,246,${opacity})`;
+            ctx.lineWidth = .8;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('resize', () => { resize(); init(); });
+    resize(); init(); tick();
+  })();
+
+  // ── OPTION 4: Cosmic + Neural ("Fate") ──
+  (function() {
+    const canvas = document.getElementById('fateCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    let stars = [];      // active "constellation" stars (drift + connect)
+    let bgStars = [];    // background twinklers (static, just twinkle)
+    const ACTIVE_COUNT = 40;
+    const BG_COUNT     = 90;
+    const LINK_DIST    = 170;
+
+    const PALETTE = [
+      'rgba(0,212,170,1)',    // green
+      'rgba(139,92,246,1)',   // purple
+      'rgba(255,255,255,1)',  // white
+      'rgba(255,179,71,1)',   // gold
+    ];
+
+    function resize() {
+      const r = canvas.parentElement.getBoundingClientRect();
+      W = canvas.width  = r.width;
+      H = canvas.height = r.height;
+    }
+
+    function init() {
+      stars = [];
+      bgStars = [];
+      for (let i = 0; i < ACTIVE_COUNT; i++) {
+        stars.push({
+          x: Math.random()*W, y: Math.random()*H,
+          vx: (Math.random()-.5)*.18, vy: (Math.random()-.5)*.18,
+          baseR: Math.random()*1.6 + 1.1,
+          color: PALETTE[Math.floor(Math.random()*PALETTE.length)],
+          pulse: Math.random()*Math.PI*2,
+          pulseSpeed: .015 + Math.random()*.02,
+        });
+      }
+      for (let i = 0; i < BG_COUNT; i++) {
+        bgStars.push({
+          x: Math.random()*W, y: Math.random()*H,
+          r: Math.random()*.9 + .25,
+          pulse: Math.random()*Math.PI*2,
+          pulseSpeed: .01 + Math.random()*.02,
+        });
+      }
+    }
+
+    // "Fate event" — every 6-9s pick 4-6 nearby stars, light a constellation
+    let constellation = null;
+    function maybeStartConstellation() {
+      if (constellation) return;
+      const seed = stars[Math.floor(Math.random()*stars.length)];
+      const sorted = stars
+        .map(s => ({ s, d: Math.hypot(s.x - seed.x, s.y - seed.y) }))
+        .sort((a,b) => a.d - b.d)
+        .slice(0, 5 + Math.floor(Math.random()*2))
+        .map(o => o.s);
+      constellation = {
+        nodes: sorted,
+        progress: 0,           // 0..1 over ~2.5s for draw
+        fade: 0,               // post-draw fade out
+        phase: 'draw',         // 'draw' → 'hold' → 'fade'
+        startTime: performance.now(),
+      };
+    }
+    setInterval(maybeStartConstellation, 6500);
+    setTimeout(maybeStartConstellation, 1800);
+
+    function drawConstellation(now) {
+      if (!constellation) return;
+      const elapsed = now - constellation.startTime;
+      const drawDur = 2200, holdDur = 1200, fadeDur = 1500;
+      const total = drawDur + holdDur + fadeDur;
+
+      let alpha = 1;
+      if (elapsed < drawDur) {
+        constellation.progress = elapsed / drawDur;
+      } else if (elapsed < drawDur + holdDur) {
+        constellation.progress = 1;
+      } else if (elapsed < total) {
+        constellation.progress = 1;
+        alpha = 1 - (elapsed - drawDur - holdDur) / fadeDur;
+      } else {
+        constellation = null;
+        return;
+      }
+
+      const nodes = constellation.nodes;
+      const segments = nodes.length - 1;
+      const segProgress = constellation.progress * segments;
+
+      // bright connecting line, drawing progressively
+      ctx.lineWidth = 1.4;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(255,255,255,.6)';
+      for (let i = 0; i < segments; i++) {
+        const segAlpha = Math.max(0, Math.min(1, segProgress - i)) * alpha;
+        if (segAlpha <= 0) continue;
+        const a = nodes[i], b = nodes[i+1];
+        const tx = a.x + (b.x - a.x) * Math.min(1, segProgress - i);
+        const ty = a.y + (b.y - a.y) * Math.min(1, segProgress - i);
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(tx, ty);
+        ctx.strokeStyle = `rgba(255,255,255,${segAlpha * .85})`;
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+
+      // halo on the active nodes
+      const lit = Math.min(nodes.length, Math.floor(segProgress) + 1);
+      for (let i = 0; i < lit; i++) {
+        const n = nodes[i];
+        const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, 14);
+        grad.addColorStop(0, `rgba(255,255,255,${.9 * alpha})`);
+        grad.addColorStop(1, `rgba(255,255,255,0)`);
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 14, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+
+    function tick(now) {
+      ctx.clearRect(0, 0, W, H);
+
+      // 1) Background twinklers
+      bgStars.forEach(s => {
+        s.pulse += s.pulseSpeed;
+        const g = (Math.sin(s.pulse) + 1) / 2;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(255,255,255,${.25 + g*.55})`;
+        ctx.fill();
+      });
+
+      // 2) Active stars — drift, glow
+      stars.forEach(s => {
+        s.x += s.vx; s.y += s.vy;
+        if (s.x < 0 || s.x > W) s.vx *= -1;
+        if (s.y < 0 || s.y > H) s.vy *= -1;
+        s.pulse += s.pulseSpeed;
+        s.glow = (Math.sin(s.pulse) + 1) / 2;
+        s.r = s.baseR + s.glow * .7;
+
+        // outer halo
+        const halo = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 5);
+        halo.addColorStop(0, s.color.replace('1)', `${.35 * s.glow})`));
+        halo.addColorStop(1, s.color.replace('1)', '0)'));
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r * 5, 0, Math.PI*2);
+        ctx.fill();
+
+        // core
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        ctx.fillStyle = s.color.replace('1)', `${.7 + s.glow * .3})`);
+        ctx.fill();
+      });
+
+      // 3) Neural connections between active stars (proximity-based)
+      ctx.lineWidth = .8;
+      for (let i = 0; i < stars.length; i++) {
+        for (let j = i + 1; j < stars.length; j++) {
+          const dx = stars[i].x - stars[j].x;
+          const dy = stars[i].y - stars[j].y;
+          const d  = Math.hypot(dx, dy);
+          if (d < LINK_DIST) {
+            const opacity = (1 - d / LINK_DIST) * .35 *
+                            ((stars[i].glow + stars[j].glow) / 2 + .3);
+            const grad = ctx.createLinearGradient(stars[i].x, stars[i].y, stars[j].x, stars[j].y);
+            grad.addColorStop(0, `rgba(0,212,170,${opacity})`);
+            grad.addColorStop(1, `rgba(139,92,246,${opacity})`);
+            ctx.strokeStyle = grad;
+            ctx.beginPath();
+            ctx.moveTo(stars[i].x, stars[i].y);
+            ctx.lineTo(stars[j].x, stars[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 4) Fate constellation overlay
+      drawConstellation(now);
+
+      requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('resize', () => { resize(); init(); });
+    resize(); init();
+    requestAnimationFrame(tick);
+  })();
+</script>
+
+</body>
+</html>

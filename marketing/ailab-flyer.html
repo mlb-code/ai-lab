@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #1a1a2e;
+    color: #e8e8f0;
+    width: 794px;
+    min-height: 1123px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background decorations */
+  .bg-circle1 {
+    position: absolute; top: -120px; right: -120px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(108,60,225,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .bg-circle2 {
+    position: absolute; bottom: 80px; left: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(0,212,170,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .page { padding: 52px 56px; position: relative; z-index: 1; }
+
+  /* HEADER */
+  .logo {
+    font-size: 1.5rem; font-weight: 900; letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .logo span { color: #00D4AA; }
+  .tagline { color: #888; font-size: 0.82rem; margin-bottom: 36px; }
+
+  /* HERO TEXT */
+  .hero-title {
+    font-size: 2.6rem; font-weight: 900; line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .hero-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, #00D4AA, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    color: #bbb; font-size: 1rem; line-height: 1.7;
+    max-width: 500px; margin-bottom: 32px;
+  }
+
+  /* STATS */
+  .stats {
+    display: flex; gap: 0;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .stat {
+    flex: 1; text-align: center; padding: 18px 12px;
+    border-left: 1px solid rgba(255,255,255,0.06);
+  }
+  .stat:last-child { border-left: none; }
+  .stat .num { font-size: 1.9rem; font-weight: 900; color: #00D4AA; display: block; }
+  .stat .lbl { font-size: 0.75rem; color: #888; margin-top: 2px; }
+
+  /* FEATURES */
+  .features {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 28px;
+  }
+  .feature {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .feature .icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+  .feature h4 { font-size: 0.88rem; color: #fff; margin-bottom: 3px; font-weight: 700; }
+  .feature p { font-size: 0.78rem; color: #999; line-height: 1.5; }
+
+  /* PRICING */
+  .pricing {
+    display: flex; gap: 12px; margin-bottom: 28px;
+  }
+  .price-card {
+    flex: 1; background: rgba(108,60,225,0.1);
+    border: 1px solid rgba(108,60,225,0.3);
+    border-radius: 12px; padding: 18px 20px; text-align: center;
+  }
+  .price-card.accent {
+    background: rgba(0,212,170,0.08);
+    border-color: rgba(0,212,170,0.3);
+  }
+  .price-card .cname { font-size: 0.85rem; color: #aaa; margin-bottom: 8px; }
+  .price-card .amount { font-size: 1.8rem; font-weight: 900; color: #00D4AA; }
+  .price-card .original { font-size: 0.85rem; color: #666; text-decoration: line-through; margin-bottom: 2px; }
+  .price-card .community-badge { font-size: 0.72rem; background: rgba(0,212,170,0.15); color: #00D4AA; border: 1px solid rgba(0,212,170,0.3); border-radius: 20px; padding: 2px 10px; display: inline-block; margin-bottom: 6px; }
+  .price-card .detail { font-size: 0.75rem; color: #777; margin-top: 4px; }
+  .price-note { font-size: 0.72rem; color: #666; text-align: center; margin-top: -16px; margin-bottom: 24px; }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, rgba(0,212,170,0.12), rgba(108,60,225,0.12));
+    border: 1px solid rgba(0,212,170,0.25);
+    border-radius: 14px; padding: 22px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px;
+  }
+  .cta-left h3 { font-size: 1.1rem; color: #fff; margin-bottom: 6px; }
+  .cta-left p { font-size: 0.82rem; color: #aaa; }
+  .cta-buttons { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+  .btn-wa {
+    background: #25d366; color: #000; font-weight: 800;
+    padding: 10px 22px; border-radius: 50px;
+    font-size: 0.88rem; white-space: nowrap; text-align: center;
+  }
+  .btn-site {
+    background: linear-gradient(135deg, #00D4AA, #8B5CF6);
+    color: #fff; font-weight: 700;
+    padding: 10px 22px; border-radius: 50px;
+    font-size: 0.88rem; white-space: nowrap; text-align: center;
+  }
+
+  @media print {
+    @page { margin: 0; size: 794px 1123px; }
+    html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-circle1"></div>
+<div class="bg-circle2"></div>
+<div class="page">
+
+  <div class="logo">AI <span>Lab</span></div>
+  <div class="tagline">ai-lab.co.il</div>
+
+  <div class="hero-title">קורס <em>AI ויזמות</em><br>לילדים ונוער</div>
+  <p class="hero-sub">הילדים שלנו ישתמשו ב-AI כל חייהם — השאלה היא אם הם יהיו מי שבונים איתו, או מי שרק מקבלים תשובות ממנו. 8 מפגשים בזום שמשנים את הפרספקטיבה.</p>
+
+  <div class="stats">
+    <div class="stat"><span class="num">8</span><span class="lbl">מפגשים</span></div>
+    <div class="stat"><span class="num">5</span><span class="lbl">תלמידים בכיתה</span></div>
+    <div class="stat"><span class="num">60</span><span class="lbl">דקות למפגש</span></div>
+    <div class="stat"><span class="num">10–17</span><span class="lbl">גילאים</span></div>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <span class="icon">🤖</span>
+      <div>
+        <h4>Claude Code — הכלי המרכזי</h4>
+        <p>עובדים עם הכלי המקצועי ביותר לפיתוח AI, בדיוק כמו שעושים בתעשייה</p>
+      </div>
+    </div>
+    <div class="feature">
+      <span class="icon">🚀</span>
+      <div>
+        <h4>פרויקט אמיתי שרץ באינטרנט</h4>
+        <p>כל ילד יוצא עם אתר/מוצר שבנה בעצמו — לא תרגיל, מוצר אמיתי</p>
+      </div>
+    </div>
+    <div class="feature">
+      <span class="icon">👤</span>
+      <div>
+        <h4>אזור אישי לכל תלמיד</h4>
+        <p>מעקב התקדמות, חומרים, פרויקטים — הכל במקום אחד</p>
+      </div>
+    </div>
+    <div class="feature">
+      <span class="icon">🌐</span>
+      <div>
+        <h4>קהילת Discord</h4>
+        <p>ממשיכים לבנות גם בין המפגשים עם אתגרים, סדנאות ועמיתים</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pricing">
+    <div class="price-card accent">
+      <div class="cname">קורס בסיסי</div>
+      <div class="community-badge">מחיר קהילת 8100</div>
+      <div class="original">₪890</div>
+      <div class="amount">₪790</div>
+      <div class="detail">8 מפגשים · 60 דקות</div>
+    </div>
+    <div class="price-card">
+      <div class="cname">קורס מתקדם</div>
+      <div class="community-badge">מחיר קהילת 8100</div>
+      <div class="original">₪1,190</div>
+      <div class="amount">₪1,090</div>
+      <div class="detail">8 מפגשים · 60 דקות</div>
+    </div>
+  </div>
+  <p class="price-note">* נדרש מנוי Claude Code — $20/חודש, ניתן לביטול בכל עת</p>
+
+  <div class="cta">
+    <div class="cta-left">
+      <h3>רוצים לשמוע עוד?</h3>
+      <p>נשמח לספר, לתאם שיחה קצרה<br>או לשלוח סילבוס מפורט</p>
+    </div>
+    <div class="cta-buttons">
+      <a href="https://wa.me/972546500795?text=היי אני מקהילת 8100 אשמח להרשם לקורס הבסיסי" style="text-decoration:none;"><div class="btn-wa">💬 וואטסאפ</div></a>
+      <div class="btn-site">🌐 ai-lab.co.il</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

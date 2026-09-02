@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>שיעור 4 · תוכן ו-SEO | בניית אתרים | AI Lab Business</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../lesson.css">
+    <style>
+        .glossary { max-width: 900px; width: 100%; margin-top: 24px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 4px; background: var(--bg-elev); }
+        .gl-row { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 16px 24px; border-bottom: 1px solid var(--line); text-align: right; align-items: baseline; }
+        .gl-row:last-child { border-bottom: 0; }
+        .gl-term { font-family: 'Space Mono', monospace; font-weight: 700; color: var(--accent); font-size: 0.95rem; }
+        .gl-def { color: var(--text); font-size: 0.95rem; line-height: 1.55; }
+        .gl-def small { display: block; color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
+        @media (max-width: 700px) { .gl-row { grid-template-columns: 1fr; gap: 4px; } }
+        .why-how { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1100px; width: 100%; margin-top: 20px; text-align: right; }
+        .why-how > div { background: var(--bg-elev); border: 1px solid var(--line); border-radius: 4px; padding: 24px; }
+        .wh-tag { font-family: 'Space Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700; color: var(--blue); display: inline-block; margin-bottom: 10px; }
+        .why-how .how .wh-tag { color: var(--accent); }
+        .why-how p { color: var(--text); font-size: 0.95rem; line-height: 1.7; }
+        .why-how p strong { color: var(--accent); font-weight: 600; }
+        @media (max-width: 700px) { .why-how { grid-template-columns: 1fr; } }
+        .agenda { max-width: 720px; width: 100%; margin-top: 24px; text-align: right; }
+        .agenda-row { display: grid; grid-template-columns: 90px 1fr 80px; gap: 16px; padding: 14px 0; border-bottom: 1px dashed var(--line); align-items: baseline; }
+        .agenda-row:last-child { border-bottom: 0; }
+        .agenda-row .ag-time { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--text-faded); letter-spacing: 0.08em; }
+        .agenda-row .ag-text { font-size: 1rem; color: var(--text); }
+        .agenda-row .ag-tag { font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faded); text-align: left; }
+        h2.ralign, p.ralign, div.ralign { text-align: right; max-width: 1000px; align-self: flex-start; margin-right: max(80px, calc((100vw - 1000px) / 2)); }
+        h2.ralign-w, p.ralign-w, div.ralign-w { text-align: right; max-width: 1100px; align-self: flex-start; margin-right: max(80px, calc((100vw - 1100px) / 2)); }
+    </style>
+</head>
+<body>
+
+<div class="brand-label">AI Lab <span class="biz">BUSINESS</span></div>
+<div class="deck-meta"><a href="../../websites.html">→ חזרה לקורס</a></div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter" id="slideCounter"></div>
+<div class="nav-hint">← → חיצים לניווט · ESC חזרה</div>
+
+<div class="deck">
+
+    <!-- 01 — TITLE -->
+    <div class="slide bg-glow active">
+        <div class="kicker">קורס בניית אתרים · שיעור 04</div>
+        <h1>תוכן <span class="gradient-text">ו-SEO.</span></h1>
+        <p class="lead" style="margin-top: 16px;">איך לגרום לגוגל למצוא את האתר שלכם, ולהציג אותו ללקוחות שמחפשים אתכם.</p>
+        <div style="display:flex; gap:32px; margin-top:48px; color:var(--text-muted); font-family: 'Space Mono', monospace; font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase;">
+            <span>60 דקות</span><span style="color:var(--text-faded);">·</span><span>20 עיוני</span><span style="color:var(--text-faded);">·</span><span>30 מעשי</span><span style="color:var(--text-faded);">·</span><span>10+ משימה</span>
+        </div>
+    </div>
+
+    <!-- 02 — AGENDA -->
+    <div class="slide bg-default">
+        <div class="kicker">מה נכסה היום</div>
+        <h2 class="ralign">סדר היום.</h2>
+        <div class="agenda">
+            <div class="agenda-row"><span class="ag-time">00:00 — 00:05</span><span class="ag-text">סיכום שיעור 3 + מילון מונחים חדשים</span><span class="ag-tag">recap</span></div>
+            <div class="agenda-row"><span class="ag-time">00:05 — 00:25</span><span class="ag-text">חלק עיוני: איך גוגל עובד, מילות מפתח, meta tags קריטיים</span><span class="ag-tag">theory</span></div>
+            <div class="agenda-row"><span class="ag-time">00:25 — 00:55</span><span class="ag-text">חלק מעשי: הוספת SEO מלא, sitemap, robots.txt, OG tags</span><span class="ag-tag">practice</span></div>
+            <div class="agenda-row"><span class="ag-time">00:55 — 01:00</span><span class="ag-text">תבנית, מלכודות, והמשימה לשיעור 5</span><span class="ag-tag">wrap-up</span></div>
+        </div>
+    </div>
+
+    <!-- 03 — RECAP -->
+    <div class="slide bg-default">
+        <div class="kicker">מהשיעור הקודם</div>
+        <h2 class="ralign">איפה <span class="accent">נשארנו.</span></h2>
+        <p class="lead ralign">בשיעור 3 שיפרנו את העיצוב — פלטה, פונטים, רספונסיביות. <strong>הדף נראה מצוין.</strong> עכשיו השאלה: איך אנשים ימצאו אותו? היום נדאג לכך שגוגל יראה את האתר שלכם ויציג אותו לחיפושים רלוונטיים.</p>
+    </div>
+
+    <!-- 04 — GLOSSARY -->
+    <div class="slide bg-default">
+        <div class="kicker">לפני שמתחילים</div>
+        <h2 class="ralign">מונחים <span class="accent">חדשים בשיעור.</span></h2>
+        <div class="glossary">
+            <div class="gl-row"><span class="gl-term">SEO</span><span class="gl-def">Search Engine Optimization — אופטימיזציה למנועי חיפוש. כל מה שגורם לגוגל למצוא ולדרג את האתר שלכם גבוה.<small>אתר עם SEO טוב = לקוחות חינמיים מגוגל.</small></span></div>
+            <div class="gl-row"><span class="gl-term">מילת מפתח · keyword</span><span class="gl-def">המילים שאנשים מחפשים בגוגל. <em>"רופא שיניים תל אביב"</em>, <em>"קורס AI לעסקים"</em>.<small>אתם רוצים להופיע בתוצאות לחיפושים שהקהל שלכם מבצע.</small></span></div>
+            <div class="gl-row"><span class="gl-term">Meta tags</span><span class="gl-def">תיוגים נסתרים בקוד הדף שמספרים לגוגל: על מה הדף, מה לכתוב בתוצאות החיפוש.<small>הטקסט שגוגל מציג בתוצאות = ה-meta tags שלכם.</small></span></div>
+            <div class="gl-row"><span class="gl-term">Title + Description</span><span class="gl-def">שני ה-meta tags החשובים ביותר. ה-Title הוא הכותרת בתוצאות גוגל, ה-Description הוא תקציר.<small>אורך אופטימלי: Title 60 תווים, Description 160 תווים.</small></span></div>
+            <div class="gl-row"><span class="gl-term">Sitemap</span><span class="gl-def">קובץ XML שאומר לגוגל איזה דפים יש באתר. עוזר ל-Google לסרוק יעיל יותר.<small>נדרש בעיקר לאתרים עם הרבה דפים. גם דף יחיד ייהנה ממנו.</small></span></div>
+            <div class="gl-row"><span class="gl-term">OG tags · Open Graph</span><span class="gl-def">תיוגים שאומרים לפייסבוק / WhatsApp / לינקדאין איך להציג את הקישור לאתר שלכם.<small>בלעדיהם — הקישור מופיע בלי תמונה ובלי תיאור.</small></span></div>
+        </div>
+    </div>
+
+    <!-- 05 — THEORY HEADER -->
+    <div class="slide bg-theory">
+        <div class="kicker theory">חלק עיוני · 20 דקות</div>
+        <h1>איך <span class="gradient-text">גוגל</span> עובד.</h1>
+        <p class="lead">לפני שמשפרים — צריך להבין איך גוגל מוצא דפים, מבין על מה הם, ומחליט איזה מהם להציג ראשון.</p>
+    </div>
+
+    <!-- 06 — HOW GOOGLE WORKS -->
+    <div class="slide bg-default">
+        <div class="kicker theory">חלק עיוני</div>
+        <h2 class="ralign-w">3 השלבים <span class="accent">של גוגל.</span></h2>
+        <p class="lead ralign-w">כל אתר באינטרנט עובר את אותם 3 שלבים בגוגל.</p>
+        <div class="cards cols-3" style="max-width: 1100px; margin-top: 24px;">
+            <div class="card">
+                <div class="num">01</div>
+                <h4>זחילה · Crawling</h4>
+                <p>בוטים של גוגל סורקים את האינטרנט ומגלים דפים חדשים. אם האתר שלכם לא מקושר משום מקום — הם לא ימצאו אותו.</p>
+            </div>
+            <div class="card">
+                <div class="num">02</div>
+                <h4>אינדקס · Indexing</h4>
+                <p>גוגל קורא את התוכן של הדף ומבין על מה הוא. <strong>כותרות, meta tags, תוכן הטקסט</strong> — כולם משפיעים על איך גוגל מקטלג.</p>
+            </div>
+            <div class="card">
+                <div class="num">03</div>
+                <h4>דירוג · Ranking</h4>
+                <p>כשמישהו מחפש מילת מפתח — גוגל מציג מאות דפים רלוונטיים, אבל מסדר אותם לפי איכות, רלוונטיות, ופופולריות.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 07 — KEYWORDS -->
+    <div class="slide bg-default">
+        <div class="kicker theory">חלק עיוני · מילות מפתח</div>
+        <h2 class="ralign">מה הקהל <span class="accent">מחפש?</span></h2>
+        <p class="lead ralign">הצעד הראשון ב-SEO: למצוא את מילות המפתח שהלקוחות שלכם מחפשים. לא מה ש<em>אתם</em> חושבים — אלא מה ש<em>הם</em> מקלידים.</p>
+        <div class="why-how">
+            <div>
+                <span class="wh-tag">איך מוצאים</span>
+                <p><strong>Google Trends</strong> (חינם) — בודקים פופולריות של מונחים. <strong>חיפוש בגוגל בעצמכם</strong> — תרשמו את המונחים, ראו מה גוגל מציע ב-autocomplete. <strong>שאלו לקוחות אמיתיים</strong> — איך הם תיארו את הצורך לפני שמצאו אתכם.</p>
+            </div>
+            <div class="how">
+                <span class="wh-tag">דוגמה</span>
+                <p>קליניקת שיניים בתל אביב.<br><strong>מילים ראשיות:</strong> "רופא שיניים תל אביב", "מרפאת שיניים תל אביב".<br><strong>מילים משניות:</strong> "השתלת שיניים", "ילדים", "רופא שיניים אמין".<br><strong>שאלה ארוכה:</strong> "כמה עולה שתל שיניים".</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 08 — META TAGS -->
+    <div class="slide bg-default">
+        <div class="kicker theory">חלק עיוני · Meta Tags</div>
+        <h2 class="ralign-w">2 ה-Meta Tags <span class="accent">הקריטיים.</span></h2>
+        <p class="lead ralign-w">כל דף באתר צריך אותם. הם מה שגוגל ופייסבוק מציגים כשמישהו מוצא את הדף שלכם.</p>
+        <div class="cards cols-2" style="max-width: 1000px; margin-top: 24px;">
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">META TAG 01</span>
+                <h4>&lt;title&gt; — הכותרת בגוגל</h4>
+                <p>זה מה שמופיע בכתום בתוצאות החיפוש. <strong>60 תווים מקסימום</strong>. כולל את מילת המפתח החשובה ביותר.</p>
+                <p style="margin-top: 8px; font-family: 'Space Mono', monospace; color: var(--accent); font-size: 0.8rem;">דוגמה: "רופא שיניים תל אביב | קליניקת ד"ר כהן"</p>
+            </div>
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">META TAG 02</span>
+                <h4>&lt;description&gt; — התיאור</h4>
+                <p>הפסקה מתחת לכותרת בתוצאות גוגל. <strong>160 תווים מקסימום</strong>. צריך לגרום לקליק.</p>
+                <p style="margin-top: 8px; font-family: 'Space Mono', monospace; color: var(--accent); font-size: 0.8rem;">דוגמה: "מרפאת שיניים מתקדמת בתל אביב. השתלות, יישור, טיפולי שיניים לכל המשפחה. פגישת ייעוץ ראשונה — חינם."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 09 — PRACTICE HEADER -->
+    <div class="slide bg-practice">
+        <div class="kicker practice">חלק מעשי · 30 דקות</div>
+        <h1>מוסיפים <span class="gradient-text">SEO מלא.</span></h1>
+        <p class="lead">לוקחים את הדף, מוסיפים את כל השכבות — meta tags, OG tags, sitemap, robots.txt.</p>
+    </div>
+
+    <!-- 10 — DEMO 1: KEYWORDS -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 1 — מילות מפתח</div>
+        <h2 class="ralign">מציאת <span class="accent">3 מילות המפתח שלכם.</span></h2>
+        <p class="lead ralign">לפני שכותבים meta tags — בוחרים את 2-3 מילות המפתח החשובות לדף.</p>
+        <div class="prompt">
+            <span class="ptag">תרגיל · בחירת מילות מפתח</span>
+            עליכם לבחור (אישית, לא ל-Claude):
+            <br>· מילת מפתח ראשית: 1 מילה / ביטוי שהקהל שלכם מחפש בגוגל
+            <br>· 2 מילות מפתח משניות: וריאציות / מילים קשורות
+            <br><br>
+            <strong>איך לבדוק:</strong> פותחים גוגל בכתב לא נכנס (incognito), מקלידים, רואים את ה-autocomplete. מה גוגל מציע = מה אנשים מחפשים בפועל.
+        </div>
+    </div>
+
+    <!-- 11 — DEMO 2: META TAGS -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 2 — Meta Tags</div>
+        <h2 class="ralign">הוספת <span class="accent">Meta Tags לדף.</span></h2>
+        <div class="prompt">
+            <span class="ptag">פרומפט · Meta Tags</span>
+            תוסיף את התיוגים הבאים ב-&lt;head&gt; של הדף:
+            <br><br>
+            · &lt;title&gt; — [הכותרת שלי, 60 תווים, כוללת מילת מפתח ראשית]
+            <br>· &lt;meta name="description"&gt; — [תיאור 160 תווים, כולל מילת מפתח]
+            <br>· &lt;meta name="keywords"&gt; — [3 מילות מפתח מופרדות בפסיקים]
+            <br>· &lt;meta name="robots" content="index, follow"&gt;
+            <br>· &lt;link rel="canonical" href="[הדומיין שלי]"&gt;
+            <br>· &lt;meta name="language" content="Hebrew"&gt;
+            <br>· &lt;meta name="geo.region" content="IL"&gt;
+            <br><br>
+            וודא שכל התיוגים בעברית נכתבו ב-UTF-8 כמו שצריך.
+        </div>
+    </div>
+
+    <!-- 12 — DEMO 3: OG TAGS -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 3 — OG Tags</div>
+        <h2 class="ralign">תיוגי <span class="accent">סושיאל.</span></h2>
+        <p class="lead ralign">איך הקישור שלכם נראה כשמישהו משתף אותו ב-WhatsApp, פייסבוק, או לינקדאין.</p>
+        <div class="prompt">
+            <span class="ptag">פרומפט · OG Tags</span>
+            תוסיף ב-&lt;head&gt; את ה-Open Graph tags:
+            <br><br>
+            · og:title — [כותרת מכירתית, יכולה להיות שונה מ-title]
+            <br>· og:description — [תיאור שמושך לקליק]
+            <br>· og:image — [URL של תמונה 1200x630px]
+            <br>· og:url — [הדומיין שלי]
+            <br>· og:type — website
+            <br>· og:locale — he_IL
+            <br>· og:site_name — [שם החברה]
+            <br><br>
+            וגם Twitter Cards: twitter:card="summary_large_image", twitter:title, twitter:description, twitter:image.
+            <br><br>
+            אם אין תמונה — תיצור קובץ og-image.html שיוצר תמונה אוטומטית עם הלוגו והכותרת.
+        </div>
+    </div>
+
+    <!-- 13 — DEMO 4: SITEMAP + ROBOTS -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 4 — sitemap + robots</div>
+        <h2 class="ralign">קבצים <span class="accent">לגוגל.</span></h2>
+        <p class="lead ralign">2 קבצים שגוגל מצפה למצוא בכל אתר. בלי הם — הסריקה הרבה יותר איטית.</p>
+        <div class="prompt">
+            <span class="ptag">פרומפט · sitemap + robots</span>
+            תיצור 2 קבצים בתיקייה הראשית של האתר:
+            <br><br>
+            <strong>1. sitemap.xml</strong> — רשימה של כל הדפים באתר בפורמט XML סטנדרטי. כל דף עם תאריך עדכון אחרון ועדיפות.
+            <br><br>
+            <strong>2. robots.txt</strong> — קובץ טקסט פשוט שאומר לגוגל מה לסרוק:
+            <br><span class="mono" style="display:block; padding: 10px; background: var(--bg); border-radius: 4px; margin-top: 8px; direction: ltr; text-align: left;">User-agent: *<br>Allow: /<br>Sitemap: https://[הדומיין שלי]/sitemap.xml</span>
+        </div>
+    </div>
+
+    <!-- 14 — VARIATIONS -->
+    <div class="slide bg-default">
+        <div class="kicker">וריאציות</div>
+        <h2 class="ralign-w">SEO לפי <span class="accent">סוג אתר.</span></h2>
+        <p class="lead ralign-w">המבנה זהה. הפוקוס משתנה.</p>
+        <div class="cards cols-3" style="max-width: 1100px; margin-top: 24px;">
+            <div class="card"><span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">SEO מקומי</span><h4>שירות באזור</h4><p>קליניקה, מסעדה, חנות פיזית. <strong>הדגש:</strong> שם המקום במילות מפתח. הוספת Google Business Profile.</p></div>
+            <div class="card"><span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">SEO ארצי</span><h4>שירות אונליין</h4><p>קורס, יועץ, מוצר דיגיטלי. <strong>הדגש:</strong> ביטוי הצורך הספציפי, לא מיקום. בלוג עם תכנים תומכים.</p></div>
+            <div class="card"><span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">SEO E-Commerce</span><h4>חנות אונליין</h4><p>מוצרים פיזיים. <strong>הדגש:</strong> דף לכל מוצר, schema markup לסחורות, ביקורות לקוחות.</p></div>
+        </div>
+    </div>
+
+    <!-- 15 — TEMPLATE -->
+    <div class="slide bg-default">
+        <div class="kicker">תבנית</div>
+        <h2 class="ralign">פרומפט SEO <span class="accent">מלא.</span></h2>
+        <p class="lead ralign">פרומפט אחד שמוסיף את כל שכבות ה-SEO בבת אחת.</p>
+        <div class="prompt">
+            <span class="ptag">תבנית · SEO מלא לדף</span>
+            תוסיף לדף הזה את כל שכבות ה-SEO:
+            <br><br>
+            <strong>מילות מפתח:</strong><br>
+            · ראשית: [...]<br>
+            · משניות: [..., ...]<br><br>
+            <strong>Meta Tags:</strong><br>
+            · title: [60 תווים, כולל מילת מפתח ראשית]<br>
+            · description: [160 תווים, מזמין לקליק]<br>
+            · canonical, robots, language, geo<br><br>
+            <strong>OG Tags + Twitter Cards:</strong><br>
+            · כותרת, תיאור, תמונה (1200x630), URL<br><br>
+            <strong>קבצים נוספים:</strong><br>
+            · sitemap.xml בתיקייה הראשית<br>
+            · robots.txt בתיקייה הראשית<br><br>
+            <strong>Structured Data:</strong><br>
+            · schema.org JSON-LD: סוג עסק [LocalBusiness/Person/Service]<br>
+            · שם, כתובת, טלפון, שעות פתיחה אם רלוונטי
+        </div>
+    </div>
+
+    <!-- 16 — PITFALLS -->
+    <div class="slide bg-warn">
+        <div class="kicker warn">מלכודות נפוצות</div>
+        <h2 class="ralign-w">3 שגיאות <span style="color:var(--warn);">ב-SEO.</span></h2>
+        <div class="cards cols-3" style="max-width: 1100px;">
+            <div class="card" style="border-color: rgba(255,77,77,0.3);"><div class="num" style="color: var(--warn);">01</div><h4>כותרת ללא מילת מפתח</h4><p>"ברוכים הבאים לאתר שלי" — גוגל לא יודע על מה הדף. <strong>הכותרת חייבת לכלול מה אתם מציעים.</strong></p><p style="margin-top: 8px; color: var(--accent);"><strong>פתרון:</strong> מילת מפתח ראשית בכותרת תמיד.</p></div>
+            <div class="card" style="border-color: rgba(255,77,77,0.3);"><div class="num" style="color: var(--warn);">02</div><h4>אותו תוכן בכל דפים</h4><p>אם יש לכם 5 דפים — לכל אחד meta tags משלו. <strong>שכפול = פגיעה ב-SEO.</strong></p><p style="margin-top: 8px; color: var(--accent);"><strong>פתרון:</strong> title ו-description ייחודיים לכל דף.</p></div>
+            <div class="card" style="border-color: rgba(255,77,77,0.3);"><div class="num" style="color: var(--warn);">03</div><h4>הזרקת מילות מפתח</h4><p>"רופא שיניים רופא שיניים רופא שיניים בתל אביב" — גוגל מזהה ומעניש.</p><p style="margin-top: 8px; color: var(--accent);"><strong>פתרון:</strong> מילת מפתח ראשית 2-3 פעמים בלבד בטקסט הטבעי.</p></div>
+        </div>
+    </div>
+
+    <!-- 17 — HOMEWORK -->
+    <div class="slide bg-homework">
+        <div class="kicker homework">משימה לפני המפגש הבא</div>
+        <h2 class="ralign">מה לעשות <span style="color:var(--gold);">השבוע.</span></h2>
+        <p class="lead ralign">מטרה: הדף שלכם מוכן לגוגל ולסושיאל — עם כל שכבות ה-SEO.</p>
+        <div class="steps" style="max-width: 760px; margin-top: 24px;">
+            <div class="step" style="border-color: rgba(245,200,66,0.3);"><div class="step-n" style="color: var(--gold);">1.</div><div class="step-text"><strong>חקרו את מילות המפתח לעסק שלכם</strong><small>3 מילים. השתמשו ב-autocomplete של גוגל. שמרו ברשימה.</small></div></div>
+            <div class="step" style="border-color: rgba(245,200,66,0.3);"><div class="step-n" style="color: var(--gold);">2.</div><div class="step-text"><strong>הריצו את התבנית המלאה</strong><small>Meta Tags + OG Tags + sitemap + robots — הכל בפעולה אחת.</small></div></div>
+            <div class="step" style="border-color: rgba(245,200,66,0.3);"><div class="step-n" style="color: var(--gold);">3.</div><div class="step-text"><strong>בדקו ב-OpenGraph debugger</strong><small>הזן את הדומיין שלך ב-opengraph.xyz — ראו איך הקישור ייראה ב-WhatsApp ובפייסבוק.</small></div></div>
+            <div class="step" style="border-color: rgba(245,200,66,0.3);"><div class="step-n" style="color: var(--gold);">4.</div><div class="step-text"><strong>שתפו בקבוצה</strong><small>צילום מסך מ-OpenGraph debugger + כותרת ה-title שלכם. תקבלו פידבק מחברי הקורס.</small></div></div>
+        </div>
+    </div>
+
+    <!-- 18 — RECAP -->
+    <div class="slide bg-glow">
+        <div class="kicker">סיכום שיעור 4</div>
+        <h2 class="ralign">מה <span class="accent">למדנו היום.</span></h2>
+        <div class="steps" style="max-width: 820px;">
+            <div class="step"><div class="step-n">01</div><div class="step-text">איך גוגל מוצא ומדרג דפים — Crawling, Indexing, Ranking</div></div>
+            <div class="step"><div class="step-n">02</div><div class="step-text">מילות מפתח — איך מוצאים ומשתמשים נכון</div></div>
+            <div class="step"><div class="step-n">03</div><div class="step-text">Meta Tags קריטיים: title, description, OG, Twitter</div></div>
+            <div class="step"><div class="step-n">04</div><div class="step-text">קבצים נוספים: sitemap.xml ו-robots.txt</div></div>
+        </div>
+        <p class="lead" style="margin-top: 32px;">בשיעור האחרון: <strong>Deploy לאוויר + דומיין + אנליטיקס</strong> — האתר חי, על דומיין משלכם, עם מעקב אחר גולשים.</p>
+        <div style="margin-top: 32px; display: flex; gap: 16px; align-items: center; color: var(--text-muted); font-size: 0.9rem;">
+            <a href="../../websites.html" style="color: var(--accent); border-bottom: 1px solid var(--accent);">→ חזרה לקורס</a>
+            <span style="color: var(--text-faded);">·</span>
+            <a href="lesson-03.html" style="color: var(--text-muted); border-bottom: 1px solid var(--line);">שיעור 3</a>
+            <span style="color: var(--text-faded);">·</span>
+            <a href="lesson-05.html" style="color: var(--accent); border-bottom: 1px solid var(--accent);">שיעור 5 ←</a>
+        </div>
+    </div>
+
+</div>
+
+<script src="../lesson.js"></script>
+</body>
+</html>

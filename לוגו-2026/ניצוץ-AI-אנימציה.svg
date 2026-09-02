@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <style>
+    .spin { transform-origin: 100px 100px; animation: rot 13s linear infinite; }
+    .breath { transform-origin: 100px 100px; animation: br 2.8s ease-in-out infinite; }
+    .sat { transform-origin: center; transform-box: fill-box; animation: tw 2.8s ease-in-out infinite; }
+    .s2 { animation-delay: 1.4s; }
+    @keyframes rot { to { transform: rotate(360deg); } }
+    @keyframes br { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    @keyframes tw { 0%,100% { opacity: .2; transform: scale(.45) rotate(0deg); } 50% { opacity: 1; transform: scale(1.1) rotate(35deg); } }
+  </style>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7BE8C4"/><stop offset=".5" stop-color="#4DD6E8"/><stop offset="1" stop-color="#B79CFF"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g class="breath">
+    <g class="spin">
+      <path filter="url(#glow)" fill="url(#g)" d="M100 22 C106.7 58 118 69.3 154 76 C118 82.7 106.7 94 100 130 C93.3 94 82 82.7 46 76 C82 69.3 93.3 58 100 22 Z" transform="translate(0 24)"/>
+    </g>
+  </g>
+  <path class="sat" fill="#BFF3FF" d="M156 40 C158 50 161 53 171 55 C161 57 158 60 156 70 C154 60 151 57 141 55 C151 53 154 50 156 40 Z"/>
+  <path class="sat s2" fill="#D9CBFF" d="M52 138 C53.4 145 55.5 147 62.5 148.5 C55.5 150 53.4 152 52 159 C50.6 152 48.5 150 41.5 148.5 C48.5 147 50.6 145 52 138 Z"/>
+</svg>

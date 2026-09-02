@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>שיעור 3 · עיצוב ורספונסיביות | בניית אתרים | AI Lab Business</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../lesson.css">
+    <style>
+        .glossary { max-width: 900px; width: 100%; margin-top: 24px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 4px; background: var(--bg-elev); }
+        .gl-row { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 16px 24px; border-bottom: 1px solid var(--line); text-align: right; align-items: baseline; }
+        .gl-row:last-child { border-bottom: 0; }
+        .gl-term { font-family: 'Space Mono', monospace; font-weight: 700; color: var(--accent); font-size: 0.95rem; }
+        .gl-def { color: var(--text); font-size: 0.95rem; line-height: 1.55; }
+        .gl-def small { display: block; color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
+        @media (max-width: 700px) { .gl-row { grid-template-columns: 1fr; gap: 4px; } }
+        .why-how { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1100px; width: 100%; margin-top: 20px; text-align: right; }
+        .why-how > div { background: var(--bg-elev); border: 1px solid var(--line); border-radius: 4px; padding: 24px; }
+        .wh-tag { font-family: 'Space Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700; color: var(--blue); display: inline-block; margin-bottom: 10px; }
+        .why-how .how .wh-tag { color: var(--accent); }
+        .why-how p { color: var(--text); font-size: 0.95rem; line-height: 1.7; }
+        .why-how p strong { color: var(--accent); font-weight: 600; }
+        @media (max-width: 700px) { .why-how { grid-template-columns: 1fr; } }
+        .agenda { max-width: 720px; width: 100%; margin-top: 24px; text-align: right; }
+        .agenda-row { display: grid; grid-template-columns: 90px 1fr 80px; gap: 16px; padding: 14px 0; border-bottom: 1px dashed var(--line); align-items: baseline; }
+        .agenda-row:last-child { border-bottom: 0; }
+        .agenda-row .ag-time { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--text-faded); letter-spacing: 0.08em; }
+        .agenda-row .ag-text { font-size: 1rem; color: var(--text); }
+        .agenda-row .ag-tag { font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faded); text-align: left; }
+        h2.ralign, p.ralign, div.ralign { text-align: right; max-width: 1000px; align-self: flex-start; margin-right: max(80px, calc((100vw - 1000px) / 2)); }
+        h2.ralign-w, p.ralign-w, div.ralign-w { text-align: right; max-width: 1100px; align-self: flex-start; margin-right: max(80px, calc((100vw - 1100px) / 2)); }
+        .palette-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; max-width: 880px; width: 100%; margin-top: 18px; }
+        .swatch { aspect-ratio: 1.4; border-radius: 4px; display: flex; align-items: flex-end; padding: 12px; font-family: 'Space Mono', monospace; font-size: 0.72rem; color: rgba(0,0,0,0.7); font-weight: 700; }
+        .swatch.dark { color: rgba(255,255,255,0.85); }
+    </style>
+</head>
+<body>
+
+<div class="brand-label">AI Lab <span class="biz">BUSINESS</span></div>
+<div class="deck-meta"><a href="../../websites.html">→ חזרה לקורס</a></div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter" id="slideCounter"></div>
+<div class="nav-hint">← → חיצים לניווט · ESC חזרה</div>
+
+<div class="deck">
+
+    <!-- 01 — TITLE -->
+    <div class="slide bg-glow active">
+        <div class="kicker">קורס בניית אתרים · שיעור 03</div>
+        <h1>עיצוב <span class="gradient-text">ורספונסיביות.</span></h1>
+        <p class="lead" style="margin-top: 16px;">
+            מהפרינציפים הבסיסיים של עיצוב ועד התאמה למובייל. הופכים דף תקין לדף שמרגיש מקצועי.
+        </p>
+        <div style="display:flex; gap:32px; margin-top:48px; color:var(--text-muted); font-family: 'Space Mono', monospace; font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase;">
+            <span>60 דקות</span>
+            <span style="color:var(--text-faded);">·</span>
+            <span>20 עיוני</span>
+            <span style="color:var(--text-faded);">·</span>
+            <span>30 מעשי</span>
+            <span style="color:var(--text-faded);">·</span>
+            <span>10+ משימה</span>
+        </div>
+    </div>
+
+    <!-- 02 — AGENDA -->
+    <div class="slide bg-default">
+        <div class="kicker">מה נכסה היום</div>
+        <h2 class="ralign">סדר היום.</h2>
+        <div class="agenda">
+            <div class="agenda-row"><span class="ag-time">00:00 — 00:05</span><span class="ag-text">סיכום שיעור 2 + מילון מונחים חדשים</span><span class="ag-tag">recap</span></div>
+            <div class="agenda-row"><span class="ag-time">00:05 — 00:25</span><span class="ag-text">חלק עיוני: 4 פרינציפים, צבעים, פונטים, מובייל-first</span><span class="ag-tag">theory</span></div>
+            <div class="agenda-row"><span class="ag-time">00:25 — 00:55</span><span class="ag-text">חלק מעשי: שיפור פלטה, פונטים, התאמה למובייל, בדיקה ב-DevTools</span><span class="ag-tag">practice</span></div>
+            <div class="agenda-row"><span class="ag-time">00:55 — 01:00</span><span class="ag-text">תבנית, מלכודות, והמשימה לשיעור 4</span><span class="ag-tag">wrap-up</span></div>
+        </div>
+    </div>
+
+    <!-- 03 — RECAP -->
+    <div class="slide bg-default">
+        <div class="kicker">מהשיעור הקודם</div>
+        <h2 class="ralign">איפה <span class="accent">נשארנו.</span></h2>
+        <p class="lead ralign">
+            בשיעור 2 בנינו דף נחיתה אסטרטגי — Hero, בעיה, פתרון, עדויות, טופס. <strong>המבנה תקין, אבל הוא עדיין לא מרגיש מקצועי.</strong> היום ניקח את אותו דף ונשפר את העיצוב — צבעים, פונטים, רווחים, ובמיוחד התאמה למובייל.
+        </p>
+    </div>
+
+    <!-- 04 — GLOSSARY -->
+    <div class="slide bg-default">
+        <div class="kicker">לפני שמתחילים</div>
+        <h2 class="ralign">מונחים <span class="accent">חדשים בשיעור.</span></h2>
+        <div class="glossary">
+            <div class="gl-row">
+                <span class="gl-term">Responsive</span>
+                <span class="gl-def">דף שנראה טוב בכל גודל מסך — מחשב, טאבלט, וגם מובייל. משתנה אוטומטית.<small>היום 70% מהגולשים באים ממובייל. דף לא רספונסיבי = איבוד 70% מהלקוחות.</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">Mobile-First</span>
+                <span class="gl-def">גישת עיצוב — מתחילים לעצב מהמובייל, ורק אחר כך מתאימים למסך גדול.<small>הופך את החשיבה: מה הכי חשוב? מה אפשר לקצר?</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">Viewport</span>
+                <span class="gl-def">החלון שבו הגולש רואה את הדף — בדפדפן או במובייל.<small>גודל ה-viewport קובע איך הדף נראה.</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">Color Palette</span>
+                <span class="gl-def">לוח הצבעים של האתר — בדרך כלל 3-5 צבעים שעובדים יפה ביחד.<small>פלטה טובה = אתר מרגיש מקצועי, גם בלי שום אלמנט מיוחד.</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">Typography</span>
+                <span class="gl-def">העיצוב של הטקסט — בחירת פונטים, גדלים, רווחים. הדבר הכי חשוב בעיצוב דיגיטלי.<small>אתר נקי עם פונט מצוין נראה הרבה יותר טוב מאתר עמוס עם פונט לא מתאים.</small></span>
+            </div>
+            <div class="gl-row">
+                <span class="gl-term">Hierarchy</span>
+                <span class="gl-def">סדר חשיבות — מה גדול, מה קטן, מה בולט, מה משני. עוזר לעין לדעת לאן להסתכל.<small>"כותרת ראשית" צריכה להיראות אחרת לחלוטין מ"טקסט רגיל".</small></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 05 — THEORY HEADER -->
+    <div class="slide bg-theory">
+        <div class="kicker theory">חלק עיוני · 20 דקות</div>
+        <h1>4 פרינציפים <span class="gradient-text">לכל עיצוב.</span></h1>
+        <p class="lead">לא צריך להיות מעצב כדי להבין את הכללים. 4 כללים בלבד מספיקים כדי שהדף ייראה מקצועי.</p>
+    </div>
+
+    <!-- 06 — DESIGN PRINCIPLES -->
+    <div class="slide bg-default">
+        <div class="kicker theory">חלק עיוני</div>
+        <h2 class="ralign-w">4 הפרינציפים <span class="accent">של עיצוב.</span></h2>
+        <p class="lead ralign-w">תזכרו אותם, תיתנו ל-Claude כהוראה, והדף ייראה אחרת לחלוטין.</p>
+        <div class="cards cols-2" style="max-width: 1000px; margin-top: 24px;">
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">CONTRAST · ניגוד</span>
+                <h4>ניגוד</h4>
+                <p>שני אלמנטים סמוכים שונים זה מזה — בגודל, בצבע, או בעובי. <strong>"כותרת" גדולה ומודגשת לעומת טקסט קטן ורגיל.</strong></p>
+            </div>
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">REPETITION · חזרה</span>
+                <h4>חזרה</h4>
+                <p>אותו סגנון חוזר על עצמו לאורך הדף — אותו פונט, אותו צבע ראשי, אותם רווחים. <strong>חזרה = אחידות = מקצועיות.</strong></p>
+            </div>
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">ALIGNMENT · יישור</span>
+                <h4>יישור</h4>
+                <p>הכל מיושר — או הכל מיושר לימין, או הכל למרכז. <strong>אלמנטים "צפים באוויר" = רושם של חובבני.</strong></p>
+            </div>
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">PROXIMITY · קרבה</span>
+                <h4>קרבה</h4>
+                <p>דברים שקשורים — קרובים זה לזה. דברים שלא קשורים — רחוקים. <strong>הרווחים מספרים את הסיפור של מה שייך למה.</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 07 — COLORS -->
+    <div class="slide bg-default">
+        <div class="kicker theory">חלק עיוני · צבעים</div>
+        <h2 class="ralign">בחירת <span class="accent">פלטת צבעים.</span></h2>
+        <p class="lead ralign">3-5 צבעים בסך הכל. כלל הברזל: <strong>צבע ראשי, צבע מבטא, ושני גוונים נייטרליים.</strong></p>
+        <div class="palette-row">
+            <div class="swatch dark" style="background: #0f172a;">PRIMARY<br>#0f172a</div>
+            <div class="swatch dark" style="background: #2563eb;">ACCENT<br>#2563eb</div>
+            <div class="swatch" style="background: #f1f5f9;">LIGHT<br>#f1f5f9</div>
+            <div class="swatch dark" style="background: #475569;">MUTED<br>#475569</div>
+        </div>
+        <div class="why-how" style="margin-top: 32px;">
+            <div>
+                <span class="wh-tag">איך לבחור</span>
+                <p>השתמשו ב-<strong>coolors.co</strong> או <strong>realtimecolors.com</strong> — כלים חינמיים שיוצרים פלטות הרמוניות באוטומטית. מקליקים על "Generate" עד שמוצאים פלטה שמתאימה.</p>
+            </div>
+            <div class="how">
+                <span class="wh-tag">איך לתת ל-Claude</span>
+                <p>אחרי שיש לכם פלטה — תיתנו ל-Claude את 4 קודי הצבע (#hex). הוא יבנה את הדף עם הפלטה הזו עקבית לאורך הכל.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 08 — TYPOGRAPHY -->
+    <div class="slide bg-default">
+        <div class="kicker theory">חלק עיוני · פונטים</div>
+        <h2 class="ralign">בחירת <span class="accent">פונטים.</span></h2>
+        <p class="lead ralign">פונט אחד מספיק. אם רוצים שניים — אחד לכותרות, אחד לטקסט.</p>
+        <div class="cards cols-2" style="max-width: 1000px; margin-top: 24px;">
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">SANS-SERIF · ללא תוויות</span>
+                <h4 style="font-family: 'Heebo', sans-serif;">Heebo, Assistant, Rubik</h4>
+                <p>פונטים ללא תוויות בקצוות. נקיים, מודרניים, קלים לקריאה במסך. <strong>בחירה דיפולטית לרוב האתרים.</strong></p>
+            </div>
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">SERIF · עם תוויות</span>
+                <h4 style="font-family: 'Frank Ruhl Libre', serif;">Frank Ruhl, David, Times</h4>
+                <p>פונטים מסורתיים יותר. מתאימים לתוכן ארוך, אווירה רצינית, או מותגים שרוצים יוקרה.</p>
+            </div>
+        </div>
+        <p class="lead ralign" style="margin-top: 24px;">
+            <strong>למצוא פונט עברי טוב:</strong> Google Fonts (חינם) → לסנן לפי "Hebrew". להעתיק את הקוד שגוגל נותן ולתת ל-Claude.
+        </p>
+    </div>
+
+    <!-- 09 — PRACTICE HEADER -->
+    <div class="slide bg-practice">
+        <div class="kicker practice">חלק מעשי · 30 דקות</div>
+        <h1>משדרגים <span class="gradient-text">את העיצוב.</span></h1>
+        <p class="lead">לוקחים את הדף מהשיעור הקודם, ומיישמים את הפרינציפים — צבעים, פונטים, רווחים, ובמיוחד מובייל.</p>
+    </div>
+
+    <!-- 10 — DEMO 1: PALETTE -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 1 — פלטה</div>
+        <h2 class="ralign">החלפת <span class="accent">פלטת הצבעים.</span></h2>
+        <p class="lead ralign">בוחרים פלטה ב-coolors.co, מעבירים ל-Claude.</p>
+        <div class="prompt">
+            <span class="ptag">פרומפט · החלפת פלטה</span>
+            תחליף את כל הצבעים באתר לפלטה הבאה:
+            <br>· צבע ראשי (כותרות, רקע כהה): #0F172A
+            <br>· צבע מבטא (כפתורים, קישורים): #2563EB
+            <br>· רקע בהיר (סקציות): #F1F5F9
+            <br>· טקסט משני: #475569
+            <br><br>
+            וודא שהשתמשת ב-CSS variables כך שניתן לשנות פעם אחת. השתמש בצבעים האלה עקבית בכל הדף.
+        </div>
+    </div>
+
+    <!-- 11 — DEMO 2: TYPOGRAPHY -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 2 — פונטים</div>
+        <h2 class="ralign">החלפת <span class="accent">פונט.</span></h2>
+        <p class="lead ralign">פונט אחד מ-Google Fonts, היררכיה ברורה: כותרת ענקית, תת-כותרת בינונית, טקסט קטן.</p>
+        <div class="prompt">
+            <span class="ptag">פרומפט · החלפת פונט</span>
+            תחליף את הפונט באתר ל-Heebo מ-Google Fonts. תקנפג היררכיה ברורה:
+            <br>· H1 (כותרות ראשיות): 800 weight, גודל clamp(2.4rem, 5vw, 4.2rem)
+            <br>· H2 (כותרות סקציות): 700 weight, גודל clamp(1.8rem, 3.5vw, 2.8rem)
+            <br>· גוף הטקסט: 400 weight, גודל 1.05rem, line-height 1.6
+            <br>· כפתורים: 700 weight, גודל 1rem
+            <br><br>
+            וודא שהמשקלים נטענים כראוי מ-Google Fonts. השתמש בפונט עקבית.
+        </div>
+    </div>
+
+    <!-- 12 — DEMO 3: MOBILE -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 3 — מובייל</div>
+        <h2 class="ralign">התאמה <span class="accent">למובייל.</span></h2>
+        <p class="lead ralign">המבחן הקריטי: לפתוח את הדף בטלפון. אם זה לא נראה מצוין — אין דף.</p>
+        <div class="prompt">
+            <span class="ptag">פרומפט · רספונסיביות מלאה</span>
+            תוודא שהדף עובד מצוין במובייל בכל המסכים החשובים: 320px, 375px, 414px (iPhone SE → iPhone Pro Max).
+            <br><br>
+            במובייל:
+            <br>· הכותרת הראשית — לא יותר משלוש שורות
+            <br>· סקציות בעמודה אחת (לא שתיים)
+            <br>· כפתורים גדולים מספיק לאצבע (לפחות 48px גובה)
+            <br>· מרווחים בין סקציות — קטנים יותר ממחשב
+            <br>· גודל פונט הטקסט — לא קטן מ-16px
+            <br><br>
+            תשתמש ב-media queries וב-clamp() לגדלים נזילים.
+        </div>
+    </div>
+
+    <!-- 13 — DEMO 4: TESTING -->
+    <div class="slide bg-default">
+        <div class="kicker practice">הדגמה · שלב 4 — בדיקה</div>
+        <h2 class="ralign">בדיקה ב-<span class="accent">DevTools.</span></h2>
+        <p class="lead ralign">לא צריך טלפון אמיתי כדי לבדוק. הדפדפן עושה את זה בעצמו.</p>
+        <div class="steps" style="max-width: 760px;">
+            <div class="step">
+                <div class="step-n">1.</div>
+                <div class="step-text"><strong>פתחו את האתר ב-Chrome</strong><small>לחיצה ימנית על הדף ← Inspect (או F12)</small></div>
+            </div>
+            <div class="step">
+                <div class="step-n">2.</div>
+                <div class="step-text"><strong>לחצו על אייקון "Toggle device toolbar"</strong><small>פינה שמאלית-עליונה של ה-DevTools (סמל של טלפון/טאבלט)</small></div>
+            </div>
+            <div class="step">
+                <div class="step-n">3.</div>
+                <div class="step-text"><strong>בחרו מכשיר</strong><small>iPhone SE לבדיקת מובייל קטן, iPad לטאבלט, ועוד</small></div>
+            </div>
+            <div class="step">
+                <div class="step-n">4.</div>
+                <div class="step-text"><strong>גללו את הדף, נסו ללחוץ על כפתורים</strong><small>אם משהו רחוק או קטן מדי — חוזרים ל-Claude עם פרומפט תיקון.</small></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 14 — VARIATIONS -->
+    <div class="slide bg-default">
+        <div class="kicker">וריאציות</div>
+        <h2 class="ralign-w">סגנונות עיצוב <span class="accent">לפי תחום.</span></h2>
+        <p class="lead ralign-w">אותם פרינציפים — ביטוי שונה.</p>
+        <div class="cards cols-3" style="max-width: 1100px; margin-top: 24px;">
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">סגנון A · מקצועי</span>
+                <h4>כחול / לבן / אפור</h4>
+                <p>קליניקה, יועץ, חברת הייטק. <strong>פלטה:</strong> Navy + שמיימי. <strong>פונט:</strong> sans-serif נקי.</p>
+            </div>
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">סגנון B · חם</span>
+                <h4>זהב / קרם / חום</h4>
+                <p>בוטיק, מאמן, יוקרה. <strong>פלטה:</strong> זהב + שנהב. <strong>פונט:</strong> serif אלגנטי + sans-serif לטקסט.</p>
+            </div>
+            <div class="card">
+                <span class="kicker" style="margin-bottom: 14px; font-size: 0.65rem;">סגנון C · אנרגטי</span>
+                <h4>שחור / נאון</h4>
+                <p>סטארטאפ, AI, טכנולוגיה. <strong>פלטה:</strong> שחור + ירוק/סגול בוהק. <strong>פונט:</strong> sans-serif עבה + monospace.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 15 — TEMPLATE -->
+    <div class="slide bg-default">
+        <div class="kicker">תבנית</div>
+        <h2 class="ralign">פרומפט שיפור <span class="accent">עיצוב מלא.</span></h2>
+        <p class="lead ralign">פרומפט יחיד שמיישם את כל הפרינציפים בבת אחת.</p>
+        <div class="prompt">
+            <span class="ptag">תבנית · שיפור עיצוב</span>
+            תשפר את העיצוב של הדף לפי הפרמטרים הבאים:
+            <br><br>
+            <strong>פלטה:</strong> [4 קודי hex מ-coolors].<br>
+            <strong>פונט:</strong> [שם פונט מ-Google Fonts] עם משקלים 400, 700, 800.<br>
+            <strong>סגנון:</strong> [מינימליסטי / חם / מקצועי / אנרגטי].<br><br>
+
+            תיישם את 4 הפרינציפים:
+            <br>· ניגוד — היררכיה ברורה בין כותרות וטקסט
+            <br>· חזרה — אותו סגנון לכפתורים, אותם רווחים בין סקציות
+            <br>· יישור — הכל מיושר עקבי
+            <br>· קרבה — אלמנטים קשורים קרובים, נפרדים מרוחקים
+            <br><br>
+            רספונסיביות מלאה: 320px, 375px, 414px, 768px, 1024px+.
+        </div>
+    </div>
+
+    <!-- 16 — PITFALLS -->
+    <div class="slide bg-warn">
+        <div class="kicker warn">מלכודות נפוצות</div>
+        <h2 class="ralign-w">3 שגיאות <span style="color:var(--warn);">בעיצוב.</span></h2>
+        <div class="cards cols-3" style="max-width: 1100px;">
+            <div class="card" style="border-color: rgba(255,77,77,0.3);">
+                <div class="num" style="color: var(--warn);">01</div>
+                <h4>יותר מדי צבעים</h4>
+                <p>אדום + כחול + ירוק + צהוב + סגול = רעש ויזואלי. <strong>3-5 צבעים בסך הכל.</strong></p>
+                <p style="margin-top: 8px; color: var(--accent);"><strong>פתרון:</strong> פלטה אחת מ-coolors.co.</p>
+            </div>
+            <div class="card" style="border-color: rgba(255,77,77,0.3);">
+                <div class="num" style="color: var(--warn);">02</div>
+                <h4>טקסט קטן מדי</h4>
+                <p>"זה נראה יפה ב-12px במחשב" — ובמובייל בלתי קריא. <strong>16px מינימום, 18px מומלץ.</strong></p>
+                <p style="margin-top: 8px; color: var(--accent);"><strong>פתרון:</strong> בדוק תמיד במובייל אמיתי.</p>
+            </div>
+            <div class="card" style="border-color: rgba(255,77,77,0.3);">
+                <div class="num" style="color: var(--warn);">03</div>
+                <h4>שכחת המובייל</h4>
+                <p>הדף נראה מצוין במחשב — ובמובייל הסקציה הראשונה גולשת מימין החוצה.</p>
+                <p style="margin-top: 8px; color: var(--accent);"><strong>פתרון:</strong> בדיקה ב-DevTools אחרי כל שינוי.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 17 — HOMEWORK -->
+    <div class="slide bg-homework">
+        <div class="kicker homework">משימה לפני המפגש הבא</div>
+        <h2 class="ralign">מה לעשות <span style="color:var(--gold);">השבוע.</span></h2>
+        <p class="lead ralign">מטרה: דף מעוצב, עם פלטה ופונטים שלכם, רספונסיבי לחלוטין.</p>
+        <div class="steps" style="max-width: 760px; margin-top: 24px;">
+            <div class="step" style="border-color: rgba(245,200,66,0.3);"><div class="step-n" style="color: var(--gold);">1.</div><div class="step-text"><strong>בחרו פלטת צבעים ב-coolors.co</strong><small>אל תפחדו — לחצו "Generate" עד שמוצאים פלטה שמדברת אליכם. שמרו את ה-hex.</small></div></div>
+            <div class="step" style="border-color: rgba(245,200,66,0.3);"><div class="step-n" style="color: var(--gold);">2.</div><div class="step-text"><strong>בחרו פונט מ-Google Fonts</strong><small>סננו לפי "Hebrew", בחרו אחד שמרגיש מתאים לעסק שלכם.</small></div></div>
+            <div class="step" style="border-color: rgba(245,200,66,0.3);"><div class="step-n" style="color: var(--gold);">3.</div><div class="step-text"><strong>הריצו את התבנית מהשיעור על הדף שלכם</strong><small>פלטה + פונט + 4 הפרינציפים. סבלנות עם איטרציות.</small></div></div>
+            <div class="step" style="border-color: rgba(245,200,66,0.3);"><div class="step-n" style="color: var(--gold);">4.</div><div class="step-text"><strong>בדיקה ב-DevTools במובייל + שיתוף בקבוצה</strong><small>צילום מסך גם מהמחשב וגם מתצוגת המובייל. תקבלו פידבק מחברי הקורס.</small></div></div>
+        </div>
+    </div>
+
+    <!-- 18 — RECAP -->
+    <div class="slide bg-glow">
+        <div class="kicker">סיכום שיעור 3</div>
+        <h2 class="ralign">מה <span class="accent">למדנו היום.</span></h2>
+        <div class="steps" style="max-width: 820px;">
+            <div class="step"><div class="step-n">01</div><div class="step-text">4 פרינציפים: ניגוד, חזרה, יישור, קרבה</div></div>
+            <div class="step"><div class="step-n">02</div><div class="step-text">בחירת פלטה + פונט עברי מ-Google Fonts</div></div>
+            <div class="step"><div class="step-n">03</div><div class="step-text">רספונסיביות לכל המסכים — 320px עד דסקטופ</div></div>
+            <div class="step"><div class="step-n">04</div><div class="step-text">בדיקה ב-DevTools ופרומפט שיפור עיצוב מלא</div></div>
+        </div>
+        <p class="lead" style="margin-top: 32px;">בשיעור הבא: <strong>תוכן ו-SEO</strong> — איך גוגל מבין את האתר ומציג אותו לחיפושים רלוונטיים.</p>
+        <div style="margin-top: 32px; display: flex; gap: 16px; align-items: center; color: var(--text-muted); font-size: 0.9rem;">
+            <a href="../../websites.html" style="color: var(--accent); border-bottom: 1px solid var(--accent);">→ חזרה לקורס</a>
+            <span style="color: var(--text-faded);">·</span>
+            <a href="lesson-02.html" style="color: var(--text-muted); border-bottom: 1px solid var(--line);">שיעור 2</a>
+            <span style="color: var(--text-faded);">·</span>
+            <a href="lesson-04.html" style="color: var(--accent); border-bottom: 1px solid var(--accent);">שיעור 4 ←</a>
+        </div>
+    </div>
+
+</div>
+
+<script src="../lesson.js"></script>
+</body>
+</html>

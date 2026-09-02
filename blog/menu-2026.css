@@ -1,0 +1,208 @@
+/* ============================================================
+   AI Lab — תפריט 2026 לדפי הבלוג
+   מקור: redesign-2026.html (האתר הראשי). נטען מ-shared.js.
+   מטרה: שפת עיצוב זהה לחלוטין בין הבלוג לאתר — כולל תפריט המובייל.
+   ============================================================ */
+
+/* גשר משתנים: הבלוג משתמש בשמות אחרים מהאתר הראשי */
+.burger, .mobile-menu, .mobile-menu * {
+    --on-night: #EEF0FF;
+    --on-night-soft: rgba(226, 229, 255, 0.72);
+    --font-body: 'Assistant', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Suez One', Georgia, serif;
+    --accent: #6366F1;
+    --accent-bright: #8B8DFF;
+    --wa: #1FAF57;
+}
+
+    .burger {
+        display: none; margin-inline-start: auto;
+        background: none; border: 0; cursor: pointer; padding: 10px;
+    }
+    .burger span { display: block; width: 24px; height: 2px; background: var(--on-night); margin: 5px 0; border-radius: 2px; transition: transform .3s, opacity .3s; }
+    .menu-open .burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-open .burger span:nth-child(2) { opacity: 0; }
+    .menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+    /* Mobile menu — פאנל זכוכית צף כמעט-עד-הקצה (לא נצמד לקצוות המסך) */
+    .mobile-menu {
+        position: fixed; inset: 8px; z-index: 99; border-radius: 30px;
+        background:
+            linear-gradient(0deg, rgba(10,13,36,.55), transparent 26%),
+            radial-gradient(62% 42% at 86% 6%, rgba(124,108,255,.22), transparent 70%),
+            radial-gradient(52% 38% at 8% 94%, rgba(77,214,232,.16), transparent 70%),
+            linear-gradient(163deg, rgba(214,220,248,.1), rgba(140,148,198,.06) 55%),
+            rgba(10,13,36,.7);
+        backdrop-filter: blur(32px) saturate(1.7);
+        -webkit-backdrop-filter: blur(32px) saturate(1.7);
+        border: 1px solid rgba(255,255,255,.18);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 30px 90px rgba(0,0,0,.55);
+        display: flex; flex-direction: column; justify-content: safe center; align-items: center; gap: 10px;
+        opacity: 0; pointer-events: none; transition: opacity .3s;
+        /* גלילה פנימית: בשום מסך שום כפתור לא נעלם — ופס הגלילה מוסתר כדי לא לשבור את המסגרת */
+        overflow-y: auto; overscroll-behavior: contain;
+        scrollbar-width: none; -ms-overflow-style: none;
+        padding: var(--mm-top, 78px) 22px calc(var(--mm-bot, 20px) + env(safe-area-inset-bottom));
+    }
+    .mobile-menu::-webkit-scrollbar { display: none; }
+    .menu-open .mobile-menu { opacity: 1; pointer-events: auto; }
+    /* כפתור הסגירה כשהתפריט פתוח — שטוח, בלי זכוכית-על-זכוכית */
+    .menu-open .burger {
+        background: rgba(255,255,255,.06);
+        border-color: rgba(255,255,255,.18);
+        box-shadow: none;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+    }
+    /* כשהתפריט פתוח — הלוגו וה-X מתיישרים לרשת הפנימית של הפאנל
+       (מתחת לעיקול הפינות, באותו קו עם השורות) */
+    .menu-open nav .nav-inner { height: 84px; padding-inline: 34px; }
+    /* כל שורה בתפריט = שבב זכוכית עצמאי (בלי קופסה עוטפת) */
+    .m-list {
+        width: min(480px, 100%); flex-shrink: 0;
+        display: grid; gap: var(--mm-gap, 7px);
+        position: relative; z-index: 1;
+    }
+    .mobile-menu a.mlink {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: var(--mm-link, 11px 17px);
+        color: #fff; text-decoration: none;
+        font-family: var(--font-body); font-weight: 600; font-size: var(--mm-linkfs, .97rem);
+        background: linear-gradient(163deg, rgba(214,220,248,.12), rgba(164,172,215,.07) 48%, rgba(140,148,198,.1));
+        border: 1px solid rgba(255,255,255,.2);
+        border-radius: 17px;
+        box-shadow: inset 0 1.5px 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(0,0,0,.16);
+    }
+    /* חץ CSS פיזי שמצביע שמאלה ("קדימה" ב-RTL) — תו ‹ מתהפך אוטומטית ב-bidi */
+    .mobile-menu a.mlink::after {
+        content: ""; width: 8px; height: 8px; flex-shrink: 0;
+        border-left: 2px solid rgba(226,229,255,.45); border-bottom: 2px solid rgba(226,229,255,.45);
+        transform: rotate(45deg);
+    }
+    .mobile-menu a.mlink:active { background: rgba(255,255,255,.07); }
+    /* היהלום המרחף בתפריט + כפתור — שניהם פותחים את הצ'אט עם ה-AI */
+    .m-gem {
+        display: flex; flex-direction: column; align-items: center; gap: var(--mm-gemgap, 7px);
+        background: none; border: 0; cursor: pointer; padding: 0;
+        margin-bottom: var(--mm-gemmb, 11px); position: relative; z-index: 1;
+        font-family: var(--font-body);
+    }
+    .m-gem .m-gem-core { display: block; width: var(--mm-gem, 46px); height: var(--mm-gem, 46px); animation: mGemFloat 4.2s ease-in-out infinite; }
+    .m-gem .m-gem-core img { width: 100%; height: 100%; display: block; animation: mGemTilt 4.2s ease-in-out infinite; }
+    @keyframes mGemFloat { 0%, 100% { transform: translateY(3px); } 50% { transform: translateY(-6px); } }
+    @keyframes mGemTilt {
+        0%, 100% { transform: rotate(-6deg); filter: drop-shadow(0 0 12px rgba(100,190,255,.5)); }
+        50% { transform: rotate(7deg) scale(1.06); filter: drop-shadow(0 0 24px rgba(140,215,255,.9)); }
+    }
+    .m-gem .m-gem-label {
+        display: inline-flex; align-items: center; gap: 7px;
+        color: #fff; font-weight: 700; font-size: var(--mm-gemfs, .83rem);
+        background: linear-gradient(163deg, rgba(214,220,248,.18), rgba(140,148,198,.12));
+        border: 1px solid rgba(255,255,255,.32); border-radius: 50px;
+        padding: var(--mm-gempad, 7px 17px);
+        box-shadow: inset 0 1.5px 0 rgba(255,255,255,.4), 0 10px 26px rgba(0,0,0,.3);
+    }
+    .mobile-menu .m-actions { display: flex; flex-direction: column; gap: var(--mm-gap, 7px); margin-top: var(--mm-actmt, 14px); width: min(480px, 100%); flex-shrink: 0; }
+    .mobile-menu .m-actions .btn { padding: var(--mm-btn, 12px 24px); }
+    .mobile-menu .m-social { display: flex; gap: 13px; margin-top: var(--mm-socmt, 12px); }
+    .mobile-menu .m-social a {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: var(--mm-soc, 38px); height: var(--mm-soc, 38px); border-radius: 50%;
+        background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+    }
+    .mobile-menu .m-social svg { width: 19px; height: 19px; fill: var(--on-night); }
+
+    /* ===== התפריט חייב להיכנס במסך אחד — מתכווץ לפי גובה המכשיר ולא נגלל =====
+       מדרגות: מסך רגיל · מסך בינוני (iPhone 13 mini) · מסך נמוך (iPhone SE) */
+    @media (max-height: 780px) {
+        .mobile-menu {
+            --mm-top: 72px; --mm-bot: 14px;
+            --mm-gem: 40px; --mm-gemgap: 6px; --mm-gemmb: 8px; --mm-gemfs: .79rem; --mm-gempad: 6px 15px;
+            --mm-gap: 6px; --mm-link: 9px 16px; --mm-linkfs: .93rem;
+            --mm-actmt: 11px; --mm-btn: 11px 22px; --mm-socmt: 9px; --mm-soc: 35px;
+        }
+    }
+    @media (max-height: 690px) {
+        .mobile-menu {
+            --mm-top: 66px; --mm-bot: 10px;
+            --mm-gem: 34px; --mm-gemgap: 5px; --mm-gemmb: 6px; --mm-gemfs: .75rem; --mm-gempad: 5px 13px;
+            --mm-gap: 5px; --mm-link: 7.5px 14px; --mm-linkfs: .89rem;
+            --mm-actmt: 8px; --mm-btn: 9.5px 20px; --mm-socmt: 7px; --mm-soc: 32px;
+        }
+        .mobile-menu a.mlink { border-radius: 14px; }
+    }
+    @media (max-height: 600px) {
+        .mobile-menu {
+            --mm-top: 60px; --mm-bot: 8px;
+            --mm-gem: 0px; --mm-gemgap: 0px; --mm-gemmb: 5px; --mm-gemfs: .73rem; --mm-gempad: 5px 12px;
+            --mm-gap: 4px; --mm-link: 6.5px 13px; --mm-linkfs: .85rem;
+            --mm-actmt: 6px; --mm-btn: 8.5px 18px; --mm-socmt: 6px; --mm-soc: 29px;
+        }
+        /* במסך נמוך במיוחד היהלום המצויר מוסתר — התווית לבדה עדיין פותחת את הסוכן */
+        .m-gem .m-gem-core { display: none; }
+    }
+
+    /* ===== Buttons ===== */
+    .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+        padding: 13px 26px; border-radius: 50px; text-decoration: none;
+        font-weight: 800; font-size: .95rem; transition: transform .2s, box-shadow .2s, background .2s, border-color .2s;
+    }
+    /* חתימות אור זכוכית — כל הכפתורים */
+    .btn, .nav-cta, .ag-send, .agent-orb { position: relative; z-index: 0; }
+    .btn::after, .nav-cta::after, .ag-send::after, .agent-orb::after {
+        content: ""; position: absolute; inset: 0; border-radius: inherit;
+        z-index: -1; pointer-events: none;
+        background:
+            radial-gradient(44px 22px at 16% 0%, rgba(255,255,255,.3), transparent 70%),
+            linear-gradient(115deg, transparent 30%, rgba(255,255,255,.08) 44%, rgba(255,255,255,.2) 50%, rgba(255,255,255,.08) 56%, transparent 70%);
+        box-shadow:
+            inset 0 1.5px 0 rgba(255,255,255,.42),
+            inset 0 0 0 1px rgba(255,255,255,.14),
+            inset 0 -1px 0 rgba(0,0,0,.16);
+    }
+    .btn-primary { background: linear-gradient(120deg, #6366F1, #8B5CF6); color: #fff; box-shadow: 0 12px 34px rgba(99,102,241,.35); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(99,102,241,.5); }
+    .btn-ghost-dark {
+        background: linear-gradient(163deg, rgba(214,220,248,.22), rgba(164,172,215,.12) 48%, rgba(140,148,198,.17));
+        color: #fff; border: 1px solid rgba(255,255,255,.36);
+        box-shadow: inset 0 1.5px 0 rgba(255,255,255,.5), inset 0 0 0 1px rgba(255,255,255,.1), inset 0 -1px 0 rgba(0,0,0,.2), 0 10px 26px rgba(0,0,0,.28);
+    }
+    .btn-ghost-dark:hover { border-color: rgba(255,255,255,.62); color: #fff; transform: translateY(-2px); box-shadow: inset 0 1.5px 0 rgba(255,255,255,.6), inset 0 0 0 1px rgba(255,255,255,.14), inset 0 -1px 0 rgba(0,0,0,.2), 0 16px 38px rgba(0,0,0,.36); }
+    .btn-ink { background: var(--ink); color: #fff; box-shadow: var(--shadow-md); }
+    .btn-ink:hover { background: var(--accent); transform: translateY(-2px); }
+    .btn-ghost { background: #fff; color: var(--ink); border: 1.5px solid rgba(16,20,51,.14); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent-deep); transform: translateY(-2px); }
+    .btn-wa { background: var(--wa); color: #fff; box-shadow: 0 10px 34px rgba(31,175,87,.35); }
+    .btn-wa:hover { background: #178A44; transform: translateY(-2px); }
+
+/* ===== המבורגר: רק במובייל, ובאותה זכוכית של האתר הראשי ===== */
+@media (min-width: 961px) {
+    .burger { display: none !important; }
+    .mobile-menu { display: none !important; }
+}
+@media (max-width: 960px) {
+    nav#navbar .nav-links-desktop, nav#navbar .nav-cta-group { display: none !important; }
+    .burger {
+        display: flex !important; flex-direction: column; align-items: center; justify-content: center;
+        margin-inline-start: 0; gap: 4px; padding: 0;
+        width: 48px; height: 48px; border-radius: 14px;
+        background: linear-gradient(163deg, rgba(214,220,248,.16), rgba(164,172,215,.1) 48%, rgba(140,148,198,.13));
+        border: 1px solid rgba(255,255,255,.32);
+        box-shadow: inset 0 1.5px 0 rgba(255,255,255,.45), inset 0 -1px 0 rgba(0,0,0,.2), 0 10px 26px rgba(0,0,0,.3);
+        backdrop-filter: blur(14px) saturate(1.5);
+        -webkit-backdrop-filter: blur(14px) saturate(1.5);
+    }
+    .burger span {
+        margin: 0; width: 20px; height: 2.5px; border-radius: 3px;
+        background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(190,200,245,.5));
+        box-shadow: inset 0 .6px 0 rgba(255,255,255,.95), 0 1px 2.5px rgba(0,0,0,.4);
+    }
+    /* כשהתפריט פתוח — הבר העליון שקוף, הפאנל הוא הגיבור */
+    body.menu-open nav#navbar { background: none !important; backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important; border-bottom: 0 !important; box-shadow: none !important; }
+    body.menu-open { overflow: hidden; }
+}
+
+/* ===== נטרול התפריט הישן של הבלוג (נשאר ב-CSS המוטבע של 24 הדפים) ===== */
+.mobile-menu-btn, .mobile-menu-panel, .mobile-overlay { display: none !important; }

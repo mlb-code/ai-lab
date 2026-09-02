@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Hero Demo — Minimalist Orb</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #6C3CE1;
+  --primary-light: #8B5CF6;
+  --accent: #00D4AA;
+  --pink: #FF4D8D;
+  --text: #ffffff;
+  --text-muted: #a0a0b8;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Heebo', sans-serif; background: #0a0a1a; color: var(--text); direction: rtl; }
+
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 2px solid rgba(255,255,255,0.08);
+  background: #0a0a1a;
+}
+
+.option-label {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  z-index: 100;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.option-label .num { color: var(--accent); }
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 2rem;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(108,60,225,0.15);
+  border: 1px solid rgba(108,60,225,0.4);
+  color: #b89ffa;
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+.pulse-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero-content h1 {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--primary-light), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shimmer 4s ease infinite;
+}
+@keyframes shimmer { 0%,100%{background-position:0%} 50%{background-position:200%} }
+
+.hero-slogan {
+  font-size: clamp(1.3rem, 2.8vw, 1.7rem);
+  font-weight: 700;
+  margin: 0.5rem 0 1.3rem;
+}
+.hero-desc {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+.hero-ctas { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+.btn {
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-primary { background: linear-gradient(135deg, var(--accent), #00b894); color:#000; }
+.btn-secondary { background: transparent; color: var(--text); border: 2px solid rgba(255,255,255,0.25); }
+
+/* Shared: dark overlay under text so it always reads */
+.text-veil {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  max-width: 900px;
+  height: 80vh;
+  max-height: 600px;
+  background: radial-gradient(ellipse at center, rgba(10,10,26,0.75) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   A — Ultra Minimal: barely-there aurora glow, no defined sphere
+   ═══════════════════════════════════════════════════════════════ */
+.bg-ultra .glow-a, .bg-ultra .glow-b {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  will-change: transform;
+}
+.bg-ultra .glow-a {
+  width: 600px; height: 600px;
+  background: var(--primary);
+  opacity: 0.25;
+  top: 50%; left: 50%;
+  animation: ultra-a 16s ease-in-out infinite;
+}
+.bg-ultra .glow-b {
+  width: 500px; height: 500px;
+  background: var(--accent);
+  opacity: 0.18;
+  top: 50%; left: 50%;
+  animation: ultra-b 20s ease-in-out infinite;
+}
+@keyframes ultra-a {
+  0%,100% { transform: translate(-55%, -60%) scale(1); }
+  50% { transform: translate(-45%, -40%) scale(1.15); }
+}
+@keyframes ultra-b {
+  0%,100% { transform: translate(-45%, -40%) scale(1.1); }
+  50% { transform: translate(-55%, -60%) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   B — Small Subtle Orb: small orb behind text, faded, one thin ring
+   ═══════════════════════════════════════════════════════════════ */
+.bg-subtle .aurora {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(108,60,225,0.25) 0%, rgba(0,212,170,0.12) 40%, transparent 70%);
+  filter: blur(60px);
+  animation: subtle-breathe 10s ease-in-out infinite;
+}
+@keyframes subtle-breathe {
+  0%,100% { transform: translate(-50%,-50%) scale(1); opacity:0.8; }
+  50% { transform: translate(-50%,-50%) scale(1.08); opacity:1; }
+}
+.bg-subtle .small-orb {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.3), rgba(139,92,246,0.5) 40%, rgba(10,10,26,0.8) 100%);
+  opacity: 0.55;
+  filter: blur(2px);
+  animation: small-breathe 6s ease-in-out infinite;
+}
+@keyframes small-breathe {
+  0%,100% { transform: translate(-50%,-50%) scale(1); }
+  50% { transform: translate(-50%,-50%) scale(1.06); }
+}
+.bg-subtle .thin-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(139,92,246,0.15);
+  animation: ring-rotate-slow 40s linear infinite;
+  pointer-events: none;
+}
+@keyframes ring-rotate-slow { from {transform: translate(-50%,-50%) rotate(0deg);} to {transform: translate(-50%,-50%) rotate(360deg);} }
+
+/* ═══════════════════════════════════════════════════════════════
+   C — Off-center Orb: orb positioned corner behind text, max elegance
+   ═══════════════════════════════════════════════════════════════ */
+.bg-corner .corner-glow {
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(108,60,225,0.4) 0%, rgba(0,212,170,0.15) 40%, transparent 70%);
+  filter: blur(80px);
+  animation: corner-move 14s ease-in-out infinite;
+}
+@keyframes corner-move {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.1); }
+}
+.bg-corner .corner-glow-2 {
+  position: absolute;
+  bottom: -200px; left: -200px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,170,0.3) 0%, rgba(108,60,225,0.1) 40%, transparent 70%);
+  filter: blur(80px);
+  animation: corner-move-2 16s ease-in-out infinite;
+}
+@keyframes corner-move-2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(-60px, -40px) scale(1.1); }
+}
+.bg-corner .particles-subtle {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 60% 70%, rgba(0,212,170,0.6), transparent),
+    radial-gradient(1px 1px at 80% 20%, rgba(139,92,246,0.5), transparent),
+    radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 50% 50%, rgba(0,212,170,0.4), transparent);
+  background-size: 100% 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   D — Minimal Neural: particles + lines, much dimmer & sparser
+   ═══════════════════════════════════════════════════════════════ */
+.bg-neural-min { background: radial-gradient(ellipse at center, #15152a 0%, #0a0a1a 100%); }
+#neural-min-canvas { position:absolute; inset:0; width:100%; height:100%; }
+/* Custom veil for D — smaller, sits only under the text, leaves AI visible at top */
+.bg-neural-min .text-veil-d {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85vw;
+  max-width: 900px;
+  height: 55vh;
+  max-height: 480px;
+  background: radial-gradient(ellipse at center, rgba(10,10,26,0.75) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 5;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- A — ULTRA MINIMAL -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="hero-section bg-ultra">
+  <div class="option-label"><span class="num">A</span> · Ultra Minimal — זוהר דק בלבד</div>
+  <div class="glow-a"></div>
+  <div class="glow-b"></div>
+  <div class="text-veil"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="pulse-dot"></span>🗓️ מחזור חדש נפתח — מפגשים חיים בזום</div>
+    <h1>יזמות<br><span class="gradient-text">ובינה מלאכותית</span></h1>
+    <p class="hero-slogan">הופכים רעיונות למציאות ✨</p>
+    <p class="hero-desc">קורס מעשי שבו ילדים ובני נוער לומדים לבנות אתרים ומוצרים דיגיטליים<br>עם ChatGPT, Claude Code וכלי AI מובילים.</p>
+    <div class="hero-ctas">
+      <a href="#" class="btn btn-primary">הרשמו עכשיו 🚀</a>
+      <a href="#" class="btn btn-secondary">🎓 וובינר חינמי</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- B — SMALL SUBTLE ORB -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="hero-section bg-subtle">
+  <div class="option-label"><span class="num">B</span> · כדור קטן מרכזי — מינימלי</div>
+  <div class="aurora"></div>
+  <div class="thin-ring"></div>
+  <div class="small-orb"></div>
+  <div class="text-veil"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="pulse-dot"></span>🗓️ מחזור חדש נפתח — מפגשים חיים בזום</div>
+    <h1>יזמות<br><span class="gradient-text">ובינה מלאכותית</span></h1>
+    <p class="hero-slogan">הופכים רעיונות למציאות ✨</p>
+    <p class="hero-desc">קורס מעשי שבו ילדים ובני נוער לומדים לבנות אתרים ומוצרים דיגיטליים<br>עם ChatGPT, Claude Code וכלי AI מובילים.</p>
+    <div class="hero-ctas">
+      <a href="#" class="btn btn-primary">הרשמו עכשיו 🚀</a>
+      <a href="#" class="btn btn-secondary">🎓 וובינר חינמי</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- C — OFF-CENTER CORNER GLOW -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="hero-section bg-corner">
+  <div class="option-label"><span class="num">C</span> · זוהר מהפינות — אלגנטי</div>
+  <div class="corner-glow"></div>
+  <div class="corner-glow-2"></div>
+  <div class="particles-subtle"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="pulse-dot"></span>🗓️ מחזור חדש נפתח — מפגשים חיים בזום</div>
+    <h1>יזמות<br><span class="gradient-text">ובינה מלאכותית</span></h1>
+    <p class="hero-slogan">הופכים רעיונות למציאות ✨</p>
+    <p class="hero-desc">קורס מעשי שבו ילדים ובני נוער לומדים לבנות אתרים ומוצרים דיגיטליים<br>עם ChatGPT, Claude Code וכלי AI מובילים.</p>
+    <div class="hero-ctas">
+      <a href="#" class="btn btn-primary">הרשמו עכשיו 🚀</a>
+      <a href="#" class="btn btn-secondary">🎓 וובינר חינמי</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- D — MINIMAL NEURAL PULSE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="hero-section bg-neural-min">
+  <div class="option-label"><span class="num">D</span> · Neural — גיאומטרי ואלגנטי</div>
+  <canvas id="neural-min-canvas"></canvas>
+  <div class="text-veil-d"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="pulse-dot"></span>🗓️ מחזור חדש נפתח — מפגשים חיים בזום</div>
+    <h1>יזמות<br><span class="gradient-text">ובינה מלאכותית</span></h1>
+    <p class="hero-slogan">הופכים רעיונות למציאות ✨</p>
+    <p class="hero-desc">קורס מעשי שבו ילדים ובני נוער לומדים לבנות אתרים ומוצרים דיגיטליים<br>עם ChatGPT, Claude Code וכלי AI מובילים.</p>
+    <div class="hero-ctas">
+      <a href="#" class="btn btn-primary">הרשמו עכשיו 🚀</a>
+      <a href="#" class="btn btn-secondary">🎓 וובינר חינמי</a>
+    </div>
+  </div>
+</section>
+
+<script>
+// Neural Pulse — dots, connecting lines, triangles, pulses. Density matches mobile look on all screen sizes.
+(function() {
+  const canvas = document.getElementById('neural-min-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  let w, h, nodes = [], pulses = [];
+
+  // Density target: ~1 node per 14,000 px² (more alive feel on all screens)
+  // On 1600×800 = 1,280,000 → ~91 nodes
+  // On 375×700 = 262,500 → ~19 nodes
+  const DENSITY = 14000;
+  const MAX_DIST_BASE = 170;
+  const TRI_DIST = 140;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    w = rect.width; h = rect.height;
+  }
+
+  function init() {
+    resize();
+    const count = Math.max(15, Math.round((w * h) / DENSITY));
+    nodes = [];
+    for (let i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random()*w, y: Math.random()*h,
+        vx: (Math.random()-0.5)*0.35, vy: (Math.random()-0.5)*0.35,
+        r: Math.random()*1.3 + 0.8,
+      });
+    }
+  }
+
+  function spawnPulse() {
+    if (nodes.length < 2) return;
+    const a = nodes[Math.floor(Math.random()*nodes.length)];
+    let b = null, bd = Infinity;
+    for (const n of nodes) {
+      if (n === a) continue;
+      const d = Math.hypot(a.x-n.x, a.y-n.y);
+      if (d < MAX_DIST_BASE && d < bd) { bd = d; b = n; }
+    }
+    if (b) pulses.push({ a, b, t: 0, speed: 0.014 + Math.random()*0.008 });
+  }
+  setInterval(spawnPulse, 450);
+
+  function draw() {
+    ctx.clearRect(0,0,w,h);
+
+    // Triangles (fill) — when 3 nodes are all mutually close
+    for (let i=0;i<nodes.length;i++) {
+      for (let j=i+1;j<nodes.length;j++) {
+        for (let k=j+1;k<nodes.length;k++) {
+          const a=nodes[i], b=nodes[j], c=nodes[k];
+          const d1=Math.hypot(a.x-b.x, a.y-b.y);
+          if (d1 >= TRI_DIST) continue;
+          const d2=Math.hypot(b.x-c.x, b.y-c.y);
+          if (d2 >= TRI_DIST) continue;
+          const d3=Math.hypot(c.x-a.x, c.y-a.y);
+          if (d3 >= TRI_DIST) continue;
+          const avg = (d1+d2+d3)/3;
+          const alpha = 0.04 * (1 - avg/TRI_DIST);
+          ctx.fillStyle = `rgba(108, 60, 225, ${alpha})`;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.lineTo(c.x,c.y);
+          ctx.closePath(); ctx.fill();
+        }
+      }
+    }
+
+    // Lines
+    for (let i=0;i<nodes.length;i++) {
+      for (let j=i+1;j<nodes.length;j++) {
+        const a=nodes[i], b=nodes[j];
+        const d=Math.hypot(a.x-b.x, a.y-b.y);
+        if (d < MAX_DIST_BASE) {
+          ctx.strokeStyle = `rgba(139, 92, 246, ${(1 - d/MAX_DIST_BASE) * 0.18})`;
+          ctx.lineWidth = 0.6;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+
+    // Dots + movement
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > w) n.vx *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0, 212, 170, 0.75)';
+      ctx.shadowBlur = 5; ctx.shadowColor = '#00D4AA';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+
+    // Pulses traveling along edges
+    pulses = pulses.filter(p => p.t <= 1);
+    pulses.forEach(p => {
+      const x = p.a.x + (p.b.x-p.a.x)*p.t;
+      const y = p.a.y + (p.b.y-p.a.y)*p.t;
+      ctx.beginPath();
+      ctx.arc(x, y, 2.2, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,255,255,0.95)';
+      ctx.shadowBlur = 14; ctx.shadowColor = '#00D4AA';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      p.t += p.speed;
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', init);
+  init(); draw();
+})();
+</script>
+
+</body>
+</html>

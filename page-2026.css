@@ -1,0 +1,166 @@
+/* ============================================================
+   AI Lab — שלד עמודי משנה 2026 (ליקוויד-גלאס)
+   משמש את: faq / mission / privacy / terms / accessibility
+   ============================================================ */
+:root {
+    --night: #0A0E27;
+    --ink: #EEF0FF;
+    --ink-soft: rgba(226, 229, 255, 0.74);
+    --accent: #6366F1;
+    --accent-bright: #8B8DFF;
+    --cyan: #4DD6E8;
+    --font-display: 'Suez One', serif;
+    --font-body: 'Assistant', -apple-system, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: var(--font-body);
+    background: var(--night);
+    color: var(--ink);
+    line-height: 1.8;
+    direction: rtl;
+    min-height: 100svh;
+}
+body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+        radial-gradient(52% 42% at 8% 6%, rgba(124, 108, 255, 0.16), transparent 70%),
+        radial-gradient(46% 40% at 94% 88%, rgba(77, 214, 232, 0.11), transparent 70%),
+        linear-gradient(180deg, #0A0E27 0%, #151942 45%, #121539 100%);
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: normal; text-wrap: balance; }
+a { color: var(--cyan); }
+
+/* ===== אי הניווט הצף ===== */
+.nav-2026 {
+    position: fixed; top: 14px !important; right: 0; left: 0; z-index: 100;
+    display: flex !important; justify-content: center; pointer-events: none;
+    direction: rtl; /* מפורש — דפים ישנים כופים ltr על nav */
+    /* נטרול כללי nav ישנים בדפים ותיקים (רקע/גובה/ריפוד של הבר הישן) */
+    background: none !important; border: 0 !important; box-shadow: none !important;
+    height: auto !important; padding: 0 !important;
+    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+}
+.nav-2026 .ni {
+    pointer-events: auto;
+    display: flex; align-items: center; gap: 20px;
+    width: max-content; max-width: calc(100vw - 32px);
+    height: 56px; padding-inline: 20px 10px;
+    border-radius: 999px;
+    background:
+        radial-gradient(140px 44px at 82% 0%, rgba(255, 255, 255, 0.13), transparent 70%),
+        linear-gradient(163deg, rgba(214, 220, 248, 0.14), rgba(140, 148, 198, 0.08) 55%),
+        rgba(13, 16, 40, 0.62);
+    backdrop-filter: blur(28px) saturate(1.8);
+    -webkit-backdrop-filter: blur(28px) saturate(1.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.25), 0 18px 50px rgba(0, 0, 0, 0.4);
+}
+.nav-2026 .nlogo {
+    font-family: var(--font-display); font-size: 1.25rem; color: #fff;
+    text-decoration: none; white-space: nowrap;
+}
+.nav-2026 .nlogo::before {
+    content: ""; display: inline-block; width: 25px; height: 25px;
+    margin-inline-end: 7px; vertical-align: -0.28em;
+    background: url(/logo-gem-96.png) center/contain no-repeat;
+    filter: drop-shadow(0 0 10px rgba(120, 200, 255, 0.4));
+}
+.nav-2026 .nlogo b { color: var(--accent-bright); font-weight: normal; }
+.nav-2026 .nlinks { display: flex; gap: 18px; }
+.nav-2026 .nlinks a {
+    color: var(--ink-soft); text-decoration: none; font-weight: 600; font-size: 0.9rem;
+    transition: color 0.2s; white-space: nowrap;
+}
+.nav-2026 .nlinks a:hover { color: #fff; }
+.nav-2026 .ncta {
+    background: linear-gradient(135deg, #6366F1, #8B5CF6);
+    color: #fff; text-decoration: none; white-space: nowrap;
+    padding: 9px 20px; border-radius: 999px; font-weight: 700; font-size: 0.88rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 8px 22px rgba(99, 102, 241, 0.35);
+    transition: transform 0.2s;
+}
+.nav-2026 .ncta:hover { transform: translateY(-1px); }
+@media (max-width: 700px) {
+    .nav-2026 .nlinks { display: none; }
+    .nav-2026 .ni { height: 52px; gap: 12px; padding-inline: 16px 8px; }
+}
+
+/* ===== גוף העמוד ===== */
+.page-wrap { max-width: 820px; margin: 0 auto; padding: 118px 20px 60px; }
+.page-head { text-align: center; margin-bottom: 30px; }
+.page-head h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); color: #fff; }
+.page-head .updated { color: var(--ink-soft); font-size: 0.85rem; margin-top: 8px; }
+.back-link {
+    display: inline-block; color: var(--cyan); text-decoration: none;
+    font-weight: 600; font-size: 0.9rem; margin-bottom: 20px;
+}
+.back-link:hover { text-decoration: underline; }
+
+/* כרטיס זכוכית לתוכן */
+.glass-card {
+    background: linear-gradient(163deg, rgba(214, 220, 248, 0.1), rgba(140, 148, 198, 0.06) 55%), rgba(20, 24, 58, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 24px;
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.18), 0 22px 60px rgba(0, 0, 0, 0.32);
+    padding: clamp(22px, 4vw, 40px);
+}
+.glass-card h2 {
+    font-size: 1.15rem; color: var(--accent-bright);
+    margin-top: 26px; margin-bottom: 8px;
+}
+.glass-card h2:first-child { margin-top: 0; }
+.glass-card p, .glass-card li { color: var(--ink-soft); font-size: 0.97rem; margin-bottom: 10px; }
+.glass-card ul { padding-inline-start: 22px; margin-bottom: 12px; }
+.glass-card li { margin-bottom: 5px; }
+.glass-card strong, .glass-card b { color: #fff; }
+.contact-box {
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(139, 141, 255, 0.28);
+    border-radius: 16px; padding: 18px 22px; margin-top: 24px;
+}
+.contact-box p { margin-bottom: 5px; }
+.note-box {
+    background: rgba(77, 214, 232, 0.08);
+    border: 1px solid rgba(77, 214, 232, 0.3);
+    border-inline-start: 3px solid var(--cyan);
+    border-radius: 14px; padding: 14px 18px; margin: 16px 0;
+}
+
+/* ===== FAQ ===== */
+.faq-list { display: grid; gap: 12px; }
+.faq-item {
+    background: linear-gradient(163deg, rgba(214, 220, 248, 0.1), rgba(140, 148, 198, 0.06) 55%), rgba(20, 24, 58, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 18px;
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.16), 0 14px 36px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+.faq-q {
+    cursor: pointer; list-style: none;
+    padding: 17px 20px;
+    font-weight: 700; font-size: 1.02rem; color: #fff;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    min-height: 44px;
+}
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::after {
+    content: "+"; flex-shrink: 0;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(139, 141, 255, 0.16); color: var(--accent-bright);
+    font-size: 1.1rem; font-weight: 400;
+    transition: transform 0.25s;
+}
+.faq-item[open] .faq-q::after { transform: rotate(45deg); }
+.faq-a { padding: 0 20px 18px; color: var(--ink-soft); font-size: 0.95rem; }
+
+/* ===== פוטר קטן ===== */
+.foot-2026 {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 50px; padding: 26px 20px calc(26px + env(safe-area-inset-bottom));
+    text-align: center; color: var(--ink-soft); font-size: 0.85rem;
+}
+.foot-2026 a { color: var(--ink-soft); text-decoration: none; margin-inline: 8px; display: inline-block; padding: 4px 0; }
+.foot-2026 a:hover { color: #fff; }

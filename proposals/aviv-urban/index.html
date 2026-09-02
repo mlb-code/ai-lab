@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>הצעת מחיר — אביב אורבן × AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg: #080808;
+    --bg-elev: #0f0f0f;
+    --bg-card: #131313;
+    --line: rgba(255,255,255,0.07);
+    --line-strong: rgba(255,255,255,0.14);
+    --text: #f4f4f4;
+    --text-muted: #8a8a8a;
+    --text-faded: #555;
+    --accent: #10E593;
+    --accent-soft: rgba(16,229,147,0.12);
+    --accent-glow: #c1f0c1;
+    --gold: #E2B93B;
+    --warn: #FF4D4D;
+    --max-w: 1180px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+::selection { background: var(--accent); color: #000; }
+a { color: inherit; text-decoration: none; }
+
+.mono { font-family: 'Space Mono', monospace; letter-spacing: 0.02em; }
+.accent { color: var(--accent); }
+.gold { color: var(--gold); }
+.muted { color: var(--text-muted); }
+
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+@media (max-width: 700px) { .container { padding: 0 20px; } }
+
+.kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+}
+.kicker::before {
+    content: ""; width: 28px; height: 1px;
+    background: var(--accent);
+}
+
+/* === HERO === */
+.hero {
+    position: relative;
+    padding: 80px 0 100px;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-soft) 0%, transparent 60%);
+    pointer-events: none;
+}
+.hero .topline {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 60px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.brand {
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+}
+.brand .lab { color: var(--accent); }
+.meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: left;
+}
+.meta b { color: var(--text); }
+
+.hero h1 {
+    font-size: clamp(2.4rem, 6.5vw, 4.8rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+}
+.hero h1 .stack {
+    display: block;
+    color: var(--accent);
+}
+.hero .lead {
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    color: var(--text-muted);
+    max-width: 720px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+}
+.hero-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+}
+.hero-summary .card {
+    border: 1px solid var(--line);
+    background: var(--bg-elev);
+    padding: 22px;
+    border-radius: 12px;
+}
+.hero-summary .card .num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+.hero-summary .card .title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+.hero-summary .card .desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+@media (max-width: 700px) {
+    .hero-summary { grid-template-columns: 1fr; }
+}
+
+/* === VAT BANNER === */
+.vat-banner {
+    margin-top: 36px;
+    padding: 16px 24px;
+    border: 1px solid var(--accent);
+    background: rgba(16,229,147,0.08);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+.vat-banner .icon {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: #000;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+}
+.vat-banner b { color: var(--accent); }
+
+/* === SECTIONS === */
+.section {
+    padding: 90px 0;
+    border-bottom: 1px solid var(--line);
+}
+.section-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 24px; margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+.section-head h2 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 720px;
+}
+.section-head .num-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-faded);
+    letter-spacing: 0.2em;
+}
+
+/* === MODULE BLOCK === */
+.module {
+    border: 1px solid var(--line);
+    background: var(--bg-elev);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+.module-head {
+    padding: 32px 36px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-elev) 100%);
+    display: flex; gap: 28px; align-items: flex-start;
+    flex-wrap: wrap;
+}
+.module-head .badge {
+    flex-shrink: 0;
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0;
+    border: 1px solid rgba(16,229,147,0.25);
+}
+.module-head .info {
+    flex: 1; min-width: 280px;
+}
+.module-head h3 {
+    font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.015em;
+}
+.module-head .subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+.module-head .price {
+    margin-right: auto;
+    text-align: left;
+    flex-shrink: 0;
+}
+.module-head .price .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-faded);
+    letter-spacing: 0.18em;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+.module-head .price .amount {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+}
+.module-head .price .unit {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.module-body {
+    padding: 32px 36px;
+}
+.module-body h4 {
+    font-size: 0.78rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    margin-top: 28px;
+}
+.module-body h4:first-child { margin-top: 0; }
+
+/* sessions list (training) */
+.sessions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+@media (max-width: 700px) { .sessions { grid-template-columns: 1fr; } }
+.session {
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    padding: 20px 22px;
+    border-radius: 10px;
+}
+.session .num {
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
+}
+.session .title {
+    font-weight: 700;
+    font-size: 1.02rem;
+    margin-bottom: 6px;
+}
+.session .desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+.bullet-list {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+}
+.bullet-list li {
+    padding-right: 24px;
+    position: relative;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.bullet-list li::before {
+    content: "";
+    position: absolute;
+    right: 0; top: 0.7em;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+}
+.bullet-list li b { color: var(--text); font-weight: 600; }
+
+/* tier table for retainer */
+.tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 8px;
+}
+@media (max-width: 900px) { .tiers { grid-template-columns: 1fr; } }
+.tier {
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+}
+.tier.recommended {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, rgba(16,229,147,0.04) 0%, var(--bg-card) 100%);
+}
+.tier.recommended::before {
+    content: "מומלץ";
+    position: absolute;
+    top: -10px; right: 20px;
+    background: var(--accent);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+}
+.tier .tier-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.tier .tier-price {
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+}
+.tier .tier-unit {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+}
+.tier-features {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+.tier-features li {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    padding-right: 22px;
+    position: relative;
+    line-height: 1.5;
+}
+.tier-features li::before {
+    content: "✓";
+    position: absolute;
+    right: 0; top: 0;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* hour banks */
+.hour-banks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 8px;
+}
+@media (max-width: 900px) { .hour-banks { grid-template-columns: 1fr; } }
+.bank {
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 22px;
+    position: relative;
+}
+.bank.recommended {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, rgba(16,229,147,0.04) 0%, var(--bg-card) 100%);
+}
+.bank.recommended::before {
+    content: "פופולרי";
+    position: absolute;
+    top: -10px; right: 20px;
+    background: var(--accent);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+}
+.bank .bank-hours {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+}
+.bank .bank-rate {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+.bank .bank-total {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+}
+.bank .bank-total small {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+}
+
+/* === SUMMARY TABLE === */
+.summary-section {
+    background: var(--bg-elev);
+}
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-card);
+}
+.summary-table th, .summary-table td {
+    padding: 18px 24px;
+    text-align: right;
+    border-bottom: 1px solid var(--line);
+}
+.summary-table th {
+    background: var(--bg-elev);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.summary-table tr:last-child td { border-bottom: none; }
+.summary-table .item-name { font-weight: 700; }
+.summary-table .item-desc { color: var(--text-muted); font-size: 0.88rem; margin-top: 4px; }
+.summary-table .price-cell {
+    text-align: left;
+    font-weight: 800;
+    color: var(--accent);
+    font-size: 1.05rem;
+    white-space: nowrap;
+}
+.summary-table .price-cell small {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 2px;
+}
+@media (max-width: 700px) {
+    .summary-table th:nth-child(2),
+    .summary-table td:nth-child(2) { display: none; }
+    .summary-table th, .summary-table td { padding: 14px 16px; }
+}
+
+/* === TIMELINE === */
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    counter-reset: step;
+}
+@media (max-width: 900px) { .timeline { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .timeline { grid-template-columns: 1fr; } }
+.step {
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 24px;
+    counter-increment: step;
+}
+.step::before {
+    content: "0" counter(step);
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    font-size: 1.4rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 12px;
+}
+.step .step-title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+.step .step-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+/* === WHY === */
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+@media (max-width: 900px) { .why-grid { grid-template-columns: 1fr; } }
+.why-card {
+    border: 1px solid var(--line);
+    background: var(--bg-elev);
+    padding: 28px;
+    border-radius: 12px;
+}
+.why-card .icon {
+    width: 40px; height: 40px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+}
+.why-card h4 {
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+}
+.why-card p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+/* === CTA === */
+.cta {
+    padding: 100px 0;
+    text-align: center;
+    background: var(--bg-elev);
+}
+.cta h2 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    margin-bottom: 20px;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+}
+.cta p {
+    color: var(--text-muted);
+    margin-bottom: 36px;
+    font-size: 1.1rem;
+    max-width: 540px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.cta-buttons {
+    display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap;
+}
+.btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 32px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: transform 0.15s, background 0.15s;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.btn-primary {
+    background: var(--accent);
+    color: #000;
+}
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-ghost {
+    border-color: var(--line-strong);
+    color: var(--text);
+    background: transparent;
+}
+.btn-ghost:hover { background: var(--bg-card); }
+
+/* === FOOTER === */
+footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    color: var(--text-faded);
+    font-size: 0.82rem;
+    text-align: center;
+}
+footer .row {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+}
+footer a { color: var(--text-muted); }
+
+/* small print */
+.notes {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 24px;
+}
+.notes b { color: var(--text); }
+.notes ul { list-style: none; display: grid; gap: 10px; margin-top: 12px; }
+.notes ul li { padding-right: 18px; position: relative; }
+.notes ul li::before {
+    content: "—"; position: absolute; right: 0; color: var(--accent);
+}
+
+/* === MOBILE OPTIMIZATIONS (≤700px) === */
+@media (max-width: 700px) {
+    body { line-height: 1.7; }
+
+    /* Tighter container */
+    .container { padding: 0 18px; }
+
+    /* HERO — better typography & spacing */
+    .hero {
+        padding: 48px 0 64px;
+    }
+    .hero::before {
+        top: -150px; right: -150px;
+        width: 380px; height: 380px;
+    }
+    .hero .topline {
+        margin-bottom: 36px;
+        align-items: flex-start;
+    }
+    .hero h1 {
+        font-size: 2.4rem;
+        line-height: 1.05;
+        margin-bottom: 22px;
+    }
+    .hero .lead {
+        font-size: 1rem;
+        line-height: 1.75;
+        margin-bottom: 32px;
+    }
+    .meta {
+        font-size: 0.7rem;
+        line-height: 1.7;
+    }
+    .brand {
+        font-size: 1.05rem;
+    }
+    .kicker {
+        font-size: 0.65rem;
+        margin-bottom: 20px;
+    }
+    .kicker::before { width: 20px; }
+
+    /* Hero summary cards */
+    .hero-summary {
+        margin-top: 36px;
+        gap: 12px;
+    }
+    .hero-summary .card {
+        padding: 20px 22px;
+    }
+    .hero-summary .card .title {
+        font-size: 1.05rem;
+        margin-bottom: 6px;
+    }
+    .hero-summary .card .desc {
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    /* SECTIONS — tighter padding */
+    .section {
+        padding: 56px 0;
+    }
+    .section-head {
+        margin-bottom: 32px;
+        gap: 12px;
+    }
+    .section-head h2 {
+        font-size: 1.7rem;
+        line-height: 1.15;
+    }
+    .section-head .num-badge { font-size: 0.65rem; }
+
+    /* MODULE — much tighter on mobile */
+    .module-head {
+        padding: 22px 20px;
+        gap: 16px;
+    }
+    .module-head .badge {
+        width: 44px; height: 44px;
+        font-size: 1rem;
+        border-radius: 10px;
+    }
+    .module-head h3 {
+        font-size: 1.3rem;
+        line-height: 1.2;
+        margin-bottom: 6px;
+    }
+    .module-head .subtitle {
+        font-size: 0.94rem;
+        line-height: 1.7;
+    }
+    /* Price card becomes full width on mobile, with top border */
+    .module-head .price {
+        width: 100%;
+        margin-right: 0;
+        text-align: right;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .module-head .price .label {
+        order: 1;
+        margin-bottom: 0;
+    }
+    .module-head .price .amount {
+        order: 2;
+        font-size: 1.4rem;
+    }
+    .module-head .price .unit {
+        order: 3;
+        flex-basis: 100%;
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+
+    .module-body {
+        padding: 24px 20px;
+    }
+    .module-body h4 {
+        font-size: 0.72rem;
+        margin-bottom: 14px;
+        margin-top: 24px;
+    }
+
+    /* Sessions */
+    .sessions { gap: 12px; }
+    .session {
+        padding: 18px 20px;
+    }
+    .session .title {
+        font-size: 1.02rem;
+        margin-bottom: 6px;
+    }
+    .session .desc {
+        font-size: 0.92rem;
+        line-height: 1.7;
+    }
+
+    /* Bullet list — better spacing */
+    .bullet-list { gap: 14px; }
+    .bullet-list li {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        padding-right: 22px;
+    }
+    .bullet-list li::before {
+        top: 0.65em;
+        width: 7px; height: 7px;
+    }
+
+    /* Tiers and banks - tighter */
+    .tier, .bank {
+        padding: 22px 20px;
+    }
+    .tier .tier-price, .bank .bank-hours {
+        font-size: 1.4rem;
+    }
+    .tier-features li {
+        font-size: 0.88rem;
+        line-height: 1.6;
+    }
+
+    /* WHY cards */
+    .why-card { padding: 24px 22px; }
+    .why-card h4 { font-size: 1.02rem; }
+    .why-card p { font-size: 0.92rem; line-height: 1.7; }
+
+    /* Notes — better readability */
+    .notes {
+        font-size: 0.88rem;
+        padding: 20px 22px;
+        line-height: 1.75;
+    }
+
+    /* VAT banner */
+    .vat-banner {
+        padding: 14px 18px;
+        font-size: 0.92rem;
+        line-height: 1.65;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    .vat-banner .icon {
+        width: 26px; height: 26px;
+        font-size: 0.85rem;
+        margin-top: 2px;
+    }
+
+    /* CTA */
+    .cta {
+        padding: 64px 0;
+    }
+    .cta h2 {
+        font-size: 1.9rem;
+        line-height: 1.15;
+    }
+    .cta p {
+        font-size: 1rem;
+    }
+    .btn {
+        padding: 14px 26px;
+        font-size: 0.95rem;
+        width: 100%;
+        justify-content: center;
+    }
+    .cta-buttons { gap: 10px; }
+
+    /* Footer */
+    footer { padding: 32px 0; font-size: 0.78rem; }
+    footer .row { gap: 12px; text-align: center; flex-direction: column; }
+}
+
+/* === EXTRA SMALL (≤380px) === */
+@media (max-width: 380px) {
+    .container { padding: 0 16px; }
+    .hero h1 { font-size: 2.1rem; }
+    .module-head h3 { font-size: 1.2rem; }
+    .section-head h2 { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="topline">
+            <div class="brand">AI <span class="lab">Lab</span></div>
+            <div class="meta">
+                <div>הצעה עבור: <b>אביב אורבן</b></div>
+                <div>הוכן עבור: <b>ארז אביב וארז גקמן</b></div>
+                <div>תאריך: <b>04.05.2026</b></div>
+                <div>תוקף: <b>30 יום</b></div>
+            </div>
+        </div>
+
+        <div class="kicker">Proposal · Aviv Urban × AI Lab</div>
+        <h1>
+            הכשרה, ליווי ואוטומציות
+            <span class="stack">לחברת אביב אורבן.</span>
+        </h1>
+        <p class="lead">
+            הצעה אישית עבור ארז אביב וארז גקמן — שילוב של הכשרה מעשית בקלוד קוד, בנק שעות ייעוץ לפיתוחים שאתם בונים,
+            ואפיון וביצוע של אוטומציות חכמות שמורידות עומס מהצוות. שלוש אפשרויות עצמאיות שאפשר לחבר ביניהן או לקחת כל אחת בנפרד — תשמרו על שליטה מלאה
+            ועצמאות לאורך זמן — אני נשאר חיצוני, מקצועי וזמין.
+        </p>
+
+        <div class="hero-summary">
+            <div class="card">
+                <div class="num">01</div>
+                <div class="title">הכשרת קלוד קוד</div>
+                <div class="desc">4 מפגשים של שעתיים לארז אביב וארז גקמן. מיסודות מחשב ואינטרנט ועד בניית אתר ראשון.</div>
+            </div>
+            <div class="card">
+                <div class="num">02</div>
+                <div class="title">בנק שעות ייעוץ</div>
+                <div class="desc">10 שעות ייעוץ ב-300 ₪/שעה. אפיון, ארכיטקטורה, API ואסטרטגיה.</div>
+            </div>
+            <div class="card">
+                <div class="num">03</div>
+                <div class="title">אפיון וביצוע אוטומציות</div>
+                <div class="desc">חודשי לפי שעות עבודה. שני שירותים נפרדים: אפיון בלבד או הקמה בלבד.</div>
+            </div>
+        </div>
+
+        <div class="vat-banner">
+            <div class="icon">!</div>
+            <div><b>כל המחירים המוצגים בהצעה זו אינם כוללים מע״מ.</b> מע״מ בשיעור 18% יתווסף לכל חיוב.</div>
+        </div>
+    </div>
+</section>
+
+<!-- MODULE 1: TRAINING -->
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2>אפשרות 1 — הכשרה פנימית בקלוד קוד</h2>
+            <span class="num-badge">MODULE / 01</span>
+        </div>
+
+        <div class="module">
+            <div class="module-head">
+                <div class="badge">01</div>
+                <div class="info">
+                    <h3>קלוד קוד — מהיסוד למנהלים</h3>
+                    <div class="subtitle">
+                        4 מפגשים של שעה. המטרה פשוטה — שתעלו לאוויר עם קלוד קוד, תבינו איך הוא "חושב",
+                        ותדעו לתאר נכון את מה שאתם צריכים. בלי עומס טכני, בלי קוד מורכב, רק הלוגיקה
+                        שתהפוך אתכם לעצמאיים.
+                    </div>
+                </div>
+                <div class="price">
+                    <div class="label">חבילה מלאה</div>
+                    <div class="amount">3,000 ₪</div>
+                    <div class="unit">4 מפגשים × שעתיים · ל-2 משתתפים · חד פעמי</div>
+                </div>
+            </div>
+
+            <div class="module-body">
+                <h4>שלב מקדים — בדיקת תאימות</h4>
+                <ul class="bullet-list">
+                    <li><b>סקירה קצרה של המחשבים שלכם</b> לפני המפגש הראשון — לוודא שיש מערכת הפעלה מתאימה, מקום פנוי, וכל מה שצריך כדי שקלוד קוד ירוץ חלק</li>
+                    <li><b>הכנת רשימת כלים</b> שיותקנו במפגש הראשון, כך שלא נבזבז זמן יקר על תקלות טכניות במהלך השיעור</li>
+                    <li><b>פתיחת איזור אישי</b> בו ירוכזו כל חומרי הקורס, פרומפטים, ודוגמאות לפי משתתף</li>
+                </ul>
+
+                <h4 style="margin-top: 36px;">תכנית המפגשים — אפשר לרכוש כל מפגש בנפרד</h4>
+                <div class="sessions">
+                    <div class="session">
+                        <div class="num">SESSION 01 · 2H · 750 ₪</div>
+                        <div class="title">יסודות מחשב ואינטרנט + התקנה</div>
+                        <div class="desc">מושגים בסיסיים שכדאי להכיר לפני שצוללים: מהי כתובת URL, מה זה דומיין, איך עובד האינטרנט, מהו שרת. אחר כך — התקנת קלוד קוד, הגדרות, והפעלה ראשונה משותפת.</div>
+                    </div>
+                    <div class="session">
+                        <div class="num">SESSION 02 · 2H · 750 ₪</div>
+                        <div class="title">איך קלוד קוד "חושב" ואיך לתאר בקשות</div>
+                        <div class="desc">הלוגיקה שמאחורי הכלי — מה הוא רואה, מה לא, איך הוא מחליט ומתי הוא טועה. ובהמשך: איך החשיבה והניסוח שלכם משפיעים ישירות על התוצאה. תרגולים ותבניות מוכנות.</div>
+                    </div>
+                    <div class="session">
+                        <div class="num">SESSION 03 · 2H · 750 ₪</div>
+                        <div class="title">פרויקט דמו ראשון — בונים אתר</div>
+                        <div class="desc">לוקחים את כל מה שלמדנו ובונים יחד פרויקט אמיתי באמצעות קלוד — אתר אינטרנט מלא. מהרעיון ועד תוצאה רצה. תרגיל מעשי שמראה לכם בדיוק מה אפשר לעשות עם הכלי.</div>
+                    </div>
+                    <div class="session">
+                        <div class="num">SESSION 04 · 2H · 750 ₪</div>
+                        <div class="title">שילוב בעבודה היומיומית</div>
+                        <div class="desc">מה זה Skill ואיך משתמשים בכישורים מותאמים. איך עובדים תוספים באקסל ובוורד עם AI. דוגמאות מעולם הנדל״ן וההתחדשות העירונית, ומפת דרכים אישית להמשך עצמאי.</div>
+                    </div>
+                </div>
+
+                <h4>מה כלול בחבילה</h4>
+                <ul class="bullet-list">
+                    <li><b>4 מפגשים</b> בני שעתיים, אונליין (Zoom/Meet) או פרונטלי במשרד שלכם — לבחירתכם</li>
+                    <li><b>שלב מקדים</b> של בדיקת תאימות מחשבים והכנה לפני שמתחילים</li>
+                    <li><b>איזור אישי</b> ייעודי לארז אביב וארז גקמן — כל החומרים, הפרומפטים, הדוגמאות והקבצים מהמפגשים במקום אחד</li>
+                    <li><b>תמיכה בוואטסאפ</b> במשך 30 יום מסיום הקורס — לשאלות בזמן היישום</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MODULE 2: MENTORING -->
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2>אפשרות 2 — ליווי אישי בבנק שעות (ייעוץ בלבד)</h2>
+            <span class="num-badge">MODULE / 02</span>
+        </div>
+
+        <div class="module">
+            <div class="module-head">
+                <div class="badge">02</div>
+                <div class="info">
+                    <h3>בנק שעות ייעוץ — 10 שעות</h3>
+                    <div class="subtitle">
+                        ליווי צמוד אחרי ההכשרה — אפיון, ארכיטקטורה, ייעוץ ב-API, ליווי בקלוד קוד,
+                        אסטרטגיה עסקית עם AI ותמיכה תפעולית שוטפת. בנק קבוע של 10 שעות בתעריף אטרקטיבי,
+                        עם הנחות מדורגות לבנקים נוספים באותו החודש.
+                    </div>
+                </div>
+                <div class="price">
+                    <div class="label">תעריף קבוע</div>
+                    <div class="amount">300 ₪</div>
+                    <div class="unit">לשעה · בנק = 3,000 ₪</div>
+                </div>
+            </div>
+
+            <div class="module-body">
+                <h4>הבנק שלכם — מדרגות הנחה</h4>
+                <div class="hour-banks">
+                    <div class="bank recommended">
+                        <div class="bank-hours">10 שעות ייעוץ</div>
+                        <div class="bank-rate">300 ₪ לשעה · תעריף קבוע</div>
+                        <div class="bank-total">
+                            3,000 ₪
+                            <small>תוקף 60 יום מרכישה</small>
+                        </div>
+                    </div>
+                    <div class="bank">
+                        <div class="bank-hours">+10 שעות נוספות</div>
+                        <div class="bank-rate">270 ₪ לשעה · 10% הנחה</div>
+                        <div class="bank-total">
+                            2,700 ₪
+                            <small>בנק שני באותו חודש (10-20 שעות סה״כ)</small>
+                        </div>
+                    </div>
+                    <div class="bank">
+                        <div class="bank-hours">+10 שעות נוספות</div>
+                        <div class="bank-rate">255 ₪ לשעה · 15% הנחה</div>
+                        <div class="bank-total">
+                            2,550 ₪
+                            <small>מעל 20 שעות סה״כ באותו חודש (וכן הלאה)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>על מה אפשר להשתמש בבנק</h4>
+                <ul class="bullet-list">
+                    <li><b>אפיון</b> — של בוטים, אוטומציות ופיתוחים שאתם רוצים להוציא לדרך</li>
+                    <li><b>ליווי בקלוד קוד</b> — סיוע בזמן אמת בפיתוחים שאתם בונים בעצמכם</li>
+                    <li><b>ייעוץ ארכיטקטורה</b> — איך לבנות את הפתרון נכון מההתחלה, מה לבחור ולמה</li>
+                    <li><b>ייעוץ לחיבורי API</b> — חיבור בין מערכות, אינטגרציות, בחירת ספקים</li>
+                    <li><b>אסטרטגיה עסקית עם AI</b> — מה כדאי להכניס לחברה, מה לא, סדר עדיפויות</li>
+                    <li><b>תמיכה תפעולית שוטפת</b> — שאלות שצצות בעבודה היומיומית, ייעוץ מהיר בוואטסאפ</li>
+                </ul>
+
+                <div class="notes">
+                    <b>איך זה עובד בפועל:</b>
+                    <ul>
+                        <li>השעות נמדדות בפועל (מינימום 30 דקות לסשן)</li>
+                        <li>זמן תגובה: עד 24 שעות בימי עבודה לפניות חדשות</li>
+                        <li>תוקף: 60 יום מרכישה. שעות שלא נוצלו לא חוזרות</li>
+                        <li>הנחות הן מדורגות לפי כמות שעות באותו חודש קלנדרי: עד 10 שעות תעריף מלא, 10-20 שעות 10% הנחה, מעל 20 שעות 15% הנחה</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MODULE 3: AUTOMATION RETAINER -->
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2>אפשרות 3 — אפיון וביצוע אוטומציות (ייעוץ + עבודה בפועל)</h2>
+            <span class="num-badge">MODULE / 03</span>
+        </div>
+
+        <div class="module">
+            <div class="module-head">
+                <div class="badge">03</div>
+                <div class="info">
+                    <h3>אפיון וביצוע אוטומציות — לפי שעות עבודה</h3>
+                    <div class="subtitle">
+                        העבודה כולה נעשית על ידי, באופן אישי. שני שירותים נפרדים שאפשר לרכוש לבד או יחד —
+                        <b>אפיון בלבד</b> או <b>הקמה בלבד</b>. תעריף אחיד לפי שעות עבודה, ללא התחייבות
+                        לכמות אוטומציות (זה תלוי ברמת המורכבות של מה שתבחרו).
+                    </div>
+                </div>
+                <div class="price">
+                    <div class="label">חבילה חודשית</div>
+                    <div class="amount">10,000 ₪</div>
+                    <div class="unit">20 שעות בחודש · 500 ₪ לשעה</div>
+                </div>
+            </div>
+
+            <div class="module-body">
+                <h4>שני השירותים — בוחרים מה שצריך</h4>
+                <div class="tiers" style="grid-template-columns: 1fr 1fr;">
+                    <div class="tier">
+                        <div class="tier-name">Service A</div>
+                        <div class="tier-price">אפיון בלבד</div>
+                        <div class="tier-unit">500 ₪ לשעה · עבודה אנליטית מקדימה</div>
+                        <ul class="tier-features">
+                            <li>מיפוי התהליך הקיים אצלכם</li>
+                            <li>הגדרת הצורך והיעדים</li>
+                            <li>בחירת הטכנולוגיה והכלים</li>
+                            <li>מסמך אפיון מלא ו-flow מפורט</li>
+                            <li>הערכת שעות לביצוע</li>
+                            <li>אתם יכולים לבצע את ההקמה לבד או דרכי</li>
+                        </ul>
+                    </div>
+                    <div class="tier">
+                        <div class="tier-name">Service B</div>
+                        <div class="tier-price">הקמה בלבד</div>
+                        <div class="tier-unit">500 ₪ לשעה · ביצוע על בסיס אפיון מוכן</div>
+                        <ul class="tier-features">
+                            <li>בנייה בפועל של האוטומציה / הבוט</li>
+                            <li>חיבור API ואינטגרציות</li>
+                            <li>בדיקות ועליה לאוויר</li>
+                            <li>תיעוד ומסירה</li>
+                            <li>תחזוקה במסגרת השעות החודשיות</li>
+                            <li>נדרש אפיון מוכן (שלי או שלכם)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 36px;">המודל החודשי</h4>
+                <ul class="bullet-list">
+                    <li><b>10,000 ₪ לחודש = 20 שעות עבודה</b> — אפיון, הקמה, או שילוב של השניים, לפי הצורך שלכם בכל חודש</li>
+                    <li><b>גמישות מלאה</b> — אפשר חודש אחד עם 100% אפיון ובחודש הבא 100% הקמה</li>
+                    <li><b>ללא התחייבות לכמות אוטומציות</b> — אוטומציה פשוטה יכולה לקחת 5 שעות, מורכבת 30+. אנחנו עובדים לפי השעות, לא לפי "כמה דברים סיימנו"</li>
+                    <li><b>שקיפות מלאה</b> — דוח חודשי על מה נעשה, באילו שעות, ומה התוצרים</li>
+                    <li><b>ניתן לעצור</b> בהתראה של 7 ימים — תשלום יחסי בלבד על השעות שבוצעו בפועל, ללא קנס</li>
+                </ul>
+
+                <h4 style="margin-top: 36px;">דוגמאות לאוטומציות שמתאימות לחברה כמו אביב אורבן</h4>
+                <ul class="bullet-list">
+                    <li><b>בוט וואטסאפ לדיירים</b> — מענה אוטומטי לשאלות נפוצות בפרויקט, עדכוני התקדמות, תיאום פגישות</li>
+                    <li><b>ניתוח אוטומטי של חוזים והסכמים</b> — סיכום, השוואה, איתור סיכונים</li>
+                    <li><b>מיון פניות נכנסות</b> — סינון לידים, סיווג אוטומטי, ניתוב לאיש המתאים</li>
+                    <li><b>דוחות פרויקט אוטומטיים</b> — שליפה ממקורות שונים, סיכום והפצה</li>
+                    <li><b>הכנה אוטומטית של מצגות</b> ומסמכי שיווק לפרויקטים</li>
+                    <li><b>סקיל לניהול שאלוני מכרז</b> — מילוי אוטומטי של שאלוני מכרזים על בסיס מאגר תשובות קודמות, התאמה לדרישות ספציפיות וניהול גרסאות</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY US -->
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2>למה לעבוד איתנו</h2>
+            <span class="num-badge">WHY</span>
+        </div>
+
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="icon">◆</div>
+                <h4>איש אחד, אחריות מלאה</h4>
+                <p>כל העבודה נעשית על ידי, באופן אישי. אין החלפות, אין צוות עובדים שמתחלף — אתם יודעים מי בונה, מי מלווה ומי אחראי.</p>
+            </div>
+            <div class="why-card">
+                <div class="icon">⚡</div>
+                <h4>אתם נשארים עם השליטה</h4>
+                <p>אין נעילה על ספק. כל קוד, כל אוטומציה — שייך לכם. מסמכים, תיעוד, גישות מלאות. אם תרצו ביום מן הימים להעביר לצוות פנימי שלכם, אקל עליכם.</p>
+            </div>
+            <div class="why-card">
+                <div class="icon">⌬</div>
+                <h4>גמישות אמיתית</h4>
+                <p>אפשר לעצור את החבילה החודשית בכל עת בהתראה של 7 ימים — והתשלום יהיה יחסי בלבד, על השעות שבוצעו בפועל. אפשר לרכוש מפגש קורס בודד, או רק בנק שעות. בלי חוזים ארוכים, בלי קנסות.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="container">
+        <div class="vat-banner" style="max-width: 720px; margin: 0 auto 36px; justify-content: center; text-align: right;">
+            <div class="icon">!</div>
+            <div><b>כל המחירים המוצגים בהצעה זו אינם כוללים מע״מ.</b> מע״מ בשיעור 18% יתווסף לכל חיוב.</div>
+        </div>
+        <h2>מוכנים להתחיל?</h2>
+        <p>נסגור פגישת היכרות של 30 דקות, נחדד יחד את ההצעה ונצא לדרך.</p>
+        <div class="cta-buttons">
+            <a href="mailto:laviemb@gmail.com?subject=אביב אורבן × AI Lab — אישור הצעה" class="btn btn-primary">← לאישור ההצעה</a>
+            <a href="https://wa.me/972000000000" class="btn btn-ghost">לתיאום שיחה</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div>AI Lab · ai-lab.co.il · laviemb@gmail.com</div>
+            <div>הצעה זו חסויה — מיועדת לעיני נציגי אביב אורבן בלבד</div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

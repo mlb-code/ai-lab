@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>קורס אוטומציות לעסק — AI Lab Business</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <a href="/business/portal/" class="brand">
+            <span>AI Lab</span>
+            <span class="biz">BUSINESS</span>
+        </a>
+        <div class="topbar-nav">
+            <a href="/business/portal/">→ לוח קורסים</a>
+            <div class="topbar-user" id="topbarUser"></div>
+        </div>
+    </header>
+
+    <main class="course-page">
+        <div class="course-hero">
+            <div class="kicker">קורס 02 / אוטומציות לעסק</div>
+            <h1>תהליכים שרצים <em>לבד</em>.<br>בלי שתשימו לב.</h1>
+            <p class="lead">
+                3 מפגשים, ושלושה תהליכים אוטומטיים שעובדים עליכם 24/7 — ליד נכנס וזורם לכל המקומות הנכונים, חשבונית נשלחת לבד, דוחות נבנים מעצמם.
+            </p>
+        </div>
+
+        <div class="session-toc">
+            <a href="#session-1" class="toc-link"><span class="toc-num">01</span><span>יסודות אוטומציה + Make.com</span></a>
+            <a href="#session-2" class="toc-link"><span class="toc-num">02</span><span>אוטומציות מכירה ושיווק</span></a>
+            <a href="#session-3" class="toc-link"><span class="toc-num">03</span><span>אוטומציות פנימיות + AI</span></a>
+        </div>
+
+        <!-- SESSION 01 -->
+        <section id="session-1" class="session">
+            <div class="session-head">
+                <div class="id">
+                    <span class="num">01</span>
+                    SESSION
+                    <div class="meta">90 MIN</div>
+                </div>
+                <div>
+                    <h2>יסודות אוטומציה + Make.com</h2>
+                    <p class="summary">
+                        מה זה אוטומציה, מה זה webhook, ומה זה API — כל זה ב-30 דקות בלי כאב ראש. אחר כך בונים אוטומציה ראשונה: טופס באתר → מייל ב-Gmail.
+                    </p>
+                </div>
+            </div>
+
+            <div class="session-body">
+
+                <div>
+                    <h3>1. מה זה אוטומציה — באמת</h3>
+                    <p>
+                        אוטומציה זה <strong>תהליך שקורה לבד אחרי שמשהו מפעיל אותו</strong>. במציאות זה: ליד נכנס → מייל יוצא. תשלום בוצע → חשבונית נשלחת. קליק על מודעה → רשומה בגוגל שיט.
+                    </p>
+                    <p>
+                        כל אוטומציה בנויה מ-2 דברים:
+                    </p>
+                    <ul>
+                        <li><strong>Trigger</strong> — מה גורם לתהליך להתחיל (טופס נשלח, מייל מתקבל, וכו')</li>
+                        <li><strong>Actions</strong> — מה קורה אחרי (שליחת מייל, רישום בטבלה, פתיחת משימה)</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>2. הכלים — מה לבחור</h3>
+                    <p>שלושה שחקנים עיקריים בשוק ה-no-code automation:</p>
+                    <div class="session-block">
+                        <div class="block-label">Make.com (לשעבר Integromat)</div>
+                        <p>
+                            הכי גמיש, הכי חזק. תוכניות חינמיות עם 1,000 פעולות בחודש. <strong>בחירה ראשונה לקורס.</strong> ויזואלי, נחמד לעין, יודע לחבר כמעט הכל.
+                        </p>
+                    </div>
+                    <div class="session-block">
+                        <div class="block-label">Zapier</div>
+                        <p>
+                            הכי ידידותי, הכי מוכר. גרסה חינמית מאוד מוגבלת (100 פעולות בלבד), משם זה משתלם פחות מ-Make. <em>טוב לאוטומציות פשוטות מאוד.</em>
+                        </p>
+                    </div>
+                    <div class="session-block">
+                        <div class="block-label">n8n</div>
+                        <p>
+                            הכי טכני. אופן-סורס, אפשר להריץ על שרת משלכם בחינם לחלוטין. <strong>הכלי לאוטומציות חזקות במיוחד</strong> — נדבר עליו במפגש 3.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>3. רישום ל-Make.com</h3>
+                    <ol>
+                        <li>נכנסים ל-<strong>make.com</strong></li>
+                        <li>Sign up Free עם Gmail (אפס חיכוך)</li>
+                        <li>הממשק: <strong>Scenarios</strong> = אוטומציות, <strong>Connections</strong> = שירותים שחיברתם</li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3>4. האוטומציה הראשונה — טופס → מייל</h3>
+                    <p>אנחנו ניקח את הטופס מהאתר שבניתם (Web3Forms שלמדנו בקורס 1) ונעשה משהו חכם איתו: כל פנייה תיכנס לגוגל שיט עם תאריך + שעה.</p>
+                    <ol>
+                        <li><strong>Trigger</strong>: Webhook (Make ייתן לכם URL)</li>
+                        <li><strong>Action 1</strong>: Google Sheets → Add a Row</li>
+                        <li><strong>Action 2</strong>: Gmail → Send Email (התראה לעצמכם)</li>
+                        <li><strong>Action 3</strong>: WhatsApp דרך Twilio (התראה למובייל!)</li>
+                    </ol>
+                    <p>נחבר את הטופס מהאתר ל-Webhook הזה — וכל פנייה תופיע גם בגוגל שיט וגם תקפיץ לכם הודעה.</p>
+                </div>
+
+                <div>
+                    <h3>5. בדיקה בחיים אמיתיים</h3>
+                    <p>
+                        ממלאים את הטופס באתר שלכם. תוך 5 שניות:
+                    </p>
+                    <ul>
+                        <li>✓ שורה חדשה בגוגל שיט עם הפרטים</li>
+                        <li>✓ מייל בתיבה שלכם</li>
+                        <li>✓ הודעת WhatsApp במובייל</li>
+                    </ul>
+                </div>
+
+                <div class="callout">
+                    <span class="callout-label">💡 רגע השיא</span>
+                    <p>זה הרגע שבו רוב התלמידים אומרים "וואו, זהו? זה כל הסיפור?". כן. זה כל הסיפור. עכשיו דמיינו מה אפשר לעשות עם זה.</p>
+                </div>
+
+                <div class="deliverable">
+                    <div class="check">✓</div>
+                    <div>
+                        <span class="label">תוצר המפגש</span>
+                        <strong>אוטומציה ראשונה: טופס → גוגל שיט + מייל + WhatsApp</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SESSION 02 -->
+        <section id="session-2" class="session">
+            <div class="session-head">
+                <div class="id">
+                    <span class="num">02</span>
+                    SESSION
+                    <div class="meta">90 MIN</div>
+                </div>
+                <div>
+                    <h2>אוטומציות מכירה ושיווק</h2>
+                    <p class="summary">
+                        בונים pipeline מכירה אוטומטי — מהרגע שליד נכנס ועד שהוא לקוח משלם. כולל מיילים אוטומטיים, תזכורות, ולוגים מסודרים.
+                    </p>
+                </div>
+            </div>
+
+            <div class="session-body">
+
+                <div>
+                    <h3>1. ה-Pipeline שאנחנו בונים</h3>
+                    <p>
+                        ליד מילא טופס באתר. מה הוא חווה אחר כך?
+                    </p>
+                    <ol>
+                        <li><strong>תוך 30 שניות</strong> — מקבל מייל ברוכים הבאים מותאם אישית</li>
+                        <li><strong>תוך 5 דקות</strong> — נכנס לגוגל שיט (ה-CRM שלכם)</li>
+                        <li><strong>אחרי 24 שעות</strong> — מקבל תזכורת אם לא ענה</li>
+                        <li><strong>אחרי 3 ימים</strong> — מקבל מייל "case study" של לקוח דומה</li>
+                        <li><strong>אחרי 7 ימים</strong> — אם עדיין לא ענה, מועבר ל"לידים קרים"</li>
+                    </ol>
+                    <p>הכל אוטומטי. אתם רק מסתכלים על הגוגל שיט בבוקר ורואים מי חם.</p>
+                </div>
+
+                <div>
+                    <h3>2. כתיבת מיילים מותאמים אישית עם AI</h3>
+                    <p>
+                        במקום לשלוח את אותו מייל לכולם — אנחנו ניתן ל-Claude לכתוב מייל מותאם אישית לכל ליד, על בסיס המידע שהוא נתן בטופס.
+                    </p>
+                    <div class="session-block">
+                        <div class="block-label">המבנה ב-Make</div>
+                        <p>Trigger (Form) → HTTP Module → קריאה ל-Claude API עם פרטי הליד → קבלת המייל → שליחה ב-Gmail</p>
+                    </div>
+                    <p>תוצאה: כל ליד מקבל מייל שנראה כאילו אתם כתבתם אותו אישית. <strong>הם לא יודעים שזה אוטומטי</strong>.</p>
+                </div>
+
+                <div>
+                    <h3>3. תזכורות חכמות</h3>
+                    <p>
+                        ב-Make יש מודול בשם <strong>Scheduler</strong> — רץ פעם ביום על הגוגל שיט שלכם, בודק לידים שלא נענו, ושולח תזכורת אוטומטית.
+                    </p>
+                    <p>הכלי הזה לבד יכול להעלות לכם את אחוז ההמרה ב-30%, רק בגלל שאתם לא שוכחים אף ליד.</p>
+                </div>
+
+                <div>
+                    <h3>4. שילוב עם CRM אמיתי (אופציונלי)</h3>
+                    <p>
+                        אם יש לכם CRM אמיתי (HubSpot, Pipedrive, monday.com) — Make מתחבר לכל אחד מהם. אנחנו נראה איך לחבר ל-monday כדוגמה — כי זה הכי נפוץ בישראל.
+                    </p>
+                </div>
+
+                <div>
+                    <h3>5. דוח שבועי אוטומטי</h3>
+                    <p>
+                        כל יום ראשון בבוקר — מייל אליכם עם הסטטיסטיקות של השבוע: כמה לידים נכנסו, אחוז המרה, מקור הליד הכי חזק. הכל אוטומטי, ב-Make.
+                    </p>
+                </div>
+
+                <div class="deliverable">
+                    <div class="check">✓</div>
+                    <div>
+                        <span class="label">תוצר המפגש</span>
+                        <strong>Pipeline מכירה אוטומטי מקצה לקצה — מליד עד לקוח</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SESSION 03 -->
+        <section id="session-3" class="session">
+            <div class="session-head">
+                <div class="id">
+                    <span class="num">03</span>
+                    SESSION
+                    <div class="meta">90 MIN</div>
+                </div>
+                <div>
+                    <h2>אוטומציות פנימיות + AI</h2>
+                    <p class="summary">
+                        אוטומציות שחוסכות זמן בעבודה היומיומית — חשבוניות אוטומטיות, סיכום פגישות, תיוג מיילים, וכלי AI שעוטף הכל.
+                    </p>
+                </div>
+            </div>
+
+            <div class="session-body">
+
+                <div>
+                    <h3>1. חשבונית אוטומטית מטופס</h3>
+                    <p>
+                        תשלום בוצע → חשבונית נשלחת. בלי שתעשו כלום.
+                    </p>
+                    <p>
+                        אינטגרציה: <strong>Stripe / PayPal / Lemon Squeezy</strong> → Make → <strong>iCount / Hashavshevet / Greeninvoice</strong> → אוטומטית מייל ללקוח עם החשבונית.
+                    </p>
+                    <p>אם אתם עוסקים מורשים בישראל — Greeninvoice יש לו API מצוין שעובד מצוין עם Make.</p>
+                </div>
+
+                <div>
+                    <h3>2. תיוג מיילים אוטומטי עם AI</h3>
+                    <p>
+                        כל מייל שנכנס ל-Gmail עובר דרך Claude:
+                    </p>
+                    <ul>
+                        <li>"זה ליד חם"</li>
+                        <li>"זו תלונה"</li>
+                        <li>"זה מייל פנימי, ניתן להתעלם"</li>
+                        <li>"זו פניית תמיכה"</li>
+                    </ul>
+                    <p>בהתאם לתיוג — Make מצמיד תווית בגוגל, מעביר לתיקייה, או שולח התראה במקום שמתאים.</p>
+                </div>
+
+                <div>
+                    <h3>3. סיכום פגישות זום אוטומטי</h3>
+                    <p>
+                        זום מקליט פגישה → Make לוקח את ההקלטה → שולח ל-Whisper של OpenAI לתמלול → שולח ל-Claude לסיכום → הסיכום נכנס לגוגל שיט.
+                    </p>
+                    <p>תוך 10 דקות אחרי הפגישה — יש לכם סיכום מסודר של מה שדובר, מה שהוחלט, ומה לעשות הלאה.</p>
+                </div>
+
+                <div>
+                    <h3>4. n8n — אוטומציות מתקדמות בחינם</h3>
+                    <p>
+                        אם אתם מתחילים להגיע לתקרת ה-1,000 פעולות של Make בחודש — n8n זו האלטרנטיבה. <strong>אופן-סורס, אפשר להריץ על שרת משלכם בחינם לחלוטין</strong>.
+                    </p>
+                    <p>במפגש נראה איך מקימים n8n על Railway (5$ לחודש לשרת אישי) ומעבירים אליו את האוטומציות המסיביות.</p>
+                </div>
+
+                <div>
+                    <h3>5. עיצוב אוטומציה לעסק שלכם</h3>
+                    <p>
+                        החלק החשוב ביותר. <strong>כל תלמיד יזהה ב-3 דקות 3 תהליכים יומיומיים שלוקחים לו זמן</strong> — ואנחנו נבנה אחד מהם יחד.
+                    </p>
+                    <p>הקוד והרעיון יישארו אצלכם. תוכלו להעתיק את ה-2 הנותרים בעצמכם.</p>
+                </div>
+
+                <div class="callout">
+                    <span class="callout-label">💎 איפה אתם נמצאים בסוף הקורס?</span>
+                    <p>
+                        יש לכם <strong>3-5 אוטומציות שרצות בעסק שלכם</strong>. אם הן חוסכות לכם 5 שעות בשבוע (זה הממוצע) — זה <strong>20 שעות בחודש</strong>. שעת עבודה של בעל עסק = 100-300₪. עשו חשבון.
+                    </p>
+                </div>
+
+                <div class="deliverable">
+                    <div class="check">✓</div>
+                    <div>
+                        <span class="label">תוצר הקורס</span>
+                        <strong>3-5 אוטומציות פעילות בעסק + ידע לבנות עוד 50 בעצמכם</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="session-nav">
+                <a href="/business/portal/">→ חזרה ללוח הקורסים</a>
+                <a href="assistant.html">קורס הבא: עוזר אישי AI ←</a>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="portal.js"></script>
+    <script>
+        const auth = requireAuth();
+        if (auth) {
+            if (!hasCourseAccess(auth, 'automation')) {
+                document.body.innerHTML = '<div style="padding:80px 32px; text-align:center;"><h1>אין לכם הרשאה לקורס זה</h1><p style="margin-top:16px; color:var(--text-muted);">לרכישת הקורס — <a href="/business/" style="color:var(--accent);">כאן</a></p></div>';
+            } else {
+                renderUserWidget(auth);
+            }
+        }
+    </script>
+</body>
+</html>

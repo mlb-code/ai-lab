@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>אזור אישי — AI Lab Business</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="login-gate">
+        <div class="login-card">
+            <div class="kicker">AI Lab Business / אזור אישי</div>
+            <h1>היי <span class="accent">ובברוכים הבאים.</span></h1>
+            <p class="lead">
+                הזינו את מספר הטלפון שאיתו נרשמתם — נכניס אתכם לקורסים שלכם.
+            </p>
+            <div class="login-form">
+                <label class="form-label" for="phoneInput">מספר טלפון</label>
+                <input type="tel" class="form-input" id="phoneInput" placeholder="050-000-0000" maxlength="13" autocomplete="tel">
+                <div class="form-error" id="loginError"></div>
+                <button class="btn btn-primary" id="loginBtn" onclick="handleLogin()" style="width:100%; justify-content:center; margin-top:14px;">
+                    <span>כניסה</span><span class="arrow">←</span>
+                </button>
+            </div>
+
+            <div id="passwordStep" style="display:none; margin-top: 24px;">
+                <label class="form-label" for="passwordInput">סיסמה</label>
+                <input type="password" class="form-input" id="passwordInput" placeholder="—" autocomplete="current-password">
+                <button class="btn btn-primary" onclick="handlePasswordSubmit()" style="width:100%; justify-content:center; margin-top:14px;">
+                    <span>אישור</span><span class="arrow">←</span>
+                </button>
+                <a href="#" onclick="event.preventDefault(); resetLogin();" style="display:inline-block; margin-top:14px; color:var(--text-muted); font-size:0.85rem;">← חזרה</a>
+            </div>
+
+            <div style="margin-top: 24px; padding: 14px 16px; border-radius: 2px; background: rgba(16,229,147,0.06); border: 1px solid rgba(16,229,147,0.2); font-size: 0.82rem; color: var(--text-muted);">
+                <span style="color: var(--accent); font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em;">DEMO</span><br>
+                להתחברות כאדמין: <strong style="color: var(--text); font-family: 'Space Mono', monospace;">0546500795</strong><br>
+                להתחברות כתלמיד דמו: <strong style="color: var(--text); font-family: 'Space Mono', monospace;">0500000001</strong>
+            </div>
+
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--text-faded);">
+                עוד לא רשומים? <a href="/business/" style="color:var(--accent); border-bottom:1px solid var(--accent);">הצטרפו לאחד הקורסים</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD (shown after login) -->
+    <div id="dashboardScreen" style="display:none;">
+        <header class="topbar">
+            <a href="/business/portal/" class="brand">
+                <span>AI Lab</span>
+                <span class="biz">BUSINESS</span>
+            </a>
+            <div class="topbar-nav">
+                <a href="/business/" target="_blank">לדף הראשי</a>
+                <div class="topbar-user" id="topbarUser"></div>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <div class="dashboard-header">
+                <div class="kicker">לוח הקורסים שלכם</div>
+                <h1 class="display">שלום, <em id="userGreeting">משתמש</em>.</h1>
+                <p class="lead" style="margin-top: 16px;">
+                    כל הקורסים שלכם במקום אחד. לחיצה על קורס תפתח את החומרים, השיעורים, וההקלטות.
+                </p>
+            </div>
+
+            <div class="course-grid" id="courseGrid">
+                <!-- Cards rendered by JS -->
+            </div>
+        </main>
+    </div>
+
+    <script src="portal.js"></script>
+    <script>
+        const COURSES = [
+            {
+                slug: 'websites',
+                num: '01',
+                title: 'בניית אתרים',
+                desc: 'מ-0 לאתר עסקי חי באוויר. Claude Code, HTML/CSS, Deploy, דומיין משלכם.',
+                sessions: 3,
+                href: 'websites.html'
+            },
+            {
+                slug: 'automation',
+                num: '02',
+                title: 'אוטומציות לעסק',
+                desc: 'תהליכים שרצים לבד מאחורי הקלעים. Make, n8n, Zapier, חיבורים חכמים.',
+                sessions: 3,
+                href: 'automation.html'
+            },
+            {
+                slug: 'assistant',
+                num: '03',
+                title: 'עוזר אישי AI',
+                desc: 'סוכן AI אישי שמנהל לכם את היום. Claude + MCP + Notion + Google Workspace.',
+                sessions: 3,
+                href: 'assistant.html'
+            },
+            {
+                slug: 'content',
+                num: '04',
+                title: 'יצירת תוכן עם AI',
+                desc: 'תוכן בקצב ובאיכות שלא חשבתם שאפשרי. ChatGPT, Claude, Midjourney, Sora.',
+                sessions: 0,
+                href: '#',
+                comingSoon: true
+            }
+        ];
+
+        var pendingAuth = null;
+
+        async function handleLogin() {
+            const phone = document.getElementById('phoneInput').value.trim();
+            const btn = document.getElementById('loginBtn');
+            const err = document.getElementById('loginError');
+            err.textContent = '';
+            if (!phone) { err.textContent = 'הכניסו מספר טלפון'; return; }
+            btn.disabled = true;
+            btn.querySelector('span').textContent = 'בודק...';
+
+            const result = await checkPhoneInSheet(phone);
+
+            if (!result.valid) {
+                btn.disabled = false;
+                btn.querySelector('span').textContent = 'כניסה';
+                if (result.reason === 'not_found') err.textContent = 'מספר הטלפון לא נמצא במערכת';
+                else if (result.reason === 'expired') err.textContent = 'ההרשאה שלך פגה. פנו אלינו';
+                else if (result.reason === 'invalid') err.textContent = 'מספר טלפון לא תקין';
+                else err.textContent = 'שגיאה בבדיקה. נסו שוב';
+                return;
+            }
+
+            if (result.password) {
+                pendingAuth = { phone: normalizePhone(phone), result };
+                document.getElementById('phoneInput').parentElement.querySelector('label').style.display = 'none';
+                document.getElementById('phoneInput').style.display = 'none';
+                btn.style.display = 'none';
+                document.getElementById('passwordStep').style.display = '';
+                err.textContent = '';
+                setTimeout(() => document.getElementById('passwordInput').focus(), 50);
+                return;
+            }
+
+            completeLogin(normalizePhone(phone), result);
+        }
+
+        function handlePasswordSubmit() {
+            const entered = document.getElementById('passwordInput').value;
+            const err = document.getElementById('loginError');
+            if (!entered) { err.textContent = 'הזינו סיסמה'; return; }
+            if (!pendingAuth || entered !== pendingAuth.result.password) {
+                err.textContent = 'סיסמה שגויה';
+                document.getElementById('passwordInput').value = '';
+                return;
+            }
+            completeLogin(pendingAuth.phone, pendingAuth.result);
+            pendingAuth = null;
+        }
+
+        function resetLogin() {
+            document.getElementById('passwordStep').style.display = 'none';
+            document.getElementById('phoneInput').parentElement.querySelector('label').style.display = '';
+            document.getElementById('phoneInput').style.display = '';
+            document.getElementById('phoneInput').value = '';
+            document.getElementById('passwordInput').value = '';
+            const btn = document.getElementById('loginBtn');
+            btn.style.display = '';
+            btn.disabled = false;
+            btn.querySelector('span').textContent = 'כניסה';
+            document.getElementById('loginError').textContent = '';
+            pendingAuth = null;
+        }
+
+        function completeLogin(phone, data) {
+            saveAuth(phone, data);
+            showDashboard(data);
+        }
+
+        function showDashboard(auth) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboardScreen').style.display = '';
+            document.getElementById('userGreeting').textContent = auth.name || 'משתמש';
+            renderUserWidget(auth);
+            renderCourseCards(auth);
+        }
+
+        function renderCourseCards(auth) {
+            const grid = document.getElementById('courseGrid');
+            grid.innerHTML = COURSES.map(c => {
+                const accessible = hasCourseAccess(auth, c.slug);
+                const locked = !accessible || c.comingSoon;
+                const lockBadge = c.comingSoon ? 'בקרוב' : (accessible ? '' : 'לא ברכישתכם');
+
+                if (locked) {
+                    return `
+                        <div class="course-card locked">
+                            ${lockBadge ? `<span class="locked-badge">${lockBadge}</span>` : ''}
+                            <div class="num">${c.num}</div>
+                            <h3>${c.title}</h3>
+                            <p>${c.desc}</p>
+                            <div class="course-card-meta">
+                                <span>${c.sessions || '—'} מפגשים</span>
+                                <span>${c.comingSoon ? 'בפיתוח' : 'נדרשת רכישה'}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+                return `
+                    <a href="${c.href}" class="course-card">
+                        <div class="num">${c.num}</div>
+                        <h3>${c.title}</h3>
+                        <p>${c.desc}</p>
+                        <div class="course-card-meta">
+                            <span>${c.sessions} מפגשים</span>
+                            <span class="progress">→ פתח</span>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        // Init
+        (function() {
+            const auth = loadAuth();
+            if (auth) {
+                showDashboard(auth);
+                return;
+            }
+            document.getElementById('phoneInput').addEventListener('keypress', e => {
+                if (e.key === 'Enter') handleLogin();
+            });
+            document.getElementById('passwordInput').addEventListener('keypress', e => {
+                if (e.key === 'Enter') handlePasswordSubmit();
+            });
+        })();
+    </script>
+</body>
+</html>

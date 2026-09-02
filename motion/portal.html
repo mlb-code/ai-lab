@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>פורטל הקורס — Motion AI Lab</title>
+<meta name="description" content="פורטל הקורס של Motion AI Lab — חומרי הלמידה, המפגשים והכלים למסלול ילדים ונוער ולמסלול מבוגרים.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080c1a;--bg2:#0f1830;--card:#141e3d;--card2:#1a264c;--line:rgba(255,255,255,.09);
+    --ink:#eef2ff;--muted:#a9b4d6;--brand:#5b8cff;--brand2:#8a6bff;--accent:#38e1c3;--gold:#ffd066;
+    --radius:24px;--step:clamp(15px, 1.02vw + 8px, 30px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Heebo',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:var(--step);
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+
+  .orbs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+  .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;animation:float 18s ease-in-out infinite}
+  .orb.a{width:46vw;height:46vw;background:radial-gradient(circle,#3a5cff,transparent 65%);top:-12vw;inset-inline-end:-8vw}
+  .orb.b{width:40vw;height:40vw;background:radial-gradient(circle,#8a6bff,transparent 65%);bottom:-10vw;inset-inline-start:-8vw;animation-delay:-6s}
+  @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(3vw,4vw) scale(1.08)}66%{transform:translate(-3vw,-2vw) scale(.95)}}
+
+  .wrap{width:min(1080px,92vw);margin-inline:auto}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(8,12,26,.72);border-bottom:1px solid var(--line)}
+  nav .bar{width:min(1080px,92vw);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;padding:.75em 0}
+  nav .brand{font-weight:900;font-size:1.05em;display:flex;align-items:center;gap:.5em}
+  nav .brand .d{width:.6em;height:.6em;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  nav .brand b{color:var(--brand)}
+  nav .back{font-size:.8em;color:var(--muted);transition:color .2s}
+  nav .back:hover{color:var(--ink)}
+
+  /* header */
+  .phead{text-align:center;padding:clamp(38px,6vw,72px) 0 clamp(20px,3vw,36px)}
+  .phead .eyebrow{display:inline-block;color:var(--accent);font-weight:700;letter-spacing:.14em;font-size:.72em;text-transform:uppercase;margin-bottom:.7em}
+  .phead h1{font-size:clamp(1.9em,4.6vw,3.2em);font-weight:900;line-height:1.12;margin-bottom:.3em}
+  .phead h1 .grad{background:linear-gradient(90deg,var(--brand),var(--brand2) 55%,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .phead p{color:var(--muted);max-width:56ch;margin-inline:auto}
+
+  /* track switcher */
+  .switch{display:flex;gap:.5em;justify-content:center;margin:2em auto 0;background:rgba(255,255,255,.04);
+    border:1px solid var(--line);border-radius:999px;padding:.4em;width:max-content;max-width:100%}
+  .switch button{background:none;border:none;color:var(--muted);font-family:inherit;font-weight:800;font-size:.9em;
+    padding:.6em 1.4em;border-radius:999px;cursor:pointer;transition:all .25s;white-space:nowrap}
+  .switch button.active{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 12px 26px -12px var(--brand)}
+
+  /* progress bar */
+  .track-intro{text-align:center;margin:2em auto 0;max-width:60ch;color:var(--muted);font-size:.95em}
+
+  /* lessons */
+  .lessons{display:flex;flex-direction:column;gap:1.1em;margin:2.4em 0 1em}
+  .lesson{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:border-color .3s}
+  .lesson:hover{border-color:rgba(91,140,255,.4)}
+  .lesson .lhead{display:flex;align-items:center;gap:1em;padding:1.1em 1.3em;cursor:pointer;user-select:none}
+  .lesson .num{flex:none;width:2.4em;height:2.4em;border-radius:14px;font-weight:900;font-size:.95em;
+    display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand2))}
+  .lesson.kids .num{background:linear-gradient(135deg,var(--accent),var(--brand))}
+  .lesson .ltitle{flex:1;min-width:0}
+  .lesson .ltitle h3{font-size:1.1em;font-weight:800;line-height:1.25}
+  .lesson .ltitle .tools{color:var(--muted);font-size:.8em;margin-top:.15em}
+  .lesson .chev{flex:none;color:var(--muted);transition:transform .3s;font-size:1.1em}
+  .lesson.open .chev{transform:rotate(180deg)}
+  .lesson .body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .lesson.open .body{max-height:640px}
+  .lesson .body-inner{padding:0 1.3em 1.3em;border-top:1px solid var(--line);margin-top:0;padding-top:1.1em}
+  .lesson .body-inner .lbl{font-weight:800;font-size:.82em;color:var(--accent);margin:.9em 0 .35em;display:block}
+  .lesson .body-inner ul{list-style:none;display:flex;flex-direction:column;gap:.4em}
+  .lesson .body-inner li{position:relative;padding-inline-start:1.4em;color:#dbe2fb;font-size:.92em}
+  .lesson .body-inner li::before{content:"›";position:absolute;inset-inline-start:0;color:var(--accent);font-weight:900}
+  .lesson .out{margin-top:1.1em;background:rgba(56,225,195,.08);border:1px solid rgba(56,225,195,.25);border-radius:12px;
+    padding:.7em 1em;font-size:.88em;color:#dbe2fb}
+  .lesson .out b{color:#fff}
+  .lesson .toolchips{display:flex;flex-wrap:wrap;gap:.4em;margin-top:.6em}
+  .lesson .toolchips span{font-size:.74em;color:#cdd6f5;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:999px;padding:.28em .8em}
+
+  .wip{text-align:center;color:var(--muted);font-size:.82em;margin:1.6em auto 0;background:rgba(255,208,102,.08);
+    border:1px solid rgba(255,208,102,.25);border-radius:14px;padding:1em 1.3em;max-width:60ch}
+  .wip b{color:var(--gold)}
+
+  footer{padding:2.6em 0 3.6em;text-align:center;color:var(--muted);font-size:.82em}
+  footer .logo{font-weight:900;color:var(--ink);font-size:1.3em}
+  footer .logo span{color:var(--brand)}
+
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="orbs"><div class="orb a"></div><div class="orb b"></div></div>
+
+<nav>
+  <div class="bar">
+    <div class="brand"><i class="d"></i><b>Motion</b> AI Lab</div>
+    <a class="back" href="index.html">← חזרה לאתר</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="phead">
+    <span class="eyebrow">פורטל הקורס</span>
+    <h1>חומרי הלמידה של <span class="grad">Motion AI Lab</span></h1>
+    <p>כאן מרוכזים כל המפגשים, הכלים והתרגילים. בוחרים מסלול ומתקדמים מפגש-מפגש.</p>
+  </div>
+
+  <div class="switch">
+    <button id="btn-kids" class="active" onclick="showTrack('kids')">🧒 ילדים ונוער</button>
+    <button id="btn-adults" onclick="showTrack('adults')">🧑 מבוגרים 18+</button>
+  </div>
+
+  <!-- ===== KIDS ===== -->
+  <div id="track-kids">
+    <p class="track-intro">מסלול צעיר וכיפי — כל מפגש הוא תוצר שאתה יוצר בעצמך, עד לסרטון אישי בסיום. לחץ על מפגש כדי לפתוח.</p>
+    <div class="lessons" id="lessons-kids"></div>
+  </div>
+
+  <!-- ===== ADULTS ===== -->
+  <div id="track-adults" class="hidden">
+    <p class="track-intro">מסלול מקצועי ליוצרי תוכן ובעלי עסקים — מרעיון לסרטון שיווקי, עם workflow להמשך עצמאי. לחץ על מפגש כדי לפתוח.</p>
+    <div class="lessons" id="lessons-adults"></div>
+  </div>
+
+  <div class="wip">💡 <b>בבנייה:</b> מבנה המפגשים מוכן. התוכן המפורט של כל מפגש (סרטוני הדרכה, תרגילים והדגמות) יתמלא בהמשך.</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">Motion <span>AI Lab</span></div>
+    <p style="margin-top:.5em">זרוע יצירת התוכן של AI Lab · מאיר לביא ותומר כליף</p>
+  </div>
+</footer>
+
+<script>
+  const DATA = {
+    kids: [
+      {t:"עולם ה-AI ואיך מדברים איתו", tools:"ChatGPT",
+       cover:["מה זה בינה מלאכותית ואיך היא עוזרת ליצור","איך כותבים פרומפט טוב — לבקש בצורה ברורה","בטיחות ואחריות: מה מותר, מה לא, ומה לא לשתף"],
+       out:"דמות או עולם משלך שתיארת ל-AI במילים.", chips:["ChatGPT"]},
+      {t:"יוצרים תמונות מהדמיון", tools:"Midjourney / Ideogram",
+       cover:["הופכים רעיון לתמונה בעזרת AI","שומרים על סגנון אחיד לכל הסדרה","בוחרים את התמונות הכי טובות לסרטון"],
+       out:"סדרת תמונות בסגנון אחיד לסרטון שלך.", chips:["Midjourney","Ideogram"]},
+      {t:"מהתמונה לסרטון — הנפשה", tools:"Runway / Kling",
+       cover:["מכניסים תנועה לתמונות שיצרת","יוצרים קליפ קצר ראשון","טיפים לתנועה שנראית חלקה"],
+       out:"קליפ וידאו קצר ראשון מהתמונות שלך.", chips:["Runway","Kling"]},
+      {t:"קול ומוזיקה לסרטון", tools:"ElevenLabs / Suno",
+       cover:["יוצרים קריינות בקול AI","מלחינים פסקול מקורי לסרטון","מתאימים את הקצב לתמונות"],
+       out:"קריינות + פסקול שמתאימים לסרטון.", chips:["ElevenLabs","Suno"]},
+      {t:"עריכה והרכבה לסרטון שלם", tools:"CapCut",
+       cover:["מרכיבים את הכל יחד בעורך פשוט","מוסיפים מעברים, כתוביות ואפקטים","מייצאים סרטון מוכן לשיתוף"],
+       out:"סרטון מוגמר באורך 15–30 שניות.", chips:["CapCut"]},
+      {t:"פרויקט סיום + הקרנה", tools:"כל הכלים",
+       cover:["משכללים את הסרטון האישי","מציגים לכולם בהקרנה קבוצתית","איך ממשיכים ליצור גם אחרי הקורס"],
+       out:"סרטון אישי מלא — מוכן לפרסום ולשיתוף.", chips:["ChatGPT","Midjourney","Runway","CapCut"]}
+    ],
+    adults: [
+      {t:"אסטרטגיית תוכן וכתיבת תסריט", tools:"ChatGPT / Claude",
+       cover:["מגדירים קהל יעד ומסר","בונים לוח תוכן שבועי","כותבים תסריט ו-HOOK פותח עם AI"],
+       out:"תסריט מוכן + לוח תוכן ראשוני.", chips:["ChatGPT","Claude"]},
+      {t:"ויזואל מקצועי ומיתוג", tools:"Midjourney / Ideogram",
+       cover:["בונים שפה ויזואלית עקבית למותג","יוצרים בנק תמונות לשימוש חוזר","טקסט וכיתובים בתוך התמונה"],
+       out:"בנק ויזואלים תואם-מותג.", chips:["Midjourney","Ideogram"]},
+      {t:"וידאו AI — מטקסט/תמונה לסרטון", tools:"Sora / Runway / Kling / Veo",
+       cover:["השוואת כלים: מתי משתמשים בכל אחד","מטקסט לסרטון וממתמונה לסרטון","בניית סצנות רציפות"],
+       out:"סצנות וידאו לשימוש בסרטון השיווקי.", chips:["Sora","Runway","Kling","Veo"]},
+      {t:"קריינות, קול ומוזיקה", tools:"ElevenLabs / Suno",
+       cover:["קריינות מקצועית בקול מותאם מותג","מוזיקה מקורית ללא זכויות יוצרים","עיצוב סאונד לתחושה נכונה"],
+       out:"קריינות ופסקול מותאמים למותג.", chips:["ElevenLabs","Suno"]},
+      {t:"עריכה מקצועית וסאונד", tools:"CapCut / Premiere Pro",
+       cover:["עריכה, מעברים וקצב מקצועי","עבודת סאונד ומיקס בסיסי","כתוביות, גרפיקה וייצוא איכותי"],
+       out:"סרטון שיווקי מוגמר ומלוטש.", chips:["CapCut","Premiere Pro"]},
+      {t:"הפצה, פרסום ו-workflow שבועי", tools:"כל הכלים",
+       cover:["התאמת פורמט לכל פלטפורמה","בונים workflow שאפשר לחזור עליו לבד","תכנית תוכן להמשך עצמאי"],
+       out:"תכנית תוכן + workflow אישי להמשך.", chips:["ChatGPT","Runway","Premiere Pro"]}
+    ]
+  };
+
+  function renderTrack(key){
+    const wrap = document.getElementById('lessons-'+key);
+    if(wrap.dataset.rendered) return;
+    wrap.innerHTML = DATA[key].map((l,i)=>`
+      <div class="lesson ${key}" onclick="toggleLesson(this)">
+        <div class="lhead">
+          <div class="num">${i+1}</div>
+          <div class="ltitle"><h3>${l.t}</h3><div class="tools">${l.tools}</div></div>
+          <div class="chev">▾</div>
+        </div>
+        <div class="body"><div class="body-inner">
+          <span class="lbl">במה נעסוק</span>
+          <ul>${l.cover.map(c=>`<li>${c}</li>`).join('')}</ul>
+          <div class="out">🎁 <b>התוצר:</b> ${l.out}</div>
+          <span class="lbl">כלים במפגש</span>
+          <div class="toolchips">${l.chips.map(c=>`<span>${c}</span>`).join('')}</div>
+        </div></div>
+      </div>`).join('');
+    wrap.dataset.rendered = "1";
+  }
+
+  function toggleLesson(el){ el.classList.toggle('open'); }
+
+  function showTrack(key){
+    document.getElementById('track-kids').classList.toggle('hidden', key!=='kids');
+    document.getElementById('track-adults').classList.toggle('hidden', key!=='adults');
+    document.getElementById('btn-kids').classList.toggle('active', key==='kids');
+    document.getElementById('btn-adults').classList.toggle('active', key==='adults');
+    renderTrack(key);
+  }
+
+  renderTrack('kids');
+</script>
+</body>
+</html>

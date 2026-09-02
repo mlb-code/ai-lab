@@ -1,0 +1,190 @@
+/* ============================================================
+   AI Lab — Blog 2026 Theme (ליקוויד-גלאס)
+   נטען אחרון (מוזרק ע"י shared.js) — דורס את הסקין הישן בכל 17 המאמרים
+   ומעניק לבלוג את שפת העיצוב של האתר החדש: לילה #0A0E27, זכוכית,
+   Suez One + Assistant, אי-ניווט צף.
+   ============================================================ */
+
+:root {
+    --primary: #6366F1;
+    --primary-light: #8B5CF6;
+    --primary-dark: #4F52C9;
+    --accent: #8B8DFF;
+    --accent-light: #4DD6E8;
+    --dark: #0A0E27;
+    --dark-card: #171B45;
+    --dark-lighter: #1E2354;
+    --text: #EEF0FF;
+    --text-muted: rgba(226, 229, 255, 0.72);
+    --gold: #F5C842;
+    --orange: #FF7849;
+    --border: rgba(255, 255, 255, 0.12);
+    --shadow-brand: 0 8px 24px rgba(99, 102, 241, 0.35);
+}
+
+/* ===== בסיס: גופנים + רקע לילה ===== */
+body {
+    font-family: 'Assistant', -apple-system, 'Segoe UI', sans-serif !important;
+    background: #0A0E27 !important;
+    color: var(--text);
+}
+body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+        radial-gradient(52% 42% at 8% 6%, rgba(124, 108, 255, 0.16), transparent 70%),
+        radial-gradient(46% 40% at 94% 88%, rgba(77, 214, 232, 0.11), transparent 70%),
+        linear-gradient(180deg, #0A0E27 0%, #151942 45%, #121539 100%);
+}
+h1, h2, h3 { font-family: 'Suez One', serif; font-weight: normal !important; }
+
+/* ===== אי הניווט הצף (כמו באתר הראשי) ===== */
+nav#navbar {
+    top: 14px !important; right: 0; left: 0;
+    height: auto; padding: 0;
+    display: flex; justify-content: center;
+    background: none !important; border-bottom: 0 !important; box-shadow: none !important;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    pointer-events: none;
+    direction: rtl;
+}
+nav#navbar .nav-inner-2026 {
+    pointer-events: auto;
+    display: flex; align-items: center; gap: 22px;
+    width: max-content; max-width: calc(100vw - 32px);
+    height: 58px; padding-inline: 22px 10px;
+    border-radius: 999px;
+    background:
+        radial-gradient(140px 44px at 82% 0%, rgba(255, 255, 255, 0.13), transparent 70%),
+        linear-gradient(163deg, rgba(214, 220, 248, 0.14), rgba(140, 148, 198, 0.08) 55%),
+        rgba(13, 16, 40, 0.6);
+    backdrop-filter: blur(28px) saturate(1.8);
+    -webkit-backdrop-filter: blur(28px) saturate(1.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.25), 0 18px 50px rgba(0, 0, 0, 0.4);
+}
+nav#navbar .nav-logo {
+    display: inline-block; white-space: nowrap;
+    font-family: 'Suez One', serif; font-size: 1.3rem; font-weight: normal;
+    background: none; -webkit-text-fill-color: currentcolor; color: #fff;
+}
+/* inline-block ולא flex — ב-RTL פלקס מפרק את "AI Lab" לשני פריטים והופך אותם */
+nav#navbar .nav-logo::before {
+    content: ""; display: inline-block; width: 26px; height: 26px;
+    margin-inline-end: 8px; vertical-align: -0.28em;
+    background: url(/logo-gem-96.png) center/contain no-repeat;
+    filter: drop-shadow(0 0 10px rgba(120, 200, 255, 0.4));
+}
+nav#navbar .nav-logo b, nav#navbar .nav-logo span { color: var(--accent); }
+nav#navbar .nav-links { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
+nav#navbar .nav-links a {
+    color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.92rem;
+    transition: color 0.2s;
+}
+nav#navbar .nav-links a:hover, nav#navbar .nav-links a.active { color: #fff; }
+nav#navbar .nav-cta-group { display: flex; gap: 8px; }
+nav#navbar .nav-cta {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+    color: #fff; text-decoration: none;
+    padding: 9px 20px; border-radius: 999px; font-weight: 700; font-size: 0.88rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 8px 22px rgba(99, 102, 241, 0.35);
+    transition: transform 0.2s;
+}
+nav#navbar .nav-cta:hover { transform: translateY(-1px); }
+nav#navbar .nav-cta.nav-ghost {
+    background: transparent !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.28);
+    box-shadow: none;
+}
+.mobile-menu-btn {
+    pointer-events: auto;
+    background: linear-gradient(163deg, rgba(214, 220, 248, 0.16), rgba(140, 148, 198, 0.13)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.32) !important;
+    border-radius: 14px; width: 46px; height: 46px;
+    color: #fff; font-size: 1.3rem;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.45), 0 10px 26px rgba(0, 0, 0, 0.3);
+}
+
+/* תפריט מובייל — פאנל זכוכית צף */
+.mobile-menu-panel {
+    background:
+        linear-gradient(163deg, rgba(214, 220, 248, 0.1), rgba(140, 148, 198, 0.06) 55%),
+        rgba(10, 13, 36, 0.86) !important;
+    backdrop-filter: blur(32px) saturate(1.7);
+    -webkit-backdrop-filter: blur(32px) saturate(1.7);
+    border-inline-start: 1px solid rgba(255, 255, 255, 0.18);
+}
+.mobile-menu-links li a { color: var(--text); border-radius: 14px; }
+.mobile-menu-links .mobile-cta a { border-radius: 999px; }
+
+/* ===== כותרת מאמר ===== */
+.article-header { position: relative; }
+.article-header h1 { color: #fff; }
+.back-link { color: var(--accent-light) !important; text-decoration: none; }
+.article-tag {
+    background: rgba(139, 141, 255, 0.14) !important;
+    border: 1px solid rgba(139, 141, 255, 0.32);
+    color: var(--accent) !important;
+    border-radius: 999px;
+}
+
+/* ===== גוף מאמר — כרטיסי זכוכית ===== */
+.article-content, .article-container {
+    background: none;
+}
+.article-content .tool-card,
+.article-content .info-box,
+.article-content .tip-box,
+.article-content .warning-box,
+.article-content .example-box,
+.article-content .faq-item,
+.article-content blockquote,
+.cta-box, .lead-form-card, .scroll-popup-box {
+    background: linear-gradient(163deg, rgba(214, 220, 248, 0.09), rgba(140, 148, 198, 0.05) 55%), rgba(23, 27, 69, 0.55) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.14), 0 14px 36px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+}
+.article-content a { color: var(--accent-light); }
+.article-content img { border-radius: 16px; }
+
+/* ===== פוטר ===== */
+.shared-footer {
+    background:
+        radial-gradient(58% 48% at 86% 100%, rgba(139, 120, 255, 0.08), transparent 70%),
+        linear-gradient(180deg, #0F0C28 0%, #161030 55%, #1B1233 100%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.shared-footer .footer-section h4 { color: var(--accent); letter-spacing: 0.08em; font-family: 'Assistant', sans-serif; font-weight: 800; }
+.shared-footer a { color: var(--text-muted); }
+.shared-footer a:hover { color: #fff; }
+.footer-social a {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%; width: 40px; height: 40px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--text) !important;
+}
+
+/* ===== טפסים (ליד + פופאפ) ===== */
+.contact-form .form-group input, .contact-form .form-group textarea {
+    background: rgba(10, 14, 39, 0.55) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    border-radius: 14px; color: #fff !important;
+    font-family: 'Assistant', sans-serif;
+}
+.contact-form .form-group input:focus, .contact-form .form-group textarea:focus {
+    border-color: rgba(139, 92, 246, 0.65) !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.16);
+}
+.contact-form .form-buttons .btn-primary {
+    background: linear-gradient(120deg, #6366F1, #8B5CF6) !important;
+    border-radius: 999px; font-family: 'Assistant', sans-serif; font-weight: 800;
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.35), 0 12px 34px rgba(99, 102, 241, 0.35);
+}
+.contact-form .form-buttons .btn-whatsapp { border-radius: 999px; font-family: 'Assistant', sans-serif; font-weight: 800; }
+
+/* ===== מובייל ===== */
+@media (max-width: 768px) {
+    nav#navbar { top: 10px !important; }
+    nav#navbar .nav-inner-2026 { height: 54px; gap: 12px; padding-inline: 16px 8px; }
+}

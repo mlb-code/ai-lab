@@ -1,0 +1,12 @@
+import puppeteer from 'puppeteer';
+import path from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const out = path.join(__dirname, 'project-previews', 'setup.jpg');
+const browser = await puppeteer.launch({ headless: true });
+const page = await browser.newPage();
+await page.setViewport({ width: 1280, height: 720, deviceScaleFactor: 1 });
+await page.goto('https://ai-lab.co.il/setup/?cb=' + Math.floor(Math.random()*1e9), { waitUntil: 'networkidle2', timeout: 30000 });
+await new Promise(r => setTimeout(r, 2500));
+await page.screenshot({ path: out, type: 'jpeg', quality: 82, clip: {x:0,y:0,width:1280,height:720} });
+console.log('-> ' + (fs.statSync(out).size/1024).toFixed(1) + 'KB');
+await browser.close();

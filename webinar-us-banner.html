@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Webinar US Banner (internal)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap');
+
+  .banner {
+    width: 1200px;
+    height: 628px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+  }
+
+  .banner img.bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  /* Dark overlay on the right side for text readability */
+  .text-overlay {
+    position: absolute;
+    top: 0; right: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(5,10,30,1) 50%, rgba(5,10,30,0.95) 70%, rgba(5,10,30,0.4) 92%, transparent 100%);
+    z-index: 1;
+  }
+
+  .content {
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 40px 50px;
+    z-index: 2;
+    text-align: right;
+  }
+
+  .ai-lab-top {
+    font-size: 28px;
+    font-weight: 900;
+    color: #00D4AA;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .title {
+    font-size: 52px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: #c0c0e0;
+    margin-bottom: 20px;
+  }
+
+  .us-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 6px 20px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #e0e0f0;
+    margin-bottom: 20px;
+  }
+
+  .details {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .details .highlight {
+    color: #00D4AA;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: #6C3CE1;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 800;
+    padding: 14px 40px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    margin-bottom: 16px;
+  }
+
+  .ai-lab-bottom {
+    font-size: 20px;
+    font-weight: 900;
+    color: #00D4AA;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body style="background:#000; display:flex; justify-content:center; align-items:center; min-height:100vh;">
+
+<div class="banner" id="banner">
+  <!-- Original image as background -->
+  <img class="bg" src="/Users/meirlb/Downloads/WhatsApp Image 2026-04-13 at 13.48.22.jpeg" alt="">
+
+  <div class="text-overlay"></div>
+
+  <div class="content">
+    <div class="ai-lab-top">AI Lab</div>
+    <div class="title">וובינר חינמי<br>להורים וילדים</div>
+    <div class="subtitle">AI ויזמות — בנו פרויקט אמיתי!</div>
+    <div class="us-tag">🇺🇸 לישראלים בארה״ב</div>
+    <div class="details">
+      יום ראשון | <span class="highlight">19.4</span> | <span class="highlight">20:00</span> שעון ישראל<br>
+      12:00 CT (טקסס) | 13:00 ET | 10:00 PT<br>
+      זום אונליין
+    </div>
+    <div class="cta-btn">הרשמה חינם</div>
+    <div class="ai-lab-bottom">AI Lab</div>
+  </div>
+</div>
+
+</body>
+</html>
