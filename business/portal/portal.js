@@ -4,7 +4,7 @@
 // For now, points to the same Sheets API key but a placeholder sheet — update when
 // the business students sheet is created.
 const BIZ_SHEET_ID = 'REPLACE_WITH_BUSINESS_SHEET_ID';
-const BIZ_API_KEY = 'AIzaSyDKcJmFB60aKI3eBgglpX4TvBS6QNlD-IM';
+const BIZ_API_KEY = 'REPLACE_WITH_KEY_WHEN_NEEDED';
 const BIZ_SHEET_RANGE = 'Sheet1!A:F';
 const BIZ_RECHECK_HOURS = 24;
 const STORAGE_KEY = 'biz_auth';
