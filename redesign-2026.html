@@ -3027,9 +3027,12 @@ gtag('config', 'AW-18061574299');
         P('buildmc','BUILDMC','טום, בן 14'), P('spot','SPOT','מתן, בן 10')
     ];
     // בחירת 18 להירו לפי חלון תאריך מתגלגל — מתחלף כל 3 ימים אצל כל הגולשים יחד
+    // אתרים שמוצגים רק בקיר (לא ברוטציית ההירו):
+    const HERO_EXCLUDE = new Set(['spot']);
+    const HERO_POOL = ALL_SITES.filter(p => !HERO_EXCLUDE.has(p.slug));
     const rotPeriod = Math.floor(Date.now() / 86400000 / 3);
-    const rotStart = (rotPeriod * 18) % ALL_SITES.length;
-    const heroPicks = Array.from({ length: 18 }, (_, i) => ALL_SITES[(rotStart + i) % ALL_SITES.length]);
+    const rotStart = (rotPeriod * 18) % HERO_POOL.length;
+    const heroPicks = Array.from({ length: 18 }, (_, i) => HERO_POOL[(rotStart + i) % HERO_POOL.length]);
     const heroSet = new Set(heroPicks.map(p => p.slug));
     const wallSites = ALL_SITES.filter(p => !heroSet.has(p.slug));
     const HERO_COLS = [heroPicks.slice(0, 6), heroPicks.slice(6, 12), heroPicks.slice(12, 18)];
