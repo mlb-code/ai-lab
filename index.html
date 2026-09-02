@@ -2076,6 +2076,7 @@ gtag('config', 'AW-18061574299');
         .ask-bar:focus, .ask-bar:focus-visible { outline: none; }
         .ask-bar:hover { background: none; border: 0; transform: none; }
         .ask-ic { display: none; }
+        .ask-caret { display: none; }
         /* ביצועים במובייל: פחות שכבות צבועות-ענק ואנימציות רקע */
         .aurora .a2, .aurora .a3 { display: none; }
         .aurora .a1 { animation: none; opacity: .8; }
@@ -3481,7 +3482,22 @@ gtag('config', 'AW-18061574299');
         ];
         const askPh = document.getElementById('askPh');
         let aq = 0, achar = 0, aphase = 'type', apause = 0, askOverride = null;
-        (function askTick(){
+        // במובייל הכפתור ממורכז — הקלדה אות-אות מרצדת. שם: שאלה מלאה עם החלפה עדינה.
+        const askIsMobile = window.matchMedia('(max-width: 960px)').matches;
+        if (askIsMobile && askPh) {
+            askPh.style.transition = 'opacity .28s ease';
+            askPh.textContent = ASK_QS[0];
+            setInterval(() => {
+                if (askOverride) { askPh.textContent = askOverride; return; }
+                askPh.style.opacity = '0';
+                setTimeout(() => {
+                    aq = (aq + 1) % ASK_QS.length;
+                    askPh.textContent = ASK_QS[aq];
+                    askPh.style.opacity = '1';
+                }, 300);
+            }, 3400);
+        }
+        else (function askTick(){
             if (!askPh) return;
             if (wrap.classList.contains('open')) { setTimeout(askTick, 600); return; }
             if (askOverride) { askPh.textContent = askOverride; setTimeout(askTick, 300); return; }
