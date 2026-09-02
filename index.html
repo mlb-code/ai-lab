@@ -2053,7 +2053,8 @@ gtag('config', 'AW-18061574299');
         .hero-copy { max-width: 100%; text-align: center; margin: 0 auto; position: relative; z-index: 2; }
         .hero-sub { margin-inline: auto; }
         .hero-actions { justify-content: center; }
-        .hero-actions .btn { flex: 1 1 100%; max-width: 340px; margin-inline: auto; }
+        .hero-actions { max-width: 340px; margin-inline: auto; gap: 10px; }
+        .hero-actions .btn { flex: 1 1 calc(50% - 5px); max-width: none; margin-inline: 0; padding: 12px 8px; font-size: .88rem; }
         /* ערימת CTA אחידה: הכפתור הראשי באותו רוחב כמו כפתור הוואטסאפ, והדירוג כתג קטן */
         .hero-actions .cr-row { flex-direction: column; align-items: center; width: 100%; gap: 12px; }
         .hero-actions .cr-row .holo-wrap { width: 100%; max-width: 340px; display: block; }
@@ -2075,6 +2076,11 @@ gtag('config', 'AW-18061574299');
         .ask-bar:focus, .ask-bar:focus-visible { outline: none; }
         .ask-bar:hover { background: none; border: 0; transform: none; }
         .ask-ic { display: none; }
+        /* ביצועים במובייל: פחות שכבות צבועות-ענק ואנימציות רקע */
+        .aurora .a2, .aurora .a3 { display: none; }
+        .aurora .a1 { animation: none; opacity: .8; }
+        .grain { display: none; }
+        .spark-sat { display: none; }
         .ask-bar { display: flex; flex-direction: column; align-items: center; gap: 9px; }
         /* השאלות המתחלפות הן הכפתור עצמו — באותו עיצוב זכוכית בדיוק */
         .ask-ph {
@@ -2605,7 +2611,7 @@ gtag('config', 'AW-18061574299');
     <div class="hub-item hub-i4">
         <button class="hub-head" aria-expanded="false">
             <span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#9FE8F2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="12" r="3.6"/><path d="M12.1 12H21M17.6 12v3.2M14.9 12v2.2"/></svg></span>
-            <span class="hub-tt"><b>האזור האישי ואיך זה עובד</b><span>מה כל תלמיד מקבל, ואיך נראה התהליך</span></span>
+            <span class="hub-tt"><b>האזור האישי וסקאי — ואיך זה עובד</b><span>מה כל תלמיד מקבל, מי מלווה אותו 24/7, ואיך נראה התהליך</span></span>
             <span class="hub-x">+</span>
         </button>
         <div class="hub-body"><div class="hub-inner">
@@ -3054,6 +3060,7 @@ gtag('config', 'AW-18061574299');
         if (!btn || !grid) return;
         let built = false;
         btn.addEventListener('click', () => {
+            if (window.matchMedia('(max-width: 960px)').matches) { location.href = 'projects.html'; return; }
             if (!built) {
                 grid.innerHTML = ALL_SITES.map(pr =>
                     `<a class="w-card" href="https://ai-lab.co.il/${pr.slug}/" target="_blank" rel="noopener">
