@@ -32,7 +32,7 @@ gtag('config', 'AW-18061574299');
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>AI Lab — המרכז למיומנויות העתיד | יזמות ו-AI לילדים ונוער</title>
     <link rel="canonical" href="https://ai-lab.co.il/">
-<meta name="description" content="AI Lab — המרכז למיומנויות העתיד: קורסים ביזמות, בינה מלאכותית ויצירה לילדים ונוער, בקבוצות קטנות של עד 5. התלמידים בונים אתרים, אפליקציות וסרטונים אמיתיים שחיים ברשת, עם אזור אישי ועוזר AI לכל תלמיד.">
+<meta name="description" content="AI Lab — המרכז למיומנויות העתיד: קורסים ביזמות, בינה מלאכותית ויצירה לילדים ונוער, בקבוצות קטנות של עד 5. התלמידים בונים אתרים, אפליקציות וסרטונים אמיתיים שחיים ברשת, עם אזור אישי וסקאי — עוזר ה-AI האישי — לכל תלמיד.">
 <!-- SEO/GEO: בעת הטמעה באתר החי — מעבירים את כל תגי ה-OG, ה-canonical, ה-JSON-LD המלא (Organization + Course + Reviews), sitemap ו-llms.txt מהאתר הקיים -->
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-gem-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="favicon-gem-64.png">
@@ -1106,6 +1106,8 @@ gtag('config', 'AW-18061574299');
         text-decoration: none; color: var(--ink); transition: transform .25s, box-shadow .25s;
     }
     .w-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(99,102,241,.25); }
+    .allproj { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; margin-top: 26px; text-align: right; }
+    .allproj .w-card { width: auto; margin: 0; }
     .w-card .m-label { padding: 10px 14px 12px; }
     .w-card .m-label b { font-size: .92rem; }
     .wall-cta { text-align: center; margin-top: 44px; }
@@ -2487,7 +2489,8 @@ gtag('config', 'AW-18061574299');
             <div class="w-row"><div class="w-track" id="rowB"></div></div>
         </div>
         <div class="wall-cta reveal">
-            <a href="https://ai-lab.co.il/#projects" class="btn btn-ghost-dark">לכל הפרויקטים</a>
+            <button type="button" id="allProjBtn" class="btn btn-ghost-dark">לכל הפרויקטים</button>
+            <div id="allProjGrid" class="allproj" hidden></div>
         </div>
     </section>
 
@@ -2595,9 +2598,9 @@ gtag('config', 'AW-18061574299');
                 <div class="portal-copy">
                     <span class="eyebrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg> כלול בכל קורס</span>
                     <h3>האזור האישי</h3>
-                    <p class="portal-sub">כל תלמיד מקבל פורטל משלו עם כל החומר — ועוזר AI שזמין תמיד.</p>
+                    <p class="portal-sub">כל תלמיד מקבל פורטל משלו עם כל החומר — וסקאי, עוזר ה-AI האישי, שזמין תמיד.</p>
                     <ul class="portal-feats">
-                        <li><b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> עוזר AI</b> — זמין 24/7 לכל שאלה על הלימודים</li>
+                        <li><b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> סקאי — עוזר ה-AI האישי</b> — זמין 24/7 לכל שאלה על הלימודים</li>
                         <li><b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> כל המפגשים</b> — במקום אחד</li>
                         <li><b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> תרגילים ומצגות</b> — לכל שיעור</li>
                         <li><b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> ארגז כלים מלא</b> — הכלים שעובדים איתם בקורס</li>
@@ -2625,9 +2628,9 @@ gtag('config', 'AW-18061574299');
                         <div class="pp-lesson done"><span class="pp-n">✓</span><div><b>מי נגד מי</b><small>הושלם</small></div></div>
                         <div class="pp-lesson done"><span class="pp-n">✓</span><div><b>הכלים שיבנו בשבילך</b><small>הושלם</small></div></div>
                         <div class="pp-lesson next"><span class="pp-n">▶</span><div><b>GitHub — בית הקוד שלך</b><small>השיעור הבא</small></div></div>
-                        <div class="pp-chat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> יש שאלה על השיעור? דברו איתי…</div>
+                        <div class="pp-chat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> יש שאלה על השיעור? שאלו את סקאי…</div>
                     </div>
-                    <div class="pp-badge pb1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> עוזר AI<br><small>זמין 24/7</small></div>
+                    <div class="pp-badge pb1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> סקאי<br><small>סקאי · זמין 24/7</small></div>
                     <div class="pp-badge pb2"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> כל המפגשים<br><small>במקום אחד</small></div>
                     <div class="pp-badge pb3"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> תרגילים<br><small>ומצגות</small></div>
                 </div>
@@ -3026,6 +3029,28 @@ gtag('config', 'AW-18061574299');
         P('pocket-coach','Pocket Coach','רועי, בן 12'), P('hamigrash-habeiti','המגרש הביתי','בן, בן 10'),
         P('buildmc','BUILDMC','טום, בן 14'), P('spot','SPOT','מתן, בן 10')
     ];
+    // "לכל הפרויקטים" — גריד מלא שנפתח במקום, מכל האתרים
+    (function allProj(){
+        const btn = document.getElementById('allProjBtn');
+        const grid = document.getElementById('allProjGrid');
+        if (!btn || !grid) return;
+        let built = false;
+        btn.addEventListener('click', () => {
+            if (!built) {
+                grid.innerHTML = ALL_SITES.map(pr =>
+                    `<a class="w-card" href="https://ai-lab.co.il/${pr.slug}/" target="_blank" rel="noopener">
+                       <img src="project-previews-small/${pr.slug}.jpg" alt="${pr.title}" loading="lazy">
+                       <span class="m-label"><b>${pr.title}</b><small>${pr.student}</small></span>
+                     </a>`).join('');
+                built = true;
+            }
+            const open = grid.hidden;
+            grid.hidden = !open;
+            btn.textContent = open ? 'הצגת פחות' : 'לכל הפרויקטים';
+            if (open) grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    })();
+
     // בחירת 18 להירו לפי חלון תאריך מתגלגל — מתחלף כל 3 ימים אצל כל הגולשים יחד
     // אתרים שמוצגים רק בקיר (לא ברוטציית ההירו):
     const HERO_EXCLUDE = new Set(['spot']);
@@ -3427,7 +3452,7 @@ gtag('config', 'AW-18061574299');
             'יש הנחה לאחים?',
             'אפשר לקבוע שיחת זום להכרות?',
             'מתי נפתח המחזור הקרוב?',
-            'יש דוגמאות לפרויקטים של תלמידים?'
+            'יש דוגמאות לפרויקטים?'
         ];
         const askPh = document.getElementById('askPh');
         let aq = 0, achar = 0, aphase = 'type', apause = 0, askOverride = null;
@@ -3607,7 +3632,7 @@ gtag('config', 'AW-18061574299');
             { k: ['מבוגר', 'הורה שרוצה', 'גם אני', 'למבוגרים'],
               r: { text: 'בטח! יש לנו את AI Lab Starter — קורסי AI למבוגרים בלי רקע טכני, מהצעד הראשון ועד פרויקט אמיתי.', actions: [ACT.adult, ACT.wa] } },
             { k: ['אזור אישי', 'פורטל', 'חומר', 'הקלטות'],
-              r: { text: 'כל תלמיד מקבל אזור אישי: כל המפגשים, הקלטות, תרגילים, ארגז כלים — ועוזר AI שזמין תמיד לשאלות על הלימודים.', actions: [ACT.portal] } },
+              r: { text: 'כל תלמיד מקבל אזור אישי: כל המפגשים, הקלטות, תרגילים, ארגז כלים — וסקאי, עוזר ה-AI האישי שזמין תמיד לשאלות על הלימודים.', actions: [ACT.portal] } },
             { k: ['שלום', 'היי', 'הי ', 'בוקר', 'ערב'],
               r: { text: 'היי! כיף שבאתם. אני הסוכן של AI Lab — שאלו אותי על הקורסים, המחירים, דוגמאות של תלמידים, או תיאום שיחת היכרות.', actions: [ACT.map, ACT.waCall] } },
             { k: ['זום', 'איפה', 'מיקום', 'פרונטלי', 'מפגש'],
