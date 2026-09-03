@@ -2228,7 +2228,16 @@ gtag('config', 'AW-18061574299');
             pointer-events: none; opacity: .75;
             -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 97%);
             mask-image: linear-gradient(180deg, #000 60%, transparent 97%);
+            /* ‼️ בלי זה הפסיפס גולש עד ~512px (תמונות width=400 + עמודות 1fr שלא
+               מתכווצות מתחת ל-min-content) ומנפח את העמוד — וכל ההירו נחתך:
+               הכותרת והמשפט "נשברים" עם שברי מילים בקצוות. זה רקע מטושטש —
+               חיתוך שלו לא מורגש. */
+            overflow: hidden;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            transform: none;
         }
+        /* חגורת ביטחון: שום דבר בהירו לא מרחיב את העמוד לרוחב */
+        .hero { overflow-x: clip; }
         /* הילה כהה רכה סביב אזור היהלום — שומרת עליו נקי מהרקע */
         .ask-core::after {
             content: ""; position: absolute; top: -46px; left: 50%; transform: translateX(-50%);
