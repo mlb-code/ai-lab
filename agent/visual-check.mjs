@@ -13,8 +13,9 @@ const PAGES = [
   { name: "פלטפורמת ההרשמה — מובייל", url: "https://my.ai-lab.co.il/", width: 390, height: 844, shot: "platform-mobile" },
 ];
 
-// שגיאות רשת שאינן באשמת האתר (חוסמי פרסום וכד') — לא מדווחים עליהן
-const IGNORE_NET = [/googletagmanager|google-analytics|facebook|fbcdn|connect\.facebook/i];
+// שגיאות רשת שאינן באשמת האתר — לא מדווחים עליהן:
+// אנליטיקס/פיקסלים (נחסמים בסביבת בדיקה), ו-prefetch של Next.js (_rsc) שמבוטל באופן טבעי
+const IGNORE_NET = [/googletagmanager|google-analytics|analytics\.google|google\.com\/measurement|googleadservices|doubleclick|facebook|fbcdn|connect\.facebook|[?&]_rsc=/i];
 
 mkdirSync("shots", { recursive: true });
 const findings = [];   // בעיות טכניות ודאיות
@@ -34,6 +35,8 @@ for (const p of PAGES) {
   page.on("pageerror", e => consoleErrs.push(String(e).slice(0, 200)));
   page.on("console", m => { if (m.type() === "error") consoleErrs.push(m.text().slice(0, 200)); });
   page.on("requestfailed", r => {
+    // ERR_ABORTED = הדפדפן עצמו ביטל (prefetch, ניווט) — רעש, לא תקלה של האתר
+    if (r.failure()?.errorText === "net::ERR_ABORTED") return;
     if (!IGNORE_NET.some(rx => rx.test(r.url()))) netFails.push(`${r.url().slice(0, 120)} (${r.failure()?.errorText})`);
   });
   page.on("response", r => {
