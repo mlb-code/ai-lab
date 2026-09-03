@@ -1,0 +1,63 @@
+# ניטור זמינות — בדיקה כל ~10 דקות שהאתר והפלטפורמה חיים.
+# נפילה → נפתח Issue (= מייל למאיר). חזרה לחיים → ה-Issue נסגר אוטומטית.
+name: uptime
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: בדיקת שני האתרים
+        id: ping
+        run: |
+          down=""
+          check() {
+            # שני ניסיונות בהפרש 20 שניות — כדי לא להתריע על שיהוק רגעי
+            for attempt in 1 2; do
+              code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 25 "$1" || echo 000)
+              [ "$code" = "200" ] && return 0
+              [ $attempt = 1 ] && sleep 20
+            done
+            down="$down$2 (HTTP $code) · "
+            return 1
+          }
+          check "https://ai-lab.co.il/"        "האתר הראשי ai-lab.co.il" || true
+          check "https://my.ai-lab.co.il/"     "פלטפורמת ההרשמה my.ai-lab.co.il" || true
+          echo "down=$down" >> "$GITHUB_OUTPUT"
+
+      - name: פתיחת התראה כשמשהו נפל
+        if: steps.ping.outputs.down != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # התראה אחת פתוחה לכל היותר — לא מציפים במיילים כל 10 דקות
+          existing=$(gh issue list --repo "${{ github.repository }}" --label uptime --state open --json number --jq '.[0].number // empty')
+          if [ -z "$existing" ]; then
+            gh label create uptime --repo "${{ github.repository }}" --color B60205 --description "התראת זמינות" 2>/dev/null || true
+            gh issue create --repo "${{ github.repository }}" --label uptime \
+              --title "🚨 האתר לא מגיב — $(TZ=Asia/Jerusalem date +%H:%M %d.%m.%Y)" \
+              --body "הניטור מצא שירות שלא מחזיר תקין (שתי בדיקות בהפרש 20 שניות):
+
+**${{ steps.ping.outputs.down }}**
+
+מה עושים: בודקים את האתר בדפדפן; אם באמת נפל — Railway (פלטפורמה) או GitHub Pages (אתר). ההתראה תיסגר אוטומטית כשהשירות יחזור."
+          fi
+
+      - name: סגירת התראה כשהכל חזר
+        if: steps.ping.outputs.down == ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          existing=$(gh issue list --repo "${{ github.repository }}" --label uptime --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --repo "${{ github.repository }}" \
+              --comment "✅ השירות חזר לענות תקין — $(TZ=Asia/Jerusalem date +%H:%M). ההתראה נסגרה אוטומטית."
+          fi
