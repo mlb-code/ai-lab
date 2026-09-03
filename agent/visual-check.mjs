@@ -104,10 +104,13 @@ if (KEY) {
     });
     const msg = await client.messages.create({
       model: "claude-sonnet-5",
-      max_tokens: 1200,
+      // דגמי Claude 5 חושבים לפני תשובה — חייבים תקציב שמכסה גם את החשיבה,
+      // אחרת התשובה נחתכת לפני בלוק הטקסט (קרה בריצה #2: דוח ריק)
+      max_tokens: 6000,
       messages: [{ role: "user", content }],
     });
-    aiReport = msg.content.filter(b => b.type === "text").map(b => b.text).join("\n");
+    aiReport = msg.content.filter(b => b.type === "text").map(b => b.text).join("\n").trim();
+    if (!aiReport) aiReport = `(המודל לא החזיר טקסט — stop_reason=${msg.stop_reason}, blocks=${msg.content.map(b => b.type).join(",")})`;
   } catch (e) {
     aiReport = `(ניתוח Claude נכשל: ${String(e).slice(0, 160)})`;
   }
