@@ -1,0 +1,67 @@
+# סוכן ניטור נראות — רץ כל 3 ימים, מדווח בעיות כ-Issue (שמייצר מייל למאיר).
+# דיווח בלבד: הסוכן לא משנה שום דבר באתר.
+name: visual-agent
+
+on:
+  schedule:
+    - cron: "0 5 */3 * *"   # כל 3 ימים, 08:00 שעון ישראל
+  workflow_dispatch: {}      # הרצה ידנית מטאב Actions
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: התקנת Playwright ו-SDK
+        run: |
+          npm init -y >/dev/null
+          npm i --no-audit --no-fund playwright @anthropic-ai/sdk >/dev/null
+          npx playwright install --with-deps chromium >/dev/null
+
+      - name: הרצת הבדיקה
+        id: check
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set +e
+          node agent/visual-check.mjs
+          code=$?
+          set -e
+          echo "problems=$([ $code -eq 20 ] && echo yes || echo no)" >> "$GITHUB_OUTPUT"
+          # כל קוד יציאה שאינו 0/20 = תקלה בסוכן עצמו
+          if [ $code -ne 0 ] && [ $code -ne 20 ]; then exit $code; fi
+
+      - name: שמירת צילומי המסך והדוח
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-report
+          path: |
+            report.md
+            shots/
+          retention-days: 21
+
+      - name: פתיחת Issue כשנמצאו בעיות
+        if: steps.check.outputs.problems == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            cat report.md
+            echo ""
+            echo "📎 צילומי המסך: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } > issue-body.md
+          gh issue create \
+            --title "🔍 סוכן הנראות מצא בעיות באתר — $(TZ=Asia/Jerusalem date +%d.%m.%Y)" \
+            --body-file issue-body.md \
+            --repo "${{ github.repository }}"
