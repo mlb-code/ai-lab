@@ -3494,17 +3494,9 @@ gtag('config', 'AW-18061574299');
         // במובייל הכפתור ממורכז — הקלדה אות-אות מרצדת. שם: שאלה מלאה עם החלפה עדינה.
         const askIsMobile = window.matchMedia('(max-width: 960px)').matches;
         if (askIsMobile && askPh) {
-            askPh.style.transition = 'opacity .28s ease';
-            askPh.textContent = ASK_QS[0];
-            setInterval(() => {
-                if (askOverride) { askPh.textContent = askOverride; return; }
-                askPh.style.opacity = '0';
-                setTimeout(() => {
-                    aq = (aq + 1) % ASK_QS.length;
-                    askPh.textContent = ASK_QS[aq];
-                    askPh.style.opacity = '1';
-                }, 300);
-            }, 3400);
+            // במובייל: טקסט קבוע (החלפות טקסט פוגעות בנראות — החלטת מאיר 03/09).
+            // גוף ראשון של ה-AI: הוא המוח של האתר ואפשר לשאול אותו הכל.
+            askPh.textContent = 'אני ה‑AI של המרכז — שאלו אותי הכל';
         }
         else (function askTick(){
             if (!askPh) return;
