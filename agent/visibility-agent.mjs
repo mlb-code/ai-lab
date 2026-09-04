@@ -129,7 +129,7 @@ if (ghToken) {
     headers: { Authorization: `Bearer ${ghToken}`, "Content-Type": "application/json", Accept: "application/vnd.github+json" },
     body: JSON.stringify({
       title: `דוח הנראות השבועי — ${day(new Date())}`,
-      body: report + "\n\n---\n_נוצר אוטומטית על ידי סוכן הנראות · נתונים: Google Search Console_",
+      body: report + "\n\n---\n@mlb-code — הדוח השבועי מוכן.\n_נוצר אוטומטית על ידי סוכן הנראות · נתונים: Google Search Console_",
       labels: ["visibility-agent"],
     }),
   });
