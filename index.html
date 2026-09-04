@@ -1180,6 +1180,7 @@ gtag('config', 'AW-18061574299');
         padding: 6px 17px; border-radius: 50px; margin-bottom: 12px;
     }
     .on-head h3 { font-family: var(--font-display); font-weight: normal; font-size: clamp(1.5rem, 3vw, 2.1rem); color: var(--ink); }
+    .on-sub { color: rgba(255,255,255,.72); font-size: .95rem; margin-top: 8px; }
     .on-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
     @media (max-width: 1120px) { .on-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
     .on-card {
@@ -2982,6 +2983,7 @@ gtag('config', 'AW-18061574299');
                 <div class="on-head">
                     <span class="on-pill"><span class="nl-dot"></span> נרשמים עכשיו</span>
                     <h3>המחזורים הקרובים</h3>
+                    <p class="on-sub">כל קורס נפתח בקבוצות נפרדות לפי גיל — כל ילד לומד עם בני גילו.</p>
                 </div>
                 <div class="on-grid" id="openNowGrid"></div>
             </div>
@@ -3288,7 +3290,7 @@ gtag('config', 'AW-18061574299');
     const tierChip = co => co.tier === 'base' ? '<span class="chip tier-b">קורס בסיס</span>'
         : co.tier === 'adv' ? '<span class="chip tier-a">למתקדמים בלבד</span>' : '';
     const cChips = co => {
-        let h = tierChip(co) + `<span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span>`;
+        let h = tierChip(co) + `<span class="chip">גיל ${co.age}</span><span class="chip">קבוצות נפרדות לפי גיל</span><span class="chip">${co.count || '8 מפגשים'}</span>`;
         if (co.prereq) h += `<span class="chip">${co.prereq}</span>`;
         if (co.price) h += `<span class="chip price">${co.price}</span>`;
         if (co.price || co.status === 'open') {
@@ -3317,7 +3319,7 @@ gtag('config', 'AW-18061574299');
         el.innerHTML = `<span class="on-em" style="background:${co.c}">${co.em}</span>
             <h4>${co.name}</h4>
             <p>${co.tag}</p>
-            <div class="on-meta">${tierChip(co)}<span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span><span class="chip five"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>  עד 5 בקבוצה</span><span class="chip ${STATUS[co.status][0]}">${STATUS[co.status][1]}</span></div>
+            <div class="on-meta">${tierChip(co)}<span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span><span class="chip five"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>  עד 5 בקבוצת גיל</span><span class="chip ${STATUS[co.status][0]}">${STATUS[co.status][1]}</span></div>
             <div class="on-price">${co.price || '<small>המחיר יעודכן בקרוב</small>'}</div>
             <a class="btn ${(co.status === 'open' || co.price) ? 'btn-wa' : 'btn-notify'}" href="${cta.href}"${cta.ext ? ' target="_blank" rel="noopener"' : ''}>${cta.label} <span class="arr">←</span></a>
             <span class="c-more" style="margin-top:12px;justify-content:center;display:flex;">לסילבוס המלא <span class="arr">←</span></span>`;
