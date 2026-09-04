@@ -42,13 +42,10 @@ jobs:
           existing=$(gh issue list --repo "${{ github.repository }}" --label uptime --state open --json number --jq '.[0].number // empty')
           if [ -z "$existing" ]; then
             gh label create uptime --repo "${{ github.repository }}" --color B60205 --description "התראת זמינות" 2>/dev/null || true
+            body=$(printf 'הניטור מצא שירות שלא מחזיר תקין (שתי בדיקות בהפרש 20 שניות):\n\n**%s**\n\nמה עושים: בודקים את האתר בדפדפן; אם באמת נפל — Railway (פלטפורמה) או GitHub Pages (אתר). ההתראה תיסגר אוטומטית כשהשירות יחזור.\n\n@mlb-code' "${{ steps.ping.outputs.down }}")
             gh issue create --repo "${{ github.repository }}" --label uptime \
-              --title "🚨 האתר לא מגיב — $(TZ=Asia/Jerusalem date +%H:%M %d.%m.%Y)" \
-              --body "הניטור מצא שירות שלא מחזיר תקין (שתי בדיקות בהפרש 20 שניות):
-
-**${{ steps.ping.outputs.down }}**
-
-מה עושים: בודקים את האתר בדפדפן; אם באמת נפל — Railway (פלטפורמה) או GitHub Pages (אתר). ההתראה תיסגר אוטומטית כשהשירות יחזור."
+              --title "🚨 האתר לא מגיב — $(TZ=Asia/Jerusalem date '+%H:%M %d.%m.%Y')" \
+              --body "$body"
           fi
 
       - name: סגירת התראה כשהכל חזר
