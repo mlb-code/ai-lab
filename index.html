@@ -1212,6 +1212,8 @@ gtag('config', 'AW-18061574299');
     .chip.open { background: rgba(31,175,87,.12); color: #12703A; }
     .chip.soon { background: rgba(245,166,35,.13); color: #A66A00; }
     .chip.price { background: rgba(99,102,241,.1); color: var(--accent-deep); }
+    .chip.tier-b { background: rgba(99,102,241,.14); color: var(--accent-deep); font-weight: 800; border: 1px solid rgba(99,102,241,.28); }
+    .chip.tier-a { background: #101433; color: #fff; font-weight: 800; }
     .c-more { color: var(--accent-deep); font-weight: 800; font-size: .88rem; align-items: center; gap: 6px; cursor: pointer; }
     .c-more .arr { transition: transform .25s; }
     .c-more:hover .arr { transform: translateX(-5px); }
@@ -2715,7 +2717,7 @@ gtag('config', 'AW-18061574299');
         <div class="sec-head reveal">
             <span class="eyebrow">בלעדי במרכז</span>
             <h2>וול סטריט — בלי הסיכון</h2>
-            <p>כל תלמיד בקורס "כסף וחשיבה פיננסית" מקבל תיק השקעות וירטואלי משלו — וסוחר במניות אמיתיות, במחירים אמיתיים, בלי שקל אחד אמיתי.</p>
+            <p>כל תלמיד בקורס "כסף חכם" מקבל תיק השקעות וירטואלי משלו — וסוחר במניות אמיתיות, במחירים אמיתיים, בלי שקל אחד אמיתי.</p>
         </div>
         <div class="bourse-grid reveal">
             <div class="bourse-phone" aria-hidden="true">
@@ -2734,7 +2736,7 @@ gtag('config', 'AW-18061574299');
                     <div class="bourse-point"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg><span><b>בטוח לגמרי</b> — בלי חשבון חיצוני, בלי פרטים אישיים, בתוך האזור האישי של AI Lab</span></div>
                 </div>
                 <div class="bourse-cta">
-                    <button class="btn btn-primary" onclick="openCourse(6)">חלק מקורס כסף וחשיבה פיננסית <span class="arr">←</span></button>
+                    <button class="btn btn-primary" onclick="openCourse(5)">חלק מקורס כסף חכם <span class="arr">←</span></button>
                 </div>
             </div>
         </div>
@@ -3248,10 +3250,10 @@ gtag('config', 'AW-18061574299');
 
     // ===== מפת הקורסים =====
     const COURSES = [
-      { lvl:1, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>', c:'#EEF0FF', cat:['build','biz'], name:'יזמות ובינה מלאכותית', tag:'מקימים מיזם אמיתי ובונים לו אתר ראשון עם AI — נקודת הפתיחה של כל תלמיד במרכז.',
+      { lvl:1, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>', c:'#EEF0FF', cat:['build','biz'], name:'בינה מלאכותית ויזמות', tier:'base', tag:'מקימים מיזם אמיתי ובונים לו אתר ראשון עם AI — נקודת הפתיחה של כל תלמיד במרכז.',
         age:'9+', status:'open', price:'990 ₪', deliver:'מיזם אישי + אתר חי באוויר עם כתובת אמיתית',
         sessions:[ ['רעיון וחזון','בוחרים תחום שאתה אוהב והופכים אותו לרעיון למיזם'], ['מהרעיון לתכנון','חוקרים קהל ומתחרים בעזרת AI'], ['בונים אתר ראשון','העמוד הראשון שלך עולה בעזרת כלי AI'], ['מעצבים','צבעים, סגנון ומראה מקצועי'], ['תוכן שמוכר','טקסטים ותמונות שמספרים את הסיפור'], ['עולים לאוויר','האתר מקבל כתובת אמיתית באינטרנט'], ['משפרים ומרחיבים','פידבק אמיתי ושדרוגים'], ['ערב השקה','מציגים את המיזמים מול ההורים'] ] },
-      { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>', c:'#FDF0E6', cat:['create'], name:'יצירת סרטונים ב-AI', tag:'מפיקים סרטונים אמיתיים עם כלי ה-AI החדשים — כולל עולם יוצרי התוכן.',
+      { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>', c:'#FDF0E6', cat:['create'], name:'יצירת סרטונים ב-AI', tier:'base', tag:'מפיקים סרטונים אמיתיים עם כלי ה-AI החדשים — כולל עולם יוצרי התוכן.',
         age:'10+', status:'first', price:'1,290 ₪', deliver:'סרטון מופק ברמה גבוהה + תבנית לערוץ תוכן',
         sessions:[ ['איך סרטון "תופס"','מנתחים סרטונים ויראליים ובוחרים רעיון'], ['תסריט וסטוריבורד','כותבים תסריט קצר עם AI'], ['מפיקים שוטים','יצירת סצנות ודמויות בכלי טקסט-לווידאו'], ['קול וקריינות','קריינות AI, כתוביות ומוזיקת רקע'], ['עריכה א\'','חיתוך, קצב ומעברים'], ['עריכה ב\'','אפקטים, צבע והתאמה לשורטס'], ['הסרטון של המיזם שלך','סרטון תדמית לפרויקט שלך'], ['ערב בכורה','הקרנה חגיגית ואיך ממשיכים ערוץ'] ] },
       { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>', c:'#E8F7EE', cat:['biz','stage'], name:'שיווק', tag:'הופכים מיזם למותג: עיצוב, מיתוג וקמפיין אמיתי ראשון.',
@@ -3260,17 +3262,14 @@ gtag('config', 'AW-18061574299');
       { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', c:'#F3E8FF', cat:['create'], name:'מוזיקה והפקה ב-AI', tag:'כותבים, מפיקים ומוציאים שיר אמיתי — מהמילים ועד העטיפה.',
         age:'9+', status:'soon', price:'', deliver:'סינגל מופק + עטיפה מעוצבת',
         sessions:[ ['איך שיר בנוי','בית, פזמון וז\'אנרים — מאזינים כמו מפיקים'], ['השיר הראשון שלך','יצירה ראשונה בכלי מוזיקת AI'], ['כתיבת מילים','נושא אישי, חריזה ומקצב'], ['הפקה','סגנון, קצב וסאונד'], ['שירה וקול','קולות AI מול קול אמיתי'], ['ג\'ינגל ופסקול','מוזיקה למיזם או לסרטון שלך'], ['מאסטרינג והפצה','איך שיר מגיע לספוטיפיי'], ['מופע השמעה','משמיעים מול ההורים'] ] },
-      { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>', c:'#FFF7E0', cat:['create','stage'], name:'סטוריטלינג וכתיבה עם AI', tag:'כותבים ומאיירים ספר או קומיקס — ומוציאים אותו לאור ברשת.',
-        age:'9+', status:'soon', price:'', deliver:'ספר או קומיקס דיגיטלי מאויר, חי ברשת',
-        sessions:[ ['כוחו של סיפור','מה גורם לנו להישאב לסיפור'], ['הגיבור שלך','בונים דמות עם עומק'], ['העולם והעלילה','בונים את עולם הסיפור'], ['כותבים פרק ראשון','AI כעורך שלך, לא ככותב במקומך'], ['דיאלוגים ורגש','איך דמויות מדברות אמיתי'], ['מאיירים','איורים בסגנון אחיד לספר'], ['הוצאה לאור דיגיטלית','עימוד והעלאה לרשת'], ['ערב השקה ספרותי','הקראות וספריית הכיתה'] ] },
       { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg>', c:'#FFE9EE', cat:['stage'], name:'עמידה מול קהל ופיצ\'ינג', tag:'הופכים פחד במה לכוח — ומסיימים בדמו-דיי אמיתי מול קהל.',
         age:'10+', status:'soon', price:'', deliver:'פיץ\' מלא עם מצגת, מוצג בערב הצגות',
         sessions:[ ['הפחד שכולם מכירים','ומה עושים איתו — נאום ראשון של 30 שניות'], ['מבנה של נאום','פתיח שתופס, מסר אחד, סגירה'], ['הפיץ\'','מנסחים פיץ\' למיזם שלך'], ['שפת גוף וקול','תרגול מול מצלמה'], ['מצגת מנצחת','מסר אחד לשקף, עיצוב עם AI'], ['שאלות קשות','התמודדות עם קהל ואלתור'], ['חזרה גנרלית','מצלמים, מנתחים ומלטשים'], ['ערב פיצ\'ים','דמו-דיי מול ההורים'] ] },
-      { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>', c:'#E6F6F8', cat:['biz'], name:'כסף וחשיבה פיננסית', tag:'מבוא לשוק ההון וחשיבה ביקורתית על כסף — בסימולציה, בלי סיכון.',
+      { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>', c:'#E6F6F8', cat:['biz'], name:'כסף חכם', tier:'base', tag:'מבוא לשוק ההון וחשיבה ביקורתית על כסף — בסימולציה, בלי סיכון.',
         age:'12+', status:'soon', price:'1,190 ₪', deliver:'תיק השקעות וירטואלי חי + דשבורד מעקב שבנית עם AI + "המצפן הפיננסי שלי"', note:'תוכן לימודי בסימולציה בלבד — לא ייעוץ השקעות ולא המלצה לרכוש ניירות ערך אמיתיים.',
         sessions:[ ['מה זה כסף בעצם','מאיפה הוא בא, אינפלציה ("למה הגלידה התייקרה?") והערך של זמן'], ['המוח שלנו והכסף','חשיבה ביקורתית: איך פרסומות עובדות עלינו, FOMO ומלכודות במשחקים — מנתחים פרסומות עם AI'], ['הקסם של ריבית דריבית','בונים מחשבון חיסכון עם AI ורואים מה הזמן עושה לכסף'], ['מבוא לוול סטריט','מה זו מניה, NYSE ונאסד"ק, מדד S&P 500 — וסיור מודרך ב-TradingView וב-Yahoo Finance דרך חברות שאתה מכיר: Apple, Nintendo, Roblox, Disney'], ['התיק הווירטואלי שלי','פותחים תיק ב"בורסת AI Lab" (מניות ארה"ב במחירי אמת), מחקר חברה ראשון עם AI ועקרון הפיזור'], ['סיכון, תשואה — ופינפלואנסרים','בועות, הימורים מול השקעות, קריפטו בעין ביקורתית — ואיך מזהים הבטחות התעשרות בטיקטוק וביוטיוב'], ['AI ככלי פיננסי','בונים דשבורד מעקב אישי לתיק: מחקר, השוואות וגרפים מ-TradingView'], ['המשחק הגדול','סימולציית שוק מסכמת בבורסת AI Lab, סיכום התיקים ו"המצפן הפיננסי שלי"'] ] },
-      { lvl:3, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>', c:'#EEF0FF', cat:['build'], name:'תכנות באמצעות AI', tag:'הקורס המתקדם: Vibe Coding אמיתי עם Cursor, Claude ו-GitHub — בונים מערכת שלמה, לא רק אתר.',
-        age:'11+', status:'open', price:'1,290 ₪', count:'8 מפגשים', deliver:'פרויקט מלא באוויר: אתר, אוטומציות וסוכן AI משלך', prereq:'אחרי יזמות',
+      { lvl:3, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>', c:'#EEF0FF', cat:['build'], name:'תכנות באמצעות AI', tier:'adv', tag:'הקורס המתקדם: Vibe Coding אמיתי עם Cursor, Claude ו-GitHub — בונים מערכת שלמה, לא רק אתר.',
+        age:'11+', status:'open', price:'1,290 ₪', count:'8 מפגשים', deliver:'פרויקט מלא באוויר: אתר, אוטומציות וסוכן AI משלך', prereq:'אחרי קורס בסיס',
         sessions:[ ['מי נגד מי + הסביבה המקצועית','מורה נבוכים לעולם ה-AI, ומקימים את סביבת העבודה: Cursor · Claude · Terminal'], ['GitHub','בית הקוד שלך: Git, ענן ופרסום אתר חי דרך GitHub Pages'], ['בונים את ה"פנים"','דף נחיתה ואתר ראשון — הצד שהמשתמש רואה'], ['ה"מוח" של האתר','מחברים את האתר ל-Google Sheets ונותנים לו זיכרון'], ['הפרויקט שלך','אפיון, תכנון ומפת דרכים למיזם שלך עם AI'], ['בונים סוכן AI','מהתיאוריה לסוכן שעובד — שלב אחרי שלב'], ['אוטומציות וחיבורים אמיתיים','תהליכים שרצים בשבילך לבד + חיבור למערכות מהעולם האמיתי'], ['השקה וצמיחה','דוחפים לאוויר, מלטשים ומציגים את הפרויקט'] ] },
       { lvl:3, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>', c:'#F1EBFF', cat:['build'], name:'צוות סוכני AI', tag:'הרמה שאחרי המתקדם: לא סוכן אחד — צוות שלם שעובד בשבילך מסביב לשעון.',
         age:'12+', status:'soon', price:'', deliver:'מערכת רב-סוכנית חיה שרצה לבד ומחוברת לוואטסאפ או טלגרם', prereq:'אחרי תכנות ב-AI',
@@ -3278,13 +3277,15 @@ gtag('config', 'AW-18061574299');
       { lvl:3, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>', c:'#FDF0E6', cat:['create'], name:'סרטונים 2 — "האולפן"', tag:'מסרטון בודד להפקה שלמה: מיני-סדרה ועבודה ללקוח אמיתי.',
         age:'10+', status:'soon', price:'', deliver:'מיני-סדרה או סרט קצר + הפקה ללקוח אמיתי', prereq:'אחרי סרטונים ב-AI',
         sessions:[ ['מ"סרטון" ל"הפקה"','בוחרים: מיני-סדרה, סרט קצר או קמפיין'], ['דמות עקבית','אותה דמות ואותו סגנון לאורך פרקים'], ['תסריט לסדרה','קשת עלילתית ופרק פיילוט'], ['הפקה מתקדמת א\'','תנועות מצלמה וסצנות מורכבות'], ['הפקה מתקדמת ב\'','ליפ-סינק, קול קבוע וסאונד דיזיין'], ['לקוח אמיתי','מפיקים סרטון לעסק אמיתי בליווי המנחה'], ['המאסטר','עריכה סופית + טריילר ושורטס'], ['פסטיבל הקרנה','מקרינים מול ההורים ומשיקים ערוץ'] ] },
-      { lvl:3, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>', c:'#E8F7EE', cat:['biz'], name:'השקעות ושוק ההון לנוער', tag:'ההמשך של כסף וחשיבה פיננסית — לומדים שוק ההון בגובה העיניים. תוכן לימודי בלבד, לא ייעוץ השקעות.',
-        age:'13+', status:'soon', price:'', deliver:'תיק וירטואלי מנומק + תוכנית פיננסית אישית', prereq:'אחרי כסף וחשיבה פיננסית',
+      { lvl:3, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>', c:'#E8F7EE', cat:['biz'], name:'השקעות ושוק ההון לנוער', tag:'ההמשך של כסף חכם — לומדים שוק ההון בגובה העיניים. תוכן לימודי בלבד, לא ייעוץ השקעות.',
+        age:'13+', status:'soon', price:'', deliver:'תיק וירטואלי מנומק + תוכנית פיננסית אישית', prereq:'אחרי כסף חכם',
         sessions:[ ['איך הבורסה עובדת','מניות ומדדים — פותחים תיק וירטואלי'], ['לקרוא חברה','הכנסות, רווח, מותג מול עסק'], ['מחקר עם AI','תהליך חכם — ומה לא נותנים ל-AI להחליט'], ['סיכון ופיזור','למה לא שמים הכול על מניה אחת'], ['פסיכולוגיה של משקיעים','פחד, חמדנות ובאזז ברשתות'], ['טווח ארוך מול מסחר','ריבית דריבית, קרנות ומדדים'], ['התוכנית האישית שלך','בונים כללים לגילך'], ['ועידת המשקיעים הצעירים','מציגים תיק ותובנות'] ] }
     ];
     const STATUS = { open: ['open','● ההרשמה פתוחה'], first: ['soon','מחזור ראשון בקרוב'], soon: ['soon','בקרוב'] };
+    const tierChip = co => co.tier === 'base' ? '<span class="chip tier-b">קורס בסיס</span>'
+        : co.tier === 'adv' ? '<span class="chip tier-a">למתקדמים בלבד</span>' : '';
     const cChips = co => {
-        let h = `<span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span>`;
+        let h = tierChip(co) + `<span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span>`;
         if (co.prereq) h += `<span class="chip">${co.prereq}</span>`;
         if (co.price) h += `<span class="chip price">${co.price}</span>`;
         if (co.price || co.status === 'open') {
@@ -3302,7 +3303,7 @@ gtag('config', 'AW-18061574299');
 
     // ===== בלוק "נרשמים עכשיו" =====
     const BAR = { 1: 'linear-gradient(90deg,#6366F1,#8B5CF6)', 2: 'linear-gradient(90deg,#0EA5B7,#4DD6E8)', 3: 'linear-gradient(90deg,#F5A623,#FBBF24)' };
-    const featured = [0, 7, 6, 1];   // יזמות · תכנות ב-AI · כסף וחשיבה פיננסית · סרטונים
+    const featured = [0, 6, 5, 1];   // יזמות · תכנות ב-AI · כסף חכם · סרטונים
     const onGrid = document.getElementById('openNowGrid');
     featured.forEach(i => {
         const co = COURSES[i], cta = ctaFor(co);
@@ -3312,7 +3313,7 @@ gtag('config', 'AW-18061574299');
         el.innerHTML = `<span class="on-em" style="background:${co.c}">${co.em}</span>
             <h4>${co.name}</h4>
             <p>${co.tag}</p>
-            <div class="on-meta"><span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span><span class="chip five"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>  עד 5 בקבוצה</span><span class="chip ${STATUS[co.status][0]}">${STATUS[co.status][1]}</span></div>
+            <div class="on-meta">${tierChip(co)}<span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span><span class="chip five"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>  עד 5 בקבוצה</span><span class="chip ${STATUS[co.status][0]}">${STATUS[co.status][1]}</span></div>
             <div class="on-price">${co.price || '<small>המחיר יעודכן בקרוב</small>'}</div>
             <a class="btn ${co.status === 'open' ? 'btn-ink' : 'btn-wa'}" href="${cta.href}"${cta.ext ? ' target="_blank" rel="noopener"' : ''}>${cta.label} <span class="arr">←</span></a>
             <span class="c-more" style="margin-top:12px;justify-content:center;display:flex;">לסילבוס המלא <span class="arr">←</span></span>`;
@@ -3363,7 +3364,7 @@ gtag('config', 'AW-18061574299');
                     <span class="fc-name">${co.name}</span>
                     <p class="fc-tag">${co.tag}</p>
                     <div class="fc-meta">
-                        <span class="chip">גיל ${co.age}</span>
+                        ${tierChip(co)}<span class="chip">גיל ${co.age}</span>
                         <span class="chip five"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> עד 5</span>
                         <span class="chip ${STATUS[co.status][0]}">${co.status === 'open' ? 'פתוח' : 'בקרוב'}</span>
                     </div>
@@ -3441,7 +3442,6 @@ gtag('config', 'AW-18061574299');
         ['<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-4px;flex-shrink:0"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>','סוכני AI','#10B981','#fff'],
         ['<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-4px;flex-shrink:0"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>','יצירת סרטונים','#F43F5E','#fff'],
         ['<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-4px;flex-shrink:0"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>','מוזיקה ב-AI','#D946EF','#fff'],
-        ['<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-4px;flex-shrink:0"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>','סטוריטלינג','#3B82F6','#fff'],
         ['<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-4px;flex-shrink:0"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>','חשיבה פיננסית','#059669','#fff'],
         ['<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-4px;flex-shrink:0"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>','השקעות','#EAB308','#101433'],
         ['<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-4px;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>','עבודת צוות','#FB7185','#101433'],
@@ -3774,8 +3774,8 @@ gtag('config', 'AW-18061574299');
             wa:     { t: 'wa', msg: 'היי, אני מתעניין בקורסים של AI Lab', label: 'דברו איתנו בוואטסאפ' },
             waCall: { t: 'wa', msg: 'היי, אשמח לתאם שיחת היכרות קצרה', label: 'תיאום שיחה בוואטסאפ' },
             lead:   { t: 'lead' },
-            c1:     { t: 'course', i: 0, label: 'סילבוס יזמות ובינה מלאכותית' },
-            c2:     { t: 'course', i: 7, label: 'סילבוס תכנות ב-AI' },
+            c1:     { t: 'course', i: 0, label: 'סילבוס בינה מלאכותית ויזמות' },
+            c2:     { t: 'course', i: 6, label: 'סילבוס תכנות ב-AI' },
             sites:  { t: 'scroll', sel: '#wall', label: 'לקיר האתרים' },
             vids:   { t: 'scroll', sel: '#videos', label: 'לסרטוני התלמידים' },
             portal: { t: 'link', href: 'https://my.ai-lab.co.il', label: 'לאזור האישי' },
@@ -3785,7 +3785,7 @@ gtag('config', 'AW-18061574299');
             { k: ['שיחה', 'פגישה', 'לתאם', 'תיאום', 'טלפון', 'שיחת', 'לדבר עם'],
               r: { text: 'בשמחה! הדרך הכי מהירה היא וואטסאפ — עונים שם אישית ומהר. אפשר גם להשאיר פרטים כאן ונחזור אליכם.', actions: [ACT.waCall, ACT.lead] } },
             { k: ['מחיר', 'עולה', 'כמה', 'עלות', 'תשלום'],
-              r: { text: 'המחירים אצלנו גלויים תמיד: קורס יזמות ובינה מלאכותית (ההתחלה של כולם) — 990 ₪ ל-8 מפגשים. קורס תכנות ב-AI (המתקדם) — 1,290 ₪ ל-8 מפגשים. ובקרוב: כסף וחשיבה פיננסית — 1,190 ₪, יצירת סרטונים ב-AI — 1,290 ₪. עד 5 תלמידים בקבוצה, והאזור האישי כלול.', actions: [ACT.c1, ACT.c2, ACT.reg] } },
+              r: { text: 'המחירים אצלנו גלויים תמיד: קורס בינה מלאכותית ויזמות (ההתחלה של כולם) — 990 ₪ ל-8 מפגשים. קורס תכנות ב-AI (המתקדם) — 1,290 ₪ ל-8 מפגשים. ובקרוב: כסף חכם — 1,190 ₪, יצירת סרטונים ב-AI — 1,290 ₪. עד 5 תלמידים בקבוצה, והאזור האישי כלול.', actions: [ACT.c1, ACT.c2, ACT.reg] } },
             { k: ['גיל', 'בן ', 'בת ', 'מתאים ל', 'צעיר', 'קטן'],
               r: { text: 'הקורסים מתאימים לגילאי 9–16, בקבוצות גיל נפרדות של עד 5 תלמידים. מתחילים מקורס היזמות — משם כל המסלולים נפתחים. ספרו לי בוואטסאפ בן כמה הילד ונתאים בדיוק.', actions: [ACT.c1, ACT.waCall] } },
             { k: ['דוגמ', 'אתרים של', 'פרויקט', 'בנו', 'תוצאות'],
