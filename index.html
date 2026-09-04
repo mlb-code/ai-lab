@@ -3300,7 +3300,8 @@ gtag('config', 'AW-18061574299');
     };
     // ===== כפתור חכם: פתוח → הרשמה · אחרת → עדכנו אותי =====
     const WA = 'https://wa.me/972546500795?text=';
-    const ctaFor = co => co.status === 'open'
+    // קורס עם מחיר = כפתור הרשמה ירוק (גם אם המחזור נפתח בהמשך); בלי מחיר = עדכנו אותי
+    const ctaFor = co => (co.status === 'open' || co.price)
         ? { label: 'להרשמה', href: 'https://my.ai-lab.co.il/join', ext: false }
         : { label: 'עדכנו אותי כשנפתח', href: WA + encodeURIComponent('היי, אשמח שתעדכנו אותי כשייפתח הקורס "' + co.name + '" ב-AI Lab'), ext: true };
 
@@ -3318,7 +3319,7 @@ gtag('config', 'AW-18061574299');
             <p>${co.tag}</p>
             <div class="on-meta">${tierChip(co)}<span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span><span class="chip five"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>  עד 5 בקבוצה</span><span class="chip ${STATUS[co.status][0]}">${STATUS[co.status][1]}</span></div>
             <div class="on-price">${co.price || '<small>המחיר יעודכן בקרוב</small>'}</div>
-            <a class="btn ${co.status === 'open' ? 'btn-wa' : 'btn-notify'}" href="${cta.href}"${cta.ext ? ' target="_blank" rel="noopener"' : ''}>${cta.label} <span class="arr">←</span></a>
+            <a class="btn ${(co.status === 'open' || co.price) ? 'btn-wa' : 'btn-notify'}" href="${cta.href}"${cta.ext ? ' target="_blank" rel="noopener"' : ''}>${cta.label} <span class="arr">←</span></a>
             <span class="c-more" style="margin-top:12px;justify-content:center;display:flex;">לסילבוס המלא <span class="arr">←</span></span>`;
         el.querySelector('.c-more').addEventListener('click', e => { e.stopPropagation(); openCourse(i); });
         el.addEventListener('click', e => { if (!e.target.closest('a')) openCourse(i); });
@@ -3417,7 +3418,7 @@ gtag('config', 'AW-18061574299');
         const mc = ctaFor(co), mr = document.getElementById('mRegister');
         mr.innerHTML = mc.label + ' <span class="arr">←</span>';
         mr.href = mc.href;
-        mr.className = 'btn ' + (co.status === 'open' ? 'btn-wa' : 'btn-notify');
+        mr.className = 'btn ' + ((co.status === 'open' || co.price) ? 'btn-wa' : 'btn-notify');
         if (mc.ext) { mr.target = '_blank'; mr.rel = 'noopener'; } else { mr.removeAttribute('target'); mr.removeAttribute('rel'); }
         document.getElementById('mSessions').innerHTML = co.sessions.map((s, j) =>
             `<li><span class="n">${j + 1}</span><div><b>${s[0]}</b><span>${s[1]}</span></div></li>`).join('');
