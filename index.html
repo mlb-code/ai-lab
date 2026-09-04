@@ -1327,6 +1327,21 @@ gtag('config', 'AW-18061574299');
     .fc-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-inline-start: auto; }
     .fc-dot.open { background: #22C55E; box-shadow: 0 0 0 3.5px rgba(34,197,94,.16); }
     .fc-dot.soon { background: #F5A623; box-shadow: 0 0 0 3.5px rgba(245,166,35,.15); }
+    /* "בקרוב" גדול ויפה על קורסים שטרם תומחרו (בקשת מאיר 04/09) */
+    .fcard.is-soon { overflow: hidden; }
+    .fc-ribbon {
+        position: absolute; top: 17px; left: -36px; z-index: 3; pointer-events: none;
+        transform: rotate(-45deg);
+        background: linear-gradient(90deg, #F5A623, #FBBF24);
+        color: #3A2A00; font-weight: 800; font-size: .78rem; letter-spacing: .08em;
+        padding: 5px 42px; box-shadow: 0 2px 10px rgba(0,0,0,.35);
+    }
+    .m-soon-big {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: linear-gradient(120deg, rgba(245,166,35,.16), rgba(251,191,36,.07));
+        border: 1.5px dashed rgba(245,166,35,.6); color: #A66A00;
+        font-weight: 800; font-size: 1.02rem; border-radius: 50px; padding: 8px 22px;
+    }
     .fc-name { font-weight: 800; font-size: .96rem; color: #fff; line-height: 1.3; }
     .fc-tag {
         color: rgba(226,229,255,.78); font-size: .84rem; line-height: 1.5; flex: 1;
@@ -1742,6 +1757,39 @@ gtag('config', 'AW-18061574299');
     }
     @keyframes fwIgnite { 0% { opacity: 0; } 25% { opacity: 1; } 62% { opacity: .7; } 100% { opacity: 0; } }
 
+    /* ===== הבורסה של AI Lab ===== */
+    .bourse-grid { display: grid; grid-template-columns: 300px 1fr; gap: 44px; align-items: center; max-width: 980px; margin: 0 auto; }
+    .bourse-phone {
+        width: 270px; margin: 0 auto; background: #0d1023;
+        border: 2px solid rgba(255,255,255,.18); border-radius: 26px; padding: .9rem .9rem 1.1rem;
+        box-shadow: 0 18px 50px rgba(0,0,0,.45), 0 0 60px -18px rgba(52,211,153,.5);
+    }
+    .bourse-phone .bp-bar { width: 76px; height: 7px; background: rgba(255,255,255,.2); border-radius: 5px; margin: 0 auto .8rem; }
+    .bourse-phone .bp-total { text-align: center; margin-bottom: .8rem; }
+    .bourse-phone .bp-total small { display: block; font-size: .72rem; color: rgba(226,229,255,.6); }
+    .bourse-phone .bp-total b { font-size: 1.45rem; color: #fff; }
+    .bourse-phone .bp-up { color: #34D399; font-size: .85rem; font-weight: 700; }
+    .bourse-phone .bp-row {
+        display: flex; justify-content: space-between; align-items: center; direction: ltr;
+        background: rgba(255,255,255,.06); border-radius: 10px; padding: .55rem .75rem;
+        font-size: .84rem; color: #E8EAFF; margin-bottom: .5rem; font-weight: 600;
+    }
+    .bourse-phone .bp-row:last-child { margin-bottom: 0; }
+    .bourse-phone .bp-row .up { color: #34D399; } .bourse-phone .bp-row .dn { color: #ff8f8f; }
+    .bourse-points { display: grid; gap: 12px; }
+    .bourse-point {
+        display: flex; gap: 14px; align-items: flex-start;
+        background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+        border-radius: 16px; padding: 15px 18px; color: #E8EAFF; font-size: 1rem;
+    }
+    .bourse-point svg { flex-shrink: 0; margin-top: 2px; color: #34D399; }
+    .bourse-point b { color: #fff; }
+    .bourse-cta { margin-top: 18px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .bourse-disc { text-align: center; font-size: .8rem; color: rgba(226,229,255,.55); margin-top: 26px; }
+    @media (max-width: 860px) {
+        .bourse-grid { grid-template-columns: 1fr; gap: 28px; }
+        .bourse-phone { width: min(270px, 78vw); }
+    }
     /* ===== סרטוני תלמידים ===== */
     /* 4 סרטונים = שורה אחת מלאה. מתחת ל-1180px: 2x2 (שורה של 3+יתום נראה שבור) */
     .video-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
@@ -2653,6 +2701,49 @@ gtag('config', 'AW-18061574299');
 
         </div></div>
     </div>
+    <div class="hub-item hub-i7">
+        <button class="hub-head" aria-expanded="false">
+            <span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#9FE8F2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m7 14 4-4 4 4 5-6"/></svg></span>
+            <span class="hub-tt"><b>הבורסה של AI Lab</b><span>תיק השקעות וירטואלי עם מחירים אמיתיים — בלעדי לתלמידי המרכז</span></span>
+            <span class="hub-x">+</span>
+        </button>
+        <div class="hub-body"><div class="hub-inner">
+<!-- ============ רצועה כהה: הבורסה של AI Lab ============ -->
+<section class="band-dark" id="bourse">
+    <div class="container">
+        <div class="sec-head reveal">
+            <span class="eyebrow">בלעדי במרכז</span>
+            <h2>וול סטריט — בלי הסיכון</h2>
+            <p>כל תלמיד בקורס "כסף וחשיבה פיננסית" מקבל תיק השקעות וירטואלי משלו — וסוחר במניות אמיתיות, במחירים אמיתיים, בלי שקל אחד אמיתי.</p>
+        </div>
+        <div class="bourse-grid reveal">
+            <div class="bourse-phone" aria-hidden="true">
+                <div class="bp-bar"></div>
+                <div class="bp-total"><small>שווי התיק שלי</small><b>$10,420</b> <span class="bp-up">+4.2% ▲</span></div>
+                <div class="bp-row"><span>AAPL · אפל</span><span class="up">+2.3%</span></div>
+                <div class="bp-row"><span>RBLX · רובלוקס</span><span class="up">+6.8%</span></div>
+                <div class="bp-row"><span>MCD · מקדונלדס</span><span class="dn">-1.1%</span></div>
+                <div class="bp-row"><span>מזומן</span><span>$3,150</span></div>
+            </div>
+            <div>
+                <div class="bourse-points">
+                    <div class="bourse-point"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg><span><b>$10,000 וירטואליים</b> — כל תלמיד פותח תיק ומתאמן על החלטות אמיתיות, בלי סיכון</span></div>
+                    <div class="bourse-point"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg><span><b>מחירים אמיתיים מוול סטריט</b> — אפל, נינטנדו, רובלוקס, דיסני ועוד 20 חברות שהילדים מכירים</span></div>
+                    <div class="bourse-point"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg><span><b>לוח מובילים כיתתי</b> — מתחרים בחברים, לומדים מהניצחונות וגם מהטעויות</span></div>
+                    <div class="bourse-point"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg><span><b>בטוח לגמרי</b> — בלי חשבון חיצוני, בלי פרטים אישיים, בתוך האזור האישי של AI Lab</span></div>
+                </div>
+                <div class="bourse-cta">
+                    <button class="btn btn-primary" onclick="openCourse(6)">חלק מקורס כסף וחשיבה פיננסית <span class="arr">←</span></button>
+                </div>
+            </div>
+        </div>
+        <p class="bourse-disc">הבורסה של AI Lab היא סימולציה לימודית בכסף וירטואלי בלבד — לא ייעוץ השקעות ולא מסחר אמיתי.</p>
+    </div>
+</section>
+
+
+        </div></div>
+    </div>
     <div class="hub-item hub-i4">
         <button class="hub-head" aria-expanded="false">
             <span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#9FE8F2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="12" r="3.6"/><path d="M12.1 12H21M17.6 12v3.2M14.9 12v2.2"/></svg></span>
@@ -3160,7 +3251,7 @@ gtag('config', 'AW-18061574299');
         age:'9+', status:'open', price:'990 ₪', deliver:'מיזם אישי + אתר חי באוויר עם כתובת אמיתית',
         sessions:[ ['רעיון וחזון','בוחרים תחום שאתה אוהב והופכים אותו לרעיון למיזם'], ['מהרעיון לתכנון','חוקרים קהל ומתחרים בעזרת AI'], ['בונים אתר ראשון','העמוד הראשון שלך עולה בעזרת כלי AI'], ['מעצבים','צבעים, סגנון ומראה מקצועי'], ['תוכן שמוכר','טקסטים ותמונות שמספרים את הסיפור'], ['עולים לאוויר','האתר מקבל כתובת אמיתית באינטרנט'], ['משפרים ומרחיבים','פידבק אמיתי ושדרוגים'], ['ערב השקה','מציגים את המיזמים מול ההורים'] ] },
       { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>', c:'#FDF0E6', cat:['create'], name:'יצירת סרטונים ב-AI', tag:'מפיקים סרטונים אמיתיים עם כלי ה-AI החדשים — כולל עולם יוצרי התוכן.',
-        age:'10+', status:'first', price:'', deliver:'סרטון מופק ברמה גבוהה + תבנית לערוץ תוכן',
+        age:'10+', status:'first', price:'1,390 ₪', deliver:'סרטון מופק ברמה גבוהה + תבנית לערוץ תוכן',
         sessions:[ ['איך סרטון "תופס"','מנתחים סרטונים ויראליים ובוחרים רעיון'], ['תסריט וסטוריבורד','כותבים תסריט קצר עם AI'], ['מפיקים שוטים','יצירת סצנות ודמויות בכלי טקסט-לווידאו'], ['קול וקריינות','קריינות AI, כתוביות ומוזיקת רקע'], ['עריכה א\'','חיתוך, קצב ומעברים'], ['עריכה ב\'','אפקטים, צבע והתאמה לשורטס'], ['הסרטון של המיזם שלך','סרטון תדמית לפרויקט שלך'], ['ערב בכורה','הקרנה חגיגית ואיך ממשיכים ערוץ'] ] },
       { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>', c:'#E8F7EE', cat:['biz','stage'], name:'שיווק', tag:'הופכים מיזם למותג: עיצוב, מיתוג וקמפיין אמיתי ראשון.',
         age:'10+', status:'soon', price:'', deliver:'מותג שלם + קמפיין השקה אמיתי',
@@ -3175,10 +3266,10 @@ gtag('config', 'AW-18061574299');
         age:'10+', status:'soon', price:'', deliver:'פיץ\' מלא עם מצגת, מוצג בערב הצגות',
         sessions:[ ['הפחד שכולם מכירים','ומה עושים איתו — נאום ראשון של 30 שניות'], ['מבנה של נאום','פתיח שתופס, מסר אחד, סגירה'], ['הפיץ\'','מנסחים פיץ\' למיזם שלך'], ['שפת גוף וקול','תרגול מול מצלמה'], ['מצגת מנצחת','מסר אחד לשקף, עיצוב עם AI'], ['שאלות קשות','התמודדות עם קהל ואלתור'], ['חזרה גנרלית','מצלמים, מנתחים ומלטשים'], ['ערב פיצ\'ים','דמו-דיי מול ההורים'] ] },
       { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>', c:'#E6F6F8', cat:['biz'], name:'כסף וחשיבה פיננסית', tag:'מבוא לשוק ההון האמריקאי וחשיבה ביקורתית על כסף — בסימולציה, בלי סיכון.',
-        age:'12+', status:'soon', price:'', deliver:'תיק השקעות וירטואלי חי + דשבורד מעקב שבנית עם AI + "המצפן הפיננסי שלי"', note:'תוכן לימודי בסימולציה בלבד — לא ייעוץ השקעות ולא המלצה לרכוש ניירות ערך אמיתיים.',
+        age:'12+', status:'soon', price:'1,190 ₪', deliver:'תיק השקעות וירטואלי חי + דשבורד מעקב שבנית עם AI + "המצפן הפיננסי שלי"', note:'תוכן לימודי בסימולציה בלבד — לא ייעוץ השקעות ולא המלצה לרכוש ניירות ערך אמיתיים.',
         sessions:[ ['מה זה כסף בעצם','מאיפה הוא בא, אינפלציה ("למה הגלידה התייקרה?") והערך של זמן'], ['המוח שלנו והכסף','חשיבה ביקורתית: איך פרסומות עובדות עלינו, FOMO ומלכודות במשחקים — מנתחים פרסומות עם AI'], ['הקסם של ריבית דריבית','בונים מחשבון חיסכון עם AI ורואים מה הזמן עושה לכסף'], ['מבוא לוול סטריט','מה זו מניה, NYSE ונאסד"ק, מדד S&P 500 — וסיור מודרך ב-TradingView וב-Yahoo Finance דרך חברות שאתה מכיר: Apple, Nintendo, Roblox, Disney'], ['התיק הווירטואלי שלי','פותחים תיק ב"בורסת AI Lab" (מניות ארה"ב במחירי אמת), מחקר חברה ראשון עם AI ועקרון הפיזור'], ['סיכון, תשואה — ופינפלואנסרים','בועות, הימורים מול השקעות, קריפטו בעין ביקורתית — ואיך מזהים הבטחות התעשרות בטיקטוק וביוטיוב'], ['AI ככלי פיננסי','בונים דשבורד מעקב אישי לתיק: מחקר, השוואות וגרפים מ-TradingView'], ['המשחק הגדול','סימולציית שוק מסכמת בבורסת AI Lab, סיכום התיקים ו"המצפן הפיננסי שלי"'] ] },
       { lvl:3, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>', c:'#EEF0FF', cat:['build'], name:'תכנות באמצעות AI', tag:'הקורס המתקדם: Vibe Coding אמיתי עם Cursor, Claude ו-GitHub — בונים מערכת שלמה, לא רק אתר.',
-        age:'11+', status:'open', price:'1,250 ₪', count:'8 מפגשים', deliver:'פרויקט מלא באוויר: אתר, אוטומציות וסוכן AI משלך', prereq:'אחרי יזמות',
+        age:'11+', status:'open', price:'1,290 ₪', count:'8 מפגשים', deliver:'פרויקט מלא באוויר: אתר, אוטומציות וסוכן AI משלך', prereq:'אחרי יזמות',
         sessions:[ ['מי נגד מי + הסביבה המקצועית','מורה נבוכים לעולם ה-AI, ומקימים את סביבת העבודה: Cursor · Claude · Terminal'], ['GitHub','בית הקוד שלך: Git, ענן ופרסום אתר חי דרך GitHub Pages'], ['בונים את ה"פנים"','דף נחיתה ואתר ראשון — הצד שהמשתמש רואה'], ['ה"מוח" של האתר','מחברים את האתר ל-Google Sheets ונותנים לו זיכרון'], ['הפרויקט שלך','אפיון, תכנון ומפת דרכים למיזם שלך עם AI'], ['בונים סוכן AI','מהתיאוריה לסוכן שעובד — שלב אחרי שלב'], ['אוטומציות וחיבורים אמיתיים','תהליכים שרצים בשבילך לבד + חיבור למערכות מהעולם האמיתי'], ['השקה וצמיחה','דוחפים לאוויר, מלטשים ומציגים את הפרויקט'] ] },
       { lvl:3, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>', c:'#F1EBFF', cat:['build'], name:'צוות סוכני AI', tag:'הרמה שאחרי המתקדם: לא סוכן אחד — צוות שלם שעובד בשבילך מסביב לשעון.',
         age:'12+', status:'soon', price:'', deliver:'מערכת רב-סוכנית חיה שרצה לבד ומחוברת לוואטסאפ או טלגרם', prereq:'אחרי תכנות ב-AI',
@@ -3195,7 +3286,11 @@ gtag('config', 'AW-18061574299');
         let h = `<span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span>`;
         if (co.prereq) h += `<span class="chip">${co.prereq}</span>`;
         if (co.price) h += `<span class="chip price">${co.price}</span>`;
-        h += `<span class="chip ${STATUS[co.status][0]}">${STATUS[co.status][1]}</span>`;
+        if (co.price || co.status === 'open') {
+            h += `<span class="chip ${STATUS[co.status][0]}">${STATUS[co.status][1]}</span>`;
+        } else {
+            h += `<span class="m-soon-big"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> נפתח בקרוב</span>`;
+        }
         return h;
     };
     // ===== כפתור חכם: פתוח → הרשמה · אחרת → עדכנו אותי =====
@@ -3257,10 +3352,10 @@ gtag('config', 'AW-18061574299');
             items.forEach(({ co, i }, k) => {
                 const mid = (n - 1) / 2;
                 const el = document.createElement('button');
-                el.className = 'fcard';
+                el.className = 'fcard' + (!co.price && co.status !== 'open' ? ' is-soon' : '');
                 el.style.setProperty('--k', k);
                 el.setAttribute('aria-label', 'סילבוס ' + co.name);
-                el.innerHTML = `<div class="fc-top">
+                el.innerHTML = `${!co.price && co.status !== 'open' ? '<span class="fc-ribbon">בקרוב</span>' : ''}<div class="fc-top">
                         <span class="fc-em" style="background:${co.c}">${co.em}</span>
                         <span class="fc-dot ${co.status === 'open' ? 'open' : 'soon'}"></span>
                     </div>
