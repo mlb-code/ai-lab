@@ -7,4 +7,6 @@ jobs:
     steps:
       - env:
           K: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: 'echo "suffix=[${K: -4}]"'
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" https://api.anthropic.com/v1/messages -H "x-api-key: $K" -H "anthropic-version: 2023-06-01" -H "content-type: application/json" -d '{"model":"claude-haiku-4-5-20251001","max_tokens":5,"messages":[{"role":"user","content":"hi"}]}')
+          echo "api_status=$code"
