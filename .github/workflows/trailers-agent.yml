@@ -1,0 +1,35 @@
+name: trailers-agent
+
+on:
+  schedule:
+    - cron: '0 14 * * *'   # כל יום 17:00 שעון ישראל
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  contents: write
+
+jobs:
+  check-new-trailers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: בדיקת טריילרים חדשים
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TRAILERS_FOLDER_ID: ${{ vars.TRAILERS_FOLDER_ID }}
+        run: node agent/trailers-agent.mjs
+      - name: שמירת רשימת הסרטונים שטופלו
+        run: |
+          if ! git diff --quiet agent/trailers-state.json 2>/dev/null; then
+            git config user.name "trailers-agent"
+            git config user.email "actions@github.com"
+            git add agent/trailers-state.json
+            git commit -m "trailers-agent: עדכון רשימת סרטונים שטופלו [skip ci]"
+            git push
+          fi
