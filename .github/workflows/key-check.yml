@@ -1,9 +1,10 @@
 name: key-check
-on: { workflow_dispatch: {} }
+on:
+  workflow_dispatch: {}
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - env:
           K: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: echo "suffix=[${K: -4}]"
+        run: 'echo "suffix=[${K: -4}]"'
