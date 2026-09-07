@@ -215,4 +215,16 @@
 
   <!-- Student project sites are noindex — intentionally not listed here -->
   <!-- Legal pages (privacy/terms/accessibility) are intentionally noindex — not listed here -->
+  <url>
+    <loc>https://ai-lab.co.il/blog/discord-for-kids-parents-guide.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ai-lab.co.il/blog/ailab-discord-community.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
