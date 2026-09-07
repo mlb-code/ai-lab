@@ -1167,6 +1167,54 @@ gtag('config', 'AW-18061574299');
     .btn-soon { background: rgba(255,255,255,.14); color: #fff; border: 1.5px dashed rgba(255,255,255,.45); cursor: default; position: relative; z-index: 1; }
     .comm-icon { position: absolute; top: 26px; left: 26px; color: rgba(255,255,255,.2); }
     .comm-icon svg { width: 92px; height: 92px; }
+    .btn-comm-dc { color: #2B3299; }
+
+    /* ===== הקהילה בדיסקורד — הסבר + מוקאפ ===== */
+    .dc-wrap { display: grid; grid-template-columns: 1fr 1.05fr; gap: 30px; align-items: center; margin-top: 30px; }
+    .dc-how h3 { font-family: var(--font-display); font-weight: normal; font-size: 1.6rem; margin-bottom: 8px; color: #fff; }
+    .dc-how > p { color: rgba(255,255,255,.72); font-size: 1rem; margin-bottom: 18px; }
+    .dc-steps { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 10px; }
+    .dc-steps li { display: flex; gap: 12px; align-items: flex-start; font-size: .96rem; color: rgba(255,255,255,.92); }
+    .dc-steps li a { color: #C7D2FE; text-decoration: underline; text-underline-offset: 3px; }
+    .dc-steps li b { flex: 0 0 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #5865F2, #9FE8F2); color: #0B1030; font-size: .9rem; }
+    .dc-steps code { font-family: inherit; font-weight: 800; background: rgba(255,255,255,.14); color: #fff; padding: 1px 8px; border-radius: 6px; direction: ltr; display: inline-block; }
+    .dc-safe { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .dc-safe span { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 700; padding: 6px 12px; border-radius: 50px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); color: #DDE2FF; }
+    .dc-safe svg { width: 14px; height: 14px; }
+    .dc-ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn-dc { background: linear-gradient(135deg, #2B3299, #5865F2); color: #fff; box-shadow: 0 12px 30px rgba(88,101,242,.35); }
+    .btn-dc:hover { transform: translateY(-2px); }
+    /* מוקאפ של השרת — נבנה ב-CSS, בלי צילומי מסך של ילדים */
+    .dc-mock { background: #313338; color: #dbdee1; border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(20,24,60,.35); display: grid; grid-template-columns: 178px 1fr; height: 420px; font-size: .8rem; direction: rtl; }
+    .dc-side { background: #2b2d31; padding: 12px 10px; overflow: hidden; }
+    .dc-side .dc-srv { font-weight: 800; color: #fff; font-size: .86rem; padding: 4px 8px 12px; border-bottom: 1px solid #1f2023; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .dc-side .dc-srv i { width: 22px; height: 22px; border-radius: 7px; background: linear-gradient(135deg, #5865F2, #9FE8F2); display: inline-block; }
+    .dc-cat { color: #949ba4; font-size: .66rem; font-weight: 800; letter-spacing: .02em; padding: 10px 8px 4px; }
+    .dc-ch { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 6px; color: #949ba4; white-space: nowrap; }
+    .dc-ch i { color: #6d7178; font-style: normal; font-weight: 800; }
+    .dc-ch.on { background: #404249; color: #fff; }
+    .dc-ch.lock i::after { content: ""; }
+    .dc-main { display: flex; flex-direction: column; min-width: 0; }
+    .dc-top { padding: 12px 16px; border-bottom: 1px solid #26272b; font-weight: 800; color: #fff; display: flex; gap: 8px; align-items: center; }
+    .dc-top i { color: #80848e; font-style: normal; }
+    .dc-top small { color: #949ba4; font-weight: 500; font-size: .72rem; margin-inline-start: 6px; }
+    .dc-msgs { padding: 14px 16px; display: grid; gap: 14px; align-content: start; overflow: hidden; }
+    .dc-msg { display: flex; gap: 10px; align-items: flex-start; }
+    .dc-av { flex: 0 0 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: #fff; font-size: .82rem; }
+    .dc-av.bot { background: linear-gradient(135deg, #5865F2, #2B3299); }
+    .dc-av.a { background: #E67E22; } .dc-av.b { background: #16A34A; } .dc-av.c { background: #9333EA; }
+    .dc-msg b { color: #fff; font-size: .82rem; }
+    .dc-msg b em { font-style: normal; font-size: .6rem; background: #5865F2; color: #fff; padding: 1px 5px; border-radius: 4px; margin-inline-start: 5px; vertical-align: 1px; }
+    .dc-msg small { color: #949ba4; font-size: .66rem; margin-inline-start: 6px; }
+    .dc-msg p { margin: 2px 0 0; line-height: 1.45; color: #dbdee1; }
+    .dc-msg p span { display: inline-block; background: #2b2d31; border-inline-start: 3px solid #5865F2; padding: 6px 10px; border-radius: 6px; margin-top: 4px; color: #b5bac1; }
+    .dc-input { margin: auto 14px 14px; background: #383a40; border-radius: 10px; padding: 10px 14px; color: #6d7178; }
+    @media (max-width: 860px) {
+        .dc-wrap { grid-template-columns: 1fr; }
+        .dc-mock { height: auto; grid-template-columns: 1fr; }
+        .dc-side { display: none; }
+        .dc-msgs { padding: 12px; }
+    }
 
     /* ===== נרשמים עכשיו ===== */
     .open-now { margin-bottom: 78px; }
@@ -2966,10 +3014,62 @@ gtag('config', 'AW-18061574299');
                     <div class="comm-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.891.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
                     </div>
-                    <span class="comm-tag">בקרוב</span>
+                    <span class="comm-tag">פתוחה · לתלמידים ולהורים</span>
                     <h3>קהילת הדיסקורד</h3>
-                    <p>מרחב לתלמידים שלנו: שיתוף פרויקטים, עזרה הדדית, אירועים חיים ואתגרי בנייה משותפים.</p>
-                    <span class="btn btn-soon">נפתחת בקרוב</span>
+                    <p>הבית של תלמידי המרכז בין המפגשים: אתגר שבועי, עזרה במשימה, הצגת פרויקטים, ערוץ לכל מסלול — וקומה נפרדת להורים. הכניסה עם קוד אישי מהאזור האישי.</p>
+                    <a href="https://discord.gg/qUxv47SCfh" target="_blank" rel="noopener" class="btn btn-comm btn-comm-dc">הצטרפו לדיסקורד <span class="arr">←</span></a>
+                </div>
+            </div>
+
+            <div class="dc-wrap" id="discord">
+                <div class="dc-how reveal">
+                    <h3>איך נכנסים לקהילת הדיסקורד?</h3>
+                    <p>שרת מנוהל של AI Lab. ערוצי התלמידים נפתחים רק עם קוד אישי — כך הקהילה נשארת של הילדים שלנו בלבד.</p>
+                    <ol class="dc-steps">
+                        <li><b>1</b><span>נרשמים לאחד הקורסים. הקוד האישי מופיע ב<a href="https://my.ai-lab.co.il/student">אזור האישי של התלמיד</a> (ולהורים — באזור ההורים).</span></li>
+                        <li><b>2</b><span>לוחצים "הצטרפו לדיסקורד" ועונים בשאלת הכניסה: <code>תלמיד</code> או <code>הורה</code>.</span></li>
+                        <li><b>3</b><span>מקלידים <code>/קוד</code> ואת הקוד — וערוץ המסלול, האתגר השבועי ועזרה במשימה נפתחים מיד.</span></li>
+                    </ol>
+                    <div class="dc-safe">
+                        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg> מנוהל על ידי צוות המרכז</span>
+                        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> ערוצי תלמידים סגורים לזרים</span>
+                        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/></svg> קומה נפרדת להורים</span>
+                    </div>
+                    <div class="dc-ctas">
+                        <a href="https://discord.gg/qUxv47SCfh" target="_blank" rel="noopener" class="btn btn-dc">הצטרפו לדיסקורד</a>
+                        <a href="https://my.ai-lab.co.il/student" class="btn btn-ghost-dark">לקוד שלי באזור האישי</a>
+                    </div>
+                </div>
+                <div class="dc-mock reveal" aria-label="הדמיה של שרת הדיסקורד של AI Lab" role="img">
+                    <div class="dc-side">
+                        <div class="dc-srv"><i></i> AI Lab · המרכז למיומנויות העתיד</div>
+                        <div class="dc-cat">התחלה</div>
+                        <div class="dc-ch"><i>#</i> ברוכים-הבאים</div>
+                        <div class="dc-ch"><i>#</i> חוקים</div>
+                        <div class="dc-cat">פתוח לכולם</div>
+                        <div class="dc-ch"><i>#</i> חדשות-ai</div>
+                        <div class="dc-ch"><i>#</i> כלי-השבוע</div>
+                        <div class="dc-ch on"><i>#</i> אתגר-השבוע</div>
+                        <div class="dc-ch"><i>#</i> הצגת-פרויקטים</div>
+                        <div class="dc-cat">אזור תלמידים</div>
+                        <div class="dc-ch"><i>#</i> עזרה-במשימה</div>
+                        <div class="dc-ch"><i>#</i> עוזר-הלימודים</div>
+                        <div class="dc-ch"><i>#</i> רעיונות-לפרויקט</div>
+                        <div class="dc-ch"><i>#</i> יזמות-ובינה</div>
+                        <div class="dc-ch"><i>#</i> יצירת-סרטונים-ב-ai</div>
+                        <div class="dc-cat">הורים</div>
+                        <div class="dc-ch"><i>#</i> הורים</div>
+                    </div>
+                    <div class="dc-main">
+                        <div class="dc-top"><i>#</i> אתגר-השבוע <small>אתגר חדש כל יום ראשון</small></div>
+                        <div class="dc-msgs">
+                            <div class="dc-msg"><span class="dc-av bot">AI</span><div><b>AI Lab Bot <em>BOT</em></b><small>יום ראשון 17:00</small><p>אתגר השבוע: לבנות דף נחיתה למוצר דמיוני ב-30 דקות עם Claude. מי שמסיים — שולח צילום מסך כאן עד יום חמישי.</p></div></div>
+                            <div class="dc-msg"><span class="dc-av a">י</span><div><b>יובל</b><small>יום שני 16:42</small><p>סיימתי! הוספתי גם טופס הרשמה וכפתור וואטסאפ<span>landing-page-v2.png</span></p></div></div>
+                            <div class="dc-msg"><span class="dc-av b">מ</span><div><b>מנחה · תומר</b><small>יום שני 17:05</small><p>יפה מאוד. טיפ לשדרוג: שאלה אחת בכותרת שגורמת למבקר לעצור ולחשוב. נסה ותראה מה קורה להמרות.</p></div></div>
+                            <div class="dc-msg"><span class="dc-av c">ר</span><div><b>רוני</b><small>יום שני 17:31</small><p>איך עשית שהכפתור יזוז כשעוברים עליו? תקוע על זה</p></div></div>
+                        </div>
+                        <div class="dc-input">שליחת הודעה ל-#אתגר-השבוע</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3239,6 +3339,7 @@ gtag('config', 'AW-18061574299');
                 <li><a href="mailto:meir@ai-lab.co.il">meir@ai-lab.co.il</a></li>
                 <li><a href="https://wa.me/972546500795" target="_blank" rel="noopener">וואטסאפ</a></li>
                 <li><a href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener">קבוצת הקהילה</a></li>
+                <li><a href="https://discord.gg/qUxv47SCfh" target="_blank" rel="noopener">קהילת הדיסקורד</a></li>
             </ul>
         </div>
     </div>
