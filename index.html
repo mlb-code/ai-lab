@@ -3779,10 +3779,25 @@ gtag('config', 'AW-18061574299');
 
         // --- פתיחה/סגירה ---
         let opened = false;
+        // מדידת הסוכן (07/09): מזהה שיחה לביקור + אירועי פתיחה/לחיצה נשלחים לפלטפורמה. בלי פרטים מזהים.
+        const AGENT_EVENT_API = 'https://my.ai-lab.co.il/api/sales-agent/event';
+        function agentSid() {
+            try {
+                let id = sessionStorage.getItem('ag-sid');
+                if (!id) { id = 's-' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); sessionStorage.setItem('ag-sid', id); }
+                return id;
+            } catch (e) { return 's-anon'; }
+        }
+        function agentTrack(event, label, kind) {
+            try {
+                fetch(AGENT_EVENT_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
+                    body: JSON.stringify({ session: agentSid(), source: 'site', event, label, kind, page: location.pathname + location.hash }) }).catch(() => {});
+            } catch (e) { /* המדידה לא מפילה כלום */ }
+        }
         function openAgent(prefill) {
             wrap.classList.add('open');
             document.body.classList.add('agent-open');
-            if (!opened) { opened = true; greet(); }
+            if (!opened) { opened = true; greet(); agentTrack('open'); }
             setTimeout(() => { field.focus(); if (prefill) field.value = prefill; }, 250);
         }
         function closeAgent() {
@@ -3843,6 +3858,7 @@ gtag('config', 'AW-18061574299');
                 if (a.t === 'scroll') el.addEventListener('click', () => { closeAgent(); if (window.openHubFor) window.openHubFor(a.sel); setTimeout(() => document.querySelector(a.sel).scrollIntoView({ behavior: 'smooth' }), 150); });
                 if (a.t === 'course') el.addEventListener('click', () => { closeAgent(); openCourse(a.i); });
                 if (a.t === 'link' && a.href.startsWith('#')) el.addEventListener('click', () => closeAgent());
+                el.addEventListener('click', () => agentTrack('action', a.label, a.t));
                 row.appendChild(el);
             });
             log.appendChild(row);
@@ -3962,7 +3978,7 @@ gtag('config', 'AW-18061574299');
                 const res = await fetch(AGENT_API, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ messages: agentHist.slice(-12) })
+                    body: JSON.stringify({ messages: agentHist.slice(-12), session: agentSid(), source: 'site' })
                 });
                 if (!res.ok) throw 0;
                 const r = await res.json();
