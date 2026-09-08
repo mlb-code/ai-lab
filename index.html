@@ -43,6 +43,17 @@ gtag('config', 'AW-18061574299');
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<!-- טעינה מוקדמת של הגופנים (Suez One + Assistant, עברית ולטינית) — מונע קפיצת פריסה כשהגופן מגיע אחרי הציור הראשון -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/assistant/v24/2sDcZGJYnIjSi6H75xkzamW5Kb8VZBHR.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/assistant/v24/2sDcZGJYnIjSi6H75xkzaGW5Kb8VZA.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/assistant/v24/2sDcZGJYnIjSi6H75xkzamW5Kb8VZBHR.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/assistant/v24/2sDcZGJYnIjSi6H75xkzaGW5Kb8VZA.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/assistant/v24/2sDcZGJYnIjSi6H75xkzamW5Kb8VZBHR.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/assistant/v24/2sDcZGJYnIjSi6H75xkzaGW5Kb8VZA.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/assistant/v24/2sDcZGJYnIjSi6H75xkzamW5Kb8VZBHR.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/assistant/v24/2sDcZGJYnIjSi6H75xkzaGW5Kb8VZA.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/suezone/v15/taiJGmd_EZ6rqscQgOFMmouC-50xUK4.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/suezone/v15/taiJGmd_EZ6rqscQgOFOmouC-50x.woff2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Assistant:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;700&display=swap" rel="stylesheet">
@@ -826,6 +837,10 @@ gtag('config', 'AW-18061574299');
     .c-w { color: #fff; font-weight: 800; }
     .c-cy { color: #4DD6E8; font-weight: 800; }
     .c-in { color: #A5A8FF; font-weight: 700; }
+    #typeSub, #decodeWord { position: relative; }
+    .type-ghost { visibility: hidden; }
+    #typeSub .type-ghost { display: block; }
+    .type-live { position: absolute; inset: 0; display: block; }
     .type-cursor {
         display: inline-block; width: 8px; height: 1.05em; margin-inline-start: 2px;
         background: #4DD6E8; vertical-align: text-bottom;
@@ -4131,11 +4146,14 @@ gtag('config', 'AW-18061574299');
         // קוראים את הטוקנים מה-HTML (שומר SEO), מודדים גובה, מוחקים ומקלידים חזרה
         const tokens = [...el.childNodes].map(n =>
             n.nodeType === 3 ? { t: n.textContent, c: null } : { t: n.textContent, c: n.className });
-        el.style.minHeight = el.offsetHeight + 'px';
-        el.innerHTML = '';
+        // "רוח רפאים": הטקסט המלא נשאר במקום (מוסתר) ושומר את הגובה המדויק — גם אחרי טעינת הפונט —
+        // והטקסט המוקלד מצויר מעליו. אפס קפיצות בעמוד (בעיית המובייל, מאיר 08/09).
+        const ghost = document.createElement('span'); ghost.className = 'type-ghost'; ghost.setAttribute('aria-hidden', 'true'); ghost.innerHTML = el.innerHTML;
+        const live = document.createElement('span'); live.className = 'type-live';
+        el.innerHTML = ''; el.appendChild(ghost); el.appendChild(live);
         const cursor = document.createElement('span');
         cursor.className = 'type-cursor';
-        el.appendChild(cursor);
+        live.appendChild(cursor);
         let ti = 0, ci = 0, cur = null;
         const SPEED = 13, START = 600;
         function step() {
@@ -4148,7 +4166,7 @@ gtag('config', 'AW-18061574299');
             if (!cur) {
                 cur = tok.c ? document.createElement('span') : document.createTextNode('');
                 if (tok.c) cur.className = tok.c;
-                el.insertBefore(cur, cursor);
+                live.insertBefore(cur, cursor);
             }
             ci++;
             cur.textContent = tok.t.slice(0, ci);
@@ -4164,6 +4182,9 @@ gtag('config', 'AW-18061574299');
         if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         const FINAL = 'העתיד.';
         const GLYPHS = '01אבגדהוזחטיכלמנ×+∆◊';
+        // המילה הסופית שומרת מקום (מוסתרת); הגליפים המתחלפים מצוירים מעליה בלי להזיז שום דבר
+        el.innerHTML = '<span class="type-ghost" aria-hidden="true">' + FINAL + '</span><span class="type-live"></span>';
+        const liveW = el.lastChild;
         const D = 950, LOCK = 130;
         const t0 = performance.now();
         (function tick(){
@@ -4172,7 +4193,7 @@ gtag('config', 'AW-18061574299');
             for (let i = 0; i < FINAL.length; i++) {
                 out += el2 > D + i * LOCK - D ? (el2 > i * LOCK + 320 ? FINAL[i] : GLYPHS[(Math.floor(el2 / 46) * 7 + i * 3) % GLYPHS.length]) : FINAL[i];
             }
-            el.textContent = out;
+            liveW.textContent = out;
             if (out !== FINAL) requestAnimationFrame(tick); else el.textContent = FINAL;
         })();
     })();
