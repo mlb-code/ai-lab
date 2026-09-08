@@ -52,16 +52,27 @@ async function gscQuery(token, body) {
 // ---- Google Analytics 4 (Data API) — ביקורים, מקורות, ומה לוחצים באתר (אירועי cta_click) ----
 // דורש: GA4_PROPERTY_ID (משתנה בריפו) + חשבון השירות כ-Viewer בנכס + מימדים מותאמים cta_label / cta_section
 const GA4 = process.env.GA4_PROPERTY_ID;
-// תנועת פיתוח מקומית (localhost:5500/5502 של מאיר) לא נספרת — מסננים לפי hostName בכל השאילתות
-const NOT_LOCAL = { notExpression: { filter: { fieldName: "hostName", stringFilter: { matchType: "CONTAINS", value: "localhost" } } } };
+// תנועת פיתוח מקומית (localhost של מאיר) לא נספרת: מוסיפים hostName לכל שאילתה, מסננים בצד שלנו ומאחדים חזרה
 async function ga4Report(token, body) {
-  const dimensionFilter = body.dimensionFilter ? { andGroup: { expressions: [body.dimensionFilter, NOT_LOCAL] } } : NOT_LOCAL;
+  const dims = [...(body.dimensions || []), { name: "hostName" }];
   const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${GA4}:runReport`, {
-    method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ ...body, dimensionFilter }),
+    method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ ...body, dimensions: dims, limit: Math.min((body.limit || 10) * 4, 250) }),
   });
   if (!res.ok) throw new Error(`GA4 ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const j = await res.json();
-  return (j.rows || []).map(r => ({ k: (r.dimensionValues || []).map(d => d.value), v: (r.metricValues || []).map(m => Number(m.value)) }));
+  const merged = new Map();
+  for (const r of j.rows || []) {
+    const keys = (r.dimensionValues || []).map(d => d.value);
+    const host = keys.pop();
+    if (/localhost|127\.0\.0\.1/.test(host || "")) continue;
+    const vals = (r.metricValues || []).map(m => Number(m.value));
+    const id = keys.join("\u0001");
+    const cur = merged.get(id) || { k: keys, v: vals.map(() => 0) };
+    cur.v = cur.v.map((x, i) => x + (vals[i] || 0));
+    merged.set(id, cur);
+  }
+  return [...merged.values()].sort((a, b) => b.v[0] - a.v[0]).slice(0, body.limit || 10);
 }
 async function analyticsBlock(token) {
   if (!GA4) return "### אנליטיקס (GA4)\nעדיין לא מחובר — חסר GA4_PROPERTY_ID (מאיר צריך להוסיף את חשבון השירות כ-Viewer בנכס ולשמור את מזהה הנכס).";
