@@ -460,8 +460,15 @@ gtag('config', 'AW-18061574299');
     .hero-comm .dc-ic { width: 19px; height: 19px; fill: #fff; flex-shrink: 0; }
     .hero-comm-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
     /* דיסקורד בהירו — זכוכית שקטה (אפשרות ד׳, מאיר 08/09): הכפתור הראשי נשאר סגול, הקהילה משנית */
-    .hero-comm.dc { background: rgba(255,255,255,.08); border-color: rgba(199,210,254,.5); box-shadow: 0 6px 20px rgba(0,0,0,.25); animation-delay: .7s; }
-    .hero-comm.dc:hover { background: rgba(255,255,255,.14); box-shadow: 0 10px 30px rgba(88,101,242,.35); }
+    /* זכוכית עם "אור" עדין בצבע דיסקורד (#5865F2): הילה פנימית, מסגרת בגוון, אייקון בכחול-לבנדר (מאיר 08/09) */
+    .hero-comm.dc {
+        background: radial-gradient(120% 140% at 15% 50%, rgba(88,101,242,.42), rgba(88,101,242,.12) 55%, rgba(255,255,255,.07) 100%);
+        border-color: rgba(139,148,255,.7);
+        box-shadow: 0 6px 22px rgba(88,101,242,.28), inset 0 0 18px rgba(88,101,242,.22);
+        animation-delay: .7s;
+    }
+    .hero-comm.dc .dc-ic { fill: #C7CBFF; filter: drop-shadow(0 0 6px rgba(121,131,245,.9)); }
+    .hero-comm.dc:hover { background: radial-gradient(120% 140% at 15% 50%, rgba(88,101,242,.6), rgba(88,101,242,.2) 55%, rgba(255,255,255,.1) 100%); box-shadow: 0 10px 30px rgba(88,101,242,.45), inset 0 0 22px rgba(88,101,242,.3); }
     .hero-comm.dc::after { display: none; }
     .hero-comm .wave { display: inline-block; animation: waveHand 2.2s ease-in-out infinite; transform-origin: 70% 70%; font-size: 1.15em; }
     @keyframes waveHand { 0%, 55%, 100% { transform: rotate(0); } 62% { transform: rotate(16deg); } 70% { transform: rotate(-8deg); } 78% { transform: rotate(14deg); } 86% { transform: rotate(0); } }
