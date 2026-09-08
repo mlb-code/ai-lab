@@ -52,9 +52,12 @@ async function gscQuery(token, body) {
 // ---- Google Analytics 4 (Data API) — ביקורים, מקורות, ומה לוחצים באתר (אירועי cta_click) ----
 // דורש: GA4_PROPERTY_ID (משתנה בריפו) + חשבון השירות כ-Viewer בנכס + מימדים מותאמים cta_label / cta_section
 const GA4 = process.env.GA4_PROPERTY_ID;
+// תנועת פיתוח מקומית (localhost:5500/5502 של מאיר) לא נספרת — מסננים לפי hostName בכל השאילתות
+const NOT_LOCAL = { notExpression: { filter: { fieldName: "hostName", stringFilter: { matchType: "CONTAINS", value: "localhost" } } } };
 async function ga4Report(token, body) {
+  const dimensionFilter = body.dimensionFilter ? { andGroup: { expressions: [body.dimensionFilter, NOT_LOCAL] } } : NOT_LOCAL;
   const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${GA4}:runReport`, {
-    method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(body),
+    method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ ...body, dimensionFilter }),
   });
   if (!res.ok) throw new Error(`GA4 ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const j = await res.json();
@@ -156,7 +159,7 @@ const res = await fetch("https://api.anthropic.com/v1/messages", {
     max_tokens: 3000,
     system: `אתה "סוכן הנראות" של AI Lab (ai-lab.co.il) — בית ספר ישראלי ל-AI ויזמות לילדים ונוער. אתה כותב דוח SEO שבועי בעברית למאיר, בעל העסק, שאינו איש טכנולוגיה.
 כללים: עברית פשוטה וחמה, בלי ז'רגון. פתח בשורת מצב אחת (עלייה/יציבות/ירידה). הצג עד 5 נקודות עיקריות עם מספרים מדויקים. אם יש ירידה חדה (מעל 30% בקליקים) — פתח ב"⚠️ דורש תשומת לב".
-הדוח בנוי משני חלקים: (1) "בגוגל" — חיפושים, שאילתות, מיקומים (Search Console). (2) "באתר" — ביקורים, מאיפה מגיעים, ואיזה כפתורים לוחצים יותר ופחות (Google Analytics, אירועי cta_click). בחלק "באתר" תמיד ציין: 3 הכפתורים הכי נלחצים, כפתורים חשובים שכמעט לא לוחצים עליהם (במיוחד הרשמה/מפת הקורסים/דיסקורד/וואטסאפ), ומגמה מול השבוע הקודם. אם האנליטיקס לא מחובר — כתוב זאת במשפט אחד ומה צריך כדי לחבר.
+הדוח בנוי משני חלקים: (1) "בגוגל" — חיפושים, שאילתות, מיקומים (Search Console). (2) "באתר" — ביקורים, מאיפה מגיעים, ואיזה כפתורים לוחצים יותר ופחות (Google Analytics, אירועי cta_click). בחלק "באתר" תמיד ציין: 3 הכפתורים הכי נלחצים, כפתורים חשובים שכמעט לא לוחצים עליהם (במיוחד הרשמה/מפת הקורסים/דיסקורד/וואטסאפ), ומגמה מול השבוע הקודם. מעקב הלחיצות (cta_click) כבר מותקן באתר מ-08.09.2026 — אם אין עדיין נתוני לחיצות, כתוב שהם מצטברים ואל תמליץ "לחבר מעקב". אם האנליטיקס לא מחובר — כתוב זאת במשפט אחד ומה צריך כדי לחבר.
 סיים ב"ההמלצה השבועית" אחת בלבד: נושא מאמר מבוסס שאילתה עולה, תיקון טכני, או שינוי בכפתור שלא ממיר — הכי מעשי שיש. אל תמציא נתונים; אם משהו חסר, כתוב שחסר.`,
     messages: [{ role: "user", content: `הנתונים לשבוע זה:\n\n${dataBlock}` }],
   }),
