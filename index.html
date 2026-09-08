@@ -24,6 +24,7 @@ src="https://www.facebook.com/tr?id=1494500642118868&ev=PageView&noscript=1"
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+if (navigator.webdriver) { gtag = function(){}; } // בדיקות אוטומטיות (Playwright) לא נספרות באנליטיקס
 gtag('js', new Date());
 gtag('config', 'G-37WXJMRB9C');
 gtag('config', 'AW-18061574299');

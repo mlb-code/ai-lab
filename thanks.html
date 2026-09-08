@@ -29,6 +29,7 @@ fbq('track','Lead');
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+if (navigator.webdriver) { gtag = function(){}; } // בדיקות אוטומטיות (Playwright) לא נספרות באנליטיקס
 gtag('js', new Date());
 gtag('config', 'G-2V4B01L78V');
 gtag('config', 'AW-18061574299');
