@@ -1,0 +1,35 @@
+name: publish-agent
+
+# "פרסום בקליק": מאיר עונה על מייל של Issue במילה "טיוטה" או "פרסם" (אפשר גם "פרסם: נושא") —
+# הסוכן כותב מאמר בלוג ומצרף טיוטה / מפרסם אותו לאתר.
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency: publish-agent
+
+jobs:
+  publish:
+    if: >-
+      github.event.comment.user.login == 'mlb-code' &&
+      (startsWith(github.event.comment.body, 'פרסם') || startsWith(github.event.comment.body, 'טיוטה') ||
+       startsWith(github.event.comment.body, 'publish') || startsWith(github.event.comment.body, 'draft'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: הרצת סוכן הפרסום
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: node agent/publish-agent.mjs
