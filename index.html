@@ -4963,6 +4963,21 @@ gtag('config', 'AW-18061574299');
         entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ===== מדידת לחיצות ל-Google Analytics (08.09.2026, בקשת מאיר): כל כפתור/קישור משמעותי → אירוע cta_click =====
+    (function ctaTracking(){
+        const SEL = 'a.btn, button.btn, .hero-comm, .btn-comm, .btn-dc, .grating, .ask-bar, .agent-orb, .foot-social a, .m-social a, nav a, .mlink, .post, .hub-head, a[href*="my.ai-lab.co.il"], a[href*="wa.me"], a[href*="discord.gg"], a[href*="chat.whatsapp.com"], a[href*="tel:"], a[href*="mailto:"], [data-track]';
+        document.addEventListener('click', e => {
+            const el = e.target && e.target.closest ? e.target.closest(SEL) : null;
+            if (!el || typeof gtag !== 'function') return;
+            const hubTitle = el.classList.contains('hub-head') ? el.querySelector('.hub-tt b')?.textContent?.trim() : null;
+            const label = (el.dataset.track || (hubTitle ? 'פתיחת: ' + hubTitle : '') || el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+            const hub = el.closest('.hub-item');
+            const section = hub ? ('אקורדיון: ' + (hub.querySelector('.hub-tt b')?.textContent?.trim() || 'hub')) : (el.closest('section[id]')?.id || (el.closest('header') ? 'hero' : el.closest('footer') ? 'footer' : el.closest('nav, .mmenu, .mobile-menu') ? 'nav' : 'page'));
+            const href = (el.getAttribute('href') || '').slice(0, 100);
+            gtag('event', 'cta_click', { cta_label: label || '(ללא טקסט)', cta_section: section, cta_href: href, transport_type: 'beacon' });
+        }, true);
+    })();
 </script>
 </body>
 </html>

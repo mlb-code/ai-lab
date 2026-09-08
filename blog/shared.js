@@ -370,3 +370,16 @@
         window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
     };
 })();
+
+
+// ===== מדידת לחיצות ל-Google Analytics (08.09.2026): כפתורים וקישורים משמעותיים → אירוע cta_click =====
+(function ctaTracking(){
+    const SEL = 'a.btn, button.btn, .cta-btn, .btn-submit, .blog-card, .back-link, .footer-social a, .nav-cta, .nav-links a, .mobile-menu-links a, a[href*="my.ai-lab.co.il"], a[href*="wa.me"], a[href*="discord.gg"], a[href*="chat.whatsapp.com"], a[href*="tel:"], a[href*="mailto:"], [data-track]';
+    document.addEventListener('click', e => {
+        const el = e.target && e.target.closest ? e.target.closest(SEL) : null;
+        if (!el || typeof gtag !== 'function') return;
+        const label = (el.dataset.track || el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+        const section = el.closest('article') ? 'article' : el.closest('#shared-cta') ? 'cta' : el.closest('footer, #shared-footer') ? 'footer' : el.closest('nav, #shared-nav') ? 'nav' : 'page';
+        gtag('event', 'cta_click', { cta_label: label || '(ללא טקסט)', cta_section: 'blog:' + section, cta_href: (el.getAttribute('href') || '').slice(0, 100), transport_type: 'beacon' });
+    }, true);
+})();

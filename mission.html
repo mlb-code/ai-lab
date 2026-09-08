@@ -657,6 +657,14 @@
   }
 }
 </script>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-37WXJMRB9C"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-37WXJMRB9C');
+</script>
 </head>
 <body>
 
@@ -859,5 +867,18 @@
     }
   </script>
 <script src="/agent-widget.js" defer></script>
+<script>
+// מדידת לחיצות ל-Google Analytics (08.09.2026): כפתורים וקישורים → אירוע cta_click
+(function(){
+  const SEL = 'a.btn-primary, a.btn-discord, a.btn-outline, .nav-cta, nav a, a[href*="my.ai-lab.co.il"], a[href*="wa.me"], a[href*="discord.gg"], a[href*="chat.whatsapp.com"], [data-track]';
+  document.addEventListener('click', e => {
+    const el = e.target && e.target.closest ? e.target.closest(SEL) : null;
+    if (!el || typeof gtag !== 'function') return;
+    const label = (el.dataset.track || el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+    const section = el.closest('section[id]')?.id || (el.closest('header') ? 'hero' : el.closest('nav') ? 'nav' : 'page');
+    gtag('event', 'cta_click', { cta_label: label || '(ללא טקסט)', cta_section: 'mission:' + section, cta_href: (el.getAttribute('href') || '').slice(0, 100), transport_type: 'beacon' });
+  }, true);
+})();
+</script>
 </body>
 </html>
