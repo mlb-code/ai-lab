@@ -445,6 +445,10 @@ gtag('config', 'AW-18061574299');
     }
     @keyframes commShine { 0%, 55% { transform: translateX(160%); } 90%, 100% { transform: translateX(-160%); } }
     .hero-comm .wa-ic { width: 19px; height: 19px; fill: #fff; flex-shrink: 0; }
+    .hero-comm .dc-ic { width: 19px; height: 19px; fill: #fff; flex-shrink: 0; }
+    .hero-comm-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .hero-comm.dc { background: linear-gradient(120deg, #3B45C9, #5865F2 55%, #7983F5); border-color: rgba(199,210,254,.55); box-shadow: 0 8px 28px rgba(88,101,242,.4); animation-delay: .7s; }
+    .hero-comm.dc:hover { box-shadow: 0 12px 38px rgba(88,101,242,.55); }
     .hero-comm .wave { display: inline-block; animation: waveHand 2.2s ease-in-out infinite; transform-origin: 70% 70%; font-size: 1.15em; }
     @keyframes waveHand { 0%, 55%, 100% { transform: rotate(0); } 62% { transform: rotate(16deg); } 70% { transform: rotate(-8deg); } 78% { transform: rotate(14deg); } 86% { transform: rotate(0); } }
 
@@ -2327,7 +2331,7 @@ gtag('config', 'AW-18061574299');
         .hero h1 { font-size: clamp(2.05rem, 8.8vw, 2.7rem); }
         .hero-sub .c-in { white-space: nowrap; }
         .hero-actions { flex-direction: column; gap: 12px; }
-        .hero-actions .hero-comm { order: -1; }
+        .hero-actions .hero-comm-row { order: -1; width: 100%; max-width: 340px; }
         .hero-actions .holo-wrap { order: 2; }
         .hud-row { justify-content: center; }
         .hud-row > .grating { display: none; }
@@ -2454,7 +2458,8 @@ gtag('config', 'AW-18061574299');
         .comm-card { padding: 36px 26px; }
         .comm-card .btn { width: 100%; }
         .comm-icon svg { width: 70px; height: 70px; }
-        .hero-comm { font-size: .85rem; width: 100%; justify-content: center; text-align: center; }
+        .hero-comm-row { width: 100%; gap: 8px; flex-wrap: nowrap; }
+        .hero-comm { font-size: .82rem; flex: 1 1 0; justify-content: center; text-align: center; padding: 11px 10px; gap: 7px; }
         .rv-stage { min-height: 190px; }
         .foot-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
         .foot-brand { grid-column: 1 / -1; }
@@ -2496,7 +2501,7 @@ gtag('config', 'AW-18061574299');
         .hero-actions .cr-row .holo-wrap { order: 2; flex: 1 1 100%; max-width: 340px; margin-inline: auto; display: block; }
         .hero-actions .cr-row .holo-wrap .btn { width: 100%; }
         .hero-actions a.grating-m { order: 10; flex: 0 0 auto; width: max-content; height: auto; padding: 8px 18px; margin: 4px auto 0; }
-        .hero-actions .hero-comm { order: -1; }
+        .hero-actions .hero-comm-row { order: -1; width: 100%; max-width: 340px; }
     }
 
     /* ===== גיבוי לדפדפנים בלי backdrop-filter (WebView ישן / פיירפוקס לפני 103) =====
@@ -2682,11 +2687,10 @@ gtag('config', 'AW-18061574299');
             </button></span>
             <div class="hero-actions">
                 <div class="cr-row"><span class="holo-wrap"><a href="#courses" class="btn btn-primary">למפת הקורסים <span class="arr">←</span></a></span><a class="grating grating-m" href="https://share.google/ckBqGOSb4wWxyHCfX" target="_blank" rel="noopener" aria-label="דירוג 5.0 בגוגל"><span class="gr-star">★</span> <b>5.0</b> <span class="gr-txt">בגוגל</span></a></div>
-                <a class="hero-comm" href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener">
-                <svg class="wa-ic" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                בואו לקהילה שלנו
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </a>
+                <div class="hero-comm-row" aria-label="הקהילות שלנו">
+                    <a class="hero-comm wa" href="https://chat.whatsapp.com/LpbKfD25gYF6Tx2K9Lj5WG?mode=hqctcli" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> הקהילה בוואטסאפ</a>
+                    <a class="hero-comm dc" href="https://discord.gg/qUxv47SCfh" target="_blank" rel="noopener"><svg class="dc-ic" viewBox="0 0 24 24"><path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.891.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg> הקהילה בדיסקורד</a>
+                </div>
             </div>
         </div>
         <div class="pmosaic" id="pmosaic"></div>
@@ -4072,6 +4076,26 @@ gtag('config', 'AW-18061574299');
         // המוח האמיתי: סוכן המכירות בפלטפורמה (Sonnet). נופל למוח הדמו אם אין רשת.
         const AGENT_API = 'https://my.ai-lab.co.il/api/sales-agent';
         const agentHist = [];
+        // איפה הגולש נמצא כרגע (דף + הסקשן שבמרכז המסך) — הסוכן מתאים את התשובה למה שמולו
+        function agentPageContext() {
+            const names = { courses: 'מפת הקורסים ומחירים', community: 'הקהילות שלנו (וואטסאפ ודיסקורד)', discord: 'ההסבר על קהילת הדיסקורד', blog: 'הבלוג', faq: 'שאלות נפוצות', wall: 'הפרויקטים של התלמידים', builders: 'הבונים הצעירים', videos: 'סרטוני התלמידים', howitworks: 'איך זה עובד', trailersBlock: 'טריילרים של תלמידים' };
+            const mid = window.innerHeight / 2;
+            let best = null, bestD = 1e9;
+            document.querySelectorAll('section[id], [id="discord"], .hub-item').forEach(el => {
+                const r = el.getBoundingClientRect();
+                if (r.height < 40) return;
+                const d = r.top <= mid && r.bottom >= mid ? 0 : Math.min(Math.abs(r.top - mid), Math.abs(r.bottom - mid));
+                if (d < bestD) { bestD = d; best = el; }
+            });
+            let where = 'דף הבית (למעלה)';
+            if (best && bestD < 400) {
+                const id = best.id;
+                const hub = best.classList.contains('hub-item') ? best.querySelector('.hub-tt b')?.textContent?.trim() : null;
+                where = names[id] || hub || best.querySelector('h2, h3')?.textContent?.trim()?.slice(0, 60) || id || where;
+            }
+            const scrolled = Math.round((window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight)) * 100);
+            return `דף הבית ai-lab.co.il — סקשן: ${where} (גלילה ${isNaN(scrolled) ? 0 : scrolled}%)`;
+        }
         async function send(text) {
             if (!text.trim()) return;
             const clean = text.replace(/[<>]/g, '');
@@ -4083,7 +4107,7 @@ gtag('config', 'AW-18061574299');
                 const res = await fetch(AGENT_API, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ messages: agentHist.slice(-12), session: agentSid(), source: 'site' })
+                    body: JSON.stringify({ messages: agentHist.slice(-12), session: agentSid(), source: 'site', page: location.pathname + location.hash, context: agentPageContext() })
                 });
                 if (!res.ok) throw 0;
                 const r = await res.json();
