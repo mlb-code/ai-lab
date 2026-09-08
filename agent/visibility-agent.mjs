@@ -24,7 +24,7 @@ async function googleToken(sa) {
   const enc = o => Buffer.from(JSON.stringify(o)).toString("base64url");
   const unsigned = enc({ alg: "RS256", typ: "JWT" }) + "." + enc({
     iss: sa.client_email,
-    scope: "https://www.googleapis.com/auth/webmasters.readonly",
+    scope: "https://www.googleapis.com/auth/webmasters.readonly https://www.googleapis.com/auth/analytics.readonly",
     aud: "https://oauth2.googleapis.com/token",
     iat: now, exp: now + 3600,
   });
@@ -47,6 +47,44 @@ async function gscQuery(token, body) {
   });
   if (!res.ok) throw new Error(`GSC ${res.status}: ${await res.text()}`);
   return (await res.json()).rows || [];
+}
+
+// ---- Google Analytics 4 (Data API) — ביקורים, מקורות, ומה לוחצים באתר (אירועי cta_click) ----
+// דורש: GA4_PROPERTY_ID (משתנה בריפו) + חשבון השירות כ-Viewer בנכס + מימדים מותאמים cta_label / cta_section
+const GA4 = process.env.GA4_PROPERTY_ID;
+async function ga4Report(token, body) {
+  const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${GA4}:runReport`, {
+    method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`GA4 ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  const j = await res.json();
+  return (j.rows || []).map(r => ({ k: (r.dimensionValues || []).map(d => d.value), v: (r.metricValues || []).map(m => Number(m.value)) }));
+}
+async function analyticsBlock(token) {
+  if (!GA4) return "### אנליטיקס (GA4)\nעדיין לא מחובר — חסר GA4_PROPERTY_ID (מאיר צריך להוסיף את חשבון השירות כ-Viewer בנכס ולשמור את מזהה הנכס).";
+  const cur = { startDate: "7daysAgo", endDate: "yesterday" }, prev = { startDate: "14daysAgo", endDate: "8daysAgo" };
+  const out = [];
+  try {
+    const [c, p] = await Promise.all([
+      ga4Report(token, { dateRanges: [cur], metrics: [{ name: "sessions" }, { name: "totalUsers" }, { name: "screenPageViews" }] }),
+      ga4Report(token, { dateRanges: [prev], metrics: [{ name: "sessions" }, { name: "totalUsers" }, { name: "screenPageViews" }] }),
+    ]);
+    const f = r => r[0] ? `ביקורים ${r[0].v[0]}, משתמשים ${r[0].v[1]}, צפיות ${r[0].v[2]}` : "(אין נתונים)";
+    out.push(`### ביקורים — 7 ימים אחרונים\n${f(c)}\n### ביקורים — 7 הימים שלפני\n${f(p)}`);
+    const src = await ga4Report(token, { dateRanges: [cur], dimensions: [{ name: "sessionSource" }], metrics: [{ name: "sessions" }], orderBys: [{ metric: { metricName: "sessions" }, desc: true }], limit: 8 });
+    out.push(`### מאיפה מגיעים (7 ימים)\n${src.map(r => `${r.k[0]} — ${r.v[0]}`).join("\n") || "(אין)"}`);
+    const pages = await ga4Report(token, { dateRanges: [cur], dimensions: [{ name: "pagePath" }], metrics: [{ name: "screenPageViews" }], orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }], limit: 10 });
+    out.push(`### עמודים נצפים (7 ימים)\n${pages.map(r => `${r.k[0]} — ${r.v[0]}`).join("\n") || "(אין)"}`);
+    try {
+      const clicks = await ga4Report(token, { dateRanges: [cur], dimensions: [{ name: "customEvent:cta_section" }, { name: "customEvent:cta_label" }], metrics: [{ name: "eventCount" }], dimensionFilter: { filter: { fieldName: "eventName", stringFilter: { value: "cta_click" } } }, orderBys: [{ metric: { metricName: "eventCount" }, desc: true }], limit: 25 });
+      const prevClicks = await ga4Report(token, { dateRanges: [prev], dimensions: [{ name: "customEvent:cta_label" }], metrics: [{ name: "eventCount" }], dimensionFilter: { filter: { fieldName: "eventName", stringFilter: { value: "cta_click" } } }, limit: 60 });
+      const pm = Object.fromEntries(prevClicks.map(r => [r.k[0], r.v[0]]));
+      out.push(`### על מה לוחצים באתר (אירועי cta_click, 7 ימים; בסוגריים השבוע שלפני)\n${clicks.map(r => `[${r.k[0]}] ${r.k[1]} — ${r.v[0]} (${pm[r.k[1]] ?? 0})`).join("\n") || "(עדיין אין לחיצות מדודות)"}`);
+    } catch (e) {
+      out.push(`### על מה לוחצים באתר\nלא זמין עדיין — כנראה המימדים המותאמים cta_label / cta_section לא נרשמו ב-GA4 (Admin → Custom definitions). ${e.message.slice(0, 120)}`);
+    }
+  } catch (e) { out.push(`### אנליטיקס (GA4)\nשגיאה בגישה: ${e.message.slice(0, 200)} — לבדוק שחשבון השירות הוא Viewer בנכס ושמזהה הנכס נכון.`); }
+  return out.join("\n");
 }
 
 const day = d => d.toISOString().slice(0, 10);
@@ -89,6 +127,7 @@ const [curTotal, prevTotal, topQueries, prevQueries, topPages] = await Promise.a
   gscQuery(token, { ...cur, dimensions: ["page"], rowLimit: 12 }),
 ]);
 const tech = await techChecks();
+const analytics = await analyticsBlock(token);
 
 const fmtRows = rows => rows.map(r => `${(r.keys || ["(סה\"כ)"]).join(" | ")} — קליקים ${r.clicks}, חשיפות ${r.impressions}, מיקום ${r.position?.toFixed(1)}`).join("\n") || "(אין נתונים)";
 
@@ -104,7 +143,10 @@ ${fmtRows(prevQueries)}
 ### עמודים מובילים — נוכחי
 ${fmtRows(topPages)}
 ### בדיקות טכניות
-${tech}`;
+${tech}
+
+## אנליטיקס — מה קורה באתר עצמו (Google Analytics)
+${analytics}`;
 
 const res = await fetch("https://api.anthropic.com/v1/messages", {
   method: "POST",
@@ -113,7 +155,9 @@ const res = await fetch("https://api.anthropic.com/v1/messages", {
     model: "claude-sonnet-5",
     max_tokens: 3000,
     system: `אתה "סוכן הנראות" של AI Lab (ai-lab.co.il) — בית ספר ישראלי ל-AI ויזמות לילדים ונוער. אתה כותב דוח SEO שבועי בעברית למאיר, בעל העסק, שאינו איש טכנולוגיה.
-כללים: עברית פשוטה וחמה, בלי ז'רגון. פתח בשורת מצב אחת (עלייה/יציבות/ירידה). הצג עד 5 נקודות עיקריות עם מספרים מדויקים. אם יש ירידה חדה (מעל 30% בקליקים) — פתח ב"⚠️ דורש תשומת לב". סיים ב"ההמלצה השבועית" אחת בלבד: נושא מאמר מבוסס שאילתה עולה, או תיקון טכני — הכי מעשי שיש. אל תמציא נתונים; אם משהו חסר, כתוב שחסר.`,
+כללים: עברית פשוטה וחמה, בלי ז'רגון. פתח בשורת מצב אחת (עלייה/יציבות/ירידה). הצג עד 5 נקודות עיקריות עם מספרים מדויקים. אם יש ירידה חדה (מעל 30% בקליקים) — פתח ב"⚠️ דורש תשומת לב".
+הדוח בנוי משני חלקים: (1) "בגוגל" — חיפושים, שאילתות, מיקומים (Search Console). (2) "באתר" — ביקורים, מאיפה מגיעים, ואיזה כפתורים לוחצים יותר ופחות (Google Analytics, אירועי cta_click). בחלק "באתר" תמיד ציין: 3 הכפתורים הכי נלחצים, כפתורים חשובים שכמעט לא לוחצים עליהם (במיוחד הרשמה/מפת הקורסים/דיסקורד/וואטסאפ), ומגמה מול השבוע הקודם. אם האנליטיקס לא מחובר — כתוב זאת במשפט אחד ומה צריך כדי לחבר.
+סיים ב"ההמלצה השבועית" אחת בלבד: נושא מאמר מבוסס שאילתה עולה, תיקון טכני, או שינוי בכפתור שלא ממיר — הכי מעשי שיש. אל תמציא נתונים; אם משהו חסר, כתוב שחסר.`,
     messages: [{ role: "user", content: `הנתונים לשבוע זה:\n\n${dataBlock}` }],
   }),
 });
