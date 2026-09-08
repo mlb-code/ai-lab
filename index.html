@@ -377,10 +377,7 @@ gtag('config', 'AW-18061574299');
     }
     .btn-primary { background: linear-gradient(120deg, #6366F1, #8B5CF6); color: #fff; box-shadow: 0 12px 34px rgba(99,102,241,.35); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(99,102,241,.5); }
-    /* הכפתור הראשי בהירו — ציאן→מנטה עם טקסט כהה, כדי שלא ידמה לכפתור הדיסקורד (מאיר 08/09) */
-    .hero-actions .cr-row .btn-primary { background: linear-gradient(120deg, #4DD6E8, #7DF0C0); color: #0B1030; box-shadow: 0 12px 34px rgba(77,214,232,.38); }
-    .hero-actions .cr-row .btn-primary:hover { box-shadow: 0 16px 44px rgba(77,214,232,.55); }
-    .hero-actions .cr-row .btn-primary .arr { color: #0B1030; }
+
     .btn-ghost-dark {
         background: linear-gradient(163deg, rgba(214,220,248,.22), rgba(164,172,215,.12) 48%, rgba(140,148,198,.17));
         color: #fff; border: 1px solid rgba(255,255,255,.36);
@@ -462,8 +459,10 @@ gtag('config', 'AW-18061574299');
     .hero-comm .wa-ic { width: 19px; height: 19px; fill: #fff; flex-shrink: 0; }
     .hero-comm .dc-ic { width: 19px; height: 19px; fill: #fff; flex-shrink: 0; }
     .hero-comm-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-    .hero-comm.dc { background: linear-gradient(120deg, #3B45C9, #5865F2 55%, #7983F5); border-color: rgba(199,210,254,.55); box-shadow: 0 8px 28px rgba(88,101,242,.4); animation-delay: .7s; }
-    .hero-comm.dc:hover { box-shadow: 0 12px 38px rgba(88,101,242,.55); }
+    /* דיסקורד בהירו — זכוכית שקטה (אפשרות ד׳, מאיר 08/09): הכפתור הראשי נשאר סגול, הקהילה משנית */
+    .hero-comm.dc { background: rgba(255,255,255,.08); border-color: rgba(199,210,254,.5); box-shadow: 0 6px 20px rgba(0,0,0,.25); animation-delay: .7s; }
+    .hero-comm.dc:hover { background: rgba(255,255,255,.14); box-shadow: 0 10px 30px rgba(88,101,242,.35); }
+    .hero-comm.dc::after { display: none; }
     .hero-comm .wave { display: inline-block; animation: waveHand 2.2s ease-in-out infinite; transform-origin: 70% 70%; font-size: 1.15em; }
     @keyframes waveHand { 0%, 55%, 100% { transform: rotate(0); } 62% { transform: rotate(16deg); } 70% { transform: rotate(-8deg); } 78% { transform: rotate(14deg); } 86% { transform: rotate(0); } }
 
