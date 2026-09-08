@@ -16,9 +16,11 @@ const DRY = process.env.DRY_RUN === "1";              // בדיקה מקומית
 const OUT = DRY ? (process.env.OUT_DIR || "/tmp/publish-agent") : ".";
 if (!anthropicKey) { console.error("חסר ANTHROPIC_API_KEY"); process.exit(1); }
 
-const mode = /^(פרסם|publish)/.test(commentBody) ? "publish" : /^(טיוטה|draft)/.test(commentBody) ? "draft" : null;
+const mode = /^(פרסם|publish)/.test(commentBody.trim()) ? "publish" : /^(טיוטה|draft)/.test(commentBody.trim()) ? "draft" : null;
 if (!mode) { console.log("לא פקודה של הסוכן — מסיים."); process.exit(0); }
-const topicFromComment = commentBody.replace(/^(פרסם|publish|טיוטה|draft)\s*[:：-]?\s*/, "").trim();
+// תשובה מהמייל מגיעה עם כל הציטוט של ההודעה המקורית (כולל קישורי unsubscribe עם טוקנים) — לוקחים רק את השורה הראשונה
+const firstLine = commentBody.split(/\r?\n/).map(l => l.trim()).find(l => l) || "";
+const topicFromComment = firstLine.replace(/^(פרסם|publish|טיוטה|draft)\s*[:：-]?\s*/, "").replace(/https?:\/\/\S+/g, "").trim().slice(0, 200);
 
 // ---------- GitHub ----------
 const gh = async (p, init = {}) => {
