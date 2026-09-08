@@ -4080,13 +4080,17 @@ gtag('config', 'AW-18061574299');
         function agentPageContext() {
             const names = { courses: 'מפת הקורסים ומחירים', community: 'הקהילות שלנו (וואטסאפ ודיסקורד)', discord: 'ההסבר על קהילת הדיסקורד', blog: 'הבלוג', faq: 'שאלות נפוצות', wall: 'הפרויקטים של התלמידים', builders: 'הבונים הצעירים', videos: 'סרטוני התלמידים', howitworks: 'איך זה עובד', trailersBlock: 'טריילרים של תלמידים' };
             const mid = window.innerHeight / 2;
-            let best = null, bestD = 1e9;
-            document.querySelectorAll('section[id], [id="discord"], .hub-item').forEach(el => {
-                const r = el.getBoundingClientRect();
-                if (r.height < 40) return;
-                const d = r.top <= mid && r.bottom >= mid ? 0 : Math.min(Math.abs(r.top - mid), Math.abs(r.bottom - mid));
-                if (d < bestD) { bestD = d; best = el; }
-            });
+            // מה באמת מוצג במרכז המסך (מדלגים על חלון הצ'אט עצמו ועל אקורדיונים מקופלים)
+            let best = null, bestD = 0;
+            const pts = [[innerWidth / 2, mid], [innerWidth * 0.3, mid], [innerWidth * 0.7, mid], [innerWidth / 2, mid - 160], [innerWidth / 2, mid + 160]];
+            for (const [x, y] of pts) {
+                for (const el of document.elementsFromPoint(x, y)) {
+                    if (el.closest('.agent-orb, .agent-form, #agentForm, [class*="agent-"], [id^="agent"]')) continue;
+                    const sec = el.closest('section[id], #discord, .hub-item');
+                    if (sec) { best = sec; break; }
+                }
+                if (best) break;
+            }
             let where = 'דף הבית (למעלה)';
             if (best && bestD < 400) {
                 const id = best.id;
