@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1494500642118868');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1494500642118868&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-37WXJMRB9C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+if (navigator.webdriver) { gtag = function(){}; } // בדיקות אוטומטיות (Playwright) לא נספרות באנליטיקס
+        gtag('js', new Date());
+        gtag('config', 'G-37WXJMRB9C');
+    </script>
+    <title>קורס AI לילדים — מה באמת לומדים שם | עולם ה-AI | AI Lab</title>
+    <meta name="description" content="מה זה קורס AI לילדים, איך נראה מפגש טיפוסי, באילו כלים נוגעים ומה התוצרים בסוף — מדריך ברור להורים שרוצים להבין למה הם נרשמים.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ai-lab.co.il/blog/what-is-ai-course-for-kids.html">
+    <meta property="og:title" content="קורס AI לילדים — מה באמת לומדים שם | AI Lab">
+    <meta property="og:description" content="מה זה קורס AI לילדים, איך נראה מפגש טיפוסי, באילו כלים נוגעים ומה התוצרים בסוף — מדריך ברור להורים שרוצים להבין למה הם נרשמים.">
+    <meta property="og:image" content="https://ai-lab.co.il/og-image-2026.jpg">
+    <meta property="og:url" content="https://ai-lab.co.il/blog/what-is-ai-course-for-kids.html">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="he_IL">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #6C3CE1;
+            --primary-light: #8B5CF6;
+            --primary-dark: #5228CC;
+            --accent: #00D4AA;
+            --accent-light: #34EABB;
+            --dark: #1a1a2e;
+            --dark-card: #25253e;
+            --dark-lighter: #32324e;
+            --text: #f0eef5;
+            --text-muted: #b8b0d0;
+            --gold: #F5C842;
+            --orange: #FF7849;
+            --red: #FF4D6D;
+        }
+
+        html { scroll-behavior: smooth; overflow-x: clip; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: clip;
+            line-height: 1.7;
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; right: 0; left: 0;
+            z-index: 100;
+            height: 56px;
+            padding: 0 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 46, 0.92);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 1px 20px rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            direction: ltr;
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+            list-style: none;
+            direction: ltr;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.82rem;
+            transition: color 0.3s;
+            direction: rtl;
+            unicode-bidi: plaintext;
+            position: relative;
+            padding-bottom: 2px;
+            white-space: nowrap;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { color: var(--accent); }
+        .nav-links a.active::after { width: 100%; }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff !important;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.78rem !important;
+            font-weight: 600 !important;
+            transition: transform 0.3s, box-shadow 0.3s !important;
+            white-space: nowrap;
+        }
+
+        .nav-cta::after { display: none !important; }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.4);
+        }
+
+        .menu-icon { display: none; }
+
+        .mobile-menu-btn {
+            display: none;
+            z-index: 300;
+            width: 44px; height: 44px;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu-panel {
+            display: none;
+            position: fixed;
+            top: 0; right: 0;
+            width: 280px; height: 100vh;
+            background: var(--dark);
+            z-index: 250;
+            flex-direction: column;
+            padding: 1.5rem;
+            border-left: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .mobile-menu-panel.open {
+            display: flex;
+            animation: menuSlideIn 0.3s ease;
+        }
+
+        @keyframes menuSlideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-menu-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mobile-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .mobile-menu-links li a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .mobile-menu-links li a:hover { background: var(--dark-card); }
+
+        .mobile-menu-links .mobile-cta a {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            justify-content: center;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .mobile-menu-links .mobile-cta-green a {
+            background: linear-gradient(135deg, var(--accent), #00b894);
+            color: #fff;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+        }
+
+        .mobile-overlay.active { display: block; }
+
+        /* ARTICLE */
+        .article-container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 6rem 2rem 3rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover { opacity: 0.8; }
+
+        .article-tag {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.2);
+            color: var(--primary-light);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+
+        .article-emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+        .article-emoji svg { width: 1em; height: 1em; display: block; margin: 0 auto; color: #8B8DFF; }
+        .ic-inline { width: 1.05em; height: 1.05em; display: inline-block; vertical-align: -0.16em; margin-inline-end: .28em; color: #8B8DFF; }
+
+        .article-container h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .article-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: var(--accent);
+        }
+
+        .article-content h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 1.5rem 0 0.8rem;
+            color: var(--text);
+        }
+
+        .article-content p {
+            margin-bottom: 1.2rem;
+            color: var(--text);
+        }
+
+        .article-content ul {
+            margin: 1rem 1.5rem 1.5rem;
+            color: var(--text);
+        }
+
+        .article-content ul li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        .article-content strong {
+            color: var(--gold);
+        }
+
+        .highlight-box {
+            background: var(--dark-card);
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .danger-box {
+            background: rgba(255, 77, 109, 0.08);
+            border: 1px solid rgba(255, 77, 109, 0.35);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .danger-box h3 {
+            color: var(--red) !important;
+            margin-top: 0 !important;
+        }
+
+        .success-box {
+            background: rgba(0, 212, 170, 0.08);
+            border: 1px solid rgba(0, 212, 170, 0.35);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .success-box h3 {
+            color: var(--accent) !important;
+            margin-top: 0 !important;
+        }
+
+        .quote-box {
+            background: rgba(245, 200, 66, 0.08);
+            border-right: 4px solid var(--gold);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-style: italic;
+            color: var(--text);
+        }
+
+        /* CTA SECTION */
+        .article-cta {
+            max-width: 750px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .cta-box {
+            background: var(--dark-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--gold));
+            z-index: -1;
+        }
+
+        .cta-box h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .cta-btn-whatsapp {
+            background: #25D366;
+            color: #fff;
+        }
+
+        .cta-btn-whatsapp:hover {
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-btn-email {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+        }
+
+        .cta-btn-email:hover {
+            box-shadow: 0 8px 25px rgba(108, 60, 225, 0.4);
+        }
+
+        .cta-phone {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .cta-phone a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* FOOTER */
+        footer {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3rem 2rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            direction: rtl;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            text-align: right;
+        }
+
+        .footer-section h4 {
+            color: var(--text);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            line-height: 2;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover { color: var(--accent); }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links-desktop { display: none !important; }
+            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+            .menu-icon { display: inline; }
+
+            .article-container { padding: 5rem 1.2rem 2rem; }
+            .article-container h1 { font-size: 1.7rem; }
+            .article-cta { padding: 0 1.2rem; }
+            .cta-box { padding: 1.8rem 1.2rem; }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+<link rel="stylesheet" href="/blog/shared.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"קורס AI לילדים — מה באמת לומדים שם","description":"מה זה קורס AI לילדים, איך נראה מפגש טיפוסי, באילו כלים נוגעים ומה התוצרים בסוף — מדריך ברור להורים שרוצים להבין למה הם נרשמים.","image":"https://ai-lab.co.il/og-image-2026.jpg","author":{"@type":"Person","name":"מאיר לביא","url":"https://ai-lab.co.il"},"publisher":{"@type":"Organization","name":"AI Lab","logo":{"@type":"ImageObject","url":"https://ai-lab.co.il/favicon.png"}},"datePublished":"2026-09-08","dateModified":"2026-09-08","mainEntityOfPage":"https://ai-lab.co.il/blog/what-is-ai-course-for-kids.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"AI Lab","item":"https://ai-lab.co.il/"},{"@type":"ListItem","position":2,"name":"עולם ה-AI","item":"https://ai-lab.co.il/blog/"},{"@type":"ListItem","position":3,"name":"קורס AI לילדים — מה באמת לומדים שם","item":"https://ai-lab.co.il/blog/what-is-ai-course-for-kids.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"הילד שלי לא יודע לתכנת בכלל — זה מתאים?","acceptedAnswer":{"@type":"Answer","text":"כן. רוב הכלים שעובדים איתם בקורסים כאלה לא דורשים ידע קודם בתכנות. מה שנדרש הוא סבלנות בסיסית ורצון לנסות. ילדים שמכירים תכנות פשוט מגיעים רחוק יותר בפרויקט שלהם."}},{"@type":"Question","name":"מה ההבדל בין קורס AI לחוג תכנות רגיל?","acceptedAnswer":{"@type":"Answer","text":"חוג תכנות מתמקד בשליטה בשפה ובכתיבת קוד; קורס AI מתמקד בהפיכת רעיון לתוצר בעזרת כלים, כולל הבנה של איך הכלים עובדים ומה המגבלות שלהם."}},{"@type":"Question","name":"כמה זמן עד שרואים תוצר ראשון?","acceptedAnswer":{"@type":"Answer","text":"לפי הניסיון שלנו, ילדים מוציאים משהו קטן שעובד כבר במפגש הראשון או השני — אתר פשוט, תמונה שיצרו או בוט קצר. הפרויקט המשמעותי מתפתח לאורך הקורס."}},{"@type":"Question","name":"זה לא יגרום לתלות ב-AI בשיעורי הבית?","acceptedAnswer":{"@type":"Answer","text":"זה תלוי באופן שבו מלמדים. כשעובדים על יצירה ובודקים כל תוצאה, נבנה הרגל לפקפק בתשובות ולא לקבל אותן כמובן מאליו. השיחה הביתית על מה מותר בשיעורי בית היא חלק מהעניין."}}]}</script>
+</head>
+<body>
+    <!-- SHARED NAV (injected by /blog/shared.js) -->
+    <div id="shared-nav"></div>
+
+    <!-- ARTICLE -->
+    <article class="article-container">
+        <a href="/blog/" class="back-link">&#8594; חזרה לעולם ה-AI</a>
+        <span class="article-tag">הורים</span>
+        <span class="article-emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <h1>קורס AI לילדים — מה באמת לומדים שם</h1>
+        <div class="article-meta">AI Lab | ספטמבר 2026 | קריאה של 7 דקות</div>
+
+        <div class="article-content">
+<p>"קורס AI לילדים" הפך בשנתיים האחרונות לשם שמופיע בכל פינה — בפרסומות, בקבוצות הורים, בחוגים של המתנ"ס ובאתרים כמו שלנו. הבעיה היא שאותן שלוש מילים מתארות דברים שונים לחלוטין. יש מקומות שבהם ילדים מתבקשים לכתוב הנחיות ל-ChatGPT במשך שעה, יש מקומות שבהם הם בונים אפליקציה שעובדת, ויש מקומות שבהם הם רק צופים במסך של מדריך שעושה הדגמה.</p>
+<p>המאמר הזה נכתב בשביל ההורים שרוצים להבין, לפני שהם משלמים, מה בדיוק קורה שם בפנים. בלי סופרלטיבים ובלי הבטחות — פשוט תיאור של תוכן, מבנה מפגש, כלים ותוצרים.</p>
+
+<h2>מה זה בעצם קורס AI לילדים</h2>
+<p>בבסיס, קורס AI לילדים הוא קורס שבו הילד לומד לעבוד עם כלים של בינה מלאכותית כדי ליצור משהו — ולא רק להשתמש בהם כדי לקבל תשובות. ההבדל הזה הוא כל הסיפור.</p>
+<p>ילד שמכיר AI מהבית בדרך כלל יודע לשאול שאלה ולקבל תשובה. קורס טוב עוסק בשלב הבא: איך מפרקים רעיון גדול לשלבים קטנים, איך מנסחים בקשה שמייצרת בדיוק את מה שרצינו, איך בודקים אם התוצאה נכונה, ומה עושים כשהיא לא. במקביל, עוסקים גם בהבנה בסיסית של איך המערכות האלה עובדות — למה הן טועות, למה הן לפעמים "ממציאות", ולמה זה לא קסם.</p>
+<div class="quote-box"><p>קורס AI טוב לא מלמד ילדים לדבר עם מכונה. הוא מלמד אותם לחשוב יחד איתה — ולדעת מתי לא להסכים איתה.</p></div>
+<p>אם רוצים להבין קודם את המושג עצמו, אפשר להתחיל מ<a href="/blog/what-is-ai.html">ההסבר הפשוט על בינה מלאכותית להורים ולילדים</a> ואז לחזור לכאן.</p>
+
+<h2>שלושה סוגים של קורסים שנקראים באותו שם</h2>
+<p>לפי הניסיון שלנו, כמעט כל מה שנקרא "קורס AI לילדים" נופל לאחת משלוש הקטגוריות:</p>
+<ul>
+<li><strong>קורס היכרות עם כלים</strong> — סקירה של כמה כלים פופולריים, הדגמות, ניסויים קצרים. מתאים כטעימה, פחות מייצר תוצר.</li>
+<li><strong>קורס תוכן טכנולוגי קלאסי עם תוספת AI</strong> — בעיקרו חוג תכנות או רובוטיקה, שהוסיפו לו מפגש או שניים על בינה מלאכותית.</li>
+<li><strong>קורס בנייה ויצירה</strong> — הילד עובד על פרויקט משלו לאורך הקורס, וכלי ה-AI הם הדרך להוציא אותו לפועל: אתר, אפליקציה, משחק, סוכן, כלי שימושי.</li>
+</ul>
+<p>אין כאן נכון ולא נכון — יש התאמה. ילד שסקרן ורוצה לטעום יהיה מרוצה מהראשון; ילד שנמשך ליצירה ומשתעמם מהדגמות יזדקק לשלישי. אם אתם מתלבטים בין תכנות לבין AI, כתבנו על זה בהרחבה במאמר <a href="/blog/coding-class-vs-ai-course.html">חוג תכנות או קורס בינה מלאכותית</a>.</p>
+
+<h2>איך נראה מפגש טיפוסי</h2>
+<p>הורים מדמיינים לפעמים הרצאה עם מצגת. בפועל, מפגש טוב בקורס AI לילדים נראה יותר כמו סדנת עבודה. המבנה שאנחנו עובדים בו נראה בגדול כך:</p>
+<ul>
+<li><strong>פתיחה קצרה</strong> — מה עשינו בפעם הקודמת, מה הבעיה שאנחנו פותרים היום.</li>
+<li><strong>הדגמה חיה</strong> — המנחה בונה משהו קטן מול הילדים, כולל הטעויות בדרך. דווקא הטעויות הן החלק המלמד.</li>
+<li><strong>עבודה עצמאית</strong> — כל ילד עובד על הגרסה שלו, עם מסך פתוח ותמיכה נקודתית.</li>
+<li><strong>שיתוף</strong> — כל אחד מציג מה יצא לו. זה הרגע שבו ילדים לומדים אחד מהשני יותר מכל.</li>
+<li><strong>משימה קטנה להמשך</strong> — לא שיעורי בית כבדים, אלא רעיון להתנסות.</li>
+</ul>
+<div class="success-box"><h3>למה גודל הקבוצה קריטי</h3><p>בקורס AI, כמעט כל ילד נתקע במקום אחר. אחד לא הבין למה הכלי החזיר תשובה מוזרה, שנייה רוצה לשנות עיצוב, שלישי כבר מנסה משהו מתקדם. בקבוצה של עשרים ילדים אי אפשר לענות לכולם. אנחנו עובדים בקבוצות של עד חמישה ילדים בזום, וזו לא החלטה שיווקית — זה מה שמאפשר לעבור בין המסכים ולעזור בזמן אמת.</p></div>
+
+<h2>באילו כלים נוגעים</h2>
+<p>הכלים משתנים כל כמה חודשים, וזו בדיוק הסיבה שקורס לא צריך להיות "קורס על כלי אחד". עדיף שהילד יבין את העקרונות, ואז החלפת כלי היא עניין של רבע שעה. בגדול, קורס AI לילדים נוגע במשפחות הכלים הבאות:</p>
+<ul>
+<li><strong>כלי שיחה וכתיבה</strong> — לחשיבה, לתכנון, לניסוח, לפתרון בעיות.</li>
+<li><strong>כלי יצירת תמונות וקול</strong> — לעיצוב, לדמויות, לסרטונים קצרים, לפרסום של פרויקט.</li>
+<li><strong>כלי בנייה של אתרים ואפליקציות</strong> — כאן קורה הקסם: ילד מתאר מה הוא רוצה, מקבל גרסה עובדת, ומשפר אותה בשלבים. על הגישה הזאת כתבנו במאמר <a href="/blog/vibe-coding-for-kids.html">Vibe Coding לילדים</a>.</li>
+<li><strong>כלי אוטומציה</strong> — לבנות תהליך שעובד לבד: טופס שמייצר תשובה, בוט שמסדר מידע.</li>
+</ul>
+<p>לצד הכלים, חלק בלתי נפרד הוא נושא הפרטיות והשימוש האחראי: מה לא מעלים למערכות האלה, איך מזהים תשובה לא מדויקת, ומתי צריך לשאול מבוגר. הרחבנו על כך במאמר <a href="/blog/kids-ai-privacy.html">ילדים, AI והפרטיות שלכם</a>.</p>
+
+<h2>מה לא לומדים בקורס AI לילדים</h2>
+<div class="danger-box"><h3>ציפיות שכדאי להוריד מהשולחן</h3><p><strong>לא בונים מודל בינה מלאכותית מאפס.</strong> זה תחום שדורש מתמטיקה אקדמית ומשאבי חישוב עצומים. מי שמבטיח לילד בן עשר שהוא "יבנה AI" — מוכר סיפור.</p><p><strong>זה לא קורס תכנות עמוק.</strong> נוגעים בקוד, מבינים מה קורה, אבל המטרה היא יצירה ולא שליטה בשפת תכנות אחת לעומק.</p><p><strong>זה לא תחליף לשיעורי מחשב בבית הספר</strong> ולא קורס להכנה לבגרות. זה מקום אחר, עם היגיון אחר.</p></div>
+
+<h2>מה יוצא מזה בסוף — התוצרים</h2>
+<p>הדרך הטובה ביותר להבין מה לומדים בקורס היא להסתכל על מה שיוצא ממנו. תוצרים אופייניים שאנחנו רואים:</p>
+<ul>
+<li>אתר אישי או אתר לנושא שהילד אוהב — כולל עיצוב, טקסטים ותמונות שהוא יצר.</li>
+<li>משחק דפדפן פשוט עם חוקים שהילד הגדיר בעצמו.</li>
+<li>כלי שימושי קטן — מחשבון לצורך מסוים, מחולל תרגילים, מארגן משימות.</li>
+<li>בוט או סוכן שמדבר בסגנון מסוים ועונה על שאלות בתחום מוגדר.</li>
+<li>סרטון או קמפיין שיווקי קטן לרעיון עסקי — כאן נכנס החלק היזמי.</li>
+</ul>
+<p>אם אתם רוצים לראות דוגמאות קונקרטיות לפני שאתם מחליטים, אספנו במאמר <a href="/blog/real-kids-ai-projects.html">36 פרויקטים אמיתיים שילדים ישראלים בנו עם AI</a> תמונת מצב מלאה של סוגי התוצרים.</p>
+<div class="highlight-box"><p>שווה לשים לב: הפרויקט הוא אמצעי, לא מטרה. מה שנשאר לילד אחרי הקורס הוא ההרגל לפרק בעיה, לנסות, לבדוק ולתקן. הפרויקט הוא רק ההוכחה שזה קרה.</p></div>
+
+<h2>החלק שהורים מפספסים: היזמות</h2>
+<p>בקורסים טובים, ה-AI הוא לא סוף הסיפור אלא הכלי. אחרי שילד מגלה שהוא יכול לבנות דבר שעובד, השאלה הבאה היא מי צריך את זה. מכאן נכנסים נושאים כמו: למי הפרויקט מיועד, איך מציגים אותו, מה השם שלו, איך מקבלים משוב ומשפרים.</p>
+<p>זה החלק שממיר את הקורס מ"חוג טכנולוגי" ל"התנסות ביצירת ערך". גם ילד שלא ייגע בטכנולוגיה בעוד עשר שנים לוקח מכאן משהו — היכולת להפוך רעיון למשהו ממשי שאפשר להראות.</p>
+
+<h2>איך זה נראה אצלנו</h2>
+<p>ב-<a href="/#courses">AI Lab</a> הקורסים מתקיימים בזום בקבוצות של עד חמישה ילדים, בגילאי 9–17, בהנחיית מאיר לביא. כל מפגש משלב הדגמה חיה ועבודה על פרויקט אישי, וההתקדמות נקבעת לפי הקבוצה ולא לפי סילבוס נוקשה. בין המפגשים יש קהילה שבה הילדים משתפים מה בנו ומקבלים משוב — על כך כתבנו במאמר <a href="/blog/ailab-discord-community.html">קהילת הדיסקורד של AI Lab</a>.</p>
+
+<h2>מה כדאי לשאול לפני שנרשמים</h2>
+<ul>
+<li>מה הילד בונה עד סוף הקורס, ואיזה תוצר יש בידיים?</li>
+<li>כמה ילדים בקבוצה, ומי מנחה בפועל?</li>
+<li>איזה חלק מהזמן הוא עבודה עצמאית ואיזה חלק הרצאה?</li>
+<li>מה קורה כשילד מפספס מפגש או מתקדם בקצב שונה?</li>
+<li>איך מתייחסים לשימוש אחראי, לפרטיות ולבדיקת מידע?</li>
+</ul>
+<p>שאלות נוספות בנושא ריכזנו במאמר <a href="/blog/how-to-choose-ai-course.html">איך לבחור קורס בינה מלאכותית</a>.</p>
+
+<h2>שאלות ותשובות</h2>
+<div class="highlight-box">
+<p><strong>שאלה: הילד שלי לא יודע לתכנת בכלל — זה מתאים?</strong></p>
+<p>כן. רוב הכלים שעובדים איתם בקורסים כאלה לא דורשים ידע קודם בתכנות. מה שכן נדרש הוא סבלנות בסיסית ורצון לנסות. ילדים שכבר מכירים תכנות פשוט מגיעים רחוק יותר בפרויקט שלהם.</p>
+<p><strong>שאלה: מה ההבדל בין קורס AI לחוג תכנות רגיל?</strong></p>
+<p>חוג תכנות מתמקד בשליטה בשפה ובכתיבת קוד; קורס AI מתמקד בהפיכת רעיון לתוצר בעזרת כלים, כולל הבנה של איך הכלים עובדים ומה מגבלותיהם. בפועל שני התחומים נפגשים, אבל נקודת הפתיחה שונה.</p>
+<p><strong>שאלה: כמה זמן עד שרואים תוצר ראשון?</strong></p>
+<p>לפי הניסיון שלנו, ילדים מוציאים משהו קטן שעובד כבר במפגש הראשון או השני — אתר פשוט, תמונה שיצרו, בוט קצר. הפרויקט המשמעותי מתפתח לאורך הקורס.</p>
+<p><strong>שאלה: זה לא יגרום לו להיות תלוי ב-AI בשיעורי הבית?</strong></p>
+<p>זה תלוי לגמרי באופן שבו מלמדים. כשעובדים על יצירה ובודקים כל תוצאה, הילד לומד דווקא לפקפק בתשובות ולא לקבל אותן כמובן מאליו. השיחה הביתית על מה מותר בשיעורי בית ומה לא היא חלק בלתי נפרד מהעניין.</p>
+</div>
+        </div>
+    </article>
+
+    <div style="max-width:750px;margin:2rem auto;padding:2rem;background:var(--dark-card);border-radius:16px;border:1px solid rgba(255,255,255,0.06);">
+        <h3 style="font-size:1.2rem;margin-bottom:1rem;">מאמרים נוספים שיעניינו אתכם</h3>
+        <div style="display:flex;flex-direction:column;gap:0.8rem;">
+            <a href="/blog/how-to-choose-ai-course.html" style="color:var(--accent);text-decoration:none;font-weight:500;">איך לבחור קורס בינה מלאכותית? המדריך המלא 2026 ←</a>
+            <a href="/blog/coding-class-vs-ai-course.html" style="color:var(--accent);text-decoration:none;font-weight:500;">חוג תכנות או קורס בינה מלאכותית — מה עדיף לילד שלי ב-2026? ←</a>
+            <a href="/blog/real-kids-ai-projects.html" style="color:var(--accent);text-decoration:none;font-weight:500;">36 פרויקטים אמיתיים שילדים ישראלים בנו עם AI ←</a>
+        </div>
+    </div>
+
+    <!-- SHARED LEAD FORM CTA (injected by /blog/shared.js) -->
+    <div id="shared-cta" data-article="what-is-ai-course-for-kids"></div>
+
+    <!-- SHARED FOOTER (injected by /blog/shared.js) -->
+    <div id="shared-footer"></div>
+
+    <script src="/blog/shared.js"></script>
+</body>
+</html>

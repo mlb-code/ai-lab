@@ -46,6 +46,7 @@
 
 ## בלוג — מדריכים בעברית על בינה מלאכותית
 - [עולם ה-AI — כל המאמרים](https://ai-lab.co.il/blog/)
+- [קורס AI לילדים — מה באמת לומדים שם](https://ai-lab.co.il/blog/what-is-ai-course-for-kids.html)
 - [5 שאלות לפני רישום לחוג טכנולוגי אונליין](https://ai-lab.co.il/blog/questions-before-online-tech-course.html)
 - [דיסקורד לילדים — המדריך להורים 2026](https://ai-lab.co.il/blog/discord-for-kids-parents-guide.html)
 - [קהילת הדיסקורד של AI Lab: מה קורה בין המפגשים](https://ai-lab.co.il/blog/ailab-discord-community.html)
