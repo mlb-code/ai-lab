@@ -1293,6 +1293,7 @@ gtag('config', 'AW-18061574299');
     .chip.soon { background: rgba(245,166,35,.13); color: #A66A00; }
     .chip.price { background: rgba(99,102,241,.1); color: var(--accent-deep); }
     .chip.extra { background: rgba(245,158,11,.14); color: #92400E; font-weight: 700; }
+    .chip.extra.free { background: rgba(22,163,74,.14); color: #166534; }
     .chip.tier-b { background: rgba(99,102,241,.14); color: var(--accent-deep); font-weight: 800; border: 1px solid rgba(99,102,241,.28); }
     .chip.tier-a { background: #101433; color: #fff; font-weight: 800; }
     .c-more { color: var(--accent-deep); font-weight: 800; font-size: .88rem; align-items: center; gap: 6px; cursor: pointer; }
@@ -1606,6 +1607,8 @@ gtag('config', 'AW-18061574299');
     .mc-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
     .mc-extra { background: rgba(245,158,11,.12); border: 1px solid rgba(245,158,11,.35); color: #7C2D12; border-radius: 14px; padding: 10px 16px; font-weight: 700; font-size: .88rem; line-height: 1.45; margin-bottom: 14px; }
     .on-extra { font-size: .8rem; color: #92400E; font-weight: 700; margin-top: 4px; }
+    .mc-extra.free { background: rgba(22,163,74,.10); border-color: rgba(22,163,74,.35); color: #14532D; }
+    .on-extra.free { color: #166534; }
     .mc-deliver {
         background: var(--mist); border-radius: 14px; padding: 10px 16px;
         font-weight: 700; font-size: .9rem; line-height: 1.45; margin-bottom: 14px;
@@ -3504,7 +3507,7 @@ gtag('config', 'AW-18061574299');
         age:'10+', status:'soon', price:'', deliver:'פיץ\' מלא עם מצגת, מוצג בערב הצגות',
         sessions:[ ['הפחד שכולם מכירים','ומה עושים איתו — נאום ראשון של 30 שניות'], ['מבנה של נאום','פתיח שתופס, מסר אחד, סגירה'], ['הפיץ\'','מנסחים פיץ\' למיזם שלך'], ['שפת גוף וקול','תרגול מול מצלמה'], ['מצגת מנצחת','מסר אחד לשקף, עיצוב עם AI'], ['שאלות קשות','התמודדות עם קהל ואלתור'], ['חזרה גנרלית','מצלמים, מנתחים ומלטשים'], ['ערב פיצ\'ים','דמו-דיי מול ההורים'] ] },
       { lvl:2, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>', c:'#E6F6F8', cat:['biz'], name:'כסף חכם עם AI', tier:'base', tag:'מבוא לשוק ההון וחשיבה ביקורתית על כסף — בסימולציה, בלי סיכון.',
-        age:'12+', status:'soon', price:'1,190 ₪', deliver:'תיק השקעות וירטואלי + דשבורד מעקב שבנית עם AI + "המצפן הפיננסי שלי"', note:'לימודי בלבד, בסימולציה — לא ייעוץ השקעות.',
+        age:'12+', status:'soon', price:'1,190 ₪', deliver:'תיק השקעות וירטואלי + דשבורד מעקב שבנית עם AI + "המצפן הפיננסי שלי"', note:'לימודי בלבד, בסימולציה — לא ייעוץ השקעות.', extra:'ללא עלות נוספת: כל הכלים בקורס חינמיים.', extraFree:true,
         sessions:[ ['מה זה כסף בעצם','מאיפה הוא בא, אינפלציה ("למה הגלידה התייקרה?") והערך של זמן'], ['המוח שלנו והכסף','איך פרסומות עובדות עלינו, FOMO ומלכודות במשחקים — מנתחים עם AI'], ['הקסם של ריבית דריבית','בונים מחשבון חיסכון עם AI ורואים מה הזמן עושה לכסף'], ['מבוא לוול סטריט','מניה, NYSE ונאסד"ק, S&P 500 — וסיור ב-TradingView דרך Apple, Nintendo ו-Roblox'], ['התיק הווירטואלי שלי','פותחים תיק בבורסת AI Lab (מחירי אמת), מחקר חברה ראשון עם AI ופיזור'], ['סיכון, תשואה — ופינפלואנסרים','בועות, הימור מול השקעה, קריפטו — ואיך מזהים הבטחות התעשרות בטיקטוק'], ['AI ככלי פיננסי','בונים דשבורד מעקב אישי לתיק: מחקר, השוואות וגרפים מ-TradingView'], ['המשחק הגדול','סימולציית שוק מסכמת בבורסת AI Lab, סיכום התיקים ו"המצפן הפיננסי שלי"'] ] },
       { lvl:3, em:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:0px;flex-shrink:0;color:#1E2749"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>', c:'#EEF0FF', cat:['build'], name:'תכנות באמצעות AI', tier:'adv', tag:'הקורס המתקדם: Vibe Coding אמיתי עם Cursor, Claude ו-GitHub — בונים מערכת שלמה, לא רק אתר.',
         age:'11+', status:'open', price:'1,290 ₪', count:'8 מפגשים', deliver:'פרויקט מלא באוויר: אתר, אוטומציות וסוכן AI משלך', extra:'מנוי Claude Pro (כ-20 דולר לחודש), נרכש על ידי ההורה ישירות מ-Anthropic. לא כלול במחיר הקורס.', prereq:'אחרי קורס בסיס',
@@ -3526,7 +3529,7 @@ gtag('config', 'AW-18061574299');
         let h = tierChip(co) + `<span class="chip">גיל ${co.age}</span><span class="chip">קבוצות נפרדות לפי גיל</span><span class="chip">${co.count || '8 מפגשים'}</span>`;
         if (co.prereq) h += `<span class="chip">${co.prereq}</span>`;
         if (co.price) h += `<span class="chip price">${co.price}</span>`;
-        if (co.extra) h += `<span class="chip extra">+ ${co.extra.split(',')[0]}</span>`;
+        if (co.extra) h += co.extraFree ? `<span class="chip extra free">ללא עלות נוספת</span>` : `<span class="chip extra">+ ${co.extra.split(',')[0]}</span>`;
         if (co.price || co.status === 'open') {
             h += `<span class="chip ${STATUS[co.status][0]}">${STATUS[co.status][1]}</span>`;
         } else {
@@ -3555,7 +3558,7 @@ gtag('config', 'AW-18061574299');
             <p>${co.tag}</p>
             <div class="on-meta">${tierChip(co)}<span class="chip">גיל ${co.age}</span><span class="chip">${co.count || '8 מפגשים'}</span><span class="chip five"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>  עד 5 בקבוצת גיל</span><span class="chip ${STATUS[co.status][0]}">${STATUS[co.status][1]}</span></div>
             <div class="on-price">${co.price || '<small>המחיר יעודכן בקרוב</small>'}</div>
-            ${co.extra ? `<div class="on-extra">+ ${co.extra.split(',')[0]} — לא כלול</div>` : ''}
+            ${co.extra ? (co.extraFree ? `<div class="on-extra free">ללא עלות נוספת — כל הכלים חינמיים</div>` : `<div class="on-extra">+ ${co.extra.split(',')[0]} — לא כלול</div>`) : ''}
             <a class="btn ${(co.status === 'open' || co.price) ? 'btn-wa' : 'btn-notify'}" href="${cta.href}"${cta.ext ? ' target="_blank" rel="noopener"' : ''}>${cta.label} <span class="arr">←</span></a>
             <span class="c-more" style="margin-top:12px;justify-content:center;display:flex;">לסילבוס המלא <span class="arr">←</span></span>`;
         el.querySelector('.c-more').addEventListener('click', e => { e.stopPropagation(); openCourse(i); });
@@ -3651,7 +3654,7 @@ gtag('config', 'AW-18061574299');
         document.getElementById('mTag').textContent = co.tag;
         document.getElementById('mChips').innerHTML = cChips(co);
         document.getElementById('mDeliver').textContent = 'מסיימים עם: ' + co.deliver + (co.note ? ' · ' + co.note : '');
-        const mx = document.getElementById('mExtra'); mx.textContent = co.extra ? 'עלות נוספת: ' + co.extra : ''; mx.hidden = !co.extra;
+        const mx = document.getElementById('mExtra'); mx.textContent = co.extra ? (co.extraFree ? co.extra : 'עלות נוספת: ' + co.extra) : ''; mx.hidden = !co.extra; mx.classList.toggle('free', !!co.extraFree);
         document.getElementById('mSylTitle').textContent = 'הסילבוס — ' + (co.count || '8 מפגשים');
         const mc = ctaFor(co), mr = document.getElementById('mRegister');
         mr.innerHTML = mc.label + ' <span class="arr">←</span>';
