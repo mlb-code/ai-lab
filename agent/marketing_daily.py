@@ -36,8 +36,9 @@ def money(v): return f"₪{float(v or 0):.0f}"
 # ---------- מודעות ----------
 def ads_block():
     out = ["## מודעות במטא"]
-    for label, preset in (("אתמול", "yesterday"), ("מצטבר מתחילת הקמפיינים", "maximum")):
-        rows = get(f"{ACT}/insights", level="campaign", date_preset=preset, limit=50,
+    FILT = json.dumps([{"field": "campaign.name", "operator": "CONTAIN", "value": "AI Lab ·"}])
+    for label, rng in (("אתמול", {"date_preset": "yesterday"}), ("מצטבר מ-09.09", {"time_range": json.dumps({"since": "2026-09-09", "until": today.isoformat()})})):
+        rows = get(f"{ACT}/insights", level="campaign", limit=50, filtering=FILT, **rng,
                    fields="campaign_name,spend,impressions,reach,clicks,actions,cpc,ctr").get("data", [])
         rows = [r for r in rows if float(r.get("spend", 0)) > 0]
         if not rows: out.append(f"\n**{label}:** אין הוצאה."); continue
@@ -49,7 +50,7 @@ def ads_block():
             tot[0] += float(r['spend']); tot[1] += int(r.get('reach', 0)); tot[2] += a['link_click']; tot[3] += a['landing_page_view']
         out.append(f"| **סה\"כ** | **{money(tot[0])}** | {tot[1]} | **{tot[2]}** | {tot[3]} | | |")
     # מודעות מובילות אתמול
-    ads = get(f"{ACT}/insights", level="ad", date_preset="yesterday", limit=100,
+    ads = get(f"{ACT}/insights", level="ad", date_preset="yesterday", limit=100, filtering=FILT,
               fields="ad_name,adset_name,spend,impressions,actions,ctr").get("data", [])
     ads = sorted([a for a in ads if float(a.get("spend", 0)) > 0], key=lambda x: -float(x["spend"]))[:8]
     if ads:
