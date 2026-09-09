@@ -1,0 +1,24 @@
+name: ga-report
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "כמה ימים אחורה"
+        required: false
+        default: "7"
+permissions:
+  contents: read
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: דוח GA4
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          GA4_PROPERTY_ID: ${{ vars.GA4_PROPERTY_ID }}
+          DAYS: ${{ github.event.inputs.days }}
+        run: node agent/ga-report.mjs
