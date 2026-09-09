@@ -59,8 +59,9 @@ def ads_block():
             k = acts(a, ["link_click"])
             out.append(f"| {a['ad_name']} | {a['adset_name'][:28]} | {money(a['spend'])} | {k['link_click']} | {float(a.get('ctr',0)):.1f}% |")
     # מודעות שנדחו / בבדיקה
-    bad = get(f"{ACT}/ads", fields="name,effective_status,ad_review_feedback", limit=100,
+    bad = get(f"{ACT}/ads", fields="name,effective_status,campaign{name}", limit=200,
               effective_status='["DISAPPROVED","PENDING_REVIEW","WITH_ISSUES"]').get("data", [])
+    bad = [b for b in bad if "AI Lab ·" in (b.get("campaign") or {}).get("name", "")]
     if bad:
         out.append("\n**⚠️ מודעות שדורשות תשומת לב:** " + ", ".join(f"{b['name']} ({b['effective_status']})" for b in bad))
     return "\n".join(out)
