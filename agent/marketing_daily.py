@@ -34,62 +34,76 @@ def money(v): return f"₪{float(v or 0):.0f}"
 
 
 # ---------- מודעות ----------
-def ads_block():
-    out = ["## מודעות במטא"]
+def h(tag, inner, **attrs):
+    a = "".join(f' {k}="{v}"' for k, v in attrs.items())
+    return f"<{tag}{a}>{inner}</{tag}>"
+
+
+def table(headers, rows):
+    th = "".join(h("th", x, align="right") for x in headers)
+    trs = "".join(h("tr", "".join(h("td", str(c), align="right") for c in r)) for r in rows)
+    return h("table", h("thead", h("tr", th)) + h("tbody", trs))
+
+
+def ads_block(summary):
     FILT = json.dumps([{"field": "campaign.name", "operator": "CONTAIN", "value": "AI Lab ·"}])
-    for label, rng in (("אתמול", {"date_preset": "yesterday"}), ("מצטבר מ-09.09", {"time_range": json.dumps({"since": "2026-09-09", "until": today.isoformat()})})):
+    def rows_for(rng):
         rows = get(f"{ACT}/insights", level="campaign", limit=50, filtering=FILT, **rng,
                    fields="campaign_name,spend,impressions,reach,clicks,actions,cpc,ctr").get("data", [])
-        rows = [r for r in rows if float(r.get("spend", 0)) > 0]
-        if not rows: out.append(f"\n**{label}:** אין הוצאה."); continue
-        out.append(f"\n**{label}:**\n| קמפיין | הוצאה | הגעה | לחיצות קישור | צפיות בדף | CTR | CPC |\n|---|---|---|---|---|---|---|")
-        tot = [0, 0, 0, 0]
+        return [r for r in rows if float(r.get("spend", 0)) > 0]
+    y = rows_for({"date_preset": "yesterday"})
+    cum = rows_for({"time_range": json.dumps({"since": "2026-09-09", "until": today.isoformat()})})
+    parts = [h("h2", "מודעות במטא")]
+    def render(label, rows):
+        if not rows: return h("p", h("b", label + ":") + " אין הוצאה.")
+        lines = []; tot = [0.0, 0, 0, 0]
         for r in rows:
-            a = acts(r, ["link_click", "landing_page_view"])
-            out.append(f"| {r['campaign_name'].replace('AI Lab · ','')} | {money(r['spend'])} | {r.get('reach','0')} | {a['link_click']} | {a['landing_page_view']} | {float(r.get('ctr',0)):.1f}% | ₪{float(r.get('cpc',0)):.2f} |")
-            tot[0] += float(r['spend']); tot[1] += int(r.get('reach', 0)); tot[2] += a['link_click']; tot[3] += a['landing_page_view']
-        out.append(f"| **סה\"כ** | **{money(tot[0])}** | {tot[1]} | **{tot[2]}** | {tot[3]} | | |")
-    # מודעות מובילות אתמול
+            a = acts(r, ["link_click", "landing_page_view"]); name = r["campaign_name"].replace("AI Lab · ", "").replace(" · ספטמבר 2026", "")
+            lines.append([name, money(r["spend"]), a["link_click"], f"₪{float(r.get('cpc', 0)):.2f}", a["landing_page_view"], r.get("reach", "0")])
+            tot[0] += float(r["spend"]); tot[1] += a["link_click"]; tot[2] += a["landing_page_view"]; tot[3] += int(r.get("reach", 0))
+        lines.append([h("b", "סה\"כ"), h("b", money(tot[0])), h("b", tot[1]), "", tot[2], tot[3]])
+        return h("h3", label) + table(["קמפיין", "הוצאה", "לחיצות", "עלות ללחיצה", "הגיעו לאתר", "הגעה"], lines), tot
+    ry = render("אתמול", y); rc = render("מצטבר מ-09.09", cum)
+    parts.append(ry if isinstance(ry, str) else ry[0]); parts.append(rc if isinstance(rc, str) else rc[0])
+    if not isinstance(ry, str): summary.append(f"מודעות אתמול: {money(ry[1][0])} · {ry[1][1]} לחיצות · {ry[1][2]} הגיעו לאתר")
+    if not isinstance(rc, str): summary.append(f"מצטבר: {money(rc[1][0])} · {rc[1][1]} לחיצות")
     ads = get(f"{ACT}/insights", level="ad", date_preset="yesterday", limit=100, filtering=FILT,
               fields="ad_name,adset_name,spend,impressions,actions,ctr").get("data", [])
-    ads = sorted([a for a in ads if float(a.get("spend", 0)) > 0], key=lambda x: -float(x["spend"]))[:8]
+    ads = sorted([a for a in ads if float(a.get("spend", 0)) > 0], key=lambda x: -float(x["spend"]))[:6]
     if ads:
-        out.append("\n**מודעות מובילות אתמול (לפי הוצאה):**\n| מודעה | סט | הוצאה | לחיצות | CTR |\n|---|---|---|---|---|")
-        for a in ads:
-            k = acts(a, ["link_click"])
-            out.append(f"| {a['ad_name']} | {a['adset_name'][:28]} | {money(a['spend'])} | {k['link_click']} | {float(a.get('ctr',0)):.1f}% |")
-    # מודעות שנדחו / בבדיקה
+        parts.append(h("h3", "מודעות מובילות אתמול") + table(["מודעה", "הוצאה", "לחיצות", "CTR"],
+                     [[a["ad_name"], money(a["spend"]), acts(a, ["link_click"])["link_click"], f"{float(a.get('ctr', 0)):.1f}%"] for a in ads]))
     bad = get(f"{ACT}/ads", fields="name,effective_status,campaign{name}", limit=200,
               effective_status='["DISAPPROVED","PENDING_REVIEW","WITH_ISSUES"]').get("data", [])
     bad = [b for b in bad if "AI Lab ·" in (b.get("campaign") or {}).get("name", "")]
     if bad:
-        out.append("\n**⚠️ מודעות שדורשות תשומת לב:** " + ", ".join(f"{b['name']} ({b['effective_status']})" for b in bad))
-    return "\n".join(out)
+        parts.append(h("p", "⚠️ " + h("b", "מודעות שדורשות טיפול: ") + ", ".join(f"{b['name']} ({b['effective_status']})" for b in bad)))
+        summary.append(f"⚠️ {len(bad)} מודעות דורשות טיפול")
+    return "".join(parts)
 
 
 # ---------- אינסטגרם / פייסבוק ----------
-def social_block(state):
-    out = ["## עמודים"]
-    ig = get(IG, fields="followers_count,media_count")
-    fb = get(PAGE, fields="followers_count,fan_count")
+def social_block(state, summary):
+    ig = get(IG, fields="followers_count,media_count"); fb = get(PAGE, fields="followers_count,fan_count")
     f_now = ig.get("followers_count", 0); f_prev = state.get("ig_followers")
-    delta = f"({'+' if f_now - f_prev >= 0 else ''}{f_now - f_prev} מאתמול)" if f_prev is not None else ""
-    out.append(f"- **אינסטגרם:** {f_now} עוקבים {delta} · **פייסבוק:** {fb.get('followers_count', fb.get('fan_count', '?'))} עוקבים")
+    delta = f" ({'+' if f_now - f_prev >= 0 else ''}{f_now - f_prev} מאתמול)" if f_prev is not None else ""
     state["ig_followers"] = f_now
+    summary.append(f"אינסטגרם: {f_now} עוקבים{delta}")
+    parts = [h("h2", "עמודים"), h("p", h("b", "אינסטגרם: ") + f"{f_now} עוקבים{delta} · " + h("b", "פייסבוק: ") + f"{fb.get('followers_count', fb.get('fan_count', '?'))} עוקבים")]
     if f_now >= 350 and not state.get("contest_notified"):
-        out.append("- 🏆 **חצינו 350 עוקבים — פוסט התחרות להורים יוצא היום ב-18:00 (אוטומטית).**"); state["contest_notified"] = True
-    # פוסטים אתמול
+        parts.append(h("p", "🏆 " + h("b", "חצינו 350 עוקבים — פוסט התחרות להורים יוצא היום ב-18:00 אוטומטית."))); state["contest_notified"] = True
     since = int(dt.datetime.combine(yday, dt.time.min, TZ).timestamp()); until = int(dt.datetime.combine(today, dt.time.min, TZ).timestamp())
-    posts = get(f"{PAGE}/posts", fields="message,created_time,permalink_url,shares,insights.metric(post_impressions_unique)", since=since, until=until, limit=20).get("data", [])
+    posts = get(f"{PAGE}/posts", fields="message,created_time,permalink_url,insights.metric(post_impressions_unique)", since=since, until=until, limit=20).get("data", [])
     media = get(f"{IG}/media", fields="caption,timestamp,permalink,media_product_type,like_count,comments_count", limit=15).get("data", [])
     media = [m for m in media if m["timestamp"][:10] == yday.isoformat()]
-    out.append(f"\n**פוסטים שעלו אתמול ({yday.strftime('%d.%m')}):** פייסבוק {len(posts)} · אינסטגרם {len(media)}")
+    items = []
     for m in media:
-        out.append(f"- IG {m.get('media_product_type','')}: \"{(m.get('caption') or '')[:40].replace(chr(10),' ')}…\" · ❤️ {m.get('like_count',0)} · 💬 {m.get('comments_count',0)} · [קישור]({m['permalink']})")
+        items.append(h("li", f"אינסטגרם ({m.get('media_product_type','').lower()}): \"{(m.get('caption') or '')[:38].replace(chr(10),' ')}…\" · ❤️ {m.get('like_count',0)} · 💬 {m.get('comments_count',0)} · " + h("a", "לפוסט", href=m["permalink"])))
     for p in posts:
         reach = (p.get("insights", {}).get("data") or [{}])[0].get("values", [{}])[0].get("value", "?")
-        out.append(f"- FB: \"{(p.get('message') or '')[:40].replace(chr(10),' ')}…\" · הגעה {reach} · [קישור]({p.get('permalink_url','')})")
-    return "\n".join(out)
+        items.append(h("li", f"פייסבוק: \"{(p.get('message') or '')[:38].replace(chr(10),' ')}…\" · הגעה {reach} · " + h("a", "לפוסט", href=p.get("permalink_url", ""))))
+    parts.append(h("h3", f"פוסטים שעלו אתמול ({yday.strftime('%d.%m')})") + (h("ul", "".join(items)) if items else h("p", "לא עלו פוסטים.")))
+    return "".join(parts)
 
 
 # ---------- תגובות ----------
@@ -142,32 +156,53 @@ def comments_block(state):
     seen = set(state.get("seen_comments", []))
     items = [i for i in fetch_comments() if i["id"] not in seen]
     items = classify(items)
-    out = ["## תגובות חדשות (48 שעות)"]
-    if not items: out.append("אין תגובות חדשות."); return "\n".join(out), []
+    out = [h("h2", "תגובות חדשות (48 שעות)")]
+    if not items: out.append(h("p", "אין תגובות חדשות.")); return "".join(out), []
     hidden = [i for i in items if i["kind"] == "spam"]
     for i in hidden: hide(i)
     todo = [i for i in items if i["kind"] != "spam"]
-    if hidden: out.append(f"הוסתרו אוטומטית {len(hidden)} תגובות ספאם.")
+    if hidden: out.append(h("p", f"הוסתרו אוטומטית {len(hidden)} תגובות ספאם."))
     if todo:
-        out.append("לכל תגובה יש טיוטת תשובה. **כדי לפרסם:** כתוב בתגובה ל-Issue הזה `אשר 1 3` (מספרים), או `אשר הכל`. לערוך: `אשר 2: הטקסט שלי`.\n")
+        out.append(h("p", "לכל תגובה יש טיוטת תשובה. " + h("b", "כדי לפרסם:") + " השב למייל הזה (או כתוב תגובה ב-Issue) עם <code>אשר 1 3</code> (מספרים) או <code>אשר הכל</code>. לערוך: <code>אשר 2: הטקסט שלי</code>."))
         for n, i in enumerate(todo, 1):
             icon = {"lead": "🔥", "question": "❓", "positive": "💚", "negative": "⚠️"}.get(i["kind"], "💬")
-            out.append(f"**{n}. {icon} {i['net'].upper()} · {i['who']}** על \"{i['post']}…\"\n> {i['text']}\n\n↩️ טיוטה: {i['reply'] or '(אין)'}\n")
+            net = "אינסטגרם" if i["net"] == "ig" else "פייסבוק"
+            out.append(h("p", h("b", f"{n}. {icon} {net} · {i['who']}") + f" על \"{i['post']}…\"") + h("blockquote", i["text"]) + h("p", "↩️ " + h("b", "טיוטה: ") + (i["reply"] or "(אין)")))
     state["seen_comments"] = list(seen | {i["id"] for i in items})[-2000:]
-    return "\n".join(out), todo
+    return "".join(out), todo
+
+
+def ga_compact():
+    if not os.path.exists("ga.md"): return ""
+    md = open("ga.md", encoding="utf-8").read()
+    tot = next((l for l in md.splitlines() if l.startswith("**סה")), "")
+    def section(title, n):
+        if f"### {title}" not in md: return ""
+        block = md.split(f"### {title}")[1].split("###")[0].strip().splitlines()
+        rows = [l for l in block if l.startswith("|") and not l.startswith("|---")]
+        if len(rows) < 2: return ""
+        hdr = [c.strip() for c in rows[0].strip("|").split("|")]
+        body = [[c.strip() for c in r.strip("|").split("|")] for r in rows[1:1 + n]]
+        return h("h3", title) + table(hdr, body)
+    return h("h2", "אנליטיקס (7 ימים)") + h("p", tot.replace("**", "")) + section("מקור / מדיום", 6) + section("קמפיינים (UTM)", 5) + section("לחיצות CTA (cta_click)", 6)
 
 
 def main():
     state = json.load(open(STATE_FILE)) if os.path.exists(STATE_FILE) else {}
-    parts = [f"# דוח שיווק יומי · {today.strftime('%d.%m.%Y')}", ads_block(), social_block(state)]
-    cb, todo = comments_block(state); parts.append(cb)
-    if os.path.exists("ga.md"): parts.append("## אנליטיקס (7 ימים)\n" + open("ga.md", encoding="utf-8").read().split("\n", 1)[-1])
-    parts.append("\n---\n*סוכן שיווק יומי · AI Lab · הדוח נוצר אוטומטית. תשובות לתגובות מתפרסמות רק אחרי אישור.*")
-    md = "\n\n".join(parts)
-    if todo: md += "\n\n<!-- COMMENTS_JSON " + json.dumps(todo, ensure_ascii=False) + " -->"
-    open("report.md", "w", encoding="utf-8").write(md)
+    summary = []
+    ads = ads_block(summary); social = social_block(state, summary)
+    cb, todo = comments_block(state)
+    if todo: summary.append(f"💬 {len(todo)} תגובות ממתינות לתשובה")
+    ga = ga_compact()
+    if os.path.exists("ga.md"):
+        tot = next((l for l in open("ga.md", encoding="utf-8").read().splitlines() if l.startswith("**סה")), "")
+        if tot: summary.append("אתר: " + tot.replace("**", "").replace("סה\"כ:", "").strip())
+    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + ads + social + cb + ga
+                + h("p", h("i", "נוצר אוטומטית על ידי סוכן השיווק של AI Lab. תשובות לתגובות מתפרסמות רק אחרי אישור.")), dir="rtl")
+    if todo: body += "\n\n<!-- COMMENTS_JSON " + json.dumps(todo, ensure_ascii=False) + " -->"
+    open("report.md", "w", encoding="utf-8").write(body)
     json.dump(state, open(STATE_FILE, "w"), ensure_ascii=False, indent=2)
-    print(md)
+    print(body)
 
 
 if __name__ == "__main__":
