@@ -1,0 +1,26 @@
+name: marketing-reply
+on:
+  issue_comment:
+    types: [created]
+permissions:
+  issues: write
+jobs:
+  reply:
+    if: contains(github.event.issue.labels.*.name, 'marketing-daily') && startsWith(github.event.comment.body, 'אשר') && github.event.comment.user.login == 'mlb-code'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: פרסום התשובות שאושרו
+        id: run
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: |
+          pip install -q requests
+          python3 agent/marketing_reply.py > out.txt; cat out.txt
+      - name: דיווח ב-Issue
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: gh issue comment ${{ github.event.issue.number }} --body-file out.txt
