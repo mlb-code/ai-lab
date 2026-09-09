@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AI Lab · חיבור טיקטוק</title>
+<style>
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0b1220;color:#e8eefc;font-family:-apple-system,"Segoe UI",Arial,sans-serif}
+  .card{max-width:560px;width:92%;background:#121a2e;border:1px solid #223055;border-radius:16px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+  h1{font-size:22px;margin:0 0 8px}
+  p{color:#a9b6d6;line-height:1.6;margin:8px 0}
+  .ok{color:#5ee0b8;font-weight:700}
+  .err{color:#ff7a90;font-weight:700}
+  code{display:block;direction:ltr;text-align:left;background:#0b1220;border:1px solid #223055;border-radius:10px;padding:12px;word-break:break-all;font-size:13px;margin:12px 0}
+  button{background:linear-gradient(90deg,#4fd1c5,#7c6cf2);color:#0b1220;border:0;border-radius:10px;padding:12px 18px;font-weight:700;font-size:15px;cursor:pointer}
+  .logo{font-weight:800;font-size:18px;margin-bottom:18px}
+  .logo span{color:#4fd1c5}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo"><span>AI</span> Lab</div>
+  <div id="content"><h1>מתחבר לטיקטוק...</h1></div>
+</div>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var code=q.get('code'), err=q.get('error'), desc=q.get('error_description');
+  var el=document.getElementById('content');
+  if(code){
+    el.innerHTML='<h1 class="ok">✅ החיבור לטיקטוק אושר</h1><p>זה קוד האישור החד-פעמי. לחץ "העתק" ושלח אותו לעוזר. הקוד תקף לדקות ספורות.</p><code id="c"></code><button id="b">העתק קוד</button><p id="m"></p>';
+    document.getElementById('c').textContent=code;
+    document.getElementById('b').onclick=function(){navigator.clipboard.writeText(code).then(function(){document.getElementById('m').textContent='הועתק ✓';});};
+  } else if(err){
+    el.innerHTML='<h1 class="err">החיבור לא הושלם</h1><p>'+(desc||err)+'</p><p>אפשר לסגור את הדף ולנסות שוב.</p>';
+  } else {
+    el.innerHTML='<h1>דף חיבור לטיקטוק</h1><p>הדף הזה משמש את צוות AI Lab לחיבור חשבון הטיקטוק לכלי הפרסום הפנימי. אין כאן תוכן לגולשים.</p>';
+  }
+})();
+</script>
+</body>
+</html>
