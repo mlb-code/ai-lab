@@ -213,6 +213,8 @@ gtag('config', 'AW-18061574299');
 
     /* ===== הוכחה: פרויקטים של תלמידים ===== */
     .feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .swipe-hint { display: none; font-size: .82rem; color: var(--on-night-soft); margin: -6px 0 12px; }
+    @media (max-width: 768px) { .swipe-hint { display: block; } }
     .feat { display: flex; align-items: center; overflow: hidden; }
     .feat .shot {
         width: 42%; flex-shrink: 0; margin: 18px 18px 18px 0; border-radius: 14px; overflow: hidden;
@@ -324,7 +326,12 @@ gtag('config', 'AW-18061574299');
 
     /* ===== מובייל (390px = המסך הראשי) ===== */
     @media (max-width: 860px) {
-        .feat-grid, .courses-grid, .steps { grid-template-columns: 1fr; gap: 16px; }
+        .courses-grid, .steps { grid-template-columns: 1fr; gap: 16px; }
+        /* במובייל הפרויקטים בסלייד אופקי (גלילת אצבע עם snap) — כדי שההרשמה לא תהיה רחוקה (מאיר 10.09) */
+        .feat-grid { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 4px 4px 14px; margin: 0 -20px; padding-inline: 20px; scrollbar-width: none; }
+        .feat-grid::-webkit-scrollbar { display: none; }
+        .feat-grid .feat { flex: 0 0 84%; scroll-snap-align: center; opacity: 1; transform: none; transition: none; }
+        .feat-grid .feat img { aspect-ratio: 16 / 9; width: 100%; height: auto; object-fit: cover; }
         .steps { gap: 14px; }
     }
     @media (max-width: 640px) {
@@ -378,6 +385,7 @@ gtag('config', 'AW-18061574299');
             <h2>ככה נראה פרויקט של ילד בן 11</h2>
             <p>כל תלמיד מסיים עם משהו אמיתי שרץ באינטרנט.</p>
         </div>
+        <p class="swipe-hint">גוללים הצידה לעוד פרויקטים</p>
         <div class="feat-grid">
             <div class="feat glass reveal">
                 <div class="shot"><img src="/project-previews-small/bookmatch.jpg" alt="BookMatch — האתר של מאיה, בת 11" width="640" height="360" loading="lazy"></div>
