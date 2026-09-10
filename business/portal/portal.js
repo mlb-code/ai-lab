@@ -12,7 +12,7 @@ const STORAGE_KEY = 'biz_auth';
 // Mock students used until the real Sheet is configured.
 // Phone : { name, level, courses (array of slugs), passwordHash? }
 const MOCK_STUDENTS = {
-    '0546500795': { name: 'מאיר', level: 'admin', courses: ['websites', 'automation', 'assistant', 'content'] },
+    '0546500794': { name: 'מאיר', level: 'admin', courses: ['websites', 'automation', 'assistant', 'content'] },
     '0500000001': { name: 'תלמיד דמו', level: 'student', courses: ['websites'] }
 };
 

@@ -852,7 +852,7 @@ function sendWhatsApp() {
   fd.append('channel', 'וואטסאפ');
   fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
   sendToSheets(name, phone, email, 'וואטסאפ');
-  window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
+  window.open('https://wa.me/972546500794?text=' + encodeURIComponent(msg), '_blank');
 }
 document.getElementById('syllabus-modal').addEventListener('click', function(e) {
   if (e.target === this) closeSyllabus();

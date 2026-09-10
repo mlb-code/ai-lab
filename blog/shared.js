@@ -48,7 +48,7 @@
         + '  <div class="m-actions">'
         + '    <a href="https://my.ai-lab.co.il/join" class="btn btn-primary">הרשמה</a>'
         + '    <a href="https://my.ai-lab.co.il" class="btn btn-ghost-dark">אזור אישי</a>'
-        + '    <a href="https://wa.me/972546500795" target="_blank" rel="noopener" class="btn btn-wa">וואטסאפ</a>'
+        + '    <a href="https://wa.me/972546500794?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%91%D7%9C%D7%95%D7%92%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D" target="_blank" rel="noopener" class="btn btn-wa">וואטסאפ</a>'
         + '  </div>'
         + '  <div class="m-social">'
         + '    <a href="https://www.instagram.com/ai.lab.il" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 2A76 76 0 0 0 7.3 4.3c-.9.1-1.3.2-1.6.3-.4.2-.7.3-1 .7-.3.3-.5.6-.7 1-.1.3-.3.8-.3 1.6-.1 1.2-.1 1.5-.1 4.6s0 3.4.1 4.6c.1.9.2 1.3.3 1.6.2.4.3.7.7 1 .3.3.6.5 1 .7.3.1.8.3 1.6.3 1.2.1 1.5.1 4.7.1s3.5 0 4.7-.1c.9-.1 1.3-.2 1.6-.3.4-.2.7-.3 1-.7.3-.3.5-.6.7-1 .1-.3.3-.8.3-1.6.1-1.2.1-1.5.1-4.6s0-3.4-.1-4.6c-.1-.9-.2-1.3-.3-1.6-.2-.4-.3-.7-.7-1-.3-.3-.6-.5-1-.7-.3-.1-.8-.3-1.6-.3-1.2-.1-1.5-.1-4.7-.1M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6m5.2-3.4a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4"/></svg></a>'
@@ -102,9 +102,9 @@
         + '    </div>'
         + '    <div class="footer-section">'
         + '      <h4>יצירת קשר</h4>'
-        + '      <a href="tel:054-6500795">054-6500795</a>'
+        + '      <a href="tel:054-6500794">054-6500794</a>'
         + '      <a href="mailto:meir@ai-lab.co.il">meir@ai-lab.co.il</a>'
-        + '      <a href="https://wa.me/972546500795" target="_blank" onclick="if(window.gtag)gtag(\'event\',\'whatsapp_click\',{event_category:\'contact\',event_label:\'footer_link\'})">WhatsApp</a>'
+        + '      <a href="https://wa.me/972546500794?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%91%D7%9C%D7%95%D7%92%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D" target="_blank" onclick="if(window.gtag)gtag(\'event\',\'whatsapp_click\',{event_category:\'contact\',event_label:\'footer_link\'})">WhatsApp</a>'
         + '    </div>'
         + '    <div class="footer-section">'
         + '      <h4>קהילה</h4>'
@@ -173,7 +173,7 @@
             + '        <button type="button" class="btn-whatsapp" onclick="sendLeadWhatsApp()">שלח בוואטסאפ</button>'
             + '      </div>'
             + '    </form>'
-            + '    <p class="lead-form-phone">או התקשרו ישירות: <a href="tel:054-6500795">054-6500795</a></p>'
+            + '    <p class="lead-form-phone">או התקשרו ישירות: <a href="tel:054-6500794">054-6500794</a></p>'
             + '  </div>'
             + '</section>';
     }
@@ -184,6 +184,13 @@
         if (!el) return;
         if (before) {
             el.insertAdjacentHTML('beforebegin', html);
+            // כפתור וואטסאפ צף (המספר העסקי) — גם במאמרים
+            if (!document.querySelector('.wa-float')) {
+                var waCss = document.createElement('style');
+                waCss.textContent = '.wa-float{position:fixed;bottom:26px;left:22px;z-index:94;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 26px rgba(37,211,102,.45),0 0 0 4px rgba(37,211,102,.16);transition:transform .2s;text-decoration:none}.wa-float:hover{transform:translateY(-2px) scale(1.04)}@media(max-width:768px){.wa-float{bottom:calc(22px + env(safe-area-inset-bottom));left:16px;width:50px;height:50px}}';
+                document.head.appendChild(waCss);
+                document.body.insertAdjacentHTML('beforeend', '<a class="wa-float" href="https://wa.me/972546500794?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%91%D7%9C%D7%95%D7%92%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D" target="_blank" rel="noopener" aria-label="וואטסאפ" data-cta="whatsapp_float"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path fill="#fff" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.69 8.23-8.23 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.2 8.2 0 0 1-1.26-4.38c.01-4.54 3.7-8.23 8.24-8.23M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01"/></svg></a>');
+            }
             el.parentNode.removeChild(el);
         } else {
             el.outerHTML = html;
@@ -319,7 +326,7 @@
             gtag('event', 'whatsapp_click', { event_category: 'contact', event_label: 'blog_popup' });
             gtag('event', 'conversion', { 'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD' });
         }
-        window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
+        window.open('https://wa.me/972546500794?text=' + encodeURIComponent(msg), '_blank');
     };
 
     // Lead form (in-article CTA)
@@ -367,7 +374,7 @@
             gtag('event', 'whatsapp_click', { event_category: 'contact', event_label: 'blog_article' });
             gtag('event', 'conversion', { 'send_to': 'AW-18061574299/CQ1VCKW-_5QcEJuBt6RD' });
         }
-        window.open('https://wa.me/972546500795?text=' + encodeURIComponent(msg), '_blank');
+        window.open('https://wa.me/972546500794?text=' + encodeURIComponent(msg), '_blank');
     };
 })();
 

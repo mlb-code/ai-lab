@@ -8,7 +8,7 @@
     'use strict';
     if (document.getElementById('agentOrb')) return; // דף הבית — יש כבר סוכן
 
-    var WA = function (t) { return 'https://wa.me/972546500795?text=' + encodeURIComponent(t); };
+    var WA = function (t) { return 'https://wa.me/972546500794?text=' + encodeURIComponent(t); };
 
     // ---------- עיצוב ----------
     var css = ''
