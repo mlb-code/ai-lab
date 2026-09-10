@@ -106,6 +106,32 @@ def social_block(state, summary):
     return "".join(parts)
 
 
+# ---------- מתזמן הרשתות (Railway) ----------
+SCHEDULER_URL = os.environ.get("SCHEDULER_STATUS_URL", "https://scheduler-production-ed9c.up.railway.app/status")
+
+def scheduler_block(summary):
+    """בודק שהמתזמן ב-Railway חי ושלא פוספסו פוסטים. רץ בענן — לא תלוי במחשב של מאיר."""
+    try:
+        st = requests.get(SCHEDULER_URL, timeout=20).json()
+    except Exception as e:
+        summary.append("⚠️ מתזמן הרשתות לא מגיב (Railway) — לבדוק: " + h("a", "railway.com", href="https://railway.com/dashboard"))
+        return h("h2", "מתזמן הרשתות") + h("p", f"לא הצלחתי לקרוא את הסטטוס: {e}")
+    last_run = (st.get("last") or {}).get("run_at") or ""
+    stale = True
+    if last_run:
+        try: stale = (dt.datetime.now(TZ) - dt.datetime.fromisoformat(last_run)) > dt.timedelta(minutes=10)
+        except Exception: pass
+    missed = st.get("missed") or []; paused = st.get("paused")
+    yday_done = sorted(k for k, v in (st.get("posted") or {}).items() if k.startswith(yday.isoformat()) and v.get("fb") and v.get("ig"))
+    upcoming = st.get("upcoming") or []
+    if paused: summary.append("⚠️ מתזמן הרשתות מושהה (PAUSED=1) — לא יעלו פוסטים")
+    elif stale: summary.append(f"⚠️ מתזמן הרשתות לא רץ מאז {last_run[11:16] or '—'} — לבדוק ב-Railway")
+    if missed: summary.append("⚠️ פוסטים שלא עלו: " + ", ".join(m[11:16] + " " + m[17:] for m in missed[-5:]))
+    if not (paused or stale or missed): summary.append(f"מתזמן הרשתות: תקין · אתמול עלו {len(yday_done)} פוסטים · ריצה אחרונה {last_run[11:16]}")
+    rows = [h("li", f"אתמול עלו: {', '.join(k[11:16] for k in yday_done) or 'אין'}"), h("li", "הבאים בתור: " + (" · ".join(u[5:16].replace('T',' ') + " " + u[17:] for u in upcoming[:3]) or "אין"))]
+    if missed: rows.append(h("li", h("b", "לא עלו: ") + ", ".join(missed)))
+    return h("h2", "מתזמן הרשתות (Railway)") + h("ul", "".join(rows)) + h("p", h("a", "דף הסטטוס", href=SCHEDULER_URL))
+
 # ---------- תגובות ----------
 def fetch_comments():
     cutoff = dt.datetime.now(TZ) - dt.timedelta(hours=48); items = []
@@ -190,14 +216,14 @@ def ga_compact():
 def main():
     state = json.load(open(STATE_FILE)) if os.path.exists(STATE_FILE) else {}
     summary = []
-    ads = ads_block(summary); social = social_block(state, summary)
+    ads = ads_block(summary); social = social_block(state, summary); sch = scheduler_block(summary)
     cb, todo = comments_block(state)
     if todo: summary.append(f"💬 {len(todo)} תגובות ממתינות לתשובה")
     ga = ga_compact()
     if os.path.exists("ga.md"):
         tot = next((l for l in open("ga.md", encoding="utf-8").read().splitlines() if l.startswith("**סה")), "")
         if tot: summary.append("אתר: " + tot.replace("**", "").replace("סה\"כ:", "").strip())
-    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + ads + social + cb + ga
+    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + ads + social + sch + cb + ga
                 + h("p", h("i", "נוצר אוטומטית על ידי סוכן השיווק של AI Lab. תשובות לתגובות מתפרסמות רק אחרי אישור.")), dir="rtl")
     if todo: body += "\n\n<!-- COMMENTS_JSON " + json.dumps(todo, ensure_ascii=False) + " -->"
     open("report.md", "w", encoding="utf-8").write(body)
