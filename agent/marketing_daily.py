@@ -61,6 +61,9 @@ def ads_block(summary):
             a = acts(r, ["link_click", "landing_page_view"]); name = r["campaign_name"].replace("AI Lab · ", "").replace(" · ספטמבר 2026", "")
             lines.append([name, money(r["spend"]), a["link_click"], f"₪{float(r.get('cpc', 0)):.2f}", a["landing_page_view"], r.get("reach", "0")])
             tot[0] += float(r["spend"]); tot[1] += a["link_click"]; tot[2] += a["landing_page_view"]; tot[3] += int(r.get("reach", 0))
+            # דגל אוטומטי: קמפיין יקר (מעל ₪2 ללחיצה עם הוצאה משמעותית) — לבדוק קהל/קריאייטיב
+            if label == "אתמול" and float(r.get("cpc", 0)) > 2 and float(r["spend"]) >= 20:
+                summary.append(f"⚠️ {name}: ₪{float(r['cpc']):.2f} ללחיצה אתמול — יקר, לבדוק קהל או קריאייטיב")
         lines.append([h("b", "סה\"כ"), h("b", money(tot[0])), h("b", tot[1]), "", tot[2], tot[3]])
         return h("h3", label) + table(["קמפיין", "הוצאה", "לחיצות", "עלות ללחיצה", "הגיעו לאתר", "הגעה"], lines), tot
     ry = render("אתמול", y); rc = render("מצטבר מ-09.09", cum)
@@ -80,6 +83,47 @@ def ads_block(summary):
         parts.append(h("p", "⚠️ " + h("b", "מודעות שדורשות טיפול: ") + ", ".join(f"{b['name']} ({b['effective_status']})" for b in bad)))
         summary.append(f"⚠️ {len(bad)} מודעות דורשות טיפול")
     return "".join(parts)
+
+
+# ---------- דף הבית מול דף הנחיתה (פיצול קמפיין הקורסים מ-10.09) ----------
+COURSES_CAMPAIGN = "120248975514880650"
+
+def landing_split_block(summary):
+    """סט A (דף הבית) מול סט B (/parents): הגיעו לדף → לחצו וואטסאפ (Contact) או הרשמה (InitiateCheckout). מצטבר מאז הפיצול."""
+    rows = get(f"{COURSES_CAMPAIGN}/insights", level="adset", fields="adset_name,spend,actions,cpc",
+               time_range=json.dumps({"since": "2026-09-10", "until": today.isoformat()})).get("data", [])
+    rows = [r for r in rows if float(r.get("spend", 0)) > 0]
+    if len(rows) < 2: return ""
+    lines = []; best = None
+    for r in rows:
+        a = acts(r, ["link_click", "landing_page_view", "contact", "initiate_checkout"])
+        conv = a["contact"] + a["initiate_checkout"]; lpv = a["landing_page_view"]
+        rate = conv / lpv if lpv else 0.0
+        label = "A · דף הבית" if r["adset_name"].startswith("A") else "B · דף הנחיתה"
+        lines.append([label, money(r["spend"]), a["link_click"], lpv, a["contact"], a["initiate_checkout"], f"{100*rate:.1f}%" if lpv else "—"])
+        if lpv >= 30 and (best is None or rate > best[1]): best = (label, rate)
+    if best: summary.append(f"פיצול הקורסים: מוביל {best[0]} ({100*best[1]:.1f}% פעולה אחרי הגעה לדף)")
+    return h("h2", "דף הבית מול דף הנחיתה (קמפיין הקורסים, מצטבר מ-10.09)") + \
+        table(["סט", "הוצאה", "לחיצות", "הגיעו לדף", "וואטסאפ", "הרשמה", "% פעולה"], lines) + \
+        h("p", h("i", "החלטה ב-15.09: כל התקציב לסט עם אחוז הפעולה הגבוה יותר (לפחות 30 הגעות לדף בכל סט)."))
+
+
+# ---------- סוכן הוואטסאפ (Railway) ----------
+AGENT_HEALTH_URL = os.environ.get("WA_AGENT_HEALTH_URL", "https://ailab-whatsapp-agent-production.up.railway.app/health")
+
+def agent_block(summary):
+    try:
+        d = requests.get(AGENT_HEALTH_URL, timeout=20).json()
+    except Exception as e:
+        summary.append("⚠️ סוכן הוואטסאפ לא מגיב (Railway)")
+        return h("h2", "סוכן הוואטסאפ") + h("p", f"לא הצלחתי לקרוא את הסטטוס: {e}")
+    s = d.get("stats", {})
+    if not d.get("ok") or not d.get("agent_enabled"): summary.append("⚠️ סוכן הוואטסאפ כבוי או לא תקין")
+    elif s.get("failed", 0): summary.append(f"⚠️ סוכן הוואטסאפ: {s['failed']} הודעות נכשלו")
+    else: summary.append(f"סוכן וואטסאפ: תקין · {s.get('conversations', 0)} שיחות מצטבר · אתמול+היום ${d.get('day_cost_usd', 0):.2f}")
+    return h("h2", "סוכן הוואטסאפ (Railway)") + h("ul",
+        h("li", f"שיחות: {s.get('conversations', 0)} · הודעות נכנסו {s.get('messages_in', 0)} · יצאו {s.get('messages_out', 0)} · נכשלו {s.get('failed', 0)}") +
+        h("li", f"מענה אוטומטי: {'פעיל' if d.get('auto_reply') else 'כבוי'} · מוח {d.get('brain_model', '?')} · עלות החודש ${d.get('month_cost_usd', 0):.2f} מתוך ${d.get('monthly_budget_usd', 0):.0f}"))
 
 
 # ---------- אינסטגרם / פייסבוק ----------
@@ -216,14 +260,14 @@ def ga_compact():
 def main():
     state = json.load(open(STATE_FILE)) if os.path.exists(STATE_FILE) else {}
     summary = []
-    ads = ads_block(summary); social = social_block(state, summary); sch = scheduler_block(summary)
+    ads = ads_block(summary); ab = landing_split_block(summary); social = social_block(state, summary); sch = scheduler_block(summary); ag = agent_block(summary)
     cb, todo = comments_block(state)
     if todo: summary.append(f"💬 {len(todo)} תגובות ממתינות לתשובה")
     ga = ga_compact()
     if os.path.exists("ga.md"):
         tot = next((l for l in open("ga.md", encoding="utf-8").read().splitlines() if l.startswith("**סה")), "")
         if tot: summary.append("אתר: " + tot.replace("**", "").replace("סה\"כ:", "").strip())
-    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + ads + social + sch + cb + ga
+    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + ads + ab + social + sch + ag + cb + ga
                 + h("p", h("i", "נוצר אוטומטית על ידי סוכן השיווק של AI Lab. תשובות לתגובות מתפרסמות רק אחרי אישור.")), dir="rtl")
     if todo: body += "\n\n<!-- COMMENTS_JSON " + json.dumps(todo, ensure_ascii=False) + " -->"
     open("report.md", "w", encoding="utf-8").write(body)
