@@ -126,6 +126,41 @@ def agent_block(summary):
         h("li", f"מענה אוטומטי: {'פעיל' if d.get('auto_reply') else 'כבוי'} · מוח {d.get('brain_model', '?')} · עלות החודש ${d.get('month_cost_usd', 0):.2f} מתוך ${d.get('monthly_budget_usd', 0):.0f}"))
 
 
+# ---------- גוגל אדס (REST v22; רץ רק אם יש GOOGLE_ADS_* בסביבה) ----------
+def google_block(summary):
+    g = {k: os.environ.get(k, "").strip() for k in ("GOOGLE_ADS_CLIENT_ID", "GOOGLE_ADS_CLIENT_SECRET", "GOOGLE_ADS_REFRESH_TOKEN")}
+    if not all(g.values()): return ""
+    try:
+        tok = requests.post("https://oauth2.googleapis.com/token", data={"client_id": g["GOOGLE_ADS_CLIENT_ID"], "client_secret": g["GOOGLE_ADS_CLIENT_SECRET"],
+                            "refresh_token": g["GOOGLE_ADS_REFRESH_TOKEN"], "grant_type": "refresh_token"}, timeout=60).json()["access_token"]
+        hd = {"Authorization": f"Bearer {tok}", "login-customer-id": os.environ.get("GOOGLE_ADS_MANAGER_ID", "318-612-5942").replace("-", "")}
+        if os.environ.get("GOOGLE_ADS_DEVELOPER_TOKEN"): hd["developer-token"] = os.environ["GOOGLE_ADS_DEVELOPER_TOKEN"].strip()
+        cust = os.environ.get("GOOGLE_ADS_CUSTOMER_ID", "787-977-7621").replace("-", "")
+        def q(gaql):
+            r = requests.post(f"https://googleads.googleapis.com/v22/customers/{cust}/googleAds:search", headers=hd, json={"query": gaql}, timeout=120)
+            r.raise_for_status(); return r.json().get("results", [])
+        base = "SELECT campaign.name, metrics.cost_micros, metrics.clicks, metrics.impressions, metrics.average_cpc, metrics.conversions FROM campaign WHERE campaign.status = 'ENABLED' AND segments.date {r}"
+        y = q(base.format(r="DURING YESTERDAY")); cum = q(base.format(r=f"BETWEEN '2026-09-12' AND '{today.isoformat()}'"))
+    except Exception as e:
+        summary.append("⚠️ גוגל אדס: לא הצלחתי לקרוא נתונים"); return h("h2", "גוגל אדס") + h("p", str(e)[:200])
+    def rows(rs):
+        out = []
+        for r in rs:
+            m = r["metrics"]; cost = int(m.get("costMicros", 0)) / 1e6; clicks = int(m.get("clicks", 0))
+            out.append([r["campaign"]["name"].replace("AI Lab · ", ""), money(cost), clicks, f"₪{cost/clicks:.2f}" if clicks else "—", m.get("impressions", 0), f"{float(m.get('conversions', 0)):.0f}"])
+        return out
+    ty = sum(int(r["metrics"].get("costMicros", 0)) for r in y) / 1e6; cy = sum(int(r["metrics"].get("clicks", 0)) for r in y); convy = sum(float(r["metrics"].get("conversions", 0)) for r in y)
+    summary.append(f"גוגל אתמול: {money(ty)} · {cy} קליקים · {convy:.0f} המרות" if y else "גוגל אתמול: אין הוצאה (מודעות בבדיקה?)")
+    parts = [h("h2", "גוגל אדס (חיפוש)")]
+    parts.append(h("h3", "אתמול") + (table(["קמפיין", "הוצאה", "קליקים", "עלות לקליק", "חשיפות", "המרות"], rows(y)) if y else h("p", "אין נתונים.")))
+    parts.append(h("h3", "מצטבר מ-12.09") + (table(["קמפיין", "הוצאה", "קליקים", "עלות לקליק", "חשיפות", "המרות"], rows(cum)) if cum else h("p", "אין נתונים.")))
+    try:
+        kw = q("SELECT ad_group_criterion.keyword.text, metrics.clicks, metrics.cost_micros, metrics.impressions FROM keyword_view WHERE segments.date DURING LAST_7_DAYS AND metrics.impressions > 0 ORDER BY metrics.clicks DESC LIMIT 8")
+        if kw: parts.append(h("h3", "מילים מובילות (7 ימים)") + table(["מילה", "קליקים", "הוצאה", "חשיפות"], [[r["adGroupCriterion"]["keyword"]["text"], r["metrics"].get("clicks", 0), money(int(r["metrics"].get("costMicros", 0)) / 1e6), r["metrics"].get("impressions", 0)] for r in kw]))
+    except Exception: pass
+    return "".join(parts)
+
+
 # ---------- אינסטגרם / פייסבוק ----------
 def social_block(state, summary):
     ig = get(IG, fields="followers_count,media_count"); fb = get(PAGE, fields="followers_count,fan_count")
@@ -260,14 +295,14 @@ def ga_compact():
 def main():
     state = json.load(open(STATE_FILE)) if os.path.exists(STATE_FILE) else {}
     summary = []
-    ads = ads_block(summary); ab = landing_split_block(summary); social = social_block(state, summary); sch = scheduler_block(summary); ag = agent_block(summary)
+    ads = ads_block(summary); ab = landing_split_block(summary); gg = google_block(summary); social = social_block(state, summary); sch = scheduler_block(summary); ag = agent_block(summary)
     cb, todo = comments_block(state)
     if todo: summary.append(f"💬 {len(todo)} תגובות ממתינות לתשובה")
     ga = ga_compact()
     if os.path.exists("ga.md"):
         tot = next((l for l in open("ga.md", encoding="utf-8").read().splitlines() if l.startswith("**סה")), "")
         if tot: summary.append("אתר: " + tot.replace("**", "").replace("סה\"כ:", "").strip())
-    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + ads + ab + social + sch + ag + cb + ga
+    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + ads + ab + gg + social + sch + ag + cb + ga
                 + h("p", h("i", "נוצר אוטומטית על ידי סוכן השיווק של AI Lab. תשובות לתגובות מתפרסמות רק אחרי אישור.")), dir="rtl")
     if todo: body += "\n\n<!-- COMMENTS_JSON " + json.dumps(todo, ensure_ascii=False) + " -->"
     open("report.md", "w", encoding="utf-8").write(body)
