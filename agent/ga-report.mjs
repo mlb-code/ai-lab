@@ -23,6 +23,7 @@ async function report(token, dims, metrics, range, limit = 15, filter = null) {
   for (const r of j.rows || []) {
     const keys = r.dimensionValues.map(d => d.value); const host = keys.pop();
     if (/localhost|127\.0\.0\.1/.test(host || "")) continue;
+    if (keys.some(k => /localhost|127\.0\.0\.1/.test(k || ""))) continue; // גם כמקור/מפנה (בדיקות מקומיות של סשן האתר)
     const vals = r.metricValues.map(m => Number(m.value)); const id = keys.join(" | ");
     const cur = merged.get(id) || { k: id, v: vals.map(() => 0) }; cur.v = cur.v.map((x, i) => x + vals[i]); merged.set(id, cur);
   }
