@@ -1,0 +1,29 @@
+name: ga-admin-check
+
+on:
+  workflow_dispatch:
+    inputs:
+      delete_rule:
+        description: "resource name מלא של כלל למחיקה (ריק = רק בדיקה)"
+        required: false
+        default: ""
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check GA4 event rules
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          GA4_PROPERTY_ID: ${{ vars.GA4_PROPERTY_ID }}
+          DELETE_RULE: ${{ github.event.inputs.delete_rule }}
+        run: node agent/ga-admin-check.mjs | tee ga-admin.md >> $GITHUB_STEP_SUMMARY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ga-admin
+          path: ga-admin.md
