@@ -69,6 +69,11 @@ for (const p of PAGES) {
 
   // צילום: מסך ראשון + עמוד מלא (חתוך לגבולות ה-API של התמונות)
   await page.screenshot({ path: `shots/${p.shot}-top.png` });
+  // אלמנטים עם אנימציית reveal-on-scroll מוסתרים (opacity:0) עד שגוללים אליהם — בצילום עמוד מלא בלי גלילה הם נראים כ"רווח ריק".
+  // מציגים אותם כמו שמשתמש אמיתי רואה אחרי גלילה, כדי שהדוח לא יתריע על רווח שלא קיים (13.09.2026).
+  await page.addStyleTag({ content: ".reveal{opacity:1!important;transform:none!important;transition:none!important}" });
+  await page.evaluate(() => document.querySelectorAll(".reveal").forEach(e => e.classList.add("in")));
+  await page.waitForTimeout(400);
   const fullH = await page.evaluate(() => document.documentElement.scrollHeight);
   await page.screenshot({ path: `shots/${p.shot}-full.png`, fullPage: true, clip: fullH > 7500 ? { x: 0, y: 0, width: p.width, height: 7500 } : undefined });
   notes.push(`${p.name}: כותרת "${checks.title}", גובה ${fullH}px, גלישת רוחב ${checks.overflowPx}px`);
