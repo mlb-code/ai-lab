@@ -57,6 +57,22 @@ for (const ev of ["cta_click", "whatsapp_click", "generate_lead", "click"]) {
   console.log(`\n## ${ev} בכל האתר (10 ימים): יום | דף | כמה`);
   for (const row of r.j.rows || []) console.log(row.dimensionValues.map(d => d.value).join(" | ") + " | " + row.metricValues[0].value);
 }
+// מעורבות לפי יום ב-/parents: scroll (90%) ו-user_engagement — אם הם ממשיכים אחרי 10.09 המדידה עובדת והמבקרים פשוט לא לוחצים
+for (const ev of ["scroll", "user_engagement", "page_view"]) {
+  const r = await call(tok, D, "POST", { dateRanges: [{ startDate: "10daysAgo", endDate: "today" }],
+    dimensions: [{ name: "date" }], metrics: [{ name: "eventCount" }, { name: "totalUsers" }], limit: 20, orderBys: [{ dimension: { dimensionName: "date" } }],
+    dimensionFilter: { andGroup: { expressions: [
+      { filter: { fieldName: "eventName", stringFilter: { value: ev } } },
+      { filter: { fieldName: "pagePath", stringFilter: { matchType: "BEGINS_WITH", value: "/parents" } } }] } } });
+  console.log(`\n## ${ev} ב-/parents לפי יום: יום | אירועים | משתמשים`);
+  for (const row of r.j.rows || []) console.log(row.dimensionValues[0].value + " | " + row.metricValues.map(m => m.value).join(" | "));
+}
+// ריאלטיים (30 דק' אחרונות): האם לחיצות בדיקה שלנו נרשמות
+const rt = await call(tok, `https://analyticsdata.googleapis.com/v1beta/properties/${PROP}:runRealtimeReport`, "POST",
+  { dimensions: [{ name: "eventName" }, { name: "unifiedScreenName" }], metrics: [{ name: "eventCount" }], limit: 30 });
+console.log("\n## realtime (30 דק'): אירוע | דף | כמה");
+for (const row of rt.j.rows || []) console.log(row.dimensionValues.map(d => d.value).join(" | ") + " | " + row.metricValues[0].value);
+
 // ניסיון להפעיל את Admin API בפרויקט דרך חשבון השירות (ייכשל אם אין לו הרשאה — אז מאיר מפעיל בקליק)
 const en = await call(await token("https://www.googleapis.com/auth/cloud-platform"),
   "https://serviceusage.googleapis.com/v1/projects/429419145749/services/analyticsadmin.googleapis.com:enable", "POST", {});
