@@ -44,6 +44,9 @@ md += table("תוכן UTM (utm_content)", await report(token, ["sessionManualAdC
 md += table("דפי נחיתה", await report(token, ["landingPagePlusQueryString"], ["sessions", "engagedSessions"], cur, 15), ["דף נחיתה", "ביקורים", "מעורבים"]);
 md += table("דפים נצפים", await report(token, ["pagePath"], ["screenPageViews", "totalUsers"], cur, 15), ["דף", "צפיות", "משתמשים"]);
 md += table("לחיצות CTA (cta_click)", await report(token, ["customEvent:cta_section", "customEvent:cta_label"], ["eventCount"], cur, 20, { filter: { fieldName: "eventName", stringFilter: { value: "cta_click" } } }), ["סקשן | כפתור", "לחיצות"]);
+// דף הנחיתה להורים: צפיות (landing_view) מול לחיצות (cta_click בסקשן landing_parents) — כדי לראות אם הדף ממיר בכלל (13.09.2026)
+md += table("דף הנחיתה /parents: אירועים", await report(token, ["eventName", "customEvent:cta_label"], ["eventCount"], cur, 20,
+  { filter: { fieldName: "pagePath", stringFilter: { matchType: "BEGINS_WITH", value: "/parents" } } }), ["אירוע | כפתור", "כמה"]);
 md += table("מכשיר", await report(token, ["deviceCategory"], ["sessions"], cur, 5), ["מכשיר", "ביקורים"]);
 console.log(md);
 if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
