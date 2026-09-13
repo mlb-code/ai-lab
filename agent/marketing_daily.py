@@ -56,19 +56,25 @@ def ads_block(summary):
     parts = [h("h2", "מודעות במטא")]
     def render(label, rows):
         if not rows: return h("p", h("b", label + ":") + " אין הוצאה.")
-        lines = []; tot = [0.0, 0, 0, 0]
+        lines = []; tot = [0.0, 0, 0, 0, 0]
         for r in rows:
-            a = acts(r, ["link_click", "landing_page_view"]); name = r["campaign_name"].replace("AI Lab · ", "").replace(" · ספטמבר 2026", "")
-            lines.append([name, money(r["spend"]), a["link_click"], f"₪{float(r.get('cpc', 0)):.2f}", a["landing_page_view"], r.get("reach", "0")])
-            tot[0] += float(r["spend"]); tot[1] += a["link_click"]; tot[2] += a["landing_page_view"]; tot[3] += int(r.get("reach", 0))
-            # דגל אוטומטי: קמפיין יקר (מעל ₪2 ללחיצה עם הוצאה משמעותית) — לבדוק קהל/קריאייטיב
-            if label == "אתמול" and float(r.get("cpc", 0)) > 2 and float(r["spend"]) >= 20:
-                summary.append(f"⚠️ {name}: ₪{float(r['cpc']):.2f} ללחיצה אתמול — יקר, לבדוק קהל או קריאייטיב")
-        lines.append([h("b", "סה\"כ"), h("b", money(tot[0])), h("b", tot[1]), "", tot[2], tot[3]])
-        return h("h3", label) + table(["קמפיין", "הוצאה", "לחיצות", "עלות ללחיצה", "הגיעו לאתר", "הגעה"], lines), tot
+            a = acts(r, ["link_click", "landing_page_view", "onsite_conversion.messaging_conversation_started_7d"]); name = r["campaign_name"].replace("AI Lab · ", "").replace(" · ספטמבר 2026", "")
+            conv = a["onsite_conversion.messaging_conversation_started_7d"]; is_msg = "הודעות" in name or "וואטסאפ" in name
+            lines.append([name, money(r["spend"]), a["link_click"], f"₪{float(r.get('cpc', 0)):.2f}", a["landing_page_view"], conv, r.get("reach", "0")])
+            tot[0] += float(r["spend"]); tot[1] += a["link_click"]; tot[2] += a["landing_page_view"]; tot[3] += int(r.get("reach", 0)); tot[4] += conv
+            if label == "אתמול" and float(r["spend"]) >= 20:
+                # קמפיין הודעות נמדד בעלות לשיחה, לא בעלות לקליק; קמפיין לאתר — בעלות לקליק
+                if is_msg and conv and float(r["spend"]) / conv > 40:
+                    summary.append(f"⚠️ {name}: ₪{float(r['spend'])/conv:.0f} לשיחה אתמול — יקר, לבדוק קהל או קריאייטיב")
+                elif is_msg and not conv:
+                    summary.append(f"⚠️ {name}: {money(r['spend'])} אתמול בלי אף שיחה — לבדוק")
+                elif not is_msg and float(r.get("cpc", 0)) > 2:
+                    summary.append(f"⚠️ {name}: ₪{float(r['cpc']):.2f} ללחיצה אתמול — יקר, לבדוק קהל או קריאייטיב")
+        lines.append([h("b", "סה\"כ"), h("b", money(tot[0])), h("b", tot[1]), "", tot[2], tot[4], tot[3]])
+        return h("h3", label) + table(["קמפיין", "הוצאה", "לחיצות", "עלות ללחיצה", "הגיעו לאתר", "שיחות וואטסאפ", "הגעה"], lines), tot
     ry = render("אתמול", y); rc = render("מצטבר מ-09.09", cum)
     parts.append(ry if isinstance(ry, str) else ry[0]); parts.append(rc if isinstance(rc, str) else rc[0])
-    if not isinstance(ry, str): summary.append(f"מודעות אתמול: {money(ry[1][0])} · {ry[1][1]} לחיצות · {ry[1][2]} הגיעו לאתר")
+    if not isinstance(ry, str): summary.append(f"מודעות אתמול: {money(ry[1][0])} · {ry[1][1]} לחיצות · {ry[1][2]} הגיעו לאתר · {ry[1][4]} שיחות וואטסאפ")
     if not isinstance(rc, str): summary.append(f"מצטבר: {money(rc[1][0])} · {rc[1][1]} לחיצות")
     ads = get(f"{ACT}/insights", level="ad", date_preset="yesterday", limit=100, filtering=FILT,
               fields="ad_name,adset_name,spend,impressions,actions,ctr").get("data", [])
@@ -101,8 +107,10 @@ def landing_split_block(summary):
         rate = conv / lpv if lpv else 0.0
         label = "A · דף הבית" if r["adset_name"].startswith("A") else "B · דף הנחיתה"
         lines.append([label, money(r["spend"]), a["link_click"], lpv, a["contact"], a["initiate_checkout"], f"{100*rate:.1f}%" if lpv else "—"])
-        if lpv >= 30 and (best is None or rate > best[1]): best = (label, rate)
-    if best: summary.append(f"פיצול הקורסים: מוביל {best[0]} ({100*best[1]:.1f}% פעולה אחרי הגעה לדף)")
+        if lpv >= 30 and (best is None or rate > best[1]): best = (label, rate, conv)
+    total_conv = sum(int(l[4]) + int(l[5]) for l in lines)
+    if best and total_conv >= 5: summary.append(f"פיצול הקורסים: מוביל {best[0]} ({100*best[1]:.1f}% פעולה אחרי הגעה לדף)")
+    elif lines: summary.append(f"פיצול הקורסים: עדיין אין הבדל מובהק ({total_conv} פעולות בסך הכל, צריך לפחות 5)")
     return h("h2", "דף הבית מול דף הנחיתה (קמפיין הקורסים, מצטבר מ-10.09)") + \
         table(["סט", "הוצאה", "לחיצות", "הגיעו לדף", "וואטסאפ", "הרשמה", "% פעולה"], lines) + \
         h("p", h("i", "החלטה ב-15.09: כל התקציב לסט עם אחוז הפעולה הגבוה יותר (לפחות 30 הגעות לדף בכל סט)."))
