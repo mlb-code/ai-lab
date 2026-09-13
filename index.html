@@ -2559,6 +2559,23 @@ gtag('config', 'AW-18061574299');
         .hero-actions .cr-row .hero-comm.ours .wa-ic { width: 17px; height: 17px; }
         .hero-actions .cr-row a.grating-m { order: 3; flex: 0 0 auto; width: max-content; height: auto; padding: 8px 18px; margin: 2px auto 0; }
         .hero-actions .hero-note { display: none; }
+        /* ההירו נכנס במדויק במסך המובייל (מאיר 13.09): גובה = 100svh, והרווחים/היהלום נמדדים ב-svh כדי להתאים לכל טלפון */
+        .hero { height: 100svh; min-height: 0; padding-top: calc(72px + env(safe-area-inset-top)); padding-bottom: 58px; justify-content: center; }
+        .hero-grid, .hero-copy { min-height: 0; }
+        .hud-row { margin-bottom: clamp(8px, 1.5svh, 24px); }
+        .hero h1 { font-size: clamp(1.85rem, min(8.4vw, 4.4svh), 2.7rem); margin-bottom: clamp(8px, 1.3svh, 20px); line-height: 1.12; }
+        .hero-sub { font-size: clamp(.9rem, 2.05svh, 1.02rem); margin-bottom: clamp(8px, 1.8svh, 26px); }
+        .hero .ask-wrap { margin: 0 auto clamp(8px, 1.6svh, 18px); }
+        .hero .ask-bar { gap: clamp(4px, .8svh, 9px); }
+        .hero .ask-ph { margin-top: clamp(4px, .9svh, 10px); padding: clamp(10px, 1.4svh, 13px) 18px; }
+        .hero .spark-core { width: clamp(104px, 16.5svh, 150px); height: clamp(104px, 16.5svh, 150px); }
+        .hero .ask-core::before { width: clamp(150px, 24svh, 216px); height: clamp(150px, 24svh, 216px); top: -8px; }
+        .hero .ask-core::after { width: clamp(210px, 33svh, 300px); height: clamp(210px, 33svh, 300px); top: -34px; }
+        .hero-actions { margin-bottom: 0; }
+        .hero-actions .cr-row { gap: clamp(7px, 1.1svh, 10px); }
+        .hero-actions .cr-row .holo-wrap .btn { height: clamp(46px, 6.2svh, 54px); }
+        .hero-actions .cr-row .hero-map, .hero-actions .cr-row .hero-comm.ours { height: clamp(42px, 5.6svh, 48px); }
+        .hero-actions .cr-row a.grating-m { padding: clamp(5px, .8svh, 8px) 18px; margin-top: 0; }
     }
 
     /* ===== גיבוי לדפדפנים בלי backdrop-filter (WebView ישן / פיירפוקס לפני 103) =====
