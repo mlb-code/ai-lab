@@ -48,6 +48,20 @@ for (const ev of ["whatsapp_click", "generate_lead", "landing_view", "page_view"
   for (const row of r.j.rows || []) console.log(row.dimensionValues.map(d => d.value).join(" | ") + " | " + row.metricValues[0].value);
 }
 
+// האם cta_click נעלם בכל האתר אחרי 10.09 (כלל GA4?) או רק בדף הנחיתה
+for (const ev of ["cta_click", "whatsapp_click", "generate_lead", "click"]) {
+  const r = await call(tok, D, "POST", { dateRanges: [{ startDate: "10daysAgo", endDate: "today" }],
+    dimensions: [{ name: "date" }, { name: "pagePath" }], metrics: [{ name: "eventCount" }], limit: 40,
+    orderBys: [{ dimension: { dimensionName: "date" } }],
+    dimensionFilter: { filter: { fieldName: "eventName", stringFilter: { value: ev } } } });
+  console.log(`\n## ${ev} בכל האתר (10 ימים): יום | דף | כמה`);
+  for (const row of r.j.rows || []) console.log(row.dimensionValues.map(d => d.value).join(" | ") + " | " + row.metricValues[0].value);
+}
+// ניסיון להפעיל את Admin API בפרויקט דרך חשבון השירות (ייכשל אם אין לו הרשאה — אז מאיר מפעיל בקליק)
+const en = await call(await token("https://www.googleapis.com/auth/cloud-platform"),
+  "https://serviceusage.googleapis.com/v1/projects/429419145749/services/analyticsadmin.googleapis.com:enable", "POST", {});
+console.log("\n## enable Admin API:", en.status, JSON.stringify(en.j).slice(0, 300));
+
 if (DEL) {
   const d = await call(tok, `${A}/v1alpha/${DEL}`, "DELETE");
   console.log("\n## DELETE", DEL, d.status, JSON.stringify(d.j).slice(0, 400));
