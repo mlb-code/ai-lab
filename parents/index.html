@@ -607,8 +607,17 @@ gtag('config', 'AW-18061574299');
     }
     document.querySelectorAll('a[href*="my.ai-lab.co.il"]').forEach(function (a) { a.href = withUtm(a.getAttribute('href')); });
 
+    // בדיקת A/B לטקסט כפתור ההרשמה (13.09.2026): a = "פתיחת חשבון חינם", b = "הצטרפו בחינם". אותו מבקר רואה תמיד אותה גרסה.
+    var ctaV = '';
+    try { ctaV = localStorage.getItem('cta_v') || ''; } catch (e) {}
+    if (ctaV !== 'a' && ctaV !== 'b') { ctaV = Math.random() < 0.5 ? 'a' : 'b'; try { localStorage.setItem('cta_v', ctaV); } catch (e) {} }
+    document.querySelectorAll('[data-track^="free_signup_"]').forEach(function (a) {
+        if (ctaV === 'b' && a.dataset.track !== 'free_signup_courses') a.innerHTML = a.innerHTML.replace('פתיחת חשבון חינם', 'הצטרפו בחינם');
+        a.dataset.track = a.dataset.track + '_' + ctaV;
+    });
+
     // צפייה בדף הנחיתה
-    var view = { page: 'parents' };
+    var view = { page: 'parents', cta_v: ctaV };
     ['utm_source', 'utm_campaign', 'utm_content'].forEach(function (k) { if (qs.get(k)) view[k] = qs.get(k); });
     gtag('event', 'landing_view', view);
 
