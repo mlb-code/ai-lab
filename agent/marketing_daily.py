@@ -300,9 +300,29 @@ def ga_compact():
     return h("h2", "אנליטיקס (7 ימים)") + h("p", tot.replace("**", "")) + section("מקור / מדיום", 6) + section("קמפיינים (UTM)", 5) + section("לחיצות CTA (cta_click)", 6)
 
 
+REMINDERS_FILE = os.environ.get("REMINDERS_FILE", "agent/marketing-reminders.json")
+
+def reminders_block(summary):
+    """תזכורות מתוארכות (agent/marketing-reminders.json): מופיעות בדוח ביום שלהן, ונשארות עד 3 ימים אחרי אם לא טופלו."""
+    if not os.path.exists(REMINDERS_FILE): return ""
+    try: items = json.load(open(REMINDERS_FILE, encoding="utf-8"))
+    except ValueError: return ""
+    due = []
+    for it in items:
+        try: d = dt.date.fromisoformat(it["date"])
+        except (KeyError, ValueError): continue
+        if d <= today <= d + dt.timedelta(days=3):
+            due.append((d, it["text"]))
+    if not due: return ""
+    for d, t in due:
+        summary.append(("📌 תזכורת להיום: " if d == today else f"📌 תזכורת מ-{d.strftime('%d.%m')}: ") + t)
+    return h("h2", "📌 תזכורות") + h("ul", "".join(h("li", h("b", d.strftime("%d.%m")) + " · " + t) for d, t in due))
+
+
 def main():
     state = json.load(open(STATE_FILE)) if os.path.exists(STATE_FILE) else {}
     summary = []
+    rem = reminders_block(summary)
     ads = ads_block(summary); ab = landing_split_block(summary); gg = google_block(summary); social = social_block(state, summary); sch = scheduler_block(summary); ag = agent_block(summary)
     cb, todo = comments_block(state)
     if todo: summary.append(f"💬 {len(todo)} תגובות ממתינות לתשובה")
@@ -310,7 +330,7 @@ def main():
     if os.path.exists("ga.md"):
         tot = next((l for l in open("ga.md", encoding="utf-8").read().splitlines() if l.startswith("**סה")), "")
         if tot: summary.append("אתר: " + tot.replace("**", "").replace("סה\"כ:", "").strip())
-    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + ads + ab + gg + social + sch + ag + cb + ga
+    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + rem + ads + ab + gg + social + sch + ag + cb + ga
                 + h("p", h("i", "נוצר אוטומטית על ידי סוכן השיווק של AI Lab. תשובות לתגובות מתפרסמות רק אחרי אישור.")), dir="rtl")
     if todo: body += "\n\n<!-- COMMENTS_JSON " + json.dumps(todo, ensure_ascii=False) + " -->"
     open("report.md", "w", encoding="utf-8").write(body)
