@@ -129,9 +129,28 @@ def agent_block(summary):
     if not d.get("ok") or not d.get("agent_enabled"): summary.append("⚠️ סוכן הוואטסאפ כבוי או לא תקין")
     elif s.get("failed", 0): summary.append(f"⚠️ סוכן הוואטסאפ: {s['failed']} הודעות נכשלו")
     else: summary.append(f"סוכן וואטסאפ: תקין · {s.get('conversations', 0)} שיחות מצטבר · אתמול+היום ${d.get('day_cost_usd', 0):.2f}")
-    return h("h2", "סוכן הוואטסאפ (Railway)") + h("ul",
+    out = h("h2", "סוכן הוואטסאפ (Railway)") + h("ul",
         h("li", f"שיחות: {s.get('conversations', 0)} · הודעות נכנסו {s.get('messages_in', 0)} · יצאו {s.get('messages_out', 0)} · נכשלו {s.get('failed', 0)}") +
         h("li", f"מענה אוטומטי: {'פעיל' if d.get('auto_reply') else 'כבוי'} · מוח {d.get('brain_model', '?')} · עלות החודש ${d.get('month_cost_usd', 0):.2f} מתוך ${d.get('monthly_budget_usd', 0):.0f}"))
+    # הפניות של 24 השעות האחרונות — ערוץ אמין גם כשהתראות הוואטסאפ למאיר נחסמות (131049)
+    key = os.environ.get("WA_DIGEST_KEY", "").strip()
+    if key:
+        try:
+            dg = requests.get(AGENT_HEALTH_URL.replace("/health", "/digest"), params={"key": key, "hours": 24}, timeout=20).json()
+            items = dg.get("items", [])
+            STATE = {"in_conversation": "בשיחה", "nudged": "נשלחה דחיפה, לא ענה", "closing_sent": "נשלחה הודעת סיום", "minor": "קטין — הופנה להורה",
+                     "call_requested": "מבקש שיחה איתך", "call_offering": "בתיאום שיחה", "call_scheduled": "שיחה נקבעה"}
+            summary.append(f"📩 פניות בוואטסאפ ב-24 השעות האחרונות: {len(items)}" + (" — הפרטים בסעיף הסוכן" if items else ""))
+            def t(iso):
+                try: return dt.datetime.fromisoformat(iso).astimezone(TZ).strftime("%d.%m %H:%M")
+                except Exception: return iso
+            rows = [[r.get("name") or ("קטין" if r.get("state") == "minor" else "ללא שם"), "+" + r["phone"] if r.get("state") != "minor" else "—", t(r.get("first_at", "")),
+                     " · ".join(x for x in (("גיל " + r["child_age"]) if r.get("child_age") else "", r.get("interest", "")) if x) or "—",
+                     STATE.get(r.get("state", ""), r.get("state", "")), (r.get("first_text") or "")[:70]] for r in items]
+            out += h("h3", "פניות ב-24 השעות האחרונות") + (table(["מי", "טלפון", "מתי", "פרטים", "מצב", "הודעה ראשונה"], rows) if rows else h("p", "לא היו פניות חדשות."))
+        except Exception as e:
+            out += h("p", f"(לא הצלחתי לקרוא את הפניות: {e})")
+    return out
 
 
 # ---------- גוגל אדס (REST v22; רץ רק אם יש GOOGLE_ADS_* בסביבה) ----------

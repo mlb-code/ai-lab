@@ -41,6 +41,7 @@ jobs:
         env:
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          WA_DIGEST_KEY: ${{ vars.WA_DIGEST_KEY }}
         run: pip install -q requests anthropic && python3 agent/marketing_daily.py > /dev/null
       - name: פתיחת Issue
         if: steps.dup.outputs.skip != 'true'
