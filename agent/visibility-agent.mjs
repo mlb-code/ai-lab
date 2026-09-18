@@ -54,7 +54,10 @@ async function gscQuery(token, body) {
 const GA4 = process.env.GA4_PROPERTY_ID;
 // תנועת פיתוח מקומית (localhost של מאיר) לא נספרת: מוסיפים hostName לכל שאילתה, מסננים בצד שלנו ומאחדים חזרה
 async function ga4Report(token, body) {
-  const dims = [...(body.dimensions || []), { name: "hostName" }, { name: "sessionSource" }];
+  // אם השאילתה כבר כוללת sessionSource (דוח המקורות) — לא מוסיפים אותו שוב (GA4 דוחה מימד כפול; תקלת 18.09)
+  const base = body.dimensions || [];
+  const srcIdx = base.findIndex(d => d.name === "sessionSource");
+  const dims = [...base, { name: "hostName" }, ...(srcIdx === -1 ? [{ name: "sessionSource" }] : [])];
   const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${GA4}:runReport`, {
     method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body: JSON.stringify({ ...body, dimensions: dims, limit: Math.min((body.limit || 10) * 4, 250) }),
@@ -64,7 +67,8 @@ async function ga4Report(token, body) {
   const merged = new Map();
   for (const r of j.rows || []) {
     const keys = (r.dimensionValues || []).map(d => d.value);
-    const source = keys.pop(), host = keys.pop();
+    const source = srcIdx === -1 ? keys.pop() : keys[srcIdx];
+    const host = keys.pop();
     if (/localhost|127\.0\.0\.1/.test((host || "") + " " + (source || ""))) continue;
     const vals = (r.metricValues || []).map(m => Number(m.value));
     const id = keys.join("\u0001");
