@@ -167,7 +167,10 @@ const res = await fetch("https://api.anthropic.com/v1/messages", {
   headers: { "x-api-key": anthropicKey, "anthropic-version": "2023-06-01", "Content-Type": "application/json" },
   body: JSON.stringify({
     model: "claude-sonnet-5",
-    max_tokens: 3000,
+    // 18.09.2026: ב-Sonnet 5 חשיבה מופעלת כברירת מחדל ואכלה את כל 3,000 הטוקנים — חזר בלוק thinking ריק בלי דוח.
+    // לדוח כתיבה אין צורך בחשיבה: מכבים אותה, ונותנים מקום לתשובה עצמה.
+    thinking: { type: "disabled" },
+    max_tokens: 6000,
     system: `אתה "סוכן הנראות" של AI Lab (ai-lab.co.il) — בית ספר ישראלי ל-AI ויזמות לילדים ונוער. אתה כותב דוח SEO שבועי בעברית למאיר, בעל העסק, שאינו איש טכנולוגיה.
 כללים: עברית פשוטה וחמה, בלי ז'רגון. פתח בשורת מצב אחת (עלייה/יציבות/ירידה). הצג עד 5 נקודות עיקריות עם מספרים מדויקים. אם יש ירידה חדה (מעל 30% בקליקים) — פתח ב"⚠️ דורש תשומת לב".
 הדוח בנוי משני חלקים: (1) "בגוגל" — חיפושים, שאילתות, מיקומים (Search Console). (2) "באתר" — ביקורים, מאיפה מגיעים, ואיזה כפתורים לוחצים יותר ופחות (Google Analytics, אירועי cta_click). בחלק "באתר" תמיד ציין: 3 הכפתורים הכי נלחצים, כפתורים חשובים שכמעט לא לוחצים עליהם (במיוחד הרשמה/מפת הקורסים/דיסקורד/וואטסאפ), ומגמה מול השבוע הקודם. מעקב הלחיצות (cta_click) כבר מותקן באתר מ-08.09.2026 — אם אין עדיין נתוני לחיצות, כתוב שהם מצטברים ואל תמליץ "לחבר מעקב". אם האנליטיקס לא מחובר — כתוב זאת במשפט אחד ומה צריך כדי לחבר.
@@ -176,7 +179,9 @@ const res = await fetch("https://api.anthropic.com/v1/messages", {
   }),
 });
 const ai = await res.json();
-const report = ai.content?.map(c => c.text).filter(Boolean).join("\n") || "שגיאה: לא התקבל דוח מ-Claude.\n" + JSON.stringify(ai).slice(0, 500);
+// רק בלוקי טקסט (לא thinking); אם אין — שגיאה קריאה עם הסיבה, בלי להדביק את ה-JSON הגולמי לדוח
+const reportText = (ai.content ?? []).filter(c => c.type === "text" && c.text).map(c => c.text).join("\n").trim();
+const report = reportText || `שגיאה: לא התקבל דוח מ-Claude (stop_reason: ${ai.stop_reason ?? "?"}, שגיאה: ${ai.error?.message ?? "אין"}). אפשר להריץ שוב את ה-workflow ידנית.`;
 
 console.log(report);
 
