@@ -63,6 +63,7 @@
     + '.ag-lead{align-self:flex-start;width:92%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:9px;}'
     + '.ag-lead input{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:11px;padding:10px 13px;color:#fff;font-family:Assistant,sans-serif;font-size:.93rem;}'
     + '.ag-lead input::placeholder{color:rgba(255,255,255,.4);}'
+    + '.ag-lead select{background:rgba(10,14,39,.7);border:1px solid rgba(255,255,255,.14);border-radius:11px;padding:10px 13px;color:#fff;font-family:inherit;font-size:.93rem;}.ag-lead .ag-lead-note{font-size:.78rem;color:rgba(255,255,255,.55);margin:0;}'
     + '.ag-lead button{background:linear-gradient(120deg,#6366F1,#8B5CF6);color:#fff;border:0;border-radius:11px;padding:11px;font-weight:800;font-size:.93rem;cursor:pointer;font-family:inherit;}'
     + '.agw-chips{display:flex;flex-wrap:wrap;gap:8px;padding:10px 20px 14px;justify-content:center;}'
     + '.agw-form{display:flex;gap:10px;padding:0 20px 20px;}'
@@ -197,7 +198,8 @@
         var row = document.createElement('div');
         row.className = 'ag-actions';
         actions.forEach(function(a){
-            if (a.t === 'lead') { renderLead(); return; }
+            if (a.t === 'lead') { renderLead('lead'); return; }
+            if (a.t === 'hold') { renderLead('hold', a.options || []); return; }
             var el = document.createElement('a');
             el.className = 'ag-act' + (a.t === 'wa' ? ' wa' : '');
             el.innerHTML = a.label;
@@ -210,17 +212,41 @@
         log.appendChild(row);
         log.scrollTop = log.scrollHeight;
     }
-    function renderLead() {
+    // טופס ליד / שריון מקום ל-48 שעות (מאיר 18.09): נשמר בפלטפורמה + מייל מיידי למאיר. נופל לוואטסאפ אם ה-API לא זמין.
+    var AGENT_LEAD_API = 'https://my.ai-lab.co.il/api/sales-agent/lead';
+    function agentSid() { try { var id = sessionStorage.getItem('ag-sid'); if (!id) { id = 's-' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); sessionStorage.setItem('ag-sid', id); } return id; } catch (e) { return 's-anon'; } }
+    function renderLead(kind, options) {
+        kind = kind || 'lead'; options = options || [];
+        if (log.querySelector('.ag-lead[data-kind="' + kind + '"]')) return;
         var f = document.createElement('form');
-        f.className = 'ag-lead';
-        f.innerHTML = '<input name="nm" placeholder="שם מלא" required>'
-            + '<input name="ph" placeholder="טלפון" type="tel" required>'
-            + '<button type="submit">שלחו לנו בוואטסאפ ←</button>';
+        f.className = 'ag-lead'; f.setAttribute('data-kind', kind);
+        var opts = options.map(function(o){ return '<option value="' + o.id + '">' + o.label + '</option>'; }).join('');
+        f.innerHTML = (kind === 'hold' && opts ? '<select name="co" required><option value="">באיזו קבוצה לשריין מקום?</option>' + opts + '</select>' : '')
+            + '<input name="nm" placeholder="שם מלא" required>'
+            + '<input name="ph" placeholder="טלפון" type="tel" required inputmode="tel">'
+            + '<input name="em" placeholder="מייל (לאישור השריון)" type="email"' + (kind === 'hold' ? ' required' : '') + '>'
+            + '<button type="submit">' + (kind === 'hold' ? 'לשריין לי מקום ל-48 שעות ←' : 'שמאיר יחזור אליי ←') + '</button>'
+            + '<p class="ag-lead-note">' + (kind === 'hold' ? 'בלי התחייבות ובלי תשלום — מאיר חוזר אליך לפני שהשריון נגמר.' : 'בלי התחייבות. מאיר חוזר אישית, בדרך כלל באותו יום.') + '</p>';
         f.addEventListener('submit', function(e){
             e.preventDefault();
-            var nm = f.nm.value.trim(), ph = f.ph.value.trim();
-            open(WA('היי! אשמח שתחזרו אליי לגבי הקורסים\nשם: ' + nm + '\nטלפון: ' + ph), '_blank');
-            typeBot('מעולה! פתחתי לכם וואטסאפ עם הפרטים מוכנים — רק ללחוץ שליחה, ונחזור אליכם אישית.');
+            var nm = f.nm.value.trim(), ph = f.ph.value.trim(), em = f.em.value.trim(), co = f.co ? f.co.value : '';
+            var btn = f.querySelector('button'); btn.disabled = true; btn.textContent = 'שולח…';
+            var summary = hist.slice(-8).map(function(m){ return (m.role === 'user' ? 'הורה: ' : 'סוכן: ') + m.content.slice(0, 160); }).join('\n');
+            fetch(AGENT_LEAD_API, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ session: agentSid(), source: 'site', page: location.pathname, kind: kind, name: nm, phone: ph, email: em, cohortId: co || null, summary: summary }) })
+            .then(function(res){ return res.json().then(function(j){ if (!res.ok || !j.ok) throw (j.reason || 'err'); }); })
+            .then(function(){
+                f.remove();
+                typeBot(kind === 'hold'
+                    ? 'המקום שמור לך ל-48 השעות הקרובות, בלי שום התחייבות. מאיר יחזור אליך לטלפון ' + ph + (em ? ', ושלחתי אישור למייל' : '') + '.'
+                    : 'קיבלתי! מאיר יחזור אליך ל-' + ph + ' בהקדם, בדרך כלל באותו יום.');
+            })
+            .catch(function(err){
+                btn.disabled = false; btn.textContent = 'לנסות שוב';
+                if (err === 'phone') { typeBot('המספר לא נראה תקין — נסה בפורמט 050-0000000.'); return; }
+                open(WA('היי! אשמח שתחזרו אליי לגבי הקורסים\nשם: ' + nm + '\nטלפון: ' + ph), '_blank');
+                typeBot('משהו התעכב אצלי, אז פתחתי לך וואטסאפ עם הפרטים מוכנים — רק ללחוץ שליחה.');
+            });
         });
         log.appendChild(f);
         log.scrollTop = log.scrollHeight;
@@ -283,7 +309,7 @@
         fetch(AGENT_API, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ messages: hist.slice(-12) })
+            body: JSON.stringify({ messages: hist.slice(-12), session: agentSid(), source: 'site', page: location.pathname })
         }).then(function(res){
             if (!res.ok) throw 0;
             return res.json();

@@ -766,6 +766,8 @@ gtag('config', 'AW-18061574299');
         padding: 10px 13px; color: #fff; font-family: var(--font-body); font-size: .93rem;
     }
     .ag-lead input::placeholder { color: rgba(255,255,255,.4); }
+    .ag-lead select { background: rgba(10,14,39,.7); border: 1px solid rgba(255,255,255,.14); border-radius: 11px; padding: 10px 13px; color: #fff; font-family: inherit; font-size: .93rem; }
+    .ag-lead .ag-lead-note { font-size: .78rem; color: rgba(255,255,255,.55); margin: 0; }
     .ag-lead button {
         background: linear-gradient(120deg, #6366F1, #8B5CF6); color: #fff; border: 0;
         border-radius: 11px; padding: 11px; font-weight: 800; font-size: .93rem; cursor: pointer;
@@ -4038,7 +4040,8 @@ gtag('config', 'AW-18061574299');
             const row = document.createElement('div');
             row.className = 'ag-actions';
             actions.forEach(a => {
-                if (a.t === 'lead') { renderLead(); return; }
+                if (a.t === 'lead') { renderLead('lead'); return; }
+                if (a.t === 'hold') { renderLead('hold', a.options || []); return; }
                 const el = document.createElement(a.t === 'link' || a.t === 'wa' ? 'a' : 'button');
                 el.className = 'ag-act' + (a.t === 'wa' ? ' wa' : '');
                 el.innerHTML = a.label;
@@ -4053,17 +4056,41 @@ gtag('config', 'AW-18061574299');
             log.appendChild(row);
             log.scrollTop = log.scrollHeight;
         }
-        function renderLead() {
+        // טופס ליד / שריון מקום ל-48 שעות (מאיר 18.09): נשמר בפלטפורמה + מייל מיידי למאיר. נופל לוואטסאפ אם ה-API לא זמין.
+        const AGENT_LEAD_API = 'https://my.ai-lab.co.il/api/sales-agent/lead';
+        function renderLead(kind, options) {
+            kind = kind || 'lead'; options = options || [];
+            if (log.querySelector('.ag-lead[data-kind="' + kind + '"]')) return; // טופס אחד מכל סוג
             const f = document.createElement('form');
-            f.className = 'ag-lead';
-            f.innerHTML = `<input name="nm" placeholder="שם מלא" required>
-                <input name="ph" placeholder="טלפון" type="tel" required>
-                <button type="submit">שלחו לנו בוואטסאפ ←</button>`;
-            f.addEventListener('submit', e => {
+            f.className = 'ag-lead'; f.dataset.kind = kind;
+            const opts = options.map(o => `<option value="${o.id}">${o.label}</option>`).join('');
+            f.innerHTML = (kind === 'hold' && opts ? `<select name="co" required><option value="">באיזו קבוצה לשריין מקום?</option>${opts}</select>` : '')
+                + `<input name="nm" placeholder="שם מלא" required>
+                <input name="ph" placeholder="טלפון" type="tel" required inputmode="tel">
+                <input name="em" placeholder="מייל (לאישור השריון)" type="email"${kind === 'hold' ? ' required' : ''}>
+                <button type="submit">${kind === 'hold' ? 'לשריין לי מקום ל-48 שעות ←' : 'שמאיר יחזור אליי ←'}</button>
+                <p class="ag-lead-note">${kind === 'hold' ? 'בלי התחייבות ובלי תשלום — מאיר חוזר אליך לפני שהשריון נגמר.' : 'בלי התחייבות. מאיר חוזר אישית, בדרך כלל באותו יום.'}</p>`;
+            f.addEventListener('submit', async e => {
                 e.preventDefault();
-                const nm = f.nm.value.trim(), ph = f.ph.value.trim();
-                open(WA(`היי! אשמח שתחזרו אליי לגבי הקורסים\nשם: ${nm}\nטלפון: ${ph}`), '_blank');
-                typeBot('מעולה! פתחתי לכם וואטסאפ עם הפרטים מוכנים — רק ללחוץ שליחה, ונחזור אליכם אישית.');
+                const nm = f.nm.value.trim(), ph = f.ph.value.trim(), em = f.em.value.trim(), co = f.co ? f.co.value : '';
+                const btn = f.querySelector('button'); btn.disabled = true; btn.textContent = 'שולח…';
+                const summary = agentHist.slice(-8).map(m => (m.role === 'user' ? 'הורה: ' : 'סוכן: ') + m.content.slice(0, 160)).join('\n');
+                try {
+                    const res = await fetch(AGENT_LEAD_API, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ session: agentSid(), source: 'site', page: location.pathname + location.hash, kind, name: nm, phone: ph, email: em, cohortId: co || null, summary }) });
+                    const j = await res.json().catch(() => ({}));
+                    if (!res.ok || !j.ok) throw j.reason || 'err';
+                    f.remove();
+                    agentTrack('action', kind === 'hold' ? 'שריון 48 שעות' : 'השארת פרטים', kind);
+                    typeBot(kind === 'hold'
+                        ? 'המקום שמור לך ל-48 השעות הקרובות, בלי שום התחייבות. מאיר יחזור אליך לטלפון ' + ph + (em ? ', ושלחתי אישור למייל' : '') + '. רוצה בינתיים לראות את הסילבוס?'
+                        : 'קיבלתי! מאיר יחזור אליך ל-' + ph + ' בהקדם, בדרך כלל באותו יום. אם נוח לך יותר עכשיו — אפשר גם בוואטסאפ.');
+                } catch (err) {
+                    btn.disabled = false; btn.textContent = 'לנסות שוב';
+                    if (err === 'phone') { typeBot('המספר לא נראה תקין — נסה בפורמט 050-0000000.'); return; }
+                    open(WA(`היי! אשמח שתחזרו אליי לגבי הקורסים\nשם: ${nm}\nטלפון: ${ph}`), '_blank');
+                    typeBot('משהו התעכב אצלי, אז פתחתי לך וואטסאפ עם הפרטים מוכנים — רק ללחוץ שליחה.');
+                }
             });
             log.appendChild(f);
             log.scrollTop = log.scrollHeight;
