@@ -46,6 +46,7 @@
 
 ## בלוג — מדריכים בעברית על בינה מלאכותית
 - [עולם ה-AI — כל המאמרים](https://ai-lab.co.il/blog/)
+- [קורס AI למבוגרים בלי רקע טכני — מאיפה מתחילים](https://ai-lab.co.il/blog/ai-course-adults-no-tech-background.html)
 - [מה ילד בן 10 בונה עם AI — 5 אתרים אמיתיים](https://ai-lab.co.il/blog/what-10-year-olds-build-with-ai.html)
 - [קורס AI לילדים — מה באמת לומדים שם](https://ai-lab.co.il/blog/what-is-ai-course-for-kids.html)
 - [5 שאלות לפני רישום לחוג טכנולוגי אונליין](https://ai-lab.co.il/blog/questions-before-online-tech-course.html)
