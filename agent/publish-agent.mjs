@@ -47,7 +47,8 @@ const tags = [...new Set([...blogIndex.matchAll(/blog-card-tag">([^<]+)</g)].map
 // ---------- טיוטה שמורה? ----------
 const draftPath = `agent/drafts/issue-${issueNumber || "local"}.json`;
 let art = null;
-if (mode === "publish" && !DRY && fs.existsSync(draftPath)) { art = JSON.parse(fs.readFileSync(draftPath, "utf8")); console.log("משתמש בטיוטה שמורה:", art.slug); }
+const savedDraft = path.join(OUT, draftPath); // ב-DRY_RUN הטיוטה נשמרת ב-OUT_DIR, וכך "פרסם" מקומי משתמש בה כמו ב-Actions
+if (mode === "publish" && fs.existsSync(savedDraft)) { art = JSON.parse(fs.readFileSync(savedDraft, "utf8")); console.log("משתמש בטיוטה שמורה:", art.slug); }
 
 // ---------- כתיבה עם Claude ----------
 if (!art) {
