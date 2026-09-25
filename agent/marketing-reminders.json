@@ -9,11 +9,11 @@
   },
   {
     "date": "2026-09-26",
-    "text": "יוטיוב: להריץ מקומית `python3 meta-ads/youtube_backfill.py 5` (מכסה של ~6 העלאות ביום) עד שכל 16 הסרטונים באוויר. מצב: meta-ads/youtube-backfill.json."
+    "text": "יוטיוב (ערוץ 'AI Lab ישראל'): להריץ מקומית קודם `python3 meta-ads/youtube_move.py 6` (העברת סרטונים שעלו לערוץ האישי) ואז `python3 meta-ads/youtube_backfill.py 6` עד שכל 16 באוויר. מכסה ~6 העלאות ביום. מצב: meta-ads/youtube-backfill.json."
   },
   {
     "date": "2026-09-27",
-    "text": "יוטיוב: להריץ מקומית `python3 meta-ads/youtube_backfill.py 5` (מכסה של ~6 העלאות ביום) עד שכל 16 הסרטונים באוויר. מצב: meta-ads/youtube-backfill.json."
+    "text": "יוטיוב (ערוץ 'AI Lab ישראל'): להריץ מקומית קודם `python3 meta-ads/youtube_move.py 6` (העברת סרטונים שעלו לערוץ האישי) ואז `python3 meta-ads/youtube_backfill.py 6` עד שכל 16 באוויר. מכסה ~6 העלאות ביום. מצב: meta-ads/youtube-backfill.json."
   },
   {
     "date": "2026-09-28",
