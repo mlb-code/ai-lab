@@ -2912,7 +2912,7 @@ gtag('config', 'AW-18061574299');
         </div>
         <div class="video-grid reveal" id="videoGrid"></div>
         <div style="text-align:center;margin-top:30px;">
-            <a class="btn btn-primary" href="https://action.ai-lab.co.il/gallery" target="_blank" rel="noopener">לכל הסרטונים מהתחרות <span class="arr">←</span></a>
+            <a class="btn btn-primary" href="https://mlb-code.github.io/ai-lab-action-gallery/" target="_blank" rel="noopener">לכל הסרטונים מהתחרות <span class="arr">←</span></a>
         </div>
 
         <!-- טריילרים של בוגרי קורס הסרטונים — הבלוק מוסתר עד שיש טריילר מאושר ראשון -->
@@ -4681,8 +4681,8 @@ gtag('config', 'AW-18061574299');
     // סרטון חדש בדרייב? מוסיפים שורה כאן + מורידים פוסטר:
     // curl -sL "https://drive.google.com/thumbnail?id=<ID>&sz=w1200" -o videos-posters/<ID>.jpg
     /* 4 הסרטונים המובילים מתחרות "אקשן!" — בלי הצגת דירוג (שם + כותרת ההמצאה בלבד) */
-    /* הניגון דרך שרת אקשן (proxy) ולא דרך drive-preview — הנגן של דרייב חושף את שם הקובץ */
-    const VIDEO_SRC = 'https://web-production-920a5.up.railway.app/api/video/';
+    /* הניגון מקובצי mp4 סטטיים בגלריית אקשן! ב-GitHub Pages (28.09.2026 — שרת ה-Railway כובה, חוסך ~22$ לחודש) */
+    const VIDEO_SRC = 'https://mlb-code.github.io/ai-lab-action-gallery/videos/';
     const VIDEOS = [
         { id: '1fkx4zKghO21m1gogKZiGMaxeE_J-37as', name: 'נדב',    title: 'מכונה שמנקה את החוף — ומייצרת ממנו לגו' },
         { id: '1vAkS4lDsaM20jIIw7_xuanm2Cyed1zPm', name: 'שרהשיר', title: 'תנור שמחובר למקרר ומכין ארוחה בלחיצת כפתור' },
@@ -4694,7 +4694,7 @@ gtag('config', 'AW-18061574299');
         const label = v.title ? `${v.name} · ${v.title}` : v.name;
         const c = document.createElement('div');
         c.className = 'v-card';
-        c.dataset.video = VIDEO_SRC + v.id;
+        c.dataset.video = VIDEO_SRC + v.id + '.mp4';
         c.innerHTML = `<div class="v-poster">
                 <img src="videos-posters/${v.id}.jpg" alt="${label}" loading="lazy" onerror="this.remove()">
                 <span class="v-play">▶</span>
