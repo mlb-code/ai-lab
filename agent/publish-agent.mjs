@@ -179,9 +179,20 @@ w("llms.txt", fs.readFileSync("llms.txt", "utf8").replace("- [עולם ה-AI —
 if (!DRY && fs.existsSync(draftPath)) { fs.unlinkSync(draftPath); files.push(draftPath); }
 if (DRY) { console.log("DRY RUN — נכתב ל:", OUT, files); process.exit(0); }
 gitCommitPush(files, `מאמר חדש (פרסום בקליק, Issue #${issueNumber}): ${art.title}`);
+await indexNow([url, "https://ai-lab.co.il/blog/"]);  // Bing/ChatGPT: הודעה מיידית על הכתובת החדשה (IndexNow, 28.09.2026)
 await comment(`✅ **פורסם:** ${url}\n\nהמאמר יופיע באתר תוך 1–3 דקות (GitHub Pages). נוסף לבלוג, לסייטמאפ ול-llms.txt. התמונה: קאבר AI Lab.\nלתיקון קטן — כתוב לסשן התפעול; למאמר נוסף — ענה שוב **פרסם: <נושא>** על הדוח הבא.`);
 if (issueNumber) { try { await gh(`/issues/${issueNumber}`, { method: "PATCH", body: JSON.stringify({ state: "closed" }) }); } catch { /* */ } }
 console.log("פורסם:", url);
+
+// IndexNow (Bing, Yandex, DuckDuckGo; ChatGPT מחפש דרך Bing): המפתח הוא קובץ ציבורי בשורש האתר. לא חוסם פרסום אם נכשל.
+const INDEXNOW_KEY = "6261919fed35f9c586dfd2fe4f64ba48";
+async function indexNow(urls) {
+  try {
+    const r = await fetch("https://api.indexnow.org/indexnow", { method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({ host: "ai-lab.co.il", key: INDEXNOW_KEY, keyLocation: `https://ai-lab.co.il/${INDEXNOW_KEY}.txt`, urlList: urls }) });
+    console.log("IndexNow:", r.status, urls.length, "urls");
+  } catch (e) { console.log("IndexNow failed (לא קריטי):", e.message); }
+}
 
 function gitCommitPush(paths, msg) {
   const sh = c => execSync(c, { stdio: "inherit" });
