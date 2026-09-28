@@ -123,6 +123,16 @@ async function techChecks() {
         const blocked = AI_BOTS.filter(b => new RegExp(`User-agent:\\s*${b}[\\s\\S]{0,80}?Disallow:\\s*/\\s*$`, "mi").test(txt));
         out.push(blocked.length ? `⚠️ robots.txt חוסם זחלני AI: ${blocked.join(", ")}` : "זחלני AI (GPTBot/ClaudeBot/Gemini/Perplexity/Grok): לא חסומים");
       }
+      if (path === "/llms.txt" && r.ok) {
+        // טריות (28.09.2026): הבינות עונות לפי הקובץ הזה — מועדים ישנים או "בקרוב" = תשובות שגויות להורים
+        const txt = await r.text();
+        const m = txt.match(/עודכן לאחרונה:\s*(\d{4}-\d{2}-\d{2})/);
+        const ageDays = m ? Math.round((Date.now() - new Date(m[1]).getTime()) / 86400000) : null;
+        if (ageDays == null) out.push("⚠️ llms.txt: אין שורת 'עודכן לאחרונה'");
+        else if (ageDays > 45) out.push(`⚠️ llms.txt לא עודכן ${ageDays} ימים (מאז ${m[1]}) — לעדכן מועדי מחזורים ומחירים`);
+        else out.push(`llms.txt עודכן לפני ${ageDays} ימים`);
+        if (/בקרוב/.test(txt)) out.push("⚠️ llms.txt מכיל 'בקרוב' — להחליף בתאריך אמיתי");
+      }
       if (path === "/sitemap.xml" && r.ok) {
         const n = ((await r.text()).match(/<loc>/g) || []).length;
         out.push(`כתובות בסייטמאפ: ${n}`);
