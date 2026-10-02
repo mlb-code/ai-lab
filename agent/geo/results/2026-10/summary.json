@@ -1,0 +1,1203 @@
+{
+  "month": "2026-10",
+  "generatedAt": "2026-10-02T08:41:49.086Z",
+  "runsPerQuestion": 3,
+  "engines": {
+    "gemini": {
+      "label": "Gemini (Google)",
+      "model": "gemini-3.8-flash",
+      "runs": 36,
+      "errors": 0,
+      "fatal": null,
+      "mentionedRuns": 4,
+      "mentionRate": 0.1111111111111111,
+      "questionsWith": 2,
+      "questionsTotal": 12,
+      "citedRuns": 12,
+      "seenInResultsRuns": 12,
+      "searchedRuns": 29,
+      "avgPosition": 2.5,
+      "firstPlaceRuns": 0,
+      "cost": 0.16,
+      "byQuestion": {
+        "q01": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q02": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q03": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q04": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q05": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q06": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q07": {
+          "runs": 3,
+          "mentioned": 1,
+          "bestPosition": 2
+        },
+        "q08": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q09": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q10": {
+          "runs": 3,
+          "mentioned": 3,
+          "bestPosition": 2
+        },
+        "q11": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q12": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        }
+      }
+    },
+    "anthropic": {
+      "label": "Claude (Anthropic)",
+      "model": "claude-sonnet-5",
+      "runs": 36,
+      "errors": 0,
+      "fatal": null,
+      "mentionedRuns": 6,
+      "mentionRate": 0.16666666666666666,
+      "questionsWith": 2,
+      "questionsTotal": 12,
+      "citedRuns": 3,
+      "seenInResultsRuns": 3,
+      "searchedRuns": 20,
+      "avgPosition": 2,
+      "firstPlaceRuns": 2,
+      "cost": 1.8044,
+      "byQuestion": {
+        "q01": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q02": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q03": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q04": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q05": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q06": {
+          "runs": 3,
+          "mentioned": 3,
+          "bestPosition": 1
+        },
+        "q07": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q08": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q09": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q10": {
+          "runs": 3,
+          "mentioned": 3,
+          "bestPosition": 2
+        },
+        "q11": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q12": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        }
+      }
+    }
+  },
+  "missingKeys": [
+    "openai",
+    "perplexity",
+    "xai"
+  ],
+  "overall": {
+    "runs": 72,
+    "mentionedRuns": 10,
+    "mentionRate": 0.1388888888888889,
+    "questionsWith": 3,
+    "questionsTotal": 12,
+    "citedRuns": 15
+  },
+  "competitors": [
+    {
+      "id": "matic",
+      "name": "Matic (מטיק)",
+      "answers": 40,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q04",
+        "q05",
+        "q06",
+        "q07",
+        "q08",
+        "q09",
+        "q10",
+        "q12"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 32
+    },
+    {
+      "id": "mindplay",
+      "name": "MindPlay",
+      "answers": 36,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q05",
+        "q06",
+        "q08",
+        "q09",
+        "q10",
+        "q11"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 20
+    },
+    {
+      "id": "shchakim",
+      "name": "מכללת שחקים",
+      "answers": 32,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q04",
+        "q06",
+        "q08",
+        "q09",
+        "q10",
+        "q11",
+        "q12"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 27
+    },
+    {
+      "id": "mit-scratch",
+      "name": "Scratch (MIT)",
+      "answers": 27,
+      "questions": [
+        "q01",
+        "q02",
+        "q04",
+        "q06",
+        "q08",
+        "q10",
+        "q12"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 23
+    },
+    {
+      "id": "zschool",
+      "name": "Z-School",
+      "answers": 20,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q06",
+        "q09",
+        "q11"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 14
+    },
+    {
+      "id": "cyber-campus",
+      "name": "Israel Cyber Campus",
+      "answers": 14,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q05",
+        "q06",
+        "q09",
+        "q11"
+      ],
+      "engines": [
+        "gemini"
+      ],
+      "aheadOfUs": 10
+    },
+    {
+      "id": "d-world",
+      "name": "D-World",
+      "answers": 14,
+      "questions": [
+        "q01",
+        "q05",
+        "q06",
+        "q08",
+        "q09",
+        "q11"
+      ],
+      "engines": [
+        "gemini"
+      ],
+      "aheadOfUs": 0
+    },
+    {
+      "id": "spark",
+      "name": "Spark Academy",
+      "answers": 14,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q06",
+        "q11"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 11
+    },
+    {
+      "id": "campus-il",
+      "name": "קמפוס IL",
+      "answers": 13,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q06",
+        "q07"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 13
+    },
+    {
+      "id": "tech4kids",
+      "name": "Tech4Kids",
+      "answers": 13,
+      "questions": [
+        "q01",
+        "q05",
+        "q06",
+        "q08",
+        "q09",
+        "q11"
+      ],
+      "engines": [
+        "gemini"
+      ],
+      "aheadOfUs": 13
+    },
+    {
+      "id": "tau-youth",
+      "name": "נוער שוחר מדע (אוניברסיטת ת\"א)",
+      "answers": 10,
+      "questions": [
+        "q01",
+        "q06",
+        "q09"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 8
+    },
+    {
+      "id": "openu",
+      "name": "האוניברסיטה הפתוחה",
+      "answers": 10,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q06",
+        "q07",
+        "q09",
+        "q11"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 8
+    },
+    {
+      "id": "haitech",
+      "name": "hai.tech (דרך ההייטק)",
+      "answers": 9,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q05",
+        "q06",
+        "q08"
+      ],
+      "engines": [
+        "gemini"
+      ],
+      "aheadOfUs": 6
+    },
+    {
+      "id": "beityatziv",
+      "name": "בית יציב",
+      "answers": 9,
+      "questions": [
+        "q01",
+        "q02",
+        "q03"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 6
+    },
+    {
+      "id": "cyber-school",
+      "name": "סייבר סקול",
+      "answers": 8,
+      "questions": [
+        "q01",
+        "q02",
+        "q05",
+        "q06"
+      ],
+      "engines": [
+        "gemini"
+      ],
+      "aheadOfUs": 8
+    },
+    {
+      "id": "brainroad",
+      "name": "BrainRoad",
+      "answers": 8,
+      "questions": [
+        "q01",
+        "q02",
+        "q03",
+        "q06",
+        "q09"
+      ],
+      "engines": [
+        "gemini"
+      ],
+      "aheadOfUs": 0
+    },
+    {
+      "id": "technion",
+      "name": "הטכניון",
+      "answers": 8,
+      "questions": [
+        "q01",
+        "q02",
+        "q09"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 8
+    },
+    {
+      "id": "starter-school",
+      "name": "Starter School (סטארטר)",
+      "answers": 7,
+      "questions": [
+        "q01",
+        "q03",
+        "q09"
+      ],
+      "engines": [
+        "anthropic"
+      ],
+      "aheadOfUs": 6
+    },
+    {
+      "id": "code-org",
+      "name": "Code.org",
+      "answers": 6,
+      "questions": [
+        "q02",
+        "q08",
+        "q12"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 6
+    },
+    {
+      "id": "goethe",
+      "name": "מכון גתה (AI Magic)",
+      "answers": 2,
+      "questions": [
+        "q01"
+      ],
+      "engines": [
+        "anthropic"
+      ],
+      "aheadOfUs": 2
+    },
+    {
+      "id": "coursera",
+      "name": "Coursera",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ],
+      "engines": [
+        "anthropic"
+      ],
+      "aheadOfUs": 2
+    }
+  ],
+  "discovered": [
+    {
+      "name": "kolsadna.co.il",
+      "kind": "domain",
+      "answers": 8,
+      "questions": [
+        "q03",
+        "q06"
+      ]
+    },
+    {
+      "name": "letsai.co.il",
+      "kind": "domain",
+      "answers": 7,
+      "questions": [
+        "q05",
+        "q07",
+        "q09"
+      ]
+    },
+    {
+      "name": "aiyouth.co.il",
+      "kind": "domain",
+      "answers": 6,
+      "questions": [
+        "q01",
+        "q03",
+        "q09"
+      ]
+    },
+    {
+      "name": "sport4all.co.il",
+      "kind": "domain",
+      "answers": 6,
+      "questions": [
+        "q02",
+        "q09"
+      ]
+    },
+    {
+      "name": "learnaieasy.co.il",
+      "kind": "domain",
+      "answers": 5,
+      "questions": [
+        "q07",
+        "q09"
+      ]
+    },
+    {
+      "name": "superprof.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q03",
+        "q09"
+      ]
+    },
+    {
+      "name": "sagol-lectures.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q01",
+        "q05"
+      ]
+    },
+    {
+      "name": "animaya.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "cyberforyou.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q06",
+        "q09"
+      ]
+    },
+    {
+      "name": "sportschool.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "iclass.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q08",
+        "q10"
+      ]
+    },
+    {
+      "name": "mbe-rg.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Midjourney",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q05",
+        "q08"
+      ]
+    },
+    {
+      "name": "leaplearner.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "cybernet.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q02"
+      ]
+    },
+    {
+      "name": "CapCut",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "iiai.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "fingrow.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q07",
+        "q11"
+      ]
+    },
+    {
+      "name": "kayt.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "DALL-E",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q05",
+        "q08"
+      ]
+    },
+    {
+      "name": "academykids.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "aragon.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q01",
+        "q02"
+      ]
+    },
+    {
+      "name": "techstation.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q02"
+      ]
+    },
+    {
+      "name": "ElevenLabs",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Runway",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "naya-college.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "code4kids.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "yaelikogan.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "vatikim-maof.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "startupkid.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Claude",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Roblox",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Minecraft",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "mycorporate.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "afikil.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "successcollege.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "Success College",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "פעמונים",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "המרכז לצמיחה פיננסית",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "פיננסי KIDS",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "Runway ML",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Pika Labs",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Luma Dream Machine",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Pika",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Bing Image Creator",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "HeyGen",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Google Veo",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Kling",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Luma",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Firefly",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Krea",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "VEED",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "ecomschool.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "yallaai.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "goai.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "ipc.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Investopedia",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "kind": "אתר מתחרה",
+      "count": 278,
+      "hosts": [
+        [
+          "mindplay.co.il",
+          65
+        ],
+        [
+          "matic.co.il",
+          28
+        ],
+        [
+          "z-school.co.il",
+          26
+        ],
+        [
+          "sparkacademy.co.il",
+          26
+        ],
+        [
+          "israelcybercampus.co.il",
+          20
+        ],
+        [
+          "d-world.co.il",
+          18
+        ]
+      ]
+    },
+    {
+      "kind": "אתר ישראלי אחר",
+      "count": 81,
+      "hosts": [
+        [
+          "aiyouth.co.il",
+          13
+        ],
+        [
+          "letsai.co.il",
+          7
+        ],
+        [
+          "cybernet.co.il",
+          6
+        ],
+        [
+          "kolsadna.co.il",
+          5
+        ],
+        [
+          "learnaieasy.co.il",
+          5
+        ],
+        [
+          "superprof.co.il",
+          4
+        ]
+      ]
+    },
+    {
+      "kind": "אתר זר אחר",
+      "count": 60,
+      "hosts": [
+        [
+          "calcalistech.com",
+          6
+        ],
+        [
+          "productwithshira.com",
+          5
+        ],
+        [
+          "ani-mator.com",
+          4
+        ],
+        [
+          "kaitanot.com",
+          4
+        ],
+        [
+          "jpost.com",
+          4
+        ],
+        [
+          "zebrapps.ai",
+          4
+        ]
+      ]
+    },
+    {
+      "kind": "אינדקס/מדריך חוגים",
+      "count": 29,
+      "hosts": [
+        [
+          "study.co.il",
+          29
+        ]
+      ]
+    },
+    {
+      "kind": "רשת חברתית / כללי",
+      "count": 27,
+      "hosts": [
+        [
+          "facebook.com",
+          14
+        ],
+        [
+          "youtube.com",
+          10
+        ],
+        [
+          "il.linkedin.com",
+          3
+        ]
+      ]
+    },
+    {
+      "kind": "מוסד ישראלי (אקדמיה/ממשל/עמותה)",
+      "count": 15,
+      "hosts": [
+        [
+          "tel-aviv.gov.il",
+          4
+        ],
+        [
+          "milav.org.il",
+          3
+        ],
+        [
+          "makelab.org.il",
+          2
+        ],
+        [
+          "maly.org.il",
+          1
+        ],
+        [
+          "biu.ac.il",
+          1
+        ],
+        [
+          "win-tech.org.il",
+          1
+        ]
+      ]
+    },
+    {
+      "kind": "הבלוג שלנו",
+      "count": 15,
+      "hosts": [
+        [
+          "ai-lab.co.il",
+          15
+        ]
+      ]
+    },
+    {
+      "kind": "האתר שלנו (דף הבית)",
+      "count": 6,
+      "hosts": [
+        [
+          "ai-lab.co.il",
+          6
+        ]
+      ]
+    },
+    {
+      "kind": "אתר חדשות",
+      "count": 2,
+      "hosts": [
+        [
+          "study.calcalist.co.il",
+          1
+        ],
+        [
+          "mako.co.il",
+          1
+        ]
+      ]
+    }
+  ],
+  "ourPages": {
+    "/blog/ai-course-price-kids.html": 5,
+    "/blog/how-to-choose-ai-course.html": 2,
+    "/blog/ai-course-adults-no-tech-background.html": 3,
+    "/blog/ai-course-for-adults.html": 1,
+    "/blog/summer-ai-camp.html": 3,
+    "/blog/ai-automation-small-business.html": 1,
+    "/": 6
+  },
+  "totalCost": 2.008,
+  "stoppedForBudget": false,
+  "budget": 5
+}
