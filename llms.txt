@@ -52,6 +52,8 @@
 
 ## בלוג — מדריכים בעברית על בינה מלאכותית
 - [עולם ה-AI — כל המאמרים](https://ai-lab.co.il/blog/)
+- [חוגים לילדים אונליין: מה מתאים לילד שאוהב מחשבים](https://ai-lab.co.il/blog/online-classes-for-computer-loving-kids.html)
+- [חוג תכנות לילדים 2026 — איך בוחרים וכמה עולה](https://ai-lab.co.il/blog/kids-coding-class-2026-guide.html)
 - [הילד רוצה להיות יוטיובר — מה עושים עם זה בפועל](https://ai-lab.co.il/blog/kid-wants-to-be-youtuber.html)
 - [קורס AI למבוגרים בלי רקע טכני — מאיפה מתחילים](https://ai-lab.co.il/blog/ai-course-adults-no-tech-background.html)
 - [מה ילד בן 10 בונה עם AI — 5 אתרים אמיתיים](https://ai-lab.co.il/blog/what-10-year-olds-build-with-ai.html)
