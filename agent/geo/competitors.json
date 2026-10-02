@@ -1,0 +1,343 @@
+{
+  "_הערה": "רשימת המתחרים הידועים למעקב GEO. aliases = איך השם מופיע בטקסט (מחרוזת = חיפוש לא תלוי רישיות; '/.../i' = ביטוי רגולרי). domains = דומיינים שמזהים את המתחרה בציטוטים. אפשר להוסיף שורות בחופשיות.",
+  "competitors": [
+    {
+      "id": "mindplay",
+      "name": "MindPlay",
+      "aliases": [
+        "MindPlay",
+        "מיינדפליי",
+        "מיינד פליי",
+        "מיינד-פליי"
+      ],
+      "domains": [
+        "mindplay.co.il"
+      ]
+    },
+    {
+      "id": "zschool",
+      "name": "Z-School",
+      "aliases": [
+        "Z-School",
+        "Z School",
+        "ZSchool",
+        "זי סקול",
+        "זי-סקול"
+      ],
+      "domains": [
+        "z-school.co.il",
+        "zschool.co.il"
+      ]
+    },
+    {
+      "id": "matic",
+      "name": "Matic (מטיק)",
+      "aliases": [
+        "Matic",
+        "מטיק"
+      ],
+      "domains": [
+        "matic.co.il"
+      ]
+    },
+    {
+      "id": "haitech",
+      "name": "hai.tech (דרך ההייטק)",
+      "aliases": [
+        "hai.tech",
+        "HaiTech",
+        "Hai Tech",
+        "דרך ההייטק",
+        "האי-טק",
+        "האי טק"
+      ],
+      "domains": [
+        "hai.tech",
+        "hitech-school.co.il"
+      ]
+    },
+    {
+      "id": "spark",
+      "name": "Spark Academy",
+      "aliases": [
+        "Spark Academy",
+        "/\\bSpark\\b/",
+        "ספארק"
+      ],
+      "domains": [
+        "sparkacademy.co.il"
+      ]
+    },
+    {
+      "id": "openu",
+      "name": "האוניברסיטה הפתוחה",
+      "aliases": [
+        "האוניברסיטה הפתוחה",
+        "אוניברסיטה הפתוחה",
+        "Open University"
+      ],
+      "domains": [
+        "openu.ac.il"
+      ]
+    },
+    {
+      "id": "starter-school",
+      "name": "Starter School (סטארטר)",
+      "aliases": [
+        "Starter School",
+        "starter-school",
+        "סטארטר סקול",
+        "/(?<!AI Lab )(?<!AI-Lab )סטארטר/"
+      ],
+      "domains": [
+        "starter-school.co.il"
+      ]
+    },
+    {
+      "id": "beityatziv",
+      "name": "בית יציב",
+      "aliases": [
+        "בית יציב",
+        "Beit Yatziv"
+      ],
+      "domains": [
+        "beityatziv.co.il"
+      ]
+    },
+    {
+      "id": "tau-youth",
+      "name": "נוער שוחר מדע (אוניברסיטת ת\"א)",
+      "aliases": [
+        "נוער שוחר מדע",
+        "אוניברסיטת תל אביב",
+        "אוניברסיטת תל-אביב"
+      ],
+      "domains": [
+        "tau.ac.il"
+      ]
+    },
+    {
+      "id": "technion",
+      "name": "הטכניון",
+      "aliases": [
+        "הטכניון",
+        "טכניון",
+        "Technion"
+      ],
+      "domains": [
+        "technion.ac.il"
+      ]
+    },
+    {
+      "id": "goethe",
+      "name": "מכון גתה (AI Magic)",
+      "aliases": [
+        "מכון גתה",
+        "AI Magic",
+        "Goethe"
+      ],
+      "domains": [
+        "goethe.de"
+      ]
+    },
+    {
+      "id": "cyber-campus",
+      "name": "Israel Cyber Campus",
+      "aliases": [
+        "Israel Cyber Campus",
+        "סייבר קמפוס",
+        "Cyber Campus"
+      ],
+      "domains": [
+        "israelcybercampus.co.il"
+      ]
+    },
+    {
+      "id": "cyber-school",
+      "name": "סייבר סקול",
+      "aliases": [
+        "סייבר סקול",
+        "Cyber School",
+        "סייבר-סקול"
+      ],
+      "domains": [
+        "cyber-school.co.il"
+      ]
+    },
+    {
+      "id": "d-world",
+      "name": "D-World",
+      "aliases": [
+        "D-World",
+        "D World",
+        "די וורלד"
+      ],
+      "domains": [
+        "d-world.co.il"
+      ]
+    },
+    {
+      "id": "codemonkey",
+      "name": "CodeMonkey",
+      "aliases": [
+        "CodeMonkey",
+        "קוד מאנקי",
+        "קודמאנקי"
+      ],
+      "domains": [
+        "codemonkey.com"
+      ]
+    },
+    {
+      "id": "cyber-genius",
+      "name": "Cyber Genius",
+      "aliases": [
+        "Cyber Genius",
+        "סייבר ג'יניוס",
+        "סייבר-ג'יניוס"
+      ],
+      "domains": [
+        "cybergenius.co.il"
+      ]
+    },
+    {
+      "id": "campus-il",
+      "name": "קמפוס IL",
+      "aliases": [
+        "קמפוס IL",
+        "Campus IL",
+        "קמפוס-IL"
+      ],
+      "domains": [
+        "campus.gov.il"
+      ]
+    },
+    {
+      "id": "johnbryce",
+      "name": "ג'ון ברייס",
+      "aliases": [
+        "John Bryce",
+        "ג'ון ברייס",
+        "גון ברייס"
+      ],
+      "domains": [
+        "johnbryce.co.il"
+      ]
+    },
+    {
+      "id": "hackeru",
+      "name": "HackerU",
+      "aliases": [
+        "HackerU",
+        "האקריו",
+        "האקר יו"
+      ],
+      "domains": [
+        "hackeru.co.il"
+      ]
+    },
+    {
+      "id": "udemy",
+      "name": "Udemy",
+      "aliases": [
+        "Udemy",
+        "יודמי"
+      ],
+      "domains": [
+        "udemy.com"
+      ]
+    },
+    {
+      "id": "coursera",
+      "name": "Coursera",
+      "aliases": [
+        "Coursera",
+        "קורסרה"
+      ],
+      "domains": [
+        "coursera.org"
+      ]
+    },
+    {
+      "id": "khan",
+      "name": "Khan Academy",
+      "aliases": [
+        "Khan Academy",
+        "קהאן אקדמי",
+        "חאן אקדמי"
+      ],
+      "domains": [
+        "khanacademy.org"
+      ]
+    },
+    {
+      "id": "code-org",
+      "name": "Code.org",
+      "aliases": [
+        "Code.org"
+      ],
+      "domains": [
+        "code.org"
+      ]
+    },
+    {
+      "id": "mit-scratch",
+      "name": "Scratch (MIT)",
+      "aliases": [
+        "Scratch",
+        "סקראץ'",
+        "סקראץ"
+      ],
+      "domains": [
+        "scratch.mit.edu"
+      ]
+    },
+    {
+      "id": "tech4kids",
+      "name": "Tech4Kids",
+      "aliases": [
+        "Tech4Kids",
+        "tech 4 kids"
+      ],
+      "domains": [
+        "tech4kids.co.il"
+      ]
+    },
+    {
+      "id": "kidum",
+      "name": "קידום",
+      "aliases": [
+        "/קידום(?= |$)/",
+        "Kidum"
+      ],
+      "domains": [
+        "kidum.com"
+      ]
+    },
+    {
+      "id": "shchakim",
+      "name": "מכללת שחקים",
+      "aliases": [
+        "שחקים",
+        "Shchakim",
+        "Shchackim"
+      ],
+      "domains": [
+        "shchackim.co.il",
+        "shchakim.co.il"
+      ]
+    },
+    {
+      "id": "brainroad",
+      "name": "BrainRoad",
+      "aliases": [
+        "BrainRoad",
+        "Brain Road",
+        "בריין רואד"
+      ],
+      "domains": [
+        "brainroad.co.il"
+      ]
+    }
+  ]
+}

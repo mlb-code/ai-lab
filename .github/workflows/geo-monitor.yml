@@ -1,0 +1,72 @@
+name: geo-monitor
+# מעקב GEO חודשי: האם ChatGPT / Gemini / Perplexity / Claude / Grok ממליצים על AI Lab כשהורים שואלים.
+# רץ ב-1 לכל חודש 06:00 UTC (09:00 ישראל). הדוח נשמר בריפו ונפתח כ-Issue (= מייל למאיר דרך התראות GitHub).
+on:
+  schedule:
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+    inputs:
+      runs:
+        description: "ריצות לכל שאלה בכל מנוע (ברירת מחדל 3)"
+        required: false
+        default: "3"
+      month:
+        description: "חודש הדוח YYYY-MM (ריק = החודש הנוכחי)"
+        required: false
+        default: ""
+      force:
+        description: "להריץ גם אם כבר יש דוח לחודש הזה (true/false)"
+        required: false
+        default: "false"
+permissions:
+  issues: write
+  contents: write
+concurrency:
+  group: geo-monitor
+jobs:
+  geo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: כבר יש דוח לחודש הזה?
+        id: dup
+        run: |
+          MONTH="${{ github.event.inputs.month }}"
+          [ -z "$MONTH" ] && MONTH=$(TZ=Asia/Jerusalem date +%Y-%m)
+          echo "month=$MONTH" >> $GITHUB_OUTPUT
+          if [ "${{ github.event.inputs.force }}" != "true" ] && [ -f "agent/geo/reports/דוח-GEO-$MONTH.md" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT; echo "כבר יש דוח ל-$MONTH — מדלג (להרצה חוזרת: force=true)"
+          fi
+      - uses: actions/setup-node@v4
+        if: steps.dup.outputs.skip != 'true'
+        with: { node-version: 20 }
+      - name: ריצת מעקב GEO
+        if: steps.dup.outputs.skip != 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          GEO_RUNS: ${{ github.event.inputs.runs || '3' }}
+          GEO_MONTH: ${{ steps.dup.outputs.month }}
+          GEO_BUDGET_USD: "5"
+        run: node agent/geo/geo-monitor.mjs > /dev/null
+      - name: פתיחת Issue (= מייל למאיר)
+        if: steps.dup.outputs.skip != 'true'
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: |
+          MONTH="${{ steps.dup.outputs.month }}"
+          REPORT="agent/geo/reports/דוח-GEO-$MONTH.md"
+          { cat "$REPORT"; printf '\n\n---\n@mlb-code — דוח ה-GEO החודשי מוכן. ההמלצות מיועדות לסשן התפעול; הקובץ נשמר בריפו ב-`%s`.\n' "$REPORT"; } > geo-issue-body.md
+          gh label create geo-monthly --color 6f42c1 --description "מעקב GEO חודשי — האם מנועי ה-AI ממליצים על AI Lab" 2>/dev/null || true
+          gh issue create --title "דוח GEO חודשי · $MONTH" --label geo-monthly --body-file geo-issue-body.md
+      - name: שמירת התוצאות והדוח בריפו
+        if: steps.dup.outputs.skip != 'true'
+        run: |
+          git config user.name "geo-monitor"; git config user.email "laviemb@gmail.com"
+          git add agent/geo/results agent/geo/reports agent/geo/latest.json
+          git diff --cached --quiet || git commit -qm "geo-monitor: דוח GEO ${{ steps.dup.outputs.month }}"
+          git pull -q --rebase origin main || true
+          git push -q origin main || true
