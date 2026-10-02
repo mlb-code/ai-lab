@@ -175,12 +175,6 @@
 
   <!-- Webinars -->
   <url>
-    <loc>https://ai-lab.co.il/webinar-general.html</loc>
-    <lastmod>2026-04-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://ai-lab.co.il/webinar-partner.html</loc>
     <lastmod>2026-04-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -206,12 +200,6 @@
   </url>
 
   <!-- Portal (logged-in area, still indexable landing) -->
-  <url>
-    <loc>https://ai-lab.co.il/portal/</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
 
   <!-- Student project sites are noindex — intentionally not listed here -->
   <!-- Legal pages (privacy/terms/accessibility) are intentionally noindex — not listed here -->
