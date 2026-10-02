@@ -1,3 +1,5 @@
+// Microsoft Clarity לכל מאמרי הבלוג (02.10.2026)
+(function(){var s=document.createElement("script");s.src="/clarity.js";s.defer=true;document.head.appendChild(s);})();
 /* ============================================================
    AI Lab — Blog Shared Components
    Injects nav, mobile menu, register popup, footer, and lead form
