@@ -52,6 +52,25 @@ async function gscQuery(token, body) {
 // ---- Google Analytics 4 (Data API) — ביקורים, מקורות, ומה לוחצים באתר (אירועי cta_click) ----
 // דורש: GA4_PROPERTY_ID (משתנה בריפו) + חשבון השירות כ-Viewer בנכס + מימדים מותאמים cta_label / cta_section
 const GA4 = process.env.GA4_PROPERTY_ID;
+// Microsoft Clarity (02.10.2026, מאיר: "תכניס את זה לדוח כדי שתהיה לנו ביקורת"): Data Export API, 3 ימים אחרונים.
+// דורש CLARITY_API_TOKEN (סוד בריפו) — מאיר מייצר ב-Clarity → Settings → Data Export → Generate new API token.
+const CLARITY_TOKEN = process.env.CLARITY_API_TOKEN;
+async function clarityBlock() {
+  if (!CLARITY_TOKEN) return "### Clarity (הקלטות ומפות חום)\nעדיין לא מחובר — חסר CLARITY_API_TOKEN (מאיר מייצר ב-Clarity → Settings → Data Export).";
+  const label = { Traffic: "תנועה", ScrollDepth: "עומק גלילה ממוצע", EngagementTime: "זמן מעורבות", DeadClickCount: "לחיצות מתות (לחיצה שלא עשתה כלום)", RageClickCount: "לחיצות זעם (לחיצות חוזרות מתסכול)", QuickbackClick: "חזרה מהירה אחורה", ExcessiveScroll: "גלילה מוגזמת (מחפשים ולא מוצאים)", ScriptErrorCount: "שגיאות סקריפט", ErrorClickCount: "לחיצות שגרמו לשגיאה", PopularPages: "דפים פופולריים", Device: "מכשיר", Browser: "דפדפן", ReferrerUrl: "מקור הפניה", PageTitle: "כותרת דף", OS: "מערכת הפעלה", Country: "מדינה" };
+  try {
+    const r = await fetch("https://www.clarity.ms/export-data/api/v1/project-live-insights?numOfDays=3&dimension1=Device", { headers: { Authorization: `Bearer ${CLARITY_TOKEN}` } });
+    if (!r.ok) return `### Clarity (הקלטות ומפות חום)\nשגיאה ${r.status}: ${(await r.text()).slice(0, 200)}`;
+    const data = await r.json();
+    const lines = ["### Clarity (3 ימים אחרונים, כל האתר + הפלטפורמה)"];
+    for (const m of Array.isArray(data) ? data : []) {
+      const info = (m.information || []).slice(0, 8).map(i => Object.entries(i).map(([k, v]) => `${k}: ${v}`).join(", ")).join(" · ");
+      lines.push(`- ${label[m.metricName] || m.metricName}: ${info || "(אין נתונים)"}`);
+    }
+    if (lines.length === 1) lines.push("(אין נתונים עדיין — הכלי הותקן 02.10)");
+    return lines.join("\n");
+  } catch (e) { return `### Clarity (הקלטות ומפות חום)\nשגיאה: ${e.message.slice(0, 200)}`; }
+}
 // תנועת פיתוח מקומית (localhost של מאיר) לא נספרת: מוסיפים hostName לכל שאילתה, מסננים בצד שלנו ומאחדים חזרה
 async function ga4Report(token, body) {
   // אם השאילתה כבר כוללת sessionSource (דוח המקורות) — לא מוסיפים אותו שוב (GA4 דוחה מימד כפול; תקלת 18.09)
@@ -156,6 +175,7 @@ const [curTotal, prevTotal, topQueries, prevQueries, topPages] = await Promise.a
 ]);
 const tech = await techChecks();
 const analytics = await analyticsBlock(token);
+const clarity = await clarityBlock();
 
 const fmtRows = rows => rows.map(r => `${(r.keys || ["(סה\"כ)"]).join(" | ")} — קליקים ${r.clicks}, חשיפות ${r.impressions}, מיקום ${r.position?.toFixed(1)}`).join("\n") || "(אין נתונים)";
 
@@ -174,7 +194,10 @@ ${fmtRows(topPages)}
 ${tech}
 
 ## אנליטיקס — מה קורה באתר עצמו (Google Analytics)
-${analytics}`;
+${analytics}
+
+## Clarity — איך הגולשים מתנהגים (הקלטות ומפות חום)
+${clarity}`;
 
 const res = await fetch("https://api.anthropic.com/v1/messages", {
   method: "POST",
@@ -187,7 +210,7 @@ const res = await fetch("https://api.anthropic.com/v1/messages", {
     max_tokens: 6000,
     system: `אתה "סוכן הנראות" של AI Lab (ai-lab.co.il) — בית ספר ישראלי ל-AI ויזמות לילדים ונוער. אתה כותב דוח SEO שבועי בעברית למאיר, בעל העסק, שאינו איש טכנולוגיה.
 כללים: עברית פשוטה וחמה, בלי ז'רגון. פתח בשורת מצב אחת (עלייה/יציבות/ירידה). הצג עד 5 נקודות עיקריות עם מספרים מדויקים. אם יש ירידה חדה (מעל 30% בקליקים) — פתח ב"⚠️ דורש תשומת לב".
-הדוח בנוי משני חלקים: (1) "בגוגל" — חיפושים, שאילתות, מיקומים (Search Console). (2) "באתר" — ביקורים, מאיפה מגיעים, ואיזה כפתורים לוחצים יותר ופחות (Google Analytics, אירועי cta_click). בחלק "באתר" תמיד ציין: 3 הכפתורים הכי נלחצים, כפתורים חשובים שכמעט לא לוחצים עליהם (במיוחד הרשמה/מפת הקורסים/דיסקורד/וואטסאפ), ומגמה מול השבוע הקודם. מעקב הלחיצות (cta_click) כבר מותקן באתר מ-08.09.2026 — אם אין עדיין נתוני לחיצות, כתוב שהם מצטברים ואל תמליץ "לחבר מעקב". אם האנליטיקס לא מחובר — כתוב זאת במשפט אחד ומה צריך כדי לחבר.
+הדוח בנוי משלושה חלקים: (1) "בגוגל" — חיפושים, שאילתות, מיקומים (Search Console). (2) "באתר" — ביקורים, מאיפה מגיעים, ואיזה כפתורים לוחצים יותר ופחות (Google Analytics, אירועי cta_click). (3) "התנהגות" — Clarity: לחיצות זעם/מתות, עומק גלילה, זמן מעורבות, לפי מכשיר; מה זה אומר על חוויית ההרשמה ומה לתקן. אם Clarity לא מחובר או ריק — שורה אחת שאומרת זאת. בחלק "באתר" תמיד ציין: 3 הכפתורים הכי נלחצים, כפתורים חשובים שכמעט לא לוחצים עליהם (במיוחד הרשמה/מפת הקורסים/דיסקורד/וואטסאפ), ומגמה מול השבוע הקודם. מעקב הלחיצות (cta_click) כבר מותקן באתר מ-08.09.2026 — אם אין עדיין נתוני לחיצות, כתוב שהם מצטברים ואל תמליץ "לחבר מעקב". אם האנליטיקס לא מחובר — כתוב זאת במשפט אחד ומה צריך כדי לחבר.
 סיים ב"ההמלצה השבועית" אחת בלבד: נושא מאמר מבוסס שאילתה עולה, תיקון טכני, או שינוי בכפתור שלא ממיר — הכי מעשי שיש. אל תמציא נתונים; אם משהו חסר, כתוב שחסר.`,
     messages: [{ role: "user", content: `הנתונים לשבוע זה:\n\n${dataBlock}` }],
   }),
