@@ -127,10 +127,10 @@ def agent_block(summary):
         return h("h2", "סוכן הוואטסאפ") + h("p", f"לא הצלחתי לקרוא את הסטטוס: {e}")
     s = d.get("stats", {})
     if not d.get("ok") or not d.get("agent_enabled"): summary.append("⚠️ סוכן הוואטסאפ כבוי או לא תקין")
-    elif s.get("failed", 0): summary.append(f"⚠️ סוכן הוואטסאפ: {s['failed']} הודעות נכשלו")
+    elif s.get("failed_24h", 0): summary.append(f"⚠️ סוכן הוואטסאפ: {s['failed_24h']} הודעות נכשלו ב-24 השעות האחרונות (מצטבר {s.get('failed', 0)})")  # 03.10: רק כשלונות טריים; המצטבר (92 מספטמבר) הטעה
     else: summary.append(f"סוכן וואטסאפ: תקין · {s.get('conversations', 0)} שיחות מצטבר · אתמול+היום ${d.get('day_cost_usd', 0):.2f}")
     out = h("h2", "סוכן הוואטסאפ (Railway)") + h("ul",
-        h("li", f"שיחות: {s.get('conversations', 0)} · הודעות נכנסו {s.get('messages_in', 0)} · יצאו {s.get('messages_out', 0)} · נכשלו {s.get('failed', 0)}") +
+        h("li", f"שיחות: {s.get('conversations', 0)} · הודעות נכנסו {s.get('messages_in', 0)} · יצאו {s.get('messages_out', 0)} · נכשלו ב-24 שעות {s.get('failed_24h', 0)} (מצטבר {s.get('failed', 0)})") +
         h("li", f"מענה אוטומטי: {'פעיל' if d.get('auto_reply') else 'כבוי'} · מוח {d.get('brain_model', '?')} · עלות החודש ${d.get('month_cost_usd', 0):.2f} מתוך ${d.get('monthly_budget_usd', 0):.0f}"))
     # הפניות של 24 השעות האחרונות — ערוץ אמין גם כשהתראות הוואטסאפ למאיר נחסמות (131049)
     key = os.environ.get("WA_DIGEST_KEY", "").strip()
