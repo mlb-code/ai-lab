@@ -119,6 +119,7 @@
         + '      <a href="/blog/">עולם ה-AI</a>'
         + '      <a href="/#courses">מפת הקורסים</a>'
         + '      <a href="https://my.ai-lab.co.il">אזור אישי</a>'
+        + '      <a href="https://pro.ai-lab.co.il" target="_blank" rel="noopener">AI Lab Pro לעסקים</a>'
         + '      <a href="/privacy.html">מדיניות פרטיות</a>'
         + '      <a href="/terms.html">תנאי שימוש</a>'
         + '      <a href="/accessibility.html">הצהרת נגישות</a>'

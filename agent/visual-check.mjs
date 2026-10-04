@@ -11,6 +11,9 @@ const PAGES = [
   { name: "דף הבית — מחשב", url: "https://ai-lab.co.il/", width: 1400, height: 900, shot: "home-desktop" },
   { name: "כל הפרויקטים — מובייל", url: "https://ai-lab.co.il/projects.html", width: 390, height: 844, shot: "projects-mobile" },
   { name: "פלטפורמת ההרשמה — מובייל", url: "https://my.ai-lab.co.il/", width: 390, height: 844, shot: "platform-mobile" },
+  { name: "AI Lab Pro — מובייל", url: "https://pro.ai-lab.co.il/", width: 390, height: 844, shot: "pro-mobile" },
+  { name: "AI Lab Pro — מחשב", url: "https://pro.ai-lab.co.il/", width: 1400, height: 900, shot: "pro-desktop" },
+  { name: "AI Lab Pro מחירים — מובייל", url: "https://pro.ai-lab.co.il/pricing/", width: 390, height: 844, shot: "pro-pricing-mobile" },
 ];
 
 // שגיאות רשת שאינן באשמת האתר — לא מדווחים עליהן:

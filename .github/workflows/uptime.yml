@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: בדיקת שני האתרים
+      - name: בדיקת האתרים
         id: ping
         run: |
           down=""
@@ -31,6 +31,7 @@ jobs:
           }
           check "https://ai-lab.co.il/"        "האתר הראשי ai-lab.co.il" || true
           check "https://my.ai-lab.co.il/"     "פלטפורמת ההרשמה my.ai-lab.co.il" || true
+          check "https://pro.ai-lab.co.il/"    "AI Lab Pro pro.ai-lab.co.il" || true
           echo "down=$down" >> "$GITHUB_OUTPUT"
 
       - name: פתיחת התראה כשמשהו נפל
