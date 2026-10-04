@@ -52,17 +52,20 @@ async function gscQuery(token, body) {
 // ---- Google Analytics 4 (Data API) — ביקורים, מקורות, ומה לוחצים באתר (אירועי cta_click) ----
 // דורש: GA4_PROPERTY_ID (משתנה בריפו) + חשבון השירות כ-Viewer בנכס + מימדים מותאמים cta_label / cta_section
 const GA4 = process.env.GA4_PROPERTY_ID;
+const GA4_PRO = process.env.GA4_PRO_PROPERTY_ID; // AI Lab Pro (pro.ai-lab.co.il), נוסף 04.10.2026
+const PRO_URL = "https://pro.ai-lab.co.il";
 // Microsoft Clarity (02.10.2026, מאיר: "תכניס את זה לדוח כדי שתהיה לנו ביקורת"): Data Export API, 3 ימים אחרונים.
 // דורש CLARITY_API_TOKEN (סוד בריפו) — מאיר מייצר ב-Clarity → Settings → Data Export → Generate new API token.
 const CLARITY_TOKEN = process.env.CLARITY_API_TOKEN;
-async function clarityBlock() {
-  if (!CLARITY_TOKEN) return "### Clarity (הקלטות ומפות חום)\nעדיין לא מחובר — חסר CLARITY_API_TOKEN (מאיר מייצר ב-Clarity → Settings → Data Export).";
+const CLARITY_PRO_TOKEN = process.env.CLARITY_PRO_TOKEN; // פרויקט Clarity נפרד ל-AI Lab Pro (04.10.2026)
+async function clarityBlock(tok = CLARITY_TOKEN, title = "כל האתר + הפלטפורמה") {
+  if (!tok) return "### Clarity (הקלטות ומפות חום)\nעדיין לא מחובר — חסר CLARITY_API_TOKEN (מאיר מייצר ב-Clarity → Settings → Data Export).";
   const label = { Traffic: "תנועה", ScrollDepth: "עומק גלילה ממוצע", EngagementTime: "זמן מעורבות", DeadClickCount: "לחיצות מתות (לחיצה שלא עשתה כלום)", RageClickCount: "לחיצות זעם (לחיצות חוזרות מתסכול)", QuickbackClick: "חזרה מהירה אחורה", ExcessiveScroll: "גלילה מוגזמת (מחפשים ולא מוצאים)", ScriptErrorCount: "שגיאות סקריפט", ErrorClickCount: "לחיצות שגרמו לשגיאה", PopularPages: "דפים פופולריים", Device: "מכשיר", Browser: "דפדפן", ReferrerUrl: "מקור הפניה", PageTitle: "כותרת דף", OS: "מערכת הפעלה", Country: "מדינה" };
   try {
-    const r = await fetch("https://www.clarity.ms/export-data/api/v1/project-live-insights?numOfDays=3&dimension1=Device", { headers: { Authorization: `Bearer ${CLARITY_TOKEN}` } });
+    const r = await fetch("https://www.clarity.ms/export-data/api/v1/project-live-insights?numOfDays=3&dimension1=Device", { headers: { Authorization: `Bearer ${tok}` } });
     if (!r.ok) return `### Clarity (הקלטות ומפות חום)\nשגיאה ${r.status}: ${(await r.text()).slice(0, 200)}`;
     const data = await r.json();
-    const lines = ["### Clarity (3 ימים אחרונים, כל האתר + הפלטפורמה)"];
+    const lines = [`### Clarity (3 ימים אחרונים, ${title})`];
     for (const m of Array.isArray(data) ? data : []) {
       const info = (m.information || []).slice(0, 8).map(i => Object.entries(i).map(([k, v]) => `${k}: ${v}`).join(", ")).join(" · ");
       lines.push(`- ${label[m.metricName] || m.metricName}: ${info || "(אין נתונים)"}`);
@@ -72,12 +75,12 @@ async function clarityBlock() {
   } catch (e) { return `### Clarity (הקלטות ומפות חום)\nשגיאה: ${e.message.slice(0, 200)}`; }
 }
 // תנועת פיתוח מקומית (localhost של מאיר) לא נספרת: מוסיפים hostName לכל שאילתה, מסננים בצד שלנו ומאחדים חזרה
-async function ga4Report(token, body) {
+async function ga4Report(token, body, prop = GA4) {
   // אם השאילתה כבר כוללת sessionSource (דוח המקורות) — לא מוסיפים אותו שוב (GA4 דוחה מימד כפול; תקלת 18.09)
   const base = body.dimensions || [];
   const srcIdx = base.findIndex(d => d.name === "sessionSource");
   const dims = [...base, { name: "hostName" }, ...(srcIdx === -1 ? [{ name: "sessionSource" }] : [])];
-  const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${GA4}:runReport`, {
+  const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${prop}:runReport`, {
     method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body: JSON.stringify({ ...body, dimensions: dims, limit: Math.min((body.limit || 10) * 4, 250) }),
   });
@@ -131,6 +134,51 @@ function range(daysAgoStart, daysAgoEnd) {
 }
 
 // ---- בדיקות טכניות קלות ----
+// ---- AI Lab Pro: GA4 של האתר לעסקים + Search Console (רק דפי pro.) + בדיקות טכניות ----
+async function proBlock(token) {
+  const out = [];
+  const cur = { startDate: "7daysAgo", endDate: "yesterday" }, prev = { startDate: "14daysAgo", endDate: "8daysAgo" };
+  // Search Console: רק עמודי pro.ai-lab.co.il (נכס דומיין מכסה את כל התת-דומיינים)
+  try {
+    const q = async range => {
+      const r = await fetch(`https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(SITE)}/searchAnalytics/query`, {
+        method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ ...range, dimensions: ["query"], rowLimit: 10, dimensionFilterGroups: [{ filters: [{ dimension: "page", operator: "contains", expression: "pro.ai-lab.co.il" }] }] }),
+      });
+      return (await r.json()).rows || [];
+    };
+    const d = n => new Date(Date.now() - n * 864e5).toISOString().slice(0, 10);
+    const rows = await q({ startDate: d(8), endDate: d(2) });
+    const tot = rows.reduce((a, r) => ({ c: a.c + r.clicks, i: a.i + r.impressions }), { c: 0, i: 0 });
+    out.push(`### בגוגל (Search Console, 7 ימים)\nקליקים ${tot.c}, חשיפות ${tot.i}` + (rows.length ? "\n" + rows.map(r => `- "${r.keys[0]}": קליקים ${r.clicks}, חשיפות ${r.impressions}, מיקום ${r.position.toFixed(1)}`).join("\n") : "\n(עדיין אין שאילתות — האתר הושק 04.10.2026)"));
+  } catch (e) { out.push(`### בגוגל\nשגיאה: ${e.message.slice(0, 120)}`); }
+  // GA4
+  if (!GA4_PRO) out.push("### באתר (GA4)\nחסר GA4_PRO_PROPERTY_ID.");
+  else try {
+    const [c, p] = await Promise.all([
+      ga4Report(token, { dateRanges: [cur], metrics: [{ name: "sessions" }, { name: "totalUsers" }, { name: "screenPageViews" }] }, GA4_PRO),
+      ga4Report(token, { dateRanges: [prev], metrics: [{ name: "sessions" }, { name: "totalUsers" }, { name: "screenPageViews" }] }, GA4_PRO),
+    ]);
+    const f = r => r[0] ? `ביקורים ${r[0].v[0]}, משתמשים ${r[0].v[1]}, צפיות ${r[0].v[2]}` : "(אין נתונים)";
+    out.push(`### באתר (GA4, 7 ימים)\nנוכחי: ${f(c)}\nשבוע קודם: ${f(p)}`);
+    const src = await ga4Report(token, { dateRanges: [cur], dimensions: [{ name: "sessionSource" }], metrics: [{ name: "sessions" }], orderBys: [{ metric: { metricName: "sessions" }, desc: true }], limit: 8 }, GA4_PRO);
+    out.push("### מאיפה מגיעים\n" + (src.map(r => `- ${r.k[0]}: ${r.v[0]}`).join("\n") || "(אין נתונים)"));
+    const pages = await ga4Report(token, { dateRanges: [cur], dimensions: [{ name: "pagePath" }], metrics: [{ name: "screenPageViews" }], orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }], limit: 10 }, GA4_PRO);
+    out.push("### עמודים נצפים\n" + (pages.map(r => `- ${r.k[0]}: ${r.v[0]}`).join("\n") || "(אין נתונים)"));
+    const ev = await ga4Report(token, { dateRanges: [cur], dimensions: [{ name: "eventName" }], metrics: [{ name: "eventCount" }], dimensionFilter: { filter: { fieldName: "eventName", inListFilter: { values: ["whatsapp_click", "cta_click", "generate_lead", "select_product", "calculator_use", "menu_open"] } } }, limit: 10 }, GA4_PRO);
+    const names = { whatsapp_click: "לחיצות וואטסאפ", cta_click: "לחיצות 'שיחת היכרות'", generate_lead: "טפסים שנשלחו (לידים)", select_product: "בחירת מוצר בהירו", calculator_use: "שימוש במחשבון", menu_open: "פתיחת מוצר בתפריט" };
+    out.push("### פעולות באתר (אירועי GA4)\n" + (ev.map(r => `- ${names[r.k[0]] || r.k[0]}: ${r.v[0]}`).join("\n") || "(עדיין אין אירועים)"));
+  } catch (e) { out.push(`### באתר (GA4)\nשגיאה: ${e.message.slice(0, 200)} — לבדוק שחשבון השירות הוא Viewer בנכס 557307412.`); }
+  // טכני
+  const checks = [];
+  for (const [path, must] of [["/", "AI Lab Pro"], ["/robots.txt", "Allow: /"], ["/sitemap.xml", "<urlset"], ["/llms.txt", "AI Lab Pro"], ["/pricing/", "המחירון"]]) {
+    try { const r = await fetch(PRO_URL + path, { redirect: "follow" }); const t = await r.text(); checks.push(`- ${path}: ${r.status === 200 && t.includes(must) ? "תקין" : "⚠️ בעיה (HTTP " + r.status + ")"}`); }
+    catch (e) { checks.push(`- ${path}: ⚠️ ${e.message.slice(0, 60)}`); }
+  }
+  out.push("### בדיקות טכניות\n" + checks.join("\n"));
+  return out.join("\n");
+}
+
 async function techChecks() {
   const out = [];
   for (const path of ["/llms.txt", "/robots.txt", "/sitemap.xml"]) {
@@ -193,6 +241,8 @@ const watch = await watchlistBlock(token);
 const tech = await techChecks();
 const analytics = await analyticsBlock(token);
 const clarity = await clarityBlock();
+const pro = await proBlock(token);
+const proClarity = CLARITY_PRO_TOKEN ? await clarityBlock(CLARITY_PRO_TOKEN, "AI Lab Pro בלבד") : "### Clarity\nחסר CLARITY_PRO_TOKEN.";
 
 const fmtRows = rows => rows.map(r => `${(r.keys || ["(סה\"כ)"]).join(" | ")} — קליקים ${r.clicks}, חשיפות ${r.impressions}, מיקום ${r.position?.toFixed(1)}`).join("\n") || "(אין נתונים)";
 
@@ -216,7 +266,11 @@ ${tech}
 ${analytics}
 
 ## Clarity — איך הגולשים מתנהגים (הקלטות ומפות חום)
-${clarity}`;
+${clarity}
+
+## AI Lab Pro — האתר לעסקים (pro.ai-lab.co.il, הושק 04.10.2026)
+${pro}
+${proClarity}`;
 
 const res = await fetch("https://api.anthropic.com/v1/messages", {
   method: "POST",
@@ -230,6 +284,7 @@ const res = await fetch("https://api.anthropic.com/v1/messages", {
     system: `אתה "סוכן הנראות" של AI Lab (ai-lab.co.il) — בית ספר ישראלי ל-AI ויזמות לילדים ונוער. אתה כותב דוח SEO שבועי בעברית למאיר, בעל העסק, שאינו איש טכנולוגיה.
 כללים: עברית פשוטה וחמה, בלי ז'רגון. פתח בשורת מצב אחת (עלייה/יציבות/ירידה). הצג עד 5 נקודות עיקריות עם מספרים מדויקים. אם יש ירידה חדה (מעל 30% בקליקים) — פתח ב"⚠️ דורש תשומת לב".
 הדוח בנוי משלושה חלקים: (1) "בגוגל" — חיפושים, שאילתות, מיקומים (Search Console). (2) "באתר" — ביקורים, מאיפה מגיעים, ואיזה כפתורים לוחצים יותר ופחות (Google Analytics, אירועי cta_click). (3) "התנהגות" — Clarity: לחיצות זעם/מתות, עומק גלילה, זמן מעורבות, לפי מכשיר; מה זה אומר על חוויית ההרשמה ומה לתקן. אם Clarity לא מחובר או ריק — שורה אחת שאומרת זאת. בחלק "בגוגל" הוסף פסקה קצרה "ביטויי היעד": אילו מ-10 הביטויים כבר מופיעים, באיזה מיקום, ומה השתנה מול 28 הימים הקודמים — זה המדד להצלחת המיצוב "חוג תכנות לילדים". בחלק "באתר" תמיד ציין: 3 הכפתורים הכי נלחצים, כפתורים חשובים שכמעט לא לוחצים עליהם (במיוחד הרשמה/מפת הקורסים/דיסקורד/וואטסאפ), ומגמה מול השבוע הקודם. מעקב הלחיצות (cta_click) כבר מותקן באתר מ-08.09.2026 — אם אין עדיין נתוני לחיצות, כתוב שהם מצטברים ואל תמליץ "לחבר מעקב". אם האנליטיקס לא מחובר — כתוב זאת במשפט אחד ומה צריך כדי לחבר.
+בנוסף, חלק קצר ונפרד בסוף: "AI Lab Pro — האתר לעסקים" (pro.ai-lab.co.il): ביקורים, מאיפה, לחיצות וואטסאפ וטפסים (לידים), ושאילתות אם יש. שם הקהל הוא בעלי עסקים, לא הורים; ההשוואה היא לשבוע הקודם בלבד. אם אין עדיין נתונים, כתוב שהאתר חדש ומה לבדוק בשבוע הבא.
 סיים ב"ההמלצה השבועית" אחת בלבד: נושא מאמר מבוסס שאילתה עולה, תיקון טכני, או שינוי בכפתור שלא ממיר — הכי מעשי שיש. אל תמציא נתונים; אם משהו חסר, כתוב שחסר.`,
     messages: [{ role: "user", content: `הנתונים לשבוע זה:\n\n${dataBlock}` }],
   }),

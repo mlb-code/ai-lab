@@ -6,6 +6,10 @@ on:
         description: "כמה ימים אחורה"
         required: false
         default: "7"
+      property:
+        description: "מזהה נכס GA4 (ריק = האתר הראשי; 557307412 = AI Lab Pro)"
+        required: false
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -19,6 +23,6 @@ jobs:
       - name: דוח GA4
         env:
           GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
-          GA4_PROPERTY_ID: ${{ vars.GA4_PROPERTY_ID }}
+          GA4_PROPERTY_ID: ${{ github.event.inputs.property || vars.GA4_PROPERTY_ID }}
           DAYS: ${{ github.event.inputs.days }}
         run: node agent/ga-report.mjs
