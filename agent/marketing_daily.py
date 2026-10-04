@@ -319,6 +319,18 @@ def ga_compact():
     return h("h2", "אנליטיקס (7 ימים)") + h("p", tot.replace("**", "")) + section("מקור / מדיום", 6) + section("קמפיינים (UTM)", 5) + section("לחיצות CTA (cta_click)", 6)
 
 
+def pro_block(summary):
+    """AI Lab Pro (pro.ai-lab.co.il): בלוק HTML מוכן מ-agent/pro-daily.mjs (pro.html). השורה הראשונה = סיכום לשורה התחתונה."""
+    if not os.path.exists("pro.html"): return ""
+    html_ = open("pro.html", encoding="utf-8").read()
+    first, _, rest = html_.partition("\n")
+    if first.startswith("<!--SUMMARY:"):
+        line = first[len("<!--SUMMARY:"):-3].strip()
+        if line: summary.append("🏢 " + line)
+        return rest
+    return html_
+
+
 REMINDERS_FILE = os.environ.get("REMINDERS_FILE", "agent/marketing-reminders.json")
 
 def reminders_block(summary):
@@ -346,10 +358,11 @@ def main():
     cb, todo = comments_block(state)
     if todo: summary.append(f"💬 {len(todo)} תגובות ממתינות לתשובה")
     ga = ga_compact()
+    pro = pro_block(summary)
     if os.path.exists("ga.md"):
         tot = next((l for l in open("ga.md", encoding="utf-8").read().splitlines() if l.startswith("**סה")), "")
         if tot: summary.append("אתר: " + tot.replace("**", "").replace("סה\"כ:", "").strip())
-    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + rem + ads + ab + gg + social + sch + ag + cb + ga
+    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + rem + ads + ab + gg + social + sch + ag + cb + ga + pro
                 + h("p", h("i", "נוצר אוטומטית על ידי סוכן השיווק של AI Lab. תשובות לתגובות מתפרסמות רק אחרי אישור.")), dir="rtl")
     if todo: body += "\n\n<!-- COMMENTS_JSON " + json.dumps(todo, ensure_ascii=False) + " -->"
     open("report.md", "w", encoding="utf-8").write(body)

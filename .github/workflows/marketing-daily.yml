@@ -36,6 +36,12 @@ jobs:
           GA4_PROPERTY_ID: ${{ vars.GA4_PROPERTY_ID }}
           DAYS: "7"
         run: node agent/ga-report.mjs > ga.md || echo "## GA4 לא זמין" > ga.md
+      - name: AI Lab Pro (GA4 של האתר לעסקים)
+        if: steps.dup.outputs.skip != 'true'
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          GA4_PRO_PROPERTY_ID: ${{ vars.GA4_PRO_PROPERTY_ID }}
+        run: node agent/pro-daily.mjs > pro.html || echo "" > pro.html
       - name: סוכן שיווק
         if: steps.dup.outputs.skip != 'true'
         env:

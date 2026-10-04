@@ -27,8 +27,12 @@ import { fileURLToPath } from "node:url";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, "..", "..");
-const SITE = "https://ai-lab.co.il";
-const OUR_DOMAINS = ["ai-lab.co.il"]; // כולל סאב-דומיינים (my., starter.)
+const PROFILE = process.env.GEO_PROFILE === "pro" ? "pro" : "kids"; // kids = הורים/ילדים (ברירת מחדל) · pro = AI Lab Pro לעסקים (נוסף 04.10.2026)
+const IS_PRO = PROFILE === "pro";
+const SFX = IS_PRO ? "-pro" : "";
+const AUD = IS_PRO ? "בעלי עסקים" : "הורים";
+const SITE = IS_PRO ? "https://pro.ai-lab.co.il" : "https://ai-lab.co.il";
+const OUR_DOMAINS = ["ai-lab.co.il"]; // כולל סאב-דומיינים (my., starter., pro.)
 
 const RUNS = Math.max(1, Number(process.env.GEO_RUNS || 3));
 const BUDGET = Number(process.env.GEO_BUDGET_USD || 5);
@@ -44,11 +48,11 @@ function ilMonth() {
 const MONTH = process.env.GEO_MONTH || ilMonth();
 const TODAY_IL = new Date().toLocaleDateString("he-IL", { timeZone: "Asia/Jerusalem", day: "2-digit", month: "2-digit", year: "numeric" });
 
-const questionsAll = JSON.parse(fs.readFileSync(path.join(HERE, "questions.json"), "utf8"));
+const questionsAll = JSON.parse(fs.readFileSync(path.join(HERE, `questions${SFX}.json`), "utf8"));
 const questions = LIMIT ? questionsAll.slice(0, LIMIT) : questionsAll;
-const COMPETITORS = JSON.parse(fs.readFileSync(path.join(HERE, "competitors.json"), "utf8")).competitors;
+const COMPETITORS = JSON.parse(fs.readFileSync(path.join(HERE, `competitors${SFX}.json`), "utf8")).competitors;
 
-const RESULTS_DIR = path.join(HERE, "results", MONTH);
+const RESULTS_DIR = path.join(HERE, "results" + SFX, MONTH);
 const REPORTS_DIR = path.join(HERE, "reports");
 fs.mkdirSync(RESULTS_DIR, { recursive: true });
 fs.mkdirSync(REPORTS_DIR, { recursive: true });
@@ -329,7 +333,7 @@ async function judgeOrgs(text) {
   try {
     const j = await postJson("https://api.anthropic.com/v1/messages", { "x-api-key": process.env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01" }, {
       model: "claude-haiku-4-5", max_tokens: 400,
-      system: "You extract names of organizations, schools, companies or named courses that are recommended or mentioned as providers in a Hebrew/English answer about AI courses. Return ONLY JSON: {\"orgs\":[{\"name\":\"...\",\"domain\":\"... or empty\"}]} in order of appearance. Exclude generic tools and products (ChatGPT, Gemini, Scratch, Canva, Zoom), and exclude the names 'AI Lab'/'ai-lab.co.il'. Max 12 items.",
+      system: "You extract names of organizations, schools, companies or named courses that are recommended or mentioned as providers in a Hebrew/English answer about " + (IS_PRO ? "AI agents, business automation and custom software services for businesses" : "AI courses") + ". Return ONLY JSON: {\"orgs\":[{\"name\":\"...\",\"domain\":\"... or empty\"}]} in order of appearance. Exclude generic tools and products (ChatGPT, Gemini, Scratch, Canva, Zoom), and exclude the names 'AI Lab'/'ai-lab.co.il'. Max 12 items.",
       messages: [{ role: "user", content: text.slice(0, 6000) }],
     }, { retries: 1 });
     const t = (j.content || []).filter(b => b.type === "text").map(b => b.text).join("").replace(/```json|```/g, "").trim();
@@ -467,9 +471,9 @@ fs.writeFileSync(path.join(RESULTS_DIR, "summary.json"), JSON.stringify(summary,
 
 // ---------- מגמה מול החודש הקודם ----------
 function previousSummary() {
-  const dirs = fs.readdirSync(path.join(HERE, "results")).filter(d => /^\d{4}-\d{2}$/.test(d) && d < MONTH).sort();
+  const dirs = fs.readdirSync(path.join(HERE, "results" + SFX)).filter(d => /^\d{4}-\d{2}$/.test(d) && d < MONTH).sort();
   for (const d of dirs.reverse()) {
-    const p = path.join(HERE, "results", d, "summary.json");
+    const p = path.join(HERE, "results" + SFX, d, "summary.json");
     if (fs.existsSync(p)) { try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch { /* ממשיכים */ } }
   }
   return null;
@@ -487,8 +491,8 @@ function heuristicRecs() {
   const worst = questions.map(q => ({ q, m: runnable.reduce((s, e) => s + (summary.engines[e].byQuestion[q.id]?.mentioned || 0), 0) })).sort((a, b) => a.m - b.m).slice(0, 3);
   const top = summary.competitors[0];
   return [
-    worst[0] ? `לכתוב מאמר בבלוג שעונה ישירות על השאלה "${worst[0].q.text}" (0 הופעות של AI Lab בכל המנועים), עם כותרת שחוזרת על ניסוח ההורה ועם פסקת תשובה ישירה בראש המאמר.` : "לכתוב מאמר בבלוג שעונה ישירות על אחת השאלות שבהן לא הופענו.",
-    worst[1] ? `להוסיף ל-llms.txt (בחלק "שאלות נפוצות") שורת שאלה-תשובה בניסוח המדויק "${worst[1].q.text}" → AI Lab, כולל מחיר, גילאים ופורמט.` : "להוסיף ל-llms.txt שורות שאלה-תשובה בניסוחים שהורים משתמשים בהם.",
+    worst[0] ? `לכתוב מאמר בבלוג שעונה ישירות על השאלה "${worst[0].q.text}" (0 הופעות של AI Lab בכל המנועים), עם כותרת שחוזרת על ניסוח ${IS_PRO ? "בעל העסק" : "ההורה"} ועם פסקת תשובה ישירה בראש המאמר.` : "לכתוב מאמר בבלוג שעונה ישירות על אחת השאלות שבהן לא הופענו.",
+    worst[1] ? `להוסיף ל-llms.txt (בחלק "שאלות נפוצות") שורת שאלה-תשובה בניסוח המדויק "${worst[1].q.text}" → AI Lab, כולל מחיר${IS_PRO ? " ולוח זמנים" : ", גילאים ופורמט"}.` : "להוסיף ל-llms.txt שורות שאלה-תשובה בניסוחים ש${AUD} משתמשים בהם.",
     top ? `${top.name} הוזכר ב-${top.answers} תשובות — כדאי לבדוק מה באתר שלו מצוטט (עמוד קורס עם מחיר, גילאים ו-FAQ) ולוודא שלעמוד הקורס שלנו יש מידע מקביל ומפורש בטקסט (לא רק בתמונות).` : "לבדוק אילו עמודים של מתחרים מצוטטים ולהתאים את עמוד הקורס שלנו.",
   ];
 }
@@ -505,9 +509,9 @@ async function llmRecommendations() {
   try {
     const j = await postJson("https://api.anthropic.com/v1/messages", { "x-api-key": process.env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01" }, {
       model: "claude-sonnet-5", max_tokens: 1800, thinking: { type: "disabled" },
-      system: `אתה אנליסט GEO (Generative Engine Optimization) של AI Lab (ai-lab.co.il) — בית ספר ישראלי ל-AI לילדים ונוער 9–17 ולמבוגרים, אונליין בזום. מאיר, בעל העסק, אינו איש טכנולוגיה.
-קיבלת תוצאות מעקב חודשי: האם מנועי ה-AI הזכירו את AI Lab בתשובות לשאלות של הורים, מי המתחרים שהופיעו, ואילו מקורות צוטטו. קיבלת גם את llms.txt הנוכחי של האתר.
-כתוב בדיוק 3 המלצות קונקרטיות בעברית, כל אחת 2–4 שורות, ממוספרות, בפורמט: **כותרת קצרה** — מה לעשות בדיוק ולמה (עם המספרים מהנתונים). ההמלצות חייבות להיות מהסוגים: (א) איזה מאמר לכתוב בבלוג (כותרת מוצעת + מה חייב להופיע בו), (ב) מה לתקן/להוסיף ב-llms.txt (שורה מוצעת כלשונה), (ג) איזה ביטוי/ניסוח שהורים משתמשים בו חסר באתר ואיפה להוסיף אותו. עדיפות לשאלות שבהן לא הופענו בכלל ולמתחרים שמופיעים הרבה. אל תמציא נתונים. כל ניסוח מוצע לאתר או ל-llms.txt ידבר רק על AI Lab — בלי טענות על מתחרים (מה הם עושים או לא עושים), מותר רק לציין שהם מופיעים בתשובות. אל תציע לשנות את גילאי היעד (9–17) או לפרסם דבר על תנאי שימוש של כלים. פלט: רק 3 ההמלצות, בלי פתיחה ובלי סיכום.`,
+      system: `אתה אנליסט GEO (Generative Engine Optimization) של AI Lab (ai-lab.co.il) — ${IS_PRO ? "AI Lab Pro (pro.ai-lab.co.il): סטודיו ישראלי שבונה סוכני AI, אוטומציות, מערכות פנימיות ואפליקציות לעסקים; אדם אחד בכיר שבונה עם Claude, מחירים שקופים" : "בית ספר ישראלי ל-AI לילדים ונוער 9–17 ולמבוגרים, אונליין בזום"}. מאיר, בעל העסק, אינו איש טכנולוגיה.
+קיבלת תוצאות מעקב חודשי: האם מנועי ה-AI הזכירו את AI Lab בתשובות לשאלות של ${AUD}, מי המתחרים שהופיעו, ואילו מקורות צוטטו. קיבלת גם את llms.txt הנוכחי של האתר.
+כתוב בדיוק 3 המלצות קונקרטיות בעברית, כל אחת 2–4 שורות, ממוספרות, בפורמט: **כותרת קצרה** — מה לעשות בדיוק ולמה (עם המספרים מהנתונים). ההמלצות חייבות להיות מהסוגים: (א) איזה מאמר לכתוב בבלוג (כותרת מוצעת + מה חייב להופיע בו), (ב) מה לתקן/להוסיף ב-llms.txt (שורה מוצעת כלשונה), (ג) איזה ביטוי/ניסוח ש${AUD} משתמשים בו חסר באתר ואיפה להוסיף אותו. עדיפות לשאלות שבהן לא הופענו בכלל ולמתחרים שמופיעים הרבה. אל תמציא נתונים. כל ניסוח מוצע לאתר או ל-llms.txt ידבר רק על AI Lab — בלי טענות על מתחרים (מה הם עושים או לא עושים), מותר רק לציין שהם מופיעים בתשובות. ${IS_PRO ? "" : "אל תציע לשנות את גילאי היעד (9–17) או לפרסם דבר על תנאי שימוש של כלים."} פלט: רק 3 ההמלצות, בלי פתיחה ובלי סיכום.`,
       messages: [{ role: "user", content: `## נתוני המעקב (JSON)\n${JSON.stringify(digest, null, 1).slice(0, 40000)}\n\n## llms.txt הנוכחי\n${llms.slice(0, 14000)}` }],
     }, { retries: 1 });
     const t = (j.content || []).filter(b => b.type === "text").map(b => b.text).join("\n").trim();
@@ -576,7 +580,7 @@ const statusLine = o.runs === 0
 
 const report = `# דוח GEO חודשי — ${MONTH}${prev ? "" : " (קו בסיס)"}
 
-_האם ChatGPT, Gemini, Perplexity, Claude ו-Grok ממליצים על AI Lab כשהורים שואלים בעברית? נוצר אוטומטית ב-${TODAY_IL}. ${questions.length} שאלות × ${RUNS} ריצות בכל מנוע, עם חיפוש ברשת מופעל._
+_האם ChatGPT, Gemini, Perplexity, Claude ו-Grok ממליצים על ${IS_PRO ? "AI Lab Pro" : "AI Lab"} כש${AUD} שואלים בעברית? נוצר אוטומטית ב-${TODAY_IL}. ${questions.length} שאלות × ${RUNS} ריצות בכל מנוע, עם חיפוש ברשת מופעל._
 
 ## שורת מצב
 ${statusLine}
@@ -631,9 +635,9 @@ ${missingKeys.map(e => KEY_HOWTO[e]).join("\n\n")}
 _איך זה עובד: הסקריפט \`agent/geo/geo-monitor.mjs\` שואל כל מנוע דרך ה-API הרשמי שלו עם חיפוש ברשת, 3 פעמים לכל שאלה (התשובות משתנות), ובודק בטקסט ובציטוטים אם "AI Lab" / ai-lab.co.il מופיעים, באיזה מיקום, ומי המתחרים (רשימה ב-\`agent/geo/competitors.json\` + גילוי דומיינים ישראליים). תשובות גולמיות: \`agent/geo/results/${MONTH}/\`. רץ אוטומטית ב-1 לכל חודש ב-09:00 (GitHub Actions: geo-monitor); החודש הבא יחושב מול הדוח הזה._
 `;
 
-const reportPath = path.join(REPORTS_DIR, `דוח-GEO-${MONTH}.md`);
+const reportPath = path.join(REPORTS_DIR, `דוח-GEO${IS_PRO ? "-Pro" : ""}-${MONTH}.md`);
 fs.writeFileSync(reportPath, report);
-fs.writeFileSync(path.join(HERE, "latest.json"), JSON.stringify({ month: MONTH, report: path.relative(REPO, reportPath), summary: path.relative(REPO, path.join(RESULTS_DIR, "summary.json")), generatedAt: summary.generatedAt, mentionRate: o.mentionRate, totalCost: summary.totalCost, missingKeys }, null, 2));
-if (process.env.GEO_COPY_DIR) { try { fs.copyFileSync(reportPath, path.join(process.env.GEO_COPY_DIR, `דוח-GEO-${MONTH}.md`)); log("הועתק ל-", process.env.GEO_COPY_DIR); } catch (e) { log("העתקה נכשלה:", e.message); } }
+fs.writeFileSync(path.join(HERE, `latest${SFX}.json`), JSON.stringify({ month: MONTH, report: path.relative(REPO, reportPath), summary: path.relative(REPO, path.join(RESULTS_DIR, "summary.json")), generatedAt: summary.generatedAt, mentionRate: o.mentionRate, totalCost: summary.totalCost, missingKeys }, null, 2));
+if (process.env.GEO_COPY_DIR) { try { fs.copyFileSync(reportPath, path.join(process.env.GEO_COPY_DIR, `דוח-GEO${IS_PRO ? "-Pro" : ""}-${MONTH}.md`)); log("הועתק ל-", process.env.GEO_COPY_DIR); } catch (e) { log("העתקה נכשלה:", e.message); } }
 log(`סיום · ציון ${pct(o.mentionRate)} · עלות $${summary.totalCost.toFixed(2)} · דוח: ${reportPath}`);
 console.log(report);

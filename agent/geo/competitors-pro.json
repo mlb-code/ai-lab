@@ -1,0 +1,205 @@
+{
+  "_הערה": "מתחרים של AI Lab Pro (עסקים). מבנה זהה ל-competitors.json.",
+  "competitors": [
+    {
+      "id": "stsiconic",
+      "name": "STSICONIC",
+      "aliases": [
+        "STSICONIC",
+        "סטסאיקוניק"
+      ],
+      "domains": [
+        "stsiconic.com"
+      ]
+    },
+    {
+      "id": "automaziot",
+      "name": "אוטומציות AI",
+      "aliases": [
+        "אוטומציות AI",
+        "Automaziot",
+        "automaziot"
+      ],
+      "domains": [
+        "automaziot.ai"
+      ]
+    },
+    {
+      "id": "whale",
+      "name": "WhaleBiz",
+      "aliases": [
+        "WhaleBiz",
+        "Whale",
+        "וויל"
+      ],
+      "domains": [
+        "whale.co.il"
+      ]
+    },
+    {
+      "id": "bringup",
+      "name": "BringUp",
+      "aliases": [
+        "BringUp",
+        "ברינג אפ"
+      ],
+      "domains": [
+        "bringup.io"
+      ]
+    },
+    {
+      "id": "doctorai",
+      "name": "DoctorAI",
+      "aliases": [
+        "DoctorAI",
+        "דוקטור AI",
+        "ברק בר-חן"
+      ],
+      "domains": [
+        "doctorai.co.il"
+      ]
+    },
+    {
+      "id": "danielai",
+      "name": "דניאל נחמיה",
+      "aliases": [
+        "דניאל נחמיה",
+        "danielai"
+      ],
+      "domains": [
+        "danielai.co.il"
+      ]
+    },
+    {
+      "id": "bosonet",
+      "name": "Bosonet",
+      "aliases": [
+        "Bosonet",
+        "בוזונט"
+      ],
+      "domains": [
+        "bosonet.com"
+      ]
+    },
+    {
+      "id": "iqdesk",
+      "name": "iQDesk",
+      "aliases": [
+        "iQDesk",
+        "איי קיו דסק"
+      ],
+      "domains": [
+        "iqdesk.co.il"
+      ]
+    },
+    {
+      "id": "unit01",
+      "name": "Unit01",
+      "aliases": [
+        "Unit01",
+        "יוניט 01"
+      ],
+      "domains": [
+        "unit01.co.il"
+      ]
+    },
+    {
+      "id": "achiya",
+      "name": "Achiya Automation",
+      "aliases": [
+        "Achiya",
+        "אחיה כהן",
+        "Achiya Automation"
+      ],
+      "domains": [
+        "achiya-automation.com"
+      ]
+    },
+    {
+      "id": "uidb",
+      "name": "UIDB",
+      "aliases": [
+        "UIDB"
+      ],
+      "domains": [
+        "uidb.co.il"
+      ]
+    },
+    {
+      "id": "autoflow",
+      "name": "Autoflow",
+      "aliases": [
+        "Autoflow",
+        "אוטופלו",
+        "עידו גיא"
+      ],
+      "domains": [
+        "auto-flow.co.il"
+      ]
+    },
+    {
+      "id": "smartbizz",
+      "name": "SmartBizz",
+      "aliases": [
+        "SmartBizz",
+        "סמארטביז"
+      ],
+      "domains": [
+        "smartbizz.co.il"
+      ]
+    },
+    {
+      "id": "optimate",
+      "name": "Optimate",
+      "aliases": [
+        "Optimate",
+        "אופטימייט"
+      ],
+      "domains": [
+        "optimate.co.il"
+      ]
+    },
+    {
+      "id": "wiseflow",
+      "name": "Wiseflow",
+      "aliases": [
+        "Wiseflow",
+        "וייזפלו"
+      ],
+      "domains": [
+        "wiseflow.co.il"
+      ]
+    },
+    {
+      "id": "premium",
+      "name": "Premium Digital",
+      "aliases": [
+        "Premium Digital",
+        "פרימיום דיגיטל"
+      ],
+      "domains": [
+        "premium-digital.co.il"
+      ]
+    },
+    {
+      "id": "sogomatic",
+      "name": "Sogomatic",
+      "aliases": [
+        "Sogomatic"
+      ],
+      "domains": [
+        "sogomatic.com"
+      ]
+    },
+    {
+      "id": "locwise",
+      "name": "Locwise",
+      "aliases": [
+        "Locwise"
+      ],
+      "domains": [
+        "locwise.com"
+      ]
+    }
+  ]
+}
