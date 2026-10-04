@@ -1,0 +1,15 @@
+name: ga-list
+on:
+  workflow_dispatch: {}
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: רשימת נכסי GA4
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+        run: node agent/ga-list.mjs | tee ga-list.md >> $GITHUB_STEP_SUMMARY
