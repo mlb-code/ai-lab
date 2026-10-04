@@ -1,0 +1,13 @@
+{
+  "month": "2026-10",
+  "report": "agent/geo/reports/דוח-GEO-Pro-2026-10.md",
+  "summary": "agent/geo/results-pro/2026-10/summary.json",
+  "generatedAt": "2026-10-04T09:29:00.499Z",
+  "mentionRate": 0.08333333333333333,
+  "totalCost": 1.82,
+  "missingKeys": [
+    "openai",
+    "perplexity",
+    "xai"
+  ]
+}
