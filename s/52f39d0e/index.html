@@ -276,7 +276,7 @@ footer p{color:var(--muted); margin:0 0 16px}
       <p data-i18n="gateText"></p>
       <div class="field">
         <label for="phone" data-i18n="phoneLabel"></label>
-        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+1 (___) ___-____" required>
+        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0000000000" required>
       </div>
       <button class="btn full" type="submit" data-i18n="enter"></button>
       <div class="err" id="loginErr" role="alert" aria-live="polite"></div>
@@ -354,7 +354,7 @@ footer p{color:var(--muted); margin:0 0 16px}
 <script>
 (function(){
   "use strict";
-  var HASH = "79ad3601e31eeb97935c60cb5aee0bdf185de6cd5029edc5077e8d1df924963d"; // sha256 of the last 10 digits of the student's phone
+  var HASHES = ["79ad3601e31eeb97935c60cb5aee0bdf185de6cd5029edc5077e8d1df924963d", "9d36cde44e382cb931fde85dc4c4a13c8b8acec09b2dd6a015830f9a6da32f3d"]; // sha256: student's phone (last 10 digits) + Meir's preview phone (Israeli, normalized to 0XXXXXXXXX)
   var K_AUTH = "ailab_s52_ok", K_LANG = "ailab_s52_lang";
   var TZ_IL = "Asia/Jerusalem";
   var ZOOM_EARLY_MIN = 60, DURATION_MIN = 60;
@@ -371,7 +371,7 @@ footer p{color:var(--muted); margin:0 0 16px}
     en:{
       brandSub:"My private course", logout:"Log out", langBtn:"עברית",
       gateTitle:"Welcome to your course", gateText:"Enter your phone number to open your personal course page.",
-      phoneLabel:"Phone number", enter:"Open my course", gateHelp:"Any format works, e.g. +1 (555) 123-4567",
+      phoneLabel:"Phone number", enter:"Open my course", gateHelp:"Type your phone number, just the digits.",
       errEmpty:"Please enter your phone number.", errWrong:"This number doesn't match. Please check and try again. / המספר לא תואם, נסי שוב.",
       errCrypto:"Your browser can't check the number here. Please open the page with https:// or message Meir.",
       kicker:"AI Lab · Private lessons", hello:"Hi <em>Olga</em>!",
@@ -399,7 +399,7 @@ footer p{color:var(--muted); margin:0 0 16px}
     he:{
       brandSub:"הקורס הפרטי שלי", logout:"התנתקות", langBtn:"English",
       gateTitle:"ברוכה הבאה לקורס שלך", gateText:"הכניסי את מספר הטלפון שלך כדי לפתוח את דף הקורס האישי.",
-      phoneLabel:"מספר טלפון", enter:"כניסה לקורס", gateHelp:"אפשר בכל פורמט, למשל ‎+1 (555) 123-4567",
+      phoneLabel:"מספר טלפון", enter:"כניסה לקורס", gateHelp:"מקלידים את מספר הטלפון, ספרות בלבד.",
       errEmpty:"נא להכניס מספר טלפון.", errWrong:"המספר לא תואם, בדקי ונסי שוב. / This number doesn't match, please try again.",
       errCrypto:"הדפדפן לא יכול לבדוק את המספר כאן. פתחי את הדף עם https:// או כתבי למאיר.",
       kicker:"AI Lab · שיעורים פרטיים", hello:"היי <em>אולגה</em>!",
@@ -588,8 +588,9 @@ footer p{color:var(--muted); margin:0 0 16px}
     if(!digits){ setErr("errEmpty"); return; }
     if(digits.length < 10){ setErr("errWrong"); return; }
     if(!(window.crypto && crypto.subtle && window.TextEncoder)){ setErr("errCrypto"); return; }
-    crypto.subtle.digest("SHA-256", new TextEncoder().encode(digits.slice(-10))).then(function(buf){
-      if(hex(buf) === HASH){ sset(K_AUTH,"1"); setErr(""); document.getElementById("phone").value = ""; showPortal(true); window.scrollTo(0,0); }
+    var cand = digits.indexOf("972") === 0 ? "0" + digits.slice(3) : (digits.length === 9 ? "0" + digits : digits.slice(-10));
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(cand)).then(function(buf){
+      if(HASHES.indexOf(hex(buf)) !== -1){ sset(K_AUTH,"1"); setErr(""); document.getElementById("phone").value = ""; showPortal(true); window.scrollTo(0,0); }
       else setErr("errWrong");
     }, function(){ setErr("errCrypto"); });
   });
