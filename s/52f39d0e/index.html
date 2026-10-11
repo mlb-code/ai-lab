@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0E27">
+<title>AI Lab · My Course</title>
+<!--
+  Private 1:1 course portal (AI Lab).
+  NOTE: the phone-number gate below is a CONVENIENCE gate only, not real security.
+  The page is static; anyone with the file can read its content. It only keeps
+  the page from being casually browsed, and avoids storing the number in plain text
+  (it compares a SHA-256 hash of the last 10 digits).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;700&family=Rubik:wght@500;700;800&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0A0E27; --night2:#11163a; --ink:#F4F5FF; --muted:#A9AEDB; --dim:#6F75A8;
+  --violet:#8B8DFF; --indigo:#6366F1; --cyan:#4DD6E8; --amber:#FFC46B; --rose:#FF8FB1;
+  --glass:rgba(255,255,255,.055); --glass2:rgba(255,255,255,.09); --line:rgba(139,141,255,.22);
+  --r:22px;
+  --f-head:"Fraunces", Georgia, "Times New Roman", serif;
+  --f-body:"DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+html[lang="he"]{
+  --f-head:"Rubik", "Heebo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --f-body:"Heebo", "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; min-height:100vh; color:var(--ink); font-family:var(--f-body); font-size:17px; line-height:1.6;
+  background:var(--night);
+  background-image:
+    radial-gradient(1200px 600px at 85% -10%, rgba(99,102,241,.28), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgba(77,214,232,.12), transparent 60%),
+    radial-gradient(800px 600px at 50% 110%, rgba(139,141,255,.14), transparent 60%);
+  background-attachment:fixed;
+  overflow-x:hidden;
+}
+/* star field */
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.55;
+  background-image:
+    radial-gradient(1.2px 1.2px at 12% 18%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 72% 12%, #fff 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 40% 66%, #cfd2ff 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 48%, #fff 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 22% 82%, #bff4fb 50%, transparent 51%),
+    radial-gradient(1px 1px at 58% 30%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 6% 52%, #fff 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 94% 86%, #cfd2ff 50%, transparent 51%);
+  background-size: 520px 520px;
+}
+a{color:var(--cyan)}
+button{font:inherit}
+.wrap{position:relative; z-index:1; width:100%; max-width:1080px; margin:0 auto; padding:0 16px}
+.hidden{display:none !important}
+
+/* top bar */
+.top{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 0}
+.brand{display:flex; align-items:center; gap:10px; font-family:"Rubik",var(--f-body); font-weight:800; letter-spacing:.2px; font-size:19px; color:var(--ink); text-decoration:none}
+.brand .gem{width:30px; height:30px; flex:none}
+.brand small{display:block; font-weight:500; font-size:11.5px; color:var(--muted); letter-spacing:.6px; text-transform:uppercase; font-family:var(--f-body)}
+.top-actions{display:flex; align-items:center; gap:10px}
+.lang-btn{
+  min-height:44px; min-width:44px; padding:8px 16px; border-radius:999px; cursor:pointer;
+  background:var(--glass2); color:var(--ink); border:1px solid var(--line); font-weight:700; font-size:15px;
+}
+.lang-btn:hover{border-color:var(--violet)}
+.logout{color:var(--muted); font-size:14px; background:none; border:0; cursor:pointer; text-decoration:underline; padding:10px 4px; min-height:44px}
+
+/* panels */
+.panel{background:var(--glass); border:1px solid var(--line); border-radius:var(--r); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px)}
+
+/* login */
+.gate{min-height:calc(100vh - 90px); display:grid; place-items:center; padding:20px 0 60px}
+.gate-card{width:100%; max-width:440px; padding:34px 26px; text-align:center; position:relative; overflow:hidden}
+.gate-card::after{content:""; position:absolute; inset:auto -40% -60% -40%; height:220px; background:radial-gradient(closest-side, rgba(77,214,232,.18), transparent); pointer-events:none}
+.gate h1{font-family:var(--f-head); font-size:30px; line-height:1.2; margin:14px 0 8px}
+.gate p{color:var(--muted); margin:0 0 22px}
+.field{display:flex; flex-direction:column; gap:8px; text-align:start}
+.field label{font-weight:700; font-size:15px}
+.field input{
+  width:100%; min-height:54px; padding:12px 16px; border-radius:14px; font-size:19px; letter-spacing:.5px;
+  background:rgba(10,14,39,.7); color:var(--ink); border:1.5px solid var(--line); outline:none; direction:ltr; text-align:left;
+}
+.field input:focus{border-color:var(--cyan); box-shadow:0 0 0 4px rgba(77,214,232,.15)}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:54px; padding:12px 24px;
+  border-radius:16px; border:0; cursor:pointer; font-weight:700; font-size:17px; text-decoration:none; color:#0A0E27;
+  background:linear-gradient(135deg, var(--cyan), var(--violet));
+}
+.btn:focus-visible,.lang-btn:focus-visible,.lesson-toggle:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
+.btn.full{width:100%; margin-top:16px}
+.err{color:var(--rose); font-weight:600; margin-top:12px; min-height:1.6em; font-size:15px}
+.gate .tiny{font-size:13px; color:var(--dim); margin-top:14px}
+
+/* hero */
+.hero{display:grid; grid-template-columns:1.25fr 1fr; gap:18px; margin-top:6px}
+.hello{padding:30px 28px; position:relative; overflow:hidden}
+.hello .kicker{display:inline-flex; align-items:center; gap:8px; color:var(--cyan); font-weight:700; font-size:13.5px; letter-spacing:.8px; text-transform:uppercase}
+html[lang="he"] .hello .kicker{letter-spacing:0; text-transform:none; font-size:15px}
+.hello h1{font-family:var(--f-head); font-size:44px; line-height:1.08; margin:10px 0 8px; font-weight:700}
+.hello h1 em{font-style:italic; color:var(--amber)}
+html[lang="he"] .hello h1 em{font-style:normal}
+.hello .course{color:var(--muted); margin:0 0 22px; font-size:17px}
+.class-btn{
+  position:relative; width:100%; min-height:76px; font-size:21px; border-radius:20px;
+  background:linear-gradient(135deg, #4DD6E8 0%, #8B8DFF 55%, #6366F1 100%); color:#070a20;
+  box-shadow:0 10px 30px rgba(99,102,241,.35);
+}
+.class-btn svg{width:28px; height:28px; flex:none}
+.class-btn.live{animation:pulse 1.6s ease-in-out infinite; background:linear-gradient(135deg,#FFC46B 0%, #4DD6E8 60%, #8B8DFF 100%)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,196,107,.65), 0 10px 30px rgba(99,102,241,.35); transform:scale(1)}50%{box-shadow:0 0 0 16px rgba(255,196,107,0), 0 10px 30px rgba(99,102,241,.35); transform:scale(1.015)}}
+@media (prefers-reduced-motion:reduce){.class-btn.live{animation:none; outline:3px solid var(--amber)}}
+.live-note{margin-top:12px; font-weight:700; color:var(--amber); min-height:1.6em; text-align:center}
+.zoom-hint{font-size:13.5px; color:var(--dim); text-align:center; margin-top:4px}
+
+.next{padding:24px 24px 22px; display:flex; flex-direction:column; gap:12px}
+.next h2{margin:0; font-size:14px; letter-spacing:.8px; text-transform:uppercase; color:var(--violet); font-weight:700}
+html[lang="he"] .next h2{letter-spacing:0; text-transform:none; font-size:16px}
+.next .nl-title{font-family:var(--f-head); font-size:24px; line-height:1.2; font-weight:700}
+.next .nl-title span{color:var(--muted); font-weight:500; font-size:16px; display:block; font-family:var(--f-body)}
+.count{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+.count div{background:rgba(10,14,39,.55); border:1px solid var(--line); border-radius:14px; padding:10px 4px; text-align:center}
+.count b{display:block; font-family:"Rubik",var(--f-body); font-size:28px; line-height:1.1; color:var(--ink); font-variant-numeric:tabular-nums}
+.count small{font-size:12px; color:var(--muted)}
+.times{display:flex; flex-direction:column; gap:6px; font-size:15px}
+.times .row{display:flex; gap:8px; align-items:baseline; flex-wrap:wrap}
+.times .tag{font-size:12px; font-weight:700; padding:2px 8px; border-radius:999px; background:rgba(139,141,255,.16); color:var(--violet); white-space:nowrap}
+.times .tag.you{background:rgba(77,214,232,.14); color:var(--cyan)}
+
+/* progress */
+.progress{margin-top:18px; padding:22px 24px}
+.progress-head{display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap}
+.progress-head h2{margin:0; font-family:var(--f-head); font-size:22px}
+.progress-head span{color:var(--muted); font-size:15px}
+.track{display:grid; grid-template-columns:repeat(8,1fr); gap:6px; margin-top:14px}
+.track i{height:12px; border-radius:6px; background:rgba(255,255,255,.08); position:relative}
+.track i.done{background:linear-gradient(90deg,var(--cyan),var(--violet))}
+.track i.now{background:rgba(255,196,107,.35); box-shadow:inset 0 0 0 1.5px var(--amber)}
+
+/* setup */
+.setup{margin-top:18px; padding:22px 24px; border-color:rgba(255,196,107,.35); background:linear-gradient(135deg, rgba(255,196,107,.08), rgba(255,255,255,.04))}
+.setup h2{margin:0 0 4px; font-family:var(--f-head); font-size:22px; color:var(--amber)}
+.setup p.sub{margin:0 0 14px; color:var(--muted); font-size:15px}
+.checks{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.checks li{display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border-radius:14px; background:rgba(10,14,39,.45); border:1px solid rgba(255,255,255,.06); font-size:15.5px}
+.checks .ic{flex:none; width:34px; height:34px; border-radius:10px; display:grid; place-items:center; background:rgba(255,196,107,.14); color:var(--amber)}
+.checks .ic svg{width:19px; height:19px}
+.checks b{display:block}
+.checks span{color:var(--muted)}
+
+/* journey */
+.journey-head{margin:44px 0 6px; display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap}
+.journey-head h2{margin:0; font-family:var(--f-head); font-size:34px; line-height:1.1}
+.journey-head p{margin:0; color:var(--muted)}
+.journey{position:relative; list-style:none; margin:20px 0 0; padding:0}
+.journey::before{
+  content:""; position:absolute; top:24px; bottom:24px; inset-inline-start:27px; width:3px; border-radius:3px;
+  background:repeating-linear-gradient(to bottom, rgba(139,141,255,.55) 0 10px, transparent 10px 18px);
+}
+.stop{position:relative; padding-inline-start:76px; margin-bottom:18px}
+.node{
+  position:absolute; inset-inline-start:0; top:14px; width:57px; height:57px; border-radius:50%;
+  display:grid; place-items:center; font-family:"Rubik",var(--f-body); font-weight:800; font-size:22px;
+  background:var(--night2); border:2px solid var(--line); color:var(--muted); z-index:1;
+}
+.stop.done .node{background:linear-gradient(135deg,var(--cyan),var(--violet)); color:#0A0E27; border-color:transparent}
+.stop.next .node{border-color:var(--amber); color:var(--amber); box-shadow:0 0 0 6px rgba(255,196,107,.12), 0 0 24px rgba(255,196,107,.35)}
+.stop.done .node::after{content:""; position:absolute; inset-inline-end:-4px; bottom:-4px; width:22px; height:22px; border-radius:50%; background:#0A0E27 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234DD6E8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/14px no-repeat; border:2px solid var(--cyan)}
+.card{padding:20px 22px}
+.stop.next .card{border-color:rgba(255,196,107,.5); background:linear-gradient(135deg, rgba(255,196,107,.07), rgba(255,255,255,.05))}
+.card-top{display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap}
+.chip{font-size:12.5px; font-weight:700; padding:4px 10px; border-radius:999px; background:rgba(255,255,255,.07); color:var(--muted); white-space:nowrap}
+.stop.done .chip{background:rgba(77,214,232,.14); color:var(--cyan)}
+.stop.next .chip{background:rgba(255,196,107,.16); color:var(--amber)}
+.subtitle{font-size:13px; font-weight:700; color:var(--violet); text-transform:uppercase; letter-spacing:.8px}
+html[lang="he"] .subtitle{letter-spacing:0; text-transform:none; font-size:14px}
+.card h3{font-family:var(--f-head); font-size:23px; line-height:1.2; margin:4px 0 6px; font-weight:700}
+.when{display:flex; flex-wrap:wrap; gap:6px 14px; color:var(--muted); font-size:14.5px; margin-bottom:8px}
+.when b{color:var(--ink); font-weight:600}
+.goal{margin:0 0 12px; font-size:16px}
+.goal strong{color:var(--cyan)}
+.lesson-toggle{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; min-height:50px;
+  padding:10px 16px; border-radius:14px; cursor:pointer; color:var(--ink); font-weight:700; font-size:16px;
+  background:rgba(139,141,255,.12); border:1px solid var(--line); text-align:start;
+}
+.lesson-toggle:hover{background:rgba(139,141,255,.2)}
+.lesson-toggle svg{width:20px; height:20px; transition:transform .25s; flex:none}
+.lesson-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+
+/* lesson content */
+.content{margin-top:14px; font-size:16px; line-height:1.7; overflow-wrap:anywhere}
+.content > div, .content > ul{margin:0 0 14px}
+.content ul.content-list{list-style:none; padding:0; display:flex; flex-direction:column; gap:10px}
+.content ul.content-list li{padding:12px 14px; border-radius:14px; background:rgba(10,14,39,.45); border-inline-start:3px solid var(--violet)}
+.content strong{color:#fff}
+.content ul.content-list li > strong:first-child{color:var(--cyan)}
+.content p{margin:0 0 8px}
+.content p:last-child{margin-bottom:0}
+.content code{direction:ltr; unicode-bidi:isolate; display:inline; background:rgba(77,214,232,.1); color:#bff4fb; padding:1px 6px; border-radius:6px; font-size:.92em; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+.content kbd{direction:ltr; unicode-bidi:isolate; display:inline-block; background:#1b2150; border:1px solid #3a4190; border-bottom-width:3px; border-radius:6px; padding:0 6px; font-size:.85em; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color:#fff}
+.content .disc-label,.content .exercise-label,.content .homework-label,.content .recap-label{font-weight:800; font-size:14px; margin-bottom:6px; letter-spacing:.3px}
+.content .session-recap{padding:14px 16px; border-radius:14px; background:rgba(139,141,255,.1); border:1px dashed rgba(139,141,255,.35)}
+.content .recap-label{color:var(--violet)}
+.content .session-discussion{padding:14px 16px; border-radius:14px; background:rgba(255,143,177,.07); border:1px solid rgba(255,143,177,.22)}
+.content .disc-label{color:var(--rose)}
+.content .session-exercise{padding:14px 16px; border-radius:14px; background:rgba(77,214,232,.07); border:1px solid rgba(77,214,232,.25)}
+.content .exercise-label{color:var(--cyan)}
+.content .session-exercise.glossary{background:rgba(139,141,255,.08); border-color:rgba(139,141,255,.3)}
+.content .session-exercise.glossary .exercise-label{color:var(--violet)}
+.content .session-exercise.glossary p{line-height:2}
+.content .session-homework{padding:14px 16px; border-radius:14px; background:rgba(255,196,107,.08); border:1px solid rgba(255,196,107,.3)}
+.content .homework-label{color:var(--amber)}
+.content .hw-connection{margin-top:10px; padding-top:10px; border-top:1px dashed rgba(255,196,107,.3); color:var(--muted); font-style:italic}
+.content .session-concepts{display:flex; flex-wrap:wrap; gap:8px}
+.content .concept-tag{font-size:13.5px; padding:5px 11px; border-radius:999px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); color:var(--ink)}
+
+/* footer */
+footer{margin:50px 0 30px; padding:26px 24px; text-align:center}
+footer h2{font-family:var(--f-head); margin:0 0 6px; font-size:24px}
+footer p{color:var(--muted); margin:0 0 16px}
+.contact{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+.contact a{display:inline-flex; align-items:center; gap:8px; min-height:50px; padding:10px 18px; border-radius:14px; text-decoration:none; font-weight:700; color:var(--ink); background:var(--glass2); border:1px solid var(--line); max-width:100%; overflow-wrap:anywhere}
+.contact a svg{width:20px; height:20px; flex:none}
+.contact a.wa{background:rgba(37,211,102,.14); border-color:rgba(37,211,102,.4)}
+.foot-brand{margin-top:22px; color:var(--dim); font-size:13.5px; display:flex; align-items:center; justify-content:center; gap:8px}
+.foot-brand .gem{width:20px; height:20px}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  body{font-size:16px}
+  .hello{padding:24px 18px}
+  .hello h1{font-size:36px}
+  .next,.progress,.setup{padding:20px 18px}
+  .class-btn{font-size:19px; min-height:70px}
+  .journey-head h2{font-size:28px}
+  .journey::before{inset-inline-start:19px}
+  .stop{padding-inline-start:52px}
+  .node{width:41px; height:41px; font-size:17px; top:18px}
+  .stop.done .node::after{width:18px; height:18px; background-size:11px}
+  .card{padding:18px 16px}
+  .card h3{font-size:21px}
+  .count b{font-size:24px}
+  .brand small{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#" aria-label="AI Lab">
+      <svg class="gem" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4DD6E8"/><stop offset=".6" stop-color="#8B8DFF"/><stop offset="1" stop-color="#6366F1"/></linearGradient></defs><path d="M16 2 29 12 16 30 3 12Z" fill="url(#gg)"/><path d="M3 12h26M16 2l-5 10 5 18 5-18-5-10" fill="none" stroke="#0A0E27" stroke-opacity=".45" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      <span>AI Lab<small data-i18n="brandSub"></small></span>
+    </a>
+    <div class="top-actions">
+      <button class="logout hidden" id="logoutBtn" type="button" data-i18n="logout"></button>
+      <button class="lang-btn" id="langBtn" type="button" aria-label="Switch language"></button>
+    </div>
+  </header>
+
+  <!-- LOGIN GATE -->
+  <section class="gate" id="gate">
+    <form class="gate-card panel" id="loginForm" novalidate>
+      <svg width="56" height="56" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 29 12 16 30 3 12Z" fill="url(#gg)"/></svg>
+      <h1 data-i18n="gateTitle"></h1>
+      <p data-i18n="gateText"></p>
+      <div class="field">
+        <label for="phone" data-i18n="phoneLabel"></label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+1 (___) ___-____" required>
+      </div>
+      <button class="btn full" type="submit" data-i18n="enter"></button>
+      <div class="err" id="loginErr" role="alert" aria-live="polite"></div>
+      <div class="tiny" data-i18n="gateHelp"></div>
+    </form>
+  </section>
+
+  <!-- PORTAL -->
+  <main id="portal" class="hidden">
+    <section class="hero">
+      <div class="hello panel">
+        <div class="kicker" data-i18n="kicker"></div>
+        <h1 id="helloTitle"></h1>
+        <p class="course" data-i18n="courseLine"></p>
+        <a class="btn class-btn" id="classBtn" href="https://us06web.zoom.us/j/8186142816?pwd=VEtXYVh3Z3IwZWhrZHYvWm5hYWlKQT09" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="m16 10 6-3v10l-6-3"/></svg>
+          <span data-i18n="classBtn"></span>
+        </a>
+        <div class="live-note" id="liveNote" aria-live="polite"></div>
+        <div class="zoom-hint" data-i18n="zoomHint"></div>
+      </div>
+      <div class="next panel" id="nextCard">
+        <h2 id="nextLabel"></h2>
+        <div class="nl-title" id="nextTitle"></div>
+        <div class="count" id="countBox">
+          <div><b id="cD">0</b><small data-i18n="days"></small></div>
+          <div><b id="cH">0</b><small data-i18n="hours"></small></div>
+          <div><b id="cM">0</b><small data-i18n="mins"></small></div>
+          <div><b id="cS">0</b><small data-i18n="secs"></small></div>
+        </div>
+        <div class="times" id="nextTimes"></div>
+      </div>
+    </section>
+
+    <section class="progress panel" aria-labelledby="progTitle">
+      <div class="progress-head">
+        <h2 id="progTitle" data-i18n="progress"></h2>
+        <span id="progText"></span>
+      </div>
+      <div class="track" id="track" role="progressbar" aria-valuemin="0" aria-valuemax="8"></div>
+    </section>
+
+    <section class="setup panel" id="setup">
+      <h2 data-i18n="setupTitle"></h2>
+      <p class="sub" data-i18n="setupSub"></p>
+      <ul class="checks">
+        <li><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div><b data-i18n="s1t"></b><span data-i18n="s1d"></span></div></li>
+        <li><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg></div><div><b data-i18n="s2t"></b><span data-i18n="s2d"></span></div></li>
+        <li><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="m16 10 6-3v10l-6-3"/></svg></div><div><b data-i18n="s3t"></b><span data-i18n="s3d"></span></div></li>
+        <li><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17l.8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8z"/></svg></div><div><b data-i18n="s4t"></b><span data-i18n="s4d"></span></div></li>
+        <li><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"/></svg></div><div><b data-i18n="s5t"></b><span data-i18n="s5d"></span></div></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="journeyTitle">
+      <div class="journey-head">
+        <h2 id="journeyTitle" data-i18n="journey"></h2>
+        <p data-i18n="journeySub"></p>
+      </div>
+      <ol class="journey" id="journey"></ol>
+    </section>
+
+    <footer class="panel">
+      <h2 data-i18n="footTitle"></h2>
+      <p data-i18n="footText"></p>
+      <div class="contact">
+        <a class="wa" href="https://wa.me/972546500794" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.7-5A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.3-2-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-2z"/></svg><span>WhatsApp</span></a>
+        <a href="mailto:meir@ai-lab.co.il"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg><span>meir@ai-lab.co.il</span></a>
+      </div>
+      <div class="foot-brand"><svg class="gem" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 29 12 16 30 3 12Z" fill="url(#gg)"/></svg><span data-i18n="footBrand"></span></div>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var HASH = "79ad3601e31eeb97935c60cb5aee0bdf185de6cd5029edc5077e8d1df924963d"; // sha256 of the last 10 digits of the student's phone
+  var K_AUTH = "ailab_s52_ok", K_LANG = "ailab_s52_lang";
+  var TZ_IL = "Asia/Jerusalem";
+  var ZOOM_EARLY_MIN = 60, DURATION_MIN = 60;
+
+  var LESSONS = {"en": [{"title": "Welcome to the World of AI", "subtitle": "Getting started", "goal": "Get to know artificial intelligence, understand what it is and why it matters, and have your first hands-on experience", "html": "<div class=\"session-discussion\"><div class=\"disc-label\">Warm-up question (5 min)<\/div><p>Why did you join this course? What do you want to learn? Did you come to explore the tools and have fun, or do you have a specific goal? &bull; What have you already heard about artificial intelligence?<\/p><\/div><ul class=\"content-list\"><li><strong>What is AI?<\/strong> Artificial intelligence is when computers learn to do tasks that normally need human thinking &mdash; understanding language, recognizing images, making decisions. Unlike regular programs that follow strict rules, AI learns from data<\/li><li><strong>Types of AI:<\/strong> text (ChatGPT, Claude), images (DALL-E, NanoBanana), video (Sora, Novo), code (Cursor), music (Suno). Each type works with a different kind of information<\/li><li><strong>AI in everyday life:<\/strong> Siri and Google Assistant (voice), Netflix (recommendations), Google Translate (language), Waze (navigation), Face ID (recognition), spam filters (email)<\/li><li><strong>Meet ChatGPT and Claude:<\/strong> two of the most powerful tools. You open both, ask them the same question, and compare the answers &mdash; each tool is strong at different things<\/li><li><strong>A short history:<\/strong> the idea of AI has been around since 1950 (Alan Turing), but the big breakthrough came in 2022 with ChatGPT. Israel is one of the world leaders in this field!<\/li><li><strong>What is Cursor?<\/strong> Cursor is a free program for building websites and apps with the help of AI. Instead of learning programming languages, you simply write what you want &mdash; and the AI writes all the code for you! Think of it as a &quot;smart building assistant&quot; that knows how to build whole websites<\/li><li><strong>Installing Cursor &mdash; step by step:<\/strong> (1) Go to <strong>cursor.com<\/strong> and click Download. (2) Run the file you downloaded &mdash; an EXE on Windows, a DMG on Mac. (3) Open Cursor and sign up with a Google account &mdash; the free version is enough! (4) Click <strong>File &rarr; Open Folder<\/strong> and create a new folder with an English name and no spaces, for example: <code>my-project<\/code><\/li><li><strong>How do you use the AI inside Cursor?<\/strong> Press <kbd>Ctrl+K<\/kbd> (Windows) or <kbd>Cmd+K<\/kbd> (Mac) &mdash; a small window opens where you type what you want to build. For example: &quot;Build me a nice landing page with a title, an image and a button&quot; &mdash; and within seconds the AI writes all the code! You can also ask for changes: &quot;Make the color blue&quot; or &quot;Add another button&quot;<\/li><li><strong>Claude Code inside Cursor:<\/strong> Claude Code is the smart &quot;brain&quot; that works inside Cursor. It understands plain language, builds whole websites, fixes errors and adds design &mdash; all based on what you ask. To use it: open Cursor, press <kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd>, and type your request<\/li><\/ul><div class=\"session-exercise glossary\"><div class=\"exercise-label\">Basic glossary<\/div><p><strong>AI &mdash; Artificial Intelligence<\/strong> &mdash; a computer that learns to do smart things on its own<br><strong>Prompt<\/strong> &mdash; the instruction or question you write to the AI, like &quot;write me a story&quot;<br><strong>Language Model<\/strong> &mdash; an AI that understands and creates text (like ChatGPT and Claude)<br><strong>Cursor<\/strong> &mdash; a program for building websites with built-in AI (like Word, but for code)<br><strong>Claude Code<\/strong> &mdash; the smart AI that writes code inside Cursor<br><strong>HTML<\/strong> &mdash; the skeleton language of websites (like the bricks of a house)<br><strong>CSS<\/strong> &mdash; the design language of websites (like the paint, wallpaper and furniture)<br><strong>JavaScript<\/strong> &mdash; the language that makes a website work (buttons, animations)<br><strong>Startup<\/strong> &mdash; a young company that solves a problem in a new way<br><strong>MVP &mdash; Minimum Viable Product<\/strong> &mdash; the simplest version of a product that still works<\/p><\/div><div class=\"session-concepts\"><span class=\"concept-tag\">Artificial intelligence<\/span><span class=\"concept-tag\">Language model<\/span><span class=\"concept-tag\">Prompt<\/span><span class=\"concept-tag\">Machine learning<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">Let&rsquo;s talk about it<\/div><p>Which AI tools are you already using without knowing it? &bull; What&rsquo;s the difference between smart software and artificial intelligence?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">Practice together (20 min)<\/div><p><strong>Part 1:<\/strong> You ask ChatGPT and Claude the same question &mdash; and compare the answers. Ask about something that interests you!<\/p><p><strong>Part 2:<\/strong> We install Cursor together! Open it, sign up, press <kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd> and try asking the AI to build something simple &mdash; for example &quot;Build me a page with a title and a button&quot;<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">Home challenge<\/div><p>1. Ask an AI (ChatGPT or Claude) <strong>5 questions<\/strong> about a topic that interests you &mdash; and write down what new things you learned!<\/p><p>2. Make sure <strong>Cursor<\/strong> is installed and working. Open it, press <kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd>, and type &quot;Hi, build me a simple page that says Hello World&quot; &mdash; see what happens!<\/p><p>3. Create free accounts on ChatGPT, Claude and Gemini (if you haven&rsquo;t yet). Ask your parents for help if you need it!<\/p><p>4. Think of 3 things in your life that you&rsquo;d like AI to help you with.<\/p><div class=\"hw-connection\">Next time we&rsquo;ll learn to write perfect prompts (instructions for the AI) to get exactly the results you want!<\/div><\/div>"}, {"title": "The Art of the Prompt", "subtitle": "AI", "goal": "Learn to talk to AI effectively + install Cursor and Claude Code", "html": "<div class=\"session-recap\"><div class=\"recap-label\">Last time<\/div><p>We explored the world of AI, tried ChatGPT and Claude, and learned the basic terms. &bull; <strong>Home challenge check:<\/strong> Show Meir what you tried &mdash; did you test 3 different AI tools? Did you install Cursor? What did you discover?<\/p><\/div><ul class=\"content-list\"><li><strong>What is a prompt?<\/strong> The instruction or question you give the AI. Think of it like talking to a very smart assistant &mdash; the clearer you are, the better the result<\/li><li><strong>Technique 1 &mdash; be specific:<\/strong> instead of &quot;write about dogs&quot;, write &quot;write a 200-word post about 5 dog breeds that are great for families with young children&quot;<\/li><li><strong>Technique 2 &mdash; give context:<\/strong> &quot;I&rsquo;m a 15-year-old student building a startup. Help me write...&quot; &mdash; the AI needs to know who you are and why you need it<\/li><li><strong>Technique 3 &mdash; set the format:<\/strong> &quot;Give me a numbered list / a table / 3 paragraphs / bullet points&quot; &mdash; tell the AI exactly how you want the answer<\/li><li><strong>Technique 4 &mdash; give an example:<\/strong> &quot;Write in a style similar to X, but with Y&quot; &mdash; examples help the AI understand what you&rsquo;re looking for<\/li><li><strong>Technique 5 &mdash; improve step by step:<\/strong> start simple, then ask for changes: &quot;make it shorter&quot;, &quot;add some humor&quot;, &quot;now translate it into Spanish&quot;. Every round gives you a better result!<\/li><li><strong>Installing Cursor + Claude Code:<\/strong> in the second half of the lesson &mdash; we install Cursor (the code editor with AI) and Claude Code (the smartest tool for building). Meir will guide you through it step by step<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Prompt<\/span><span class=\"concept-tag\">Context<\/span><span class=\"concept-tag\">Iteration &mdash; improving in steps<\/span><span class=\"concept-tag\">Prompt Chaining<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">Let&rsquo;s talk about it<\/div><p>Why does the same prompt give different results in different tools? &bull; What&rsquo;s the difference between a good prompt and a bad prompt?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">Practice together (15 min)<\/div><p><strong>Prompt challenge!<\/strong> Your task: &quot;Get the AI to create a logo (a symbol of a company) for an ice-cream shop&quot;. Write a few different prompts. Which one gives the best result? We&rsquo;ll compare them together and learn from each one!<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">Home challenge<\/div><p>1. Write <strong>5 different prompts<\/strong> for the same task &mdash; notice how small changes affect the result. Try the techniques we learned!<\/p><p>2. Create a <strong>logo<\/strong> for a future project of yours using DALL-E or another AI image tool. Save the result!<\/p><p>3. Think of <strong>3 problems from your own life<\/strong> (school / hobbies / friends / family) &mdash; bring them ready to the next lesson! They will become your startup idea.<\/p><div class=\"hw-connection\">The logo you create will be used when we build your website! And the problems &mdash; they are the foundation of your startup (a young company).<\/div><\/div>"}, {"title": "Thinking Like an Entrepreneur — Finding Problems", "subtitle": "Entrepreneurship", "goal": "Learn to think like an entrepreneur, spot real problems and understand the formula of a successful startup", "html": "<div class=\"session-recap\"><div class=\"recap-label\">Last time<\/div><p>We learned to write perfect prompts and installed Cursor and Claude Code. &bull; <strong>Home challenge check:<\/strong> Did you manage to create a logo with AI? Did you sign up for Claude Code? Show Meir your results!<\/p><\/div><ul class=\"content-list\"><li><strong>What is a startup?<\/strong> A young company that solves a real problem in a new or better way. The difference from a regular business: a startup aims to grow fast and reach lots of people<\/li><li><strong>Israeli startup stories:<\/strong> Waze (solved traffic jams), Wix (made building websites easy), Monday (organized the chaos of managing projects), Iron Dome (security). Israel is called the &quot;Startup Nation&quot; &mdash; it has more startups per person than any other country!<\/li><li><strong>The formula:<\/strong> Problem &rarr; Solution &rarr; Product &rarr; Business. Everything starts with a real problem that people want solved!<\/li><li><strong>Design Thinking:<\/strong> a method with 5 steps &mdash; Empathize (understand the user), Define (what exactly is the problem), Ideate (brainstorm), Prototype (build a quick first version), Test (get feedback)<\/li><li><strong>How do you find good problems?<\/strong> What annoys you in everyday life? What do your friends complain about? What do you wish were easier? The best problems are the ones you experience yourself!<\/li><li><strong>Good problem vs bad problem:<\/strong> good = lots of people have it, they&rsquo;d pay for a solution, it&rsquo;s specific. Bad = too vague, only you have it, it&rsquo;s already completely solved<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Startup<\/span><span class=\"concept-tag\">Design Thinking<\/span><span class=\"concept-tag\">Validation &mdash; checking the problem<\/span><span class=\"concept-tag\">Problem &rarr; Solution<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">Let&rsquo;s talk about it<\/div><p>What annoys you most at school? &bull; Which app do you wish existed?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">Practice together (15 min)<\/div><p><strong>Brainstorming:<\/strong> You find 3 problems from your own life (school, hobbies, friends, family) and present them to Meir. Then you decide together: which problem is the most interesting and worth solving?<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">Home challenge<\/div><p>1. Choose <strong>the best problem<\/strong> of the 3 &mdash; the one you&rsquo;re most excited about.<\/p><p>2. Do <strong>Validation<\/strong>: ask 5 people (friends, family) if they have this problem too. Write down their answers!<\/p><p>3. <strong>Research the competitors:<\/strong> search on Google &mdash; is there already a solution to this problem? What does it do well and what is it missing?<\/p><div class=\"hw-connection\">Next time we&rsquo;ll turn the problem into a real product with a Value Proposition and a plan! Bring your research.<\/div><\/div>"}, {"title": "From Idea to Product", "subtitle": "Strategy", "goal": "Choose the best idea, define a target audience, build a value proposition and plan an MVP", "html": "<div class=\"session-recap\"><div class=\"recap-label\">Last time<\/div><p>We learned to think like entrepreneurs and found 3 problems from your life. &bull; <strong>Home challenge check:<\/strong> Which problem did you choose? Did you ask 5 people? Which competitors did you find? Show Meir!<\/p><\/div><ul class=\"content-list\"><li><strong>Choosing the idea:<\/strong> out of the 3 problems from last time, you choose the best one. The criteria: Is the problem real? Do I understand it? Can I build a solution? Will people want to use it?<\/li><li><strong>Target Audience:<\/strong> who exactly suffers from this problem? Not &quot;everyone&quot; but &quot;high-school students who struggle with math&quot;. You build a Persona (an imaginary character) who represents your ideal user<\/li><li><strong>Value Proposition:<\/strong> what&rsquo;s special about your solution? The formula: &quot;We help [audience] solve [the problem] by [the solution]. Unlike [competitors], we [unique advantage]&quot;<\/li><li><strong>Competitor analysis:<\/strong> what already exists? Search on Google, download similar apps. What&rsquo;s good about them? What&rsquo;s missing? Your opportunity is in the gaps!<\/li><li><strong>MVP (Minimum Viable Product):<\/strong> the simplest version that is still useful. Not the full product &mdash; just enough to test whether people want it<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Target Audience<\/span><span class=\"concept-tag\">Value Proposition<\/span><span class=\"concept-tag\">Competitors<\/span><span class=\"concept-tag\">MVP &mdash; Minimum Viable Product<\/span><span class=\"concept-tag\">Persona &mdash; user character<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">Let&rsquo;s talk about it<\/div><p>Who is your user? Describe them in detail. &bull; What is the one thing your product does better than anything else?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">Practice together (15 min)<\/div><p><strong>Project Builder:<\/strong> answer 10 guiding questions together with Meir &mdash; the project name, the problem, the solution, the Target Audience and the Value Proposition. This becomes the Spec (specification) of your product!<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">Home challenge<\/div><p>1. Finish all 10 questions of the &quot;Project Builder&quot; &mdash; this is your Specification!<\/p><p>2. Think about the <strong>design of your website:<\/strong> which colors fit your product? Which Sections should your Landing Page have?<\/p><p>3. Get the logo you created in lesson 2 ready &mdash; you&rsquo;ll use it while building!<\/p><div class=\"hw-connection\">Next time we start building the website for real with Cursor! Make sure Cursor is installed and working.<\/div><\/div>"}, {"title": "Building a Website — Part 1", "subtitle": "Building", "goal": "Understand how a website is built (HTML/CSS/JS), get to know servers and domains, and build your first Landing Page with AI", "html": "<div class=\"session-recap\"><div class=\"recap-label\">Last time<\/div><p>We chose an idea, defined a target audience and filled in the &quot;Project Builder&quot;. &bull; <strong>Home challenge check:<\/strong> Did you finish the 10 questions? Did you think about design and colors? Show Meir your spec!<\/p><\/div><ul class=\"content-list\"><li><strong>Quick review &mdash; Cursor:<\/strong> you already installed Cursor. Today we use it to build your website! Reminder: <kbd>Ctrl+K<\/kbd> (Windows) or <kbd>Cmd+K<\/kbd> (Mac) opens the AI window &mdash; you write what you want to build and it writes the code<\/li><li><strong>How a website is built &mdash; 3 layers:<\/strong> every website on the internet is made of 3 languages that work together: <strong>HTML<\/strong> = the skeleton &mdash; defines what&rsquo;s on the page (titles, text, images, buttons). Like the bricks of a house. <strong>CSS<\/strong> = the design &mdash; decides how the page looks (colors, sizes, fonts). Like the paint and wallpaper. <strong>JavaScript<\/strong> = the brain &mdash; makes things happen (what happens when you click a button, animations). Like the electricity in the house.<\/li><li><strong>What is a server? How does a website work?<\/strong> When you type a website address in your browser (a program for browsing, like Chrome), your computer (<strong>the Client<\/strong>) sends a request to a <strong>Server<\/strong> &mdash; a powerful computer sitting in a Data Center that holds the website&rsquo;s files. The server sends the files back and the browser shows them. <strong>Domain<\/strong> = the readable address (like google.com). <strong>Hosting<\/strong> = the server that stores the files. Right now we build <strong>locally<\/strong> &mdash; the file is only on your computer. Next time we put it on the internet!<\/li><li><strong>Building with AI &mdash; your first prompt:<\/strong> press <kbd>Ctrl+K<\/kbd> (Windows) or <kbd>Cmd+K<\/kbd> (Mac) and write a detailed prompt. For example: <code>&quot;Build me a landing page for my startup with a catchy headline, an About section, 3 feature cards, testimonials and a contact form. Modern design, blue and purple colors&quot;<\/code> &mdash; the more detailed the prompt, the better the result!<\/li><li><strong>Preview:<\/strong> to see the website you built, find the <code>index.html<\/code> file in your folder and open it in Chrome (double-click the file). After every change in Cursor &mdash; go back to the browser and press Refresh (F5) to see the update. Check: Is the text readable? Are the colors right? Are the buttons in place?<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">HTML &mdash; the skeleton<\/span><span class=\"concept-tag\">CSS &mdash; design<\/span><span class=\"concept-tag\">JavaScript &mdash; action<\/span><span class=\"concept-tag\">Server<\/span><span class=\"concept-tag\">Domain<\/span><span class=\"concept-tag\">Landing Page<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">Let&rsquo;s talk about it<\/div><p>Which sections should your landing page have? &bull; Which colors represent your brand? &bull; What&rsquo;s the difference between a website that&rsquo;s only on your computer and a website that lives on the internet?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">Practice together (25 min)<\/div><p><strong>Let&rsquo;s build a Landing Page!<\/strong> You open Cursor, press <kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd>, and write a detailed prompt for your product. The result: a complete website with a headline, a description, Features and a button! How beautiful can you make it?<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">Home challenge<\/div><p>1. <strong>Improve your landing page<\/strong> &mdash; add the logo you created in lesson 2! Ask Cursor: &quot;Add my logo to the top of the page&quot;<\/p><p>2. <strong>Mobile check:<\/strong> open the website on your phone &mdash; does it look good? If not, ask Cursor: &quot;Make the website responsive (fits every screen)&quot;<\/p><p>3. Add another Section &mdash; for example: About, Features, or FAQ (frequently asked questions)<\/p><div class=\"hw-connection\">Next time we&rsquo;ll upgrade your website with Animation, Forms and a Navigation menu!<\/div><\/div>"}, {"title": "Building a Website — Part 2", "subtitle": "Development", "goal": "Upgrade the website with animations, mobile responsiveness, forms and advanced features", "html": "<div class=\"session-recap\"><div class=\"recap-label\">Last time<\/div><p>We built your first landing page! &bull; <strong>Home challenge check:<\/strong> Did you add the logo? Did you check it on your phone? Show Meir your website!<\/p><\/div><ul class=\"content-list\"><li><strong>Animation &mdash; what it is and why it matters:<\/strong> animations make a website feel professional and &quot;alive&quot;. Types: (1) <strong>Hover<\/strong> &mdash; a button changes color when you move the mouse over it. (2) <strong>Fade-in<\/strong> &mdash; elements appear gently as you scroll down. (3) <strong>Slide<\/strong> &mdash; images or text slide in from the side. Example prompt for Cursor: &quot;Add smooth animations when sections appear on scroll, and a hover effect on buttons&quot;<\/li><li><strong>Responsive Design &mdash; the website must work on phones!<\/strong> More than 60% of people browse on their phones! <strong>Responsive<\/strong> = the website changes automatically to fit the screen size. On a computer: 3 columns side by side. On a phone: one column, bigger buttons, readable text. Example prompt: &quot;Make the website responsive &mdash; it should work on phones with one column and big buttons&quot;<\/li><li><strong>Professional Navigation:<\/strong> every serious website needs a fixed Header at the top with: a Logo, Links to parts of the site (About, Features, Contact), and a bold CTA button (Call To Action). On mobile &mdash; a Hamburger Menu (3 lines) that opens when you tap it. Example prompt: &quot;Add a fixed navigation menu at the top with a logo, links, and a hamburger menu on mobile&quot;<\/li><li><strong>Form:<\/strong> a &quot;Contact us&quot; form is a must on every business website. Fields: Name, Email, Message. Add Validation (checking that the fields are filled in and the email is valid). Example prompt: &quot;Add a contact form with name, email and message, with validation and a styled send button&quot;<\/li><li><strong>Deploy to the internet &mdash; GitHub Pages:<\/strong> until now your website lives only on your computer (locally). For the whole world to see it, you need to <strong>Deploy it (upload it to a server)<\/strong>. <strong>GitHub Pages<\/strong> = a free GitHub service that turns your code into a live website on the internet! How does it work? (1) Create a GitHub account (Meir will show you how). (2) Upload your website files to a Repository (a code storage space). (3) Turn on GitHub Pages in the Settings. (4) Get an internet address: <code>https://username.github.io/repo-name<\/code>. What happens behind the scenes? The <strong>Domain<\/strong> = the readable address. GitHub&rsquo;s servers = computers that run your website 24/7. <strong>DNS<\/strong> (Domain Name System) = translates the readable address into the server&rsquo;s IP address.<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Animation<\/span><span class=\"concept-tag\">Responsive<\/span><span class=\"concept-tag\">Navigation<\/span><span class=\"concept-tag\">Form<\/span><span class=\"concept-tag\">GitHub Pages &mdash; free hosting<\/span><span class=\"concept-tag\">DNS &mdash; the address system<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">Let&rsquo;s talk about it<\/div><p>Check your website on your phone &mdash; what needs to change? &bull; Which animation will make your website feel professional?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">Practice together (25 min)<\/div><p><strong>Website upgrade!<\/strong> Add at least 3 things to your website with Cursor (<kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd>): (1) a contact Form, (2) at least one Animation, (3) a Navigation menu with your logo and links. How professional can you make it?<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">Home challenge<\/div><p>1. <strong>Deploy to the internet!<\/strong> Upload your website with GitHub Pages (follow the steps Meir showed you). Steps: GitHub account &rarr; Repository &rarr; upload files &rarr; turn on Pages.<\/p><p>2. <strong>User Testing:<\/strong> send the live link to 3 friends and ask for Feedback: What did they like? What wasn&rsquo;t clear? What would they change?<\/p><p>3. Think: how will your startup make money? Subscription (monthly plan)? Freemium (free + premium)? E-commerce (online shop)?<\/p><div class=\"hw-connection\">Next time we&rsquo;ll learn about Business Models and Marketing. The website you built will be the foundation!<\/div><\/div>"}, {"title": "Business Model & Marketing", "subtitle": "Business", "goal": "Understand how a startup makes money, how to reach customers, and how AI helps create marketing content", "html": "<div class=\"session-recap\"><div class=\"recap-label\">Last time<\/div><p>We upgraded your website with animations, forms and a navigation menu! &bull; <strong>Home challenge check:<\/strong> Is your website live on the internet? Did you get feedback? Share your link with Meir!<\/p><\/div><ul class=\"content-list\"><li><strong>Subscription:<\/strong> the customer pays every month or year. Examples: Spotify (music), Netflix (movies). Great for services that give ongoing value<\/li><li><strong>Freemium (free + premium):<\/strong> a basic version for free + payment for advanced Features (Premium). Example: Spotify &mdash; free with ads, premium without. Excellent for getting lots of users!<\/li><li><strong>E-commerce (online shop):<\/strong> selling products directly over the internet. Examples: Amazon, Etsy. &bull; <strong>Advertising:<\/strong> a free service that earns money from ads. Examples: YouTube, Instagram<\/li><li><strong>Digital Marketing for young people:<\/strong> Instagram Reels, TikTok, YouTube Shorts &mdash; visual Content is king! Being consistent matters more than being perfect. Post 3 times a week<\/li><li><strong>Creating Content with AI:<\/strong> ChatGPT writes Posts, creates Hashtags (#), and plans a Content Calendar. AI image tools create Graphics. In minutes you have professional content!<\/li><li><strong>A one-page Business Plan:<\/strong> Problem, Solution, Target Audience, Revenue Model, Marketing Strategy, and a Roadmap for the first 3 months<\/li><li><strong>AI Agents:<\/strong> what is an Agent? A smart program that receives a task and does it by itself &mdash; autonomously. Examples: a Customer Service agent, a Sales agent, a Social Media agent. We&rsquo;ll learn how to set up a simple agent and give it clear instructions<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Business Model<\/span><span class=\"concept-tag\">Subscription<\/span><span class=\"concept-tag\">Freemium &mdash; free + premium<\/span><span class=\"concept-tag\">Marketing<\/span><span class=\"concept-tag\">Content<\/span><span class=\"concept-tag\">AI Agents<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">Let&rsquo;s talk about it<\/div><p>How does your favorite app make money? &bull; How much would you charge for your product?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">Practice together (20 min)<\/div><p><strong>Part 1 &mdash; Business Plan:<\/strong> fill in a one-page business plan template: Problem, Solution, Target Audience, Revenue.<\/p><p><strong>Part 2 &mdash; Marketing Content:<\/strong> create 3 Instagram Posts with AI! Ask ChatGPT to write the texts, and an AI image tool to design the graphics.<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">Home challenge<\/div><p>1. Prepare a <strong>Pitch Deck<\/strong> of 5 Slides: the problem, the solution, a Demo, the Business Model, and a summary.<\/p><p>2. <strong>Practice your Pitch!<\/strong> 3 minutes, in front of a mirror or a friend. Record yourself!<\/p><p>3. Make sure your website + logo + posts are ready for Pitch Day!<\/p><div class=\"hw-connection\">Next time &mdash; Pitch Day! You&rsquo;ll present everything you built. Good luck!<\/div><\/div>"}, {"title": "Pitch Day", "subtitle": "Presenting", "goal": "Present your project — 3 minutes: problem, solution, live demo!", "html": "<div class=\"session-recap\"><div class=\"recap-label\">Last time<\/div><p>We learned about business models and created marketing content with AI. &bull; <strong>Home challenge check:<\/strong> Did you prepare your slides? Did you practice your pitch? Let&rsquo;s see!<\/p><\/div><ul class=\"content-list\"><li><strong>The structure of a Pitch (3 minutes):<\/strong> Hook (a catchy opening &mdash; 10 seconds) &mdash; a surprising fact or a question. Problem (30 seconds). Solution (30 seconds). Live Demo (90 seconds) &mdash; show the product! Business Model (20 seconds). CTA / Call To Action (10 seconds)<\/li><li><strong>Tips for a great presentation:<\/strong> speak slowly and clearly. Look at your audience or the camera. Be excited &mdash; if you&rsquo;re not excited, your audience won&rsquo;t be either! Practice &mdash; rehearse at least twice. It&rsquo;s okay to make mistakes &mdash; just keep going<\/li><li><strong>Slide Design:<\/strong> big text, few words on each Slide, use images, consistent colors, and your logo<\/li><li><strong>Live Demo:<\/strong> prepare a Plan B in case something breaks. Show your most impressive Feature first. Keep it simple!<\/li><li><strong>Celebration!<\/strong> Every project is an achievement! You learned AI and Entrepreneurship, and built a real product. That&rsquo;s more than most adults know how to do!<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Pitch &mdash; presentation<\/span><span class=\"concept-tag\">Hook &mdash; catchy opening<\/span><span class=\"concept-tag\">Demo &mdash; live demonstration<\/span><span class=\"concept-tag\">CTA &mdash; Call To Action<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">Let&rsquo;s talk about it<\/div><p>What&rsquo;s the most impressive thing about your project? &bull; Practice your Hook &mdash; the first 10 seconds!<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">Pitch Day! (35 min)<\/div><p><strong>It&rsquo;s Pitch Day!<\/strong> You present a 3-minute Pitch to Meir: the Problem, the Solution, and a Live Demo of your website! Then you get Feedback from Meir &mdash; and if you like, invite your family to watch too. Will it be your Best Pitch ever?<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">Congratulations!<\/div><p>You finished the course! You have a real Live Website on the internet, a Business Plan for your startup, and AI tools that will stay with you always.<\/p><p><strong>A challenge for life:<\/strong> keep building, improving, and trying new tools. Share your website with friends and family! The world belongs to young entrepreneurs!<\/p><\/div>"}], "he": [{"title": "ברוכים הבאים לעולם ה-AI", "subtitle": "היכרות", "goal": "הכרות עם בינה מלאכותית, הבנה מה זה ולמה זה חשוב, חוויה ראשונה", "html": "<div class=\"session-discussion\"><div class=\"disc-label\">שאלת פתיחה (5 דקות)<\/div><p>למה באתם לקורס? מה אתם רוצים ללמוד? האם באתם להכיר את הכלים ולהנות, או שיש לכם מטרה ספציפית? &bull; מה כבר שמעתם על בינה מלאכותית?<\/p><\/div><ul class=\"content-list\"><li><strong>מה זה AI?<\/strong> בינה מלאכותית היא כשמחשבים לומדים לבצע משימות שדורשות חשיבה אנושית &mdash; הבנת שפה, זיהוי תמונות, קבלת החלטות. בניגוד לתוכנות רגילות שעובדות לפי כללים קשיחים, AI לומד מנתונים<\/li><li><strong>סוגי AI:<\/strong> טקסט (ChatGPT, Claude), תמונות (DALL-E, NanoBanana), וידאו (Sora, Novo), קוד (Cursor), מוזיקה (Suno). כל סוג מעבד סוג אחר של מידע<\/li><li><strong>AI בחיים היומיום:<\/strong> Siri ו-Google Assistant (קול), נטפליקס (המלצות), Google Translate (שפה), Waze (ניווט), Face ID (זיהוי), פילטרי ספאם (אימייל)<\/li><li><strong>הכרות עם ChatGPT ו-Claude:<\/strong> שני הכלים החזקים ביותר. נכנסים, שואלים את אותה שאלה בשניהם, ורואים את ההבדלים &mdash; כל כלי חזק בדברים שונים<\/li><li><strong>היסטוריה קצרה:<\/strong> הרעיון של AI קיים מ-1950 (אלן טיורינג), אבל הפריצה הגדולה הגיעה ב-2022 עם ChatGPT. ישראל מובילה עולמית בתחום!<\/li><li><strong>מה זה Cursor (קֶרְסוֹר)?<\/strong> Cursor היא תוכנה חינמית לבניית אתרים ואפליקציות בעזרת בינה מלאכותית. במקום ללמוד שפות תכנות &mdash; אתם פשוט כותבים מה אתם רוצים, וה-AI כותב את כל הקוד בשבילכם! חשבו על זה כמו &quot;עוזר בנייה חכם&quot; שיודע לבנות אתרים שלמים<\/li><li><strong>התקנת Cursor &mdash; צעד אחר צעד:<\/strong> (1) היכנסו לאתר <strong>cursor.com<\/strong> ולחצו על Download (הורדה). (2) הריצו את הקובץ שירד &mdash; EXE בווינדוס, DMG במק. (3) פתחו את Cursor והירשמו עם חשבון Google &mdash; הגרסה החינמית מספיקה! (4) לחצו על <strong>File &rarr; Open Folder<\/strong> (קובץ &rarr; פתח תיקייה) וצרו תיקייה חדשה באנגלית בלי רווחים, למשל: <code>my-project<\/code><\/li><li><strong>איך מפעילים את ה-AI בתוך Cursor?<\/strong> לוחצים <kbd>Ctrl+K<\/kbd> (ווינדוס) או <kbd>Cmd+K<\/kbd> (מק) &mdash; ייפתח חלון קטן שבו כותבים מה רוצים לבנות. לדוגמה: &quot;תבנה לי דף נחיתה יפה בעברית עם כותרת, תמונה וכפתור&quot; &mdash; ותוך שניות ה-AI יכתוב את כל הקוד! אפשר גם לבקש שינויים: &quot;תחליף צבע לכחול&quot; או &quot;תוסיף עוד כפתור&quot;<\/li><li><strong>Claude Code (קלוד קוד) בתוך Cursor:<\/strong> Claude Code הוא ה&quot;מוח&quot; החכם שעובד בתוך Cursor. הוא מבין עברית, בונה אתרים שלמים, מתקן שגיאות ומוסיף עיצוב &mdash; הכל לפי מה שתבקשו. כדי להשתמש בו: פתחו את Cursor, לחצו <kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd>, וכתבו את הבקשה שלכם<\/li><\/ul><div class=\"session-exercise glossary\"><div class=\"exercise-label\">מילון מושגים בסיסי<\/div><p><strong>AI &mdash; בינה מלאכותית (אי.איי)<\/strong> &mdash; מחשב שלומד לעשות דברים חכמים לבד<br><strong>Prompt &mdash; פרומפט<\/strong> &mdash; ההוראה או השאלה שכותבים ל-AI, כמו &quot;תכתוב לי סיפור&quot;<br><strong>Language Model &mdash; מודל שפה<\/strong> &mdash; AI שמבין ויוצר טקסט (כמו ChatGPT ו-Claude)<br><strong>Cursor &mdash; קרסור<\/strong> &mdash; תוכנה לבניית אתרים עם AI מובנה (כמו Word, רק לקוד)<br><strong>Claude Code &mdash; קלוד קוד<\/strong> &mdash; ה-AI החכם שבונה קוד בתוך Cursor<br><strong>HTML &mdash; אייצ׳.טי.אם.אל<\/strong> &mdash; שפת השלד של אתרים (כמו הלבנים של בית)<br><strong>CSS &mdash; סי.אס.אס<\/strong> &mdash; שפת העיצוב של אתרים (כמו צבע, טפט ורהיטים)<br><strong>JavaScript &mdash; ג׳אווה-סקריפט<\/strong> &mdash; השפה שגורמת לאתר לעבוד (כפתורים, אנימציות)<br><strong>Startup &mdash; סטארטאפ<\/strong> &mdash; חברה צעירה שפותרת בעיה בדרך חדשה<br><strong>MVP &mdash; מוצר מינימלי<\/strong> &mdash; הגרסה הכי פשוטה של המוצר שעדיין עובדת<\/p><\/div><div class=\"session-concepts\"><span class=\"concept-tag\">בינה מלאכותית<\/span><span class=\"concept-tag\">מודל שפה<\/span><span class=\"concept-tag\">פרומפט<\/span><span class=\"concept-tag\">למידת מכונה<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">שאלות לדיון<\/div><p>באילו כלי AI אתם כבר משתמשים בלי לדעת? &bull; מה ההבדל בין תוכנה חכמה לבינה מלאכותית?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">תרגול כיתה (20 דקות)<\/div><p><strong>חלק 1:<\/strong> כל תלמיד שואל את ChatGPT ואת Claude את אותה שאלה &mdash; ומשווה תשובות. שאלו על נושא שמעניין אתכם!<\/p><p><strong>חלק 2:<\/strong> מתקינים ביחד את Cursor! פותחים, נרשמים, לוחצים <kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd> ומנסים לבקש מה-AI לבנות משהו פשוט &mdash; למשל &quot;תבנה לי דף עם כותרת בעברית וכפתור&quot;<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">אתגר בית<\/div><p>1. שאלו AI (ChatGPT או Claude) <strong>5 שאלות<\/strong> על נושא שמעניין אתכם &mdash; ורשמו מה למדתם חדש!<\/p><p>2. ודאו שהתקנתם את <strong>Cursor<\/strong> ושהוא עובד. פתחו אותו, לחצו <kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd>, וכתבו &quot;Hi, build me a simple page that says Hello World&quot; &mdash; ראו מה קורה!<\/p><p>3. צרו חשבונות חינמיים ב-ChatGPT, Claude ו-Gemini (אם עוד לא עשיתם). בקשו עזרה מההורים אם צריך!<\/p><p>4. חשבו על 3 דברים מהחיים שלכם שהייתם רוצים ש-AI יעזור בהם.<\/p><div class=\"hw-connection\">במפגש הבא נלמד לכתוב פרומפטים (Prompt &mdash; הוראות ל-AI) מושלמים כדי לקבל תוצאות מדויקות!<\/div><\/div>"}, {"title": "אמנות הפרומפט", "subtitle": "AI", "goal": "ללמוד לדבר עם AI בצורה אפקטיבית + התקנת Cursor ו-Claude Code", "html": "<div class=\"session-recap\"><div class=\"recap-label\">במפגש הקודם<\/div><p>הכרנו את עולם ה-AI, ניסינו ChatGPT ו-Claude, ולמדנו מושגים בסיסיים. &bull; <strong>בדיקת משימת בית:<\/strong> מי ניסה 3 כלי AI שונים? מי התקין Cursor? מה גיליתם?<\/p><\/div><ul class=\"content-list\"><li><strong>מה זה פרומפט?<\/strong> ההוראה או השאלה שנותנים ל-AI. חשבו על זה כמו לדבר עם עוזר חכם מאוד &mdash; ככל שתהיו ברורים יותר, כך התוצאה תהיה טובה יותר<\/li><li><strong>טכניקה 1 &mdash; היו ספציפיים:<\/strong> במקום \"כתוב על כלבים\" כתבו \"כתוב פוסט של 200 מילים על 5 גזעי כלבים מומלצים למשפחות עם ילדים קטנים\"<\/li><li><strong>טכניקה 2 &mdash; תנו הקשר:<\/strong> \"אני תלמיד בן 15 שבונה סטארטאפ. עזור לי לכתוב...\" &mdash; ה-AI צריך לדעת מי אתם ולמה אתם צריכים את זה<\/li><li><strong>טכניקה 3 &mdash; הגדירו פורמט:<\/strong> \"תן לי רשימה ממוספרת / טבלה / 3 פסקאות / נקודות\" &mdash; תגידו ל-AI בדיוק איך אתם רוצים את התשובה<\/li><li><strong>טכניקה 4 &mdash; תנו דוגמה:<\/strong> \"כתוב בסגנון דומה ל-X, אבל עם Y\" &mdash; דוגמאות עוזרות ל-AI להבין מה אתם מחפשים<\/li><li><strong>טכניקה 5 &mdash; שפרו צעד אחר צעד:<\/strong> התחילו פשוט, ואז בקשו שינויים: \"תקצר\", \"תוסיף הומור\", \"עכשיו תרגם לעברית\". כל פעם מקבלים תוצאה טובה יותר!<\/li><li><strong>התקנת Cursor + Claude Code:<\/strong> בחצי השני של המפגש &mdash; מתקינים את Cursor (עורך הקוד עם AI) ו-Claude Code (הכלי החכם ביותר לבנייה). ההדרכה המלאה באזור \"הדרכות\"<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Prompt &mdash; פרומפט<\/span><span class=\"concept-tag\">Context &mdash; הקשר<\/span><span class=\"concept-tag\">Iteration &mdash; שיפור בשלבים<\/span><span class=\"concept-tag\">Prompt Chaining &mdash; שרשור פרומפטים<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">שאלות לדיון<\/div><p>למה אותו פרומפט נותן תוצאות שונות בכלים שונים? &bull; מה ההבדל בין פרומפט טוב לפרומפט רע?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">תרגול כיתה (15 דקות)<\/div><p><strong>אתגר פרומפטים!<\/strong> כולם מקבלים את אותה משימה: &quot;גרמו ל-AI ליצור לוגו (Logo &mdash; סמל/סימן של חברה) לחנות גלידה&quot;. כל אחד כותב פרומפט שונה. מי מקבל את התוצאה הכי טובה? נשווה ונלמד מהפרומפטים של כולם!<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">אתגר בית<\/div><p>1. כתבו <strong>5 פרומפטים שונים<\/strong> לאותה משימה &mdash; שימו לב איך שינויים קטנים משפיעים על התוצאה. תתנסו בטכניקות שלמדנו!<\/p><p>2. צרו <strong>לוגו (Logo)<\/strong> לפרויקט עתידי שלכם באמצעות DALL-E או כלי AI ליצירת תמונות. שמרו את התוצאה!<\/p><p>3. חשבו על <strong>3 בעיות מהחיים שלכם<\/strong> (בית ספר / תחביבים / חברים / משפחה) &mdash; תביאו אותן מוכנות למפגש הבא! אלה יהפכו לרעיון הסטארטאפ שלכם.<\/p><div class=\"hw-connection\">הלוגו שתיצרו ישמש אתכם כשנבנה את האתר! והבעיות &mdash; הן הבסיס לסטארטאפ (Startup &mdash; חברה צעירה) שלכם.<\/div><\/div>"}, {"title": "חשיבה יזמית — מוצאים בעיות", "subtitle": "יזמות", "goal": "ללמוד לחשוב כמו יזמים, לזהות בעיות אמיתיות ולהבין את הנוסחה של סטארטאפ מצליח", "html": "<div class=\"session-recap\"><div class=\"recap-label\">במפגש הקודם<\/div><p>למדנו לכתוב פרומפטים מושלמים והתקנו Cursor ו-Claude Code. &bull; <strong>בדיקת משימת בית:<\/strong> מי הצליח ליצור לוגו עם AI? מי נרשם ל-Claude Code? הראו את התוצאות!<\/p><\/div><ul class=\"content-list\"><li><strong>מה זה סטארטאפ?<\/strong> חברה צעירה שפותרת בעיה אמיתית בדרך חדשה או טובה יותר. ההבדל מעסק רגיל: סטארטאפ שואף לצמוח מהר ולהגיע להרבה אנשים<\/li><li><strong>סיפורי יזמים ישראליים:<\/strong> Waze (פתרו את בעיית הפקקים), Wix (הקלו על בניית אתרים), Monday (סידרו כאוס בניהול פרויקטים), Iron Dome (ביטחון). ישראל = \"אומת הסטארטאפ\" &mdash; יותר סטארטאפים לנפש מכל מדינה!<\/li><li><strong>הנוסחה:<\/strong> בעיה &#x2190; פתרון &#x2190; מוצר &#x2190; עסק. הכל מתחיל מבעיה אמיתית שאנשים רוצים לפתור!<\/li><li><strong>Design Thinking (חשיבה עיצובית):<\/strong> שיטה בת 5 שלבים &mdash; Empathize/הזדהו (הבינו את המשתמש), Define/הגדירו (מה הבעיה בדיוק), Ideate/חשבו (סיעור מוחות), Prototype/בנו (אב-טיפוס מהיר), Test/בדקו (קבלו פידבק &mdash; Feedback, משוב)<\/li><li><strong>איך מוצאים בעיות טובות?<\/strong> מה מעצבן אתכם ביומיום? על מה חברים מתלוננים? מה הייתם רוצים שיהיה קל יותר? הבעיות הכי טובות הן אלה שאתם חווים בעצמכם!<\/li><li><strong>בעיה טובה vs בעיה רעה:<\/strong> טובה = הרבה אנשים חווים אותה, מוכנים לשלם על פתרון, ספציפית. רעה = עמומה מדי, רק אתם חווים אותה, כבר נפתרה לגמרי<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Startup &mdash; סטארטאפ<\/span><span class=\"concept-tag\">Design Thinking &mdash; חשיבה עיצובית<\/span><span class=\"concept-tag\">Validation &mdash; אימות בעיה<\/span><span class=\"concept-tag\">Problem &rarr; Solution<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">שאלות לדיון<\/div><p>מה הדבר שהכי מעצבן אתכם בבית הספר? &bull; איזו אפליקציה הייתם רוצים שתהיה קיימת?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">תרגול כיתה (15 דקות)<\/div><p><strong>סיעור מוחות (Brainstorming):<\/strong> כל תלמיד מזהה 3 בעיות מהחיים שלו (בית ספר, תחביבים, חברים, משפחה) ומציג לכיתה. אחרי ההצגות &mdash; הכיתה מצביעה: איזו בעיה הכי מעניינת ושווה לפתור?<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">אתגר בית<\/div><p>1. בחרו את <strong>הבעיה הכי טובה<\/strong> מתוך ה-3 &mdash; זו שאתם הכי מתלהבים ממנה.<\/p><p>2. עשו <strong>Validation (אימות)<\/strong>: שאלו 5 אנשים (חברים, משפחה) אם גם הם חווים את הבעיה. רשמו את התשובות!<\/p><p>3. <strong>מחקר מתחרים (Competitors):<\/strong> חפשו בגוגל &mdash; האם כבר קיים פתרון לבעיה? מה הוא עושה טוב ומה חסר בו?<\/p><div class=\"hw-connection\">במפגש הבא נהפוך את הבעיה למוצר אמיתי עם הצעת ערך (Value Proposition) ותוכנית! תביאו את המחקר שלכם.<\/div><\/div>"}, {"title": "מרעיון למוצר", "subtitle": "אסטרטגיה", "goal": "לבחור את הרעיון הטוב ביותר, להגדיר קהל יעד, לבנות הצעת ערך ולתכנן MVP", "html": "<div class=\"session-recap\"><div class=\"recap-label\">במפגש הקודם<\/div><p>למדנו חשיבה יזמית ומצאנו 3 בעיות מהחיים שלנו. &bull; <strong>בדיקת משימת בית:<\/strong> מי בחר את הבעיה הטובה ביותר? מי שאל 5 אנשים? מה המתחרים שמצאתם?<\/p><\/div><ul class=\"content-list\"><li><strong>בחירת הרעיון:<\/strong> מתוך 3 הבעיות מהמפגש הקודם, בוחרים את הטובה ביותר. הקריטריונים: האם הבעיה אמיתית? האם אני מבין אותה? האם אפשר לבנות פתרון? האם אנשים ירצו להשתמש?<\/li><li><strong>קהל יעד (Target Audience):<\/strong> מי בדיוק סובל מהבעיה? לא &quot;כולם&quot; אלא &quot;תלמידי תיכון בישראל שמתקשים במתמטיקה&quot;. בונים Persona (פרסונה &mdash; דמות בדיונית) שמייצגת את המשתמש האידיאלי<\/li><li><strong>הצעת ערך (Value Proposition):<\/strong> מה מיוחד בפתרון שלכם? הנוסחה: &quot;אנחנו עוזרים ל-[קהל] לפתור את [הבעיה] על ידי [הפתרון], בניגוד ל-[מתחרים (Competitors)] אנחנו [יתרון ייחודי]&quot;<\/li><li><strong>ניתוח מתחרים:<\/strong> מה כבר קיים? חפשו בגוגל, הורידו אפליקציות דומות. מה טוב בהן? מה חסר? ההזדמנות שלכם נמצאת בפערים!<\/li><li><strong>MVP (Minimum Viable Product &mdash; מוצר מינימלי):<\/strong> הגרסה הכי פשוטה שעדיין שימושית. לא המוצר המלא, רק מספיק כדי לבדוק אם אנשים רוצים את זה<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Target Audience &mdash; קהל יעד<\/span><span class=\"concept-tag\">Value Proposition &mdash; הצעת ערך<\/span><span class=\"concept-tag\">Competitors &mdash; מתחרים<\/span><span class=\"concept-tag\">MVP &mdash; מוצר מינימלי<\/span><span class=\"concept-tag\">Persona &mdash; דמות משתמש<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">שאלות לדיון<\/div><p>מי המשתמש שלכם? תארו אותו בפירוט. &bull; מה הדבר האחד שהמוצר שלכם עושה טוב יותר מכל דבר אחר?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">תרגול כיתה (15 דקות)<\/div><p><strong>בונה הפרויקט (Project Builder):<\/strong> מלאו את 10 השאלות המנחות באזור האישי &mdash; שם הפרויקט, הבעיה, הפתרון, קהל היעד (Target Audience), והצעת הערך (Value Proposition). זה יהפוך לאפיון (Spec &mdash; מפרט) המוצר שלכם!<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">אתגר בית<\/div><p>1. השלימו את כל 10 השאלות ב&quot;בונה הפרויקט&quot; &mdash; זה האפיון (Specification &mdash; מפרט) שלכם!<\/p><p>2. חשבו על <strong>עיצוב (Design) האתר:<\/strong> אילו צבעים מתאימים למוצר שלכם? אילו חלקים (Sections &mdash; מקטעים) צריכים להיות בדף הנחיתה (Landing Page)?<\/p><p>3. הכינו את הלוגו שיצרתם במפגש 2 &mdash; הוא ישמש אתכם בבנייה!<\/p><div class=\"hw-connection\">במפגש הבא נתחיל לבנות את האתר באמת עם Cursor! ודאו ש-Cursor מותקן ועובד.<\/div><\/div>"}, {"title": "בונים אתר — חלק 1", "subtitle": "בנייה", "goal": "הבנת מבנה אתר (HTML/CSS/JS), הכרת שרתים ודומיינים, ובנייה ראשונה של דף נחיתה (Landing Page) עם AI", "html": "<div class=\"session-recap\"><div class=\"recap-label\">במפגש הקודם<\/div><p>בחרנו רעיון, הגדרנו קהל יעד ומילאנו את \"בונה הפרויקט\". &bull; <strong>בדיקת משימת בית:<\/strong> מי השלים את 10 השאלות? מי חשב על עיצוב וצבעים? הציגו את האפיון שלכם!<\/p><\/div><ul class=\"content-list\"><li><strong>חזרה מהירה &mdash; Cursor (קרסור):<\/strong> התקנו את Cursor במפגש 1. היום נשתמש בו לבנות את האתר! תזכורת: <kbd>Ctrl+K<\/kbd> (ווינדוס) או <kbd>Cmd+K<\/kbd> (מק) פותח את חלון ה-AI &mdash; כותבים מה רוצים לבנות והוא כותב את הקוד<\/li><li><strong>מבנה אתר &mdash; 3 שכבות (Layers):<\/strong> כל אתר באינטרנט בנוי מ-3 שפות שעובדות ביחד: <strong>HTML (אייצ׳.טי.אם.אל)<\/strong> = השלד &mdash; מגדיר מה יש בדף (כותרות, טקסטים, תמונות, כפתורים). כמו הלבנים של בית. <strong>CSS (סי.אס.אס)<\/strong> = העיצוב &mdash; קובע איך הדף נראה (צבעים, גדלים, פונטים). כמו הצבע והטפט. <strong>JavaScript (ג׳אווה-סקריפט)<\/strong> = המוח &mdash; מפעיל דברים (מה קורה כשלוחצים כפתור, אנימציות). כמו החשמל של הבית.<\/li><li><strong>מה זה שרת (Server)? איך אתר עובד?<\/strong> כשאתם כותבים כתובת אתר בדפדפן (Browser &mdash; תוכנת גלישה כמו Chrome), המחשב שלכם (<strong>Client &mdash; לקוח<\/strong>) שולח בקשה ל<strong>Server (שרת)<\/strong> &mdash; מחשב חזק שיושב במרכז נתונים (Data Center) ומחזיק את קבצי האתר. השרת שולח חזרה את הקבצים והדפדפן מציג אותם. <strong>Domain (דומיין)<\/strong> = הכתובת הקריאה (כמו google.com). <strong>Hosting (אחסון)<\/strong> = השרת שמאחסן את הקבצים. כרגע בונים <strong>מקומית (Locally)<\/strong> &mdash; הקובץ רק על המחשב שלכם. במפגש הבא נעלה לאינטרנט!<\/li><li><strong>בנייה עם AI &mdash; הפרומפט הראשון:<\/strong> לוחצים <kbd>Ctrl+K<\/kbd> (ווינדוס) או <kbd>Cmd+K<\/kbd> (מק), וכותבים Prompt (פרומפט &mdash; הוראה) מפורט. אפשר בעברית! לדוגמה: <code>&quot;תבנה לי דף נחיתה (Landing Page) לסטארטאפ שלי עם כותרת מושכת, חלק אודות, 3 כרטיסיות של פיצ׳רים, חוות דעת, וטופס יצירת קשר. עיצוב מודרני, צבעים כחול וסגול, עברית RTL&quot;<\/code> &mdash; ככל שהפרומפט מפורט יותר, התוצאה טובה יותר!<\/li><li><strong>תצוגה מקדימה (Preview):<\/strong> כדי לראות את האתר שבניתם, מחפשים את קובץ ה-<code>index.html<\/code> בתיקייה ופותחים אותו בדפדפן Chrome (לחיצה כפולה על הקובץ). אחרי כל שינוי ב-Cursor &mdash; חוזרים לדפדפן ולוחצים רענן (Refresh &mdash; F5) כדי לראות את העדכון. בדקו: האם הטקסט קריא? הצבעים נכונים? הכפתורים במקום?<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">HTML &mdash; שלד האתר<\/span><span class=\"concept-tag\">CSS &mdash; עיצוב<\/span><span class=\"concept-tag\">JavaScript &mdash; הפעלה<\/span><span class=\"concept-tag\">Server &mdash; שרת<\/span><span class=\"concept-tag\">Domain &mdash; דומיין<\/span><span class=\"concept-tag\">Landing Page &mdash; דף נחיתה<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">שאלות לדיון<\/div><p>אילו חלקים צריכים להיות בדף הנחיתה שלכם? &bull; אילו צבעים מייצגים את המותג שלכם? &bull; מה ההבדל בין אתר שנמצא רק על המחשב שלכם לבין אתר שחי באינטרנט?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">תרגול כיתה (25 דקות)<\/div><p><strong>בונים דף נחיתה (Landing Page)!<\/strong> כל תלמיד פותח Cursor, לוחץ <kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd>, וכותב פרומפט (Prompt) מפורט למוצר שלו. התוצאה: אתר שלם עם כותרת, תיאור, פיצ׳רים (Features &mdash; יכולות) וכפתור! מי מקבל את האתר הכי יפה?<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">אתגר בית<\/div><p>1. <strong>שפרו את דף הנחיתה<\/strong> &mdash; הוסיפו את הלוגו (Logo) שיצרתם במפגש 2! בקשו מ-Cursor: &quot;תוסיף את הלוגו שלי לראש הדף&quot;<\/p><p>2. <strong>בדיקת מובייל (Mobile):<\/strong> פתחו את האתר בטלפון &mdash; האם הוא נראה טוב? אם לא, בקשו מ-Cursor: &quot;תעשה את האתר רספונסיבי (Responsive &mdash; מתאים לכל מסך)&quot;<\/p><p>3. הוסיפו עוד Section (מקטע) &mdash; למשל: About (אודות), Features (יכולות), או FAQ (שאלות נפוצות)<\/p><div class=\"hw-connection\">במפגש הבא נשדרג את האתר עם Animation (אנימציה), טפסים (Forms) ותפריט ניווט (Navigation)!<\/div><\/div>"}, {"title": "בונים אתר — חלק 2", "subtitle": "פיתוח", "goal": "לשדרג את האתר עם אנימציות, רספונסיביות למובייל, טפסים ופיצ'רים מתקדמים", "html": "<div class=\"session-recap\"><div class=\"recap-label\">במפגש הקודם<\/div><p>התקנו Cursor ובנינו את דף הנחיתה הראשון! &bull; <strong>בדיקת משימת בית:<\/strong> מי הוסיף את הלוגו? מי בדק בטלפון? הראו את האתרים שלכם!<\/p><\/div><ul class=\"content-list\"><li><strong>Animation (אנימציה) &mdash; מה זה ולמה זה חשוב:<\/strong> אנימציות גורמות לאתר להרגיש מקצועי ו&quot;חי&quot;. סוגים: (1) <strong>Hover (ריחוף)<\/strong> &mdash; כפתור משנה צבע כשמרחפים עליו עם העכבר. (2) <strong>Fade-in (הופעה עדינה)<\/strong> &mdash; אלמנטים נכנסים בעדינות כשגוללים למטה. (3) <strong>Slide (החלקה)<\/strong> &mdash; תמונות או טקסטים נכנסים מהצד. דוגמת פרומפט ל-Cursor: &quot;תוסיף אנימציות חלקות כשהמקטעים מופיעים בגלילה, ואפקט ריחוף על כפתורים&quot;<\/li><li><strong>Responsive Design (עיצוב רספונסיבי) &mdash; האתר חייב לעבוד בטלפון!<\/strong> יותר מ-60% מהגולשים גולשים מהטלפון! <strong>רספונסיבי<\/strong> = האתר משתנה אוטומטית בהתאם לגודל המסך. במחשב: 3 עמודות זו ליד זו. בטלפון: עמודה אחת, כפתורים גדולים יותר, טקסט קריא. דוגמת פרומפט: &quot;תעשה את האתר רספונסיבי &mdash; שיעבוד גם בטלפון עם עמודה אחת וכפתורים גדולים&quot;<\/li><li><strong>Navigation (ניווט) מקצועי:<\/strong> כל אתר רציני צריך Header (כותרת עליונה) קבוע למעלה עם: Logo (לוגו), Links (קישורים) לחלקי האתר (אודות, יכולות, צור קשר), וכפתור CTA (Call To Action &mdash; קריאה לפעולה) בולט. במובייל &mdash; תפריט Hamburger Menu (&quot;המבורגר&quot; &mdash; 3 פסים ) שנפתח בלחיצה. דוגמת פרומפט: &quot;תוסיף תפריט ניווט קבוע למעלה עם לוגו, קישורים, ותפריט המבורגר במובייל&quot;<\/li><li><strong>Form (טופס):<\/strong> טופס &quot;צור קשר&quot; הוא חובה בכל אתר עסקי. שדות (Fields): שם, אימייל (Email), הודעה (Message). הוסיפו Validation (ולידציה &mdash; בדיקה שהשדות מלאים ושהאימייל תקין). דוגמת פרומפט: &quot;תוסיף טופס יצירת קשר עם שם, אימייל והודעה, עם בדיקת תקינות וכפתור שליחה מעוצב&quot;<\/li><li><strong>Deploy (העלאה) לאינטרנט &mdash; GitHub Pages:<\/strong> עד עכשיו האתר חי רק על המחשב שלכם (Locally &mdash; מקומית). כדי שכל העולם יוכל לראות אותו, צריך <strong>Deploy (להעלות אותו לשרת)<\/strong>. <strong>GitHub Pages<\/strong> = שירות חינמי של GitHub שהופך את הקוד שלכם לאתר חי באינטרנט! איך זה עובד? (1) יוצרים חשבון ב-GitHub (ראו הדרכה בלשונית &quot;הדרכות&quot;). (2) מעלים את קבצי האתר ל-Repository (ריפו &mdash; מאגר קוד). (3) מפעילים GitHub Pages בהגדרות (Settings). (4) מקבלים כתובת אינטרנט: <code>https://username.github.io/repo-name<\/code>. מה קורה מאחורי הקלעים? ה-<strong>Domain (דומיין)<\/strong> = הכתובת הקריאה. שרתי GitHub = מחשבים שמריצים את האתר שלכם 24/7. <strong>DNS<\/strong> (מערכת שמות דומיין) = מתרגמת את הכתובת הקריאה לכתובת IP של השרת.<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Animation &mdash; אנימציה<\/span><span class=\"concept-tag\">Responsive &mdash; רספונסיבי<\/span><span class=\"concept-tag\">Navigation &mdash; ניווט<\/span><span class=\"concept-tag\">Form &mdash; טופס<\/span><span class=\"concept-tag\">GitHub Pages &mdash; אחסון חינמי<\/span><span class=\"concept-tag\">DNS &mdash; מערכת כתובות<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">שאלות לדיון<\/div><p>בדקו את האתר שלכם בטלפון &mdash; מה צריך להשתנות? &bull; איזו אנימציה תגרום לאתר להרגיש מקצועי?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">תרגול כיתה (25 דקות)<\/div><p><strong>שדרוג האתר!<\/strong> כל תלמיד מוסיף לאתר שלו לפחות 3 דברים בעזרת Cursor (<kbd>Ctrl+K<\/kbd> / <kbd>Cmd+K<\/kbd>): (1) Form (טופס) יצירת קשר, (2) Animation (אנימציה) אחת לפחות, (3) Navigation (תפריט ניווט) עם לוגו וקישורים. מי מקבל את האתר הכי מקצועי?<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">אתגר בית<\/div><p>1. <strong>Deploy (העלאה) לאינטרנט!<\/strong> העלו את האתר עם GitHub Pages (ראו הדרכה בלשונית &quot;הדרכות&quot;). שלבים: חשבון GitHub &rarr; Repository (מאגר קוד) &rarr; העלאת קבצים &rarr; הפעלת Pages.<\/p><p>2. <strong>User Testing (בדיקת משתמשים):<\/strong> שלחו את הלינק החי ל-3 חברים ובקשו Feedback (פידבק &mdash; משוב): מה אהבו? מה לא ברור? מה הייתם משנים?<\/p><p>3. חשבו: איך הסטארטאפ שלכם ירוויח כסף? Subscription (מנוי חודשי)? Freemium (חינם + פרימיום)? E-commerce (חנות)?<\/p><div class=\"hw-connection\">במפגש הבא נלמד על Business Model (מודל עסקי) ו-Marketing (שיווק). האתר שבניתם יהיה הבסיס!<\/div><\/div>"}, {"title": "מודל עסקי ושיווק", "subtitle": "עסקים", "goal": "להבין איך סטארטאפ מרוויח כסף, איך מגיעים ללקוחות, ואיך AI עוזר ליצור תוכן שיווקי", "html": "<div class=\"session-recap\"><div class=\"recap-label\">במפגש הקודם<\/div><p>שדרגנו את האתר עם אנימציות, טפסים ותפריט ניווט! &bull; <strong>בדיקת משימת בית:<\/strong> מי העלה לאינטרנט? מי קיבל פידבק? שתפו את הלינקים!<\/p><\/div><ul class=\"content-list\"><li><strong>Subscription (מנוי חודשי):<\/strong> הלקוח משלם כל חודש או שנה. דוגמאות: Spotify (ספוטיפיי &mdash; מוזיקה), Netflix (נטפליקס &mdash; סרטים). מתאים לשירותים שנותנים ערך מתמשך<\/li><li><strong>Freemium (חינם + פרימיום):<\/strong> גרסה בסיסית חינם (Free) + תשלום על Features (יכולות) מתקדמים (Premium). דוגמאות: Spotify &mdash; חינם עם פרסומות, פרימיום בלי. מצוין לגיוס משתמשים!<\/li><li><strong>E-commerce (חנות אונליין):<\/strong> מכירת מוצרים ישירות דרך האינטרנט. דוגמאות: Amazon, Etsy. &bull; <strong>Advertising (פרסום):<\/strong> שירות חינמי, הכנסות מפרסום. דוגמאות: YouTube, Instagram<\/li><li><strong>Digital Marketing (שיווק דיגיטלי) לנוער:<\/strong> Instagram Reels (סרטונים קצרים באינסטגרם), TikTok (טיקטוק), YouTube Shorts (שורטס ביוטיוב) &mdash; Content (תוכן) ויזואלי הוא המלך! עקביות חשובה יותר משלמות. פרסמו 3 פעמים בשבוע<\/li><li><strong>יצירת Content (תוכן) עם AI:<\/strong> ChatGPT כותב פוסטים (Posts), יוצר Hashtags (תגיות &mdash; #), מתכנן Content Calendar (לוח תוכן). כלי AI ליצירת תמונות יוצרים גרפיקה (Graphics). תוך דקות יש לכם תוכן מקצועי!<\/li><li><strong>Business Plan (תוכנית עסקית) בעמוד אחד:<\/strong> Problem (בעיה), Solution (פתרון), Target Audience (קהל יעד), Revenue Model (מודל הכנסות), Marketing Strategy (אסטרטגיית שיווק), Roadmap (תוכנית) ל-3 חודשים ראשונים<\/li><li><strong>AI Agents (סוכני בינה מלאכותית):<\/strong> מה זה Agent (סוכן)? תוכנה חכמה שמקבלת משימה ומבצעת אותה לבד &mdash; בצורה אוטונומית (Autonomous). דוגמאות: סוכן Customer Service (שירות לקוחות), סוכן Sales (מכירות), סוכן Social Media (רשתות חברתיות). נלמד איך להגדיר סוכן פשוט ולתת לו הוראות ברורות<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Business Model &mdash; מודל עסקי<\/span><span class=\"concept-tag\">Subscription &mdash; מנוי<\/span><span class=\"concept-tag\">Freemium &mdash; חינם+פרימיום<\/span><span class=\"concept-tag\">Marketing &mdash; שיווק<\/span><span class=\"concept-tag\">Content &mdash; תוכן<\/span><span class=\"concept-tag\">AI Agents &mdash; סוכני AI<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">שאלות לדיון<\/div><p>איך האפליקציה האהובה עליכם מרוויחה כסף? &bull; כמה הייתם גובים עבור המוצר שלכם?<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">תרגול כיתה (20 דקות)<\/div><p><strong>חלק 1 &mdash; Business Plan (תוכנית עסקית):<\/strong> כל תלמיד ממלא תבנית תוכנית עסקית בעמוד אחד: Problem (בעיה), Solution (פתרון), Target Audience (קהל), Revenue (הכנסות).<\/p><p><strong>חלק 2 &mdash; Marketing Content (תוכן שיווקי):<\/strong> צרו 3 Posts (פוסטים) לאינסטגרם עם AI! בקשו מ-ChatGPT לכתוב טקסטים, ומכלי AI ליצירת תמונות לעצב גרפיקה.<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">אתגר בית<\/div><p>1. הכינו <strong>Pitch Deck (מצגת פיץ׳)<\/strong> של 5 Slides (שקפים): הבעיה, הפתרון, Demo (הדגמה), Business Model (מודל עסקי), סיכום.<\/p><p>2. <strong>תתאמנו על ה-Pitch (פיץ׳ &mdash; הצגה)!<\/strong> 3 דקות, לפני מראה או מול חבר. תקליטו את עצמכם!<\/p><p>3. ודאו שהאתר + הלוגו + הפוסטים מוכנים ל-Pitch Day (יום הפיץ׳)!<\/p><div class=\"hw-connection\">במפגש הבא &mdash; Pitch Day (יום הפיץ׳)! תציגו את כל מה שבניתם. בהצלחה!<\/div><\/div>"}, {"title": "יום הפיץ'", "subtitle": "הצגה", "goal": "להציג את הפרויקט בפני קהל — 3 דקות, בעיה, פתרון, דמו חי!", "html": "<div class=\"session-recap\"><div class=\"recap-label\">במפגש הקודם<\/div><p>למדנו מודלים עסקיים ויצרנו תוכן שיווקי עם AI. &bull; <strong>בדיקת משימת בית:<\/strong> מי הכין מצגת? מי התאמן על הפיץ'? בואו נראה!<\/p><\/div><ul class=\"content-list\"><li><strong>מבנה ה-Pitch (פיץ׳ &mdash; הצגה, 3 דקות):<\/strong> Hook (פתיח מושך &mdash; 10 שניות) &mdash; עובדה מפתיעה או שאלה. Problem (הבעיה &mdash; 30 שניות). Solution (הפתרון &mdash; 30 שניות). Live Demo (הדגמה חיה &mdash; 90 שניות) &mdash; הראו את המוצר! Business Model (מודל עסקי &mdash; 20 שניות). CTA / Call To Action (קריאה לפעולה &mdash; 10 שניות)<\/li><li><strong>Tips (טיפים) להצגה מעולה:<\/strong> דברו לאט וברור. הסתכלו על הקהל או המצלמה. התלהבו &mdash; אם אתם לא מתלהבים, הקהל לא יתלהב! Practice (תרגול) &mdash; תתאמנו לפחות פעמיים. זה בסדר לטעות &mdash; פשוט תמשיכו<\/li><li><strong>Slide Design (עיצוב שקפים):<\/strong> טקסט גדול, מעט מילים בכל Slide (שקף), השתמשו בתמונות, צבעים עקביים, ואת הלוגו שלכם<\/li><li><strong>Live Demo (הדגמה חיה):<\/strong> הכינו Plan B (תוכנית ב׳) למקרה שמשהו נשבר. הראו את ה-Feature (יכולת) הכי מרשימה קודם. שמרו את זה פשוט!<\/li><li><strong>חגיגה!<\/strong> כל פרויקט הוא הישג! למדתם AI, Entrepreneurship (יזמות), ובניתם מוצר אמיתי. זה יותר ממה שרוב המבוגרים יודעים לעשות!<\/li><\/ul><div class=\"session-concepts\"><span class=\"concept-tag\">Pitch &mdash; הצגה<\/span><span class=\"concept-tag\">Hook &mdash; פתיח מושך<\/span><span class=\"concept-tag\">Demo &mdash; הדגמה חיה<\/span><span class=\"concept-tag\">CTA &mdash; קריאה לפעולה<\/span><\/div><div class=\"session-discussion\"><div class=\"disc-label\">שאלות לדיון<\/div><p>מה הדבר הכי מרשים בפרויקט שלכם? &bull; תתאמנו על ה-Hook &mdash; 10 השניות הראשונות!<\/p><\/div><div class=\"session-exercise\"><div class=\"exercise-label\">תרגול כיתה &mdash; Pitch Day! (35 דקות)<\/div><p><strong>יום הפיץ׳!<\/strong> כל תלמיד מציג Pitch (הצגה) של 3 דקות: Problem (הבעיה), Solution (הפתרון), Live Demo (הדגמה חיה של האתר)! אחרי כל הצגה &mdash; Feedback (משוב) מהמנחה ומהכיתה. מי ייבחר ל-Best Pitch (הפיץ׳ הטוב ביותר)?<\/p><\/div><div class=\"session-homework\"><div class=\"homework-label\">Congratulations &mdash; מזל טוב!<\/div><p>סיימתם את הקורס! יש לכם אתר אמיתי (Live Website) באינטרנט, Business Plan (תוכנית עסקית) לסטארטאפ, וכלי AI שתמיד ילוו אתכם.<\/p><p><strong>אתגר לחיים:<\/strong> המשיכו לבנות, לשפר, ולנסות כלים חדשים. שתפו את האתר שלכם עם חברים ומשפחה! העולם שייך ליזמים הצעירים!<\/p><\/div>"}]};
+
+  // [year, month, day, hour, minute] in Israel time
+  var SCHEDULE = [
+    [2026,10,14,19,0],[2026,10,18,17,0],[2026,10,21,19,0],[2026,10,25,17,0],
+    [2026,10,28,19,0],[2026,11,1,17,0],[2026,11,4,19,0],[2026,11,8,17,0]
+  ];
+
+  var T = {
+    en:{
+      brandSub:"My private course", logout:"Log out", langBtn:"עברית",
+      gateTitle:"Welcome to your course", gateText:"Enter your phone number to open your personal course page.",
+      phoneLabel:"Phone number", enter:"Open my course", gateHelp:"Any format works, e.g. +1 (555) 123-4567",
+      errEmpty:"Please enter your phone number.", errWrong:"This number doesn't match. Please check and try again. / המספר לא תואם, נסי שוב.",
+      errCrypto:"Your browser can't check the number here. Please open the page with https:// or message Meir.",
+      kicker:"AI Lab · Private lessons", hello:"Hi <em>Olga</em>!",
+      courseLine:"AI & Entrepreneurship · 8 private lessons with Meir · 1 hour each on Zoom",
+      classBtn:"Enter classroom", zoomHint:"Opens Zoom in a new tab",
+      startsIn:function(m){return "Your lesson starts in "+m+" min"}, startsNow:"Your lesson starts now — come in!",
+      inProgress:function(m){return "Lesson in progress · "+m+" min left — join now!"},
+      nextLabel:"Next lesson", liveLabel:"Happening now", doneLabel:"Course complete!",
+      doneTitle:"You finished all 8 lessons. Amazing work!",
+      days:"days", hours:"hours", mins:"min", secs:"sec",
+      israel:"Israel", you:"Your time", lessonN:"Lesson",
+      progress:"Your progress", progText:function(d){return d+" of 8 lessons completed"},
+      setupTitle:"Before lesson 1", setupSub:"A few things to get ready, so we can start right away:",
+      s1t:"A computer with Chrome", s1d:"A laptop or desktop (not a phone) with the Chrome browser.",
+      s2t:"Headphones", s2d:"With a microphone if you have them — it makes talking much easier.",
+      s3t:"Zoom installed", s3d:"Download it from zoom.us/download and test it once.",
+      s4t:"A Claude account", s4d:"Sign up at claude.ai — the course uses Claude Pro (your parent purchases it).",
+      s5t:"Cursor — together", s5d:"No need to install it yet. We'll install Cursor together in lesson 2.",
+      journey:"Your learning journey", journeySub:"8 stops from your first AI chat to your own Pitch Day.",
+      chipDone:"Done", chipNext:"Next", chipLive:"Now", chipUp:"Coming up",
+      goal:"Goal:", open:"Lesson content", close:"Hide lesson content",
+      footTitle:"Questions? Just ask.", footText:"Message Meir anytime on WhatsApp or by email.",
+      footBrand:"AI Lab · ai-lab.co.il"
+    },
+    he:{
+      brandSub:"הקורס הפרטי שלי", logout:"התנתקות", langBtn:"English",
+      gateTitle:"ברוכה הבאה לקורס שלך", gateText:"הכניסי את מספר הטלפון שלך כדי לפתוח את דף הקורס האישי.",
+      phoneLabel:"מספר טלפון", enter:"כניסה לקורס", gateHelp:"אפשר בכל פורמט, למשל ‎+1 (555) 123-4567",
+      errEmpty:"נא להכניס מספר טלפון.", errWrong:"המספר לא תואם, בדקי ונסי שוב. / This number doesn't match, please try again.",
+      errCrypto:"הדפדפן לא יכול לבדוק את המספר כאן. פתחי את הדף עם https:// או כתבי למאיר.",
+      kicker:"AI Lab · שיעורים פרטיים", hello:"היי <em>אולגה</em>!",
+      courseLine:"בינה מלאכותית ויזמות · 8 שיעורים פרטיים עם מאיר · שעה כל שיעור בזום",
+      classBtn:"כניסה לכיתה", zoomHint:"נפתח בזום בלשונית חדשה",
+      startsIn:function(m){return "השיעור מתחיל בעוד "+m+" דקות"}, startsNow:"השיעור מתחיל עכשיו — היכנסי!",
+      inProgress:function(m){return "השיעור מתקיים עכשיו · נשארו "+m+" דקות — היכנסי!"},
+      nextLabel:"השיעור הבא", liveLabel:"מתקיים עכשיו", doneLabel:"סיימת את הקורס!",
+      doneTitle:"השלמת את כל 8 השיעורים. עבודה מדהימה!",
+      days:"ימים", hours:"שעות", mins:"דקות", secs:"שניות",
+      israel:"ישראל", you:"השעה אצלך", lessonN:"שיעור",
+      progress:"ההתקדמות שלך", progText:function(d){return d+" מתוך 8 שיעורים הושלמו"},
+      setupTitle:"לפני שיעור 1", setupSub:"כמה דברים להכין כדי שנוכל להתחיל מיד:",
+      s1t:"מחשב עם Chrome", s1d:"מחשב נייד או נייח (לא טלפון) עם דפדפן Chrome.",
+      s2t:"אוזניות", s2d:"עם מיקרופון אם יש — הרבה יותר נוח לדבר.",
+      s3t:"Zoom מותקן", s3d:"מורידים מ-zoom.us/download ובודקים פעם אחת שעובד.",
+      s4t:"חשבון Claude", s4d:"נרשמים ב-claude.ai — בקורס משתמשים ב-Claude Pro (ההורה רוכש).",
+      s5t:"Cursor — ביחד", s5d:"לא צריך להתקין עכשיו. נתקין את Cursor ביחד בשיעור 2.",
+      journey:"מסע הלמידה שלך", journeySub:"8 תחנות מהשיחה הראשונה עם AI ועד יום הפיץ׳ שלך.",
+      chipDone:"הושלם", chipNext:"הבא", chipLive:"עכשיו", chipUp:"בקרוב",
+      goal:"מטרה:", open:"תוכן השיעור", close:"הסתרת תוכן השיעור",
+      footTitle:"שאלות? פשוט לשאול.", footText:"אפשר לכתוב למאיר בכל זמן בוואטסאפ או במייל.",
+      footBrand:"AI Lab · ai-lab.co.il"
+    }
+  };
+
+  // ---------- storage (safe) ----------
+  function sget(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } }
+  function sset(k,v){ try{ window.localStorage.setItem(k,v); }catch(e){} }
+  function sdel(k){ try{ window.localStorage.removeItem(k); }catch(e){} }
+
+  // ---------- time ----------
+  var qsNow = null;
+  try{ var q = new URLSearchParams(location.search).get("now"); if(q && !isNaN(Date.parse(q))) qsNow = Date.parse(q) - Date.now(); }catch(e){}
+  function now(){ return Date.now() + (qsNow||0); }
+
+  function tzOffsetMs(ts, tz){
+    var f = new Intl.DateTimeFormat("en-US",{timeZone:tz, hourCycle:"h23", year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", second:"2-digit"});
+    var p = {}; f.formatToParts(new Date(ts)).forEach(function(x){ p[x.type]=x.value; });
+    var asUTC = Date.UTC(+p.year, +p.month-1, +p.day, (+p.hour)%24, +p.minute, +p.second);
+    return asUTC - (ts - ts%1000);
+  }
+  function zonedToUTC(y,mo,d,h,mi,tz){
+    var guess = Date.UTC(y,mo-1,d,h,mi);
+    var off = tzOffsetMs(guess, tz);
+    var ts = guess - off;
+    var off2 = tzOffsetMs(ts, tz);
+    if(off2 !== off) ts = guess - off2;
+    return ts;
+  }
+  var START = SCHEDULE.map(function(s){ return zonedToUTC(s[0],s[1],s[2],s[3],s[4],TZ_IL); });
+  var END = START.map(function(t){ return t + DURATION_MIN*60000; });
+
+  var userTZ = TZ_IL;
+  try{ userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone || TZ_IL; }catch(e){}
+  var showLocal = userTZ !== TZ_IL && tzOffsetMs(START[0], userTZ) !== tzOffsetMs(START[0], TZ_IL);
+
+  function fmt(ts, tz, lang, withDate){
+    var loc = lang === "he" ? "he-IL" : "en-GB";
+    var o = {timeZone:tz, hour:"2-digit", minute:"2-digit", hourCycle:"h23"};
+    if(withDate){ o.weekday = "short"; o.day = "numeric"; o.month = "short"; }
+    try{ return new Intl.DateTimeFormat(loc, o).format(new Date(ts)); }catch(e){ return new Date(ts).toString(); }
+  }
+  function tzName(tz){ var c = tz.split("/").pop().replace(/_/g," "); return c; }
+
+  // ---------- state ----------
+  var lang = sget(K_LANG) === "he" ? "he" : "en";
+
+  function t(k){ return T[lang][k]; }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+  function applyLang(){
+    var html = document.documentElement;
+    html.lang = lang; html.dir = lang === "he" ? "rtl" : "ltr";
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var v = T[lang][el.getAttribute("data-i18n")];
+      if(typeof v === "string") el.textContent = v;
+    });
+    document.getElementById("langBtn").textContent = t("langBtn");
+    document.getElementById("langBtn").setAttribute("lang", lang === "he" ? "en" : "he");
+    document.getElementById("helloTitle").innerHTML = t("hello");
+    var errEl = document.getElementById("loginErr");
+    if(errEl.dataset.key) errEl.textContent = t(errEl.dataset.key);
+    renderJourney();
+    tick();
+  }
+
+  // ---------- journey ----------
+  var openSet = {};
+  function lessonState(i, n){
+    if(n >= END[i]) return "done";
+    if(n >= START[i] - ZOOM_EARLY_MIN*60000) return "live";
+    return (nextIndex(n) === i) ? "next" : "up";
+  }
+  function nextIndex(n){ for(var i=0;i<8;i++){ if(n < END[i]) return i; } return -1; }
+
+  function renderJourney(){
+    var n = now(), ol = document.getElementById("journey"), out = [];
+    var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+    for(var i=0;i<8;i++){
+      var L = LESSONS[lang][i], st = lessonState(i,n);
+      var cls = st === "done" ? "done" : (st === "up" ? "up" : "next");
+      var chip = {done:t("chipDone"), next:t("chipNext"), live:t("chipLive"), up:t("chipUp")}[st];
+      var isOpen = !!openSet[i];
+      var when = '<span><b>'+esc(fmt(START[i],TZ_IL,lang,true))+'</b> · '+esc(t("israel"))+'</span>';
+      if(showLocal) when += '<span><b>'+esc(fmt(START[i],userTZ,lang,true))+'</b> · '+esc(t("you"))+' ('+esc(tzName(userTZ))+')</span>';
+      out.push(
+        '<li class="stop '+cls+'" id="lesson-'+(i+1)+'">'+
+          '<div class="node" aria-hidden="true">'+(i+1)+'</div>'+
+          '<article class="card panel">'+
+            '<div class="card-top"><div><div class="subtitle">'+esc(t("lessonN"))+' '+(i+1)+' · '+esc(L.subtitle)+'</div>'+
+            '<h3>'+esc(L.title)+'</h3></div><span class="chip">'+esc(chip)+'</span></div>'+
+            '<div class="when">'+when+'</div>'+
+            '<p class="goal"><strong>'+esc(t("goal"))+'</strong> '+esc(L.goal)+'</p>'+
+            '<button type="button" class="lesson-toggle" aria-expanded="'+isOpen+'" aria-controls="lc-'+i+'" data-i="'+i+'"><span>'+esc(isOpen?t("close"):t("open"))+'</span>'+chevron+'</button>'+
+            '<div class="content" id="lc-'+i+'"'+(isOpen?'':' hidden')+'>'+L.html+'</div>'+
+          '</article>'+
+        '</li>'
+      );
+    }
+    ol.innerHTML = out.join("");
+  }
+  document.getElementById("journey").addEventListener("click", function(e){
+    var b = e.target.closest(".lesson-toggle"); if(!b) return;
+    var i = +b.getAttribute("data-i"), panel = document.getElementById("lc-"+i);
+    var open = b.getAttribute("aria-expanded") !== "true";
+    openSet[i] = open; b.setAttribute("aria-expanded", String(open));
+    panel.hidden = !open; b.querySelector("span").textContent = open ? t("close") : t("open");
+  });
+
+  // ---------- ticking ----------
+  var lastStates = "";
+  function pad(x){ return x < 10 ? "0"+x : ""+x; }
+  function tick(){
+    var n = now(), ni = nextIndex(n);
+    var done = 0; for(var i=0;i<8;i++) if(n >= END[i]) done++;
+
+    // progress
+    var track = document.getElementById("track"), segs = [];
+    for(var j=0;j<8;j++) segs.push('<i class="'+(n>=END[j]?"done":(j===ni?"now":""))+'"></i>');
+    track.innerHTML = segs.join(""); track.setAttribute("aria-valuenow", done);
+    document.getElementById("progText").textContent = T[lang].progText(done);
+
+    // setup box only matters before lesson 1 ends
+    document.getElementById("setup").classList.toggle("hidden", n >= END[0]);
+
+    // next card
+    var btn = document.getElementById("classBtn"), note = document.getElementById("liveNote");
+    var label = document.getElementById("nextLabel"), title = document.getElementById("nextTitle"), times = document.getElementById("nextTimes"), cb = document.getElementById("countBox");
+    if(ni === -1){
+      label.textContent = t("doneLabel"); title.textContent = t("doneTitle"); times.innerHTML = ""; cb.classList.add("hidden");
+      btn.classList.remove("live"); note.textContent = "";
+    } else {
+      var s = START[ni], live = n >= s - ZOOM_EARLY_MIN*60000;
+      label.textContent = (n >= s) ? t("liveLabel") : t("nextLabel");
+      title.innerHTML = esc(LESSONS[lang][ni].title) + '<span>'+esc(t("lessonN"))+' '+(ni+1)+' / 8</span>';
+      var diff = Math.max(0, s - n), d = Math.floor(diff/86400000), h = Math.floor(diff%86400000/3600000), m = Math.floor(diff%3600000/60000), sec = Math.floor(diff%60000/1000);
+      cb.classList.remove("hidden");
+      document.getElementById("cD").textContent = d; document.getElementById("cH").textContent = pad(h);
+      document.getElementById("cM").textContent = pad(m); document.getElementById("cS").textContent = pad(sec);
+      var rows = '<div class="row"><span class="tag">'+esc(t("israel"))+'</span><span>'+esc(fmt(s,TZ_IL,lang,true))+'</span></div>';
+      if(showLocal) rows += '<div class="row"><span class="tag you">'+esc(t("you"))+'</span><span>'+esc(fmt(s,userTZ,lang,true))+' · '+esc(tzName(userTZ))+'</span></div>';
+      times.innerHTML = rows;
+      btn.classList.toggle("live", live);
+      if(!live) note.textContent = "";
+      else if(n < s){ var mins = Math.ceil((s-n)/60000); note.textContent = mins <= 0 ? t("startsNow") : T[lang].startsIn(mins); }
+      else note.textContent = T[lang].inProgress(Math.max(1, Math.ceil((END[ni]-n)/60000)));
+    }
+    // re-render journey if a lesson changed state
+    var states = ""; for(var k=0;k<8;k++) states += lessonState(k,n)[0];
+    if(states !== lastStates){ var first = lastStates === ""; lastStates = states; if(!first) renderJourney(); }
+  }
+
+  // ---------- auth ----------
+  function hex(buf){ return Array.prototype.map.call(new Uint8Array(buf), function(b){ return ("0"+b.toString(16)).slice(-2); }).join(""); }
+  function showPortal(on){
+    document.getElementById("gate").classList.toggle("hidden", on);
+    document.getElementById("portal").classList.toggle("hidden", !on);
+    document.getElementById("logoutBtn").classList.toggle("hidden", !on);
+  }
+  function setErr(key){ var e = document.getElementById("loginErr"); e.dataset.key = key || ""; e.textContent = key ? t(key) : ""; }
+
+  document.getElementById("loginForm").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var digits = (document.getElementById("phone").value || "").replace(/\D/g,"");
+    if(!digits){ setErr("errEmpty"); return; }
+    if(digits.length < 10){ setErr("errWrong"); return; }
+    if(!(window.crypto && crypto.subtle && window.TextEncoder)){ setErr("errCrypto"); return; }
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(digits.slice(-10))).then(function(buf){
+      if(hex(buf) === HASH){ sset(K_AUTH,"1"); setErr(""); document.getElementById("phone").value = ""; showPortal(true); window.scrollTo(0,0); }
+      else setErr("errWrong");
+    }, function(){ setErr("errCrypto"); });
+  });
+  document.getElementById("logoutBtn").addEventListener("click", function(){ sdel(K_AUTH); showPortal(false); });
+  document.getElementById("langBtn").addEventListener("click", function(){ lang = lang === "en" ? "he" : "en"; sset(K_LANG, lang); applyLang(); });
+
+  // ---------- init ----------
+  applyLang();
+  showPortal(sget(K_AUTH) === "1");
+  setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>
