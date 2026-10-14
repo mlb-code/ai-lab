@@ -253,6 +253,49 @@ footer p{color:var(--muted); margin:0 0 16px}
   .count b{font-size:24px}
   .brand small{display:none}
 }
+
+/* presentation viewer */
+.card-actions{display:flex; gap:10px; flex-wrap:wrap}
+.card-actions .lesson-toggle{flex:1 1 200px; width:auto}
+.slides-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px; flex:1 1 200px; min-height:50px; padding:10px 16px;
+  border-radius:14px; border:0; cursor:pointer; font-weight:700; font-size:16px; color:#0A0E27;
+  background:linear-gradient(135deg, var(--cyan), var(--violet));
+}
+.slides-btn svg{width:20px; height:20px; flex:none}
+.slides-btn:focus-visible,.pz-btn:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
+.pz{position:fixed; inset:0; z-index:50; display:flex; flex-direction:column; background:var(--night);
+  background-image:radial-gradient(1000px 500px at 85% -10%, rgba(99,102,241,.25), transparent 60%), radial-gradient(800px 500px at -10% 90%, rgba(77,214,232,.1), transparent 60%)}
+.pz-top{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; border-bottom:1px solid var(--line)}
+.pz-crumb{font-size:14px; color:var(--muted); font-weight:600; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.pz-crumb b{color:var(--ink)}
+.pz-actions{display:flex; align-items:center; gap:8px; flex:none}
+.pz-counter{font-size:14px; color:var(--muted); direction:ltr}
+.pz-counter b{color:var(--cyan)}
+.pz-btn{min-width:44px; min-height:44px; border-radius:12px; border:1px solid var(--line); background:var(--glass2); color:var(--ink); cursor:pointer; font-size:18px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; padding:0 12px}
+.pz-btn:hover{border-color:var(--violet)}
+.pz-btn[disabled]{opacity:.3; cursor:default}
+.pz-progress{height:3px; background:rgba(255,255,255,.07); flex:none}
+.pz-progress i{display:block; height:100%; background:linear-gradient(90deg, var(--indigo), var(--cyan)); transition:width .3s}
+.pz-stage{flex:1; overflow-y:auto; display:flex; padding:28px 16px}
+.pz-html{margin:auto; width:100%; max-width:860px; overflow-wrap:anywhere;
+  --primary:#6366F1; --primary-light:#8B8DFF; --accent:#4DD6E8; --accent-light:#7BE8C4; --gold:#F5C842; --pink:#F0A6C8;
+  --orange:#FFB86B; --blue:#7CB8FF; --dark:#0A0E27; --dark-card:rgba(20,24,58,.55); --dark-lighter:rgba(255,255,255,.07);
+  --text:#EEF0FF; --text-muted:rgba(226,229,255,.72); color:var(--text); line-height:1.6}
+.pz-html h1{font-family:var(--f-head); font-size:clamp(1.6rem,5vw,2.6rem) !important; line-height:1.2; margin:0 0 1.4rem}
+.pz-html p{margin:0}
+.pz-html strong{color:#fff}
+.pz-html kbd{font-family:ui-monospace,Menlo,monospace; font-size:.85em; padding:2px 7px; border-radius:6px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2)}
+.pz-html .ic{width:1em; height:1em; display:inline-block; vertical-align:-.14em; flex-shrink:0; color:inherit}
+.pz-bottom{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px calc(10px + env(safe-area-inset-bottom)); border-top:1px solid var(--line)}
+.pz-bottom .pz-btn{min-width:120px; font-size:15px}
+.pz-slide-title{font-size:14px; color:var(--muted); text-align:center; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+@media (max-width:640px){
+  .pz-html [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
+  .pz-html [style*="font-size:3rem"]{font-size:2.2rem !important}
+  .pz-bottom .pz-btn{min-width:88px}
+  .pz-stage{padding:20px 16px}
+}
 </style>
 </head>
 <body>
@@ -351,6 +394,25 @@ footer p{color:var(--muted); margin:0 0 16px}
   </main>
 </div>
 
+<div id="pz" class="pz hidden" role="dialog" aria-modal="true" aria-labelledby="pzCrumb">
+  <div class="pz-top">
+    <div class="pz-crumb" id="pzCrumb"></div>
+    <div class="pz-actions">
+      <span class="pz-counter" id="pzCounter"></span>
+      <button type="button" class="pz-btn" id="pzLang" style="font-size:15px"></button>
+      <button type="button" class="pz-btn" id="pzClose" aria-label="Close">✕</button>
+    </div>
+  </div>
+  <div class="pz-progress"><i id="pzBar"></i></div>
+  <div class="pz-stage" id="pzStage"><div class="pz-html" id="pzHtml"></div></div>
+  <div class="pz-bottom">
+    <button type="button" class="pz-btn" id="pzPrev"></button>
+    <div class="pz-slide-title" id="pzTitle"></div>
+    <button type="button" class="pz-btn" id="pzNext"></button>
+  </div>
+</div>
+
+<script src="slides.js"></script>
 <script>
 (function(){
   "use strict";
@@ -393,6 +455,7 @@ footer p{color:var(--muted); margin:0 0 16px}
       journey:"Your learning journey", journeySub:"8 stops from your first AI chat to your own Pitch Day.",
       chipDone:"Done", chipNext:"Next", chipLive:"Now", chipUp:"Coming up",
       goal:"Goal:", open:"Lesson content", close:"Hide lesson content",
+      slidesBtn:"Open presentation", pzPrev:"Back", pzNext:"Next", pzClose:"Close (Esc)",
       footTitle:"Questions? Just ask.", footText:"Message Meir anytime on WhatsApp or by email.",
       footBrand:"AI Lab · ai-lab.co.il"
     },
@@ -421,6 +484,7 @@ footer p{color:var(--muted); margin:0 0 16px}
       journey:"מסע הלמידה שלך", journeySub:"8 תחנות מהשיחה הראשונה עם AI ועד יום הפיץ׳ שלך.",
       chipDone:"הושלם", chipNext:"הבא", chipLive:"עכשיו", chipUp:"בקרוב",
       goal:"מטרה:", open:"תוכן השיעור", close:"הסתרת תוכן השיעור",
+      slidesBtn:"פתיחת המצגת", pzPrev:"הקודם", pzNext:"הבא", pzClose:"סגירה (Esc)",
       footTitle:"שאלות? פשוט לשאול.", footText:"אפשר לכתוב למאיר בכל זמן בוואטסאפ או במייל.",
       footBrand:"AI Lab · ai-lab.co.il"
     }
@@ -498,6 +562,7 @@ footer p{color:var(--muted); margin:0 0 16px}
 
   function renderJourney(){
     var n = now(), ol = document.getElementById("journey"), out = [];
+    var slidesIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="m10 7 4 3-4 3z"/></svg>';
     var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
     for(var i=0;i<8;i++){
       var L = LESSONS[lang][i], st = lessonState(i,n);
@@ -514,7 +579,10 @@ footer p{color:var(--muted); margin:0 0 16px}
             '<h3>'+esc(L.title)+'</h3></div><span class="chip">'+esc(chip)+'</span></div>'+
             '<div class="when">'+when+'</div>'+
             '<p class="goal"><strong>'+esc(t("goal"))+'</strong> '+esc(L.goal)+'</p>'+
+            '<div class="card-actions">'+
+            '<button type="button" class="slides-btn" data-slides="'+i+'">'+slidesIcon+'<span>'+esc(t("slidesBtn"))+'</span></button>'+
             '<button type="button" class="lesson-toggle" aria-expanded="'+isOpen+'" aria-controls="lc-'+i+'" data-i="'+i+'"><span>'+esc(isOpen?t("close"):t("open"))+'</span>'+chevron+'</button>'+
+            '</div>'+
             '<div class="content" id="lc-'+i+'"'+(isOpen?'':' hidden')+'>'+L.html+'</div>'+
           '</article>'+
         '</li>'
@@ -523,12 +591,64 @@ footer p{color:var(--muted); margin:0 0 16px}
     ol.innerHTML = out.join("");
   }
   document.getElementById("journey").addEventListener("click", function(e){
+    var sb = e.target.closest(".slides-btn"); if(sb){ openSlides(+sb.getAttribute("data-slides"), sb); return; }
     var b = e.target.closest(".lesson-toggle"); if(!b) return;
     var i = +b.getAttribute("data-i"), panel = document.getElementById("lc-"+i);
     var open = b.getAttribute("aria-expanded") !== "true";
     openSet[i] = open; b.setAttribute("aria-expanded", String(open));
     panel.hidden = !open; b.querySelector("span").textContent = open ? t("close") : t("open");
   });
+
+  // ---------- presentation viewer ----------
+  var pz = {open:false, lesson:0, idx:0, opener:null};
+  function pzSlides(){ return (window.S52_SLIDES && window.S52_SLIDES[lang] && window.S52_SLIDES[lang][pz.lesson]) || []; }
+  function renderSlide(){
+    var list = pzSlides(), n = list.length, sl = list[pz.idx] || {t:"",h:""};
+    var el = document.getElementById("pz"); el.setAttribute("dir", lang === "he" ? "rtl" : "ltr");
+    document.getElementById("pzCrumb").innerHTML = esc(t("lessonN"))+" "+(pz.lesson+1)+" · <b>"+esc(LESSONS[lang][pz.lesson].title)+"</b>";
+    document.getElementById("pzCounter").innerHTML = "<b>"+(pz.idx+1)+"</b> / "+n;
+    document.getElementById("pzBar").style.width = (n ? (pz.idx+1)/n*100 : 0)+"%";
+    document.getElementById("pzHtml").innerHTML = sl.h;
+    document.getElementById("pzTitle").textContent = sl.t;
+    var prev = document.getElementById("pzPrev"), next = document.getElementById("pzNext");
+    var back = lang === "he" ? "→ " : "← ", fwd = lang === "he" ? " ←" : " →";
+    prev.textContent = back + t("pzPrev"); next.textContent = t("pzNext") + fwd;
+    prev.disabled = pz.idx <= 0; next.disabled = pz.idx >= n-1;
+    document.getElementById("pzClose").setAttribute("aria-label", t("pzClose"));
+    document.getElementById("pzClose").title = t("pzClose");
+    document.getElementById("pzLang").textContent = t("langBtn");
+    document.getElementById("pzStage").scrollTop = 0;
+  }
+  function openSlides(i, opener){
+    pz.open = true; pz.lesson = i; pz.idx = 0; pz.opener = opener || null;
+    document.getElementById("pz").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    renderSlide();
+    document.getElementById("pzNext").focus();
+  }
+  function closeSlides(){
+    pz.open = false; document.getElementById("pz").classList.add("hidden"); document.body.style.overflow = "";
+    if(pz.opener && document.body.contains(pz.opener)) pz.opener.focus();
+  }
+  function goSlide(d){ var n = pzSlides().length, j = pz.idx + d; if(j >= 0 && j < n){ pz.idx = j; renderSlide(); } }
+  document.getElementById("pzPrev").addEventListener("click", function(){ goSlide(-1); });
+  document.getElementById("pzNext").addEventListener("click", function(){ goSlide(1); });
+  document.getElementById("pzClose").addEventListener("click", closeSlides);
+  document.getElementById("pzLang").addEventListener("click", function(){ document.getElementById("langBtn").click(); });
+  document.addEventListener("keydown", function(e){
+    if(!pz.open) return;
+    if(e.key === "Escape"){ closeSlides(); return; }
+    var fwdKey = lang === "he" ? "ArrowLeft" : "ArrowRight", backKey = lang === "he" ? "ArrowRight" : "ArrowLeft";
+    if(e.key === fwdKey || e.key === "PageDown"){ e.preventDefault(); goSlide(1); }
+    else if(e.key === backKey || e.key === "PageUp"){ e.preventDefault(); goSlide(-1); }
+  });
+  var tx = null, ty = null;
+  document.getElementById("pzStage").addEventListener("touchstart", function(e){ tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, {passive:true});
+  document.getElementById("pzStage").addEventListener("touchend", function(e){
+    if(tx === null) return;
+    var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; tx = null;
+    if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)*1.5){ var toNext = lang === "he" ? dx > 0 : dx < 0; goSlide(toNext ? 1 : -1); }
+  }, {passive:true});
 
   // ---------- ticking ----------
   var lastStates = "";
@@ -594,8 +714,8 @@ footer p{color:var(--muted); margin:0 0 16px}
       else setErr("errWrong");
     }, function(){ setErr("errCrypto"); });
   });
-  document.getElementById("logoutBtn").addEventListener("click", function(){ sdel(K_AUTH); showPortal(false); });
-  document.getElementById("langBtn").addEventListener("click", function(){ lang = lang === "en" ? "he" : "en"; sset(K_LANG, lang); applyLang(); });
+  document.getElementById("logoutBtn").addEventListener("click", function(){ if(pz.open) closeSlides(); sdel(K_AUTH); showPortal(false); });
+  document.getElementById("langBtn").addEventListener("click", function(){ lang = lang === "en" ? "he" : "en"; sset(K_LANG, lang); applyLang(); if(pz.open) renderSlide(); });
 
   // ---------- init ----------
   applyLang();
