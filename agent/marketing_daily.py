@@ -354,7 +354,7 @@ def main():
     state = json.load(open(STATE_FILE)) if os.path.exists(STATE_FILE) else {}
     summary = []
     rem = reminders_block(summary)
-    ads = ads_block(summary); ab = landing_split_block(summary); gg = google_block(summary); social = social_block(state, summary); sch = scheduler_block(summary); ag = agent_block(summary)
+    ads = ads_block(summary); gg = google_block(summary); social = social_block(state, summary); sch = scheduler_block(summary); ag = agent_block(summary)
     cb, todo = comments_block(state)
     if todo: summary.append(f"💬 {len(todo)} תגובות ממתינות לתשובה")
     ga = ga_compact()
@@ -362,7 +362,7 @@ def main():
     if os.path.exists("ga.md"):
         tot = next((l for l in open("ga.md", encoding="utf-8").read().splitlines() if l.startswith("**סה")), "")
         if tot: summary.append("אתר: " + tot.replace("**", "").replace("סה\"כ:", "").strip())
-    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + rem + ads + ab + gg + social + sch + ag + cb + ga + pro
+    body = h("div", h("h1", f"דוח שיווק יומי · {today.strftime('%d.%m.%Y')}") + h("h2", "שורה תחתונה") + h("ul", "".join(h("li", x) for x in summary)) + rem + ads + gg + social + sch + ag + cb + ga + pro
                 + h("p", h("i", "נוצר אוטומטית על ידי סוכן השיווק של AI Lab. תשובות לתגובות מתפרסמות רק אחרי אישור.")), dir="rtl")
     if todo: body += "\n\n<!-- COMMENTS_JSON " + json.dumps(todo, ensure_ascii=False) + " -->"
     open("report.md", "w", encoding="utf-8").write(body)
