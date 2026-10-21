@@ -296,6 +296,36 @@ footer p{color:var(--muted); margin:0 0 16px}
   .pz-bottom .pz-btn{min-width:88px}
   .pz-stage{padding:20px 16px}
 }
+/* my project wizard */
+.proj-btn{display:flex; width:100%; min-height:54px; margin-top:12px; background:var(--glass2); color:var(--ink); border:1px solid var(--line)}
+.proj-btn:hover{border-color:var(--violet)}
+.proj-btn svg{width:20px; height:20px; flex:none}
+.project{margin-top:18px; padding:22px 24px; scroll-margin-top:16px; border-color:rgba(139,141,255,.4); background:linear-gradient(135deg, rgba(139,141,255,.10), rgba(255,255,255,.035))}
+.project h2{margin:0 0 4px; font-family:var(--f-head); font-size:22px; color:var(--violet)}
+.project p.sub{margin:0 0 14px; color:var(--muted); font-size:15px}
+.wz-bar{height:6px; border-radius:6px; background:rgba(255,255,255,.08); overflow:hidden; margin-bottom:16px}
+.wz-bar i{display:block; height:100%; background:linear-gradient(90deg,var(--cyan),var(--violet)); transition:width .3s}
+.wz-step{font-size:13px; color:var(--dim); font-weight:700; letter-spacing:.4px}
+.wz-q{font-family:var(--f-head); font-size:21px; line-height:1.3; margin:6px 0 4px}
+.wz-hint{color:var(--muted); font-size:15px; margin:0 0 12px}
+.wz-area{width:100%; min-height:120px; padding:14px 16px; border-radius:14px; font:inherit; font-size:16px; line-height:1.5; resize:vertical;
+  background:rgba(10,14,39,.7); color:var(--ink); border:1.5px solid var(--line); outline:none}
+.wz-area:focus{border-color:var(--cyan); box-shadow:0 0 0 4px rgba(77,214,232,.15)}
+.wz-nav{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:14px}
+.wz-nav .btn{min-height:48px; padding:10px 20px; font-size:16px}
+.wz-ghost{background:var(--glass2); color:var(--ink); border:1px solid var(--line)}
+.wz-ghost:disabled{opacity:.4; cursor:default}
+.wz-saved{font-size:14px; color:#7be8c4; opacity:0; transition:opacity .3s}
+.wz-saved.show{opacity:1}
+.wz-grow{flex:1}
+.wz-sum{display:grid; gap:8px; margin:12px 0 4px}
+.wz-sum button{all:unset; box-sizing:border-box; cursor:pointer; display:block; padding:12px 14px; border-radius:14px; background:rgba(10,14,39,.45); border:1px solid rgba(255,255,255,.06)}
+.wz-sum button:hover,.wz-sum button:focus-visible{border-color:var(--violet)}
+.wz-sum b{display:block; font-size:14.5px}
+.wz-sum span{display:block; color:var(--muted); font-size:14.5px; white-space:pre-wrap; overflow-wrap:anywhere}
+.wz-sum span.empty{color:var(--dim); font-style:italic}
+.wz-copied{font-size:14px; color:#7be8c4; min-height:1.4em; margin-top:8px}
+@media (max-width:560px){ .wz-nav .btn{flex:1 1 100%} .wz-grow{display:none} }
 </style>
 </head>
 <body>
@@ -338,6 +368,10 @@ footer p{color:var(--muted); margin:0 0 16px}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="m16 10 6-3v10l-6-3"/></svg>
           <span data-i18n="classBtn"></span>
         </a>
+        <a class="btn proj-btn" id="projBtn" href="#project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.2 2.2 0 0 0-2.9-.1z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.9A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/></svg>
+          <span data-i18n="projBtn"></span>
+        </a>
         <div class="live-note" id="liveNote" aria-live="polite"></div>
         <div class="zoom-hint" data-i18n="zoomHint"></div>
       </div>
@@ -360,6 +394,12 @@ footer p{color:var(--muted); margin:0 0 16px}
         <span id="progText"></span>
       </div>
       <div class="track" id="track" role="progressbar" aria-valuemin="0" aria-valuemax="8"></div>
+    </section>
+
+    <section class="project panel" id="project" aria-labelledby="projTitle">
+      <h2 id="projTitle" data-i18n="projTitle"></h2>
+      <p class="sub" data-i18n="projSub"></p>
+      <div id="wz"></div>
     </section>
 
     <section class="setup panel" id="setup">
@@ -456,6 +496,11 @@ footer p{color:var(--muted); margin:0 0 16px}
       chipDone:"Done", chipNext:"Next", chipLive:"Now", chipUp:"Coming up",
       goal:"Goal:", open:"Lesson content", close:"Hide lesson content",
       slidesBtn:"Open presentation", pzPrev:"Back", pzNext:"Next", pzClose:"Close (Esc)",
+      projBtn:"My project", projTitle:"My project", projSub:"Answer a few short questions about your idea. At the end, one click copies everything as a ready prompt — paste it into Claude and it builds your website.",
+      wzStep:function(a,b){return "Question "+a+" of "+b}, wzPrev:"Back", wzNext:"Next", wzFinish:"Finish", wzSaved:"✔ Saved",
+      wzDoneTitle:"Your project brief is ready!", wzDoneSub:function(a,b){return "You answered "+a+" of "+b+" questions. Tap any answer to edit it."},
+      wzEmpty:"Not answered yet — tap to edit", wzRestart:"Edit from the start", wzCopyPrompt:"Copy build prompt for Claude", wzCopyBrief:"Copy my answers",
+      wzCopiedPrompt:"Copied! Now open claude.ai, start a new chat and paste (Ctrl+V / ⌘+V).", wzCopiedBrief:"Your answers are copied.", wzCopyFail:"Couldn't copy automatically — select the text and copy it.",
       footTitle:"Questions? Just ask.", footText:"Message Meir anytime on WhatsApp or by email.",
       footBrand:"AI Lab · ai-lab.co.il"
     },
@@ -485,6 +530,11 @@ footer p{color:var(--muted); margin:0 0 16px}
       chipDone:"הושלם", chipNext:"הבא", chipLive:"עכשיו", chipUp:"בקרוב",
       goal:"מטרה:", open:"תוכן השיעור", close:"הסתרת תוכן השיעור",
       slidesBtn:"פתיחת המצגת", pzPrev:"הקודם", pzNext:"הבא", pzClose:"סגירה (Esc)",
+      projBtn:"הפרויקט שלי", projTitle:"הפרויקט שלי", projSub:"עונים על כמה שאלות קצרות על הרעיון שלך. בסוף, לחיצה אחת מעתיקה הכול כפרומפט מוכן — מדביקים בקלוד והוא בונה לך את האתר.",
+      wzStep:function(a,b){return "שאלה "+a+" מתוך "+b}, wzPrev:"הקודם", wzNext:"הבא", wzFinish:"סיום", wzSaved:"✔ נשמר",
+      wzDoneTitle:"תיק הפרויקט שלך מוכן!", wzDoneSub:function(a,b){return "ענית על "+a+" מתוך "+b+" שאלות. לחיצה על תשובה פותחת אותה לעריכה."},
+      wzEmpty:"עוד לא ענית — לחצי לעריכה", wzRestart:"עריכה מההתחלה", wzCopyPrompt:"העתקת פרומפט בנייה לקלוד", wzCopyBrief:"העתקת התשובות שלי",
+      wzCopiedPrompt:"הועתק! עכשיו פותחים את claude.ai, שיחה חדשה, ומדביקים (Ctrl+V / ⌘+V).", wzCopiedBrief:"התשובות שלך הועתקו.", wzCopyFail:"לא הצלחנו להעתיק אוטומטית — סמני את הטקסט והעתיקי.",
       footTitle:"שאלות? פשוט לשאול.", footText:"אפשר לכתוב למאיר בכל זמן בוואטסאפ או במייל.",
       footBrand:"AI Lab · ai-lab.co.il"
     }
@@ -548,6 +598,7 @@ footer p{color:var(--muted); margin:0 0 16px}
     var errEl = document.getElementById("loginErr");
     if(errEl.dataset.key) errEl.textContent = t(errEl.dataset.key);
     renderJourney();
+    renderProject();
     tick();
   }
 
@@ -716,6 +767,131 @@ footer p{color:var(--muted); margin:0 0 16px}
   });
   document.getElementById("logoutBtn").addEventListener("click", function(){ if(pz.open) closeSlides(); sdel(K_AUTH); showPortal(false); });
   document.getElementById("langBtn").addEventListener("click", function(){ lang = lang === "en" ? "he" : "en"; sset(K_LANG, lang); applyLang(); if(pz.open) renderSlide(); });
+
+  // ---------- my project wizard (like "הפרויקט שלי" in the platform) ----------
+  var K_PROJ = "ailab_s52_proj";
+  var WZ = {
+    en:[
+      {q:"What's the name of your project?", h:"Pick a catchy name that hints at what it does.", ph:"e.g. StudyBuddy, PetAlert, GreenBite..."},
+      {q:"What problem are you solving?", h:"Describe a real problem people run into in everyday life.", ph:"e.g. It's hard to find friends to study with before exams..."},
+      {q:"Who are you solving it for?", h:"Who is your audience? Age, interests, where they live.", ph:"e.g. High-school students preparing for exams..."},
+      {q:"How do people solve it today?", h:"What already exists? Why isn't it good enough?", ph:"e.g. They use WhatsApp groups, but it's messy..."},
+      {q:"What's your solution?", h:"Explain your idea in one or two sentences.", ph:"e.g. A website that matches students into study groups..."},
+      {q:"Which features will it have?", h:"List 3–5 main features.", ph:"e.g. 1) Find partners 2) Group chat 3) Study calendar..."},
+      {q:"How will you make money?", h:"Monthly subscription? Free with premium? Ads?", ph:"e.g. Free basic version, premium subscription..."},
+      {q:"What's the first thing you'll build?", h:"The simplest version that's still useful (MVP).", ph:"e.g. A landing page with a sign-up form..."},
+      {q:"How will you reach customers?", h:"Social media? Word of mouth? Partnerships?", ph:"e.g. Share in school groups, a TikTok video..."},
+      {q:"What does success look like for you?", h:"What's the goal? How many users? What change?", ph:"e.g. 100 students using it in the first month..."},
+      {q:"Which language and look should your website have?", h:"English, Hebrew or both — plus a style and colors you love.", ph:"e.g. English, dark background with bright purple, playful and modern..."}
+    ],
+    he:[
+      {q:"מה השם של הפרויקט שלך?", h:"בחרי שם קליט שמרמז מה המוצר עושה.", ph:"למשל: StudyBuddy, PetAlert, GreenBite..."},
+      {q:"איזו בעיה את פותרת?", h:"תארי בעיה אמיתית שאנשים נתקלים בה ביומיום.", ph:"למשל: קשה למצוא חברים ללמוד איתם לפני מבחנים..."},
+      {q:"למי את פותרת את הבעיה?", h:"מי קהל היעד? גיל, תחומי עניין, איפה הם גרים.", ph:"למשל: תלמידי תיכון לפני בחינות..."},
+      {q:"איך פותרים את הבעיה היום?", h:"מה כבר קיים? למה זה לא מספיק טוב?", ph:"למשל: משתמשים בקבוצות וואטסאפ, אבל זה לא מסודר..."},
+      {q:"מה הפתרון שלך?", h:"הסבירי את הרעיון במשפט אחד או שניים.", ph:"למשל: אתר שמחבר תלמידים לקבוצות לימוד..."},
+      {q:"אילו יכולות יהיו במוצר?", h:"רשמי 3–5 יכולות עיקריות.", ph:"למשל: 1) חיפוש שותפים 2) צ'אט קבוצתי 3) לוח זמנים..."},
+      {q:"איך תרוויחי כסף?", h:"מנוי חודשי? חינם עם פרימיום? פרסום?", ph:"למשל: גרסה בסיסית חינם, מנוי פרימיום..."},
+      {q:"מה הדבר הראשון שתבני?", h:"הגרסה הכי פשוטה שעדיין שימושית (MVP).", ph:"למשל: דף נחיתה עם טופס הרשמה..."},
+      {q:"איך תגיעי ללקוחות?", h:"רשתות חברתיות? מפה לאוזן? שיתופי פעולה?", ph:"למשל: אשתף בקבוצות של בית הספר, סרטון בטיקטוק..."},
+      {q:"איך נראית הצלחה בשבילך?", h:"מה המטרה? כמה משתמשים? איזה שינוי?", ph:"למשל: 100 תלמידים ישתמשו בחודש הראשון..."},
+      {q:"באיזו שפה ובאיזה סגנון יהיה האתר?", h:"אנגלית, עברית או שתיהן — ועוד סגנון וצבעים שאת אוהבת.", ph:"למשל: אנגלית, רקע כהה עם סגול בוהק, שובב ומודרני..."}
+    ]
+  };
+  var proj = (function(){ try{ var d = JSON.parse(sget(K_PROJ) || "{}"); return {a:d.a||{}, step:d.step||0}; }catch(e){ return {a:{}, step:0}; } })();
+  var savedTimer = null;
+  function projSave(showTick){
+    sset(K_PROJ, JSON.stringify(proj));
+    if(showTick){ var el = document.getElementById("wzSaved"); if(el){ el.classList.add("show"); clearTimeout(savedTimer); savedTimer = setTimeout(function(){ el.classList.remove("show"); }, 1200); } }
+  }
+  function ans(i){ return (proj.a[i] || "").trim(); }
+  function buildPrompt(){
+    var Q = WZ[lang], v = function(i){ return ans(i) || "-"; };
+    if(lang === "he"){
+      return 'אני לומדת בקורס פרטי "בינה מלאכותית ויזמות" של AI Lab. סיימתי את מסמך האפיון של המיזם שלי — בני לי לפיו אתר. אם חסר לך פרט חשוב, שאלי אותי לפני שאת בונה.\n\n'+
+        '# מסמך האפיון — '+(ans(0)||"המיזם שלי")+'\n'+
+        '- שם המיזם: '+v(0)+'\n- הבעיה שאנחנו פותרים: '+v(1)+'\n- קהל היעד: '+v(2)+'\n- איך פותרים את זה היום (ולמה זה לא מספיק): '+v(3)+'\n- הפתרון שלנו: '+v(4)+'\n- היכולות המרכזיות: '+v(5)+'\n- איך נרוויח כסף: '+v(6)+'\n- הדבר הראשון שנבנה (MVP): '+v(7)+'\n- איך נגיע ללקוחות: '+v(8)+'\n- איך נראית הצלחה: '+v(9)+'\n- שפה וסגנון האתר: '+v(10)+'\n\n'+
+        '# הוראות בנייה\nבני אתר נחיתה שלם למיזם, בקובץ index.html אחד:\n'+
+        '1. שפה וסגנון: לפי מה שכתבתי בסעיף "שפה וסגנון האתר". אם האתר בעברית — כיוון RTL (dir="rtl").\n'+
+        '2. הסקשנים: פתיח עם שם המיזם, משפט מכירה אחד וכפתור קריאה לפעולה גדול · הבעיה · הפתרון · היכולות ככרטיסים · איך זה עובד ב-3 צעדים · מחירים לפי המודל העסקי · טופס הרשמה או יצירת קשר (עיצובי בלבד, בלי שרת) · פוטר עם השורה "נבנה בקורס בינה מלאכותית ויזמות של AI Lab".\n'+
+        '3. מותאם קודם כל למובייל ורספונסיבי מלא. בלי ספריות חיצוניות — כל ה-CSS בתוך הקובץ. נגיעות נעימות: אפקטי ריחוף, כרטיסים מעוגלים, פלטת צבעים שמתאימה לאופי המיזם.\n'+
+        '4. השתמשי בתשובות מהאפיון כלשונן איפה שמתאים — זה המיזם שלי, שמרי על המילים שלי.\n'+
+        '5. אחרי שתבני — הציעי לי שדרוג אחד שאוכל לבקש ממך בהמשך.';
+    }
+    return 'I\'m a student in AI Lab\'s private "AI & Entrepreneurship" course. I\'ve finished the brief for my startup idea — please build me a website based on it. If an important detail is missing, ask me before you build.\n\n'+
+      '# Project brief — '+(ans(0)||"My project")+'\n'+
+      '- Project name: '+v(0)+'\n- The problem we solve: '+v(1)+'\n- Target audience: '+v(2)+'\n- How people solve it today (and why that\'s not enough): '+v(3)+'\n- Our solution: '+v(4)+'\n- Main features: '+v(5)+'\n- How we\'ll make money: '+v(6)+'\n- First thing to build (MVP): '+v(7)+'\n- How we\'ll reach customers: '+v(8)+'\n- What success looks like: '+v(9)+'\n- Website language and look: '+v(10)+'\n\n'+
+      '# Build instructions\nBuild a complete landing page for the project in a single index.html file:\n'+
+      '1. Language and style: follow what I wrote under "Website language and look". If the site is in Hebrew, use right-to-left (dir="rtl").\n'+
+      '2. Sections: a hero with the project name, one selling sentence and a big call-to-action button · the problem · our solution · the features as cards · how it works in 3 simple steps · pricing based on the business model · a sign-up or contact form (design only, no server) · a footer with the line "Built in the AI & Entrepreneurship course at AI Lab".\n'+
+      '3. Mobile-first and fully responsive. No external libraries — all CSS inside the file. Add pleasant touches: hover effects, rounded cards, and a color palette that fits the project.\n'+
+      '4. Use my answers word for word where it fits — it\'s my project, keep my words.\n'+
+      '5. After you build it, suggest one upgrade I could ask you for next.';
+  }
+  function copyText(txt, okKey){
+    var out = document.getElementById("wzCopied");
+    function ok(){ if(out) out.textContent = t(okKey); }
+    function fail(){
+      var ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly",""); ta.style.position = "fixed"; ta.style.top = "0"; ta.style.insetInlineStart = "0"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var done = false; try{ done = document.execCommand("copy"); }catch(e){}
+      document.body.removeChild(ta);
+      if(out) out.textContent = done ? t(okKey) : t("wzCopyFail");
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, fail); else fail();
+  }
+  function renderProject(){
+    var box = document.getElementById("wz"); if(!box) return;
+    var Q = WZ[lang], n = Q.length, step = Math.min(proj.step, n);
+    var back = lang === "he" ? "→ " : "← ", fwd = lang === "he" ? " ←" : " →";
+    var pct = Math.round(step / n * 100);
+    if(step < n){
+      var q = Q[step];
+      box.innerHTML = '<div class="wz-bar"><i style="width:'+pct+'%"></i></div>'+
+        '<div class="wz-step">'+esc(T[lang].wzStep(step+1, n))+'</div>'+
+        '<h3 class="wz-q"><label for="wzArea">'+esc(q.q)+'</label></h3>'+
+        '<p class="wz-hint">'+esc(q.h)+'</p>'+
+        '<textarea class="wz-area" id="wzArea" placeholder="'+esc(q.ph)+'"></textarea>'+
+        '<div class="wz-nav">'+
+          '<button type="button" class="btn wz-ghost" data-wz="prev"'+(step===0?' disabled':'')+'>'+back+esc(t("wzPrev"))+'</button>'+
+          '<span class="wz-saved" id="wzSaved">'+esc(t("wzSaved"))+'</span><span class="wz-grow"></span>'+
+          '<button type="button" class="btn" data-wz="next">'+esc(step === n-1 ? t("wzFinish") : t("wzNext"))+(step === n-1 ? '' : fwd)+'</button>'+
+        '</div>';
+      var area = document.getElementById("wzArea");
+      area.value = proj.a[step] || "";
+      area.addEventListener("input", function(){ proj.a[step] = area.value; projSave(true); });
+    } else {
+      var filled = 0, items = "";
+      for(var i=0;i<n;i++){ if(ans(i)) filled++;
+        items += '<button type="button" data-wz-edit="'+i+'"><b>'+esc(Q[i].q)+'</b><span class="'+(ans(i)?'':'empty')+'">'+esc(ans(i) || t("wzEmpty"))+'</span></button>'; }
+      box.innerHTML = '<div class="wz-bar"><i style="width:100%"></i></div>'+
+        '<h3 class="wz-q">'+esc(t("wzDoneTitle"))+'</h3>'+
+        '<p class="wz-hint">'+esc(T[lang].wzDoneSub(filled, n))+'</p>'+
+        '<div class="wz-sum">'+items+'</div>'+
+        '<div class="wz-nav">'+
+          '<button type="button" class="btn wz-ghost" data-wz="restart">'+esc(t("wzRestart"))+'</button><span class="wz-grow"></span>'+
+          '<button type="button" class="btn wz-ghost" data-wz="brief">'+esc(t("wzCopyBrief"))+'</button>'+
+          '<button type="button" class="btn" data-wz="prompt">'+esc(t("wzCopyPrompt"))+'</button>'+
+        '</div><div class="wz-copied" id="wzCopied" aria-live="polite"></div>';
+    }
+  }
+  document.getElementById("wz").addEventListener("click", function(e){
+    var b = e.target.closest("[data-wz],[data-wz-edit]"); if(!b) return;
+    var n = WZ[lang].length, act = b.getAttribute("data-wz");
+    if(b.hasAttribute("data-wz-edit")){ proj.step = +b.getAttribute("data-wz-edit"); }
+    else if(act === "prev"){ proj.step = Math.max(0, proj.step-1); }
+    else if(act === "next"){ proj.step = Math.min(n, proj.step+1); }
+    else if(act === "restart"){ proj.step = 0; }
+    else if(act === "prompt"){ copyText(buildPrompt(), "wzCopiedPrompt"); return; }
+    else if(act === "brief"){
+      var Q = WZ[lang], lines = [lang === "he" ? "תיק הפרויקט שלי — AI Lab" : "My project brief — AI Lab", ""];
+      for(var i=0;i<n;i++){ lines.push(Q[i].q); lines.push(ans(i) || "-"); lines.push(""); }
+      copyText(lines.join("\n"), "wzCopiedBrief"); return;
+    }
+    projSave(false); renderProject();
+    var a = document.getElementById("wzArea"); if(a) a.focus({preventScroll:true});
+    document.getElementById("project").scrollIntoView({block:"start", behavior:"smooth"});
+  });
 
   // ---------- init ----------
   applyLang();
