@@ -1,0 +1,23 @@
+name: openai-check
+# בדיקה חינמית: האם OPENAI_API_KEY תקין והאם מודל ה-GEO קיים (רשימת מודלים בלבד, בלי קריאה בתשלום)
+on:
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: List models
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          code=$(curl -s -o models.json -w "%{http_code}" https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY")
+          echo "HTTP $code"
+          [ "$code" = "200" ] || { echo "המפתח לא תקין או חסום"; exit 1; }
+          python3 - <<'PY'
+          import json
+          ids=sorted(m["id"] for m in json.load(open("models.json"))["data"])
+          want="gpt-4.1-mini"
+          print("geo model", want, "exists:", want in ids)
+          print("mini models:", [i for i in ids if "mini" in i and not any(x in i for x in ("audio","realtime","tts","transcribe","search"))][:20])
+          PY
