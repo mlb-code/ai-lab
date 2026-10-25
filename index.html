@@ -33,7 +33,7 @@ gtag('config', 'AW-18061574299');
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>AI Lab | חוגי תכנות ו-AI לילדים ונוער אונליין — קורסים בזום מגיל 9, תל אביב</title>
     <link rel="canonical" href="https://ai-lab.co.il/">
-<meta name="description" content="חוג תכנות לילדים ונוער עם AI, קורס בינה מלאכותית ויזמות, יצירת סרטונים וכסף חכם: 4 קורסים חיים בזום לגילאי 9–16, עד 5 בקבוצה, הילד יוצא עם אתר או אפליקציה באוויר. מחזור חדש מ-25.10, מסלול קצר או ארוך · דירוג 5.0 בגוגל">
+<meta name="description" content="חוג תכנות לילדים ונוער עם AI, קורס בינה מלאכותית ויזמות, יצירת סרטונים וכסף חכם: 4 קורסים חיים בזום לגילאי 9–17, עד 5 בקבוצה, הילד יוצא עם אתר או אפליקציה באוויר. מחזור חדש מ-25.10, מסלול קצר או ארוך · דירוג 5.0 בגוגל">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-gem-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="favicon-gem-64.png">
 <link rel="apple-touch-icon" href="apple-touch-icon-gem.png">
@@ -60,7 +60,7 @@ gtag('config', 'AW-18061574299');
 <link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Assistant:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"לאיזה גילאים מתאימים הקורסים?","acceptedAnswer":{"@type":"Answer","text":"גילאי 9–16 בשלוש קבוצות גיל, ויש גם מסלול נפרד למבוגרים ללא רקע טכנולוגי."}},
+{"@type":"Question","name":"לאיזה גילאים מתאימים הקורסים?","acceptedAnswer":{"@type":"Answer","text":"גילאי 9–17 בשלוש קבוצות גיל, ויש גם מסלול נפרד למבוגרים ללא רקע טכנולוגי."}},
 {"@type":"Question","name":"צריך ניסיון קודם בתכנות?","acceptedAnswer":{"@type":"Answer","text":"לא. מתחילים מאפס ולומדים לעבוד עם ChatGPT, Claude ו-Cursor צעד אחר צעד."}},
 {"@type":"Question","name":"מה קורה אחרי שמסיימים קורס?","acceptedAnswer":{"@type":"Answer","text":"ממשיכים לקורס הבא במפת הקורסים — הפרויקט של התלמיד ממשיך איתו מקורס לקורס: אתר, סרטון, שיווק, אפליקציה ועוד."}},
 {"@type":"Question","name":"איך מתקיימים המפגשים?","acceptedAnswer":{"@type":"Answer","text":"מפגשים חיים בזום בקבוצות קטנות של עד 5 תלמידים, עם ליווי אישי לכל תלמיד."}},
@@ -1182,7 +1182,7 @@ gtag('config', 'AW-18061574299');
     }
     .sticker:nth-child(odd) { transform: rotate(-1.6deg); }
     .sticker:nth-child(even) { transform: rotate(1.6deg); }
-    .sticker:hover { transform: rotate(0) scale(1.06); box-shadow: inset 0 1.5px 0 rgba(255,255,255,.6), 0 14px 34px color-mix(in srgb, var(--stc) 40%, transparent); }
+    /* 25.10.2026: בלי אפקט hover למדבקות המיומנויות — הן לא לחיצות, וההגדלה במעבר עכבר הזמינה "לחיצות מתות" (Clarity) */
     .sticker .em { font-size: 1.25em; }
 
     /* ===== קהילות ===== */
@@ -2580,6 +2580,65 @@ gtag('config', 'AW-18061574299');
         .hero-actions .cr-row a.grating-m { padding: clamp(5px, .8svh, 8px) 18px; margin-top: 0; }
     }
 
+    /* ===== 25.10.2026: "הרשמה לקבוצות החדשות" מתחת לכפתורי ההירו =====
+       במובייל גוללים רק ~45% מהדף, וכרטיסי ההרשמה נמצאים אחרי מרכז הבחירה — הקישור מביא את ההרשמה למסך הראשון.
+       דסקטופ: שורה משלו אחרי ההערה "חינם ובלי התחייבות". מובייל: באותה שורה עם תג ה-5.0 (בלי להוסיף גובה להירו). */
+    .hero-cohort {
+        order: 5;
+        display: inline-flex; align-items: center; gap: 9px;
+        padding: 9px 18px; border-radius: 50px; text-decoration: none; white-space: nowrap;
+        background: rgba(31,175,87,.12);
+        backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6);
+        border: 1px solid rgba(74,222,128,.42);
+        box-shadow: inset 0 1.5px 0 rgba(255,255,255,.22), 0 6px 22px rgba(31,175,87,.16);
+        color: #A7F3C4; font-size: .9rem; font-weight: 800;
+        transition: transform .2s, border-color .2s, background-color .2s, color .2s;
+    }
+    .hero-cohort:hover { transform: translateY(-2px); border-color: rgba(74,222,128,.78); background-color: rgba(31,175,87,.22); color: #fff; }
+    .hero-cohort .hc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: #4ADE80; box-shadow: 0 0 10px rgba(74,222,128,.9); animation: hudPulse 1.6s ease-in-out infinite; }
+    .hero-cohort .hc-arr { transition: transform .2s; }
+    .hero-cohort:hover .hc-arr { transform: translateX(-3px); }
+    @media (max-width: 960px) {
+        .hero-actions .cr-row { justify-content: center; }
+        .hero-actions .cr-row .hero-cohort { order: 3; flex: 0 0 auto; margin: 0; padding: clamp(5px, .8svh, 8px) 11px; font-size: .8rem; gap: 6px; }
+        .hero-actions .cr-row a.grating-m { margin-inline: 0; }
+    }
+    .hero-cohort .hc-short { display: none; }
+    /* טלפונים צרים מאוד (320px): נוסח קצר, כדי שהקישור ותג ה-5.0 יישארו בשורה אחת ולא יגדילו את ההירו */
+    @media (max-width: 350px) {
+        .hero-cohort .hc-full { display: none; }
+        .hero-cohort .hc-short { display: inline; }
+    }
+    @media (prefers-reduced-motion: reduce) { .hero-cohort .hc-dot { animation: none; } }
+    /* טלפונים נמוכים (גובה ≤700, למשל iPhone SE): רמז הגלילה נופל על שורת הכפתורים התחתונה ותופס את הלחיצות — מסתירים אותו שם */
+    @media (max-width: 960px) and (max-height: 700px) { .scroll-cue { display: none; } }
+
+    /* תג גוגל בביקורות — עכשיו קישור לביקורות (25.10.2026, לחיצות מתות) */
+    a.g-badge { text-decoration: none; color: inherit; transition: border-color .2s, background-color .2s; }
+    a.g-badge:hover { border-color: rgba(245,166,35,.5); background-color: rgba(255,255,255,.1); }
+
+    /* ===== מדריכים להורים — קישורים פנימיים למאמרי "חוג תכנות לילדים" (25.10.2026) ===== */
+    .guides {
+        max-width: 980px; margin: 34px auto 0; padding: 22px 26px; border-radius: 22px;
+        background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14);
+        box-shadow: inset 0 1.5px 0 rgba(255,255,255,.12);
+    }
+    .guides h3 { font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .guides ul { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
+    .guides a {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        padding: 11px 2px; border-bottom: 1px solid rgba(255,255,255,.09);
+        color: #C7D2FE; font-weight: 700; font-size: .95rem; line-height: 1.45; text-decoration: none;
+        transition: color .2s;
+    }
+    .guides a::after { content: "←"; color: var(--accent-bright); flex-shrink: 0; transition: transform .2s; }
+    .guides a:hover { color: #fff; }
+    .guides a:hover::after { transform: translateX(-4px); }
+    @media (max-width: 760px) {
+        .guides { padding: 18px 18px 8px; }
+        .guides ul { grid-template-columns: minmax(0, 1fr); }
+    }
+
     /* ===== גיבוי לדפדפנים בלי backdrop-filter (WebView ישן / פיירפוקס לפני 103) =====
        רק background-color — השכבה התחתונה ביותר, לכן הגרדיאנטים והצללים של הזכוכית
        נשארים בדיוק כמו שהם. בלי זה הפאנלים היו שקופים על גבי הרקע החי והטקסט נבלע. */
@@ -2765,7 +2824,7 @@ gtag('config', 'AW-18061574299');
                 <span class="ask-go">דברו עם ה-AI שלנו</span>
             </button></span>
             <div class="hero-actions">
-                <div class="cr-row"><span class="holo-wrap"><a href="https://my.ai-lab.co.il/join" class="btn btn-primary" data-track="free_signup" data-section="hero">פתיחת חשבון חינם <span class="arr">←</span></a></span><a href="#courses" class="btn btn-ghost-dark hero-map" data-track="see_courses" data-section="hero">למפת הקורסים</a><a class="hero-comm ours" href="https://wa.me/972546500794?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D" target="_blank" rel="noopener" data-cta="whatsapp_hero"><svg class="wa-ic" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.69 8.23-8.23 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.2 8.2 0 0 1-1.26-4.38c.01-4.54 3.7-8.23 8.24-8.23M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01"/></svg> הוואטסאפ שלנו</a><a class="grating grating-m" href="https://share.google/ckBqGOSb4wWxyHCfX" target="_blank" rel="noopener" aria-label="דירוג 5.0 בגוגל"><span class="gr-star">★</span> <b>5.0</b> <span class="gr-txt">בגוגל</span></a></div>
+                <div class="cr-row"><span class="holo-wrap"><a href="https://my.ai-lab.co.il/join" class="btn btn-primary" data-track="free_signup" data-section="hero">פתיחת חשבון חינם <span class="arr">←</span></a></span><a href="#courses" class="btn btn-ghost-dark hero-map" data-track="see_courses" data-section="hero">למפת הקורסים</a><a class="hero-comm ours" href="https://wa.me/972546500794?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D%20%D7%9C%D7%99%D7%9C%D7%93%D7%99%D7%9D" target="_blank" rel="noopener" data-cta="whatsapp_hero"><svg class="wa-ic" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.69 8.23-8.23 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.2 8.2 0 0 1-1.26-4.38c.01-4.54 3.7-8.23 8.24-8.23M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01"/></svg> הוואטסאפ שלנו</a><a class="hero-cohort" href="https://my.ai-lab.co.il/courses" data-track="cohort_groups_hero" data-section="hero"><span class="hc-dot" aria-hidden="true"></span><span class="hc-full">הרשמה לקבוצות החדשות</span><span class="hc-short">הקבוצות החדשות</span> <span class="hc-arr" aria-hidden="true">←</span></a><a class="grating grating-m" href="https://share.google/ckBqGOSb4wWxyHCfX" target="_blank" rel="noopener" aria-label="דירוג 5.0 בגוגל"><span class="gr-star">★</span> <b>5.0</b> <span class="gr-txt">בגוגל</span></a></div>
                 <p class="hero-note">חינם ובלי התחייבות · משלמים רק כשבוחרים קורס</p>
             </div>
         </div>
@@ -3050,10 +3109,10 @@ gtag('config', 'AW-18061574299');
             </div>
         </div>
         <div class="quote reveal" id="reviewsBox">
-            <div class="g-badge">
+            <a class="g-badge" href="https://share.google/ckBqGOSb4wWxyHCfX" target="_blank" rel="noopener" aria-label="דירוג 5.0 בגוגל — לביקורות" data-track="google_reviews_badge">
                 <span class="g-word"><b style="color:#4285F4">G</b><b style="color:#EA4335">o</b><b style="color:#FBBC05">o</b><b style="color:#4285F4">g</b><b style="color:#34A853">l</b><b style="color:#EA4335">e</b></span>
                 <span class="stars-inline">5.0 ★★★★★</span>
-            </div>
+            </a>
             <div class="rv-stage">
                 <div class="rv-slide" id="rvSlide">
                     <blockquote id="rvText"></blockquote>
@@ -3187,6 +3246,18 @@ gtag('config', 'AW-18061574299');
                     </div>
                 </a>
             </div>
+            <!-- מדריכים להורים: קישורים פנימיים למאמרי "חוג תכנות לילדים" (25.10.2026) -->
+            <div class="guides reveal">
+                <h3>מדריכים להורים: חוגי תכנות ומחשבים לילדים</h3>
+                <ul>
+                    <li><a href="/blog/kids-coding-class-2026-guide.html">חוג תכנות לילדים 2026: המדריך להורים</a></li>
+                    <li><a href="/blog/computer-class-for-kids-2026.html">חוג מחשבים לילדים ב-2026: מה לומדים היום</a></li>
+                    <li><a href="/blog/coding-class-vs-ai-course.html">חוג תכנות לילדים או קורס AI: מה עדיף?</a></li>
+                    <li><a href="/blog/how-many-kids-in-coding-class.html">כמה ילדים צריכים להיות בחוג תכנות?</a></li>
+                    <li><a href="/blog/online-classes-for-computer-loving-kids.html">חוגים לילדים אונליין לילד שאוהב מחשבים</a></li>
+                    <li><a href="/blog/coding-club-teens-tel-aviv.html">חוג תכנות לנוער בתל אביב, או קבוצה קטנה בזום?</a></li>
+                </ul>
+            </div>
             <div class="blog-cta reveal">
                 <a href="/blog/" class="btn btn-ghost-dark">לכל המאמרים בבלוג</a>
             </div>
@@ -3213,7 +3284,7 @@ gtag('config', 'AW-18061574299');
             <div class="faq-wrap reveal">
                 <details>
                     <summary>לאיזה גילאים מתאימים הקורסים?</summary>
-                    <div class="faq-a">גילאי 9–16, בשלוש קבוצות גיל נפרדות — ויש גם מסלול נפרד למבוגרים ללא רקע טכנולוגי.</div>
+                    <div class="faq-a">גילאי 9–17, בשלוש קבוצות גיל נפרדות — ויש גם מסלול נפרד למבוגרים ללא רקע טכנולוגי.</div>
                 </details>
                 <details>
                     <summary>צריך ניסיון קודם בתכנות?</summary>
@@ -4128,7 +4199,7 @@ gtag('config', 'AW-18061574299');
             { k: ['מחיר', 'עולה', 'כמה', 'עלות', 'תשלום'],
               r: { text: 'המחירים אצלנו גלויים תמיד: קורס בינה מלאכותית ויזמות (ההתחלה של כולם) — 990 ₪ ל-8 מפגשים. קורס תכנות ב-AI (המתקדם) — 1,290 ₪ ל-8 מפגשים. ובקרוב: כסף חכם עם AI — 1,190 ₪, יצירת סרטונים ב-AI — 1,290 ₪. עד 5 תלמידים בקבוצה, והאזור האישי כלול.', actions: [ACT.c1, ACT.c2, ACT.reg] } },
             { k: ['גיל', 'בן ', 'בת ', 'מתאים ל', 'צעיר', 'קטן'],
-              r: { text: 'הקורסים מתאימים לגילאי 9–16, בקבוצות גיל נפרדות של עד 5 תלמידים. מתחילים מקורס היזמות — משם כל המסלולים נפתחים. ספרו לי בוואטסאפ בן כמה הילד ונתאים בדיוק.', actions: [ACT.c1, ACT.waCall] } },
+              r: { text: 'הקורסים מתאימים לגילאי 9–17, בקבוצות גיל נפרדות של עד 5 תלמידים. מתחילים מקורס היזמות — משם כל המסלולים נפתחים. ספרו לי בוואטסאפ בן כמה הילד ונתאים בדיוק.', actions: [ACT.c1, ACT.waCall] } },
             { k: ['דוגמ', 'אתרים של', 'פרויקט', 'בנו', 'תוצאות'],
               r: { text: 'יש לנו עשרות אתרים חיים שילדים בנו — כולם באוויר באינטרנט. הנה כמה מהאהובים עליי, או שתגללו לקיר המלא:', actions: [
                   { t: 'link', href: 'https://ai-lab.co.il/bookmatch/', label: 'BookMatch — מאיה, 11' },
@@ -5057,7 +5128,7 @@ gtag('config', 'AW-18061574299');
 
     // ===== מדידת לחיצות ל-Google Analytics (08.09.2026, בקשת מאיר): כל כפתור/קישור משמעותי → אירוע cta_click =====
     (function ctaTracking(){
-        const SEL = 'a.btn, button.btn, .hero-comm, .btn-comm, .btn-dc, .grating, .ask-bar, .agent-orb, .foot-social a, .m-social a, nav a, .mlink, .post, .hub-head, a[href*="my.ai-lab.co.il"], a[href*="wa.me"], a[href*="discord.gg"], a[href*="chat.whatsapp.com"], a[href*="tel:"], a[href*="mailto:"], [data-track]';
+        const SEL = 'a.btn, button.btn, .hero-comm, .btn-comm, .btn-dc, .grating, .ask-bar, .agent-orb, .foot-social a, .m-social a, nav a, .mlink, .post, .guides a, .hub-head, a[href*="my.ai-lab.co.il"], a[href*="wa.me"], a[href*="discord.gg"], a[href*="chat.whatsapp.com"], a[href*="tel:"], a[href*="mailto:"], [data-track]';
         document.addEventListener('click', e => {
             const el = e.target && e.target.closest ? e.target.closest(SEL) : null;
             if (!el || typeof gtag !== 'function') return;
