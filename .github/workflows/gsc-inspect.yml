@@ -1,0 +1,34 @@
+name: gsc-inspect
+
+# סטטוס סריקה בגוגל (Search Console URL Inspection): דף הבית, הבלוג, המאמרים של 02–03.10.2026 ודף הבית של Pro,
+# + רשימת הסייטמאפים שנשלחו (כולל: האם ל-pro.ai-lab.co.il יש סייטמאפ). קריאה בלבד, חינם.
+# הרצה: gh workflow run gsc-inspect -R mlb-code/ai-lab  → התוצאה בטבלה ב-Summary של הריצה.
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "כתובות לבדיקה מופרדות בפסיק (ריק = הרשימה הקבועה, עד 10)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: בדיקת סריקה ואינדוקס
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          URLS: ${{ github.event.inputs.urls }}
+        run: node agent/gsc-inspect.mjs | tee gsc-inspect.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gsc-inspect
+          path: gsc-inspect.md

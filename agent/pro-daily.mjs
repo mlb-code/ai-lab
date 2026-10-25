@@ -1,5 +1,7 @@
 // AI Lab Pro — בלוק יומי לדוח השיווק: GA4 של pro.ai-lab.co.il (אתמול + 7 ימים). מדפיס HTML; שורה ראשונה = סיכום לשורה התחתונה.
+// מ-25.10.2026: כל שאילתה מחריגה תנועת בדיקות פנימית (selftest / qa) — ראו ga4-qa-filter.mjs.
 import crypto from "node:crypto";
+import { withoutQA, QA_NOTE } from "./ga4-qa-filter.mjs";
 const sa = JSON.parse(process.env.GSC_SERVICE_ACCOUNT_JSON || "{}");
 const PROP = process.env.GA4_PRO_PROPERTY_ID;
 if (!sa.client_email || !PROP) { console.log("<!--SUMMARY:-->"); process.exit(0); }
@@ -11,7 +13,7 @@ async function token() {
   const d = await r.json(); if (!d.access_token) throw new Error(JSON.stringify(d)); return d.access_token;
 }
 async function report(t, body) {
-  const r = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${PROP}:runReport`, { method: "POST", headers: { Authorization: `Bearer ${t}`, "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const r = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${PROP}:runReport`, { method: "POST", headers: { Authorization: `Bearer ${t}`, "Content-Type": "application/json" }, body: JSON.stringify(withoutQA(body)) });
   if (!r.ok) throw new Error(`GA4 ${r.status}: ${(await r.text()).slice(0, 200)}`);
   return ((await r.json()).rows || []).map(row => ({ k: (row.dimensionValues || []).map(d => d.value), v: (row.metricValues || []).map(m => Number(m.value)) }));
 }
@@ -37,5 +39,6 @@ try {
 <p><b>אתמול:</b> ${sy[0]} ביקורים, ${sy[1]} משתמשים · <b>7 ימים:</b> ${sw[0]} ביקורים, ${sw[1]} משתמשים</p>
 <table border="1" cellpadding="6" style="border-collapse:collapse"><tr><th>פעולה</th><th>אתמול</th><th>7 ימים</th></tr>${rows}</table>
 <p><b>מאיפה מגיעים (7 ימים):</b> ${src.length ? src.map(r => `${esc(r.k[0])} ${r.v[0]}`).join(" · ") : "אין נתונים עדיין"}</p>
-<p>לידים מלאים (שם וטלפון): <a href="https://docs.google.com/spreadsheets/d/1mmn9c_gwCjrYc2BSo9VYE1fOovsIIQVDU4nHgLuz9s8/edit">גיליון לידים AI Lab Pro</a></p>`);
+<p>לידים מלאים (שם וטלפון): <a href="https://docs.google.com/spreadsheets/d/1mmn9c_gwCjrYc2BSo9VYE1fOovsIIQVDU4nHgLuz9s8/edit">גיליון לידים AI Lab Pro</a></p>
+<p><i>${QA_NOTE}</i></p>`);
 } catch (e) { console.log("<!--SUMMARY:-->"); console.log(`<h2>🏢 AI Lab Pro</h2><p>GA4 לא זמין: ${esc(e.message.slice(0, 160))}</p>`); }

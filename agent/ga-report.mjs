@@ -1,7 +1,8 @@
 // דוח GA4 לפי דרישה — מריצים דרך workflow ga-report (gh workflow run ga-report -f days=7).
-// מדפיס Markdown ל-stdout ול-GITHUB_STEP_SUMMARY. מסנן localhost.
+// מדפיס Markdown ל-stdout ול-GITHUB_STEP_SUMMARY. מסנן localhost ותנועת בדיקות פנימית (selftest / qa, מ-25.10.2026).
 import crypto from "node:crypto";
 import fs from "node:fs";
+import { excludeQA, QA_NOTE } from "./ga4-qa-filter.mjs";
 const sa = JSON.parse(process.env.GSC_SERVICE_ACCOUNT_JSON);
 const GA4 = process.env.GA4_PROPERTY_ID;
 const DAYS = Number(process.env.DAYS || 7);
@@ -16,7 +17,7 @@ async function googleToken(sa) {
 }
 async function report(token, dims, metrics, range, limit = 15, filter = null) {
   const body = { dateRanges: [range], dimensions: [...dims, { name: "hostName" }].map(d => typeof d === "string" ? { name: d } : d), metrics: metrics.map(m => ({ name: m })), limit: 500 };
-  if (filter) body.dimensionFilter = filter;
+  body.dimensionFilter = excludeQA(filter); // תמיד: מחריג תנועת בדיקות פנימית, ומשלב עם הסינון של הטבלה אם יש
   const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${GA4}:runReport`, { method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(body) });
   if (!res.ok) throw new Error(`GA4 ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const j = await res.json(); const merged = new Map();
@@ -33,7 +34,7 @@ const table = (title, rows, cols) => `\n### ${title}\n| ${cols.join(" | ")} |\n|
 
 const token = await googleToken(sa);
 const cur = { startDate: `${DAYS}daysAgo`, endDate: "today" }, prev = { startDate: `${DAYS * 2}daysAgo`, endDate: `${DAYS + 1}daysAgo` };
-let md = `## GA4 · ai-lab.co.il · ${DAYS} ימים אחרונים (עד היום)\n`;
+let md = `## GA4 · ai-lab.co.il · ${DAYS} ימים אחרונים (עד היום)\n_${QA_NOTE}_\n`;
 const tot = await report(token, [], ["sessions", "totalUsers", "screenPageViews"], cur, 1);
 const totp = await report(token, [], ["sessions", "totalUsers", "screenPageViews"], prev, 1);
 md += `\n**סה"כ:** ביקורים ${tot[0]?.v[0] ?? 0} (תקופה קודמת ${totp[0]?.v[0] ?? 0}) · משתמשים ${tot[0]?.v[1] ?? 0} · צפיות ${tot[0]?.v[2] ?? 0}\n`;

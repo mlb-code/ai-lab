@@ -1,7 +1,12 @@
 // סוכן הנראות של AI Lab — זרוע SEO שבועית
 // מושך נתונים מ-Google Search Console, בודק תקינות טכנית, ומבקש מ-Claude דוח בעברית.
 // רץ ב-GitHub Actions (ראו .github/workflows/visibility-agent.yml). בלי תלויות חיצוניות.
+// 25.10.2026: (1) כל שאילתות GA4 מחריגות תנועת בדיקות פנימית (selftest / qa) — ga4-qa-filter.mjs.
+// (2) אחריותיות: הדוח נפתח ב"מה קרה עם ההמלצה מהשבוע שעבר" (מהדוח הקודם, התגובות עליו והקומיטים מאז), וההמלצה החדשה = משימה אחת עם אחראי (מאיר / קלוד).
+// (3) "סטטוס סריקה בגוגל": URL Inspection למאמרים של 02–03.10 ולדף הבית — gsc-inspect.mjs (אותה רשימה כמו ה-workflow הידני gsc-inspect).
 import crypto from "node:crypto";
+import { withoutQA, QA_NOTE } from "./ga4-qa-filter.mjs";
+import { inspectUrls, inspectionLines, inspectionMarkdown, proSitemapLine } from "./gsc-inspect.mjs";
 
 const SITE = "sc-domain:ai-lab.co.il";
 const SITE_URL = "https://ai-lab.co.il";
@@ -74,7 +79,8 @@ async function clarityBlock(tok = CLARITY_TOKEN, title = "כל האתר + הפל
     return lines.join("\n");
   } catch (e) { return `### Clarity (הקלטות ומפות חום)\nשגיאה: ${e.message.slice(0, 200)}`; }
 }
-// תנועת פיתוח מקומית (localhost של מאיר) לא נספרת: מוסיפים hostName לכל שאילתה, מסננים בצד שלנו ומאחדים חזרה
+// תנועת פיתוח מקומית (localhost של מאיר) לא נספרת: מוסיפים hostName לכל שאילתה, מסננים בצד שלנו ומאחדים חזרה.
+// תנועת בדיקות פנימית (selftest / qa) מסוננת כבר בצד של GA4 (withoutQA).
 async function ga4Report(token, body, prop = GA4) {
   // אם השאילתה כבר כוללת sessionSource (דוח המקורות) — לא מוסיפים אותו שוב (GA4 דוחה מימד כפול; תקלת 18.09)
   const base = body.dimensions || [];
@@ -82,7 +88,7 @@ async function ga4Report(token, body, prop = GA4) {
   const dims = [...base, { name: "hostName" }, ...(srcIdx === -1 ? [{ name: "sessionSource" }] : [])];
   const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${prop}:runReport`, {
     method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ ...body, dimensions: dims, limit: Math.min((body.limit || 10) * 4, 250) }),
+    body: JSON.stringify(withoutQA({ ...body, dimensions: dims, limit: Math.min((body.limit || 10) * 4, 250) })), // מחריג תנועת בדיקות פנימית, משולב עם הסינון של השאילתה
   });
   if (!res.ok) throw new Error(`GA4 ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const j = await res.json();
@@ -209,6 +215,75 @@ async function techChecks() {
   return out.join("\n");
 }
 
+// ---- אחריותיות (25.10.2026): מה קרה עם ההמלצה מהשבוע שעבר ----
+// מושכים את דוח הנראות הקודם (Issue פתוח או סגור), את "ההמלצה השבועית" שבו, תגובות של מאיר / סוכן הפרסום עליו,
+// ואת כותרות הקומיטים מאז — כדי ש-Claude ישפוט אם ההמלצה בוצעה ואם עזרה. תגובות של זרים (הריפו ציבורי) לא נכנסות.
+const TITLE_PREFIX = "דוח הנראות השבועי";
+const BOT_AUTHORS = /^(marketing-agent|trailers-agent|geo-monitor)$/i;              // עדכוני מצב אוטומטיים — רעש
+const NOISE = /^(marketing-agent|trailers-agent|geo-monitor|social:|agent: reminder)|אזור אישי|\/s\/[0-9a-f]{6,}/i; // מדיה, תזכורות, אזורים אישיים של תלמידים
+async function ghGet(path) {
+  const r = await fetch(`https://api.github.com/repos/${repo}${path}`, { headers: { Authorization: `Bearer ${ghToken}`, Accept: "application/vnd.github+json" } });
+  if (!r.ok) throw new Error(`GitHub ${r.status}`);
+  return r.json();
+}
+// החלק "ההמלצה השבועית" מגוף ה-Issue: מהמופע האחרון של הצירוף (לפני שורת @mlb-code) ועד הכותרת / קו ההפרדה הבא
+function extractRecommendation(body = "") {
+  const lines = body.split("\n@mlb-code")[0].split(/\r?\n/);
+  let start = -1;
+  lines.forEach((l, i) => { if (l.includes("ההמלצה השבועית")) start = i; });
+  if (start === -1) return "";
+  const out = [lines[start].replace(/^[#>\s]+/, "")];
+  for (const l of lines.slice(start + 1)) {
+    if (/^\s*(#{1,6}\s|-{3,}\s*$|<details)/.test(l)) break;
+    out.push(l);
+  }
+  return out.join("\n").trim().slice(0, 1500);
+}
+async function previousReportBlock() {
+  if (!ghToken) return "(אין GITHUB_TOKEN — הדוח הקודם לא נבדק)";
+  try {
+    const today = day(new Date());
+    const pick = list => (Array.isArray(list) ? list : [])
+      .filter(i => !i.pull_request && (i.title || "").startsWith(TITLE_PREFIX) && !(i.title || "").includes(today))
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+    let prev = pick(await ghGet("/issues?state=all&labels=visibility-agent&sort=created&direction=desc&per_page=10"));
+    if (!prev) prev = pick(await ghGet("/issues?state=all&sort=created&direction=desc&per_page=100")); // גיבוי: בלי תווית
+    if (!prev) return "אין דוח קודם — זה הדוח הראשון.";
+    const rec = extractRecommendation(prev.body || "") || "(לא נמצא חלק 'ההמלצה השבועית' בדוח הקודם)";
+    const owner = repo.split("/")[0];
+    let comments, commits;
+    try {
+      comments = (await ghGet(`/issues/${prev.number}/comments?per_page=50`))
+        .filter(c => c.user?.login === owner || c.user?.login === "github-actions[bot]")
+        .map(c => {
+          const first = (c.body || "").split(/\r?\n/).map(l => l.trim()).find(Boolean) || ""; // תשובה מהמייל מגיעה עם ציטוט — רק השורה הראשונה
+          return `- ${c.user.login === owner ? "מאיר" : "סוכן הפרסום (אוטומטי)"} (${(c.created_at || "").slice(0, 10)}): ${first.slice(0, 200)}`;
+        });
+    } catch (e) { comments = [`(התגובות לא נקראו: ${e.message})`]; }
+    try {
+      commits = (await ghGet(`/commits?since=${encodeURIComponent(prev.created_at)}&per_page=100`))
+        .map(c => ({ d: (c.commit?.author?.date || "").slice(0, 10), who: c.commit?.author?.name || "", msg: (c.commit?.message || "").split("\n")[0] }))
+        .filter(c => !BOT_AUTHORS.test(c.who) && !NOISE.test(c.msg))
+        .slice(0, 40).map(c => `- ${c.d} · ${c.msg.slice(0, 160)}`);
+    } catch (e) { commits = [`(השינויים לא נקראו: ${e.message})`]; }
+    return `דוח #${prev.number} מ-${(prev.created_at || "").slice(0, 10)} (ה-Issue ${prev.state === "closed" ? "סגור" : "פתוח"})
+### ההמלצה מהשבוע שעבר (כלשונה)
+${rec}
+### תגובות על הדוח הקודם (מאיר וסוכן הפרסום בלבד)
+${comments.join("\n") || "(אין תגובות — מאיר לא ענה 'טיוטה' / 'פרסם')"}
+### שינויים שנדחפו לאתר מאז הדוח הקודם (כותרות קומיטים, בלי עדכונים אוטומטיים ומדיה)
+${commits.join("\n") || "(אין שינויים)"}`;
+  } catch (e) { return `לא הצלחתי לקרוא את הדוח הקודם: ${e.message.slice(0, 120)}`; }
+}
+
+// ---- סטטוס סריקה בגוגל (URL Inspection) — האם המאמרים של 02–03.10 ודף הבית באינדקס ----
+async function indexingBlock(token) {
+  try {
+    const results = await inspectUrls(token);
+    return { text: `${inspectionLines(results)}\nסייטמאפ של AI Lab Pro: ${await proSitemapLine(token)}`, table: inspectionMarkdown(results) };
+  } catch (e) { return { text: `הבדיקה נכשלה: ${e.message.slice(0, 160)}`, table: "" }; }
+}
+
 // ---- הרצה ----
 const sa = JSON.parse(gscJson);
 const token = await googleToken(sa);
@@ -243,10 +318,15 @@ const analytics = await analyticsBlock(token);
 const clarity = await clarityBlock();
 const pro = await proBlock(token);
 const proClarity = CLARITY_PRO_TOKEN ? await clarityBlock(CLARITY_PRO_TOKEN, "AI Lab Pro בלבד") : "### Clarity\nחסר CLARITY_PRO_TOKEN.";
+const indexing = await indexingBlock(token);
+const previous = await previousReportBlock();
 
 const fmtRows = rows => rows.map(r => `${(r.keys || ["(סה\"כ)"]).join(" | ")} — קליקים ${r.clicks}, חשיפות ${r.impressions}, מיקום ${r.position?.toFixed(1)}`).join("\n") || "(אין נתונים)";
 
-const dataBlock = `## תקופה נוכחית ${cur.startDate}–${cur.endDate}
+const dataBlock = `## הדוח הקודם — כדי לבדוק מה קרה עם ההמלצה מהשבוע שעבר
+${previous}
+
+## תקופה נוכחית ${cur.startDate}–${cur.endDate}
 ### סה"כ נוכחי
 ${fmtRows(curTotal)}
 ### סה"כ שבוע קודם (${prev.startDate}–${prev.endDate})
@@ -261,14 +341,16 @@ ${fmtRows(topPages)}
 ${watch}
 ### בדיקות טכניות
 ${tech}
+### סטטוס סריקה בגוגל (URL Inspection: דף הבית, הבלוג, המאמרים שפורסמו 02–03.10.2026, דף הבית של Pro)
+${indexing.text}
 
-## אנליטיקס — מה קורה באתר עצמו (Google Analytics)
+## אנליטיקס — מה קורה באתר עצמו (Google Analytics) — ${QA_NOTE}
 ${analytics}
 
 ## Clarity — איך הגולשים מתנהגים (הקלטות ומפות חום)
 ${clarity}
 
-## AI Lab Pro — האתר לעסקים (pro.ai-lab.co.il, הושק 04.10.2026)
+## AI Lab Pro — האתר לעסקים (pro.ai-lab.co.il, הושק 04.10.2026) — נתוני GA4: ${QA_NOTE}
 ${pro}
 ${proClarity}`;
 
@@ -282,10 +364,23 @@ const res = await fetch("https://api.anthropic.com/v1/messages", {
     thinking: { type: "disabled" },
     max_tokens: 6000,
     system: `אתה "סוכן הנראות" של AI Lab (ai-lab.co.il) — בית ספר ישראלי ל-AI ויזמות לילדים ונוער. אתה כותב דוח SEO שבועי בעברית למאיר, בעל העסק, שאינו איש טכנולוגיה.
-כללים: עברית פשוטה וחמה, בלי ז'רגון. פתח בשורת מצב אחת (עלייה/יציבות/ירידה). הצג עד 5 נקודות עיקריות עם מספרים מדויקים. אם יש ירידה חדה (מעל 30% בקליקים) — פתח ב"⚠️ דורש תשומת לב".
-הדוח בנוי משלושה חלקים: (1) "בגוגל" — חיפושים, שאילתות, מיקומים (Search Console). (2) "באתר" — ביקורים, מאיפה מגיעים, ואיזה כפתורים לוחצים יותר ופחות (Google Analytics, אירועי cta_click). (3) "התנהגות" — Clarity: לחיצות זעם/מתות, עומק גלילה, זמן מעורבות, לפי מכשיר; מה זה אומר על חוויית ההרשמה ומה לתקן. אם Clarity לא מחובר או ריק — שורה אחת שאומרת זאת. בחלק "בגוגל" הוסף פסקה קצרה "ביטויי היעד": אילו מ-10 הביטויים כבר מופיעים, באיזה מיקום, ומה השתנה מול 28 הימים הקודמים — זה המדד להצלחת המיצוב "חוג תכנות לילדים". בחלק "באתר" תמיד ציין: 3 הכפתורים הכי נלחצים, כפתורים חשובים שכמעט לא לוחצים עליהם (במיוחד הרשמה/מפת הקורסים/דיסקורד/וואטסאפ), ומגמה מול השבוע הקודם. מעקב הלחיצות (cta_click) כבר מותקן באתר מ-08.09.2026 — אם אין עדיין נתוני לחיצות, כתוב שהם מצטברים ואל תמליץ "לחבר מעקב". אם האנליטיקס לא מחובר — כתוב זאת במשפט אחד ומה צריך כדי לחבר.
-בנוסף, חלק קצר ונפרד בסוף: "AI Lab Pro — האתר לעסקים" (pro.ai-lab.co.il): ביקורים, מאיפה, לחיצות וואטסאפ וטפסים (לידים), ושאילתות אם יש. שם הקהל הוא בעלי עסקים, לא הורים; ההשוואה היא לשבוע הקודם בלבד. אם אין עדיין נתונים, כתוב שהאתר חדש ומה לבדוק בשבוע הבא.
-סיים ב"ההמלצה השבועית" אחת בלבד: נושא מאמר מבוסס שאילתה עולה, תיקון טכני, או שינוי בכפתור שלא ממיר — הכי מעשי שיש. אל תמציא נתונים; אם משהו חסר, כתוב שחסר.`,
+כללים: עברית פשוטה וחמה, בלי ז'רגון; מונח טכני (אינדקס, סייטמאפ וכו') — רק עם הסבר קצר במילים פשוטות. הצג עד 5 נקודות עיקריות עם מספרים מדויקים.
+סדר הדוח:
+(0) פתח בחלק קצר "מה קרה עם ההמלצה מהשבוע שעבר" (2–4 שורות): מה הומלץ, במשפט אחד; האם זה בוצע — לפי רשימת השינויים שנדחפו לאתר, התגובות על הדוח הקודם ונתוני השבוע; ואם בוצע — האם רואים השפעה במספרים. תן פסק דין אחד ברור: "בוצע ועזר" / "בוצע, עוד מוקדם לראות השפעה" / "בוצע ולא עזר" / "לא בוצע" / "אי אפשר לדעת מהנתונים" — ובמקרה האחרון כתוב במשפט אחד למה. אם לא בוצע — כתוב אם זה עדיין רלוונטי. שים לב לתאריכים: נתוני Search Console בדוח מסתיימים כמה ימים לפני היום, אז שינוי מהימים האחרונים עוד לא יכול להופיע בהם. אם אין דוח קודם — שורה אחת שאומרת זאת. רשימת השינויים נועדה רק לשפוט אם ההמלצה בוצעה: אל תצטט ממנה מעבר לזה, ואל תזכיר שמות של אנשים.
+מיד אחריו שורת מצב אחת (עלייה/יציבות/ירידה). אם יש ירידה חדה (מעל 30% בקליקים) — שורת המצב מתחילה ב"⚠️ דורש תשומת לב".
+(1) "בגוגל" — חיפושים, שאילתות, מיקומים (Search Console). הוסף פסקה קצרה "ביטויי היעד": אילו מ-10 הביטויים כבר מופיעים, באיזה מיקום, ומה השתנה מול 28 הימים הקודמים — זה המדד להצלחת המיצוב "חוג תכנות לילדים".
+(2) "סטטוס סריקה בגוגל" — חלק קצר: כמה מהכתובות שנבדקו כבר באינדקס של גוגל (כלומר יכולות להופיע בחיפוש), אילו עדיין לא — לפי שם המאמר במילים פשוטות ומה המצב שלהן (למשל "גוגל יודע שהדף קיים אבל עדיין לא סרק אותו"), ומתי גוגל ביקר בהן לאחרונה. המאמרים פורסמו 02–03.10.2026; מאמר שעדיין לא באינדקס אחרי שלושה שבועות — ציין זאת במפורש. הוסף שורה אחת על הסייטמאפ של AI Lab Pro (נשלח לגוגל או לא). אם הבדיקה נכשלה או שהמכסה נגמרה — שורה אחת. טבלה מלאה לכל כתובת מצורפת אוטומטית בסוף הדוח, אז אין צורך לפרט כתובות שבאינדקס אחת-אחת.
+(3) "באתר" — ביקורים, מאיפה מגיעים, ואיזה כפתורים לוחצים יותר ופחות (Google Analytics, אירועי cta_click). תמיד ציין: 3 הכפתורים הכי נלחצים, כפתורים חשובים שכמעט לא לוחצים עליהם (במיוחד הרשמה/מפת הקורסים/דיסקורד/וואטסאפ), ומגמה מול השבוע הקודם. מעקב הלחיצות (cta_click) כבר מותקן באתר מ-08.09.2026 — אם אין עדיין נתוני לחיצות, כתוב שהם מצטברים ואל תמליץ "לחבר מעקב". אם האנליטיקס לא מחובר — כתוב זאת במשפט אחד ומה צריך כדי לחבר. נתוני האנליטיקס לא כוללים תנועת בדיקות פנימית (מקור selftest / מדיום qa) — כתוב זאת בשורה אחת קצרה בחלק הזה. מספרים שמופיעים בהמלצה מהשבוע שעבר אולי כללו את התנועה הזו — אל תשווה אליהם ישירות; ההשוואה לשבוע הקודם בנתונים כבר נקייה.
+(4) "התנהגות" — Clarity: לחיצות זעם/מתות, עומק גלילה, זמן מעורבות, לפי מכשיר; מה זה אומר על חוויית ההרשמה ומה לתקן. אם Clarity לא מחובר או ריק — שורה אחת שאומרת זאת.
+(5) חלק קצר ונפרד: "AI Lab Pro — האתר לעסקים" (pro.ai-lab.co.il): ביקורים, מאיפה, לחיצות וואטסאפ וטפסים (לידים), ושאילתות אם יש. שם הקהל הוא בעלי עסקים, לא הורים; ההשוואה היא לשבוע הקודם בלבד. אם אין עדיין נתונים, כתוב שהאתר חדש ומה לבדוק בשבוע הבא.
+(6) סיים בחלק "ההמלצה השבועית": משימה אחת בלבד, קונקרטית, שאפשר לבצע השבוע — הכי מעשית שיש (נושא מאמר מבוסס שאילתה עולה, תיקון טכני, שינוי בכפתור שלא ממיר, או פעולה בחשבון). מבנה קבוע, ארבע שורות:
+**אחראי:** מאיר — כשהמשימה דורשת אותו: חשבונות, כניסה למערכות (Search Console, גוגל לעסק, מטא וכו'), כסף או החלטה עסקית. או **אחראי:** קלוד — כשזה שינוי בקוד, באתר או בתוכן (מאמר, כותרת, כפתור, תיקון טכני) שקלוד יכול לעשות לבד.
+**המשימה:** צעד אחד ברור — מה בדיוק ואיפה. אם המשימה היא מאמר: האחראי קלוד, והשורה מתחילה ב"מאמר:" ואחריה הנושא.
+**למה:** המספר מנתוני השבוע שמצדיק אותה.
+**איך נדע שזה עבד:** מה נבדוק בדוח של השבוע הבא.
+אם ההמלצה מהשבוע שעבר לא בוצעה ועדיין היא הכי חשובה — מותר לחזור עליה, אבל כתוב "חוזרת מהשבוע שעבר" ופרק אותה לצעד קטן יותר; אחרת בחר משימה אחרת.
+את הצירוף "ההמלצה השבועית" כתוב רק בכותרת של החלק האחרון — לא בשום מקום אחר בדוח (מערכת אוטומטית מחפשת אותו). בחלק הפתיחה כתוב "ההמלצה מהשבוע שעבר".
+אל תמציא נתונים; אם משהו חסר, כתוב שחסר.`,
     messages: [{ role: "user", content: `הנתונים לשבוע זה:\n\n${dataBlock}` }],
   }),
 });
@@ -303,7 +398,11 @@ if (ghToken) {
     headers: { Authorization: `Bearer ${ghToken}`, "Content-Type": "application/json", Accept: "application/vnd.github+json" },
     body: JSON.stringify({
       title: `דוח הנראות השבועי — ${day(new Date())}`,
-      body: report + "\n\n---\n@mlb-code — הדוח השבועי מוכן.\n\n**להפוך את ההמלצה השבועית למאמר?** ענה על המייל הזה במילה אחת: **טיוטה** (אקבל את המאמר כאן לעיון) או **פרסם** (יתפרסם ישירות באתר). אפשר גם לכוון: `פרסם: <נושא אחר>`.\n_נוצר אוטומטית על ידי סוכן הנראות · נתונים: Google Search Console_",
+      // הטבלה המלאה של סטטוס הסריקה — אחרי קו הפרדה, כך שסוכן הפרסום (שקורא את "ההמלצה השבועית" עד ה-"---" הבא) לא יקלוט אותה
+      body: report
+        + (indexing.table ? `\n\n---\n<details><summary>סטטוס סריקה בגוגל — פירוט לכל כתובת</summary>\n\n${indexing.table}\n\n</details>` : "")
+        + "\n\n---\n@mlb-code — הדוח השבועי מוכן.\n\n**אם ההמלצה השבועית היא מאמר** — ענה על המייל הזה במילה אחת: **טיוטה** (אקבל את המאמר כאן לעיון) או **פרסם** (יתפרסם ישירות באתר). אפשר גם לכוון: `פרסם: <נושא אחר>`.\n"
+        + `_נוצר אוטומטית על ידי סוכן הנראות · נתונים: Google Search Console, Google Analytics, Clarity · ${QA_NOTE}_`,
       labels: ["visibility-agent"],
     }),
   });

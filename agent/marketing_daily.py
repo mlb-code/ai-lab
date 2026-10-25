@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """סוכן שיווק יומי של AI Lab — רץ ב-GitHub Actions כל בוקר.
 אוסף: מודעות מטא (אתמול + מצטבר), עוקבים באינסטגרם (+שינוי), פוסטים שעלו אתמול, תגובות חדשות (עם סיווג + טיוטת תשובה),
-ומחבר את דוח GA4 אם קיים (ga.md). מדפיס Markdown ל-stdout, וכותב report.md + comments.json לאישור תשובות.
+ומחבר את דוח GA4 אם קיים (ga.md, מסונן מתנועת בדיקות פנימית selftest/qa ב-ga-report.mjs). הקובץ הזה לא שואל את GA4 בעצמו. מדפיס Markdown ל-stdout, וכותב report.md + comments.json לאישור תשובות.
 ENV: META_ACCESS_TOKEN, ANTHROPIC_API_KEY (אופציונלי: בלי — אין סיווג), STATE_FILE.
 """
 import os, json, datetime as dt, time
@@ -316,7 +316,9 @@ def ga_compact():
         hdr = [c.strip() for c in rows[0].strip("|").split("|")]
         body = [[c.strip() for c in r.strip("|").split("|")] for r in rows[1:1 + n]]
         return h("h3", title) + table(hdr, body)
-    return h("h2", "אנליטיקס (7 ימים)") + h("p", tot.replace("**", "")) + section("מקור / מדיום", 6) + section("קמפיינים (UTM)", 5) + section("לחיצות CTA (cta_click)", 6)
+    # הנתונים עצמם מסוננים כבר ב-ga-report.mjs (25.10.2026) — כאן רק שורת הבהרה בדוח
+    qa_note = h("p", h("i", "לא כולל תנועת בדיקות פנימית (מקור selftest / מדיום qa).")) if tot else ""
+    return h("h2", "אנליטיקס (7 ימים)") + h("p", tot.replace("**", "")) + qa_note + section("מקור / מדיום", 6) + section("קמפיינים (UTM)", 5) + section("לחיצות CTA (cta_click)", 6)
 
 
 def pro_block(summary):
