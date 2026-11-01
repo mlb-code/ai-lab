@@ -1,0 +1,264 @@
+{
+  "engine": "openai",
+  "label": "ChatGPT (OpenAI)",
+  "model": "gpt-4.1-mini",
+  "month": "2026-11",
+  "runs": 3,
+  "generatedAt": "2026-11-01T12:54:24.321Z",
+  "answers": [
+    {
+      "questionId": "q01",
+      "question": "קורס בינה מלאכותית לילדים בישראל",
+      "run": 1,
+      "at": "2026-11-01T12:54:24.321Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q01",
+      "question": "קורס בינה מלאכותית לילדים בישראל",
+      "run": 2,
+      "at": "2026-11-01T12:54:58.662Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q01",
+      "question": "קורס בינה מלאכותית לילדים בישראל",
+      "run": 3,
+      "at": "2026-11-01T12:55:32.137Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q02",
+      "question": "איפה ללמוד AI לילד בן 10",
+      "run": 1,
+      "at": "2026-11-01T12:56:04.969Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q02",
+      "question": "איפה ללמוד AI לילד בן 10",
+      "run": 2,
+      "at": "2026-11-01T12:56:39.656Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q02",
+      "question": "איפה ללמוד AI לילד בן 10",
+      "run": 3,
+      "at": "2026-11-01T12:57:10.024Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q03",
+      "question": "כמה עולה קורס AI לילדים",
+      "run": 1,
+      "at": "2026-11-01T12:57:41.945Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q03",
+      "question": "כמה עולה קורס AI לילדים",
+      "run": 2,
+      "at": "2026-11-01T12:58:13.598Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q03",
+      "question": "כמה עולה קורס AI לילדים",
+      "run": 3,
+      "at": "2026-11-01T12:58:43.512Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q04",
+      "question": "חוג תכנות או קורס AI לילד — מה עדיף?",
+      "run": 1,
+      "at": "2026-11-01T12:59:14.800Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q04",
+      "question": "חוג תכנות או קורס AI לילד — מה עדיף?",
+      "run": 2,
+      "at": "2026-11-01T12:59:47.026Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q04",
+      "question": "חוג תכנות או קורס AI לילד — מה עדיף?",
+      "run": 3,
+      "at": "2026-11-01T13:00:18.780Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q05",
+      "question": "קורס יצירת סרטונים ב-AI לנוער",
+      "run": 1,
+      "at": "2026-11-01T13:00:54.269Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q05",
+      "question": "קורס יצירת סרטונים ב-AI לנוער",
+      "run": 2,
+      "at": "2026-11-01T13:01:24.152Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q05",
+      "question": "קורס יצירת סרטונים ב-AI לנוער",
+      "run": 3,
+      "at": "2026-11-01T13:01:54.930Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q06",
+      "question": "קורס AI אונליין בזום לילדים",
+      "run": 1,
+      "at": "2026-11-01T13:02:27.642Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q06",
+      "question": "קורס AI אונליין בזום לילדים",
+      "run": 2,
+      "at": "2026-11-01T13:02:59.479Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q06",
+      "question": "קורס AI אונליין בזום לילדים",
+      "run": 3,
+      "at": "2026-11-01T13:03:35.443Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q07",
+      "question": "קורס בינה מלאכותית למבוגרים בלי רקע טכני",
+      "run": 1,
+      "at": "2026-11-01T13:04:05.712Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q07",
+      "question": "קורס בינה מלאכותית למבוגרים בלי רקע טכני",
+      "run": 2,
+      "at": "2026-11-01T13:04:37.791Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q07",
+      "question": "קורס בינה מלאכותית למבוגרים בלי רקע טכני",
+      "run": 3,
+      "at": "2026-11-01T13:05:11.417Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q08",
+      "question": "קייטנת AI לילדים",
+      "run": 1,
+      "at": "2026-11-01T13:05:43.904Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q08",
+      "question": "קייטנת AI לילדים",
+      "run": 2,
+      "at": "2026-11-01T13:06:15.420Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q08",
+      "question": "קייטנת AI לילדים",
+      "run": 3,
+      "at": "2026-11-01T13:06:47.466Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q09",
+      "question": "חוג AI לנוער בתל אביב",
+      "run": 1,
+      "at": "2026-11-01T13:07:20.078Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q09",
+      "question": "חוג AI לנוער בתל אביב",
+      "run": 2,
+      "at": "2026-11-01T13:07:52.356Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q09",
+      "question": "חוג AI לנוער בתל אביב",
+      "run": 3,
+      "at": "2026-11-01T13:08:25.050Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q10",
+      "question": "מה ההבדל בין MindPlay ל-AI Lab?",
+      "run": 1,
+      "at": "2026-11-01T13:08:56.362Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q10",
+      "question": "מה ההבדל בין MindPlay ל-AI Lab?",
+      "run": 2,
+      "at": "2026-11-01T13:09:30.601Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q10",
+      "question": "מה ההבדל בין MindPlay ל-AI Lab?",
+      "run": 3,
+      "at": "2026-11-01T13:10:03.359Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q11",
+      "question": "קורס כסף והשקעות לילדים עם AI",
+      "run": 1,
+      "at": "2026-11-01T13:10:35.228Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q11",
+      "question": "קורס כסף והשקעות לילדים עם AI",
+      "run": 2,
+      "at": "2026-11-01T13:11:08.725Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q11",
+      "question": "קורס כסף והשקעות לילדים עם AI",
+      "run": 3,
+      "at": "2026-11-01T13:11:39.625Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q12",
+      "question": "איך ללמד ילד בינה מלאכותית בבית?",
+      "run": 1,
+      "at": "2026-11-01T13:12:12.601Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q12",
+      "question": "איך ללמד ילד בינה מלאכותית בבית?",
+      "run": 2,
+      "at": "2026-11-01T13:12:45.190Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q12",
+      "question": "איך ללמד ילד בינה מלאכותית בבית?",
+      "run": 3,
+      "at": "2026-11-01T13:13:21.044Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    }
+  ],
+  "cost": 0,
+  "errors": 36
+}

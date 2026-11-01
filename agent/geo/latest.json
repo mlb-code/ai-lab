@@ -1,12 +1,11 @@
 {
-  "month": "2026-10",
-  "report": "agent/geo/reports/דוח-GEO-2026-10.md",
-  "summary": "agent/geo/results/2026-10/summary.json",
-  "generatedAt": "2026-10-02T08:41:49.086Z",
-  "mentionRate": 0.1388888888888889,
-  "totalCost": 2.008,
+  "month": "2026-11",
+  "report": "agent/geo/reports/דוח-GEO-2026-11.md",
+  "summary": "agent/geo/results/2026-11/summary.json",
+  "generatedAt": "2026-11-01T13:13:53.993Z",
+  "mentionRate": 0.375,
+  "totalCost": 1.86,
   "missingKeys": [
-    "openai",
     "perplexity",
     "xai"
   ]
