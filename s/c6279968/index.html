@@ -477,9 +477,9 @@ details.parents .p-body{padding:0 22px 20px; font-size:18px; line-height:1.7}
       </div>
       <div class="gate-emoji" aria-hidden="true">🏪</div>
       <h1>היי מיה!</h1>
-      <p class="gate-text">הקלידי את מספר הטלפון של אמא/אבא</p>
+      <p class="gate-text">הקלידי את מספר הטלפון שלך</p>
       <form id="gateForm" autocomplete="off" novalidate>
-        <input id="phone" type="tel" inputmode="numeric" dir="ltr" maxlength="16" placeholder="05X-XXXXXXX" aria-label="מספר הטלפון של אמא או אבא">
+        <input id="phone" type="tel" inputmode="numeric" dir="ltr" maxlength="16" placeholder="05X-XXXXXXX" aria-label="מספר הטלפון שלך">
         <button class="btn big" type="submit">פתיחת החנות 🔑</button>
       </form>
       <p class="gate-err" id="gateErr" role="alert"></p>
@@ -557,7 +557,7 @@ details.parents .p-body{padding:0 22px 20px; font-size:18px; line-height:1.7}
   function C(n){ var all = window.MIA_CONTENT || {}; var c = all[n]; return (c && typeof c === "object") ? c : null; }
 
   // sha256 of the 10-digit number (student's parent) + Meir's preview number (same as in s/52f39d0e)
-  var HASHES = ["2bb4993c2713b23febe0db84f5bc6d4a80d11655156e14066cdd7a7f3b8c7b33", "9d36cde44e382cb931fde85dc4c4a13c8b8acec09b2dd6a015830f9a6da32f3d"];
+  var HASHES = ["bf788d547519d8c22f556404f5cbbfd67397cfe4a8ff4db14c0cf6408bc366aa", "9d36cde44e382cb931fde85dc4c4a13c8b8acec09b2dd6a015830f9a6da32f3d"];
   var K_AUTH = "mia_c6_ok", K_DONE = "mia_c6_done", K_BIZ = "mia_c6_biz", K_IDEA = "mia_c6_idea";
   var TZ = "Asia/Jerusalem";
   var TOTAL = 20;
