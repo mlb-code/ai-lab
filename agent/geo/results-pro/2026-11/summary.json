@@ -1,0 +1,3266 @@
+{
+  "month": "2026-11",
+  "generatedAt": "2026-11-02T17:00:43.080Z",
+  "runsPerQuestion": 3,
+  "engines": {
+    "openai": {
+      "label": "ChatGPT (OpenAI)",
+      "model": "gpt-4.1-mini",
+      "runs": 0,
+      "errors": 36,
+      "fatal": null,
+      "mentionedRuns": 0,
+      "mentionRate": 0,
+      "questionsWith": 0,
+      "questionsTotal": 12,
+      "citedRuns": 0,
+      "seenInResultsRuns": 0,
+      "searchedRuns": 0,
+      "avgPosition": null,
+      "firstPlaceRuns": 0,
+      "cost": 0,
+      "byQuestion": {
+        "q01": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q02": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q03": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q04": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q05": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q06": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q07": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q08": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q09": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q10": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q11": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q12": {
+          "runs": 0,
+          "mentioned": 0,
+          "bestPosition": 99
+        }
+      }
+    },
+    "gemini": {
+      "label": "Gemini (Google)",
+      "model": "gemini-3.8-flash",
+      "runs": 36,
+      "errors": 0,
+      "fatal": null,
+      "mentionedRuns": 3,
+      "mentionRate": 0.08333333333333333,
+      "questionsWith": 1,
+      "questionsTotal": 12,
+      "citedRuns": 1,
+      "seenInResultsRuns": 1,
+      "searchedRuns": 26,
+      "avgPosition": 1,
+      "firstPlaceRuns": 3,
+      "cost": 0.2384,
+      "byQuestion": {
+        "q01": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q02": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q03": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q04": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q05": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q06": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q07": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q08": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q09": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q10": {
+          "runs": 3,
+          "mentioned": 3,
+          "bestPosition": 1
+        },
+        "q11": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q12": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        }
+      }
+    },
+    "anthropic": {
+      "label": "Claude (Anthropic)",
+      "model": "claude-sonnet-5",
+      "runs": 36,
+      "errors": 0,
+      "fatal": null,
+      "mentionedRuns": 3,
+      "mentionRate": 0.08333333333333333,
+      "questionsWith": 1,
+      "questionsTotal": 12,
+      "citedRuns": 0,
+      "seenInResultsRuns": 0,
+      "searchedRuns": 28,
+      "avgPosition": 1,
+      "firstPlaceRuns": 3,
+      "cost": 2.3115,
+      "byQuestion": {
+        "q01": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q02": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q03": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q04": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q05": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q06": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q07": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q08": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q09": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q10": {
+          "runs": 3,
+          "mentioned": 3,
+          "bestPosition": 1
+        },
+        "q11": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        },
+        "q12": {
+          "runs": 3,
+          "mentioned": 0,
+          "bestPosition": 99
+        }
+      }
+    }
+  },
+  "missingKeys": [
+    "perplexity",
+    "xai"
+  ],
+  "overall": {
+    "runs": 72,
+    "mentionedRuns": 6,
+    "mentionRate": 0.08333333333333333,
+    "questionsWith": 1,
+    "questionsTotal": 12,
+    "citedRuns": 1
+  },
+  "competitors": [
+    {
+      "id": "automaziot",
+      "name": "אוטומציות AI",
+      "answers": 13,
+      "questions": [
+        "q01",
+        "q02",
+        "q04",
+        "q07",
+        "q08",
+        "q09",
+        "q12"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 10
+    },
+    {
+      "id": "achiya",
+      "name": "Achiya Automation",
+      "answers": 13,
+      "questions": [
+        "q02",
+        "q03",
+        "q04",
+        "q08",
+        "q12"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 5
+    },
+    {
+      "id": "bringup",
+      "name": "BringUp",
+      "answers": 8,
+      "questions": [
+        "q02",
+        "q07",
+        "q11"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 8
+    },
+    {
+      "id": "optimate",
+      "name": "Optimate",
+      "answers": 6,
+      "questions": [
+        "q01",
+        "q02"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 6
+    },
+    {
+      "id": "whale",
+      "name": "WhaleBiz",
+      "answers": 5,
+      "questions": [
+        "q01",
+        "q02",
+        "q05"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 5
+    },
+    {
+      "id": "doctorai",
+      "name": "DoctorAI",
+      "answers": 5,
+      "questions": [
+        "q09"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 3
+    },
+    {
+      "id": "stsiconic",
+      "name": "STSICONIC",
+      "answers": 4,
+      "questions": [
+        "q01",
+        "q09"
+      ],
+      "engines": [
+        "anthropic"
+      ],
+      "aheadOfUs": 3
+    },
+    {
+      "id": "autoflow",
+      "name": "Autoflow",
+      "answers": 3,
+      "questions": [
+        "q01"
+      ],
+      "engines": [
+        "gemini"
+      ],
+      "aheadOfUs": 3
+    },
+    {
+      "id": "locwise",
+      "name": "Locwise",
+      "answers": 3,
+      "questions": [
+        "q01",
+        "q11"
+      ],
+      "engines": [
+        "gemini",
+        "anthropic"
+      ],
+      "aheadOfUs": 3
+    },
+    {
+      "id": "smartbizz",
+      "name": "SmartBizz",
+      "answers": 3,
+      "questions": [
+        "q01"
+      ],
+      "engines": [
+        "anthropic"
+      ],
+      "aheadOfUs": 3
+    },
+    {
+      "id": "danielai",
+      "name": "דניאל נחמיה",
+      "answers": 3,
+      "questions": [
+        "q04"
+      ],
+      "engines": [
+        "anthropic"
+      ],
+      "aheadOfUs": 0
+    },
+    {
+      "id": "wiseflow",
+      "name": "Wiseflow",
+      "answers": 1,
+      "questions": [
+        "q02"
+      ],
+      "engines": [
+        "gemini"
+      ],
+      "aheadOfUs": 1
+    },
+    {
+      "id": "premium",
+      "name": "Premium Digital",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ],
+      "engines": [
+        "anthropic"
+      ],
+      "aheadOfUs": 0
+    },
+    {
+      "id": "iqdesk",
+      "name": "iQDesk",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ],
+      "engines": [
+        "anthropic"
+      ],
+      "aheadOfUs": 1
+    }
+  ],
+  "discovered": [
+    {
+      "name": "Make",
+      "kind": "org",
+      "answers": 15,
+      "questions": [
+        "q02",
+        "q04",
+        "q05",
+        "q07",
+        "q08",
+        "q09",
+        "q12"
+      ]
+    },
+    {
+      "name": "Zapier",
+      "kind": "org",
+      "answers": 11,
+      "questions": [
+        "q02",
+        "q04",
+        "q07",
+        "q08",
+        "q09",
+        "q12"
+      ]
+    },
+    {
+      "name": "Twilio",
+      "kind": "org",
+      "answers": 10,
+      "questions": [
+        "q02",
+        "q04",
+        "q07",
+        "q08",
+        "q12"
+      ]
+    },
+    {
+      "name": "Wati",
+      "kind": "org",
+      "answers": 9,
+      "questions": [
+        "q02",
+        "q03",
+        "q04",
+        "q07",
+        "q08",
+        "q12"
+      ]
+    },
+    {
+      "name": "n8n",
+      "kind": "org",
+      "answers": 8,
+      "questions": [
+        "q02",
+        "q04",
+        "q08",
+        "q12"
+      ]
+    },
+    {
+      "name": "virtualspirits.co.il",
+      "kind": "domain",
+      "answers": 6,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "ManyChat",
+      "kind": "org",
+      "answers": 6,
+      "questions": [
+        "q02",
+        "q03",
+        "q04",
+        "q07"
+      ]
+    },
+    {
+      "name": "Fireberry",
+      "kind": "org",
+      "answers": 6,
+      "questions": [
+        "q03",
+        "q04",
+        "q05"
+      ]
+    },
+    {
+      "name": "Monday.com",
+      "kind": "org",
+      "answers": 6,
+      "questions": [
+        "q04",
+        "q05"
+      ]
+    },
+    {
+      "name": "Airtable",
+      "kind": "org",
+      "answers": 6,
+      "questions": [
+        "q05",
+        "q07",
+        "q09"
+      ]
+    },
+    {
+      "name": "VirtualSpirits",
+      "kind": "org",
+      "answers": 5,
+      "questions": [
+        "q03",
+        "q08"
+      ]
+    },
+    {
+      "name": "HubSpot",
+      "kind": "org",
+      "answers": 5,
+      "questions": [
+        "q04",
+        "q05",
+        "q07"
+      ]
+    },
+    {
+      "name": "Green API",
+      "kind": "org",
+      "answers": 5,
+      "questions": [
+        "q02",
+        "q07",
+        "q08",
+        "q12"
+      ]
+    },
+    {
+      "name": "otherwise.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q01",
+        "q07"
+      ]
+    },
+    {
+      "name": "mybusiness.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q01",
+        "q03",
+        "q05"
+      ]
+    },
+    {
+      "name": "allchat.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "Salesforce",
+      "kind": "org",
+      "answers": 4,
+      "questions": [
+        "q03",
+        "q05"
+      ]
+    },
+    {
+      "name": "Meta",
+      "kind": "org",
+      "answers": 4,
+      "questions": [
+        "q03",
+        "q08"
+      ]
+    },
+    {
+      "name": "techtlv.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "dogma.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "letsai.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q09",
+        "q11"
+      ]
+    },
+    {
+      "name": "Matrix",
+      "kind": "org",
+      "answers": 4,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "smartsend.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q03",
+        "q12"
+      ]
+    },
+    {
+      "name": "arthurmeltser.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q03",
+        "q04"
+      ]
+    },
+    {
+      "name": "basecrm.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q04",
+        "q05"
+      ]
+    },
+    {
+      "name": "misterbit.co.il",
+      "kind": "domain",
+      "answers": 4,
+      "questions": [
+        "q06",
+        "q09"
+      ]
+    },
+    {
+      "name": "opticoai.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q01"
+      ]
+    },
+    {
+      "name": "gambot.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q02",
+        "q03"
+      ]
+    },
+    {
+      "name": "AllChat",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "OpenAI",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q03",
+        "q08",
+        "q09"
+      ]
+    },
+    {
+      "name": "liveweb.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q02",
+        "q03"
+      ]
+    },
+    {
+      "name": "Zoho",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q04",
+        "q05"
+      ]
+    },
+    {
+      "name": "WATI",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q04",
+        "q08"
+      ]
+    },
+    {
+      "name": "webitnow.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "shimara.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "webot.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "VoiceSpin",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Anthropic",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q08",
+        "q11"
+      ]
+    },
+    {
+      "name": "Make.com",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q04",
+        "q08",
+        "q12"
+      ]
+    },
+    {
+      "name": "360dialog",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Let's AI",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "Claude",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q09",
+        "q10"
+      ]
+    },
+    {
+      "name": "async.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q01"
+      ]
+    },
+    {
+      "name": "digitalix.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q01",
+        "q06"
+      ]
+    },
+    {
+      "name": "sound-check.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "automatix.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "natural-poster.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "claudecourse.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "sgo.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "kedem-law.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "digiapps.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "app.arch-tech.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "webtiv.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "nadlancrm.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "media-deal.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "ARCH",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Deal360",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Skool",
+      "kind": "org",
+      "answers": 3,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "waam-it.co.il",
+      "kind": "domain",
+      "answers": 3,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "matrix.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q01",
+        "q11"
+      ]
+    },
+    {
+      "name": "connectop.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q01",
+        "q02"
+      ]
+    },
+    {
+      "name": "uni-tech.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q02"
+      ]
+    },
+    {
+      "name": "seoagency.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q01",
+        "q02"
+      ]
+    },
+    {
+      "name": "digitalin.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q02",
+        "q09"
+      ]
+    },
+    {
+      "name": "Hubspot",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "the-hunters.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "Calendly",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q03",
+        "q08"
+      ]
+    },
+    {
+      "name": "QuickWin",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q04",
+        "q12"
+      ]
+    },
+    {
+      "name": "Powerlink",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "monday.com",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q04",
+        "q05"
+      ]
+    },
+    {
+      "name": "Green Invoice",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "iCount",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q04",
+        "q08"
+      ]
+    },
+    {
+      "name": "Make Israel",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q04",
+        "q12"
+      ]
+    },
+    {
+      "name": "Pipedrive",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q04",
+        "q05"
+      ]
+    },
+    {
+      "name": "olsi.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "ClickUp",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Linnovate",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "AWS",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q06",
+        "q11"
+      ]
+    },
+    {
+      "name": "WEBOT",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Voiceflow",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q07",
+        "q08"
+      ]
+    },
+    {
+      "name": "E3E Technologies",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q07",
+        "q11"
+      ]
+    },
+    {
+      "name": "Botomat",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q07",
+        "q12"
+      ]
+    },
+    {
+      "name": "נדלניסט AI",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "ElevenLabs",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "GreenAPI",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q08",
+        "q12"
+      ]
+    },
+    {
+      "name": "kuzmanko.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q09",
+        "q11"
+      ]
+    },
+    {
+      "name": "מעוף",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "KO AI",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q09",
+        "q11"
+      ]
+    },
+    {
+      "name": "autometa.dev",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "AllCloud",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "CloudZone",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "Pulseem",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "Landbot",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q02",
+        "q12"
+      ]
+    },
+    {
+      "name": "MessageBird",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q08",
+        "q12"
+      ]
+    },
+    {
+      "name": "aiterra.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q05",
+        "q12"
+      ]
+    },
+    {
+      "name": "gobot.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q02"
+      ]
+    },
+    {
+      "name": "fullness.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "mesergo.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "nextbot.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "thecyborg.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "tlink.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "archi-tech.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Priority",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q04",
+        "q05"
+      ]
+    },
+    {
+      "name": "Odoo",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q05",
+        "q08"
+      ]
+    },
+    {
+      "name": "SAP Business One",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Rivhit",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "lastartup.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q05",
+        "q06"
+      ]
+    },
+    {
+      "name": "rotel.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "level-app.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "arch-tech.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "מדלן AI",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Webtiv",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Nadlan CRM",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "eSelf AI",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Dentrix",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "clever-consulting.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "digitalcourse.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q09",
+        "q11"
+      ]
+    },
+    {
+      "name": "VSCO",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "AI-Labs Pro",
+      "kind": "org",
+      "answers": 2,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "wwcrm.co.il",
+      "kind": "domain",
+      "answers": 2,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "automagic.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q01"
+      ]
+    },
+    {
+      "name": "agent-ai.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q01"
+      ]
+    },
+    {
+      "name": "razi.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q01"
+      ]
+    },
+    {
+      "name": "effilo.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q02"
+      ]
+    },
+    {
+      "name": "topbot.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "stra.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "Monday",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "hotyboty.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "WhatsApp",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "Boostit",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "WeCode",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Automatiko",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Combit",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "LeadManager",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Loom",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Zebra",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "bpm'online",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Kommo",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "smartup.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "crmers.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "scallacrm.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "webology.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "MyBusiness CRM",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Scalla CRM",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Menahel4u",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "פריוריטי זום",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "אולסי מערכות",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Webology",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Inovate",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Automators",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "CloudEdge",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "B-Smart",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Z-Team",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "PowerLink CRM",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "AppMaster",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Galil Software",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Xplace",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Notion",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Retool",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Valinor",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "thm.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "cellosite.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "FlutterFlow",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "Apple App Store",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "Google Play Store",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "Google Cloud",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "Firebase",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "bmby.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "BMBY",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Coze",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Chatbase",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "B-Master",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Homely",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "NextChats",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Webot",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Nadlan.ai",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Otherwise",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "ברוקרלי",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "כוורת",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Rapid",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "ClinicUp",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Bwise",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "CalSync",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Tor-Plus",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "EZcount",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "PayCall",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "CoCo Hub",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Retell AI",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "רפיד-אימאג'",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "קליניק מאסטר",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "סמארט-קליניק",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "נמשים",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "מד פלוס",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Meshulam",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Cardcom",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Tranzila",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Doctor AI",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "Asakim.ai",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "zapi.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "יניב רונן",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "ZAPI",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "Digital-In",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "מעו\"ף",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "Fireflies",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "tl;dv",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "Pro AI Lab",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "AI Labs",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "autometa",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "AI LABS",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "AILab Tools",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "johnbryce.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "DevShift",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "Ledge AI",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "DoIT International",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "danielzrihen.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "TeraSky",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "iGATES",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "One1",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "Intuit",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "InforUMobile",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "019",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "AutoChat",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "Green-API",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "Boostiez",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "GoAutomations",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "InforU Mobile",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "Maskyoo",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "Brix",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "CodeLess",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "Signals",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "Gambot",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "Automatix",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "NoCode Israel",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "AITERRA",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "ildigital.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q01"
+      ]
+    },
+    {
+      "name": "AllJobs",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q02"
+      ]
+    },
+    {
+      "name": "Fiverr",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q02"
+      ]
+    },
+    {
+      "name": "Upwork",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q02"
+      ]
+    },
+    {
+      "name": "lynxbe.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q02"
+      ]
+    },
+    {
+      "name": "bizrunner.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "mumble.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "red-ghost.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "LiveWeb",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "focus-crm.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "spike.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q03"
+      ]
+    },
+    {
+      "name": "benkalsky.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "wedomedia.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "חשבשבת",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Zoho CRM",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "ryse.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "expert.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "businessautomation.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "optimally.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "trigx.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "rightwave.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Automaze",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Make Sense",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "EffectivBiz",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q04"
+      ]
+    },
+    {
+      "name": "Bubble",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Priority Software",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Hashavshevet",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "Zoho Creator",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "coreva.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "slatech.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "sumit.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "bizzstudio.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "mrcoral.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "webon.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q05"
+      ]
+    },
+    {
+      "name": "xn--8dbacwhj3a.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "WordPress",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "Shopify",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "npcoding.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q06"
+      ]
+    },
+    {
+      "name": "webtiv",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "nadlancrm",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "media-deal",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "klikatnadlan.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Madlan",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Localize",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "matchi.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "Matchi",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q07"
+      ]
+    },
+    {
+      "name": "OpenDental",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Simple Practice",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "רופא שלי",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "InClinic",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "DoctorBase",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "medform.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "prospira.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "clinic-ai.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "tiffulit.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "hasochen.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Medform",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Prospira",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Clinic-AI",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "תפעולית AI",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "TikTak",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Smoove",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Rozin",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Dentolize",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Medesk",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Clicks",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "Setmore",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q08"
+      ]
+    },
+    {
+      "name": "jett.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "aibuddy.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "משרד הכלכלה",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "הסוכנות לעסקים קטנים ובינוניים",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q09"
+      ]
+    },
+    {
+      "name": "Future AI Lab",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "Future AI Lab Pro",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q10"
+      ]
+    },
+    {
+      "name": "voicenter.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "gadgety.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "bestai.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "jvo.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "Decart",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q11"
+      ]
+    },
+    {
+      "name": "WAAM-it",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "אחיה אוטומציה",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "SmartSend",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "wbsender",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "Albato",
+      "kind": "org",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "licard.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    },
+    {
+      "name": "ckdigital360.co.il",
+      "kind": "domain",
+      "answers": 1,
+      "questions": [
+        "q12"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "kind": "אתר זר אחר",
+      "count": 178,
+      "hosts": [
+        [
+          "itayost.com",
+          11
+        ],
+        [
+          "jpost.com",
+          9
+        ],
+        [
+          "skool.com",
+          8
+        ],
+        [
+          "voicespin.com",
+          6
+        ],
+        [
+          "wbsender.co",
+          6
+        ],
+        [
+          "ailabspro.io",
+          6
+        ]
+      ]
+    },
+    {
+      "kind": "אתר ישראלי אחר",
+      "count": 176,
+      "hosts": [
+        [
+          "waam-it.co.il",
+          8
+        ],
+        [
+          "focus-crm.co.il",
+          7
+        ],
+        [
+          "mybusiness.co.il",
+          6
+        ],
+        [
+          "virtualspirits.co.il",
+          6
+        ],
+        [
+          "lynxbe.co.il",
+          6
+        ],
+        [
+          "nadlancrm.co.il",
+          6
+        ]
+      ]
+    },
+    {
+      "kind": "אתר מתחרה",
+      "count": 89,
+      "hosts": [
+        [
+          "achiya-automation.com",
+          26
+        ],
+        [
+          "doctorai.co.il",
+          11
+        ],
+        [
+          "automaziot.ai",
+          10
+        ],
+        [
+          "bringup.io",
+          9
+        ],
+        [
+          "optimate.co.il",
+          6
+        ],
+        [
+          "whale.co.il",
+          5
+        ]
+      ]
+    },
+    {
+      "kind": "רשת חברתית / כללי",
+      "count": 17,
+      "hosts": [
+        [
+          "youtube.com",
+          11
+        ],
+        [
+          "reddit.com",
+          2
+        ],
+        [
+          "facebook.com",
+          2
+        ],
+        [
+          "anthropic.com",
+          2
+        ]
+      ]
+    },
+    {
+      "kind": "אתר חדשות",
+      "count": 11,
+      "hosts": [
+        [
+          "themarker.com",
+          8
+        ],
+        [
+          "ice.co.il",
+          2
+        ],
+        [
+          "maariv.co.il",
+          1
+        ]
+      ]
+    },
+    {
+      "kind": "מוסד ישראלי (אקדמיה/ממשל/עמותה)",
+      "count": 6,
+      "hosts": [
+        [
+          "xn----9hcbbmdejomb6a2c8b8a.org.il",
+          2
+        ],
+        [
+          "webon.org.il",
+          2
+        ],
+        [
+          "sba.org.il",
+          1
+        ],
+        [
+          "optimus.org.il",
+          1
+        ]
+      ]
+    },
+    {
+      "kind": "האתר שלנו (דף הבית)",
+      "count": 1,
+      "hosts": [
+        [
+          "ai-lab.co.il",
+          1
+        ]
+      ]
+    },
+    {
+      "kind": "ויקיפדיה",
+      "count": 1,
+      "hosts": [
+        [
+          "wikipedia.org",
+          1
+        ]
+      ]
+    }
+  ],
+  "ourPages": {
+    "/": 1
+  },
+  "totalCost": 2.581,
+  "stoppedForBudget": false,
+  "budget": 5
+}

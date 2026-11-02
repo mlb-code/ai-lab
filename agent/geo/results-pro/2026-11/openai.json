@@ -1,0 +1,264 @@
+{
+  "engine": "openai",
+  "label": "ChatGPT (OpenAI)",
+  "model": "gpt-4.1-mini",
+  "month": "2026-11",
+  "runs": 3,
+  "generatedAt": "2026-11-02T16:41:19.115Z",
+  "answers": [
+    {
+      "questionId": "q01",
+      "question": "חברה שבונה סוכני AI לעסקים בישראל, מי מומלץ?",
+      "run": 1,
+      "at": "2026-11-02T16:41:19.115Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q01",
+      "question": "חברה שבונה סוכני AI לעסקים בישראל, מי מומלץ?",
+      "run": 2,
+      "at": "2026-11-02T16:41:52.084Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q01",
+      "question": "חברה שבונה סוכני AI לעסקים בישראל, מי מומלץ?",
+      "run": 3,
+      "at": "2026-11-02T16:42:25.264Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q02",
+      "question": "מי מומלץ לפיתוח בוט וואטסאפ חכם לעסק קטן בישראל?",
+      "run": 1,
+      "at": "2026-11-02T16:42:59.403Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q02",
+      "question": "מי מומלץ לפיתוח בוט וואטסאפ חכם לעסק קטן בישראל?",
+      "run": 2,
+      "at": "2026-11-02T16:43:33.272Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q02",
+      "question": "מי מומלץ לפיתוח בוט וואטסאפ חכם לעסק קטן בישראל?",
+      "run": 3,
+      "at": "2026-11-02T16:44:05.922Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q03",
+      "question": "כמה עולה בוט וואטסאפ לעסק בישראל?",
+      "run": 1,
+      "at": "2026-11-02T16:44:36.031Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q03",
+      "question": "כמה עולה בוט וואטסאפ לעסק בישראל?",
+      "run": 2,
+      "at": "2026-11-02T16:45:09.145Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q03",
+      "question": "כמה עולה בוט וואטסאפ לעסק בישראל?",
+      "run": 3,
+      "at": "2026-11-02T16:45:40.809Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q04",
+      "question": "אוטומציה לעסק קטן בישראל, עם מי כדאי לעבוד?",
+      "run": 1,
+      "at": "2026-11-02T16:46:13.040Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q04",
+      "question": "אוטומציה לעסק קטן בישראל, עם מי כדאי לעבוד?",
+      "run": 2,
+      "at": "2026-11-02T16:46:45.626Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q04",
+      "question": "אוטומציה לעסק קטן בישראל, עם מי כדאי לעבוד?",
+      "run": 3,
+      "at": "2026-11-02T16:47:17.162Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q05",
+      "question": "מי בונה מערכת ניהול בהתאמה אישית לעסק קטן בישראל?",
+      "run": 1,
+      "at": "2026-11-02T16:47:50.938Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q05",
+      "question": "מי בונה מערכת ניהול בהתאמה אישית לעסק קטן בישראל?",
+      "run": 2,
+      "at": "2026-11-02T16:48:23.217Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q05",
+      "question": "מי בונה מערכת ניהול בהתאמה אישית לעסק קטן בישראל?",
+      "run": 3,
+      "at": "2026-11-02T16:48:56.998Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q06",
+      "question": "כמה עולה לפתח אפליקציה לעסק בישראל?",
+      "run": 1,
+      "at": "2026-11-02T16:49:28.843Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q06",
+      "question": "כמה עולה לפתח אפליקציה לעסק בישראל?",
+      "run": 2,
+      "at": "2026-11-02T16:50:02.629Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q06",
+      "question": "כמה עולה לפתח אפליקציה לעסק בישראל?",
+      "run": 3,
+      "at": "2026-11-02T16:50:33.062Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q07",
+      "question": "סוכן AI למשרד תיווך נדל\"ן בישראל, מי בונה?",
+      "run": 1,
+      "at": "2026-11-02T16:51:04.505Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q07",
+      "question": "סוכן AI למשרד תיווך נדל\"ן בישראל, מי בונה?",
+      "run": 2,
+      "at": "2026-11-02T16:51:37.249Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q07",
+      "question": "סוכן AI למשרד תיווך נדל\"ן בישראל, מי בונה?",
+      "run": 3,
+      "at": "2026-11-02T16:52:10.365Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q08",
+      "question": "סוכן AI לקביעת תורים לקליניקה פרטית בישראל",
+      "run": 1,
+      "at": "2026-11-02T16:52:43.739Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q08",
+      "question": "סוכן AI לקביעת תורים לקליניקה פרטית בישראל",
+      "run": 2,
+      "at": "2026-11-02T16:53:15.283Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q08",
+      "question": "סוכן AI לקביעת תורים לקליניקה פרטית בישראל",
+      "run": 3,
+      "at": "2026-11-02T16:53:48.618Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q09",
+      "question": "הטמעת AI בעסק קטן בישראל, יועץ או חברה מומלצים",
+      "run": 1,
+      "at": "2026-11-02T16:54:20.360Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q09",
+      "question": "הטמעת AI בעסק קטן בישראל, יועץ או חברה מומלצים",
+      "run": 2,
+      "at": "2026-11-02T16:54:52.396Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q09",
+      "question": "הטמעת AI בעסק קטן בישראל, יועץ או חברה מומלצים",
+      "run": 3,
+      "at": "2026-11-02T16:55:24.137Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q10",
+      "question": "מה זה AI Lab Pro?",
+      "run": 1,
+      "at": "2026-11-02T16:55:56.584Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q10",
+      "question": "מה זה AI Lab Pro?",
+      "run": 2,
+      "at": "2026-11-02T16:56:27.132Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q10",
+      "question": "מה זה AI Lab Pro?",
+      "run": 3,
+      "at": "2026-11-02T16:56:58.233Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q11",
+      "question": "חברה ישראלית שבונה מערכות לעסקים עם Claude",
+      "run": 1,
+      "at": "2026-11-02T16:57:29.368Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q11",
+      "question": "חברה ישראלית שבונה מערכות לעסקים עם Claude",
+      "run": 2,
+      "at": "2026-11-02T16:58:01.681Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q11",
+      "question": "חברה ישראלית שבונה מערכות לעסקים עם Claude",
+      "run": 3,
+      "at": "2026-11-02T16:58:32.175Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q12",
+      "question": "אוטומציה שמחברת וואטסאפ לגוגל שיטס לעסק, מי מומלץ בישראל?",
+      "run": 1,
+      "at": "2026-11-02T16:59:03.623Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q12",
+      "question": "אוטומציה שמחברת וואטסאפ לגוגל שיטס לעסק, מי מומלץ בישראל?",
+      "run": 2,
+      "at": "2026-11-02T16:59:37.425Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    },
+    {
+      "questionId": "q12",
+      "question": "אוטומציה שמחברת וואטסאפ לגוגל שיטס לעסק, מי מומלץ בישראל?",
+      "run": 3,
+      "at": "2026-11-02T17:00:10.978Z",
+      "error": "HTTP 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}"
+    }
+  ],
+  "cost": 0,
+  "errors": 36
+}
