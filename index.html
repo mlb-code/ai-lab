@@ -2464,6 +2464,13 @@ gtag('config', 'AW-18061574299');
         }
         .on-grid::-webkit-scrollbar { display: none; }
         .on-card { flex: 0 0 82%; max-width: 330px; scroll-snap-align: center; }
+        /* 08.11.2026 (המלצת דוח ה-SEO, שבועיים ברציפות): בנייד הכפתור "פרטים והרשמה" מופיע מיד מתחת לשם הקורס והמחיר,
+           לפני התיאור והצ'יפים — כדי שייראה בלי לגלול בתוך הכרטיס. בדסקטופ הסדר לא משתנה. */
+        .on-card .on-em { order: -4; }
+        .on-card h4 { order: -3; }
+        .on-card .on-price { order: -2; margin-bottom: 10px; }
+        .on-card .btn { order: -1; margin-bottom: 16px; }
+        .on-card p { flex: 0 0 auto; }
         /* מודאל הסילבוס: מפנה מקום לניווט למעלה ולסרגל למטה — כפתור הסגירה נגיש והכפתורים לא מוסתרים */
         .modal-wrap {
             align-items: flex-start;
