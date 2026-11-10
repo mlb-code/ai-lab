@@ -1,14 +1,14 @@
 {
   "month": "2026-11",
-  "generatedAt": "2026-11-10T08:58:25.896Z",
+  "generatedAt": "2026-11-10T09:21:36.422Z",
   "runsPerQuestion": 3,
   "engines": {
     "openai": {
       "label": "ChatGPT (OpenAI)",
       "model": "gpt-4.1-mini",
       "runs": 0,
-      "errors": 1,
-      "fatal": "HTTP 401: {\n  \"error\": {\n    \"message\": \"Incorrect API key provided: gh secre***********************************-lab. You can find your API key at https://platform.openai.com/account/api-keys.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"invalid_api_key\"\n  }\n} (מפתח לא תקין/חסר הרשאה — המנוע נעצר)",
+      "errors": 36,
+      "fatal": null,
       "mentionedRuns": 0,
       "mentionRate": 0,
       "questionsWith": 0,
@@ -99,7 +99,7 @@
   "discovered": [],
   "sources": [],
   "ourPages": {},
-  "totalCost": 0.019,
+  "totalCost": 0.018,
   "stoppedForBudget": false,
   "budget": 5
 }
