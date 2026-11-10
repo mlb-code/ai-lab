@@ -4,13 +4,13 @@
   "model": "gpt-4.1-mini",
   "month": "2026-11",
   "runs": 3,
-  "generatedAt": "2026-11-10T08:40:32.748Z",
+  "generatedAt": "2026-11-10T08:58:25.667Z",
   "answers": [
     {
       "questionId": "q01",
       "question": "חברה שבונה סוכני AI לעסקים בישראל, מי מומלץ?",
       "run": 1,
-      "at": "2026-11-10T08:40:32.748Z",
+      "at": "2026-11-10T08:58:25.667Z",
       "error": "HTTP 401: {\n  \"error\": {\n    \"message\": \"Incorrect API key provided: gh secre***********************************-lab. You can find your API key at https://platform.openai.com/account/api-keys.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"invalid_api_key\"\n  }\n} (מפתח לא תקין/חסר הרשאה — המנוע נעצר)"
     }
   ],
