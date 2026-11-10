@@ -23,6 +23,10 @@ on:
         description: "להריץ גם אם כבר יש דוח לחודש הזה (true/false)"
         required: false
         default: "false"
+      only:
+        description: "להריץ רק מנועים מסוימים, מופרדים בפסיק (למשל openai). ריק = כולם"
+        required: false
+        default: ""
 permissions:
   issues: write
   contents: write
@@ -63,6 +67,7 @@ jobs:
           GEO_MONTH: ${{ steps.dup.outputs.month }}
           GEO_PROFILE: ${{ steps.dup.outputs.profile }}
           GEO_BUDGET_USD: "5"
+          GEO_ONLY: ${{ github.event.inputs.only }}
         run: node agent/geo/geo-monitor.mjs > /dev/null
       - name: פתיחת Issue (= מייל למאיר)
         if: steps.dup.outputs.skip != 'true'
