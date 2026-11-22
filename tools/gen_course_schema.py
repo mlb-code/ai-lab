@@ -30,7 +30,7 @@ ENROLL_URL = "https://my.ai-lab.co.il/courses"
 INSTRUCTOR = {"@type": "Person", "name": "מאיר לביא", "url": "https://www.linkedin.com/in/meirlavi"}
 TZ = "Asia/Jerusalem"
 WEEKS = 8
-MAX_AGE = 15  # הקבוצות במחזור הנוכחי: 9–11 ו-12–15
+MAX_AGE = 17  # טווח הגילאים הרשמי באתר: 9–17
 
 # המחזורים הפתוחים, לפי שם הקורס במערך. כל מחזור = 8 מפגשים שבועיים של שעה.
 COHORTS = {
