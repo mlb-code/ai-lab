@@ -16,6 +16,14 @@ window.MIA_CONTENT[2] = {
     "להקליד משפטים על העסק שלך — עם כל האצבעות!"
   ],
 
+  tool: {
+    emoji: "⌨️",
+    title: "המקלדת של מיה – קיצורי הקסם",
+    text: "מקלדת ThinkPad על המסך. לוחצים על קיצור, המקשים נדלקים, ואז לוחצים עליהם באמת!",
+    button: "פתיחת המקלדת ▶",
+    url: "https://ai-lab.co.il/s/c6279968/keyboard.html"
+  },
+
   video: {
     url: "https://www.youtube.com/watch?v=OySK3gHnlkE",
     title: "כאן סקרנים: כיצד נקבע סדר האותיות בעברית במקלדת?",

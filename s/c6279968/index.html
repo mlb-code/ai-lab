@@ -800,6 +800,10 @@ details.parents .p-body{padding:0 22px 20px; font-size:18px; line-height:1.7}
       if(c.goals && c.goals.length){
         h += '<section class="card box goals"><h2>🎯 מה נעשה היום</h2><ul>'+c.goals.map(function(g){ return '<li><span>'+rich(g)+'</span></li>'; }).join("")+'</ul></section>';
       }
+      if(c.tool && c.tool.url){
+        h += '<section class="card slides-cta"><span style="font-size:46px" aria-hidden="true">'+esc(c.tool.emoji || "🧰")+'</span><p><b>'+rich(c.tool.title || "כלי לשיעור")+'</b>'+(c.tool.text ? '<br>'+rich(c.tool.text) : '')+'</p>'+
+             '<a class="btn teal" href="'+esc(c.tool.url)+'" target="_blank" rel="noopener" style="text-decoration:none">'+esc(c.tool.button || "פתיחה ▶")+'</a></section>';
+      }
       var vid = c.video && ytId(c.video.url);
       if(vid){
         h += '<section class="card box"><h2>🎬 סרטון</h2><div class="watch">👀 לראות ביחד עם מאיר בשיעור</div>'+
