@@ -29,14 +29,14 @@ h1{margin:0;font-size:26px}
 .k.on .he,.k.on .en{color:#fff}
 .k.down{outline:5px solid var(--ok);outline-offset:-2px;background:var(--ok)!important;color:#06283d!important;transform:translateY(2px)}
 @keyframes pulse{from{box-shadow:0 0 0 0 rgba(255,61,127,.7)}to{box-shadow:0 0 0 12px rgba(255,61,127,0)}}
-.r0{grid-template-columns:repeat(15,1fr)}
+.r0{grid-template-columns:repeat(17,1fr)}
 .r1{grid-template-columns:repeat(13,1fr) 2fr}
 .r2{grid-template-columns:1.5fr repeat(12,1fr) 1.5fr}
 .r3{grid-template-columns:1.8fr repeat(11,1fr) 2.2fr}
 .r4{grid-template-columns:2.4fr repeat(10,1fr) 2.6fr}
-.r5{grid-template-columns:1fr 1fr 1fr 1.2fr 6.2fr 1.2fr 1fr .9fr .9fr .9fr}
+.r5{grid-template-columns:1fr 1fr 1fr 1.2fr 5.4fr 1.1fr 1.1fr 1fr .9fr 1.6fr .9fr}
 .arrows{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px}
-.arrows .k{min-height:23px;font-size:12px}
+.arrows .k{min-height:23px;font-size:10px;padding:1px}
 .pad{margin:12px auto 0;width:34%;height:64px;background:#6f6f78;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700}
 .panel{background:var(--card);border-radius:18px;padding:14px 16px;box-shadow:var(--sh)}
 .panel h2{margin:0 0 8px;font-size:21px}
@@ -64,7 +64,7 @@ textarea{width:100%;min-height:150px;border-radius:14px;border:2px dashed var(--
 </head>
 <body>
 <header>
-  <h1>⌨️ המקלדת של מיה – קיצורי הקסם</h1>
+  <h1>⌨️ המקלדת של מיה (ThinkPad) – קיצורי הקסם</h1>
   <div style="display:flex;gap:8px;align-items:center">
     <span class="score" id="score"></span>
     <a class="back" href="./#/lesson/2">↩ חזרה לשיעור 2</a>
@@ -74,7 +74,7 @@ textarea{width:100%;min-height:150px;border-radius:14px;border:2px dashed var(--
 <div class="wrap">
   <div class="kbwrap">
     <div class="kb" id="kb"></div>
-    <div class="pad">משטח מגע (Touchpad) = העכבר של הלפטופ</div>
+    <div class="pad">🔴 הנקודה האדומה באמצע (TrackPoint) וגם משטח המגע למטה = העכבר של הלפטופ</div>
   </div>
 
   <div class="now">
@@ -108,14 +108,14 @@ textarea{width:100%;min-height:150px;border-radius:14px;border:2px dashed var(--
   // ---------- פריסה ----------
   // כל מקש: [קוד, תצוגה, class]. קוד = event.code
   var rows = [
-    ["r0", [["Escape","Esc","fn c4"],["F1","F1 🔇","fn c4"],["F2","F2 🔉","fn c4"],["F3","F3 🔊","fn c4"],["F4","F4 🎤","fn c4"],["F5","F5 🔄","fn c4"],["F6","F6 ☀︎-","fn c4"],["F7","F7 ☀︎+","fn c4"],["F8","F8 🖥","fn c4"],["F9","F9 ✈️","fn c4"],["F10","F10 ⌨️","fn c4"],["F11","F11 🔒","fn c4"],["F12","F12 📷","fn c4"],["Insert","Ins","fn c4"],["Delete","Del","fn c4"]]],
+    ["r0", [["Escape","Esc","fn c4"],["F1","F1 🔇","fn c4"],["F2","F2 🔉","fn c4"],["F3","F3 🔊","fn c4"],["F4","F4 🎤","fn c4"],["F5","F5 ☀︎-","fn c4"],["F6","F6 ☀︎+","fn c4"],["F7","F7 🖥","fn c4"],["F8","F8 ✈️","fn c4"],["F9","F9 🔔","fn c4"],["F10","F10 📞","fn c4"],["F11","F11 📵","fn c4"],["F12","F12 ⭐","fn c4"],["Home","Home","fn c4"],["End","End","fn c4"],["Insert","Insert","fn c4"],["Delete","Delete","fn c4"]]],
     ["r1", [["Backquote","~ ;",""],["Digit1","1","c5"],["Digit2","2","c5"],["Digit3","3","c5"],["Digit4","4","c5"],["Digit5","5","c5"],["Digit6","6","c5"],["Digit7","7","c5"],["Digit8","8","c5"],["Digit9","9","c5"],["Digit0","0","c5"],["Minus","- _",""],["Equal","= +",""],["Backspace","⌫ Backspace<br>מוחק אחורה","c2 sm"]]],
     ["r2", [["Tab","Tab ⇥","c3 sm"],["KeyQ","/|Q"],["KeyW","'|W"],["KeyE","ק|E"],["KeyR","ר|R"],["KeyT","א|T"],["KeyY","ט|Y"],["KeyU","ו|U"],["KeyI","ן|I"],["KeyO","ם|O"],["KeyP","פ|P"],["BracketLeft","[ ]",""],["BracketRight","] [",""],["Backslash","\\",""]]],
     ["r3", [["CapsLock","Caps Lock<br>אותיות גדולות","c3 sm"],["KeyA","ש|A"],["KeyS","ד|S"],["KeyD","ג|D"],["KeyF","כ|F"],["KeyG","ע|G"],["KeyH","י|H"],["KeyJ","ח|J"],["KeyK","ל|K"],["KeyL","ך|L"],["Semicolon","ף|;"],["Quote",",|'"],["Enter","Enter ⏎<br>שורה חדשה / אישור","c2 sm"]]],
     ["r4", [["ShiftLeft","Shift ⇧<br>אות גדולה","c3 sm"],["KeyZ","ז|Z"],["KeyX","ס|X"],["KeyC","ב|C"],["KeyV","ה|V"],["KeyB","נ|B"],["KeyN","מ|N"],["KeyM","צ|M"],["Comma","ת|,"],["Period","ץ|."],["Slash",".|/"],["ShiftRight","Shift ⇧<br>אות גדולה","c3 sm"]]],
-    ["r5", [["ControlLeft","Ctrl","c3 sm"],["Fn","Fn","c3 sm"],["MetaLeft","⊞ Win<br>תפריט התחל","c3 sm"],["AltLeft","Alt","c3 sm"],["Space","רווח (Space)","c1"],["AltRight","Alt","c3 sm"],["ControlRight","Ctrl","c3 sm"],["ArrowLeft","◀","c2"],["ARROWS"],["ArrowRight","▶","c2"]]]
+    ["r5", [["Fn","Fn","c3 sm"],["ControlLeft","Ctrl","c3 sm"],["MetaLeft","⊞ Win<br>תפריט התחל","c3 sm"],["AltLeft","Alt","c3 sm"],["Space","רווח (Space)","c1"],["AltRight","AltGr","c3 sm"],["PrintScreen","PrtSc<br>צילום מסך","c3 sm"],["ControlRight","Ctrl","c3 sm"],["ArrowLeft","◀","c2"],["ARROWS"],["ArrowRight","▶","c2"]]]
   ];
-  var names = {Escape:"Esc – יוצא / סוגר חלון קטן",Backspace:"Backspace – מוחק אות אחורה",Tab:"Tab – קופץ לשדה הבא",CapsLock:"Caps Lock – כל האותיות באנגלית גדולות",Enter:"Enter – שורה חדשה או אישור",ShiftLeft:"Shift – אות גדולה או הסימן העליון במקש",ShiftRight:"Shift – אות גדולה או הסימן העליון במקש",ControlLeft:"Ctrl – מקש הקסם: ביחד עם אות עושה פעולה",ControlRight:"Ctrl – מקש הקסם: ביחד עם אות עושה פעולה",AltLeft:"Alt – מקש עזר (למשל להחלפת שפה)",AltRight:"Alt – מקש עזר",MetaLeft:"Win – פותח את תפריט התחל",Fn:"Fn – מפעיל את הסמלים הקטנים בשורה העליונה",Space:"רווח – המקש הכי גדול, מקום בין מילים",Delete:"Delete – מוחק קדימה, או מוחק קובץ שסומן",Insert:"Insert – כמעט לא משתמשים",ArrowLeft:"חץ – מזיז את הסמן",ArrowRight:"חץ – מזיז את הסמן",ArrowUp:"חץ – מזיז את הסמן",ArrowDown:"חץ – מזיז את הסמן",F1:"F1 – עזרה (בלנובו: השתקה)",F2:"F2 – שינוי שם של קובץ (בלנובו: קול חלש)",F5:"F5 – רענון הדף",F11:"F11 – מסך מלא"};
+  var names = {Escape:"Esc – יוצא / סוגר חלון קטן",Backspace:"Backspace – מוחק אות אחורה",Tab:"Tab – קופץ לשדה הבא",CapsLock:"Caps Lock – כל האותיות באנגלית גדולות",Enter:"Enter – שורה חדשה או אישור",ShiftLeft:"Shift – אות גדולה או הסימן העליון במקש",ShiftRight:"Shift – אות גדולה או הסימן העליון במקש",ControlLeft:"Ctrl – מקש הקסם: ביחד עם אות עושה פעולה",ControlRight:"Ctrl – מקש הקסם: ביחד עם אות עושה פעולה",AltLeft:"Alt – מקש עזר (למשל להחלפת שפה)",AltRight:"Alt – מקש עזר",MetaLeft:"Win – פותח את תפריט התחל",Fn:"Fn – מפעיל את הסמלים הקטנים בשורה העליונה",Space:"רווח – המקש הכי גדול, מקום בין מילים",Delete:"Delete – מוחק קדימה, או מוחק קובץ שסומן",Insert:"Insert – כמעט לא משתמשים",Home:"Home – קופץ לתחילת השורה",End:"End – קופץ לסוף השורה",PageUp:"PgUp – עמוד למעלה",PageDown:"PgDn – עמוד למטה",PrintScreen:"PrtSc – מצלם את כל המסך",AltRight:"AltGr – Alt ימני, לסימנים מיוחדים",ArrowLeft:"חץ – מזיז את הסמן",ArrowRight:"חץ – מזיז את הסמן",ArrowUp:"חץ – מזיז את הסמן",ArrowDown:"חץ – מזיז את הסמן",F1:"F1 – השתקת הרמקולים",F2:"F2 – קול חלש יותר (וגם: שינוי שם לקובץ)",F3:"F3 – קול חזק יותר",F4:"F4 – השתקת המיקרופון",F5:"F5 – מסך כהה יותר (וגם: רענון)",F6:"F6 – מסך בהיר יותר",F7:"F7 – חיבור למסך נוסף",F8:"F8 – מצב טיסה (בלי אינטרנט)",F9:"F9 – מרכז ההתראות",F10:"F10 – מענה לשיחה",F11:"F11 – ניתוק שיחה (וגם: מסך מלא)",F12:"F12 – מקש כוכב: כפתור שאת בוחרת מה הוא עושה"};
 
   var kb = document.getElementById("kb"), keyEls = {};
   function mk(code, label, cls){
@@ -128,7 +128,7 @@ textarea{width:100%;min-height:150px;border-radius:14px;border:2px dashed var(--
   rows.forEach(function(r){
     var row = document.createElement("div"); row.className = "row "+r[0];
     r[1].forEach(function(k){
-      if(k[0]==="ARROWS"){ var a=document.createElement("div"); a.className="arrows"; a.innerHTML="<div></div>"; a.appendChild(mk("ArrowUp","▲","c2")); a.innerHTML+="<div></div><div></div>"; a.appendChild(mk("ArrowDown","▼","c2")); a.innerHTML+="<div></div>";
+      if(k[0]==="ARROWS"){ var a=document.createElement("div"); a.className="arrows"; a.appendChild(mk("PageUp","PgUp","c3 sm")); a.appendChild(mk("ArrowUp","▲","c2")); a.appendChild(mk("PageDown","PgDn","c3 sm")); a.innerHTML+="<div></div>"; a.appendChild(mk("ArrowDown","▼","c2")); a.innerHTML+="<div></div>";
         // rebuild listeners lost by innerHTML+=
         a.querySelectorAll(".k").forEach(function(d){ var c=d.dataset.code; keyEls[c]=[d]; d.addEventListener("click",function(){showKey(c,d);}); });
         row.appendChild(a); return; }
@@ -152,7 +152,7 @@ textarea{width:100%;min-height:150px;border-radius:14px;border:2px dashed var(--
     {id:"lang", keys:["Alt","Shift"], codes:["AltLeft","ShiftLeft"], name:"החלף שפה", what:"Alt + Shift", text:"עוברים בין עברית לאנגלית. מסתכלים בפינה: עב או ENG."},
     {id:"caps", keys:["Shift","m"], codes:["ShiftLeft","KeyM"], name:"אות גדולה", what:"Shift + M", text:"מחזיקים Shift ולוחצים על אות באנגלית: יוצאת גדולה. M של Mia!"},
     {id:"delword", keys:["Control","Backspace"], codes:["ControlLeft","Backspace"], name:"מחק מילה שלמה", what:"Ctrl + Backspace", text:"במקום אות-אות, מוחק מילה שלמה אחורה."},
-    {id:"home", keys:["Control","Home"], codes:["ControlLeft","ArrowUp"], name:"קפוץ להתחלה", what:"Ctrl + Home", text:"קופץ לתחילת המסמך. Ctrl + End קופץ לסוף."},
+    {id:"home", keys:["Control","Home"], codes:["ControlLeft","Home"], name:"קפוץ להתחלה", what:"Ctrl + Home", text:"קופץ לתחילת המסמך. Ctrl + End קופץ לסוף."},
     {id:"alttab", keys:["Alt","Tab"], codes:["AltLeft","Tab"], name:"החלף חלון", what:"Alt + Tab", text:"מחזיקים Alt ולוחצים Tab: קופצים בין החלונות הפתוחים."},
     {id:"desk", keys:["Meta","d"], codes:["MetaLeft","KeyD"], name:"שולחן העבודה", what:"Win + D", text:"מסתיר את כל החלונות ומראה את שולחן העבודה. עוד פעם מחזיר."},
     {id:"explorer", keys:["Meta","e"], codes:["MetaLeft","KeyE"], name:"סייר הקבצים", what:"Win + E", text:"פותח את סייר הקבצים: שם גרים כל הקבצים והתיקיות."},
@@ -160,7 +160,8 @@ textarea{width:100%;min-height:150px;border-radius:14px;border:2px dashed var(--
     {id:"lock", keys:["Meta","l"], codes:["MetaLeft","KeyL"], name:"נעל מחשב", what:"Win + L", text:"נועל את המחשב כשקמים ממנו."},
     {id:"task", keys:["Control","Shift","Escape"], codes:["ControlLeft","ShiftLeft","Escape"], name:"מנהל המשימות", what:"Ctrl + Shift + Esc", text:"מראה מה המעבד והזיכרון עושים עכשיו (זוכרת מהשיעור הקודם?)."},
     {id:"zoomin", keys:["Control","="], codes:["ControlLeft","Equal"], name:"הגדל", what:"Ctrl + (+)", text:"מגדיל את מה שעל המסך. Ctrl + (-) מקטין, Ctrl + 0 מחזיר."},
-    {id:"rename", keys:["F2"], codes:["F2"], name:"שנה שם לקובץ", what:"F2", text:"מסמנים קובץ ולוחצים F2: אפשר לכתוב לו שם חדש."}
+    {id:"rename", keys:["Fn","F2"], codes:["Fn","F2"], name:"שנה שם לקובץ", what:"Fn + F2", text:"מסמנים קובץ ולוחצים F2. במקלדת שלך F2 מנמיך קול, אז מחזיקים Fn ביחד איתו."},
+    {id:"prtsc", keys:["PrintScreen"], codes:["PrintScreen"], name:"צלם את כל המסך", what:"PrtSc", text:"מצלם את כל המסך לזיכרון. אחר כך Ctrl+V מדביק את התמונה, למשל ב-Paint."}
   ];
   var done = {}; try{ done = JSON.parse(localStorage.getItem("mia_c6_kb_done")||"{}"); }catch(e){}
   var list = document.getElementById("list"), cur = null, btns = {};
@@ -192,7 +193,7 @@ textarea{width:100%;min-height:150px;border-radius:14px;border:2px dashed var(--
 
   // ---------- לחיצה אמיתית ----------
   var pressed = {};
-  function codeOf(e){ var c=e.code; if(c==="ControlRight")c="ControlLeft"; if(c==="ShiftRight")c="ShiftLeft"; if(c==="AltRight")c="AltLeft"; if(c==="MetaRight")c="MetaLeft"; if(c==="OSLeft"||c==="OSRight")c="MetaLeft"; if(c==="Home")c="ArrowUp"; return c; }
+  function codeOf(e){ var c=e.code; if(c==="ControlRight")c="ControlLeft"; if(c==="ShiftRight")c="ShiftLeft"; if(c==="AltRight")c="AltLeft"; if(c==="MetaRight")c="MetaLeft"; if(c==="OSLeft"||c==="OSRight")c="MetaLeft"; return c; }
   document.addEventListener("keydown", function(e){
     var c = codeOf(e); pressed[c]=1;
     (keyEls[c]||[]).forEach(function(d){ d.classList.add("down"); });
