@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>המקלדת של מיה</title>
+<style>
+:root{--bg:#FFF4E0;--card:#fff;--ink:#2a2233;--soft:#6b6478;--kb:#2b2b31;--key:#3b3b44;--keytxt:#fff;--he:#ffd166;--c1:#4cc9f0;--c2:#f28482;--c3:#90be6d;--c4:#c77dff;--c5:#ffb703;--hl:#ff3d7f;--ok:#2ec27e;--sh:4px 5px 0 rgba(0,0,0,.12)}
+html[data-theme="dark"]{--bg:#1B1830;--card:#2A2644;--ink:#F4F0FF;--soft:#B9B3D8;--sh:4px 5px 0 rgba(0,0,0,.5)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Arial,sans-serif;padding:14px}
+a{color:inherit}
+header{max-width:1200px;margin:0 auto 10px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+h1{margin:0;font-size:26px}
+.back{font-size:15px;text-decoration:none;background:var(--card);padding:8px 12px;border-radius:12px;box-shadow:var(--sh)}
+.wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:14px}
+.kbwrap{background:#8d8d96;border-radius:20px;padding:14px 16px 16px;overflow-x:auto}
+.kb{background:var(--kb);border-radius:12px;padding:10px;direction:ltr;user-select:none;min-width:720px}
+.row{display:grid;gap:5px;margin-bottom:5px}
+.k{background:var(--key);color:var(--keytxt);border-radius:7px;min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px;font-weight:700;line-height:1.05;box-shadow:inset 0 -3px 0 rgba(0,0,0,.35);padding:3px;cursor:pointer;transition:transform .08s;text-align:center}
+.k:hover{transform:translateY(-2px)}
+.k .he{color:var(--he);font-weight:800}
+.k .en{font-size:13px;opacity:.9}
+.k.sm{font-size:12px;font-weight:600}
+.k.fn{min-height:34px;font-size:11px}
+.k.c1{background:var(--c1);color:#06283d}.k.c2{background:var(--c2);color:#3d0a0a}.k.c3{background:var(--c3);color:#102a05}.k.c4{background:var(--c4);color:#2b0b47}.k.c5{background:var(--c5);color:#3a2600}
+.k.on{outline:5px solid var(--hl);outline-offset:-2px;background:var(--hl)!important;color:#fff!important;transform:translateY(-3px) scale(1.06);z-index:2;animation:pulse .7s infinite alternate}
+.k.on .he,.k.on .en{color:#fff}
+.k.down{outline:5px solid var(--ok);outline-offset:-2px;background:var(--ok)!important;color:#06283d!important;transform:translateY(2px)}
+@keyframes pulse{from{box-shadow:0 0 0 0 rgba(255,61,127,.7)}to{box-shadow:0 0 0 12px rgba(255,61,127,0)}}
+.r0{grid-template-columns:repeat(15,1fr)}
+.r1{grid-template-columns:repeat(13,1fr) 2fr}
+.r2{grid-template-columns:1.5fr repeat(12,1fr) 1.5fr}
+.r3{grid-template-columns:1.8fr repeat(11,1fr) 2.2fr}
+.r4{grid-template-columns:2.4fr repeat(10,1fr) 2.6fr}
+.r5{grid-template-columns:1fr 1fr 1fr 1.2fr 6.2fr 1.2fr 1fr .9fr .9fr .9fr}
+.arrows{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px}
+.arrows .k{min-height:23px;font-size:12px}
+.pad{margin:12px auto 0;width:34%;height:64px;background:#6f6f78;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700}
+.panel{background:var(--card);border-radius:18px;padding:14px 16px;box-shadow:var(--sh)}
+.panel h2{margin:0 0 8px;font-size:21px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.sc{border:0;border-radius:14px;padding:10px 10px;background:var(--bg);color:var(--ink);font:inherit;font-size:16px;font-weight:700;cursor:pointer;text-align:right;display:flex;flex-direction:column;gap:4px;box-shadow:var(--sh);position:relative}
+.sc:hover{transform:translateY(-2px)}
+.sc.active{outline:3px solid var(--hl)}
+.sc.done::after{content:"✔";position:absolute;left:10px;top:8px;color:var(--ok);font-size:18px}
+.sc kbd{display:inline-block;direction:ltr;font-family:inherit;font-size:13px;background:#fff;color:#222;border-radius:6px;padding:2px 7px;border:1px solid #ccc;box-shadow:0 2px 0 #bbb}
+html[data-theme="dark"] .sc kbd{background:#3b3b44;color:#fff;border-color:#555;box-shadow:0 2px 0 #222}
+.now{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.now{grid-template-columns:1fr}}
+.big{font-size:22px;font-weight:800;margin:0 0 6px}
+.combo{direction:ltr;text-align:left;font-size:28px;font-weight:900;margin:6px 0 8px}
+.combo span{display:inline-block;background:var(--hl);color:#fff;border-radius:10px;padding:4px 12px;margin:2px 4px 2px 0}
+.combo i{font-style:normal;color:var(--soft);margin:0 4px}
+textarea{width:100%;min-height:150px;border-radius:14px;border:2px dashed var(--soft);padding:12px;font:inherit;font-size:18px;background:var(--bg);color:var(--ink);resize:vertical}
+.hint{color:var(--soft);font-size:15px;margin:6px 0 0}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ok);color:#06283d;font-weight:800;font-size:20px;padding:12px 22px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:14px;color:var(--soft);margin-top:8px}
+.legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;margin-left:5px;vertical-align:-2px;background:var(--x)}
+.score{font-size:16px;color:var(--soft)}
+</style>
+</head>
+<body>
+<header>
+  <h1>⌨️ המקלדת של מיה – קיצורי הקסם</h1>
+  <div style="display:flex;gap:8px;align-items:center">
+    <span class="score" id="score"></span>
+    <a class="back" href="./#/lesson/2">↩ חזרה לשיעור 2</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="kbwrap">
+    <div class="kb" id="kb"></div>
+    <div class="pad">משטח מגע (Touchpad) = העכבר של הלפטופ</div>
+  </div>
+
+  <div class="now">
+    <div class="panel">
+      <h2 id="nowTitle">👆 לוחצים על קיצור למטה, או על מקש במקלדת</h2>
+      <div class="combo" id="combo"></div>
+      <p class="big" id="nowWhat" style="display:none"></p>
+      <p id="nowText" class="hint">המקשים שצריך ללחוץ נדלקים בוורוד. כשאת לוחצת עליהם באמת במקלדת שלך, הם נדלקים בירוק!</p>
+    </div>
+    <div class="panel">
+      <h2>✍️ מגרש אימונים</h2>
+      <textarea id="pad" placeholder="כתבי כאן משהו על העסק שלך… ואז נסי: סמני מילה, Ctrl+C, ואז Ctrl+V"></textarea>
+      <p class="hint">כאן אפשר באמת לנסות: להעתיק, להדביק, לבטל, לבחור הכל.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>🪄 קיצורי הקסם</h2>
+    <div class="grid" id="list"></div>
+    <div class="legend">
+      <span style="--x:var(--c5)">מספרים</span><span style="--x:var(--c1)">רווח</span><span style="--x:var(--c2)">Enter, Backspace, חצים</span><span style="--x:var(--c3)">מקשי עזר</span><span style="--x:var(--c4)">שורת F</span><span style="--x:var(--he)">אותיות בעברית</span>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  try{ var t=localStorage.getItem("mia_c6_theme"); if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)) document.documentElement.setAttribute("data-theme","dark"); }catch(e){}
+
+  // ---------- פריסה ----------
+  // כל מקש: [קוד, תצוגה, class]. קוד = event.code
+  var rows = [
+    ["r0", [["Escape","Esc","fn c4"],["F1","F1 🔇","fn c4"],["F2","F2 🔉","fn c4"],["F3","F3 🔊","fn c4"],["F4","F4 🎤","fn c4"],["F5","F5 🔄","fn c4"],["F6","F6 ☀︎-","fn c4"],["F7","F7 ☀︎+","fn c4"],["F8","F8 🖥","fn c4"],["F9","F9 ✈️","fn c4"],["F10","F10 ⌨️","fn c4"],["F11","F11 🔒","fn c4"],["F12","F12 📷","fn c4"],["Insert","Ins","fn c4"],["Delete","Del","fn c4"]]],
+    ["r1", [["Backquote","~ ;",""],["Digit1","1","c5"],["Digit2","2","c5"],["Digit3","3","c5"],["Digit4","4","c5"],["Digit5","5","c5"],["Digit6","6","c5"],["Digit7","7","c5"],["Digit8","8","c5"],["Digit9","9","c5"],["Digit0","0","c5"],["Minus","- _",""],["Equal","= +",""],["Backspace","⌫ Backspace<br>מוחק אחורה","c2 sm"]]],
+    ["r2", [["Tab","Tab ⇥","c3 sm"],["KeyQ","/|Q"],["KeyW","'|W"],["KeyE","ק|E"],["KeyR","ר|R"],["KeyT","א|T"],["KeyY","ט|Y"],["KeyU","ו|U"],["KeyI","ן|I"],["KeyO","ם|O"],["KeyP","פ|P"],["BracketLeft","[ ]",""],["BracketRight","] [",""],["Backslash","\\",""]]],
+    ["r3", [["CapsLock","Caps Lock<br>אותיות גדולות","c3 sm"],["KeyA","ש|A"],["KeyS","ד|S"],["KeyD","ג|D"],["KeyF","כ|F"],["KeyG","ע|G"],["KeyH","י|H"],["KeyJ","ח|J"],["KeyK","ל|K"],["KeyL","ך|L"],["Semicolon","ף|;"],["Quote",",|'"],["Enter","Enter ⏎<br>שורה חדשה / אישור","c2 sm"]]],
+    ["r4", [["ShiftLeft","Shift ⇧<br>אות גדולה","c3 sm"],["KeyZ","ז|Z"],["KeyX","ס|X"],["KeyC","ב|C"],["KeyV","ה|V"],["KeyB","נ|B"],["KeyN","מ|N"],["KeyM","צ|M"],["Comma","ת|,"],["Period","ץ|."],["Slash",".|/"],["ShiftRight","Shift ⇧<br>אות גדולה","c3 sm"]]],
+    ["r5", [["ControlLeft","Ctrl","c3 sm"],["Fn","Fn","c3 sm"],["MetaLeft","⊞ Win<br>תפריט התחל","c3 sm"],["AltLeft","Alt","c3 sm"],["Space","רווח (Space)","c1"],["AltRight","Alt","c3 sm"],["ControlRight","Ctrl","c3 sm"],["ArrowLeft","◀","c2"],["ARROWS"],["ArrowRight","▶","c2"]]]
+  ];
+  var names = {Escape:"Esc – יוצא / סוגר חלון קטן",Backspace:"Backspace – מוחק אות אחורה",Tab:"Tab – קופץ לשדה הבא",CapsLock:"Caps Lock – כל האותיות באנגלית גדולות",Enter:"Enter – שורה חדשה או אישור",ShiftLeft:"Shift – אות גדולה או הסימן העליון במקש",ShiftRight:"Shift – אות גדולה או הסימן העליון במקש",ControlLeft:"Ctrl – מקש הקסם: ביחד עם אות עושה פעולה",ControlRight:"Ctrl – מקש הקסם: ביחד עם אות עושה פעולה",AltLeft:"Alt – מקש עזר (למשל להחלפת שפה)",AltRight:"Alt – מקש עזר",MetaLeft:"Win – פותח את תפריט התחל",Fn:"Fn – מפעיל את הסמלים הקטנים בשורה העליונה",Space:"רווח – המקש הכי גדול, מקום בין מילים",Delete:"Delete – מוחק קדימה, או מוחק קובץ שסומן",Insert:"Insert – כמעט לא משתמשים",ArrowLeft:"חץ – מזיז את הסמן",ArrowRight:"חץ – מזיז את הסמן",ArrowUp:"חץ – מזיז את הסמן",ArrowDown:"חץ – מזיז את הסמן",F1:"F1 – עזרה (בלנובו: השתקה)",F2:"F2 – שינוי שם של קובץ (בלנובו: קול חלש)",F5:"F5 – רענון הדף",F11:"F11 – מסך מלא"};
+
+  var kb = document.getElementById("kb"), keyEls = {};
+  function mk(code, label, cls){
+    var d = document.createElement("div"); d.className = "k "+(cls||""); d.dataset.code = code;
+    if(label.indexOf("|")>0 && !cls){ var p=label.split("|"); d.innerHTML='<span class="he">'+p[0]+'</span><span class="en">'+p[1]+'</span>'; }
+    else d.innerHTML = label;
+    d.addEventListener("click", function(){ showKey(code, d); });
+    keyEls[code] = keyEls[code] || []; keyEls[code].push(d); return d;
+  }
+  rows.forEach(function(r){
+    var row = document.createElement("div"); row.className = "row "+r[0];
+    r[1].forEach(function(k){
+      if(k[0]==="ARROWS"){ var a=document.createElement("div"); a.className="arrows"; a.innerHTML="<div></div>"; a.appendChild(mk("ArrowUp","▲","c2")); a.innerHTML+="<div></div><div></div>"; a.appendChild(mk("ArrowDown","▼","c2")); a.innerHTML+="<div></div>";
+        // rebuild listeners lost by innerHTML+=
+        a.querySelectorAll(".k").forEach(function(d){ var c=d.dataset.code; keyEls[c]=[d]; d.addEventListener("click",function(){showKey(c,d);}); });
+        row.appendChild(a); return; }
+      row.appendChild(mk(k[0], k[1], k[2]));
+    });
+    kb.appendChild(row);
+  });
+
+  // ---------- קיצורים ----------
+  var S = [
+    {id:"copy", keys:["Control","c"], codes:["ControlLeft","KeyC"], name:"העתק", what:"Ctrl + C", text:"מסמנים טקסט (גוררים עליו עם העכבר) ולוחצים Ctrl ו-C ביחד. המחשב זוכר את מה שסימנת."},
+    {id:"paste", keys:["Control","v"], codes:["ControlLeft","KeyV"], name:"הדבק", what:"Ctrl + V", text:"מדביק את מה שהעתקת. אפשר להדביק שוב ושוב!"},
+    {id:"cut", keys:["Control","x"], codes:["ControlLeft","KeyX"], name:"גזור", what:"Ctrl + X", text:"כמו העתק, אבל הטקסט נעלם מהמקום הישן ועובר למקום החדש."},
+    {id:"undo", keys:["Control","z"], codes:["ControlLeft","KeyZ"], name:"בטל (אופס!)", what:"Ctrl + Z", text:"טעית? Ctrl+Z מחזיר אחורה את הפעולה האחרונה. אפשר כמה פעמים."},
+    {id:"redo", keys:["Control","y"], codes:["ControlLeft","KeyY"], name:"בצע שוב", what:"Ctrl + Y", text:"ביטלת יותר מדי? Ctrl+Y מחזיר קדימה."},
+    {id:"save", keys:["Control","s"], codes:["ControlLeft","KeyS"], name:"שמור", what:"Ctrl + S", text:"שומר את העבודה. לשמור הרבה, כדי שכלום לא יילך לאיבוד!"},
+    {id:"all", keys:["Control","a"], codes:["ControlLeft","KeyA"], name:"בחר הכל", what:"Ctrl + A", text:"מסמן את כל הטקסט בבת אחת."},
+    {id:"find", keys:["Control","f"], codes:["ControlLeft","KeyF"], name:"חפש", what:"Ctrl + F", text:"פותח חלון חיפוש: מוצאים מילה בדף ארוך."},
+    {id:"print", keys:["Control","p"], codes:["ControlLeft","KeyP"], name:"הדפס", what:"Ctrl + P", text:"פותח את חלון ההדפסה."},
+    {id:"new", keys:["Control","n"], codes:["ControlLeft","KeyN"], name:"חדש", what:"Ctrl + N", text:"פותח קובץ חדש או חלון חדש."},
+    {id:"lang", keys:["Alt","Shift"], codes:["AltLeft","ShiftLeft"], name:"החלף שפה", what:"Alt + Shift", text:"עוברים בין עברית לאנגלית. מסתכלים בפינה: עב או ENG."},
+    {id:"caps", keys:["Shift","m"], codes:["ShiftLeft","KeyM"], name:"אות גדולה", what:"Shift + M", text:"מחזיקים Shift ולוחצים על אות באנגלית: יוצאת גדולה. M של Mia!"},
+    {id:"delword", keys:["Control","Backspace"], codes:["ControlLeft","Backspace"], name:"מחק מילה שלמה", what:"Ctrl + Backspace", text:"במקום אות-אות, מוחק מילה שלמה אחורה."},
+    {id:"home", keys:["Control","Home"], codes:["ControlLeft","ArrowUp"], name:"קפוץ להתחלה", what:"Ctrl + Home", text:"קופץ לתחילת המסמך. Ctrl + End קופץ לסוף."},
+    {id:"alttab", keys:["Alt","Tab"], codes:["AltLeft","Tab"], name:"החלף חלון", what:"Alt + Tab", text:"מחזיקים Alt ולוחצים Tab: קופצים בין החלונות הפתוחים."},
+    {id:"desk", keys:["Meta","d"], codes:["MetaLeft","KeyD"], name:"שולחן העבודה", what:"Win + D", text:"מסתיר את כל החלונות ומראה את שולחן העבודה. עוד פעם מחזיר."},
+    {id:"explorer", keys:["Meta","e"], codes:["MetaLeft","KeyE"], name:"סייר הקבצים", what:"Win + E", text:"פותח את סייר הקבצים: שם גרים כל הקבצים והתיקיות."},
+    {id:"shot", keys:["Meta","Shift","s"], codes:["MetaLeft","ShiftLeft","KeyS"], name:"צילום מסך", what:"Win + Shift + S", text:"בוחרים חלק מהמסך ומצלמים אותו."},
+    {id:"lock", keys:["Meta","l"], codes:["MetaLeft","KeyL"], name:"נעל מחשב", what:"Win + L", text:"נועל את המחשב כשקמים ממנו."},
+    {id:"task", keys:["Control","Shift","Escape"], codes:["ControlLeft","ShiftLeft","Escape"], name:"מנהל המשימות", what:"Ctrl + Shift + Esc", text:"מראה מה המעבד והזיכרון עושים עכשיו (זוכרת מהשיעור הקודם?)."},
+    {id:"zoomin", keys:["Control","="], codes:["ControlLeft","Equal"], name:"הגדל", what:"Ctrl + (+)", text:"מגדיל את מה שעל המסך. Ctrl + (-) מקטין, Ctrl + 0 מחזיר."},
+    {id:"rename", keys:["F2"], codes:["F2"], name:"שנה שם לקובץ", what:"F2", text:"מסמנים קובץ ולוחצים F2: אפשר לכתוב לו שם חדש."}
+  ];
+  var done = {}; try{ done = JSON.parse(localStorage.getItem("mia_c6_kb_done")||"{}"); }catch(e){}
+  var list = document.getElementById("list"), cur = null, btns = {};
+  S.forEach(function(s){
+    var b = document.createElement("button"); b.className = "sc"+(done[s.id]?" done":""); b.type="button";
+    b.innerHTML = '<span>'+s.name+'</span><kbd>'+s.what+'</kbd>';
+    b.addEventListener("click", function(){ select(s); });
+    btns[s.id]=b; list.appendChild(b);
+  });
+  function score(){ var n=Object.keys(done).length; document.getElementById("score").textContent = n ? "🪙 ביצעת "+n+" מתוך "+S.length : ""; }
+  score();
+
+  function clearHL(){ document.querySelectorAll(".k.on").forEach(function(d){ d.classList.remove("on"); }); Object.keys(btns).forEach(function(i){ btns[i].classList.remove("active"); }); }
+  function select(s){
+    clearHL(); cur = s; btns[s.id].classList.add("active");
+    s.codes.forEach(function(c, i){ setTimeout(function(){ (keyEls[c]||[]).forEach(function(d){ d.classList.add("on"); }); }, i*350); });
+    document.getElementById("nowTitle").textContent = "🪄 "+s.name;
+    document.getElementById("combo").innerHTML = s.what.split(" + ").map(function(k){ return "<span>"+k+"</span>"; }).join("<i>+</i>");
+    var w = document.getElementById("nowWhat"); w.style.display="none";
+    document.getElementById("nowText").textContent = s.text + (s.id==="lang"||s.id==="caps" ? "" : "  עכשיו תורך: לחצי על המקשים במקלדת שלך!");
+  }
+  function showKey(code, el){
+    clearHL(); cur = null; el.classList.add("on");
+    var t = names[code] || ((el.querySelector(".he")||{}).textContent ? "האות "+el.querySelector(".he").textContent+" בעברית, "+el.querySelector(".en").textContent+" באנגלית" : el.textContent);
+    document.getElementById("nowTitle").textContent = "🔎 מה המקש הזה עושה?";
+    document.getElementById("combo").innerHTML = "";
+    document.getElementById("nowText").textContent = t;
+  }
+
+  // ---------- לחיצה אמיתית ----------
+  var pressed = {};
+  function codeOf(e){ var c=e.code; if(c==="ControlRight")c="ControlLeft"; if(c==="ShiftRight")c="ShiftLeft"; if(c==="AltRight")c="AltLeft"; if(c==="MetaRight")c="MetaLeft"; if(c==="OSLeft"||c==="OSRight")c="MetaLeft"; if(c==="Home")c="ArrowUp"; return c; }
+  document.addEventListener("keydown", function(e){
+    var c = codeOf(e); pressed[c]=1;
+    (keyEls[c]||[]).forEach(function(d){ d.classList.add("down"); });
+    // לא לתת לדפדפן לפתוח חלונות בזמן התרגול
+    if((e.ctrlKey||e.metaKey) && /^(s|p|f|n|d|e|l|=|\+)$/i.test(e.key) && !(e.target.id==="pad" && /^(a|c|v|x|z|y)$/i.test(e.key))) e.preventDefault();
+    if(e.key==="F2"||e.key==="F5"||e.key==="F11") e.preventDefault();
+    var hit = S.find(function(s){ return s.codes.every(function(k){ return pressed[k]; }) && s.codes.length===Object.keys(pressed).length; });
+    if(hit){ done[hit.id]=1; try{ localStorage.setItem("mia_c6_kb_done", JSON.stringify(done)); }catch(x){}
+      btns[hit.id].classList.add("done"); score();
+      if(!cur || cur.id!==hit.id) select(hit);
+      toast("🎉 כל הכבוד! "+hit.name+" – "+hit.what); }
+  });
+  document.addEventListener("keyup", function(e){ var c=codeOf(e); delete pressed[c]; (keyEls[c]||[]).forEach(function(d){ d.classList.remove("down"); }); if(e.key==="Meta"||e.key==="OS") { pressed={}; document.querySelectorAll(".k.down").forEach(function(d){d.classList.remove("down");}); } });
+  window.addEventListener("blur", function(){ pressed={}; document.querySelectorAll(".k.down").forEach(function(d){d.classList.remove("down");}); });
+
+  var tt = document.getElementById("toast"), tm;
+  function toast(s){ tt.textContent=s; tt.classList.add("show"); clearTimeout(tm); tm=setTimeout(function(){ tt.classList.remove("show"); }, 2200); }
+})();
+</script>
+</body>
+</html>
