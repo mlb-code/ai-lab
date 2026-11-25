@@ -32,6 +32,9 @@ async function report(token, dims, metrics, range, limit = 15, filter = null) {
 }
 const table = (title, rows, cols) => `\n### ${title}\n| ${cols.join(" | ")} |\n|${cols.map(() => "---").join("|")}|\n` + rows.map(r => `| ${r.k} | ${r.v.join(" | ")} |`).join("\n") + "\n";
 
+// טבלה שתלויה בממד מותאם (customEvent:*) שלא קיים בכל נכס, למשל בנכס של AI Lab Pro: מדלגים במקום להפיל את הדוח (25.11.2026)
+const safe = async (title, cols, fn) => { try { return table(title, await fn(), cols); } catch (e) { return `\n### ${title}\n_לא זמין בנכס הזה (${String(e.message).slice(0, 80)})_\n`; } };
+
 const token = await googleToken(sa);
 const cur = { startDate: `${DAYS}daysAgo`, endDate: "today" }, prev = { startDate: `${DAYS * 2}daysAgo`, endDate: `${DAYS + 1}daysAgo` };
 let md = `## GA4 · ai-lab.co.il · ${DAYS} ימים אחרונים (עד היום)\n_${QA_NOTE}_\n`;
@@ -44,10 +47,13 @@ md += table("קמפיינים (UTM)", await report(token, ["sessionCampaignName"
 md += table("תוכן UTM (utm_content)", await report(token, ["sessionManualAdContent"], ["sessions", "engagedSessions"], cur, 15), ["utm_content", "ביקורים", "מעורבים"]);
 md += table("דפי נחיתה", await report(token, ["landingPagePlusQueryString"], ["sessions", "engagedSessions"], cur, 15), ["דף נחיתה", "ביקורים", "מעורבים"]);
 md += table("דפים נצפים", await report(token, ["pagePath"], ["screenPageViews", "totalUsers"], cur, 15), ["דף", "צפיות", "משתמשים"]);
-md += table("לחיצות CTA (cta_click)", await report(token, ["customEvent:cta_section", "customEvent:cta_label"], ["eventCount"], cur, 20, { filter: { fieldName: "eventName", stringFilter: { value: "cta_click" } } }), ["סקשן | כפתור", "לחיצות"]);
+md += table("דפים כולל פרמטרים (למשל קוד חברה ?c=)", await report(token, ["pagePathPlusQueryString"], ["screenPageViews", "totalUsers"], cur, 60), ["דף", "צפיות", "משתמשים"]);
+md += table("אירועים לפי דף (בלי צפיות וגלילה)", await report(token, ["eventName", "pagePathPlusQueryString"], ["eventCount"], cur, 60,
+  { notExpression: { filter: { fieldName: "eventName", inListFilter: { values: ["page_view", "session_start", "first_visit", "user_engagement", "scroll"] } } } }), ["אירוע | דף", "כמה"]);
+md += await safe("לחיצות CTA (cta_click)", ["סקשן | כפתור", "לחיצות"], () => report(token, ["customEvent:cta_section", "customEvent:cta_label"], ["eventCount"], cur, 20, { filter: { fieldName: "eventName", stringFilter: { value: "cta_click" } } }));
 // דף הנחיתה להורים: צפיות (landing_view) מול לחיצות (cta_click בסקשן landing_parents) — כדי לראות אם הדף ממיר בכלל (13.09.2026)
-md += table("דף הנחיתה /parents: אירועים", await report(token, ["eventName", "customEvent:cta_label"], ["eventCount"], cur, 20,
-  { filter: { fieldName: "pagePath", stringFilter: { matchType: "BEGINS_WITH", value: "/parents" } } }), ["אירוע | כפתור", "כמה"]);
+md += await safe("דף הנחיתה /parents: אירועים", ["אירוע | כפתור", "כמה"], () => report(token, ["eventName", "customEvent:cta_label"], ["eventCount"], cur, 20,
+  { filter: { fieldName: "pagePath", stringFilter: { matchType: "BEGINS_WITH", value: "/parents" } } }));
 md += table("מכשיר", await report(token, ["deviceCategory"], ["sessions"], cur, 5), ["מכשיר", "ביקורים"]);
 console.log(md);
 if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
