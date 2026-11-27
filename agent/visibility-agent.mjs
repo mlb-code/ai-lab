@@ -63,7 +63,7 @@ const PRO_URL = "https://pro.ai-lab.co.il";
 // דורש CLARITY_API_TOKEN (סוד בריפו) — מאיר מייצר ב-Clarity → Settings → Data Export → Generate new API token.
 const CLARITY_TOKEN = process.env.CLARITY_API_TOKEN;
 const CLARITY_PRO_TOKEN = process.env.CLARITY_PRO_TOKEN; // פרויקט Clarity נפרד ל-AI Lab Pro (04.10.2026)
-async function clarityBlock(tok = CLARITY_TOKEN, title = "כל האתר + הפלטפורמה") {
+async function clarityBlock(tok = CLARITY_TOKEN, title = "כל האתר + הפלטפורמה my.ai-lab.co.il ביחד — לא נתון של דף הבית; לפי בדיקה ידנית 27.11 רוב הלחיצות המתות הן בפלטפורמה (מצגת השיעור, אזור ההורים), לא באתר") {
   if (!tok) return "### Clarity (הקלטות ומפות חום)\nעדיין לא מחובר — חסר CLARITY_API_TOKEN (מאיר מייצר ב-Clarity → Settings → Data Export).";
   const label = { Traffic: "תנועה", ScrollDepth: "עומק גלילה ממוצע", EngagementTime: "זמן מעורבות", DeadClickCount: "לחיצות מתות (לחיצה שלא עשתה כלום)", RageClickCount: "לחיצות זעם (לחיצות חוזרות מתסכול)", QuickbackClick: "חזרה מהירה אחורה", ExcessiveScroll: "גלילה מוגזמת (מחפשים ולא מוצאים)", ScriptErrorCount: "שגיאות סקריפט", ErrorClickCount: "לחיצות שגרמו לשגיאה", PopularPages: "דפים פופולריים", Device: "מכשיר", Browser: "דפדפן", ReferrerUrl: "מקור הפניה", PageTitle: "כותרת דף", OS: "מערכת הפעלה", Country: "מדינה" };
   try {
