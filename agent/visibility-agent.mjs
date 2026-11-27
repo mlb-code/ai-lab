@@ -266,13 +266,24 @@ async function previousReportBlock() {
         .filter(c => !BOT_AUTHORS.test(c.who) && !NOISE.test(c.msg))
         .slice(0, 40).map(c => `- ${c.d} · ${c.msg.slice(0, 160)}`);
     } catch (e) { commits = [`(השינויים לא נקראו: ${e.message})`]; }
+    // 27.11.2026: גם 30 יום לפני הדוח הקודם. בלי זה הסוכן המליץ 3 שבועות ברציפות להזיז כפתור שכבר הוזז ב-08.11 ("לא בוצע").
+    let older = [];
+    try {
+      const until = new Date(prev.created_at), since = new Date(until.getTime() - 30 * 864e5);
+      older = (await ghGet(`/commits?since=${encodeURIComponent(since.toISOString())}&until=${encodeURIComponent(until.toISOString())}&per_page=100`))
+        .map(c => ({ d: (c.commit?.author?.date || "").slice(0, 10), who: c.commit?.author?.name || "", msg: (c.commit?.message || "").split("\n")[0] }))
+        .filter(c => !BOT_AUTHORS.test(c.who) && !NOISE.test(c.msg))
+        .slice(0, 40).map(c => `- ${c.d} · ${c.msg.slice(0, 160)}`);
+    } catch (e) { older = []; }
     return `דוח #${prev.number} מ-${(prev.created_at || "").slice(0, 10)} (ה-Issue ${prev.state === "closed" ? "סגור" : "פתוח"})
 ### ההמלצה מהשבוע שעבר (כלשונה)
 ${rec}
 ### תגובות על הדוח הקודם (מאיר וסוכן הפרסום בלבד)
 ${comments.join("\n") || "(אין תגובות — מאיר לא ענה 'טיוטה' / 'פרסם')"}
 ### שינויים שנדחפו לאתר מאז הדוח הקודם (כותרות קומיטים, בלי עדכונים אוטומטיים ומדיה)
-${commits.join("\n") || "(אין שינויים)"}`;
+${commits.join("\n") || "(אין שינויים)"}
+### שינויים מ-30 הימים שלפני הדוח הקודם (לבדוק כאן לפני שממליצים על משהו כ"חדש" או קובעים "לא בוצע")
+${older.join("\n") || "(אין)"}`;
   } catch (e) { return `לא הצלחתי לקרוא את הדוח הקודם: ${e.message.slice(0, 120)}`; }
 }
 

@@ -45,12 +45,18 @@ def table(headers, rows):
     return h("table", h("thead", h("tr", th)) + h("tbody", trs))
 
 
+def ours(name):
+    """קמפיין של AI Lab (ילדים או Pro) — לא פוסטים מקודמים של עסקים אחרים באותו חשבון."""
+    return "AI Lab" in name or name.startswith(("Pro", "ילדים"))
+
+
 def ads_block(summary):
-    FILT = json.dumps([{"field": "campaign.name", "operator": "CONTAIN", "value": "AI Lab ·"}])
+    # 27.11.2026: הסינון הישן ("AI Lab ·" בלבד) הסתיר כ-2,000 ₪: קמפיינים חדשים נקראים "ילדים · ..." / "Pro — ..." / "Pro · ...".
+    # בחשבון יש גם פוסטים מקודמים של בר 55 — הם לא נכנסים לדוח.
     def rows_for(rng):
-        rows = get(f"{ACT}/insights", level="campaign", limit=50, filtering=FILT, **rng,
+        rows = get(f"{ACT}/insights", level="campaign", limit=100, **rng,
                    fields="campaign_name,spend,impressions,reach,clicks,actions,cpc,ctr").get("data", [])
-        return [r for r in rows if float(r.get("spend", 0)) > 0]
+        return [r for r in rows if float(r.get("spend", 0)) > 0 and ours(r.get("campaign_name", ""))]
     y = rows_for({"date_preset": "yesterday"})
     cum = rows_for({"time_range": json.dumps({"since": "2026-09-09", "until": today.isoformat()})})
     parts = [h("h2", "מודעות במטא")]
@@ -76,15 +82,15 @@ def ads_block(summary):
     parts.append(ry if isinstance(ry, str) else ry[0]); parts.append(rc if isinstance(rc, str) else rc[0])
     if not isinstance(ry, str): summary.append(f"מודעות אתמול: {money(ry[1][0])} · {ry[1][1]} לחיצות · {ry[1][2]} הגיעו לאתר · {ry[1][4]} שיחות וואטסאפ")
     if not isinstance(rc, str): summary.append(f"מצטבר: {money(rc[1][0])} · {rc[1][1]} לחיצות")
-    ads = get(f"{ACT}/insights", level="ad", date_preset="yesterday", limit=100, filtering=FILT,
-              fields="ad_name,adset_name,spend,impressions,actions,ctr").get("data", [])
-    ads = sorted([a for a in ads if float(a.get("spend", 0)) > 0], key=lambda x: -float(x["spend"]))[:6]
+    ads = get(f"{ACT}/insights", level="ad", date_preset="yesterday", limit=100,
+              fields="campaign_name,ad_name,adset_name,spend,impressions,actions,ctr").get("data", [])
+    ads = sorted([a for a in ads if float(a.get("spend", 0)) > 0 and ours(a.get("campaign_name", ""))], key=lambda x: -float(x["spend"]))[:6]
     if ads:
         parts.append(h("h3", "מודעות מובילות אתמול") + table(["מודעה", "הוצאה", "לחיצות", "CTR"],
                      [[a["ad_name"], money(a["spend"]), acts(a, ["link_click"])["link_click"], f"{float(a.get('ctr', 0)):.1f}%"] for a in ads]))
     bad = get(f"{ACT}/ads", fields="name,effective_status,campaign{name}", limit=200,
               effective_status='["DISAPPROVED","PENDING_REVIEW","WITH_ISSUES"]').get("data", [])
-    bad = [b for b in bad if "AI Lab ·" in (b.get("campaign") or {}).get("name", "")]
+    bad = [b for b in bad if ours((b.get("campaign") or {}).get("name", ""))]
     if bad:
         parts.append(h("p", "⚠️ " + h("b", "מודעות שדורשות טיפול: ") + ", ".join(f"{b['name']} ({b['effective_status']})" for b in bad)))
         summary.append(f"⚠️ {len(bad)} מודעות דורשות טיפול")
