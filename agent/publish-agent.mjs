@@ -88,7 +88,7 @@ const IMG = "https://ai-lab.co.il/og-image-2026.jpg";
 const url = `https://ai-lab.co.il/blog/${art.slug}.html`;
 const tpl = fs.readFileSync("blog/kids-ai-privacy.html", "utf8");
 let head = tpl.slice(0, tpl.indexOf('<link rel="stylesheet" href="/blog/shared.css">'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(art.title)} | עולם ה-AI | AI Lab</title>`)
+head = head.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(art.title)} | AI Lab</title>`)
   .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(art.description)}">`)
   .replace(/https:\/\/ai-lab\.co\.il\/blog\/kids-ai-privacy\.html/g, url)
   .replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${esc(art.title)} | AI Lab">`)
